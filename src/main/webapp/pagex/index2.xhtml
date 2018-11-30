@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Lista de conexiones</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <f:view>
+            <p:dataTable var="car" value="#{dtBasicView.listarConexiones()}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{car.co_conexi}" />
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{car.no_conexi}" />
+                </p:column>
+
+            </p:dataTable>
+
+        </f:view>
+    </h:body>
+</html>
