@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/WFCORE">
-    <ResourceLink global="poolPgWfcore" name="poolPgWfcore" type="javax.sql.DataSource"/>
+    <!--<ResourceLink global="poolPgWfcore" name="poolPgWfcore" type="javax.sql.DataSource"/>-->
+    <ResourceLink global="poolPgWfcore" name="dbcnxpool_wfcore" type="javax.sql.DataSource"/>
 </Context>

@@ -15,10 +15,17 @@
     </properties>
     
     <dependencies>
+        <!-- EE8 -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
+            <version>8.0</version>
             <scope>provided</scope>
         </dependency>
         
@@ -28,9 +35,21 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.3</version>
+            <!--<scope>provided</scope>-->
+        </dependency>
         
         <!--LIbs para Faces-->
-        <dependency>
+        <!--        <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.2.18</version>
@@ -40,6 +59,11 @@
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
             <version>2.2.18</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.3.3</version>
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
@@ -47,6 +71,17 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>6.2</version>
+        </dependency>
+        <!--        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>6.3-SNAPSHOT</version>
+        </dependency>-->
+        <!-- Themes -->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>1.0.10</version>
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
@@ -88,14 +123,23 @@
             <version>1.7.19</version>
         </dependency>
         
-        <!--TEMAS PARA PRIMEFACES-->
-<!--        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.10</version>
-        </dependency>-->
-        
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/catalina -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>catalina</artifactId>
+            <version>6.0.53</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

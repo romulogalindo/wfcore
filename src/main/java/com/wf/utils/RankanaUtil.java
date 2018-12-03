@@ -1,5 +1,8 @@
 package com.wf.utils;
 
+import javax.activation.DataSource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -18,7 +21,12 @@ public class RankanaUtil {
     // Hibernate 5:
     private static SessionFactory buildSessionFactory() {
         try {
-            System.err.println("RankanaUtil ---> Inicio");
+//            InitialContext a = new InitialContext();
+//            a.
+//            Context initCtx = new InitialContext();
+//            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+//            envCtx. //            DataSource ds = (DataSource) envCtx.lookup("jdbc/EmployeeDB");
+//                    System.err.println("RankanaUtil ---> Inicio");
             // Create the ServiceRegistry from hibernate.cfg.xml
 //            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()//
 //                    .configure("hibernate.cfg.xml").build();
