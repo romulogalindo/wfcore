@@ -4,6 +4,38 @@
         <description>ServletContextListener</description>
         <listener-class>com.acceso.wfcore.listerners.WFCoreListener</listener-class>
     </listener>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bootstrap</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.level</param-name>
+        <param-value>ERROR</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.level</param-name>
+        <param-value>ERROR</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath:/log4j.properties</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-value>true</param-value>
+    </context-param>
     <session-config>
         <session-timeout>
             30
