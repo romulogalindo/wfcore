@@ -9,23 +9,21 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>WFCORE</title>
+        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css" />
     </h:head>
 
     <h:body>
 
         <p:layout fullPage="true">
 
-            <p:layoutUnit position="north" size="100"  resizable="true" collapsible="true">
-                <ui:insert name="top">Top</ui:insert>
-            </p:layoutUnit>
-
-            <p:layoutUnit position="south" size="100"  resizable="true" collapsible="true">
-                <ui:insert name="bottom">Bottom</ui:insert>
-            </p:layoutUnit>
-
             <p:layoutUnit position="west" size="220" resizable="true" >
                 <ui:insert name="left"></ui:insert>
                 <h:form>
+                    <p:panel style="height:150px">
+                        Usuario 123
+                        user@acceso.com.pe
+                    </p:panel>
+
                     <p:growl>
                         <p:autoUpdate />
                     </p:growl>
