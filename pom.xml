@@ -97,10 +97,6 @@
             <version>1.0.0-RC19</version>
         </dependency>
 
-
-
-
-        
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>

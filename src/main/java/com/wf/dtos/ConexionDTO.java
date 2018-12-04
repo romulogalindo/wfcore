@@ -22,6 +22,16 @@ import javax.persistence.NamedNativeQuery;
             name = "wfcore.cnx_test",
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
                     + "from wfsistem.tsconexi",
+            resultClass = ConexionDTO.class),
+    @NamedNativeQuery(
+            name = "wfcore.cnx_insert",
+            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+                    + "from wfsistem.pbregistra_conexion(:no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            resultClass = ConexionDTO.class),
+    @NamedNativeQuery(
+            name = "wfcore.cnx_update",
+            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+                    + "from wfsistem.pbactualiza_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class)
 })
 public class ConexionDTO {

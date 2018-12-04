@@ -12,30 +12,33 @@
 
             <ui:define name="content">
                 <h:form> 
-                    <p:panel header="Registro de Conexion">
-                        <h:panelGrid columns="2" cellpadding="5" id="panelRegistroCnx" >
+                    <p:panel header="Registro de Conexion" id="panelRegistroCnx">
+                        <p:panelGrid columns="2"  >
                             <h:outputText value="Nombre: " />
-                            <p:inputText id="no_conexi"/>
+                            <p:inputText id="no_conexi" value="#{dtBasicView.conexion.no_conexi}"/>
                             <h:outputText value="Max Pool: " />
-                            <p:inputText id="nu_maxpoo"/>
+                            <p:inputText  id="nu_maxpoo" value="#{dtBasicView.conexion.nu_maxpoo}">
+                                <p:keyFilter mask="num"/>
+                            </p:inputText>
                             <h:outputText value="Time Out: " />
-                            <p:inputText id="nu_timout"/>
+                            <p:inputText id="nu_timout" value="#{dtBasicView.conexion.nu_timout}">
+                                <p:keyFilter mask="num" />
+                            </p:inputText>
                             <h:outputText value="Usuario: " />
-                            <p:inputText id="no_usuari"/>
+                            <p:inputText id="no_usuari" value="#{dtBasicView.conexion.no_usuari}"/>
                             <h:outputText value="Password: " />
-                            <p:inputText id="pw_usuari"/>
+                            <p:inputText id="pw_usuari" value="#{dtBasicView.conexion.pw_usuari}"/>
                             <h:outputText value="Dominio: " />
-                            <p:inputText id="ur_domini"/>
-                            <h:outputText value="Puerto: " />
-                            <p:inputText id="nu_puerto"/>
+                            <p:inputText id="ur_domini" value="#{dtBasicView.conexion.ur_domini}"/>
+                            <h:outputText value="Puerto: " >
+                                <p:keyFilter mask="num"/>
+                            </h:outputText>
+                            <p:inputText id="nu_puerto" value="#{dtBasicView.conexion.nu_puerto}"/>
                             <h:outputText value="BD: " />
-                            <p:inputText id="no_datbas"/>
-                        </h:panelGrid>
+                            <p:inputText id="no_datbas" value="#{dtBasicView.conexion.no_datbas}"/>
+                        </p:panelGrid>
                     </p:panel>
-                    <p:button value="Grabar"></p:button>
-                    <p:button  value="Bookmark" icon="pi pi-star" style="margin-right:20px;">
-                        <f:param name="productId" value="10" />
-                    </p:button>
+                    <p:commandButton value="Grabar" action="#{dtBasicView.grabarConexion}"></p:commandButton>
                 </h:form>
             </ui:define>
 
