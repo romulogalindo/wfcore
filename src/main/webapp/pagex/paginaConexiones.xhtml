@@ -1,55 +1,83 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
+
 
         <ui:composition template="./../template/plantilla.xhtml">
 
             <ui:define name="content">
-                <f:view>
-                    <p:panel id="panelListaCnx" header="Lista de Conexiones">
-                        <p:dataTable var="car" value="#{dtBasicView.listarConexiones()}">
-                            <p:column headerText="Id" style="text-align: right">
+                <p:panel id="panelListaCnx" header="Conexiones">
+                    <h:form id="form">
+                        <p:dataTable id="lista" var="car" value="#{dtBasicView.listarConexiones()}" sortBy="#{car.co_conexi}" sortOrder="DESCENDING">
+                            <f:facet name="header">
+                                Lista de Conexiones
+                            </f:facet>
+                            <!--<p:ajax event="rowSelect" update=":form:carDetail" oncomplete="PF('carDialog').show()" />-->
+                            <p:column id="modelHeader" sortBy="#{car.co_conexi}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Id"/>
+                                </f:facet>
                                 <h:outputText value="#{car.co_conexi}" />
                             </p:column>
-                            <p:column headerText="Nombre">
+                            <p:column headerText="Nombre" sortBy="#{car.no_conexi}">
                                 <h:outputText value="#{car.no_conexi}" />
                             </p:column>
-                            <p:column headerText="Max Pool" style="text-align: right">
+                            <p:column headerText="Max Pool" style="text-align: right" sortBy="#{car.nu_maxpoo}">
                                 <h:outputText value="#{car.nu_maxpoo}" />
                             </p:column>
-                            <p:column headerText="Time Out" style="text-align: right">
+                            <p:column headerText="Time Out" style="text-align: right" sortBy="#{car.nu_timout}">
                                 <h:outputText value="#{car.nu_timout}" />
                             </p:column>
-                            <p:column headerText="Usuario">
+                            <p:column headerText="Usuario" sortBy="#{car.no_usuari}">
                                 <h:outputText value="#{car.no_usuari}" />
                             </p:column>
-                            <p:column headerText="Contraseña">
+                            <p:column headerText="Contraseña" sortBy="#{car.pw_usuari}">
                                 <h:outputText value="#{car.pw_usuari}" />
                             </p:column>
-                            <p:column headerText="Host">
+                            <p:column headerText="Host" sortBy="#{car.ur_domini}">
                                 <h:outputText value="#{car.ur_domini}" />
                             </p:column>
-                            <p:column headerText="Puerto" style="text-align: right">
+                            <p:column headerText="Puerto" style="text-align: right" sortBy="#{car.nu_puerto}">
                                 <h:outputText value="#{car.nu_puerto}" />
                             </p:column>
-                            <p:column headerText="BD">
+                            <p:column headerText="BD" sortBy="#{car.no_datbas}">
                                 <h:outputText value="#{car.no_datbas}" />
                             </p:column>
 
                         </p:dataTable>
-                    </p:panel>
 
-                    <p:button value="Grabar"></p:button>
-                    <p:button  value="Bookmark" icon="pi pi-star" style="margin-right:20px;">
-                        <f:param name="productId" value="10" />
-                    </p:button>
-                </f:view>
+<!--                        <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="carDetail" style="text-align:center;">
+                                <p:panelGrid  columns="2" rendered="#{not empty dtTableStateView.selectedCar}" columnClasses="label,value">
+                                    <f:facet name="header">
+                                        <p:graphicImage name="demo/images/car/#{dtTableStateView.selectedCar.brand}-big.gif"/> 
+                                    </f:facet>
+
+                                    <h:outputText value="Id:" />
+                                    <h:outputText value="#{dtTableStateView.selectedCar.id}" />
+
+                                    <h:outputText value="Year" />
+                                    <h:outputText value="#{dtTableStateView.selectedCar.year}" />
+
+                                    <h:outputText value="Brand" />
+                                    <h:outputText value="#{dtTableStateView.selectedCar.brand}" />
+
+                                    <h:outputText value="Color:" />
+                                    <h:outputText value="#{dtTableStateView.selectedCar.color}" style="color:#{dtTableStateView.selectedCar.color}"/>
+                                </p:panelGrid>
+                            </p:outputPanel>-->
+                        </p:dialog>
+
+                    </h:form>
+                </p:panel>
+
             </ui:define>
 
         </ui:composition>

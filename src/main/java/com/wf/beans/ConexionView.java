@@ -2,8 +2,8 @@ package com.wf.beans;
 
 import com.wf.daos.ConexionDAO;
 import com.wf.dtos.ConexionDTO;
+import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -14,13 +14,14 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "dtBasicView")
 @SessionScoped
-public class ConexionView {
-    
+public class ConexionView implements Serializable {
+
     private List<ConexionDTO> conexiones;
+
     private ConexionDTO conexion;
 
     public ConexionView() {
-         conexion = new ConexionDTO();
+        conexion = new ConexionDTO();
     }
 
     public ConexionDTO getConexion() {
@@ -30,7 +31,7 @@ public class ConexionView {
     public void setConexion(ConexionDTO conexion) {
         this.conexion = conexion;
     }
-    
+
     public List<ConexionDTO> getConexiones() {
         return conexiones;
     }
@@ -38,7 +39,7 @@ public class ConexionView {
     public void setConexiones(List<ConexionDTO> conexiones) {
         this.conexiones = conexiones;
     }
-    
+
     public List<ConexionDTO> listarConexiones() {
         ConexionDAO dao = new ConexionDAO();
         this.conexiones = dao.getConexiones();
@@ -46,13 +47,14 @@ public class ConexionView {
 
         return this.conexiones;
     }
-    
+
     public void grabarConexion() {
         ConexionDAO dao = new ConexionDAO();
         this.conexion = dao.insertConexion(conexion);
         System.out.println("dao = " + this.conexion);
+        this.conexion = new ConexionDTO();
     }
-    
+
     public void limpiarRegistro() {
         System.out.println("limpiarRegistro = " + this.conexion);
         this.conexion = new ConexionDTO();

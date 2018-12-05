@@ -5,6 +5,7 @@
  */
 package com.wf.dtos;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
@@ -34,7 +35,7 @@ import javax.persistence.NamedNativeQuery;
                     + "from wfsistem.pbactualiza_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class)
 })
-public class ConexionDTO {
+public class ConexionDTO implements Serializable{
 
     @Id
     int co_conexi;
@@ -119,5 +120,12 @@ public class ConexionDTO {
     public void setNo_datbas(String no_datbas) {
         this.no_datbas = no_datbas;
     }
+
+    @Override
+    public String toString() {
+        return "ConexionDTO{" + "co_conexi=" + co_conexi + ", no_conexi=" + no_conexi + ", nu_maxpoo=" + nu_maxpoo + ", nu_timout=" + nu_timout + ", no_usuari=" + no_usuari + ", pw_usuari=" + pw_usuari + ", ur_domini=" + ur_domini + ", nu_puerto=" + nu_puerto + ", no_datbas=" + no_datbas + '}';
+    }
+    
+    
 
 }

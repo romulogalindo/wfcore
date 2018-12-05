@@ -13,7 +13,7 @@
             <ui:define name="content">
                 <h:form> 
                     <p:panel header="Registro de Conexion" id="panelRegistroCnx">
-                        <p:panelGrid columns="2"  >
+                        <p:panelGrid columns="2"  style="width: 400px">
                             <h:outputText value="Nombre: " />
                             <p:inputText id="no_conexi" value="#{dtBasicView.conexion.no_conexi}"/>
                             <h:outputText value="Max Pool: " />
@@ -37,8 +37,13 @@
                             <h:outputText value="BD: " />
                             <p:inputText id="no_datbas" value="#{dtBasicView.conexion.no_datbas}"/>
                         </p:panelGrid>
+                        <p:panelGrid style="width: 400px" >
+                            <p:commandButton value="Grabar" action="#{dtBasicView.grabarConexion}" type="buttom" update="panelRegistroCnx">
+                                <p:ajax rendered="panelRegistroCnx"/>
+                            </p:commandButton>
+                        </p:panelGrid>
                     </p:panel>
-                    <p:commandButton value="Grabar" action="#{dtBasicView.grabarConexion}"></p:commandButton>
+
                 </h:form>
             </ui:define>
 

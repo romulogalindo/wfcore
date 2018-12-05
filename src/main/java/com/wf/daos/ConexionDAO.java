@@ -47,7 +47,7 @@ public class ConexionDAO {
         try {
             System.out.println("com.wf.daos.ConexionDAO.insertConexion() --> Inicio");
             String sql_name = "wfcore.cnx_insert";
-
+            System.out.println("conexion = " + conexion);
             Query query = session.getNamedQuery(sql_name);
             query.setString("no_conexi", conexion.getNo_conexi());
             query.setInteger("nu_maxpoo", conexion.getNu_maxpoo());
