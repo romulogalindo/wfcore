@@ -11,6 +11,9 @@ import org.hibernate.StatelessSession;
  */
 public interface DataBasePowerfull {
 
+    public static final int INACTIVE = 0;
+    public static final int ACTIVE = 1;
+
     /**
      * Este método devolverá un objeto que permite las consultas directas sin
      * cache
@@ -25,4 +28,6 @@ public interface DataBasePowerfull {
      * @return
      */
     public Session getHibernateSession();
+
+    public abstract int getStatus();
 }

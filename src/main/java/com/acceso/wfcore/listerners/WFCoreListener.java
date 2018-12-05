@@ -3,13 +3,11 @@ package com.acceso.wfcore.listerners;
 import com.acceso.wfcore.services.DataSourceService;
 import java.util.Hashtable;
 import java.util.Iterator;
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import org.apache.naming.factory.ResourceLinkFactory;
 import org.apache.naming.NamingContext;
 
 /**

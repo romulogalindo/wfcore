@@ -1,7 +1,7 @@
 
-package com.wf.daos;
+package com.acceso.wfcore.daos;
 
-import com.wf.dtos.ConexionDTO;
+import com.acceso.wfcore.dtos.ConexionDTO;
 import com.wf.utils.RankanaUtil;
 import java.util.List;
 import org.hibernate.Query;

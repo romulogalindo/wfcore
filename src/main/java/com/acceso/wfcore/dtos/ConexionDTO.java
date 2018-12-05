@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wf.dtos;
+package com.acceso.wfcore.dtos;
 
+import com.acceso.wfcore.utils.Values;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,26 +17,25 @@ import javax.persistence.NamedNativeQuery;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
-
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = "wfcore.cnx_test",
+            name = Values.QUERYS_NATIVE_GET_ALLCNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-                    + "from wfsistem.tsconexi",
+            + "from wfsistem.tsconexi",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
             name = "wfcore.cnx_insert",
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-                    + "from wfsistem.pbregistra_conexion(:no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            + "from wfsistem.pbregistra_conexion(:no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
             name = "wfcore.cnx_update",
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-                    + "from wfsistem.pbactualiza_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            + "from wfsistem.pbactualiza_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class)
 })
-public class ConexionDTO implements Serializable{
+public class ConexionDTO implements Serializable {
 
     @Id
     int co_conexi;
@@ -125,7 +125,5 @@ public class ConexionDTO implements Serializable{
     public String toString() {
         return "ConexionDTO{" + "co_conexi=" + co_conexi + ", no_conexi=" + no_conexi + ", nu_maxpoo=" + nu_maxpoo + ", nu_timout=" + nu_timout + ", no_usuari=" + no_usuari + ", pw_usuari=" + pw_usuari + ", ur_domini=" + ur_domini + ", nu_puerto=" + nu_puerto + ", no_datbas=" + no_datbas + '}';
     }
-    
-    
 
 }

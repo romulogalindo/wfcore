@@ -1,7 +1,7 @@
-package com.wf.beans;
+package com.acceso.wfcore.beans;
 
-import com.wf.daos.ConexionDAO;
-import com.wf.dtos.ConexionDTO;
+import com.acceso.wfcore.daos.ConexionDAO;
+import com.acceso.wfcore.dtos.ConexionDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
