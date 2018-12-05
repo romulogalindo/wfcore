@@ -6,7 +6,7 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         
         <!--CONEXION TOMCAT-->
-        <!--<property name="hibernate.connection.datasource">java:comp/env/poolPgWfcore</property>-->
+        <property name="hibernate.connection.datasource">java:comp/env/poolPgWfcore</property>
     
         <property name="hibernate.connection.autocommit">false</property>
         <property name="hibernate.cache.use_second_level_cache">false</property>
@@ -29,6 +29,6 @@
         <property name="hibernate.connection.characterEncoding">ISO-8859-1</property>
         
         <!-- DTO's -->
-        <mapping class="com.wf.dtos.ConexionDTO" />
+        <mapping class="com.acceso.wfcore.dtos.ConexionDTO" />
     </session-factory>
 </hibernate-configuration>

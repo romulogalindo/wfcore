@@ -4,6 +4,7 @@ import com.acceso.wfcore.daos.ConexionDAO;
 import com.acceso.wfcore.dtos.ConexionDTO;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -22,6 +23,11 @@ public class ConexionView implements Serializable {
 
     public ConexionView() {
         conexion = new ConexionDTO();
+    }
+    
+    @PostConstruct
+    public void init() {
+        conexiones = listarConexiones();
     }
 
     public ConexionDTO getConexion() {

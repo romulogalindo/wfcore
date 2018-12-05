@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -16,10 +16,11 @@
 
         <p:layout fullPage="true">
 
-            <p:layoutUnit position="west" size="220" resizable="true" >
+            <p:layoutUnit position="west" size="230" resizable="false" >
                 <ui:insert name="left"></ui:insert>
                 <h:form>
-                    <p:panel style="height:150px">
+                    <p:panel style="height:150px; width:220px">
+                        <p:graphicImage style="height: 70px; width: 180px" value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/img/logo2.png"/>
                         Usuario 123
                         user@acceso.com.pe
                     </p:panel>
@@ -30,15 +31,20 @@
 
                     <p:panelMenu style="width:220px">
                         <p:submenu label="Mantenimiento" expanded="true">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="pi pi-save" />
-                            <p:menuitem value="Reporte" action="#{menuView.update}"  icon="pi pi-refresh" />
+                            <p:submenu label="Conexiones" expanded="true">
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="pi pi-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="pi pi-refresh" />
+                            </p:submenu>
+                            <p:separator />
+                            <p:submenu label="Usuario" expanded="true">
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="pi pi-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="pi pi-refresh" />
+                            </p:submenu>
                         </p:submenu>
                         <p:separator />
-                        <p:submenu label="Usuario" expanded="true">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="pi pi-save" />
-                            <p:menuitem value="Reporte" action="#{menuView.update}"  icon="pi pi-refresh" />
+                        <p:submenu label="Sistema" expanded="true">
+                            <p:menuitem value="Log Out" action="#{menuView.exit}"/>
                         </p:submenu>
-                        <p:menuitem value="Salir" action="#{menuView.save}" icon="pi pi-save" />
                     </p:panelMenu>
                 </h:form>
             </p:layoutUnit>

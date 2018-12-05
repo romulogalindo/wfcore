@@ -1,86 +1,125 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <body>
 
+    <ui:composition template="./../template/plantilla.xhtml">
+        <ui:define name="content">
 
-        <ui:composition template="./../template/plantilla.xhtml">
-
-            <ui:define name="content">
-                <p:panel id="panelListaCnx" header="Conexiones">
-                    <h:form id="form">
-                        <p:dataTable id="lista" var="car" value="#{dtBasicView.listarConexiones()}" sortBy="#{car.co_conexi}" sortOrder="DESCENDING">
+            <h:form id="form">
+                <p:dialog header="Detalles" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="z-index: 2003;" appendTo="@(body)">
+                    <p:outputPanel id="carDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" rendered="#{not empty dtBasicView.conexion}" columnClasses="label,value">
                             <f:facet name="header">
-                                Lista de Conexiones
+                                Conexión
                             </f:facet>
-                            <!--<p:ajax event="rowSelect" update=":form:carDetail" oncomplete="PF('carDialog').show()" />-->
-                            <p:column id="modelHeader" sortBy="#{car.co_conexi}" >
-                                <f:facet name="header">
-                                    <h:outputText value="Id"/>
-                                </f:facet>
-                                <h:outputText value="#{car.co_conexi}" />
-                            </p:column>
-                            <p:column headerText="Nombre" sortBy="#{car.no_conexi}">
-                                <h:outputText value="#{car.no_conexi}" />
-                            </p:column>
-                            <p:column headerText="Max Pool" style="text-align: right" sortBy="#{car.nu_maxpoo}">
-                                <h:outputText value="#{car.nu_maxpoo}" />
-                            </p:column>
-                            <p:column headerText="Time Out" style="text-align: right" sortBy="#{car.nu_timout}">
-                                <h:outputText value="#{car.nu_timout}" />
-                            </p:column>
-                            <p:column headerText="Usuario" sortBy="#{car.no_usuari}">
-                                <h:outputText value="#{car.no_usuari}" />
-                            </p:column>
-                            <p:column headerText="Contraseña" sortBy="#{car.pw_usuari}">
-                                <h:outputText value="#{car.pw_usuari}" />
-                            </p:column>
-                            <p:column headerText="Host" sortBy="#{car.ur_domini}">
-                                <h:outputText value="#{car.ur_domini}" />
-                            </p:column>
-                            <p:column headerText="Puerto" style="text-align: right" sortBy="#{car.nu_puerto}">
-                                <h:outputText value="#{car.nu_puerto}" />
-                            </p:column>
-                            <p:column headerText="BD" sortBy="#{car.no_datbas}">
-                                <h:outputText value="#{car.no_datbas}" />
-                            </p:column>
 
-                        </p:dataTable>
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{dtBasicView.conexion.co_conexi}" />
 
-<!--                        <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:outputPanel id="carDetail" style="text-align:center;">
-                                <p:panelGrid  columns="2" rendered="#{not empty dtTableStateView.selectedCar}" columnClasses="label,value">
-                                    <f:facet name="header">
-                                        <p:graphicImage name="demo/images/car/#{dtTableStateView.selectedCar.brand}-big.gif"/> 
-                                    </f:facet>
+                            <h:outputText value="Nombre:" />
+                            <h:outputText value="#{dtBasicView.conexion.no_conexi}" />
 
-                                    <h:outputText value="Id:" />
-                                    <h:outputText value="#{dtTableStateView.selectedCar.id}" />
+                            <h:outputText value="Max Pool:" />
+                            <h:outputText value="#{dtBasicView.conexion.nu_maxpoo}"/>
 
-                                    <h:outputText value="Year" />
-                                    <h:outputText value="#{dtTableStateView.selectedCar.year}" />
+                            <h:outputText value="Time Out:" />
+                            <h:outputText value="#{dtBasicView.conexion.nu_timout}" />
 
-                                    <h:outputText value="Brand" />
-                                    <h:outputText value="#{dtTableStateView.selectedCar.brand}" />
+                            <h:outputText value="Usuario:" />
+                            <h:outputText value="#{dtBasicView.conexion.no_usuari}" />
 
-                                    <h:outputText value="Color:" />
-                                    <h:outputText value="#{dtTableStateView.selectedCar.color}" style="color:#{dtTableStateView.selectedCar.color}"/>
-                                </p:panelGrid>
-                            </p:outputPanel>-->
-                        </p:dialog>
+                            <h:outputText value="Contraseña:" />
+                            <h:outputText value="#{dtBasicView.conexion.pw_usuari}" />
 
-                    </h:form>
+                            <h:outputText value="Host:" />
+                            <h:outputText value="#{dtBasicView.conexion.ur_domini}" />
+
+                            <h:outputText value="Puerto:" />
+                            <h:outputText value="#{dtBasicView.conexion.nu_puerto}" />
+
+                            <h:outputText value="BD:" />
+                            <h:outputText value="#{dtBasicView.conexion.no_datbas}" />
+
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+
+                <p:panel id="panelListaCnx" header="Conexiones">
+                    <p:button outcome="paginaRegConexion" value="Agregar Conexión" icon="fa fa-star" style="margin-bottom: 10px;" title="Agregar nueva conexion">
+                    </p:button>
+                    
+                    <p:growl id="msgs" showDetail="true" />
+                    
+                    <p:dataTable id="lista" var="car" value="#{dtBasicView.listarConexiones()}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+                        <f:facet name="header">
+                            Lista de Conexiones
+                        </f:facet>
+                        <p:ajax event="sort" skipChildren="false" />
+                        <!--<p:ajax event="rowSelect" update=":form:carDetail" oncomplete="PF('carDialog').show()" />-->
+                        <p:column id="modelHeader" sortBy="#{car.co_conexi}" style="text-align: right">
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{car.co_conexi}" />
+                        </p:column>
+
+                        <p:column sortBy="#{car.no_conexi}">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{car.no_conexi}" />
+                        </p:column>
+                        <p:column headerText="Max Pool" style="text-align: right" sortBy="#{car.nu_maxpoo}">
+                            <h:outputText value="#{car.nu_maxpoo}" />
+                        </p:column>
+                        <p:column headerText="Time Out" style="text-align: right" sortBy="#{car.nu_timout}">
+                            <h:outputText value="#{car.nu_timout}" />
+                        </p:column>
+                        <p:column headerText="Usuario" sortBy="#{car.no_usuari}">
+                            <h:outputText value="#{car.no_usuari}" />
+                        </p:column>
+                        <p:column headerText="Contraseña" sortBy="#{car.pw_usuari}">
+                            <h:outputText value="#{car.pw_usuari}" />
+                        </p:column>
+                        <p:column headerText="Host" sortBy="#{car.ur_domini}">
+                            <h:outputText value="#{car.ur_domini}" />
+                        </p:column>
+                        <p:column headerText="Puerto" style="text-align: right" sortBy="#{car.nu_puerto}">
+                            <h:outputText value="#{car.nu_puerto}" />
+                        </p:column>
+                        <p:column headerText="BD" sortBy="#{car.no_datbas}">
+                            <h:outputText value="#{car.no_datbas}" />
+                        </p:column>
+                        <p:column style="width:160px;text-align: center">
+                            <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="fa fa-search" title="View">
+                                <f:setPropertyActionListener value="#{car}" target="#{dtBasicView.conexion}" />
+                            </p:commandButton>
+                            
+                            <p:commandButton oncomplete="paginaUpdConexion" icon="fa fa-fw fa-edit" title="View">
+                                <f:setPropertyActionListener value="#{car}" target="#{dtBasicView.conexion}" />
+                            </p:commandButton>
+                            <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="fa fa-fw fa-remove" title="View">
+                                <f:setPropertyActionListener value="#{car}" target="#{dtBasicView.conexion}" />
+                            </p:commandButton>
+                            
+                        </p:column>
+
+                    </p:dataTable>
                 </p:panel>
 
-            </ui:define>
+            </h:form>
 
-        </ui:composition>
 
-    </body>
+        </ui:define>
+
+    </ui:composition>
+
+
 </html>
