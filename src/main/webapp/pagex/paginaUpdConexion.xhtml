@@ -12,9 +12,11 @@
 
             <ui:define name="content">
                 <h:form> 
-                    <p:panel header="Registro de Conexion" id="panelRegistroCnx">
+                    <p:panel header="Actualizar Conexión" id="panelActualizarCnx">
                         <p:panelGrid columns="2"  style="width: 400px">
-
+                            
+                            <p:outputLabel for="co_conexi" value="Id:" />
+                            <p:inputText id="co_conexi" value="#{dtBasicView.conexion.co_conexi}" disabled="true"/>
                             <p:outputLabel for="no_conexi" value="Nombre:" />
                             <p:inputText id="no_conexi" value="#{dtBasicView.conexion.no_conexi}" required="true" requiredMessage="Debe ingresar un Nombre."/>
                             <p:outputLabel for="nu_maxpoo" value="Max Pool:" />
@@ -41,8 +43,8 @@
                         <p:panelGrid style="width: 400px" >
                             <p:button outcome="paginaConexiones" value="Atrás" title="Volver al reporte de conexiones">
                             </p:button>
-                            <p:commandButton value="Grabar" action="#{dtBasicView.grabarConexion}" type="buttom" update="panelRegistroCnx">
-                                <p:ajax rendered="panelRegistroCnx"/>
+                            <p:commandButton value="Grabar" action="#{dtBasicView.actualizarConexion()}" type="buttom" update="panelActualizarCnx">
+                                <p:ajax rendered="panelActualizarCnx"/>
                             </p:commandButton>
                             
                         </p:panelGrid>

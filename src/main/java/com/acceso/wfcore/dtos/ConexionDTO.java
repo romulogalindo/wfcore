@@ -22,7 +22,7 @@ import javax.persistence.NamedNativeQuery;
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GET_ALLCNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.tsconexi",
+            + "from wfsistem.tsconexi order by co_conexi, no_conexi",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
             name = "wfcore.cnx_insert",

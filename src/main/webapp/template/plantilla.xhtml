@@ -32,18 +32,35 @@
                     <p:panelMenu style="width:220px">
                         <p:submenu label="Mantenimiento" expanded="true">
                             <p:submenu label="Conexiones" expanded="true">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="pi pi-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="pi pi-refresh" />
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
                             </p:submenu>
-                            <p:separator />
+                            <p:submenu label="Sistema" expanded="false">
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
+                            </p:submenu>
+                            <p:submenu label="Paquete" expanded="false">
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
+                            </p:submenu>
+                            <p:submenu label="Modulos" expanded="false">
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
+                            </p:submenu>
+                            <p:submenu label="Contenedor" expanded="false">
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
+                            </p:submenu>
                             <p:submenu label="Usuario" expanded="true">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="pi pi-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="pi pi-refresh" />
+                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
+                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
+                                <p:menuitem value="Asginación de Permisos" action="#{menuView.update}"  icon="fa fa-compress" />
                             </p:submenu>
                         </p:submenu>
                         <p:separator />
                         <p:submenu label="Sistema" expanded="true">
-                            <p:menuitem value="Log Out" action="#{menuView.exit}"/>
+                            <p:menuitem value="Configuración" action="#{menuView.exit}" icon="fa fa-gear"/>
+                            <p:menuitem value="Log Out" action="#{menuView.exit}" icon="fa fa-sign-out"/>
                         </p:submenu>
                     </p:panelMenu>
                 </h:form>
