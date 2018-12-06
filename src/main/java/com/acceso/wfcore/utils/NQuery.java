@@ -12,9 +12,9 @@ import org.hibernate.Query;
  */
 public class NQuery {
 
-    Query query = null;
-    String queryString = "";
-    long execution_time;
+    private Query query = null;
+    private String queryString = "";
+    private long execution_time;
 
     public void work(Query query) {
         this.query = query;

@@ -20,17 +20,22 @@ import javax.persistence.NamedNativeQuery;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GET_ALLCNX,
+            name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
             + "from wfsistem.tsconexi order by co_conexi, no_conexi",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
-            name = "wfcore.cnx_insert",
+            name = Values.QUERYS_NATIVE_SELECT_CNX,
+            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+            + "from wfsistem.tsconexi order by co_conexi, no_conexi",
+            resultClass = ConexionDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_INSERT_CNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
             + "from wfsistem.pbregistra_conexion(:no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
-            name = "wfcore.cnx_update",
+            name = Values.QUERYS_NATIVE_UPDATE_CNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
             + "from wfsistem.pbactualiza_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class)

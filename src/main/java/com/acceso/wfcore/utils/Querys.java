@@ -17,10 +17,12 @@ public class Querys {
         NQuery nQuery = new NQuery();
 
         try {
-            nQuery.work(statelessSession.getNamedQuery(Values.QUERYS_NATIVE_GET_ALLCNX));
+            nQuery.work(statelessSession.getNamedQuery(Values.SYSQUERYS_NATIVE_GET_ALLCNX));
+            System.out.println("Q:" + nQuery.getQueryString());
             list = nQuery.list();
         } catch (Exception ep) {
             System.out.println("Error al ejecutar la query.");
+            ep.printStackTrace();
         } finally {
             try {
                 statelessSession.close();

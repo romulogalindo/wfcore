@@ -35,6 +35,7 @@ public class DataSourceService extends Service {
 
         //levantar la database princiapl de donde se cogeran los datos!!!
         mainManager.init();
+        System.out.println("Se inicializo la DB-Nativa");
 
         //se generan los manager y se agregan al hashmap
         Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> managers.put(dto.getNo_conexi(), new DataManager(new WFProperties(dto))));
@@ -50,6 +51,14 @@ public class DataSourceService extends Service {
     @Override
     public void stop() {
 
+    }
+
+    public DataManager getMainManager() {
+        return mainManager;
+    }
+
+    public void setMainManager(DataManager mainManager) {
+        this.mainManager = mainManager;
     }
 
 }

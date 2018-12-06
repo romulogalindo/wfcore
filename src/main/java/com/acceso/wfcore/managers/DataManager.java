@@ -2,6 +2,8 @@ package com.acceso.wfcore.managers;
 
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfcore.utils.WFProperties;
+import java.util.HashMap;
+import java.util.Properties;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
@@ -36,16 +38,18 @@ public class DataManager extends Manager implements DataBasePowerfull {
             properties.getKeys().stream().forEach(k -> standardServiceRegistryBuilder.applySetting(k, properties.get(k)));
 
             //Se genera el registro
-            StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder
-                    .build();
+            StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
 
             //se registra el meta
             Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
 
             //objeto creado
             sessionFactory = metadata.getSessionFactoryBuilder().build();
+            System.out.println("@sessionFactory = " + sessionFactory);
 
             //en este punto se supono todo esta bien
+//            Object result = sessionFactory.openStatelessSession().createSQLQuery("select 1").getSingleResult();
+//            System.out.println("update = " + update);
         } catch (Throwable ex) {
             sessionFactory = null;
             System.err.println("Initial SessionFactory creation failed." + ex);
@@ -59,7 +63,7 @@ public class DataManager extends Manager implements DataBasePowerfull {
 
     @Override
     public StatelessSession getNativeSession() {
-        return sessionFactory.openStatelessSession();
+        return status == DataBasePowerfull.ACTIVE ? sessionFactory.openStatelessSession() : null;
     }
 
     @Override
