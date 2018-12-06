@@ -11,15 +11,15 @@ import javax.servlet.ServletContextListener;
  */
 public class WFCoreListener implements ServletContextListener {
 
-    DataSourceService dataSourceService;
+    public static final DataSourceService dataSourceService = new DataSourceService("DataSourceService");
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        dataSourceService = new DataSourceService("DataSourceService");
+//        dataSourceService = new DataSourceService("DataSourceService");
+        System.out.println("Iniciando WF AIO2");
         dataSourceService.start();
-        
-//dataSourceService.getMainManager().getNativeSession()
 
+//dataSourceService.getMainManager().getNativeSession()
 //        try {
 //            InitialContext initCtx = new InitialContext();
 //            System.out.println("--->" + initCtx.lookup("java:comp/env").getClass());

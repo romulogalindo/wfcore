@@ -38,7 +38,8 @@ public class DataSourceService extends Service {
         System.out.println("Se inicializo la DB-Nativa");
 
         //se generan los manager y se agregan al hashmap
-        Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> managers.put(dto.getNo_conexi(), new DataManager(new WFProperties(dto))));
+//        Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> managers.put(dto.getNo_conexi(), new DataManager(new WFProperties(dto))));
+        Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> System.out.println("dto::" + dto));
 
         //luego levantar la lista de manager que manejaran las otras DB's
         managers.forEach((k, v) -> v.init());
