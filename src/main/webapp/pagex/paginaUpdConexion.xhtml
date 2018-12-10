@@ -16,34 +16,34 @@
                         <p:panelGrid columns="2"  style="width: 400px">
                             
                             <p:outputLabel for="co_conexi" value="Id:" />
-                            <p:inputText id="co_conexi" value="#{dtBasicView.conexion.co_conexi}" disabled="true"/>
+                            <p:inputText id="co_conexi" value="#{conexionBean.conexion.co_conexi}" disabled="true"/>
                             <p:outputLabel for="no_conexi" value="Nombre:" />
-                            <p:inputText id="no_conexi" value="#{dtBasicView.conexion.no_conexi}" required="true" requiredMessage="Debe ingresar un Nombre."/>
+                            <p:inputText id="no_conexi" value="#{conexionBean.conexion.no_conexi}" required="true" requiredMessage="Debe ingresar un Nombre."/>
                             <p:outputLabel for="nu_maxpoo" value="Max Pool:" />
-                            <p:inputText  id="nu_maxpoo" value="#{dtBasicView.conexion.nu_maxpoo}" required="true" requiredMessage="Debe ingresar un Max Pool.">
+                            <p:inputText  id="nu_maxpoo" value="#{conexionBean.conexion.nu_maxpoo}" required="true" requiredMessage="Debe ingresar un Max Pool.">
                                 <p:keyFilter mask="num"/>
                             </p:inputText>
                             <p:outputLabel for="nu_timout" value="Time Out:" />
-                            <p:inputText id="nu_timout" value="#{dtBasicView.conexion.nu_timout}" required="true" requiredMessage="Debe ingresar un Time Out.">
+                            <p:inputText id="nu_timout" value="#{conexionBean.conexion.nu_timout}" required="true" requiredMessage="Debe ingresar un Time Out.">
                                 <p:keyFilter mask="num" />
                             </p:inputText>
                             <p:outputLabel for="no_usuari" value="Usuario:" />
-                            <p:inputText id="no_usuari" value="#{dtBasicView.conexion.no_usuari}" required="true" requiredMessage="Debe ingresar un Usuario."/>
+                            <p:inputText id="no_usuari" value="#{conexionBean.conexion.no_usuari}" required="true" requiredMessage="Debe ingresar un Usuario."/>
                             <p:outputLabel for="pw_usuari" value="Password:" />
-                            <p:inputText id="pw_usuari" value="#{dtBasicView.conexion.pw_usuari}" required="true" requiredMessage="Debe ingresar un Password."/>
+                            <p:inputText id="pw_usuari" value="#{conexionBean.conexion.pw_usuari}" required="true" requiredMessage="Debe ingresar un Password."/>
                             <p:outputLabel for="ur_domini" value="Dominio:" />
-                            <p:inputText id="ur_domini" value="#{dtBasicView.conexion.ur_domini}" required="true" requiredMessage="Debe ingresar un Dominio."/>
+                            <p:inputText id="ur_domini" value="#{conexionBean.conexion.ur_domini}" required="true" requiredMessage="Debe ingresar un Dominio."/>
                             <p:outputLabel for="nu_puerto" value="Puerto:" />
-                            <p:inputText id="nu_puerto" value="#{dtBasicView.conexion.nu_puerto}" required="true" requiredMessage="Debe ingresar un Puerto.">
+                            <p:inputText id="nu_puerto" value="#{conexionBean.conexion.nu_puerto}" required="true" requiredMessage="Debe ingresar un Puerto.">
                                 <p:keyFilter mask="num"/>
                             </p:inputText>
                             <p:outputLabel for="no_datbas" value="BD:" />
-                            <p:inputText id="no_datbas" value="#{dtBasicView.conexion.no_datbas}" required="true" requiredMessage="Debe ingresar una BD."/>
+                            <p:inputText id="no_datbas" value="#{conexionBean.conexion.no_datbas}" required="true" requiredMessage="Debe ingresar una BD."/>
                         </p:panelGrid>
                         <p:panelGrid style="width: 400px" >
                             <p:button outcome="paginaConexiones" value="Atrás" title="Volver al reporte de conexiones">
                             </p:button>
-                            <p:commandButton value="Grabar" action="#{dtBasicView.actualizarConexion()}" type="buttom" update="panelActualizarCnx">
+                            <p:commandButton value="Grabar" action="#{conexionBean.actualizarConexion()}" type="buttom" update="panelActualizarCnx">
                                 <p:ajax rendered="panelActualizarCnx"/>
                             </p:commandButton>
                             

@@ -4,28 +4,28 @@ import com.acceso.wfcore.daos.ConexionDAO;
 import com.acceso.wfcore.dtos.ConexionDTO;
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:54:46
  */
-@ManagedBean(name = "dtBasicView")
+@ManagedBean//(name = "dtBasicView")
 @SessionScoped
-public class ConexionView implements Serializable {
+public class ConexionBean implements Serializable {
 
     private List<ConexionDTO> conexiones;
 
     private ConexionDTO conexion;
-    
+
     private static final String urlLista = "/pagex/paginaConexiones.xhtml";
 
-    public ConexionView() {
+    public ConexionBean() {
         conexion = new ConexionDTO();
     }
-    
+
     public ConexionDTO getConexion() {
         return conexion;
     }
@@ -55,26 +55,26 @@ public class ConexionView implements Serializable {
         this.conexion = dao.insertConexion(conexion);
         System.out.println("dao grabarConexion = " + this.conexion);
         this.conexion = new ConexionDTO();
-        
+
         return urlLista;
     }
-    
+
     public String actualizarConexion() {
         ConexionDAO dao = new ConexionDAO();
         this.conexion = dao.updateConexion(conexion);
         this.conexiones = dao.getConexiones();
         System.out.println("dao actualizarConexion = " + this.conexion);
-        
+
         return urlLista;
     }
-    
+
     public String eliminarConexion() {
         ConexionDAO dao = new ConexionDAO();
         String resultado = new String();
         resultado = dao.deleteConexion(conexion);
         this.conexiones = dao.getConexiones();
         System.out.println("dao eliminarConexion = " + resultado);
-        
+
         return urlLista;
     }
 

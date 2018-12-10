@@ -1,48 +1,49 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui">
+
     <ui:composition template="./../template/plantilla.xhtml">
         <ui:define name="content">
 
             <h:form id="form">
                 <p:dialog header="Detalles" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="z-index: 2003;" appendTo="@(body)">
                     <p:outputPanel id="carDetail" style="text-align:center;">
-                        <p:panelGrid  columns="2" rendered="#{not empty dtBasicView.conexion}" columnClasses="label,value">
+                        <p:panelGrid  columns="2" rendered="#{not empty conexionBean.conexion}" columnClasses="label,value">
                             <f:facet name="header">
                                 Conexión
                             </f:facet>
 
                             <h:outputText value="Id:" />
-                            <h:outputText value="#{dtBasicView.conexion.co_conexi}" />
+                            <h:outputText value="#{conexionBean.conexion.co_conexi}" />
 
                             <h:outputText value="Nombre:" />
-                            <h:outputText value="#{dtBasicView.conexion.no_conexi}" />
+                            <h:outputText value="#{conexionBean.conexion.no_conexi}" />
 
                             <h:outputText value="Max Pool:" />
-                            <h:outputText value="#{dtBasicView.conexion.nu_maxpoo}"/>
+                            <h:outputText value="#{conexionBean.conexion.nu_maxpoo}"/>
 
                             <h:outputText value="Time Out:" />
-                            <h:outputText value="#{dtBasicView.conexion.nu_timout}" />
+                            <h:outputText value="#{conexionBean.conexion.nu_timout}" />
 
                             <h:outputText value="Usuario:" />
-                            <h:outputText value="#{dtBasicView.conexion.no_usuari}" />
+                            <h:outputText value="#{conexionBean.conexion.no_usuari}" />
 
                             <h:outputText value="Contraseña:" />
-                            <h:outputText value="#{dtBasicView.conexion.pw_usuari}" />
+                            <h:outputText value="#{conexionBean.conexion.pw_usuari}" />
 
                             <h:outputText value="Host:" />
-                            <h:outputText value="#{dtBasicView.conexion.ur_domini}" />
+                            <h:outputText value="#{conexionBean.conexion.ur_domini}" />
 
                             <h:outputText value="Puerto:" />
-                            <h:outputText value="#{dtBasicView.conexion.nu_puerto}" />
+                            <h:outputText value="#{conexionBean.conexion.nu_puerto}" />
 
                             <h:outputText value="BD:" />
-                            <h:outputText value="#{dtBasicView.conexion.no_datbas}" />
+                            <h:outputText value="#{conexionBean.conexion.no_datbas}" />
 
                         </p:panelGrid>
                     </p:outputPanel>
@@ -55,12 +56,20 @@
 
                 <p:panel id="panelListaCnx" header="Conexiones">
                     <p:button outcome="paginaRegConexion" value="Agregar Conexión" icon="fa fa-star" style="margin-bottom: 10px;" title="Agregar nueva conexion">
-                        <f:param name="conexion" value="#{dtBasicView.limpiarRegistro()}" />
+                        <f:param name="conexion" value="#{conexionBean.limpiarRegistro()}" />
                     </p:button>
 
                     <p:growl id="msgs" showDetail="true" />
 
-                    <p:dataTable id="lista" var="car" value="#{dtBasicView.listarConexiones()}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+                    <p:dataTable id="lista" 
+                                 var="car" 
+                                 value="#{conexionBean.listarConexiones()}" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}" 
+                                 paginator="true" 
+                                 paginatorPosition="bottom" 
+                                 rows="100" 
+                                 widgetVar="widTable" 
+                                 rowKey="#{car.co_conexi}"  >
                         <f:facet name="header">
                             Lista de Conexiones
                         </f:facet>
@@ -102,15 +111,15 @@
                         </p:column>
                         <p:column style="width:160px;text-align: center">
                             <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="fa fa-search" title="View">
-                                <f:setPropertyActionListener value="#{car}" target="#{dtBasicView.conexion}" />
+                                <f:setPropertyActionListener value="#{car}" target="#{conexionBean.conexion}" />
                             </p:commandButton>
                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="/pagex/paginaUpdConexion.xhtml">
-                                <f:setPropertyActionListener value="#{car}" target="#{dtBasicView.conexion}" />
+                                <f:setPropertyActionListener value="#{car}" target="#{conexionBean.conexion}" />
                             </p:commandButton>
-                            <p:commandButton icon="fa fa-fw fa-remove" action="#{dtBasicView.eliminarConexion()}" update=":form:lista" >
-                                <f:setPropertyActionListener value="#{car}" target="#{dtBasicView.conexion}" />
+                            <p:commandButton icon="fa fa-fw fa-remove" action="#{conexionBean.eliminarConexion()}" update=":form:lista" >
+                                <f:setPropertyActionListener value="#{car}" target="#{conexionBean.conexion}" />
                                 <p:confirm header="Confirmación" message="¿Desea continuar?" icon="fa fa-exclamation-triangle" />
-                                
+
                             </p:commandButton>
 
                         </p:column>

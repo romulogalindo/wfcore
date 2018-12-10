@@ -1,6 +1,6 @@
 package com.acceso.wfcore.utils;
 
-import com.sun.mail.util.QDecoderStream;
+//import com.sun.mail.util.QDecoderStream;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
