@@ -4,27 +4,29 @@ import com.acceso.wfcore.dtos.ConexionDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Values;
 import com.wf.utils.RankanaUtil;
+
+import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
 
 /**
- *
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
 public class ConexionDAO {
+    StatelessSession session;
 
     public ConexionDAO() {
+        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<ConexionDTO> getConexiones() {
 
-//        StatelessSession session = RankanaUtil.getSessionFactory().openStatelessSession();
-        StatelessSession session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
-        List<ConexionDTO> conexiones = null;
+        List<ConexionDTO> conexiones = new ArrayList<>();
 
         try {
             System.out.println("com.wf.daos.ConexionDAO.getConexiones() --> Inicio");
@@ -33,7 +35,7 @@ public class ConexionDAO {
 
             conexiones = query.list();
             System.out.println("com.wf.daos.ConexionDAO.getConexiones() --> Fin");
-            session.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,6 +121,14 @@ public class ConexionDAO {
             e.printStackTrace();
         }
         return resultado;
+    }
+
+    public void close() {
+        try {
+            session.close();
+        } catch (Exception ep) {
+            session = null;
+        }
     }
 
 }

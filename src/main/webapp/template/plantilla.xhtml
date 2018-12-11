@@ -1,77 +1,108 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>WFCORE</title>
-        <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css" />
-    </h:head>
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>WFCORE</title>
+    <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>
+</h:head>
 
-    <h:body>
+<h:body>
 
-        <p:layout fullPage="true">
+    <p:layout fullPage="true">
 
-            <p:layoutUnit position="west" size="230" resizable="false" >
-                <ui:insert name="left"></ui:insert>
-                <h:form>
-                    <p:panel style="height:150px; width:220px">
-                        <p:graphicImage style="height: 70px; width: 180px" value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/img/logo2.png"/>
-                        Usuario 123
-                        user@acceso.com.pe
-                    </p:panel>
+        <p:layoutUnit position="west" size="230" resizable="false">
+            <ui:insert name="left"></ui:insert>
+            <h:form id="menuForm">
+                <p:panel style="height:150px; width:220px">
+                    <p:graphicImage style="height: 70px; width: 180px"
+                                    value="#{FacesContext.getCurrentInstance().getExternalContext()}/resources/img/logo2.png"/>
+                    Usuario 123
+                    user@acceso.com.pe
+                </p:panel>
 
-                    <p:growl>
-                        <p:autoUpdate />
-                    </p:growl>
+                <p:growl id="messages" showDetail="true">
+                    <p:autoUpdate/>
+                </p:growl>
 
-                    <p:panelMenu style="width:220px">
-                        <p:submenu label="Mantenimiento" expanded="true">
-                            <p:submenu label="Conexiones" expanded="true">
-                                <p:menuitem value="Registro" url="/pagex/paginaRegConexion.xhtml" icon="fa fa-save" />
-                                <p:menuitem value="Reporte" url="/pagex/paginaConexiones.xhtml"  icon="fa fa-refresh" />
-                            </p:submenu>
-                            <p:submenu label="Sistema" expanded="false">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
-                            </p:submenu>
-                            <p:submenu label="Paquete" expanded="false">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
-                            </p:submenu>
-                            <p:submenu label="Modulos" expanded="false">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
-                            </p:submenu>
-                            <p:submenu label="Contenedor" expanded="false">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
-                            </p:submenu>
-                            <p:submenu label="Usuario" expanded="true">
-                                <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save" />
-                                <p:menuitem value="Reporte" action="#{menuView.update}"  icon="fa fa-refresh" />
-                                <p:menuitem value="Asginación de Permisos" action="#{menuView.update}"  icon="fa fa-compress" />
-                            </p:submenu>
+                <p:panelMenu style="width:220px">
+                    <p:submenu label="Mantenimiento" expanded="true">
+                        <p:submenu label="Conexiones" expanded="true">
+                            <p:menuitem value="#{conexionBean.beanName}" action="#{conexionBean.load}" actionListener="#{conexionBean.listener}" ajax="true" async="false" update="mainPanel" icon="fa fa-save"/>
+                            <p:menuitem value="Reporte" url="/pagex/paginaConexiones.xhtml" icon="fa fa-refresh"/>
                         </p:submenu>
-                        <p:separator />
-                        <p:submenu label="Sistema" expanded="true">
-                            <p:menuitem value="Configuración" action="#{menuView.exit}" icon="fa fa-gear"/>
-                            <p:menuitem value="Log Out" action="#{menuView.exit}" icon="fa fa-sign-out"/>
-                        </p:submenu>
-                    </p:panelMenu>
-                </h:form>
-            </p:layoutUnit>
 
-            <p:layoutUnit position="center">
+                        <p:submenu label="Sistema" expanded="false">
+                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
+                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
+                        </p:submenu>
+                        <p:submenu label="Paquete" expanded="false">
+                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
+                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
+                        </p:submenu>
+                        <p:submenu label="Modulos" expanded="false">
+                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
+                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
+                        </p:submenu>
+                        <p:submenu label="Contenedor" expanded="false">
+                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
+                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
+                        </p:submenu>
+                        <p:submenu label="Usuario" expanded="true">
+                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
+                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
+                            <p:menuitem value="Asginación de Permisos" action="#{menuView.update}"
+                                        icon="fa fa-compress"/>
+                        </p:submenu>
+                    </p:submenu>
+
+                    <p:separator/>
+
+                    <p:submenu label="Sistema" expanded="true">
+                        <p:menuitem value="Configuración" action="#{menuView.exit}" icon="fa fa-gear"/>
+                        <p:menuitem value="Log Out" action="#{menuView.exit}" icon="fa fa-sign-out"/>
+                    </p:submenu>
+                </p:panelMenu>
+            </h:form>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <p:outputPanel id="mainPanel">
+                <!--<f:facet name="header">-->
+                <p:breadCrumb model="#{managerBean.model}">
+
+
+                    <f:facet name="options">
+                        <h:form>
+                            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+                            <p:menuButton value="Options">
+                                <p:menuitem value="Save" action="#{menuView.save}" update=":menuForm:messages" icon="pi pi-save"/>
+                                <p:menuitem value="Update" action="#{menuView.update}" update=":menuForm:messages"
+                                            icon="pi pi-refresh"/>
+                                <p:menuitem value="Delete" action="#{menuView.delete}" ajax="false" icon="pi pi-times"/>
+                                <p:separator/>
+                                <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="pi pi-home"/>
+                            </p:menuButton>
+                        </h:form>
+
+                    </f:facet>
+                </p:breadCrumb>
+
+                <!--/f:facet>-->
+
+
                 <ui:insert name="content">Content</ui:insert>
-            </p:layoutUnit>
+            </p:outputPanel>
+        </p:layoutUnit>
 
-        </p:layout>
+    </p:layout>
 
-    </h:body>
+</h:body>
 
 </html>
