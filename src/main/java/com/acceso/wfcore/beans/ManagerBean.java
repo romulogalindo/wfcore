@@ -12,58 +12,63 @@ import java.io.Serializable;
 @ManagedBean
 @SessionScoped
 public class ManagerBean extends MainBean implements Serializable {
-    private MenuModel model;
+   private MenuModel model;
 
-    public ManagerBean()    {
-        this.beanName = "Manager";
+   public ManagerBean() {
+      this.beanName = "Manager";
 
-        this.model = new DefaultMenuModel();
+      this.model = new DefaultMenuModel();
 
-        //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
+      //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
 
-        DefaultMenuItem item = new DefaultMenuItem("External");
-        item.setUrl("http://www.primefaces.org");
-        item.setIcon("ui-icon-home");
+      DefaultMenuItem item = new DefaultMenuItem("Inicio");
+      item.setUrl("http://192.168.54.33:8080/WFCORE/pagex/paginaInicio.xhtml");
+//        item.setIcon("ui-icon-home");
+      item.setIcon("ui-icon-home");
 
-        //firstSubmenu.addElement(item);
-        this.model.addElement(item);
-    }
+      //firstSubmenu.addElement(item);
+      this.model.addElement(item);
 
-    public void updateBreadCumBar(String title, String subTitle){
-        this.model = new DefaultMenuModel();
+   }
 
-        //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
+   public void updateBreadCumBar(String title, String subTitle) {
+      this.model = new DefaultMenuModel();
 
-        DefaultMenuItem item = new DefaultMenuItem(title);
-        item.setUrl("http://www.primefaces.org");
-        item.setIcon("ui-icon-home");
+      //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
 
-        //firstSubmenu.addElement(item);
-        this.model.addElement(item);
+      DefaultMenuItem item = new DefaultMenuItem(title);
+      item.setUrl("http://192.168.54.33:8080/WFCORE/pagex/paginaInicio.xhtml");
+      item.setIcon("ui-icon-home");
+      item.setTitle("Habra");
+      item.setValue("Habra2bres");
 
-        DefaultMenuItem item2 = new DefaultMenuItem(subTitle);
-        item2.setUrl("http://www.primefaces.org");
-        item2.setIcon("ui-icon-home");
 
-        //firstSubmenu.addElement(item);
-        this.model.addElement(item2);
-    }
+      //firstSubmenu.addElement(item);
+      this.model.addElement(item);
 
-    public MenuModel getModel() {
-        return model;
-    }
+      DefaultMenuItem item2 = new DefaultMenuItem(subTitle);
+      item2.setUrl("http://www.primefaces.org");
+      item2.setIcon("ui-icon-home");
 
-    public void setModel(MenuModel model) {
-        this.model = model;
-    }
+      //firstSubmenu.addElement(item);
+      this.model.addElement(item2);
+   }
 
-    @Override
-    public String load() {
-        return null;
-    }
+   public MenuModel getModel() {
+      return model;
+   }
 
-    @Override
-    public String getBeanName() {
-        return null;
-    }
+   public void setModel(MenuModel model) {
+      this.model = model;
+   }
+
+   @Override
+   public String load() {
+      return null;
+   }
+
+   @Override
+   public String getBeanName() {
+      return null;
+   }
 }

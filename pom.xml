@@ -15,7 +15,7 @@
     </properties>
     
     <dependencies>
-        <!-- EE8 -->
+        <!-- EE7 -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -137,6 +137,7 @@
             <version>6.0.53</version>
             <scope>provided</scope>
         </dependency>
+
 
     </dependencies>
 
