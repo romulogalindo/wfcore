@@ -17,41 +17,31 @@ public class ManagerBean extends MainBean implements Serializable {
    public ManagerBean() {
       this.beanName = "Manager";
 
-      this.model = new DefaultMenuModel();
-
-      //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
-
-      DefaultMenuItem item = new DefaultMenuItem("Inicio");
-      item.setUrl("http://192.168.54.33:8080/WFCORE/pagex/paginaInicio.xhtml");
-//        item.setIcon("ui-icon-home");
-      item.setIcon("ui-icon-home");
-
-      //firstSubmenu.addElement(item);
-      this.model.addElement(item);
-
+      initBreadCumBar();
    }
 
-   public void updateBreadCumBar(String title, String subTitle) {
+   public void initBreadCumBar() {
       this.model = new DefaultMenuModel();
 
+      DefaultMenuItem item = new DefaultMenuItem("Home");
+      item.setUrl("/WFCORE/pagex/paginaInicio.xhtml");
+      //item.setIcon("ui-icon-home");
+      item.setIcon("ui-icon-home");
+
+      this.model.addElement(item);
+   }
+
+   public void updateBreadCumBar(String title, String url) {
       //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
 
       DefaultMenuItem item = new DefaultMenuItem(title);
-      item.setUrl("http://192.168.54.33:8080/WFCORE/pagex/paginaInicio.xhtml");
-      item.setIcon("ui-icon-home");
-      item.setTitle("Habra");
-      item.setValue("Habra2bres");
-
+      item.setUrl(url);
+      item.setTitle(title);
+      item.setValue(title);
 
       //firstSubmenu.addElement(item);
       this.model.addElement(item);
 
-      DefaultMenuItem item2 = new DefaultMenuItem(subTitle);
-      item2.setUrl("http://www.primefaces.org");
-      item2.setIcon("ui-icon-home");
-
-      //firstSubmenu.addElement(item);
-      this.model.addElement(item2);
    }
 
    public MenuModel getModel() {

@@ -41,8 +41,8 @@
                             <p:inputText id="no_datbas" value="#{conexionBean.conexion.no_datbas}" required="true" requiredMessage="Debe ingresar una BD."/>
                         </p:panelGrid>
                         <p:panelGrid style="width: 400px" >
-                            <p:button outcome="paginaConexiones" value="Atrás" title="Volver al reporte de conexiones">
-                            </p:button>
+                            <p:commandButton  action="#{conexionBean.load()}" value="Atrás" title="Volver al reporte de conexiones">
+                            </p:commandButton>
                             <p:commandButton value="Grabar" action="#{conexionBean.actualizarConexion()}" type="buttom" update="panelActualizarCnx">
                                 <p:ajax rendered="panelActualizarCnx"/>
                             </p:commandButton>
