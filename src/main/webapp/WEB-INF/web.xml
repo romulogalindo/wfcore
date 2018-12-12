@@ -40,10 +40,18 @@
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JSF Login</servlet-name>
+        <jsp-file>/jsf_exec/login/login.xhtml</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSF Login</servlet-name>
+        <url-pattern>/admin/loginx</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

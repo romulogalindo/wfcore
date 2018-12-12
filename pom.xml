@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.acceso.wfcore</groupId>
@@ -13,7 +14,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <dependencies>
         <!-- EE7 -->
         <dependency>
@@ -28,7 +29,7 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -47,14 +48,14 @@
             <version>2.3.3</version>
             <!--<scope>provided</scope>-->
         </dependency>
-        
+
         <!--LIbs para Faces-->
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.2.18</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-impl</artifactId>
@@ -65,7 +66,7 @@
             <artifactId>javax.faces</artifactId>
             <version>2.2.7</version>
         </dependency>-->
-        
+
         <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
         <dependency>
             <groupId>org.primefaces</groupId>
@@ -83,7 +84,7 @@
             <artifactId>all-themes</artifactId>
             <version>1.0.10</version>
         </dependency>
-        
+
 
         <!--        <dependency>
             <groupId>org.webjars</groupId>
@@ -97,26 +98,26 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.3.7.Final</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.2.Final</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.hibernate.common</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
             <version>5.1.0.Final</version>
         </dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4.1212.jre7</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
@@ -129,7 +130,7 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.19</version>
         </dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat/catalina -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
@@ -138,7 +139,17 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <!-- for JSF 2.x -->
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-servlet</artifactId>
+            <version>3.4.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.rewrite</groupId>
+            <artifactId>rewrite-config-prettyfaces</artifactId>
+            <version>3.4.1.Final</version>
+        </dependency>
     </dependencies>
 
     <repositories>
