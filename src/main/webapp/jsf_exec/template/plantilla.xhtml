@@ -8,6 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+    <script name="jquery/jquery.js" library="primefaces"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>WFCORE</title>
     <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>
@@ -79,14 +80,13 @@
 
                     <f:facet name="options">
                         <h:form>
-                            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-                            <p:menuButton value="Options">
-                                <p:menuitem value="Save" action="#{menuView.save}" update=":menuForm:messages" icon="pi pi-save"/>
-                                <p:menuitem value="Update" action="#{menuView.update}" update=":menuForm:messages"
-                                            icon="pi pi-refresh"/>
-                                <p:menuitem value="Delete" action="#{menuView.delete}" ajax="false" icon="pi pi-times"/>
-                                <p:separator/>
-                                <p:menuitem value="Homepage" url="http://www.primefaces.org" icon="pi pi-home"/>
+                            <p:menuButton value="Opciones" model="#{managerBean.menuButton}" disabled="true"  >
+                                <!--<p:menuitem value="Save" action="#{menuView.save}" update=":menuForm:messages" icon="pi pi-save"/>-->
+                                <!--<p:menuitem value="Update" action="#{menuView.update}" update=":menuForm:messages"-->
+                                            <!--icon="pi pi-refresh"/>-->
+                                <!--<p:menuitem value="Delete" action="#{menuView.delete}" ajax="false" icon="pi pi-times"/>-->
+                                <!--<p:separator/>-->
+                                <!--<p:menuitem value="Homepage" url="http://www.primefaces.org" icon="pi pi-home"/>-->
                             </p:menuButton>
                         </h:form>
 

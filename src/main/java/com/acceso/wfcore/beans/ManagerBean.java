@@ -1,9 +1,11 @@
 package com.acceso.wfcore.beans;
 
+import org.primefaces.component.menubutton.MenuButton;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
+import javax.faces.context.FacesContext;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,10 +16,13 @@ import java.io.Serializable;
 public class ManagerBean extends MainBean implements Serializable {
    private MenuModel model;
 
+   private MenuModel menuButton;
+
    public ManagerBean() {
       this.beanName = "Manager";
 
       initBreadCumBar();
+      initMenuButton();
    }
 
    public void initBreadCumBar() {
@@ -29,7 +34,20 @@ public class ManagerBean extends MainBean implements Serializable {
       item.setIcon("ui-icon-home");
 
       this.model.addElement(item);
+
    }
+
+   public void initMenuButton() {
+      this.menuButton = new DefaultMenuModel();
+   }
+
+//   public void updateMenuButton(String title, String action) {
+//
+////      DefaultMenuItem button = new DefaultMenuItem("Ajax Action");
+////      button.setUrl("https://www.journaldev.com");
+//
+////      this.menuButton.addElement(button);
+//   }
 
    public void updateBreadCumBar(String title, String url) {
       //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
@@ -52,6 +70,14 @@ public class ManagerBean extends MainBean implements Serializable {
       this.model = model;
    }
 
+   public MenuModel getMenuButton() {
+      return menuButton;
+   }
+
+   public void setMenuButton(MenuModel menuButton) {
+      this.menuButton = menuButton;
+   }
+
    @Override
    public String load() {
       return null;
@@ -61,4 +87,5 @@ public class ManagerBean extends MainBean implements Serializable {
    public String getBeanName() {
       return null;
    }
+
 }
