@@ -30,14 +30,9 @@ import javax.persistence.NamedNativeQuery;
             + "from wfsistem.tsconexi order by co_conexi, no_conexi",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_INSERT_CNX,
+            name = Values.QUERYS_NATIVE_GRABAR_CNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbregistra_conexion(:no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
-            resultClass = ConexionDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_UPDATE_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbactualiza_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            + "from wfsistem.pbgrabar_conexion(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
             resultClass = ConexionDTO.class)
 })
 public class ConexionDTO implements Serializable {

@@ -3,7 +3,6 @@ package com.acceso.wfcore.daos;
 import com.acceso.wfcore.dtos.ConexionDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Values;
-import com.wf.utils.RankanaUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,44 +42,16 @@ public class ConexionDAO {
         return conexiones;
     }
 
-    public ConexionDTO insertConexion(ConexionDTO conexion) {
+    public ConexionDTO grabarConexion(ConexionDTO conexion) {
 
         StatelessSession session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
         ConexionDTO conexiones = null;
 
         try {
-            System.out.println("com.wf.daos.ConexionDAO.insertConexion() --> Inicio");
+            System.out.println("ConexionDAO.grabarConexion() --> Inicio");
+
             System.out.println("conexion = " + conexion);
-            Query query = session.getNamedQuery(Values.QUERYS_NATIVE_INSERT_CNX);
-            query.setString("no_conexi", conexion.getNo_conexi());
-            query.setInteger("nu_maxpoo", conexion.getNu_maxpoo());
-            query.setInteger("nu_timout", conexion.getNu_timout());
-            query.setString("no_usuari", conexion.getNo_usuari());
-            query.setString("pw_usuari", conexion.getPw_usuari());
-            query.setString("ur_domini", conexion.getUr_domini());
-            query.setInteger("nu_puerto", conexion.getNu_puerto());
-            query.setString("no_datbas", conexion.getNo_datbas());
-
-            conexiones = (ConexionDTO) query.list().get(0);
-            System.out.println("com.wf.daos.ConexionDAO.insertConexion() --> Fin");
-            session.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return conexiones;
-    }
-
-    public ConexionDTO updateConexion(ConexionDTO conexion) {
-
-        StatelessSession session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
-        ConexionDTO conexiones = null;
-
-        try {
-            System.out.println("com.wf.daos.ConexionDAO.updateConexion() --> Inicio");
-//            String sql_name = "wfcore.cnx_update";
-            System.out.println("conexion = " + conexion);
-            Query query = session.getNamedQuery(Values.QUERYS_NATIVE_UPDATE_CNX);
+            Query query = session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_CNX);
 
             query.setInteger("co_conexi", conexion.getCo_conexi());
             query.setString("no_conexi", conexion.getNo_conexi());
@@ -93,7 +64,7 @@ public class ConexionDAO {
             query.setString("no_datbas", conexion.getNo_datbas());
 
             conexiones = (ConexionDTO) query.list().get(0);
-            System.out.println("com.wf.daos.ConexionDAO.updateConexion() --> Fin");
+            System.out.println("ConexionDAO.grabarConexion() --> Fin");
             session.close();
         } catch (Exception e) {
             e.printStackTrace();

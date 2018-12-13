@@ -19,13 +19,17 @@ public class ManagerBean extends MainBean implements Serializable {
 
     private MenuModel menuButton;
     private boolean renderedMenuButton;
+    private boolean renderedCommandButton;
     private String defaultActionNameButton;
+    private String defaultActionIcoButton;
     private MainBean currentBean;
 
     public ManagerBean() {
         this.beanName = "Manager";
         this.renderedMenuButton = false;
+        this.renderedCommandButton = false;
         this.defaultActionNameButton="Nuevo";
+        this.defaultActionIcoButton="fa fa-plus";
 
         initBreadCumBar();
         initMenuButton();
@@ -108,7 +112,23 @@ public class ManagerBean extends MainBean implements Serializable {
         this.currentBean = currentBean;
     }
 
-    @Override
+   public boolean isRenderedCommandButton() {
+      return renderedCommandButton;
+   }
+
+   public void setRenderedCommandButton(boolean renderedCommandButton) {
+      this.renderedCommandButton = renderedCommandButton;
+   }
+
+   public String getDefaultActionIcoButton() {
+      return defaultActionIcoButton;
+   }
+
+   public void setDefaultActionIcoButton(String defaultActionIcoButton) {
+      this.defaultActionIcoButton = defaultActionIcoButton;
+   }
+
+   @Override
     public String load() {
         return null;
     }

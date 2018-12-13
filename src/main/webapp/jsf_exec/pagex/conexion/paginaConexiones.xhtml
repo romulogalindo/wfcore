@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="../template/plantilla.xhtml">
+<ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
 
         <h:form id="form">
@@ -56,10 +56,6 @@
             </p:confirmDialog>
 
             <p:panel id="panelListaCnx">
-                <p:button outcome="paginaRegConexion" value="Agregar Conexión" icon="fa fa-star"
-                          style="margin-bottom: 10px;" title="Agregar nueva conexion">
-                    <f:param name="conexion" value="#{conexionBean.limpiarRegistro()}"/>
-                </p:button>
 
                 <p:growl id="msgs" showDetail="true"/>
 
