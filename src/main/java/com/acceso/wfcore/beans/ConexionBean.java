@@ -17,8 +17,9 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class ConexionBean extends MainBean implements Serializable {
 
-    private static final String URL_LISTA = "/pagex/paginaConexiones.xhtml";
-    private static final String URL_DETALLE = "/pagex/paginaConexiones.xhtml";
+    private static final String URL_LISTA = "/admin/jsf_exec/pagex/paginaConexiones.xhtml";
+    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/paginaConexiones.xhtml";
+    private static final String URL_EDITAR = "/admin/jsf_exec/pagex/paginaUpdConexion.xhtml";
 
 
     private List<ConexionDTO> conexiones;
@@ -54,6 +55,13 @@ public class ConexionBean extends MainBean implements Serializable {
         this.conexion = new ConexionDTO();
 
         return URL_LISTA;
+    }
+    public String loadActualizarConexion() {
+        //acceder al manager y decirle toma
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).updateBreadCumBar("Editar",URL_EDITAR);
+
+        return URL_EDITAR;
     }
 
     public String actualizarConexion() {
@@ -95,7 +103,8 @@ public class ConexionBean extends MainBean implements Serializable {
     public void listener() {
         //acceder al manager y decirle toma
         FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).updateBreadCumBar(beanName,"Este seria el subtitutlo");
+        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).initBreadCumBar();
+        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).updateBreadCumBar(beanName,URL_LISTA);
 
         System.out.println("listener()");
     }
@@ -104,6 +113,7 @@ public class ConexionBean extends MainBean implements Serializable {
     @Override
     public String load() {
         System.out.println("load()");
+        listener();
         //CARGA INICIAL!!
         loadlista();
 
