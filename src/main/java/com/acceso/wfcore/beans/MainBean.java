@@ -10,4 +10,6 @@ public abstract class MainBean {
 
     public abstract String getBeanName();
 
+    public abstract String defaultAction();
+
 }

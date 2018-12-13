@@ -87,4 +87,9 @@ public class LoginBean extends MainBean implements Serializable {
     public String getBeanName() {
         return null;
     }
+
+    @Override
+    public String defaultAction() {
+        return null;
+    }
 }

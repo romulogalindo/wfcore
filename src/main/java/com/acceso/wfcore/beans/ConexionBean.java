@@ -20,6 +20,7 @@ public class ConexionBean extends MainBean implements Serializable {
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/paginaConexiones.xhtml";
     private static final String URL_DETALLE = "/admin/jsf_exec/pagex/paginaConexiones.xhtml";
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/paginaUpdConexion.xhtml";
+    private static final String URL_NEW = "/admin/jsf_exec/pagex/paginaRegConexion.xhtml";
 
 
     private List<ConexionDTO> conexiones;
@@ -56,10 +57,11 @@ public class ConexionBean extends MainBean implements Serializable {
 
         return URL_LISTA;
     }
+
     public String loadActualizarConexion() {
         //acceder al manager y decirle toma
         FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).updateBreadCumBar("Editar",URL_EDITAR);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
 
         return URL_EDITAR;
     }
@@ -103,8 +105,10 @@ public class ConexionBean extends MainBean implements Serializable {
     public void listener() {
         //acceder al manager y decirle toma
         FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).initBreadCumBar();
-        ((ManagerBean)context.getApplication().getVariableResolver().resolveVariable(context,"managerBean")).updateBreadCumBar(beanName,URL_LISTA);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(true);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
 
         System.out.println("listener()");
     }
@@ -123,5 +127,11 @@ public class ConexionBean extends MainBean implements Serializable {
     @Override
     public String getBeanName() {
         return beanName;
+    }
+
+    @Override
+    public String defaultAction() {
+        //varias cosas para editar
+        return URL_NEW;
     }
 }

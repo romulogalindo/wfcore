@@ -7,9 +7,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Contenendor principal</title>
+    <title>Módulo X - SYSNAME</title>
 </head>
 <body>
-    
+
 </body>
 </html>

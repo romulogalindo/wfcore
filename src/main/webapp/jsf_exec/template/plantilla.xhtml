@@ -35,7 +35,9 @@
                 <p:panelMenu style="width:220px">
                     <p:submenu label="Mantenimiento" expanded="true">
                         <p:submenu label="Conexiones" expanded="true">
-                            <p:menuitem value="#{conexionBean.beanName}" action="#{conexionBean.load}" actionListener="#{conexionBean.listener}" ajax="true" async="false" update="mainPanel" icon="fa fa-save"/>
+                            <p:menuitem value="#{conexionBean.beanName}" action="#{conexionBean.load}"
+                                        actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                        update="mainPanel" icon="fa fa-save"/>
                             <p:menuitem value="Reporte" url="/pagex/paginaConexiones.xhtml" icon="fa fa-refresh"/>
                         </p:submenu>
 
@@ -76,18 +78,20 @@
         <p:layoutUnit position="center">
             <p:outputPanel id="mainPanel">
                 <!--<f:facet name="header">-->
-                <p:breadCrumb model="#{managerBean.model}" >
+                <p:breadCrumb model="#{managerBean.model}">
 
                     <f:facet name="options">
                         <h:form>
-                            <p:menuButton value="Opciones" model="#{managerBean.menuButton}" disabled="true"  >
-                                <!--<p:menuitem value="Save" action="#{menuView.save}" update=":menuForm:messages" icon="pi pi-save"/>-->
-                                <!--<p:menuitem value="Update" action="#{menuView.update}" update=":menuForm:messages"-->
-                                            <!--icon="pi pi-refresh"/>-->
-                                <!--<p:menuitem value="Delete" action="#{menuView.delete}" ajax="false" icon="pi pi-times"/>-->
-                                <!--<p:separator/>-->
-                                <!--<p:menuitem value="Homepage" url="http://www.primefaces.org" icon="pi pi-home"/>-->
-                            </p:menuButton>
+                            <p:outputPanel>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton id="defaultActionButton" value="#{managerBean.defaultActionNameButton}" action="#{managerBean.defaultAction}"
+                                                     rendered="#{managerBean.renderedMenuButton}"/>
+                                    <p:menuButton id="optionalActionsMenuButton" model="#{managerBean.menuButton}"
+                                                  rendered="#{managerBean.renderedMenuButton}" icon="fa fa-bars">
+                                    </p:menuButton>
+                                </p:panelGrid>
+
+                            </p:outputPanel>
                         </h:form>
 
                     </f:facet>
