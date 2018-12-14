@@ -11,44 +11,6 @@
     <ui:define name="content">
 
         <h:form id="form">
-            <p:dialog header="Detalles" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade"
-                      resizable="false" style="z-index: 2003;" appendTo="@(body)">
-                <p:outputPanel id="carDetail" style="text-align:center;">
-                    <p:panelGrid columns="2" rendered="#{not empty conexionBean.conexion}" columnClasses="label,value">
-                        <f:facet name="header">
-                            Conexión
-                        </f:facet>
-
-                        <h:outputText value="Id:"/>
-                        <h:outputText value="#{conexionBean.conexion.co_conexi}"/>
-
-                        <h:outputText value="Nombre:"/>
-                        <h:outputText value="#{conexionBean.conexion.no_conexi}"/>
-
-                        <h:outputText value="Max Pool:"/>
-                        <h:outputText value="#{conexionBean.conexion.nu_maxpoo}"/>
-
-                        <h:outputText value="Time Out:"/>
-                        <h:outputText value="#{conexionBean.conexion.nu_timout}"/>
-
-                        <h:outputText value="Usuario:"/>
-                        <h:outputText value="#{conexionBean.conexion.no_usuari}"/>
-
-                        <h:outputText value="Contraseña:"/>
-                        <h:outputText value="#{conexionBean.conexion.pw_usuari}"/>
-
-                        <h:outputText value="Host:"/>
-                        <h:outputText value="#{conexionBean.conexion.ur_domini}"/>
-
-                        <h:outputText value="Puerto:"/>
-                        <h:outputText value="#{conexionBean.conexion.nu_puerto}"/>
-
-                        <h:outputText value="BD:"/>
-                        <h:outputText value="#{conexionBean.conexion.no_datbas}"/>
-
-                    </p:panelGrid>
-                </p:outputPanel>
-            </p:dialog>
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                 <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
@@ -119,9 +81,9 @@
                     </p:column>
 
                     <p:column style="width:160px;text-align: center">
-                        <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()"
-                                         icon="fa fa-search" title="View">
+                        <p:commandButton action="#{conexionBean.updateRegist}" icon="fa fa-search" title="Ver">
                             <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
+                            <f:setPropertyActionListener value="false" target="#{conexionBean.isregEditable}"/>
                         </p:commandButton>
 
                         <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{conexionBean.updateRegist}">
