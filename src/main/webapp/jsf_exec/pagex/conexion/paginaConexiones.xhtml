@@ -124,11 +124,11 @@
                             <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
                         </p:commandButton>
 
-                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{conexionBean.loadActualizarConexion()}">
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{conexionBean.updateRegist}">
                             <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
                         </p:commandButton>
 
-                        <p:commandButton icon="fa fa-trash" action="#{conexionBean.eliminarConexion()}"
+                        <p:commandButton icon="fa fa-trash" action="#{conexionBean.deleteRegist}"
                                          update=":form:lista">
                             <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
                             <p:confirm header="Confirmación" message="¿Desea continuar?"
