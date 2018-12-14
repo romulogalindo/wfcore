@@ -33,36 +33,31 @@
                 </p:growl>
 
                 <p:panelMenu style="width:220px">
-                    <p:submenu label="Mantenimiento" expanded="true">
-                        <p:submenu label="Conexiones" expanded="true">
-                            <p:menuitem value="#{conexionBean.beanName}" action="#{conexionBean.load}"
-                                        actionListener="#{conexionBean.listener}" ajax="true" async="false"
-                                        update="mainPanel" icon="fa fa-save"/>
-                            <p:menuitem value="Reporte" url="/pagex/paginaConexiones.xhtml" icon="fa fa-refresh"/>
-                        </p:submenu>
+                    <p:submenu label="Maestros" expanded="true">
+                        <p:menuitem value="#{conexionBean.beanName}" action="#{conexionBean.load}"
+                                    actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
 
-                        <p:submenu label="Sistema" expanded="false">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
-                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
-                        </p:submenu>
-                        <p:submenu label="Paquete" expanded="false">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
-                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
-                        </p:submenu>
-                        <p:submenu label="Modulos" expanded="false">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
-                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
-                        </p:submenu>
-                        <p:submenu label="Contenedor" expanded="false">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
-                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
-                        </p:submenu>
-                        <p:submenu label="Usuario" expanded="true">
-                            <p:menuitem value="Registro" action="#{menuView.save}" icon="fa fa-save"/>
-                            <p:menuitem value="Reporte" action="#{menuView.update}" icon="fa fa-refresh"/>
-                            <p:menuitem value="Asginación de Permisos" action="#{menuView.update}"
-                                        icon="fa fa-compress"/>
-                        </p:submenu>
+                        <p:menuitem value="Sistema" action="#{conexionBean.load}"
+                                    actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
+
+                        <p:menuitem value="Sub Sistema" action="#{conexionBean.load}"
+                                    actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
+
+                        <p:menuitem value="Paquete" action="#{conexionBean.load}"
+                                    actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
+
+                        <p:menuitem value="Modulo" action="#{conexionBean.load}"
+                                    actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
+
+                        <p:menuitem value="Contenedor" action="#{conexionBean.load}"
+                                    actionListener="#{conexionBean.listener}" ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
+
                     </p:submenu>
 
                     <p:separator/>

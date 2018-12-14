@@ -22,12 +22,12 @@ import javax.persistence.NamedNativeQuery;
     @NamedNativeQuery(
             name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.tsconexi order by co_conexi, no_conexi",
+            + "from wfsistem.pblistar_conexion()",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SELECT_CNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.tsconexi order by co_conexi, no_conexi",
+            + "from wfsistem.pblistar_conexion()",
             resultClass = ConexionDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GRABAR_CNX,

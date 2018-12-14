@@ -59,9 +59,10 @@ public class ConexionBean extends MainBean implements Serializable {
    }
 
    public String loadActualizarConexion() {
-      //acceder al manager y decirle toma
+      //acceder al manager y decirle toma - Se agrega la ruta en la que esta
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
       return URL_EDITAR;
    }
@@ -132,6 +133,11 @@ public class ConexionBean extends MainBean implements Serializable {
 
    @Override
    public String defaultAction() {
+      // Para el nuevo registro
+      limpiarRegistro();
+      FacesContext context = FacesContext.getCurrentInstance();
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
       //varias cosas para editar
       return URL_NEW;
    }
