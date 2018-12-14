@@ -38,7 +38,7 @@ import javax.persistence.NamedNativeQuery;
 public class ConexionDTO implements Serializable {
 
     @Id
-    int co_conexi;
+    Integer co_conexi;
 
     String no_conexi;
     Integer nu_maxpoo;
@@ -49,11 +49,11 @@ public class ConexionDTO implements Serializable {
     Integer nu_puerto;
     String no_datbas;
 
-    public int getCo_conexi() {
+    public Integer getCo_conexi() {
         return co_conexi;
     }
 
-    public void setCo_conexi(int co_conexi) {
+    public void setCo_conexi(Integer co_conexi) {
         this.co_conexi = co_conexi;
     }
 

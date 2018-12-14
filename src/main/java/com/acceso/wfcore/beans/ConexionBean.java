@@ -71,7 +71,7 @@ public class ConexionBean extends MainBean implements Serializable {
       ConexionDAO dao = new ConexionDAO();
       this.conexion = dao.grabarConexion(conexion);
       this.conexiones = dao.getConexiones();
-      System.out.println("dao actualizarConexion = " + this.conexion);
+      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
 
       return URL_LISTA;
    }

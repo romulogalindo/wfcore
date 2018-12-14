@@ -39,7 +39,7 @@ public class ManagerBean extends MainBean implements Serializable {
         this.model = new DefaultMenuModel();
 
         DefaultMenuItem item = new DefaultMenuItem("Home");
-        item.setUrl("/WFCORE/pagex/paginaInicio.xhtml");
+        item.setUrl("/admin/jsf_exec/pagex/paginaInicio.xhtml");
         //item.setIcon("ui-icon-home");
         item.setIcon("ui-icon-home");
 
