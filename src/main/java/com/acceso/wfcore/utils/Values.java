@@ -18,4 +18,14 @@ public class Values {
     public static final String QUERYS_NATIVE_SELECT_CNX = "wfcore.cnx_select";
     public static final String QUERYS_NATIVE_GRABAR_CNX = "wfcore.cnx_update";
     public static final String QUERYS_NATIVE_DELETE_CNX = "wfcore.cnx_delete";
+
+    public static final String QUERYS_NATIVE_SELECT_SISTEMA = "wfcore.cnx_select";
+    public static final String QUERYS_NATIVE_GRABAR_SISTEMA = "wfcore.cnx_update";
+    public static final String QUERYS_NATIVE_DELETE_SISTEMA = "wfcore.cnx_delete";
+
+    public static final String QUERYS_NATIVE_SELECT_SUBSISTEMA = "wfcore.cnx_select";
+    public static final String QUERYS_NATIVE_GRABAR_SUBSISTEMA = "wfcore.cnx_update";
+    public static final String QUERYS_NATIVE_DELETE_SUBSISTEMA = "wfcore.cnx_delete";
+
+
 }
