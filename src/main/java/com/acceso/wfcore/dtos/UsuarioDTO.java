@@ -6,11 +6,12 @@
 package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
-import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
+import java.io.Serializable;
 
 /**
  *
@@ -22,20 +23,20 @@ import javax.persistence.NamedNativeQuery;
     @NamedNativeQuery(
             name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbconexion_list()",
-            resultClass = ConexionDTO.class),
+            + "from wfsistem.pbusuario_list()",
+            resultClass = UsuarioDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SELECT_CNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbconexion_list()",
-            resultClass = ConexionDTO.class),
+            + "from wfsistem.pbusuario_list()",
+            resultClass = UsuarioDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GRABAR_CNX,
             query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbconexion_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
-            resultClass = ConexionDTO.class)
+            + "from wfsistem.pbusuario_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            resultClass = UsuarioDTO.class)
 })
-public class ConexionDTO implements Serializable {
+public class UsuarioDTO implements Serializable {
 
     @Id
     Integer co_conexi;

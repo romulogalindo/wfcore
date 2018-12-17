@@ -20,8 +20,8 @@ import javax.persistence.NamedNativeQuery;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = "wfcore.cnx_delete",
-            query = "select * from wfsistem.pbelimina_conexion(:co_conexi) as va_result",
+            name = Values.QUERYS_NATIVE_DELETE_CNX,
+            query = "select * from wfsistem.pbconexion_delete(:co_conexi) as va_result",
             resultClass = DeleteDTO.class)
 })
 public class DeleteDTO implements Serializable {
