@@ -31,5 +31,9 @@
         <!-- DTO's -->
         <mapping class="com.acceso.wfcore.dtos.ConexionDTO" />
         <mapping class="com.acceso.wfcore.dtos.DeleteDTO" />
+        <mapping class="com.acceso.wfcore.dtos.UsuarioDTO" />
+        <mapping class="com.acceso.wfcore.dtos.SistemaDTO" />
+        <mapping class="com.acceso.wfcore.dtos.SubSistemaDTO" />
+        <mapping class="com.acceso.wfcore.dtos.PaqueteDTO" />
     </session-factory>
 </hibernate-configuration>

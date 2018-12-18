@@ -1,7 +1,7 @@
 package com.acceso.wfcore.beans;
 
-import com.acceso.wfcore.daos.ConexionDAO;
-import com.acceso.wfcore.dtos.ConexionDTO;
+import com.acceso.wfcore.daos.SistemaDAO;
+import com.acceso.wfcore.dtos.SistemaDTO;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,21 +17,21 @@ import java.util.List;
 @SessionScoped
 public class SistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
+   private static final String URL_LISTA = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
+   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
+   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
+   private static final String URL_NEW = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
 
 
-   private List<ConexionDTO> conexiones;
-   private ConexionDTO conexion;
+   private List<SistemaDTO> sistemas;
+   private SistemaDTO sistema;
 
    private boolean isregEditable;
 
 
    public SistemaBean() {
-      this.beanName = "Conexiones";
-      this.conexion = new ConexionDTO();
+      this.beanName = "Sistemas";
+      this.sistema = new SistemaDTO();
       this.isregEditable = true;
    }
 
@@ -70,7 +70,7 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
    @Override
    public String defaultAction() {
       // Para el nuevo registro
-      this.conexion = new ConexionDTO();
+      this.sistema = new SistemaDTO();
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
@@ -108,51 +108,51 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
 
    @Override
    public void selectDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexiones = dao.getConexiones();
+      SistemaDAO dao = new SistemaDAO();
+      this.sistemas = dao.getSistemas();
       dao.close();
    }
 
    @Override
    public void saveDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
-//      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
+      SistemaDAO dao = new SistemaDAO();
+      this.sistema = dao.grabarSistema(sistema);
+      this.sistemas = dao.getSistemas();
+//      System.out.println("ConexionBean actualizarConexion = " + this.sistema);
       dao.close();
    }
 
    @Override
    public void updateDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
-//      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
+      SistemaDAO dao = new SistemaDAO();
+      this.sistema = dao.grabarSistema(sistema);
+      this.sistemas = dao.getSistemas();
+//      System.out.println("ConexionBean actualizarConexion = " + this.sistema);
       dao.close();
    }
 
    @Override
    public void deleteDto() {
-      ConexionDAO dao = new ConexionDAO();
-      String resultado = dao.deleteConexion(conexion);
-      this.conexiones = dao.getConexiones();
+      SistemaDAO dao = new SistemaDAO();
+      String resultado = dao.deleteSistema(sistema);
+      this.sistemas = dao.getSistemas();
       dao.close();
    }
 
-   public ConexionDTO getConexion() {
-      return conexion;
+   public List<SistemaDTO> getSistemas() {
+      return sistemas;
    }
 
-   public void setConexion(ConexionDTO conexion) {
-      this.conexion = conexion;
+   public void setSistemas(List<SistemaDTO> sistemas) {
+      this.sistemas = sistemas;
    }
 
-   public List<ConexionDTO> getConexiones() {
-      return conexiones;
+   public SistemaDTO getSistema() {
+      return sistema;
    }
 
-   public void setConexiones(List<ConexionDTO> conexiones) {
-      this.conexiones = conexiones;
+   public void setSistema(SistemaDTO sistema) {
+      this.sistema = sistema;
    }
 
    public boolean isIsregEditable() {

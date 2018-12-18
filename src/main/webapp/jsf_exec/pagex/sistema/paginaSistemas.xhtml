@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+            </p:confirmDialog>
+
+            <p:panel id="panelListaSis">
+
+                <p:growl id="msgs" showDetail="true"/>
+
+                <p:dataTable id="lista"
+                             var="sis"
+                             value="#{sistemaBean.sistemas}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rows="100"
+                             widgetVar="widTable"
+                             rowKey="#{sis.co_sistem}"
+                             rowIndexVar="N">
+
+                    <f:facet name="header">
+                        Lista de Sistemas
+                    </f:facet>
+
+                    <p:ajax event="sort" skipChildren="false"/>
+
+                    <p:column style="text-align: right" width="20">
+                        <f:facet name="header">
+                            <h:outputText value="#"/>
+                        </f:facet>
+                        <h:outputText value="#{N + 1}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{sis.no_sistem}">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{sis.no_sistem}"/>
+                    </p:column>
+
+                    <p:column headerText="Descripción" style="text-align: right" sortBy="#{sis.de_sistem}">
+                        <h:outputText value="#{sis.de_sistem}"/>
+                    </p:column>
+
+                    <p:column headerText="Logo" style="text-align: right" sortBy="#{sis.ur_logsis}">
+                        <h:outputText value="#{sis.ur_logsis}"/>
+                    </p:column>
+
+                    <p:column headerText="Tema" sortBy="#{sis.no_temdef}">
+                        <h:outputText value="#{sis.no_temdef}"/>
+                    </p:column>
+
+                    <p:column style="width:160px;text-align: center">
+                        <p:commandButton action="#{sistemaBean.updateRegist}" icon="fa fa-search" title="Ver">
+                            <f:setPropertyActionListener value="#{sis}" target="#{sistemaBean.sistema}"/>
+                            <f:setPropertyActionListener value="false" target="#{sistemaBean.isregEditable}"/>
+                        </p:commandButton>
+
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{sistemaBean.updateRegist}">
+                            <f:setPropertyActionListener value="#{sis}" target="#{sistemaBean.sistema}"/>
+                        </p:commandButton>
+
+                        <p:commandButton icon="fa fa-trash" action="#{sistemaBean.deleteRegist}"
+                                         update=":form:lista">
+                            <f:setPropertyActionListener value="#{sis}" target="#{sistemaBean.sistema}"/>
+                            <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                       icon="fa fa-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </p:panel>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+
+</html>
