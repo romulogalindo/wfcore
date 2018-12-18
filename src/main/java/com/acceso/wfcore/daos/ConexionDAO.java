@@ -17,6 +17,7 @@ import org.hibernate.StatelessSession;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
+
 public class ConexionDAO {
     StatelessSession session;
 
@@ -62,13 +63,14 @@ public class ConexionDAO {
             nQuery.setInteger("nu_puerto", conexion.getNu_puerto());
             nQuery.setString("no_datbas", conexion.getNo_datbas());
 
-            System.out.println("[ConexionDAO:getConexiones] Q = " + nQuery.getQueryString());
+            System.out.println("[ConexionDAO:grabarConexion] Q = " + nQuery.getQueryString());
 
             conexion = (ConexionDTO) nQuery.list().get(0);
 
-            System.out.println("[ConexionDAO:getConexiones] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("[ConexionDAO:grabarConexion] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+        } catch (Exception ep) {
+            System.out.println("[ConexionDAO:grabarConexion] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
         }
 
         return conexion;
@@ -76,21 +78,25 @@ public class ConexionDAO {
 
     public String deleteConexion(ConexionDTO conexion) {
 
-        StatelessSession session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        NQuery nQuery = new NQuery();
+
         String resultado = null;
 
         try {
-            System.out.println("com.wf.daos.ConexionDAO.deleteConexion() --> Inicio");
-            System.out.println("conexion = " + conexion);
-            Query query = session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_CNX);
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_CNX));
 
-            query.setInteger("co_conexi", conexion.getCo_conexi());
+            nQuery.setInteger("co_conexi", conexion.getCo_conexi());
 
-            resultado = query.list().toString();
-            System.out.println("com.wf.daos.ConexionDAO.deleteConexion() --> Fin");
-            session.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("[ConexionDAO:deleteConexion] Q = " + nQuery.getQueryString());
+
+            resultado = nQuery.list().toString();
+
+            System.out.println("[ConexionDAO:deleteConexion] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[ConexionDAO:deleteConexion] Q = " + nQuery.getQueryString() + " R = " + resultado);
+
+        } catch (Exception ep) {
+            System.out.println("[ConexionDAO:deleteConexion] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
         }
         return resultado;
     }

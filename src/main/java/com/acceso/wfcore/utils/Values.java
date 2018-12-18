@@ -19,13 +19,21 @@ public class Values {
     public static final String QUERYS_NATIVE_GRABAR_CNX = "wfcore.cnx_update";
     public static final String QUERYS_NATIVE_DELETE_CNX = "wfcore.cnx_delete";
 
-    public static final String QUERYS_NATIVE_SELECT_SISTEMA = "wfcore.cnx_select";
-    public static final String QUERYS_NATIVE_GRABAR_SISTEMA = "wfcore.cnx_update";
-    public static final String QUERYS_NATIVE_DELETE_SISTEMA = "wfcore.cnx_delete";
+    public static final String QUERYS_NATIVE_SELECT_SISTEMA = "wfcore.sistema_select";
+    public static final String QUERYS_NATIVE_GRABAR_SISTEMA = "wfcore.sistema_update";
+    public static final String QUERYS_NATIVE_DELETE_SISTEMA = "wfcore.sistema_delete";
 
-    public static final String QUERYS_NATIVE_SELECT_SUBSISTEMA = "wfcore.cnx_select";
-    public static final String QUERYS_NATIVE_GRABAR_SUBSISTEMA = "wfcore.cnx_update";
-    public static final String QUERYS_NATIVE_DELETE_SUBSISTEMA = "wfcore.cnx_delete";
+    public static final String QUERYS_NATIVE_SELECT_SUBSISTEMA = "wfcore.subsistema_select";
+    public static final String QUERYS_NATIVE_GRABAR_SUBSISTEMA = "wfcore.subsistema_update";
+    public static final String QUERYS_NATIVE_DELETE_SUBSISTEMA = "wfcore.subsistema_delete";
+
+    public static final String QUERYS_NATIVE_SELECT_PAQUETE = "wfcore.paquete_select";
+    public static final String QUERYS_NATIVE_GRABAR_PAQUETE = "wfcore.paquete_update";
+    public static final String QUERYS_NATIVE_DELETE_PAQUETE = "wfcore.paquete_delete";
+
+    public static final String QUERYS_NATIVE_SELECT_USUARIO = "wfcore.usuario_select";
+    public static final String QUERYS_NATIVE_GRABAR_USUARIO = "wfcore.usuario_update";
+    public static final String QUERYS_NATIVE_DELETE_USUARIO = "wfcore.usuario_delete";
 
 
 }

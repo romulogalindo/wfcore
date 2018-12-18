@@ -22,7 +22,24 @@ import javax.persistence.NamedNativeQuery;
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_DELETE_CNX,
             query = "select * from wfsistem.pbconexion_delete(:co_conexi) as va_result",
+            resultClass = DeleteDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_DELETE_SISTEMA,
+            query = "select * from wfsistem.pbsistema_delete(:co_sistem) as va_result",
+            resultClass = DeleteDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_DELETE_SUBSISTEMA,
+            query = "select * from wfsistem.pbsubsistema_delete(:co_subsis) as va_result",
+            resultClass = DeleteDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_DELETE_USUARIO,
+            query = "select * from wfsistem.pbusuario_delete(:co_usuari) as va_result",
+            resultClass = DeleteDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_DELETE_PAQUETE,
+            query = "select * from wfsistem.pbpaquete_delete(:co_paquet) as va_result",
             resultClass = DeleteDTO.class)
+
 })
 public class DeleteDTO implements Serializable {
 

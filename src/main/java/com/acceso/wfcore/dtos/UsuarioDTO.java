@@ -12,119 +12,175 @@ import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
- *
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
+
 @Entity
 @NamedNativeQueries({
-    @NamedNativeQuery(
-            name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbusuario_list()",
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_USUARIO,
+            query = "select co_usuari, co_usulog, no_usuari, pw_usuari, fe_regist, fe_bloque, ca_pwdinc, ca_pwdmax, fe_ultlog, ti_usuari, co_person, pw_usuant, co_sistem, co_subsis"
+                  + "from wfsistem.pbusuario_list()",
             resultClass = UsuarioDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbusuario_list()",
-            resultClass = UsuarioDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GRABAR_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbusuario_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_GRABAR_USUARIO,
+            query = "co_usuari, co_usulog, no_usuari, pw_usuari, fe_regist, fe_bloque, ca_pwdinc, ca_pwdmax, fe_ultlog, ti_usuari, co_person, pw_usuant, co_sistem, co_subsis"
+                  + "from wfsistem.pbusuario_save(:co_usuari, :co_usulog, :no_usuari, :pw_usuari, :ca_pwdinc, :ca_pwdmax, :ti_usuari, :co_person, :pw_usuant, :co_sistem, :co_subsis)",
             resultClass = UsuarioDTO.class)
 })
 public class UsuarioDTO implements Serializable {
 
-    @Id
-    Integer co_conexi;
+   @Id
+   Integer co_usuari;
 
-    String no_conexi;
-    Integer nu_maxpoo;
-    Integer nu_timout;
-    String no_usuari;
-    String pw_usuari;
-    String ur_domini;
-    Integer nu_puerto;
-    String no_datbas;
+   String co_usulog;
+   String no_usuari;
+   String pw_usuari;
+   Date fe_regist;
+   Date fe_bloque;
+   Integer ca_pwdinc;
+   Integer ca_pwdmax;
+   Date fe_ultlog;
+   String ti_usuari;
+   Integer co_person;
+   String pw_usuant;
+   Integer co_sistem;
+   Integer co_subsis;
 
-    public Integer getCo_conexi() {
-        return co_conexi;
-    }
+   public Integer getCo_usuari() {
+      return co_usuari;
+   }
 
-    public void setCo_conexi(Integer co_conexi) {
-        this.co_conexi = co_conexi;
-    }
+   public void setCo_usuari(Integer co_usuari) {
+      this.co_usuari = co_usuari;
+   }
 
-    public String getNo_conexi() {
-        return no_conexi;
-    }
+   public String getCo_usulog() {
+      return co_usulog;
+   }
 
-    public void setNo_conexi(String no_conexi) {
-        this.no_conexi = no_conexi;
-    }
+   public void setCo_usulog(String co_usulog) {
+      this.co_usulog = co_usulog;
+   }
 
-    public Integer getNu_maxpoo() {
-        return nu_maxpoo;
-    }
+   public String getNo_usuari() {
+      return no_usuari;
+   }
 
-    public void setNu_maxpoo(Integer nu_maxpoo) {
-        this.nu_maxpoo = nu_maxpoo;
-    }
+   public void setNo_usuari(String no_usuari) {
+      this.no_usuari = no_usuari;
+   }
 
-    public Integer getNu_timout() {
-        return nu_timout;
-    }
+   public String getPw_usuari() {
+      return pw_usuari;
+   }
 
-    public void setNu_timout(Integer nu_timout) {
-        this.nu_timout = nu_timout;
-    }
+   public void setPw_usuari(String pw_usuari) {
+      this.pw_usuari = pw_usuari;
+   }
 
-    public String getNo_usuari() {
-        return no_usuari;
-    }
+   public Date getFe_regist() {
+      return fe_regist;
+   }
 
-    public void setNo_usuari(String no_usuari) {
-        this.no_usuari = no_usuari;
-    }
+   public void setFe_regist(Date fe_regist) {
+      this.fe_regist = fe_regist;
+   }
 
-    public String getPw_usuari() {
-        return pw_usuari;
-    }
+   public Date getFe_bloque() {
+      return fe_bloque;
+   }
 
-    public void setPw_usuari(String pw_usuari) {
-        this.pw_usuari = pw_usuari;
-    }
+   public void setFe_bloque(Date fe_bloque) {
+      this.fe_bloque = fe_bloque;
+   }
 
-    public String getUr_domini() {
-        return ur_domini;
-    }
+   public Integer getCa_pwdinc() {
+      return ca_pwdinc;
+   }
 
-    public void setUr_domini(String ur_domini) {
-        this.ur_domini = ur_domini;
-    }
+   public void setCa_pwdinc(Integer ca_pwdinc) {
+      this.ca_pwdinc = ca_pwdinc;
+   }
 
-    public Integer getNu_puerto() {
-        return nu_puerto;
-    }
+   public Integer getCa_pwdmax() {
+      return ca_pwdmax;
+   }
 
-    public void setNu_puerto(Integer nu_puerto) {
-        this.nu_puerto = nu_puerto;
-    }
+   public void setCa_pwdmax(Integer ca_pwdmax) {
+      this.ca_pwdmax = ca_pwdmax;
+   }
 
-    public String getNo_datbas() {
-        return no_datbas;
-    }
+   public Date getFe_ultlog() {
+      return fe_ultlog;
+   }
 
-    public void setNo_datbas(String no_datbas) {
-        this.no_datbas = no_datbas;
-    }
+   public void setFe_ultlog(Date fe_ultlog) {
+      this.fe_ultlog = fe_ultlog;
+   }
 
-    @Override
-    public String toString() {
-        return "ConexionDTO{" + "co_conexi=" + co_conexi + ", no_conexi=" + no_conexi + ", nu_maxpoo=" + nu_maxpoo + ", nu_timout=" + nu_timout + ", no_usuari=" + no_usuari + ", pw_usuari=" + pw_usuari + ", ur_domini=" + ur_domini + ", nu_puerto=" + nu_puerto + ", no_datbas=" + no_datbas + '}';
-    }
+   public String getTi_usuari() {
+      return ti_usuari;
+   }
 
+   public void setTi_usuari(String ti_usuari) {
+      this.ti_usuari = ti_usuari;
+   }
+
+   public Integer getCo_person() {
+      return co_person;
+   }
+
+   public void setCo_person(Integer co_person) {
+      this.co_person = co_person;
+   }
+
+   public String getPw_usuant() {
+      return pw_usuant;
+   }
+
+   public void setPw_usuant(String pw_usuant) {
+      this.pw_usuant = pw_usuant;
+   }
+
+   public Integer getCo_sistem() {
+      return co_sistem;
+   }
+
+   public void setCo_sistem(Integer co_sistem) {
+      this.co_sistem = co_sistem;
+   }
+
+   public Integer getCo_subsis() {
+      return co_subsis;
+   }
+
+   public void setCo_subsis(Integer co_subsis) {
+      this.co_subsis = co_subsis;
+   }
+
+   @Override
+   public String toString() {
+      return "UsuarioDTO{" +
+            "co_usuari=" + co_usuari +
+            ", co_usulog='" + co_usulog + '\'' +
+            ", no_usuari='" + no_usuari + '\'' +
+            ", pw_usuari='" + pw_usuari + '\'' +
+            ", fe_regist=" + fe_regist +
+            ", fe_bloque=" + fe_bloque +
+            ", ca_pwdinc=" + ca_pwdinc +
+            ", ca_pwdmax=" + ca_pwdmax +
+            ", fe_ultlog=" + fe_ultlog +
+            ", ti_usuari='" + ti_usuari + '\'' +
+            ", co_person=" + co_person +
+            ", pw_usuant='" + pw_usuant + '\'' +
+            ", co_sistem=" + co_sistem +
+            ", co_subsis=" + co_subsis +
+            '}';
+   }
 }

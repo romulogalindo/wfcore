@@ -21,110 +21,104 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+            name = Values.QUERYS_NATIVE_SELECT_PAQUETE,
+            query = "select co_paquet, no_paquet, co_subsis, or_paquet, no_prefij, ur_defaul, ur_arcadj, no_coldef "
             + "from wfsistem.pbpaquete_list()",
             resultClass = PaqueteDTO.class),
     @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbpaquete_list()",
-            resultClass = PaqueteDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GRABAR_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbpaquete_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            name = Values.QUERYS_NATIVE_GRABAR_PAQUETE,
+            query = "select co_paquet, no_paquet, co_subsis, or_paquet, no_prefij, ur_defaul, ur_arcadj, no_coldef "
+            + "from wfsistem.pbpaquete_save(:co_paquet, :no_paquet, :co_subsis, :or_paquet, :no_prefij, :ur_defaul, :ur_arcadj, :no_coldef)",
             resultClass = PaqueteDTO.class)
 })
 public class PaqueteDTO implements Serializable {
 
     @Id
-    Integer co_conexi;
+    Integer co_paquet;
 
-    String no_conexi;
-    Integer nu_maxpoo;
-    Integer nu_timout;
-    String no_usuari;
-    String pw_usuari;
-    String ur_domini;
-    Integer nu_puerto;
-    String no_datbas;
+    String no_paquet;
+    Integer co_subsis;
+    Integer or_paquet;
+    String no_prefij;
+    String ur_defaul;
+    String ur_arcadj;
+    String no_coldef;
 
-    public Integer getCo_conexi() {
-        return co_conexi;
+    public Integer getCo_paquet() {
+        return co_paquet;
     }
 
-    public void setCo_conexi(Integer co_conexi) {
-        this.co_conexi = co_conexi;
+    public void setCo_paquet(Integer co_paquet) {
+        this.co_paquet = co_paquet;
     }
 
-    public String getNo_conexi() {
-        return no_conexi;
+    public String getNo_paquet() {
+        return no_paquet;
     }
 
-    public void setNo_conexi(String no_conexi) {
-        this.no_conexi = no_conexi;
+    public void setNo_paquet(String no_paquet) {
+        this.no_paquet = no_paquet;
     }
 
-    public Integer getNu_maxpoo() {
-        return nu_maxpoo;
+    public Integer getCo_subsis() {
+        return co_subsis;
     }
 
-    public void setNu_maxpoo(Integer nu_maxpoo) {
-        this.nu_maxpoo = nu_maxpoo;
+    public void setCo_subsis(Integer co_subsis) {
+        this.co_subsis = co_subsis;
     }
 
-    public Integer getNu_timout() {
-        return nu_timout;
+    public Integer getOr_paquet() {
+        return or_paquet;
     }
 
-    public void setNu_timout(Integer nu_timout) {
-        this.nu_timout = nu_timout;
+    public void setOr_paquet(Integer or_paquet) {
+        this.or_paquet = or_paquet;
     }
 
-    public String getNo_usuari() {
-        return no_usuari;
+    public String getNo_prefij() {
+        return no_prefij;
     }
 
-    public void setNo_usuari(String no_usuari) {
-        this.no_usuari = no_usuari;
+    public void setNo_prefij(String no_prefij) {
+        this.no_prefij = no_prefij;
     }
 
-    public String getPw_usuari() {
-        return pw_usuari;
+    public String getUr_defaul() {
+        return ur_defaul;
     }
 
-    public void setPw_usuari(String pw_usuari) {
-        this.pw_usuari = pw_usuari;
+    public void setUr_defaul(String ur_defaul) {
+        this.ur_defaul = ur_defaul;
     }
 
-    public String getUr_domini() {
-        return ur_domini;
+    public String getUr_arcadj() {
+        return ur_arcadj;
     }
 
-    public void setUr_domini(String ur_domini) {
-        this.ur_domini = ur_domini;
+    public void setUr_arcadj(String ur_arcadj) {
+        this.ur_arcadj = ur_arcadj;
     }
 
-    public Integer getNu_puerto() {
-        return nu_puerto;
+    public String getNo_coldef() {
+        return no_coldef;
     }
 
-    public void setNu_puerto(Integer nu_puerto) {
-        this.nu_puerto = nu_puerto;
-    }
-
-    public String getNo_datbas() {
-        return no_datbas;
-    }
-
-    public void setNo_datbas(String no_datbas) {
-        this.no_datbas = no_datbas;
+    public void setNo_coldef(String no_coldef) {
+        this.no_coldef = no_coldef;
     }
 
     @Override
     public String toString() {
-        return "ConexionDTO{" + "co_conexi=" + co_conexi + ", no_conexi=" + no_conexi + ", nu_maxpoo=" + nu_maxpoo + ", nu_timout=" + nu_timout + ", no_usuari=" + no_usuari + ", pw_usuari=" + pw_usuari + ", ur_domini=" + ur_domini + ", nu_puerto=" + nu_puerto + ", no_datbas=" + no_datbas + '}';
+        return "PaqueteDTO{" +
+              "co_paquet=" + co_paquet +
+              ", no_paquet='" + no_paquet + '\'' +
+              ", co_subsis=" + co_subsis +
+              ", or_paquet=" + or_paquet +
+              ", no_prefij='" + no_prefij + '\'' +
+              ", ur_defaul='" + ur_defaul + '\'' +
+              ", ur_arcadj='" + ur_arcadj + '\'' +
+              ", no_coldef='" + no_coldef + '\'' +
+              '}';
     }
-
 }

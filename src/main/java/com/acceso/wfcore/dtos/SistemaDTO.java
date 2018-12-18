@@ -21,110 +21,74 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+            name = Values.QUERYS_NATIVE_SELECT_SISTEMA,
+            query = "select co_sistem, no_sistem, de_sistem, ur_logsis, no_temdef "
             + "from wfsistem.pbsistema_list()",
             resultClass = SistemaDTO.class),
     @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbsistema_list()",
-            resultClass = SistemaDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GRABAR_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbsistema_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            name = Values.QUERYS_NATIVE_GRABAR_SISTEMA,
+            query = "select co_sistem, no_sistem, de_sistem, ur_logsis, no_temdef "
+            + "from wfsistem.pbsistema_save(:co_sistem, :no_sistem, :de_sistem, :ur_logsis, :no_temdef)",
             resultClass = SistemaDTO.class)
 })
 public class SistemaDTO implements Serializable {
 
     @Id
-    Integer co_conexi;
+    Integer co_sistem;
 
-    String no_conexi;
-    Integer nu_maxpoo;
-    Integer nu_timout;
-    String no_usuari;
-    String pw_usuari;
-    String ur_domini;
-    Integer nu_puerto;
-    String no_datbas;
+    String no_sistem;
+    String de_sistem;
+    String ur_logsis;
+    String no_temdef;
 
-    public Integer getCo_conexi() {
-        return co_conexi;
+    public Integer getCo_sistem() {
+        return co_sistem;
     }
 
-    public void setCo_conexi(Integer co_conexi) {
-        this.co_conexi = co_conexi;
+    public void setCo_sistem(Integer co_sistem) {
+        this.co_sistem = co_sistem;
     }
 
-    public String getNo_conexi() {
-        return no_conexi;
+    public String getNo_sistem() {
+        return no_sistem;
     }
 
-    public void setNo_conexi(String no_conexi) {
-        this.no_conexi = no_conexi;
+    public void setNo_sistem(String no_sistem) {
+        this.no_sistem = no_sistem;
     }
 
-    public Integer getNu_maxpoo() {
-        return nu_maxpoo;
+    public String getDe_sistem() {
+        return de_sistem;
     }
 
-    public void setNu_maxpoo(Integer nu_maxpoo) {
-        this.nu_maxpoo = nu_maxpoo;
+    public void setDe_sistem(String de_sistem) {
+        this.de_sistem = de_sistem;
     }
 
-    public Integer getNu_timout() {
-        return nu_timout;
+    public String getUr_logsis() {
+        return ur_logsis;
     }
 
-    public void setNu_timout(Integer nu_timout) {
-        this.nu_timout = nu_timout;
+    public void setUr_logsis(String ur_logsis) {
+        this.ur_logsis = ur_logsis;
     }
 
-    public String getNo_usuari() {
-        return no_usuari;
+    public String getNo_temdef() {
+        return no_temdef;
     }
 
-    public void setNo_usuari(String no_usuari) {
-        this.no_usuari = no_usuari;
-    }
-
-    public String getPw_usuari() {
-        return pw_usuari;
-    }
-
-    public void setPw_usuari(String pw_usuari) {
-        this.pw_usuari = pw_usuari;
-    }
-
-    public String getUr_domini() {
-        return ur_domini;
-    }
-
-    public void setUr_domini(String ur_domini) {
-        this.ur_domini = ur_domini;
-    }
-
-    public Integer getNu_puerto() {
-        return nu_puerto;
-    }
-
-    public void setNu_puerto(Integer nu_puerto) {
-        this.nu_puerto = nu_puerto;
-    }
-
-    public String getNo_datbas() {
-        return no_datbas;
-    }
-
-    public void setNo_datbas(String no_datbas) {
-        this.no_datbas = no_datbas;
+    public void setNo_temdef(String no_temdef) {
+        this.no_temdef = no_temdef;
     }
 
     @Override
     public String toString() {
-        return "ConexionDTO{" + "co_conexi=" + co_conexi + ", no_conexi=" + no_conexi + ", nu_maxpoo=" + nu_maxpoo + ", nu_timout=" + nu_timout + ", no_usuari=" + no_usuari + ", pw_usuari=" + pw_usuari + ", ur_domini=" + ur_domini + ", nu_puerto=" + nu_puerto + ", no_datbas=" + no_datbas + '}';
+        return "SistemaDTO{" +
+              "co_sistem=" + co_sistem +
+              ", no_sistem='" + no_sistem + '\'' +
+              ", de_sistem='" + de_sistem + '\'' +
+              ", ur_logsis='" + ur_logsis + '\'' +
+              ", no_temdef='" + no_temdef + '\'' +
+              '}';
     }
-
 }
