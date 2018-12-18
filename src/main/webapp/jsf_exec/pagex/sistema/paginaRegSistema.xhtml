@@ -1,72 +1,81 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <body>
+<body>
 
-        <ui:composition template="../../template/plantilla.xhtml">
+<ui:composition template="../../template/plantilla.xhtml">
 
-            <ui:define name="content">
-                <h:form> 
-                    <p:panel id="panelActualizarSis">
-                        <p:panelGrid columns="2"  style="width: 400px">
-                            
-                            <p:outputLabel for="co_sistem" value="Id:" />
-                            <p:inputText id="co_sistem" value="#{sistemaBean.sistema.co_sistem}" rendered="#{sistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{sistemaBean.sistema.co_sistem}" rendered="#{!sistemaBean.isregEditable}"/>
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panelActualizarSis">
+                <p:growl id="messages" showDetail="true"/>
+                <p:panelGrid columns="2" style="width: 400px">
 
-                            <p:outputLabel for="no_sistem" value="Nombre:" />
-                            <p:inputText id="no_sistem" value="#{sistemaBean.sistema.no_sistem}"
-                                         required="true" requiredMessage="Debe ingresar un Nombre."
-                                         rendered="#{sistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{sistemaBean.sistema.no_sistem}" rendered="#{!sistemaBean.isregEditable}"/>
+                    <p:outputLabel for="co_sistem" value="Id:"/>
+                    <p:inputText id="co_sistem" value="#{sistemaBean.sistema.co_sistem}"
+                                 rendered="#{sistemaBean.isregEditable}"/>
+                    <p:outputLabel value="#{sistemaBean.sistema.co_sistem}" rendered="#{!sistemaBean.isregEditable}"/>
 
-                            <p:outputLabel for="de_sistem" value="Descripción:" />
-                            <p:inputTextarea  id="de_sistem" value="#{sistemaBean.sistema.de_sistem}"
-                                          rows="5" cols="30" autoResize="false"
-                                          required="true" requiredMessage="Debe ingresar una Descripción."
-                                          rendered="#{sistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{sistemaBean.sistema.de_sistem}" rendered="#{!sistemaBean.isregEditable}"/>
+                    <p:outputLabel for="no_sistem" value="Nombre:"/>
+                    <p:inputText id="no_sistem" value="#{sistemaBean.sistema.no_sistem}"
+                                 required="true" requiredMessage="Debe ingresar un Nombre."
+                                 rendered="#{sistemaBean.isregEditable}"/>
+                    <p:outputLabel value="#{sistemaBean.sistema.no_sistem}" rendered="#{!sistemaBean.isregEditable}"/>
 
-                            <p:outputLabel for="ur_logsis" value="Logo:" />
-                            <p:inputText id="ur_logsis" value="#{sistemaBean.sistema.ur_logsis}"
-                                         required="true" requiredMessage="Debe ingresar un Logo."
-                                         rendered="#{sistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{sistemaBean.sistema.ur_logsis}" rendered="#{!sistemaBean.isregEditable}"/>
+                    <p:outputLabel for="ur_logsis" value="Logo:"/>
+                    <p:fileUpload id="ur_logsis"  mode="advanced" label="Escoger"
+                                  dragDropSupport="true"
+                                  update="messages" sizeLimit="100000" fileLimit="3"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  value="#{sistemaBean.sistema.ur_logsis}"
+                                  rendered="#{sistemaBean.isregEditable}"
+                                  uploadLabel="Subir" cancelLabel="Cancelar"/>
+                    <p:outputLabel value="#{sistemaBean.sistema.ur_logsis}" rendered="#{!sistemaBean.isregEditable}"/>
 
-                            <p:outputLabel for="no_temdef" value="Usuario:" />
-                            <p:inputText id="no_temdef" value="#{sistemaBean.sistema.no_temdef}"
-                                         required="true" requiredMessage="Debe ingresar un Tema."
-                                         rendered="#{sistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{sistemaBean.sistema.no_temdef}" rendered="#{!sistemaBean.isregEditable}"/>
+                    <p:outputLabel for="no_temdef" value="Tema:"/>
+                    <p:selectOneMenu id="no_temdef" value="#{sistemaBean.sistema.no_temdef}"
+                                     rendered="#{sistemaBean.isregEditable}">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="Sepia" itemValue="Sepia"/>
+                        <f:selectItem itemLabel="Dark" itemValue="Dark"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{sistemaBean.sistema.no_temdef}" rendered="#{!sistemaBean.isregEditable}"/>
+
+                    <p:outputLabel for="de_sistem" value="Descripción:"/>
+                    <p:inputTextarea id="de_sistem" value="#{sistemaBean.sistema.de_sistem}"
+                                     rows="5" cols="30" autoResize="false"
+                                     rendered="#{sistemaBean.isregEditable}"/>
+                    <p:outputLabel value="#{sistemaBean.sistema.de_sistem}" rendered="#{!sistemaBean.isregEditable}"/>
 
 
-                        </p:panelGrid>
-                        <p:panelGrid style="width: 400px" >
-                            <p:commandButton  action="#{sistemaBean.load()}"
-                                              actionListener="#{sistemaBean.doListener()}"
-                                              value="Atrás"
-                                              title="Volver al reporte de sistemas"
-                                              immediate="true">
-                            </p:commandButton>
-                            <p:commandButton value="Grabar"
-                                             action="#{sistemaBean.saveRegist}"
-                                             type="submit"
-                                             update="panelActualizarSis">
-                                <p:ajax rendered="panelActualizarSis"/>
-                            </p:commandButton>
-                            
-                        </p:panelGrid>
-                    </p:panel>
+                </p:panelGrid>
+                <p:panelGrid style="width: 400px">
+                    <p:commandButton action="#{sistemaBean.load()}"
+                                     actionListener="#{sistemaBean.doListener()}"
+                                     value="Atrás"
+                                     title="Volver al reporte de sistemas"
+                                     immediate="true">
+                    </p:commandButton>
+                    <p:commandButton value="Grabar"
+                                     action="#{sistemaBean.saveRegist}"
+                                     type="submit"
+                                     update="panelActualizarSis">
+                        <p:ajax rendered="panelActualizarSis"/>
+                    </p:commandButton>
 
-                </h:form>
-            </ui:define>
+                </p:panelGrid>
+            </p:panel>
 
-        </ui:composition>
+        </h:form>
+    </ui:define>
 
-    </body>
+</ui:composition>
+
+</body>
 </html>
