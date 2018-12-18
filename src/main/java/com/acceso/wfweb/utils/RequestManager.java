@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class RequestManager {
-    public static String REQUEST_METHOD_GET="GET";
-    public static String REQUEST_METHOD_POST="POST";
+    public static String REQUEST_METHOD_GET = "GET";
+    public static String REQUEST_METHOD_POST = "POST";
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -15,15 +15,34 @@ public class RequestManager {
         this.response = response;
     }
 
-    public String getPath(){
-        return this.request.getPathInfo();
+    public String getPath() {
+//        return this.request.getPathInfo();
+        return this.request.getServletPath();
+
     }
 
-    public String getMethod(){
+    public String getMethod() {
         return this.request.getMethod();
     }
 
-    public String param(String paranName){
+    public String getIp() {
+        return this.request.getRemoteHost();
+    }
+
+    public String getParam(String paranName) {
         return this.request.getParameter(paranName);
+    }
+
+    public void save_over_session(String objectKey, Object objectValue) {
+        this.request.getSession().setAttribute(objectKey, objectValue);
+    }
+
+    public void save_over_request(String objectKey, Object objectValue) {
+        this.request.setAttribute(objectKey, objectValue);
+    }
+
+    public void redirect(String url) throws Exception {
+        System.out.println("redirect to>" + url);
+        this.response.sendRedirect(url);
     }
 }

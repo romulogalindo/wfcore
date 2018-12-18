@@ -8,21 +8,15 @@ import com.acceso.wfcore.utils.Values;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.StatelessSession;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
-public class ConexionDAO {
-    StatelessSession session;
+public class ConexionDAO extends DAO {
 
     public ConexionDAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<ConexionDTO> getConexiones() {
@@ -32,7 +26,7 @@ public class ConexionDAO {
 
         try {
 
-            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_CNX));
+            nQuery.work(this.session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_CNX));
 
             System.out.println("[ConexionDAO:getConexiones] Q = " + nQuery.getQueryString());
             conexiones = nQuery.list();
@@ -51,7 +45,7 @@ public class ConexionDAO {
         NQuery nQuery = new NQuery();
 
         try {
-            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_CNX));
+            nQuery.work(this.session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_CNX));
 
             nQuery.setInteger("co_conexi", conexion.getCo_conexi() == null ? -1 : conexion.getCo_conexi());
             nQuery.setString("no_conexi", conexion.getNo_conexi());
@@ -83,7 +77,7 @@ public class ConexionDAO {
         String resultado = null;
 
         try {
-            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_CNX));
+            nQuery.work(this.session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_CNX));
 
             nQuery.setInteger("co_conexi", conexion.getCo_conexi());
 
@@ -99,14 +93,6 @@ public class ConexionDAO {
             ep.printStackTrace();
         }
         return resultado;
-    }
-
-    public void close() {
-        try {
-            session.close();
-        } catch (Exception ep) {
-            session = null;
-        }
     }
 
 }

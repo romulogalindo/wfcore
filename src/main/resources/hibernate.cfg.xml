@@ -35,5 +35,8 @@
         <mapping class="com.acceso.wfcore.dtos.SistemaDTO" />
         <mapping class="com.acceso.wfcore.dtos.SubSistemaDTO" />
         <mapping class="com.acceso.wfcore.dtos.PaqueteDTO" />
+        
+        <!-- DTO's (security) -->
+        <mapping class="com.acceso.security.dtos.RegsesiniDTO" />
     </session-factory>
 </hibernate-configuration>

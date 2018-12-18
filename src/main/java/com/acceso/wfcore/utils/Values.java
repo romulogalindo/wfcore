@@ -36,4 +36,6 @@ public class Values {
     public static final String QUERYS_NATIVE_DELETE_USUARIO = "wfcore.usuario_delete";
 
 
+    /*===CACHE===*/
+    public static final String CACHE_MAIN_MENUTREE = "CACHE_MAIN_MENUTREE";
 }

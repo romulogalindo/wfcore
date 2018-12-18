@@ -48,6 +48,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JSP Main</servlet-name>
+        <jsp-file>/jsp_exec/ocelot/main.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
@@ -60,6 +64,10 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login64</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSP Main</servlet-name>
+        <url-pattern>/main</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
