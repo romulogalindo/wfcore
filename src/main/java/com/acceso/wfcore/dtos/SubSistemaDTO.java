@@ -21,12 +21,12 @@ import java.io.Serializable;
 @NamedNativeQueries({
       @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SELECT_SUBSISTEMA,
-            query = "select co_subsis, no_subsis, co_sistem, ur_logsub "
+            query = "select co_subsis, no_subsis, co_sistem, ur_logsub, no_sistem "
                   + "from wfsistem.pbsubsistema_list()",
             resultClass = SubSistemaDTO.class),
       @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GRABAR_SUBSISTEMA,
-            query = "select co_subsis, no_subsis, co_sistem, ur_logsub"
+            query = "select co_subsis, no_subsis, co_sistem, ur_logsub, no_sistem"
                   + "from wfsistem.pbsubsistema_save(:co_subsis, :no_subsis, :co_sistem, :ur_logsub)",
             resultClass = SubSistemaDTO.class)
 })
@@ -38,6 +38,7 @@ public class SubSistemaDTO implements Serializable {
    String no_subsis;
    Integer co_sistem;
    String ur_logsub;
+   String no_sistem;
 
 
    public Integer getCo_subsis() {
@@ -72,13 +73,22 @@ public class SubSistemaDTO implements Serializable {
       this.ur_logsub = ur_logsub;
    }
 
+   public String getNo_sistem() {
+      return no_sistem;
+   }
+
+   public void setNo_sistem(String no_sistem) {
+      this.no_sistem = no_sistem;
+   }
+
    @Override
    public String toString() {
       return "SubSistemaDTO{" +
             "co_subsis=" + co_subsis +
             ", no_subsis='" + no_subsis + '\'' +
             ", co_sistem=" + co_sistem +
-            ", ur_logsub=" + ur_logsub +
+            ", ur_logsub='" + ur_logsub + '\'' +
+            ", no_sistem='" + no_sistem + '\'' +
             '}';
    }
 }

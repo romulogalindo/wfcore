@@ -6,7 +6,9 @@ import com.acceso.wfcore.dtos.SistemaDTO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +37,18 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
       this.isregEditable = true;
    }
 
+   public List<SelectItem> getComboSistema(){
+      List<SelectItem> res = new ArrayList<>();
+      selectDto();
+      for (SistemaDTO sis:sistemas) {
+         SelectItem item = new SelectItem();
+         item.setLabel(sis.getNo_sistem());
+         item.setDescription(sis.getDe_sistem());
+         item.setValue(sis.getCo_sistem());
+         res.add(item);
+      }
+      return res;
+   }
 
    @Override
    public String getBeanName() {

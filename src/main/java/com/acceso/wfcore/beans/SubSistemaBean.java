@@ -17,21 +17,21 @@ import java.util.List;
 @SessionScoped
 public class SubSistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/subsistema/paginaSubSistema.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/subsistema/paginaSubSistema.xhtml";
+   private static final String URL_LISTA = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
+   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
    private static final String URL_EDITAR = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
    private static final String URL_NEW = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
 
 
-   private List<SubSistemaDTO> conexiones;
-   private SubSistemaDTO conexion;
+   private List<SubSistemaDTO> subsistemas;
+   private SubSistemaDTO subsistema;
 
    private boolean isregEditable;
 
 
    public SubSistemaBean() {
-      this.beanName = "SubSistema";
-      this.conexion = new SubSistemaDTO();
+      this.beanName = "Sub Sistema";
+      this.subsistema = new SubSistemaDTO();
       this.isregEditable = true;
    }
 
@@ -70,7 +70,7 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
    @Override
    public String defaultAction() {
       // Para el nuevo registro
-      this.conexion = new SubSistemaDTO();
+      this.subsistema = new SubSistemaDTO();
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
@@ -109,50 +109,50 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
    @Override
    public void selectDto() {
       SubSistemaDAO dao = new SubSistemaDAO();
-      this.conexiones = dao.getSubSistema();
+      this.subsistemas = dao.getSubSistemas();
       dao.close();
    }
 
    @Override
    public void saveDto() {
       SubSistemaDAO dao = new SubSistemaDAO();
-      this.conexion = dao.grabarSubSistema(conexion);
-      this.conexiones = dao.getSubSistema();
-//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.conexion);
+      this.subsistema = dao.grabarSubSistema(subsistema);
+      this.subsistemas = dao.getSubSistemas();
+//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
       dao.close();
    }
 
    @Override
    public void updateDto() {
       SubSistemaDAO dao = new SubSistemaDAO();
-      this.conexion = dao.grabarSubSistema(conexion);
-      this.conexiones = dao.getSubSistema();
-//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.conexion);
+      this.subsistema = dao.grabarSubSistema(subsistema);
+      this.subsistemas = dao.getSubSistemas();
+//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
       dao.close();
    }
 
    @Override
    public void deleteDto() {
       SubSistemaDAO dao = new SubSistemaDAO();
-      String resultado = dao.deleteSubSistema(conexion);
-      this.conexiones = dao.getSubSistema();
+      String resultado = dao.deleteSubSistema(subsistema);
+      this.subsistemas = dao.getSubSistemas();
       dao.close();
    }
 
-   public SubSistemaDTO getSubSistema() {
-      return conexion;
+   public List<SubSistemaDTO> getSubsistemas() {
+      return subsistemas;
    }
 
-   public void setSubSistema(SubSistemaDTO conexion) {
-      this.conexion = conexion;
+   public void setSubsistemas(List<SubSistemaDTO> subsistemas) {
+      this.subsistemas = subsistemas;
    }
 
-   public List<SubSistemaDTO> getSubSistema() {
-      return conexiones;
+   public SubSistemaDTO getSubsistema() {
+      return subsistema;
    }
 
-   public void setSubSistema(List<SubSistemaDTO> conexiones) {
-      this.conexiones = conexiones;
+   public void setSubsistema(SubSistemaDTO subsistema) {
+      this.subsistema = subsistema;
    }
 
    public boolean isIsregEditable() {
