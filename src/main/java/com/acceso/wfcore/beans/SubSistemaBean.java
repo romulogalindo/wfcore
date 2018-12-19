@@ -1,7 +1,7 @@
 package com.acceso.wfcore.beans;
 
-import com.acceso.wfcore.daos.ConexionDAO;
-import com.acceso.wfcore.dtos.ConexionDTO;
+import com.acceso.wfcore.daos.SubSistemaDAO;
+import com.acceso.wfcore.dtos.SubSistemaDTO;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,21 +17,21 @@ import java.util.List;
 @SessionScoped
 public class SubSistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
+   private static final String URL_LISTA = "/admin/jsf_exec/pagex/subsistema/paginaSubSistema.xhtml";
+   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/subsistema/paginaSubSistema.xhtml";
+   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
+   private static final String URL_NEW = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
 
 
-   private List<ConexionDTO> conexiones;
-   private ConexionDTO conexion;
+   private List<SubSistemaDTO> conexiones;
+   private SubSistemaDTO conexion;
 
    private boolean isregEditable;
 
 
    public SubSistemaBean() {
-      this.beanName = "Conexiones";
-      this.conexion = new ConexionDTO();
+      this.beanName = "SubSistema";
+      this.conexion = new SubSistemaDTO();
       this.isregEditable = true;
    }
 
@@ -70,7 +70,7 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
    @Override
    public String defaultAction() {
       // Para el nuevo registro
-      this.conexion = new ConexionDTO();
+      this.conexion = new SubSistemaDTO();
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
@@ -108,50 +108,50 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
 
    @Override
    public void selectDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexiones = dao.getConexiones();
+      SubSistemaDAO dao = new SubSistemaDAO();
+      this.conexiones = dao.getSubSistema();
       dao.close();
    }
 
    @Override
    public void saveDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
-//      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
+      SubSistemaDAO dao = new SubSistemaDAO();
+      this.conexion = dao.grabarSubSistema(conexion);
+      this.conexiones = dao.getSubSistema();
+//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.conexion);
       dao.close();
    }
 
    @Override
    public void updateDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
-//      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
+      SubSistemaDAO dao = new SubSistemaDAO();
+      this.conexion = dao.grabarSubSistema(conexion);
+      this.conexiones = dao.getSubSistema();
+//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.conexion);
       dao.close();
    }
 
    @Override
    public void deleteDto() {
-      ConexionDAO dao = new ConexionDAO();
-      String resultado = dao.deleteConexion(conexion);
-      this.conexiones = dao.getConexiones();
+      SubSistemaDAO dao = new SubSistemaDAO();
+      String resultado = dao.deleteSubSistema(conexion);
+      this.conexiones = dao.getSubSistema();
       dao.close();
    }
 
-   public ConexionDTO getConexion() {
+   public SubSistemaDTO getSubSistema() {
       return conexion;
    }
 
-   public void setConexion(ConexionDTO conexion) {
+   public void setSubSistema(SubSistemaDTO conexion) {
       this.conexion = conexion;
    }
 
-   public List<ConexionDTO> getConexiones() {
+   public List<SubSistemaDTO> getSubSistema() {
       return conexiones;
    }
 
-   public void setConexiones(List<ConexionDTO> conexiones) {
+   public void setSubSistema(List<SubSistemaDTO> conexiones) {
       this.conexiones = conexiones;
    }
 

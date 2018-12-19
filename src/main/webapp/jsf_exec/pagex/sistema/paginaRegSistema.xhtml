@@ -64,6 +64,7 @@
                     </p:commandButton>
                     <p:commandButton value="Grabar"
                                      action="#{sistemaBean.saveRegist}"
+                                     actionListener="#{sistemaBean.doListener()}"
                                      type="submit"
                                      update="panelActualizarSis">
                         <p:ajax rendered="panelActualizarSis"/>
