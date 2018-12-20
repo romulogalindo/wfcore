@@ -17,23 +17,23 @@
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
             </p:confirmDialog>
 
-            <p:panel id="panelListaCnx">
+            <p:panel id="panelListaPaq">
 
                 <p:growl id="msgs" showDetail="true"/>
 
                 <p:dataTable id="lista"
-                             var="cnx"
-                             value="#{conexionBean.conexiones}"
+                             var="paq"
+                             value="#{paqueteBean.paquetes}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true"
                              paginatorPosition="bottom"
                              rows="100"
                              widgetVar="widTable"
-                             rowKey="#{cnx.co_conexi}"
+                             rowKey="#{paq.co_paquet}"
                              rowIndexVar="N">
 
                     <f:facet name="header">
-                        Lista de Conexiones
+                        Lista de Paquetes
                     </f:facet>
 
                     <p:ajax event="sort" skipChildren="false"/>
@@ -45,54 +45,54 @@
                         <h:outputText value="#{N + 1}"/>
                     </p:column>
 
-                    <p:column sortBy="#{cnx.no_conexi}">
+                    <p:column sortBy="#{paq.no_paquet}">
                         <f:facet name="header">
                             <h:outputText value="Nombre"/>
                         </f:facet>
-                        <h:outputText value="#{cnx.no_conexi}"/>
+                        <h:outputText value="#{paq.no_paquet}"/>
                     </p:column>
 
-                    <p:column headerText="Max Pool" style="text-align: right" sortBy="#{cnx.nu_maxpoo}">
-                        <h:outputText value="#{cnx.nu_maxpoo}"/>
+                    <p:column headerText="Orden" sortBy="#{paq.or_paquet}">
+                        <h:outputText value="#{paq.or_paquet}"/>
                     </p:column>
 
-                    <p:column headerText="Time Out" style="text-align: right" sortBy="#{cnx.nu_timout}">
-                        <h:outputText value="#{cnx.nu_timout}"/>
+                    <p:column headerText="Prefijo" sortBy="#{paq.no_prefij}">
+                        <h:outputText value="#{paq.no_prefij}"/>
                     </p:column>
 
-                    <p:column headerText="Usuario" sortBy="#{cnx.no_usuari}">
-                        <h:outputText value="#{cnx.no_usuari}"/>
+                    <p:column headerText="URL Default" sortBy="#{paq.ur_defaul}">
+                        <h:outputText value="#{paq.ur_defaul}"/>
                     </p:column>
 
-                    <p:column headerText="Contraseña" sortBy="#{cnx.pw_usuari}">
-                        <h:outputText value="#{cnx.pw_usuari}"/>
+                    <p:column headerText="URL Arcadj" sortBy="#{paq.ur_arcadj}">
+                        <h:outputText value="#{paq.ur_arcadj}"/>
                     </p:column>
 
-                    <p:column headerText="Host" sortBy="#{cnx.ur_domini}">
-                        <h:outputText value="#{cnx.ur_domini}"/>
+                    <p:column headerText="Color" sortBy="#{paq.no_coldef}">
+                        <h:outputText value="#{paq.no_coldef}"/>
                     </p:column>
 
-                    <p:column headerText="Puerto" style="text-align: right" sortBy="#{cnx.nu_puerto}">
-                        <h:outputText value="#{cnx.nu_puerto}"/>
+                    <p:column headerText="Sistema" sortBy="#{paq.no_sistem}">
+                        <h:outputText value="#{paq.no_sistem}"/>
                     </p:column>
 
-                    <p:column headerText="BD" sortBy="#{cnx.no_datbas}">
-                        <h:outputText value="#{cnx.no_datbas}"/>
+                    <p:column headerText="Sub Sistema" sortBy="#{paq.no_subsis}">
+                        <h:outputText value="#{paq.no_subsis}"/>
                     </p:column>
 
                     <p:column style="width:160px;text-align: center">
-                        <p:commandButton action="#{conexionBean.updateRegist}" icon="fa fa-search" title="Ver">
-                            <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
-                            <f:setPropertyActionListener value="false" target="#{conexionBean.isregEditable}"/>
+                        <p:commandButton action="#{paqueteBean.updateRegist}" icon="fa fa-search" title="Ver">
+                            <f:setPropertyActionListener value="#{paq}" target="#{paqueteBean.paquete}"/>
+                            <f:setPropertyActionListener value="false" target="#{paqueteBean.isregEditable}"/>
                         </p:commandButton>
 
-                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{conexionBean.updateRegist}">
-                            <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{paqueteBean.updateRegist}">
+                            <f:setPropertyActionListener value="#{paq}"  target="#{paqueteBean.paquete}"/>
                         </p:commandButton>
 
-                        <p:commandButton icon="fa fa-trash" action="#{conexionBean.deleteRegist}"
+                        <p:commandButton icon="fa fa-trash" action="#{paqueteBean.deleteRegist}"
                                          update=":form:lista">
-                            <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
+                            <f:setPropertyActionListener value="#{paq}" target="#{paqueteBean.paquete}"/>
                             <p:confirm header="Confirmación" message="¿Desea continuar?"
                                        icon="fa fa-exclamation-triangle"/>
                         </p:commandButton>

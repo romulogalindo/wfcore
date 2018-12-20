@@ -22,12 +22,12 @@ import java.io.Serializable;
 @NamedNativeQueries({
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SELECT_PAQUETE,
-            query = "select co_paquet, no_paquet, co_subsis, or_paquet, no_prefij, ur_defaul, ur_arcadj, no_coldef "
+            query = "select co_paquet, no_paquet, co_subsis, or_paquet, no_prefij, ur_defaul, ur_arcadj, no_coldef, no_subsis, co_sistem, no_sistem "
             + "from wfsistem.pbpaquete_list()",
             resultClass = PaqueteDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GRABAR_PAQUETE,
-            query = "select co_paquet, no_paquet, co_subsis, or_paquet, no_prefij, ur_defaul, ur_arcadj, no_coldef "
+            query = "select co_paquet, no_paquet, co_subsis, or_paquet, no_prefij, ur_defaul, ur_arcadj, no_coldef, no_subsis, co_sistem, no_sistem "
             + "from wfsistem.pbpaquete_save(:co_paquet, :no_paquet, :co_subsis, :or_paquet, :no_prefij, :ur_defaul, :ur_arcadj, :no_coldef)",
             resultClass = PaqueteDTO.class)
 })
@@ -43,6 +43,10 @@ public class PaqueteDTO implements Serializable {
     String ur_defaul;
     String ur_arcadj;
     String no_coldef;
+
+    String no_subsis;
+    Integer co_sistem;
+    String no_sistem;
 
     public Integer getCo_paquet() {
         return co_paquet;
@@ -108,6 +112,30 @@ public class PaqueteDTO implements Serializable {
         this.no_coldef = no_coldef;
     }
 
+    public String getNo_subsis() {
+        return no_subsis;
+    }
+
+    public void setNo_subsis(String no_subsis) {
+        this.no_subsis = no_subsis;
+    }
+
+    public Integer getCo_sistem() {
+        return co_sistem;
+    }
+
+    public void setCo_sistem(Integer co_sistem) {
+        this.co_sistem = co_sistem;
+    }
+
+    public String getNo_sistem() {
+        return no_sistem;
+    }
+
+    public void setNo_sistem(String no_sistem) {
+        this.no_sistem = no_sistem;
+    }
+
     @Override
     public String toString() {
         return "PaqueteDTO{" +
@@ -119,6 +147,9 @@ public class PaqueteDTO implements Serializable {
               ", ur_defaul='" + ur_defaul + '\'' +
               ", ur_arcadj='" + ur_arcadj + '\'' +
               ", no_coldef='" + no_coldef + '\'' +
+              ", no_subsis='" + no_subsis + '\'' +
+              ", co_sistem=" + co_sistem +
+              ", no_sistem='" + no_sistem + '\'' +
               '}';
     }
 }

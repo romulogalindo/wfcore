@@ -1,100 +1,108 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <body>
+<body>
 
-        <ui:composition template="../../template/plantilla.xhtml">
+<ui:composition template="../../template/plantilla.xhtml">
 
-            <ui:define name="content">
-                <h:form> 
-                    <p:panel id="panelActualizarCnx">
-                        <p:panelGrid columns="2"  style="width: 400px">
-                            
-                            <p:outputLabel for="co_conexi" value="Id:" />
-                            <p:inputText id="co_conexi" value="#{conexionBean.conexion.co_conexi}" rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.co_conexi}" rendered="#{!conexionBean.isregEditable}"/>
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panelActualizarPaq">
+                <p:panelGrid columns="2" style="width: 400px">
 
-                            <p:outputLabel for="no_conexi" value="Nombre:" />
-                            <p:inputText id="no_conexi" value="#{conexionBean.conexion.no_conexi}"
-                                         required="true" requiredMessage="Debe ingresar un Nombre."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_conexi}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="co_paquet" value="Id:"/>
+                    <p:inputText id="co_paquet" value="#{paqueteBean.paquete.co_paquet}"
+                                 rendered="#{paqueteBean.isregEditable}"/>
+                    <p:outputLabel value="#{paqueteBean.paquete.co_paquet}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="nu_maxpoo" value="Max Pool:" />
-                            <p:inputText  id="nu_maxpoo" value="#{conexionBean.conexion.nu_maxpoo}"
-                                          required="true" requiredMessage="Debe ingresar un Max Pool."
-                                          rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_maxpoo}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="no_paquet" value="Nombre:"/>
+                    <p:inputText id="no_paquet" value="#{paqueteBean.paquete.no_paquet}"
+                                 required="true" requiredMessage="Debe ingresar un Nombre."
+                                 rendered="#{paqueteBean.isregEditable}"/>
+                    <p:outputLabel value="#{paqueteBean.paquete.no_paquet}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="nu_timout" value="Time Out:" />
-                            <p:inputText id="nu_timout" value="#{conexionBean.conexion.nu_timout}"
-                                         required="true" requiredMessage="Debe ingresar un Time Out."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num" />
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_timout}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="or_paquet" value="Orden:"/>
+                    <p:inputText id="or_paquet" value="#{paqueteBean.paquete.or_paquet}"
+                                 required="true" requiredMessage="Debe ingresar un Orden."
+                                 rendered="#{paqueteBean.isregEditable}">
+                        <p:keyFilter mask="num"/>
+                    </p:inputText>
+                    <p:outputLabel value="#{paqueteBean.paquete.or_paquet}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="no_usuari" value="Usuario:" />
-                            <p:inputText id="no_usuari" value="#{conexionBean.conexion.no_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Usuario."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_usuari}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="no_prefij" value="Prefijo:"/>
+                    <p:inputText id="no_prefij" value="#{paqueteBean.paquete.no_prefij}"
+                                 required="true" requiredMessage="Debe ingresar un Prefijo."
+                                 rendered="#{paqueteBean.isregEditable}">
+                    </p:inputText>
+                    <p:outputLabel value="#{paqueteBean.paquete.no_prefij}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="pw_usuari" value="Password:" />
-                            <p:inputText id="pw_usuari" value="#{conexionBean.conexion.pw_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Password."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.pw_usuari}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="ur_defaul" value="URL Default:"/>
+                    <p:inputText id="ur_defaul" value="#{paqueteBean.paquete.ur_defaul}"
+                                 required="true" requiredMessage="Debe ingresar una URL Default."
+                                 rendered="#{paqueteBean.isregEditable}"/>
+                    <p:outputLabel value="#{paqueteBean.paquete.ur_defaul}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="ur_domini" value="Dominio:" />
-                            <p:inputText id="ur_domini" value="#{conexionBean.conexion.ur_domini}"
-                                         required="true" requiredMessage="Debe ingresar un Dominio."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.ur_domini}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="ur_arcadj" value="URL Arcadj:"/>
+                    <p:inputText id="ur_arcadj" value="#{paqueteBean.paquete.ur_arcadj}"
+                                 required="true" requiredMessage="Debe ingresar una URL Arcadj."
+                                 rendered="#{paqueteBean.isregEditable}"/>
+                    <p:outputLabel value="#{paqueteBean.paquete.ur_arcadj}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="nu_puerto" value="Puerto:" />
-                            <p:inputText id="nu_puerto" value="#{conexionBean.conexion.nu_puerto}"
-                                         required="true" requiredMessage="Debe ingresar un Puerto."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_puerto}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="no_coldef" value="Color:"/>
+                    <p:inputText id="no_coldef" value="#{paqueteBean.paquete.no_coldef}"
+                                 required="true" requiredMessage="Debe ingresar un Dominio."
+                                 rendered="#{paqueteBean.isregEditable}"/>
+                    <p:outputLabel value="#{paqueteBean.paquete.no_coldef}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                            <p:outputLabel for="no_datbas" value="BD:" />
-                            <p:inputText id="no_datbas" value="#{conexionBean.conexion.no_datbas}"
-                                         required="true" requiredMessage="Debe ingresar una BD."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_datbas}" rendered="#{!conexionBean.isregEditable}"/>
+                    <p:outputLabel for="co_sistem" value="Sistema:"/>
+                    <h:selectOneMenu id="co_sistem" value="#{paqueteBean.paquete.co_sistem}"
+                                     required="true" requiredMessage="Debe ingresar un Sistema."
+                                     rendered="#{paqueteBean.isregEditable}"
+                                     dynamic="true">
+                        <p:ajax listener="#{paqueteBean.onSistemaChange(paqueteBean.paquete.co_sistem)}" update="co_subsis" />
+                        <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                        <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel value="#{paqueteBean.paquete.no_sistem}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                        </p:panelGrid>
-                        <p:panelGrid style="width: 400px" >
-                            <p:commandButton  action="#{conexionBean.load()}"
-                                              actionListener="#{conexionBean.doListener()}"
-                                              value="Atrás"
-                                              title="Volver al reporte de conexiones"
-                                              immediate="true">
-                            </p:commandButton>
-                            <p:commandButton value="Grabar"
-                                             action="#{conexionBean.saveRegist}"
-                                             type="submit"
-                                             update="panelActualizarCnx">
-                                <p:ajax rendered="panelActualizarCnx"/>
-                            </p:commandButton>
-                            
-                        </p:panelGrid>
-                    </p:panel>
+                    <p:outputLabel for="co_subsis" value="Sub Sistema:"/>
+                    <h:selectOneMenu id="co_subsis" value="#{paqueteBean.paquete.co_subsis}"
+                                     required="true" requiredMessage="Debe ingresar un Sub Sistema."
+                                     rendered="#{paqueteBean.isregEditable}"
+                                     dynamic="true">
+                        <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                        <f:selectItems value="#{paqueteBean.lstSubSistemabySistema}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel value="#{paqueteBean.paquete.no_subsis}" rendered="#{!paqueteBean.isregEditable}"/>
 
-                </h:form>
-            </ui:define>
+                </p:panelGrid>
+                <p:panelGrid style="width: 400px">
+                    <p:commandButton action="#{paqueteBean.load()}"
+                                     actionListener="#{paqueteBean.doListener()}"
+                                     value="Atrás"
+                                     title="Volver al reporte de paquetees"
+                                     immediate="true">
+                    </p:commandButton>
+                    <p:commandButton value="Grabar"
+                                     action="#{paqueteBean.saveRegist}"
+                                     type="submit"
+                                     update="panelActualizarPaq">
+                        <p:ajax rendered="panelActualizarPaq"/>
+                    </p:commandButton>
 
-        </ui:composition>
+                </p:panelGrid>
+            </p:panel>
 
-    </body>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
 </html>

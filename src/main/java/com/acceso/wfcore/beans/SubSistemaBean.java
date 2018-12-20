@@ -6,7 +6,9 @@ import com.acceso.wfcore.dtos.SubSistemaDTO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +36,6 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
       this.subsistema = new SubSistemaDTO();
       this.isregEditable = true;
    }
-
 
    @Override
    public String getBeanName() {
@@ -162,4 +163,6 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
    public void setIsregEditable(boolean isregEditable) {
       this.isregEditable = isregEditable;
    }
+
+
 }
