@@ -31,6 +31,10 @@ public class Values {
     public static final String QUERYS_NATIVE_GRABAR_PAQUETE = "wfcore.paquete_update";
     public static final String QUERYS_NATIVE_DELETE_PAQUETE = "wfcore.paquete_delete";
 
+    public static final String QUERYS_NATIVE_SELECT_MODULO = "wfcore.modulo_select";
+    public static final String QUERYS_NATIVE_GRABAR_MODULO = "wfcore.modulo_update";
+    public static final String QUERYS_NATIVE_DELETE_MODULO = "wfcore.modulo_delete";
+
     public static final String QUERYS_NATIVE_SELECT_USUARIO = "wfcore.usuario_select";
     public static final String QUERYS_NATIVE_GRABAR_USUARIO = "wfcore.usuario_update";
     public static final String QUERYS_NATIVE_DELETE_USUARIO = "wfcore.usuario_delete";

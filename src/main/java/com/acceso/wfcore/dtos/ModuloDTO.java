@@ -21,110 +21,144 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+            name = Values.QUERYS_NATIVE_SELECT_MODULO,
+            query = "select co_modulo, no_modulo, ur_modulo, co_modant, co_sistem, no_sistem, co_subsis, no_subsis, co_paquet, no_paquet, co_plataf, no_plataf "
             + "from wfsistem.pbmodulo_list()",
             resultClass = ModuloDTO.class),
     @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbmodulo_list()",
-            resultClass = ModuloDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GRABAR_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbmodulo_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+            name = Values.QUERYS_NATIVE_GRABAR_MODULO,
+            query = "select co_modulo, no_modulo, ur_modulo, co_modant, co_sistem, no_sistem, co_subsis, no_subsis, co_paquet, no_paquet, co_plataf, no_plataf "
+            + "from wfsistem.pbmodulo_save(:co_modulo, :no_modulo, :ur_modulo, :co_paquet, :co_modant, :co_subsis, :co_plataf)",
             resultClass = ModuloDTO.class)
 })
 public class ModuloDTO implements Serializable {
 
     @Id
-    Integer co_conexi;
+    Integer co_modulo;
 
-    String no_conexi;
-    Integer nu_maxpoo;
-    Integer nu_timout;
-    String no_usuari;
-    String pw_usuari;
-    String ur_domini;
-    Integer nu_puerto;
-    String no_datbas;
+    String no_modulo;
+    String ur_modulo;
+    Integer co_modant;
+    Integer co_sistem;
+    String no_sistem;
+    Integer co_subsis;
+    String no_subsis;
+    Integer co_paquet;
+    String no_paquet;
+    Integer co_plataf;
+    String no_plataf;
 
-    public Integer getCo_conexi() {
-        return co_conexi;
+    public Integer getCo_modulo() {
+        return co_modulo;
     }
 
-    public void setCo_conexi(Integer co_conexi) {
-        this.co_conexi = co_conexi;
+    public void setCo_modulo(Integer co_modulo) {
+        this.co_modulo = co_modulo;
     }
 
-    public String getNo_conexi() {
-        return no_conexi;
+    public String getNo_modulo() {
+        return no_modulo;
     }
 
-    public void setNo_conexi(String no_conexi) {
-        this.no_conexi = no_conexi;
+    public void setNo_modulo(String no_modulo) {
+        this.no_modulo = no_modulo;
     }
 
-    public Integer getNu_maxpoo() {
-        return nu_maxpoo;
+    public String getUr_modulo() {
+        return ur_modulo;
     }
 
-    public void setNu_maxpoo(Integer nu_maxpoo) {
-        this.nu_maxpoo = nu_maxpoo;
+    public void setUr_modulo(String ur_modulo) {
+        this.ur_modulo = ur_modulo;
     }
 
-    public Integer getNu_timout() {
-        return nu_timout;
+    public Integer getCo_modant() {
+        return co_modant;
     }
 
-    public void setNu_timout(Integer nu_timout) {
-        this.nu_timout = nu_timout;
+    public void setCo_modant(Integer co_modant) {
+        this.co_modant = co_modant;
     }
 
-    public String getNo_usuari() {
-        return no_usuari;
+    public Integer getCo_sistem() {
+        return co_sistem;
     }
 
-    public void setNo_usuari(String no_usuari) {
-        this.no_usuari = no_usuari;
+    public void setCo_sistem(Integer co_sistem) {
+        this.co_sistem = co_sistem;
     }
 
-    public String getPw_usuari() {
-        return pw_usuari;
+    public String getNo_sistem() {
+        return no_sistem;
     }
 
-    public void setPw_usuari(String pw_usuari) {
-        this.pw_usuari = pw_usuari;
+    public void setNo_sistem(String no_sistem) {
+        this.no_sistem = no_sistem;
     }
 
-    public String getUr_domini() {
-        return ur_domini;
+    public Integer getCo_subsis() {
+        return co_subsis;
     }
 
-    public void setUr_domini(String ur_domini) {
-        this.ur_domini = ur_domini;
+    public void setCo_subsis(Integer co_subsis) {
+        this.co_subsis = co_subsis;
     }
 
-    public Integer getNu_puerto() {
-        return nu_puerto;
+    public String getNo_subsis() {
+        return no_subsis;
     }
 
-    public void setNu_puerto(Integer nu_puerto) {
-        this.nu_puerto = nu_puerto;
+    public void setNo_subsis(String no_subsis) {
+        this.no_subsis = no_subsis;
     }
 
-    public String getNo_datbas() {
-        return no_datbas;
+    public Integer getCo_paquet() {
+        return co_paquet;
     }
 
-    public void setNo_datbas(String no_datbas) {
-        this.no_datbas = no_datbas;
+    public void setCo_paquet(Integer co_paquet) {
+        this.co_paquet = co_paquet;
+    }
+
+    public String getNo_paquet() {
+        return no_paquet;
+    }
+
+    public void setNo_paquet(String no_paquet) {
+        this.no_paquet = no_paquet;
+    }
+
+    public Integer getCo_plataf() {
+        return co_plataf;
+    }
+
+    public void setCo_plataf(Integer co_plataf) {
+        this.co_plataf = co_plataf;
+    }
+
+    public String getNo_plataf() {
+        return no_plataf;
+    }
+
+    public void setNo_plataf(String no_plataf) {
+        this.no_plataf = no_plataf;
     }
 
     @Override
     public String toString() {
-        return "ConexionDTO{" + "co_conexi=" + co_conexi + ", no_conexi=" + no_conexi + ", nu_maxpoo=" + nu_maxpoo + ", nu_timout=" + nu_timout + ", no_usuari=" + no_usuari + ", pw_usuari=" + pw_usuari + ", ur_domini=" + ur_domini + ", nu_puerto=" + nu_puerto + ", no_datbas=" + no_datbas + '}';
+        return "ModuloDTO{" +
+              "co_modulo=" + co_modulo +
+              ", no_modulo='" + no_modulo + '\'' +
+              ", ur_modulo='" + ur_modulo + '\'' +
+              ", co_modant=" + co_modant +
+              ", co_sistem=" + co_sistem +
+              ", no_sistem='" + no_sistem + '\'' +
+              ", co_subsis=" + co_subsis +
+              ", no_subsis='" + no_subsis + '\'' +
+              ", co_paquet=" + co_paquet +
+              ", no_paquet='" + no_paquet + '\'' +
+              ", co_plataf=" + co_plataf +
+              ", no_plataf='" + no_plataf + '\'' +
+              '}';
     }
-
 }

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<body>
+
+<ui:composition template="../../template/plantilla.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panelActualizarMdl">
+                <p:panelGrid columns="2" style="width: 400px">
+
+                    <p:outputLabel for="co_modulo" value="Id:"/>
+                    <p:inputText id="co_modulo" value="#{moduloBean.modulo.co_modulo}"
+                                 rendered="#{moduloBean.isregEditable}"/>
+                    <p:outputLabel value="#{moduloBean.modulo.co_modulo}" rendered="#{!moduloBean.isregEditable}"/>
+
+                    <p:outputLabel for="no_paquet" value="Nombre:"/>
+                    <p:inputText id="no_paquet" value="#{moduloBean.modulo.no_paquet}"
+                                 required="true" requiredMessage="Debe ingresar un Nombre."
+                                 rendered="#{moduloBean.isregEditable}"/>
+                    <p:outputLabel value="#{moduloBean.modulo.no_paquet}" rendered="#{!moduloBean.isregEditable}"/>
+
+                    <p:outputLabel for="ur_modulo" value="URL:"/>
+                    <p:inputText id="ur_modulo" value="#{moduloBean.modulo.ur_modulo}"
+                                 required="true" requiredMessage="Debe ingresar un URL."
+                                 rendered="#{moduloBean.isregEditable}">
+                        <p:keyFilter mask="num"/>
+                    </p:inputText>
+                    <p:outputLabel value="#{moduloBean.modulo.ur_modulo}" rendered="#{!moduloBean.isregEditable}"/>
+
+                    <p:outputLabel for="co_modant" value="Modulo Anterior:"/>
+                    <p:inputText id="co_modant" value="#{moduloBean.modulo.co_modant}"
+                                 rendered="#{moduloBean.isregEditable}">
+                    </p:inputText>
+                    <p:outputLabel value="#{moduloBean.modulo.co_modant}" rendered="#{!moduloBean.isregEditable}"/>
+
+                    <p:outputLabel for="co_sistem" value="Sistema:"/>
+                    <h:selectOneMenu id="co_sistem" value="#{moduloBean.modulo.co_sistem}"
+                                     required="true" requiredMessage="Debe ingresar un Sistema."
+                                     rendered="#{moduloBean.isregEditable}"
+                                     dynamic="true">
+                        <p:ajax listener="#{moduloBean.onSistemaChange(moduloBean.modulo.co_sistem)}" update="co_subsis" />
+                        <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                        <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel value="#{moduloBean.modulo.no_sistem}" rendered="#{!moduloBean.isregEditable}"/>
+
+                    <p:outputLabel for="co_subsis" value="Sub Sistema:"/>
+                    <h:selectOneMenu id="co_subsis" value="#{moduloBean.modulo.co_subsis}"
+                                     required="true" requiredMessage="Debe ingresar un Sub Sistema."
+                                     rendered="#{moduloBean.isregEditable}"
+                                     dynamic="true">
+                        <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                        <f:selectItems value="#{moduloBean.lstSubSistemabySistema}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel value="#{moduloBean.modulo.no_subsis}" rendered="#{!moduloBean.isregEditable}"/>
+
+                    <p:outputLabel for="co_paquet" value="Sub Sistema:"/>
+                    <h:selectOneMenu id="co_paquet" value="#{moduloBean.modulo.co_subsis}"
+                                     required="true" requiredMessage="Debe ingresar un Paquete."
+                                     rendered="#{moduloBean.isregEditable}"
+                                     dynamic="true">
+                        <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                        <f:selectItems value="#{moduloBean.lstSubSistemabySistema}"/>
+                    </h:selectOneMenu>
+                    <p:outputLabel value="#{moduloBean.modulo.no_paquet}" rendered="#{!moduloBean.isregEditable}"/>
+
+                </p:panelGrid>
+                <p:panelGrid style="width: 400px">
+                    <p:commandButton action="#{moduloBean.load()}"
+                                     actionListener="#{moduloBean.doListener()}"
+                                     value="Atrás"
+                                     title="Volver al reporte de moduloes"
+                                     immediate="true">
+                    </p:commandButton>
+                    <p:commandButton value="Grabar"
+                                     action="#{moduloBean.saveRegist}"
+                                     type="submit"
+                                     update="panelActualizarMdl">
+                        <p:ajax rendered="panelActualizarMdl"/>
+                    </p:commandButton>
+
+                </p:panelGrid>
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

@@ -17,24 +17,24 @@
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
             </p:confirmDialog>
 
-            <p:panel id="panelListaPaq">
+            <p:panel id="panelListaMod">
 
                 <p:growl id="msgs" showDetail="true"/>
                 <p:scrollPanel style="width:1400px;height:650px">
                     <p:dataTable id="lista"
-                                 var="paq"
-                                 value="#{paqueteBean.paquetes}"
+                                 var="mdl"
+                                 value="#{moduloBean.modulos}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  paginator="true"
                                  paginatorPosition="bottom"
                                  rows="100"
                                  widgetVar="widTable"
-                                 rowKey="#{paq.co_paquet}"
+                                 rowKey="#{mdl.co_modulo}"
                                  rowIndexVar="N"
                                  style="width:1600px;height:600px">
 
                         <f:facet name="header">
-                            Lista de Paquetes
+                            Lista de Modulos
                         </f:facet>
 
                         <p:ajax event="sort" skipChildren="false"/>
@@ -46,55 +46,51 @@
                             <h:outputText value="#{N + 1}"/>
                         </p:column>
 
-                        <p:column sortBy="#{paq.no_paquet}">
+                        <p:column sortBy="#{mdl.no_modulo}" width="200">
                             <f:facet name="header">
                                 <h:outputText value="Nombre"/>
                             </f:facet>
-                            <h:outputText value="#{paq.no_paquet}"/>
+                            <h:outputText value="#{mdl.no_modulo}"/>
                         </p:column>
 
-                        <p:column headerText="Orden" sortBy="#{paq.or_paquet}" width="80">
-                            <h:outputText value="#{paq.or_paquet}"/>
+                        <p:column headerText="URL" sortBy="#{mdl.ur_modulo}" width="250">
+                            <h:outputText value="#{mdl.ur_modulo}"/>
                         </p:column>
 
-                        <p:column headerText="Prefijo" sortBy="#{paq.no_prefij}">
-                            <h:outputText value="#{paq.no_prefij}"/>
+                        <p:column headerText="Cod. Anterior" sortBy="#{mdl.co_modant}">
+                            <h:outputText value="#{mdl.co_modant}"/>
                         </p:column>
 
-                        <p:column headerText="URL Default" sortBy="#{paq.ur_defaul}" width="180">
-                            <h:outputText value="#{paq.ur_defaul}"/>
+                        <p:column headerText="Sistema" sortBy="#{mdl.no_sistem}" width="180">
+                            <h:outputText value="#{mdl.no_sistem}"/>
                         </p:column>
 
-                        <p:column headerText="URL Arcadj" sortBy="#{paq.ur_arcadj}" width="360">
-                            <h:outputText value="#{paq.ur_arcadj}"/>
+                        <p:column headerText="Sub Sistema" sortBy="#{mdl.no_subsis}">
+                            <h:outputText value="#{mdl.no_subsis}"/>
                         </p:column>
 
-                        <p:column headerText="Color" sortBy="#{paq.no_coldef}">
-                            <h:outputText value="#{paq.no_coldef}"/>
+                        <p:column headerText="Paquete" sortBy="#{mdl.no_paquet}">
+                            <h:outputText value="#{mdl.no_paquet}"/>
                         </p:column>
 
-                        <p:column headerText="Sistema" sortBy="#{paq.no_sistem}" width="220">
-                            <h:outputText value="#{paq.no_sistem}"/>
-                        </p:column>
-
-                        <p:column headerText="Sub Sistema" sortBy="#{paq.no_subsis}">
-                            <h:outputText value="#{paq.no_subsis}"/>
+                        <p:column headerText="Plataforma" sortBy="#{mdl.no_plataf}" width="130">
+                            <h:outputText value="#{mdl.no_plataf}"/>
                         </p:column>
 
                         <p:column style="width:160px;text-align: center">
-                            <p:commandButton action="#{paqueteBean.updateRegist}" icon="fa fa-search" title="Ver">
-                                <f:setPropertyActionListener value="#{paq}" target="#{paqueteBean.paquete}"/>
-                                <f:setPropertyActionListener value="false" target="#{paqueteBean.isregEditable}"/>
+                            <p:commandButton action="#{moduloBean.updateRegist}" icon="fa fa-search" title="Ver">
+                                <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
+                                <f:setPropertyActionListener value="false" target="#{moduloBean.isregEditable}"/>
                             </p:commandButton>
 
                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                             action="#{paqueteBean.updateRegist}">
-                                <f:setPropertyActionListener value="#{paq}" target="#{paqueteBean.paquete}"/>
+                                             action="#{moduloBean.updateRegist}">
+                                <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
                             </p:commandButton>
 
-                            <p:commandButton icon="fa fa-trash" action="#{paqueteBean.deleteRegist}"
+                            <p:commandButton icon="fa fa-trash" action="#{moduloBean.deleteRegist}"
                                              update=":form:lista">
-                                <f:setPropertyActionListener value="#{paq}" target="#{paqueteBean.paquete}"/>
+                                <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
                                 <p:confirm header="Confirmación" message="¿Desea continuar?"
                                            icon="fa fa-exclamation-triangle"/>
                             </p:commandButton>

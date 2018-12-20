@@ -48,7 +48,6 @@ public class PaqueteDAO {
 
         try {
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_PAQUETE));
-            Integer co_paquet;
 
             nQuery.setInteger("co_paquet", paquete.getCo_paquet() == null ? -1 : paquete.getCo_paquet());
             nQuery.setString("no_paquet", paquete.getNo_paquet());

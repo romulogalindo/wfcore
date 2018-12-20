@@ -48,15 +48,10 @@
 
                         <p:menuitem value="#{paqueteBean.beanName}" action="#{paqueteBean.load}"
                                     actionListener="#{paqueteBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="fa fa-check">
-                        </p:menuitem>
-
-                        <p:menuitem value="Modulo" action="#{conexionBean.load}"
-                                    actionListener="#{conexionBean.doListener}" ajax="true" async="false"
                                     update="mainPanel" icon="fa fa-check"/>
 
-                        <p:menuitem value="Contenedor" action="#{conexionBean.load}"
-                                    actionListener="#{conexionBean.doListener}" ajax="true" async="false"
+                        <p:menuitem value="#{moduloBean.beanName}" action="#{moduloBean.load}"
+                                    actionListener="#{moduloBean.doListener}" ajax="true" async="false"
                                     update="mainPanel" icon="fa fa-check"/>
 
                     </p:submenu>
