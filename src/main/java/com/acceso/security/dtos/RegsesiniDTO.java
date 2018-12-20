@@ -1,6 +1,5 @@
 package com.acceso.security.dtos;
 
-import com.acceso.wfweb.dtos.LoginDTO;
 import com.acceso.security.utils.Values;
 
 import javax.persistence.Entity;

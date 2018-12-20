@@ -1,7 +1,10 @@
 package com.acceso.wfcore.kernel;
 
+import com.acceso.wfcore.dtos.SystemTreeDTO;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.servlets.LoginServlet;
+import com.acceso.wfweb.web.Root;
+import com.google.gson.Gson;
 
 public class ApplicationManager {
     public static LoginCTRL getLoginCTRL() {
@@ -18,5 +21,12 @@ public class ApplicationManager {
         loginCTRL.setLogin_param_password("password");
 
         return loginCTRL;
+    }
+
+    public static Root buildRootTree(SystemTreeDTO systemTreeDTO) {
+        System.out.println(">>>>>>>>>>>" + systemTreeDTO);
+        Gson gson = new Gson();
+        Root mainTree = gson.fromJson(systemTreeDTO.getTree(), Root.class);
+        return mainTree;
     }
 }

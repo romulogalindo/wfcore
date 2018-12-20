@@ -1,12 +1,13 @@
 package com.acceso.wfcore.utils;
 
 //import com.sun.mail.util.QDecoderStream;
-import java.util.Date;
-import java.util.List;
+
 import org.hibernate.Query;
 
+import java.util.Date;
+import java.util.List;
+
 /**
- *
  * @author Rómulo Galindo<romulogalindo@gmail.com>
  * Created on 4 dic. 2018, 19:19:59
  */
@@ -15,10 +16,28 @@ public class NQuery {
     private Query query = null;
     private String queryString = "";
     private long execution_time;
+    private boolean show_info_log;
+    private boolean show_debug_log;
+
+    String LOG;
+
+    public NQuery() {
+        this(null);
+    }
+
+    public NQuery(Object object) {
+        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + ":" + (object == null ? "" : object.getClass().getEnclosingMethod().getName()) + "] ";
+    }
 
     public void work(Query query) {
+        work(query, false, false);
+    }
+
+    public void work(Query query, boolean show_info_log, boolean show_debug_log) {
         this.query = query;
         this.queryString = this.query.getQueryString();
+        this.show_info_log = show_info_log;
+        this.show_debug_log = show_debug_log;
     }
 
     /**
@@ -48,19 +67,36 @@ public class NQuery {
     }
 
     /**
-     *
      * @return
      */
     public Object uniqueResult() {
+        if (this.show_info_log)
+            System.out.println(LOG + "Q = " + getQueryString());
         execution_time = System.currentTimeMillis();
+
         Object object = query.uniqueResult();
+
         execution_time = System.currentTimeMillis() - execution_time;
+        if (this.show_debug_log)
+            System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
 
         return object;
     }
 
+    /*
+     * */
     public List list() {
-        return query.list();
+        if (this.show_info_log)
+            System.out.println(LOG + "Q = " + getQueryString());
+        execution_time = System.currentTimeMillis();
+
+        List list = query.list();
+
+        execution_time = System.currentTimeMillis() - execution_time;
+        if (this.show_debug_log)
+            System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+
+        return list;
     }
 
     public long getExecutionTime() {

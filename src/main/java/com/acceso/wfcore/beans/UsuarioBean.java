@@ -118,7 +118,7 @@ public class UsuarioBean extends MainBean implements Serializable, DefaultMainte
       ConexionDAO dao = new ConexionDAO();
       this.conexion = dao.grabarConexion(conexion);
       this.conexiones = dao.getConexiones();
-//      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
+//      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
       dao.close();
    }
 
@@ -127,7 +127,7 @@ public class UsuarioBean extends MainBean implements Serializable, DefaultMainte
       ConexionDAO dao = new ConexionDAO();
       this.conexion = dao.grabarConexion(conexion);
       this.conexiones = dao.getConexiones();
-//      System.out.println("ConexionBean actualizarConexion = " + this.conexion);
+//      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
       dao.close();
    }
 

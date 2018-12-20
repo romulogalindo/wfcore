@@ -132,7 +132,7 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
       SistemaDAO dao = new SistemaDAO();
       this.sistema = dao.grabarSistema(sistema);
       this.sistemas = dao.getSistemas();
-//      System.out.println("ConexionBean actualizarConexion = " + this.sistema);
+//      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
       dao.close();
    }
 
@@ -141,7 +141,7 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
       SistemaDAO dao = new SistemaDAO();
       this.sistema = dao.grabarSistema(sistema);
       this.sistemas = dao.getSistemas();
-//      System.out.println("ConexionBean actualizarConexion = " + this.sistema);
+//      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
       dao.close();
    }
 

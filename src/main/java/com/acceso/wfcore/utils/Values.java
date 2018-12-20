@@ -38,4 +38,8 @@ public class Values {
 
     /*===CACHE===*/
     public static final String CACHE_MAIN_MENUTREE = "CACHE_MAIN_MENUTREE";
+
+
+    /*===KERNEL===*/
+    public static final String QUERY_MAINTREE = "wfsistem.ppmenugeneral_web(";
 }

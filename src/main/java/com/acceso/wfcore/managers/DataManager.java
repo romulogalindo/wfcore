@@ -49,7 +49,7 @@ public class DataManager extends Manager implements DataBasePowerfull {
 
             //en este punto se supono todo esta bien
 //            Object result = sessionFactory.openStatelessSession().createSQLQuery("select 1").getSingleResult();
-//            System.out.println("update = " + update);
+//            Sistema.out.println("update = " + update);
         } catch (Throwable ex) {
             sessionFactory = null;
             System.err.println("Initial SessionFactory creation failed." + ex);

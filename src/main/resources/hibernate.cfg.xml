@@ -38,5 +38,8 @@
         
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO" />
+
+        <!-- DTO's (Web) -->
+        <mapping class="com.acceso.wfcore.dtos.SystemTreeDTO" />
     </session-factory>
 </hibernate-configuration>
