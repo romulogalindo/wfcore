@@ -52,6 +52,25 @@
         .main_margin_etop {
             padding-top: 70px;
         }
+
+        @media (min-width: 993px) {
+            .w3-modal-content {
+                width: 900px
+            }
+
+            .w3-hide-large {
+                display: none !important;
+                /*display: unset;*/
+            }
+
+            .w3-sidebar.w3-collapse {
+                /*display: block !important*/
+                /*display: none !important*/
+                display: unset;
+            }
+        }
+
+
     </style>
 
     <script>
@@ -84,7 +103,8 @@
 <body>
 
 <!-- Sidebar -->
-<div class="w3-sidebar w3-collapse w3-white w3-animate-left w3-large" style="z-index:3;width:300px;" id="mySidebar">
+<%--<div class="w3-sidebar w3-collapse w3-white w3-animate-left w3-large" style="z-index:3;width:300px;" id="mySidebar">--%>
+<div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;" id="mySidebar">
 
     <div class="w3-bar w3-black w3-center">
         <button class="w3-bar-item w3-button tablink w3-red" style="width:50%" onclick="viewtab(event,'menu64')">Menú
@@ -95,18 +115,59 @@
 
     <div id="menu64" class="w3-bar-block menubloq">
         <a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">
-            <img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">
+            <%--<img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">--%>
         </a>
-        <a class="w3-bar-item w3-button" href="#">Learn HTML</a>
-        <a class="w3-bar-item w3-button" href="#">Learn W3.CSS</a>
-        <a class="w3-bar-item w3-button" href="#">Learn JavaScript</a>
-        <a class="w3-bar-item w3-button" href="#">Learn SQL</a>
-        <a class="w3-bar-item w3-button" href="#">Learn PHP</a>
+
+        <ul class="w3-ul w3-large">
+            <c:forEach var="menu" items="${mainBean.menu.menu}">
+
+                <li class="w3-padding-16" style="font-size: 14px;">
+
+                <c:if test="${not empty menu.url}">
+                        <a href="${menu.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menu.name}</a>
+                    </li>
+                </c:if>
+
+                <c:if test="${empty menu.url}">
+                        <span style="color:green;">${menu.name}</span>
+                    </li>
+
+                    <c:forEach var="menuitem" items="${menu.sub}">
+                        <li class="w3-padding-16" style="font-size: 14px;">
+
+                        <c:if test="${not empty menuitem.url}">
+                                <a href="${menuitem.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem.name}</a>
+                            </li>
+                        </c:if>
+
+                        <c:if test="${empty menuitem.url}">
+                            <span style="color: blue;">${menuitem.name}</span>
+                            </li>
+
+                            <c:forEach var="menuitem2" items="${menuitem.sub}">
+                                <li class="w3-padding-16" style="font-size: 14px;">
+
+                                <c:if test="${not empty menuitem2.url}">
+                                        <a href="${menuitem2.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem2.name}</a>
+                                    </li>
+                                </c:if>
+
+                                <c:if test="${empty menuitem2.url}">
+                                        <span style="color: orange;">${menuitem2.name}</span>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+
+                    </c:forEach>
+                </c:if>
+            </c:forEach>
+        </ul>
     </div>
 
     <div id="sistemas64" class="menubloq" style="display: none;">
         <%--<div class="w3-container w3-border-bottom">--%>
-            <%--<h1 class="w3-text-theme">W3.CSS</h1>--%>
+        <%--<h1 class="w3-text-theme">W3.CSS</h1>--%>
         <%--</div>--%>
 
         <ul class="w3-ul w3-large">
@@ -131,7 +192,7 @@
     </div>
 </div>
 
-<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
+<div class="w3-overlay " onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
 
 <div class="w3-row w3-padding w3-teal w3-xlarge">
     <div class="w3-full">
