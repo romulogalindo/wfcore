@@ -173,11 +173,15 @@
         <ul class="w3-ul w3-large">
             <c:forEach var="sistema" items="${mainBean.root.sistemas}">
 
-                <li class="w3-padding-16" style="font-size: 14px;">${sistema.no_sistem}</li>
+                <li class="w3-padding-16" style="font-size: 14px;">
+                        ${sistema.no_sistem}
+                </li>
+
                 <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
 
                     <li class="w3-padding-16" style="font-size: 16px;color:red;">
-                        &nbsp;&nbsp;&nbsp;${sub_sistema.no_subsis}</li>
+                        &nbsp;&nbsp;&nbsp;${sub_sistema.no_subsis}
+                    </li>
 
                     <c:forEach var="paquete" items="${sub_sistema.paquetes}">
                         <li class="w3-padding-16">
