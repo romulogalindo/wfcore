@@ -1,11 +1,16 @@
 package com.acceso.wfcore.beans;
 
-import com.acceso.wfcore.daos.ModuloDAO;
+import com.acceso.wfcore.daos.MenuDAO;
 import com.acceso.wfcore.daos.PaqueteDAO;
+import com.acceso.wfcore.daos.SistemaDAO;
 import com.acceso.wfcore.daos.SubSistemaDAO;
-import com.acceso.wfcore.dtos.ModuloDTO;
+import com.acceso.wfcore.dtos.MenuDTO;
 import com.acceso.wfcore.dtos.PaqueteDTO;
+import com.acceso.wfcore.dtos.SistemaDTO;
 import com.acceso.wfcore.dtos.SubSistemaDTO;
+import com.acceso.wfcore.utils.Document;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,23 +28,25 @@ import java.util.List;
 @SessionScoped
 public class MenuBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/modulo/paginaModulos.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/modulo/paginaModulos.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/modulo/paginaRegModulo.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/modulo/paginaRegModulo.xhtml";
+   private static final String URL_LISTA = "/admin/jsf_exec/pagex/menu/paginaMenus.xhtml";
+   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/menu/paginaMenus.xhtml";
+   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/menu/paginaRegMenu.xhtml";
+   private static final String URL_NEW = "/admin/jsf_exec/pagex/menu/paginaRegMenu.xhtml";
 
 
-   private List<ModuloDTO> modulos;
-   private ModuloDTO modulo;
+   private List<MenuDTO> menus;
+   private MenuDTO menu;
 
    private boolean isregEditable;
 
    private List<SelectItem> lstSubSistemabySistema;
    private List<SelectItem> lstPaquetebySubSistema;
 
+   TreeNode root;
+
    public MenuBean() {
-      this.beanName = "Modulos";
-      this.modulo = new ModuloDTO();
+      this.beanName = "Menus";
+      this.menu = new MenuDTO();
       this.isregEditable = true;
    }
 
@@ -95,6 +102,20 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       }
    }
 
+   public TreeNode createDocuments() {
+      this.root = new DefaultTreeNode(new Document("", null, null, -1), null);
+
+      List<SistemaDTO> lstsistemas;
+      SistemaDAO sisDAO = new SistemaDAO();
+      lstsistemas = sisDAO.getSistemas();
+      for (SistemaDTO sisDTO : lstsistemas) {
+         TreeNode nodesistema = new DefaultTreeNode(new Document(sisDTO.getNo_sistem(), null, null, 0),  this.root);
+
+      }
+
+      return root;
+   }
+
    @Override
    public String getBeanName() {
       return beanName;
@@ -129,7 +150,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    @Override
    public String defaultAction() {
       // Para el nuevo registro
-      this.modulo = new ModuloDTO();
+      this.menu = new MenuDTO();
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
@@ -169,51 +190,51 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
 
    @Override
    public void selectDto() {
-      ModuloDAO dao = new ModuloDAO();
-      this.modulos = dao.getModulos();
+      MenuDAO dao = new MenuDAO();
+      this.menus = dao.getMenus(-1, -1);
       dao.close();
    }
 
    @Override
    public void saveDto() {
-      ModuloDAO dao = new ModuloDAO();
-      this.modulo = dao.grabarModulo(modulo);
-      this.modulos = dao.getModulos();
-//      System.out.println("ModuloBean actualizarModulo = " + this.modulo);
+      MenuDAO dao = new MenuDAO();
+      //this.menu = dao.grabarMenu(menu);
+      this.menus = dao.getMenus(-1, -1);
+//      System.out.println("MenuBean actualizarMenu = " + this.menu);
       dao.close();
    }
 
    @Override
    public void updateDto() {
-      ModuloDAO dao = new ModuloDAO();
-      this.modulo = dao.grabarModulo(modulo);
-      this.modulos = dao.getModulos();
-//      System.out.println("ModuloBean actualizarModulo = " + this.modulo);
+      MenuDAO dao = new MenuDAO();
+      //this.menu = dao.grabarMenu(menu);
+      this.menus = dao.getMenus(-1, -1);
+//      System.out.println("MenuBean actualizarMenu = " + this.menu);
       dao.close();
    }
 
    @Override
    public void deleteDto() {
-      ModuloDAO dao = new ModuloDAO();
-      String resultado = dao.deleteModulo(modulo);
-      this.modulos = dao.getModulos();
+      MenuDAO dao = new MenuDAO();
+      //String resultado = dao.deleteMenu(menu);
+      this.menus = dao.getMenus(-1, -1);
       dao.close();
    }
 
-   public List<ModuloDTO> getModulos() {
-      return modulos;
+   public List<MenuDTO> getMenus() {
+      return menus;
    }
 
-   public void setModulos(List<ModuloDTO> modulos) {
-      this.modulos = modulos;
+   public void setMenus(List<MenuDTO> menus) {
+      this.menus = menus;
    }
 
-   public ModuloDTO getModulo() {
-      return modulo;
+   public MenuDTO getMenu() {
+      return menu;
    }
 
-   public void setModulo(ModuloDTO modulo) {
-      this.modulo = modulo;
+   public void setMenu(MenuDTO menu) {
+      this.menu = menu;
    }
 
    public boolean isIsregEditable() {
