@@ -57,18 +57,19 @@
                                      required="true" requiredMessage="Debe ingresar un Sub Sistema."
                                      rendered="#{moduloBean.isregEditable}"
                                      dynamic="true">
+                        <p:ajax listener="#{moduloBean.onSubSistemaChange(moduloBean.modulo.co_subsis)}" update="co_paquet" />
                         <f:selectItem itemLabel="Seleccionar" itemValue=""/>
                         <f:selectItems value="#{moduloBean.lstSubSistemabySistema}"/>
                     </h:selectOneMenu>
                     <p:outputLabel value="#{moduloBean.modulo.no_subsis}" rendered="#{!moduloBean.isregEditable}"/>
 
-                    <p:outputLabel for="co_paquet" value="Sub Sistema:"/>
-                    <h:selectOneMenu id="co_paquet" value="#{moduloBean.modulo.co_subsis}"
+                    <p:outputLabel for="co_paquet" value="Paquete:"/>
+                    <h:selectOneMenu id="co_paquet" value="#{moduloBean.modulo.co_paquet}"
                                      required="true" requiredMessage="Debe ingresar un Paquete."
                                      rendered="#{moduloBean.isregEditable}"
                                      dynamic="true">
                         <f:selectItem itemLabel="Seleccionar" itemValue=""/>
-                        <f:selectItems value="#{moduloBean.lstSubSistemabySistema}"/>
+                        <f:selectItems value="#{moduloBean.lstPaquetebySubSistema}"/>
                     </h:selectOneMenu>
                     <p:outputLabel value="#{moduloBean.modulo.no_paquet}" rendered="#{!moduloBean.isregEditable}"/>
 

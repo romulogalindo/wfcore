@@ -21,7 +21,7 @@ import java.util.List;
  */
 @ManagedBean
 @SessionScoped
-public class ModuloBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
+public class MenuBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
    private static final String URL_LISTA = "/admin/jsf_exec/pagex/modulo/paginaModulos.xhtml";
    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/modulo/paginaModulos.xhtml";
@@ -37,7 +37,7 @@ public class ModuloBean extends MainBean implements Serializable, DefaultMainten
    private List<SelectItem> lstSubSistemabySistema;
    private List<SelectItem> lstPaquetebySubSistema;
 
-   public ModuloBean() {
+   public MenuBean() {
       this.beanName = "Modulos";
       this.modulo = new ModuloDTO();
       this.isregEditable = true;
