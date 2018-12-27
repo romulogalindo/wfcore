@@ -56,7 +56,7 @@ public class MenuDTO implements Serializable {
     Integer co_modulo;
     Integer co_sistem;
     Integer co_subsis;
-    Integer co_paquet
+    Integer co_paquet;
     String co_identi;
 
     public Integer getCo_elemen() {
