@@ -42,21 +42,22 @@ public class LoginServlet extends HttpServlet {
         DoLogin doLogin = new DoLogin();
         String goToUrl = "/";
 
-        System.out.println(">>>>" + requestManager.getPath()+"vs"+LOGINSERVLET_LOGIN64+"--->"+requestManager.getPath().contains(LOGINSERVLET_LOGIN64));
+        System.out.println(">>>>" + requestManager.getPath() + "vs" + LOGINSERVLET_LOGIN64 + "--->" + requestManager.getPath().contains(LOGINSERVLET_LOGIN64));
 
         if (requestManager.getPath().contains(LOGINSERVLET_LOGIN64) | requestManager.getPath().contains("/")) {
             //Validar parametros
             if (doLogin.SecurityLogin(requestManager)) {
                 //todo bien y redirigir
                 //crear objeto de usuario y guardar en session!!!
+                //doLogin.getUsuario();
                 requestManager.save_over_request("goto", "go!");
-                requestManager.save_over_session("USU", new String("superusuario"));
+                requestManager.save_over_session("US", doLogin.getUsuario());
                 goToUrl = "/main";
             } else {
                 //redigir pero mensaje de error
                 requestManager.save_over_request("goto", "go!");
-                requestManager.save_over_request("error", "Mensaje de erro que viene desde la base de datos!");
-                requestManager.save_over_session("login_error", "Mensaje de erro que viene desde la base de datos!");
+                requestManager.save_over_request("error", doLogin.getMessage());
+                requestManager.save_over_session("login_error", doLogin.getMessage());
 
                 goToUrl = "/";
             }

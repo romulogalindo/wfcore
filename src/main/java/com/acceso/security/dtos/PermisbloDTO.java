@@ -3,6 +3,7 @@ package com.acceso.security.dtos;
 import com.acceso.security.utils.Values;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import java.io.Serializable;
@@ -10,20 +11,17 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_SECURITY_REGSESINI,
-                query = "select * from wfsistem.ppregsesini(:p_username, :p_password, :p_remoteip,:p_sistema) as inises",
-                resultClass = RegsesiniDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_SECURITY_REGSESINI_WEB,
-                query = "select * from wfsistem.ppregsesini_fwweb(:p_username, :p_password, :p_remoteip) as inises",
-                resultClass = RegsesiniDTO.class)
+                name = Values.QUERYS_SECURITY_PERMISBLO_WEB,
+                query = "select * from wfsistem.pblist_permis_blo_web(:p_co_usuari) as inises",
+                resultClass = PermisbloDTO.class)
 })
 public class PermisbloDTO implements Serializable {
 
+    @Id
     int id_secuen;
-    int co_elemen;
+    String co_elemen;
     int id_elemen;
-    int il_bloque;
+    boolean il_activo;
 
     public PermisbloDTO() {
     }
@@ -36,11 +34,11 @@ public class PermisbloDTO implements Serializable {
         this.id_secuen = id_secuen;
     }
 
-    public int getCo_elemen() {
+    public String getCo_elemen() {
         return co_elemen;
     }
 
-    public void setCo_elemen(int co_elemen) {
+    public void setCo_elemen(String co_elemen) {
         this.co_elemen = co_elemen;
     }
 
@@ -52,11 +50,11 @@ public class PermisbloDTO implements Serializable {
         this.id_elemen = id_elemen;
     }
 
-    public int getIl_bloque() {
-        return il_bloque;
+    public boolean isIl_activo() {
+        return il_activo;
     }
 
-    public void setIl_bloque(int il_bloque) {
-        this.il_bloque = il_bloque;
+    public void setIl_activo(boolean il_activo) {
+        this.il_activo = il_activo;
     }
 }

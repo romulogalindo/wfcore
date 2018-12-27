@@ -11,6 +11,7 @@ public class Paquete implements Serializable {
     //String ur_default;
     String ur_arcadj;
     MainMenu mmenu;
+    boolean renderer;
 
     public Paquete() {
     }
@@ -61,6 +62,14 @@ public class Paquete implements Serializable {
 
     public void setMmenu(MainMenu mmenu) {
         this.mmenu = mmenu;
+    }
+
+    public boolean isRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(boolean renderer) {
+        this.renderer = renderer;
     }
 
     @Override

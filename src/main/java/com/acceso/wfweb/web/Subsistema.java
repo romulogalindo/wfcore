@@ -8,6 +8,7 @@ public class Subsistema implements Serializable {
     int co_subsis;
     String no_subsis;
     List<Paquete> paquetes;
+    boolean renderer;
 
     public Subsistema() {
     }
@@ -34,6 +35,14 @@ public class Subsistema implements Serializable {
 
     public void setPaquetes(List<Paquete> paquetes) {
         this.paquetes = paquetes;
+    }
+
+    public boolean isRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(boolean renderer) {
+        this.renderer = renderer;
     }
 
     @Override

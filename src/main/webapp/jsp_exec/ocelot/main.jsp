@@ -124,19 +124,19 @@
                 <li class="w3-padding-16" style="font-size: 14px;">
 
                 <c:if test="${not empty menu.url}">
-                        <a href="${menu.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menu.name}</a>
+                    <a href="${menu.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menu.name}</a>
                     </li>
                 </c:if>
 
                 <c:if test="${empty menu.url}">
-                        <span style="color:green;">${menu.name}</span>
+                    <span style="color:green;">${menu.name}</span>
                     </li>
 
                     <c:forEach var="menuitem" items="${menu.sub}">
                         <li class="w3-padding-16" style="font-size: 14px;">
 
                         <c:if test="${not empty menuitem.url}">
-                                <a href="${menuitem.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem.name}</a>
+                            <a href="${menuitem.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem.name}</a>
                             </li>
                         </c:if>
 
@@ -148,12 +148,12 @@
                                 <li class="w3-padding-16" style="font-size: 14px;">
 
                                 <c:if test="${not empty menuitem2.url}">
-                                        <a href="${menuitem2.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem2.name}</a>
+                                    <a href="${menuitem2.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem2.name}</a>
                                     </li>
                                 </c:if>
 
                                 <c:if test="${empty menuitem2.url}">
-                                        <span style="color: orange;">${menuitem2.name}</span>
+                                    <span style="color: orange;">${menuitem2.name}</span>
                                     </li>
                                 </c:if>
                             </c:forEach>
@@ -170,8 +170,8 @@
         <%--<h1 class="w3-text-theme">W3.CSS</h1>--%>
         <%--</div>--%>
 
-        <ul class="w3-ul w3-large">
-            <c:forEach var="sistema" items="${mainBean.root.sistemas}">
+        <ul class="w3-ul w3-large ${US}-${US.root}" >
+            <c:forEach var="sistema" items="${US.root.sistemas}">
 
                 <li class="w3-padding-16" style="font-size: 14px;">
                         ${sistema.no_sistem}

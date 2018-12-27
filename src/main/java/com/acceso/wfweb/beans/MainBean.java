@@ -17,7 +17,7 @@ public class MainBean implements Serializable {
         Root root = (Root) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE");
 
         //capa de seguridad
-
+        
         return root;
     }
 

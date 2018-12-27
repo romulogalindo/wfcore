@@ -8,6 +8,7 @@ public class Sistema implements Serializable {
     int co_sistem;
     String no_sistem;
     List<Subsistema> subsistemas;
+    boolean renderer;
 
     public Sistema() {
     }
@@ -34,6 +35,14 @@ public class Sistema implements Serializable {
 
     public void setSubsistemas(List<Subsistema> subsistemas) {
         this.subsistemas = subsistemas;
+    }
+
+    public boolean isRenderer() {
+        return renderer;
+    }
+
+    public void setRenderer(boolean renderer) {
+        this.renderer = renderer;
     }
 
     @Override

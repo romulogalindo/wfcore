@@ -43,7 +43,7 @@ public class SecurityDAO extends DAO {
         NQuery nQuery = new NQuery(this);
 
         try {
-            nQuery.work(this.session.getNamedQuery(Values.QUERYS_SECURITY_REGSESINI_WEB), true, true);
+            nQuery.work(this.session.getNamedQuery(Values.QUERYS_SECURITY_PERMISBLO_WEB), true, true);
 
             nQuery.setInteger("p_co_usuari", p_co_usuari);
 

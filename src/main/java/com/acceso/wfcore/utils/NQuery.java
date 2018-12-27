@@ -26,7 +26,8 @@ public class NQuery {
     }
 
     public NQuery(Object object) {
-        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + ":" + (object == null ? "" : object.getClass().getEnclosingMethod().getName()) + "] ";
+        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + "] ";
+//        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + ":" + (object == null ? "" : object.getClass().getEnclosingMethod().getName()) + "] ";
     }
 
     public void work(Query query) {
@@ -40,6 +41,11 @@ public class NQuery {
         this.show_debug_log = show_debug_log;
     }
 
+    public void setString(String param_name, String param_value) {
+        query.setString(param_name, param_value);
+        queryString = queryString.replaceFirst(":" + param_name, "\'" + String.valueOf(param_value) + "\'");
+    }
+
     /**
      * Asigna el valor int
      *
@@ -51,9 +57,9 @@ public class NQuery {
         queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value));
     }
 
-    public void setString(String param_name, String param_value) {
-        query.setString(param_name, param_value);
-        queryString = queryString.replaceFirst(":" + param_name, "\'" + String.valueOf(param_value) + "\'");
+    public void setLong(String param_name, long param_value) {
+        query.setLong(param_name, param_value);
+        queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value));
     }
 
     public void setDate(String param_name, Date param_value) {
