@@ -22,16 +22,16 @@ public class MenuDAO {
         session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
     }
 
-    public List<MenuDTO> getMenus(Integer co_paquet, Integer co_menpad) {
+    public List<MenuDTO> getMenus_Sistemas() {
 
         List<MenuDTO> menus = new ArrayList<>();
         NQuery nQuery = new NQuery();
 
         try {
 
-            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU));
-            nQuery.setInteger("co_paquet", co_paquet == null ? -1 : co_paquet);
-            nQuery.setInteger("co_menpad", co_menpad == null ? -1 : co_menpad);
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SISTEMA));
+            //nQuery.setInteger("co_paquet", co_paquet == null ? -1 : co_paquet);
+            //nQuery.setInteger("co_menpad", co_menpad == null ? -1 : co_menpad);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
@@ -44,60 +44,50 @@ public class MenuDAO {
 
         return menus;
     }
-//
-//    public MenuDTO grabarMenu(MenuDTO menu) {
-//
-//        NQuery nQuery = new NQuery();
-//
-//        try {
-//            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_PAQUETE));
-//
-//            nQuery.setInteger("co_paquet", menu.getCo_paquet() == null ? -1 : menu.getCo_paquet());
-//            nQuery.setString("no_paquet", menu.getNo_paquet());
-//            nQuery.setInteger("co_subsis", menu.getCo_subsis());
-//            nQuery.setInteger("or_paquet", menu.getOr_paquet());
-//            nQuery.setString("no_prefij", menu.getNo_prefij());
-//            nQuery.setString("ur_defaul", menu.getUr_defaul());
-//            nQuery.setString("ur_arcadj", menu.getUr_arcadj());
-//            nQuery.setString("no_coldef", menu.getNo_coldef());
-//
-//            System.out.println("[MenuDAO:grabarMenu] Q = " + nQuery.getQueryString());
-//
-//            menu = (MenuDTO) nQuery.list().get(0);
-//
-//            System.out.println("[MenuDAO:grabarMenu] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
-//        } catch (Exception ep) {
-//            System.out.println("[MenuDAO:grabarMenu] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-//            ep.printStackTrace();
-//        }
-//
-//        return menu;
-//    }
-//
-//    public String deleteMenu(MenuDTO menu) {
-//
-//        NQuery nQuery = new NQuery();
-//
-//        String resultado = null;
-//
-//        try {
-//            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_PAQUETE));
-//
-//            nQuery.setInteger("co_paquet", menu.getCo_paquet());
-//
-//            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString());
-//
-//            resultado = nQuery.list().toString();
-//
-//            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
-//            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + " R = " + resultado);
-//
-//        } catch (Exception ep) {
-//            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-//            ep.printStackTrace();
-//        }
-//        return resultado;
-//    }
+
+    public List<MenuDTO> getMenus_SubSistemas(Integer co_sistem) {
+
+        List<MenuDTO> menus = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SUBSISTEMA));
+            nQuery.setInteger("co_sistem", co_sistem == null ? -1 : co_sistem);
+
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            menus = nQuery.list();
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return menus;
+    }
+
+    public List<MenuDTO> getMenus_Paquete(Integer co_subsis) {
+
+        List<MenuDTO> menus = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_PAQUETE));
+            nQuery.setInteger("co_sistem", co_subsis == null ? -1 : co_subsis);
+
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            menus = nQuery.list();
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return menus;
+    }
 
     public void close() {
         try {

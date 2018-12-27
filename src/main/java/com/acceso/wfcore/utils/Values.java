@@ -39,7 +39,11 @@ public class Values {
     public static final String QUERYS_NATIVE_GRABAR_USUARIO = "wfcore.usuario_update";
     public static final String QUERYS_NATIVE_DELETE_USUARIO = "wfcore.usuario_delete";
 
-    public static final String QUERYS_NATIVE_SELECT_MENU = "wfcore.menu_select";
+    public static final String QUERYS_NATIVE_SELECT_MENU_SISTEMA = "wfcore.menu_sistema";
+    public static final String QUERYS_NATIVE_SELECT_MENU_SUBSISTEMA = "wfcore.menu_subsistema";
+    public static final String QUERYS_NATIVE_SELECT_MENU_PAQUETE = "wfcore.menu_paquete";
+    public static final String QUERYS_NATIVE_SELECT_MENU_MODPAD = "wfcore.menu_modpad";
+    public static final String QUERYS_NATIVE_SELECT_MENU_SUBMOD = "wfcore.menu_submod";
 
 
     /*===CACHE===*/

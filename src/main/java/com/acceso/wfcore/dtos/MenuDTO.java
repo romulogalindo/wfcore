@@ -21,37 +21,58 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_MENU,
-            query = "select co_mensis, no_mensis, co_menpad, co_modulo, or_mensis, co_subsis, co_paquet "
-            + "from wfsistem.pbmodulo_list()",
+            name = Values.QUERYS_NATIVE_SELECT_MENU_SISTEMA,
+            query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi "
+            + "from wfsistem.pbgetmenu_sistem()",
+            resultClass = MenuDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_MENU_SUBSISTEMA,
+            query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi "
+                  + "from wfsistem.pbgetmenu_subsistem(:co_sistem)",
+            resultClass = MenuDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_MENU_PAQUETE,
+            query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi "
+                  + "from wfsistem.pbgetmenu_paquete(:co_subsis)",
+            resultClass = MenuDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_MENU_MODPAD,
+            query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi "
+                  + "from wfsistem.pbgetmenu_modpad(:co_paquet)",
+            resultClass = MenuDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_MENU_SUBMOD,
+            query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi "
+                  + "from wfsistem.pbgetmenu_submod(:co_menpad)",
             resultClass = MenuDTO.class)
 })
 public class MenuDTO implements Serializable {
 
     @Id
-    Integer co_mensis;
+    Integer co_elemen;
 
-    String no_mensis;
+    String no_elemen;
     Integer co_menpad;
     Integer co_modulo;
-    Integer or_mensis;
+    Integer co_sistem;
     Integer co_subsis;
-    Integer co_paquet;
+    Integer co_paquet
+    String co_identi;
 
-    public Integer getCo_mensis() {
-        return co_mensis;
+    public Integer getCo_elemen() {
+        return co_elemen;
     }
 
-    public void setCo_mensis(Integer co_mensis) {
-        this.co_mensis = co_mensis;
+    public void setCo_elemen(Integer co_elemen) {
+        this.co_elemen = co_elemen;
     }
 
-    public String getNo_mensis() {
-        return no_mensis;
+    public String getNo_elemen() {
+        return no_elemen;
     }
 
-    public void setNo_mensis(String no_mensis) {
-        this.no_mensis = no_mensis;
+    public void setNo_elemen(String no_elemen) {
+        this.no_elemen = no_elemen;
     }
 
     public Integer getCo_menpad() {
@@ -70,12 +91,12 @@ public class MenuDTO implements Serializable {
         this.co_modulo = co_modulo;
     }
 
-    public Integer getOr_mensis() {
-        return or_mensis;
+    public Integer getCo_sistem() {
+        return co_sistem;
     }
 
-    public void setOr_mensis(Integer or_mensis) {
-        this.or_mensis = or_mensis;
+    public void setCo_sistem(Integer co_sistem) {
+        this.co_sistem = co_sistem;
     }
 
     public Integer getCo_subsis() {
@@ -94,16 +115,25 @@ public class MenuDTO implements Serializable {
         this.co_paquet = co_paquet;
     }
 
+    public String getCo_identi() {
+        return co_identi;
+    }
+
+    public void setCo_identi(String co_identi) {
+        this.co_identi = co_identi;
+    }
+
     @Override
     public String toString() {
         return "MenuDTO{" +
-              "co_mensis=" + co_mensis +
-              ", no_mensis='" + no_mensis + '\'' +
+              "co_elemen=" + co_elemen +
+              ", no_elemen='" + no_elemen + '\'' +
               ", co_menpad=" + co_menpad +
               ", co_modulo=" + co_modulo +
-              ", or_mensis=" + or_mensis +
+              ", co_sistem=" + co_sistem +
               ", co_subsis=" + co_subsis +
               ", co_paquet=" + co_paquet +
+              ", co_identi='" + co_identi + '\'' +
               '}';
     }
 }
