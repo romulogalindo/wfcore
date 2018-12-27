@@ -56,15 +56,11 @@ public class LoginServlet extends HttpServlet {
             } else {
                 //redigir pero mensaje de error
                 requestManager.save_over_request("goto", "go!");
-                requestManager.save_over_request("error", doLogin.getMessage());
                 requestManager.save_over_session("login_error", doLogin.getMessage());
 
                 goToUrl = "/";
             }
 
-        } else {
-            //forzarlos a irse a la pagina del login
-            goToUrl = "/";
         }
 
 

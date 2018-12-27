@@ -70,7 +70,12 @@
             }
         }
 
-
+        .wf4_iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
+        }
     </style>
 
     <script>
@@ -119,7 +124,7 @@
         </a>
 
         <ul class="w3-ul w3-large">
-            <c:forEach var="menu" items="${mainBean.menu.menu}">
+            <c:forEach var="menu" items="${US.mainMenu.menu}">
 
                 <li class="w3-padding-16" style="font-size: 14px;">
 
@@ -166,11 +171,8 @@
     </div>
 
     <div id="sistemas64" class="menubloq" style="display: none;">
-        <%--<div class="w3-container w3-border-bottom">--%>
-        <%--<h1 class="w3-text-theme">W3.CSS</h1>--%>
-        <%--</div>--%>
 
-        <ul class="w3-ul w3-large ${US}-${US.root}" >
+        <ul class="w3-ul w3-large ${US}-${US.root}">
             <c:forEach var="sistema" items="${US.root.sistemas}">
 
                 <li class="w3-padding-16" style="font-size: 14px;">
@@ -216,9 +218,10 @@
 
     <div class="wf_right w3-quarter">
         <div class="w3-bar w3-xlarge">
+            <div class="w3-bar-item w3-button">${US.no_usulog}</div>
             <a href="#" class="w3-bar-item w3-button w3-right">
-                <img class="w3-hide-small w3-circle" src="https://www.w3schools.com/w3css/img_avtar.jpg"
-                     style="height:40px;">
+                <img class="w3-hide-small w3-circle" src="${US.no_imgusu}"
+                     style="height:40px;"/>
             </a>
         </div>
 
@@ -231,7 +234,9 @@
         <div class="w3-row" style="height: 30px;"></div>
 
         <div class="w3-row">
-            <div class="w3-quarter" style="background:red;height: 200px;">1/4</div>
+            <div class="w3-quarter" style="background:red;height: 200px;">
+                <iframe src="/jsp_exec/ocelot/pagina.jsp?rise=123456" class="wf4_iframe"></iframe>
+            </div>
             <div class="w3-quarter" style="background:green;height: 200px;">1/4</div>
             <div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>
             <div class="w3-quarter" style="background:gray;height: 200px;">1/4</div>
