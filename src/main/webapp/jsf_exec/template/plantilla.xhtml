@@ -54,6 +54,11 @@
                                     actionListener="#{moduloBean.doListener}" ajax="true" async="false"
                                     update="mainPanel" icon="fa fa-check"/>
 
+                        <p:menuitem value="#{menuBean.beanName}"
+                                    action="#{menuBean.load}"
+                                    ajax="true" async="false"
+                                    update="mainPanel" icon="fa fa-check"/>
+
                     </p:submenu>
 
                     <p:separator/>

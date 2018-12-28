@@ -1,23 +1,18 @@
 package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.MenuDAO;
-import com.acceso.wfcore.daos.PaqueteDAO;
-import com.acceso.wfcore.daos.SistemaDAO;
-import com.acceso.wfcore.daos.SubSistemaDAO;
 import com.acceso.wfcore.dtos.MenuDTO;
-import com.acceso.wfcore.dtos.PaqueteDTO;
-import com.acceso.wfcore.dtos.SistemaDTO;
-import com.acceso.wfcore.dtos.SubSistemaDTO;
-import com.acceso.wfcore.utils.Document;
+
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +37,8 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
     private List<SelectItem> lstSubSistemabySistema;
     private List<SelectItem> lstPaquetebySubSistema;
 
-    TreeNode root;
+    private TreeNode root;
+    private TreeNode selectedNode;
 
     public MenuBean() {
         this.beanName = "Menus";
@@ -50,70 +46,64 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
         this.isregEditable = true;
     }
 
-    public void onSistemaChange(Integer co_sistem) {
-        this.lstSubSistemabySistema = new ArrayList<>();
-        List<SubSistemaDTO> subsistemas;
-        SubSistemaDAO dao = new SubSistemaDAO();
-        subsistemas = dao.getSubSistemas();
-        if (co_sistem == 0) {
-            for (SubSistemaDTO sis : subsistemas) {
-                SelectItem item = new SelectItem();
-                item.setLabel(sis.getNo_subsis());
-                item.setDescription(sis.getNo_subsis());
-                item.setValue(sis.getCo_subsis());
-                this.lstSubSistemabySistema.add(item);
-            }
-        } else {
-            for (SubSistemaDTO sis : subsistemas) {
-                if (sis.getCo_sistem() == co_sistem) {
-                    SelectItem item = new SelectItem();
-                    item.setLabel(sis.getNo_subsis());
-                    item.setDescription(sis.getNo_subsis());
-                    item.setValue(sis.getCo_subsis());
-                    this.lstSubSistemabySistema.add(item);
+    public void createTreeNode() {
+        this.root = new DefaultTreeNode("Root Node", null);
+
+        List<MenuDTO> lstsistemas;
+        MenuDAO menuDAO = new MenuDAO();
+        lstsistemas = menuDAO.getMenus_Sistemas();
+
+        for (MenuDTO menusisDTO : lstsistemas) {
+            TreeNode nodesistema = new DefaultTreeNode(menusisDTO ,  this.root);
+            List<MenuDTO> lstsubsis = menuDAO.getMenus_SubSistemas(menusisDTO.getCo_elemen());
+
+            for (MenuDTO menusubDTO : lstsubsis) {
+                TreeNode nodesubsis = new DefaultTreeNode(menusubDTO ,  nodesistema);
+                List<MenuDTO> lstpaquetes = menuDAO.getMenus_Paquete(menusubDTO.getCo_elemen());
+
+                for (MenuDTO menupaqDTO : lstpaquetes) {
+                    TreeNode nodepaquete = new DefaultTreeNode(menupaqDTO ,  nodesubsis);
+                    List<MenuDTO> lstmodpad = menuDAO.getMenus_ModPad(menupaqDTO.getCo_elemen());
+
+                    for (MenuDTO menupadDTO : lstmodpad) {
+                        TreeNode nodemodpad = new DefaultTreeNode(menupadDTO ,  nodepaquete);
+                        List<MenuDTO> lstsub1 = menuDAO.getMenus_SubMod(menupadDTO.getCo_elemen());
+
+                        for (MenuDTO menusb1DTO : lstsub1) {
+                            TreeNode nodesub1 = new DefaultTreeNode(menusb1DTO ,  nodemodpad);
+                            List<MenuDTO> lstsub2 = menuDAO.getMenus_SubMod(menusb1DTO.getCo_elemen());
+
+                            for (MenuDTO menusb2DTO : lstsub2) {
+                                TreeNode nodesub2 = new DefaultTreeNode(menusb2DTO ,  nodesub1);
+                                List<MenuDTO> lstsub3 = menuDAO.getMenus_SubMod(menusb2DTO.getCo_elemen());
+
+                                for (MenuDTO menusb3DTO : lstsub3) {
+                                    TreeNode nodesub3 = new DefaultTreeNode(menusb3DTO ,  nodesub2);
+                                    List<MenuDTO> lstsub4 = menuDAO.getMenus_SubMod(menusb3DTO.getCo_elemen());
+
+                                    for (MenuDTO menusb4DTO : lstsub4) {
+                                        TreeNode nodesub4 = new DefaultTreeNode(menusb4DTO ,  nodesub3);
+                                        List<MenuDTO> lstsub5 = menuDAO.getMenus_SubMod(menusb4DTO.getCo_elemen());
+
+                                        for (MenuDTO menusb5DTO : lstsub5) {
+                                            TreeNode nodesub5 = new DefaultTreeNode(menusb5DTO ,  nodesub4);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
         }
+        menuDAO.close();
+        System.out.println("Final Bean:" + this.root.getData().toString());
     }
 
-    public void onSubSistemaChange(Integer co_subsis) {
-        this.lstPaquetebySubSistema = new ArrayList<>();
-        List<PaqueteDTO> paquetes;
-        PaqueteDAO dao = new PaqueteDAO();
-        paquetes = dao.getPaquetes();
-        if (co_subsis == 0) {
-            for (PaqueteDTO paq : paquetes) {
-                SelectItem item = new SelectItem();
-                item.setLabel(paq.getNo_paquet());
-                item.setDescription(paq.getNo_paquet());
-                item.setValue(paq.getCo_paquet());
-                this.lstPaquetebySubSistema.add(item);
-            }
-        } else {
-            for (PaqueteDTO paq : paquetes) {
-                if (paq.getCo_subsis() == co_subsis) {
-                    SelectItem item = new SelectItem();
-                    item.setLabel(paq.getNo_paquet());
-                    item.setDescription(paq.getNo_paquet());
-                    item.setValue(paq.getCo_paquet());
-                    this.lstPaquetebySubSistema.add(item);
-                }
-            }
-        }
-    }
-
-    public TreeNode createDocuments() {
-        this.root = new DefaultTreeNode(new Document("", null, null, -1), null);
-
-        List<SistemaDTO> lstsistemas;
-        SistemaDAO sisDAO = new SistemaDAO();
-        lstsistemas = sisDAO.getSistemas();
-        for (SistemaDTO sisDTO : lstsistemas) {
-            TreeNode nodesistema = new DefaultTreeNode(new Document(sisDTO.getNo_sistem(), null, null, 0), this.root);
-
-        }
-
-        return root;
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Edit Cancelled", ((TreeNode) event.getObject()).toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     @Override
@@ -128,7 +118,8 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
         // LLENAR LOS BOTONES SECUNDARIOS
         //doListener();
         //CARGA INICIAL!!
-        selectDto();
+        //selectDto();
+        createTreeNode();
 
         return URL_LISTA;
     }
@@ -170,8 +161,6 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
-        // CARGAMOS COMBOS DE SUBSISTEMA
-        onSistemaChange(0);
         return URL_EDITAR;
     }
 
@@ -191,15 +180,15 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
     @Override
     public void selectDto() {
         MenuDAO dao = new MenuDAO();
-//        this.menus = dao.getMenus(-1, -1);
+        // this.menus = dao.getMenus(-1, -1);
         dao.close();
     }
 
     @Override
     public void saveDto() {
         MenuDAO dao = new MenuDAO();
-        //this.menu = dao.grabarMenu(menu);
-//        this.menus = dao.getMenus(-1, -1);
+        // this.menu = dao.grabarMenu(menu);
+        // this.menus = dao.getMenus(-1, -1);
 //      System.out.println("MenuBean actualizarMenu = " + this.menu);
         dao.close();
     }
@@ -208,7 +197,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
     public void updateDto() {
         MenuDAO dao = new MenuDAO();
         //this.menu = dao.grabarMenu(menu);
-//        this.menus = dao.getMenus(-1, -1);
+        // this.menus = dao.getMenus(-1, -1);
 //      System.out.println("MenuBean actualizarMenu = " + this.menu);
         dao.close();
     }
@@ -217,7 +206,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
     public void deleteDto() {
         MenuDAO dao = new MenuDAO();
         //String resultado = dao.deleteMenu(menu);
-//        this.menus = dao.getMenus(-1, -1);
+        // this.menus = dao.getMenus(-1, -1);
         dao.close();
     }
 
@@ -245,19 +234,19 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
         this.isregEditable = isregEditable;
     }
 
-    public List<SelectItem> getLstSubSistemabySistema() {
-        return lstSubSistemabySistema;
+    public TreeNode getRoot() {
+        return root;
     }
 
-    public void setLstSubSistemabySistema(List<SelectItem> lstSubSistemabySistema) {
-        this.lstSubSistemabySistema = lstSubSistemabySistema;
+    public void setRoot(TreeNode root) {
+        this.root = root;
     }
 
-    public List<SelectItem> getLstPaquetebySubSistema() {
-        return lstPaquetebySubSistema;
+    public TreeNode getSelectedNode() {
+        return selectedNode;
     }
 
-    public void setLstPaquetebySubSistema(List<SelectItem> lstPaquetebySubSistema) {
-        this.lstPaquetebySubSistema = lstPaquetebySubSistema;
+    public void setSelectedNode(TreeNode selectedNode) {
+        this.selectedNode = selectedNode;
     }
 }

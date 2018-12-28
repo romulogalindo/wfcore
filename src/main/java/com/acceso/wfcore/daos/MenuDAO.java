@@ -75,7 +75,50 @@ public class MenuDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_PAQUETE));
-            nQuery.setInteger("co_sistem", co_subsis == null ? -1 : co_subsis);
+            nQuery.setInteger("co_subsis", co_subsis == null ? -1 : co_subsis);
+
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            menus = nQuery.list();
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return menus;
+    }
+
+    public List<MenuDTO> getMenus_ModPad(Integer co_paquet) {
+
+        List<MenuDTO> menus = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_MODPAD));
+            nQuery.setInteger("co_paquet", co_paquet == null ? -1 : co_paquet);
+
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            menus = nQuery.list();
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return menus;
+    }
+    public List<MenuDTO> getMenus_SubMod(Integer co_menpad) {
+
+        List<MenuDTO> menus = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SUBMOD));
+            nQuery.setInteger("co_menpad", co_menpad == null ? -1 : co_menpad);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
