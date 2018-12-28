@@ -10,23 +10,24 @@ import javax.script.ScriptEngineManager;
 import java.util.List;
 
 public class JavaScriptService extends Service {
+
     ScriptEngineManager manager;
-    ScriptEngine engine_nativejs;
+    //    ScriptEngine engine_nativejs;
     ScriptEngine engine_nashornjs;
-    ScriptEngine engine_graalvmjs;
+//    ScriptEngine engine_graalvmjs;
 
     public JavaScriptService(String serviceName) {
         super(serviceName);
 
         //Levantar el motor de JS
         manager = new ScriptEngineManager();
-        engine_nativejs = manager.getEngineByName("javascript");
+//        engine_nativejs = manager.getEngineByName("javascript");
         engine_nashornjs = manager.getEngineByName("nashorn");
-        engine_graalvmjs = manager.getEngineByName("Graal.js");
-        List<ScriptEngineFactory> scriptEngineFactories = manager.getEngineFactories();
-        for (ScriptEngineFactory scriptEngineFactory : scriptEngineFactories) {
-            System.out.println("scriptEngineFactory = " + scriptEngineFactory);
-        }
+//        engine_graalvmjs = manager.getEngineByName("graal.js");
+//        List<ScriptEngineFactory> scriptEngineFactories = manager.getEngineFactories();
+//        for (ScriptEngineFactory scriptEngineFactory : scriptEngineFactories) {
+//            System.out.println("scriptEngineFactory = " + scriptEngineFactory);
+//        }
     }
 
     @Override
@@ -34,15 +35,15 @@ public class JavaScriptService extends Service {
         String script_Base = "(function() { return this; })";
 
         /*ENGINE 1*/
-        try {
-            Object fn = engine_nativejs.eval(script_Base);
-            Invocable inv = (Invocable) engine_nativejs;
-            Object result = inv.invokeMethod(fn, "call", fn);
-            System.out.println("(ENGINE1)result = " + result);
-        } catch (Exception ep) {
-            System.out.println("ENGINE 1 (error)");
-            ep.printStackTrace();
-        }
+//        try {
+//            Object fn = engine_nativejs.eval(script_Base);
+//            Invocable inv = (Invocable) engine_nativejs;
+//            Object result = inv.invokeMethod(fn, "call", fn);
+//            System.out.println("(ENGINE1)result = " + result);
+//        } catch (Exception ep) {
+//            System.out.println("ENGINE 1 (error)");
+//            ep.printStackTrace();
+//        }
 
         /*ENGINE 2*/
         try {
@@ -57,23 +58,23 @@ public class JavaScriptService extends Service {
 
         /*ENGINE 3*/
 //        org.graalvm.polyglot.Engine.
-        Context context = Context.create();
-        Value array = context.eval("js", "[1,2,42,4]");
-        int result2 = array.getArrayElement(2).asInt();
+//        Context context = Context.create();
+//        Value array = context.eval("js", "[1,2,42,4]");
+//        int result2 = array.getArrayElement(2).asInt();
 
-        try {
-            Object fn = engine_graalvmjs.eval(script_Base);
-            Invocable inv = (Invocable) engine_graalvmjs;
-            Object result = inv.invokeMethod(fn, "call", fn);
-            System.out.println("(ENGINE3)result = " + result);
-        } catch (Exception ep) {
-            System.out.println("ENGINE 3 (error)");
-            ep.printStackTrace();
-        }
+//        try {
+//            Object fn = engine_graalvmjs.eval(script_Base);
+//            Invocable inv = (Invocable) engine_graalvmjs;
+//            Object result = inv.invokeMethod(fn, "call", fn);
+//            System.out.println("(ENGINE3)result = " + result);
+//        } catch (Exception ep) {
+//            System.out.println("ENGINE 3 (error)");
+//            ep.printStackTrace();
+//        }
     }
 
     @Override
     public void stop() {
-
+        engine_nashornjs = null;
     }
 }

@@ -168,35 +168,74 @@
         <dependency>
             <groupId>org.graalvm</groupId>
             <artifactId>graal-sdk</artifactId>
-            <version>1.0.0-rc2</version>
+            <version>1.0.0-rc7</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.oracle.truffle/truffle-api -->
+        <!--<dependency>-->
+            <!--<groupId>com.oracle.truffle</groupId>-->
+            <!--<artifactId>truffle-api</artifactId>-->
+            <!--<version>1.0.0-rc7</version>-->
+        <!--</dependency>-->
+
 
         <!-- https://mvnrepository.com/artifact/org.graalvm.sdk/polyglot-tck -->
         <!--<dependency>-->
-            <!--<groupId>org.graalvm.sdk</groupId>-->
-            <!--<artifactId>polyglot-tck</artifactId>-->
-            <!--<version>1.0.0-rc10</version>-->
+        <!--<groupId>org.graalvm.sdk</groupId>-->
+        <!--<artifactId>polyglot-tck</artifactId>-->
+        <!--<version>1.0.0-rc10</version>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-            <!--<groupId>org.graalvm.js</groupId>-->
-            <!--<artifactId>js</artifactId>-->
-            <!--<version>${graalvm.version}</version>-->
-            <!--<scope>runtime</scope>-->
+        <!--<groupId>org.graalvm.js</groupId>-->
+        <!--<artifactId>js</artifactId>-->
+        <!--<version>1.0.0-rc2</version>-->
+        <!--<scope>runtime</scope>-->
         <!--</dependency>-->
 
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>graaljs-scriptengine</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/libs/graaljs-scriptengine.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>graaljs</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/libs/graaljs.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>truffle-api</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/libs/truffle-api.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>tregex</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/libs/tregex.jar</systemPath>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.graalvm.sdk/launcher-common -->
         <!--<dependency>-->
-            <!--<groupId>org.graalvm.sdk</groupId>-->
-            <!--<artifactId>launcher-common</artifactId>-->
-            <!--<version>1.0.0-rc10</version>-->
+        <!--<groupId>org.graalvm.sdk</groupId>-->
+        <!--<artifactId>launcher-common</artifactId>-->
+        <!--<version>1.0.0-rc10</version>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-            <!--<groupId>org.graalvm.js</groupId>-->
-            <!--<artifactId>js</artifactId>-->
-            <!--<version>${graalvm.version}</version>-->
-            <!--<scope>runtime</scope>-->
+        <!--<groupId>org.graalvm.js</groupId>-->
+        <!--<artifactId>js</artifactId>-->
+        <!--<version>${graalvm.version}</version>-->
+        <!--<scope>runtime</scope>-->
         <!--</dependency>-->
         <!--<dependency>-->
         <!--<groupId>com.eclipsesource.j2v8</groupId>-->
