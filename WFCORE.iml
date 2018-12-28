@@ -80,6 +80,42 @@
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.6.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.5" level="project" />
-    <orderEntry type="library" name="Maven: org.graalvm:graal-sdk:1.0.0-rc2" level="project" />
+    <orderEntry type="library" name="Maven: org.graalvm:graal-sdk:1.0.0-rc7" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: org.graalvm.js:graaljs-scriptengine:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/resources/libs/graaljs-scriptengine.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.graalvm.js:graaljs:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/resources/libs/graaljs.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.graalvm.js:truffle-api:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/resources/libs/truffle-api.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.graalvm.js:tregex:1.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/resources/libs/tregex.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
