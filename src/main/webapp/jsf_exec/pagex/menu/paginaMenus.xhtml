@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <style type="text/css">
+        .ui-row-editor .ui-row-editor-pencil {
+            margin-left: 8px;
+        }
+
+        .ui-editable-column .ui-cell-editor-input {
+            overflow: hidden;
+        }
+
+        .ui-editable-column .ui-cell-editor-input * {
+            box-sizing: border-box;
+        }
+
+        .ui-treetable {
+            margin-top: 40px
+        }
+
+        .ui-treetable table {
+            table-layout: fixed
+        }
+
+        body .ui-button {
+            margin: 10px 0 0 0;
+        }
+    </style>
+
+    <ui:composition template="../../template/plantilla.xhtml">
+        <ui:define name="content">
+
+            <h:form id="form">
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+                </p:confirmDialog>
+
+                <p:panel id="panelListaMenu">
+
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:scrollPanel style="width:1400px;height:1200px">
+                        <p:treeTable id="lista"
+                                     value="#{menuBean.root}"
+                                     var="men"
+                                     editable="true"
+                                     style="margin-bottom:20px"
+                                     selectionMode="single"
+                                     selection="#{menuBean.selectedNode}">
+
+                            <f:facet name="header">
+                                Lista de Menus
+                            </f:facet>
+
+                            <p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}"/>
+                            <p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}"/>
+
+                            <p:column headerText="Nombre">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{men.no_elemen}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{men.no_elemen}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Modulo">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{men.co_modulo}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{men.co_modulo}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Identificador">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{men.co_identi}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{men.co_identi}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column style="width:32px">
+                                <p:rowEditor rendered="true"/>
+                            </p:column>
+
+                        </p:treeTable>
+                        <p:commandButton value="Agregar" update="msgs" icon="pi pi-clone"
+                                         action="#"/>
+                    </p:scrollPanel>
+                </p:panel>
+
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
+
+</html>

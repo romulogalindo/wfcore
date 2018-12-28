@@ -37,6 +37,7 @@
         <mapping class="com.acceso.wfcore.dtos.SubSistemaDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PaqueteDTO"/>
         <mapping class="com.acceso.wfcore.dtos.ModuloDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.MenuDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>

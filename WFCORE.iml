@@ -80,5 +80,6 @@
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:3.4.1.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.6.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" name="Maven: org.graalvm:graal-sdk:1.0.0-rc2" level="project" />
   </component>
 </module>
