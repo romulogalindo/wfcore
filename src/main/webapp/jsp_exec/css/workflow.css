@@ -1,0 +1,56 @@
+* {
+    font-family: "Ubuntu Light"
+}
+
+DIV.w3-teal {
+    position: fixed;
+    width: 100%;
+}
+
+DIV.wf_right {
+    position: fixed;
+    right: 0px;
+    display: block;
+    top: 5px;
+}
+
+.main_title_module {
+    margin: 0px;
+    color: white;
+    font-size: 26px;
+}
+
+.main_title_breadcrumbs {
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    font-size: 14px;
+}
+
+.main_margin_etop {
+    padding-top: 70px;
+}
+
+@media (min-width: 993px) {
+    .w3-modal-content {
+        width: 900px
+    }
+
+    .w3-hide-large {
+        display: none !important;
+        /*display: unset;*/
+    }
+
+    .w3-sidebar.w3-collapse {
+        /*display: block !important*/
+        /*display: none !important*/
+        display: unset;
+    }
+}
+
+.wf4_iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+}

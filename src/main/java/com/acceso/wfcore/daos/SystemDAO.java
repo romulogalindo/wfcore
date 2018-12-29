@@ -11,13 +11,13 @@ public class SystemDAO extends DAO {
         this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
     }
 
-    public SystemTreeDTO regsesini() {
+    public SystemTreeDTO getSystemTreeDTO() {
         SystemTreeDTO systemTreeDTO = null;
 
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(this);
 
         try {
-            nQuery.work(this.session.getNamedQuery(Values.QUERY_MAINTREE));
+            nQuery.work(this.session.getNamedQuery(Values.QUERY_MAINTREE), true, true);
 
             systemTreeDTO = (SystemTreeDTO) nQuery.list().get(0);
         } catch (Exception e) {

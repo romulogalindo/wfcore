@@ -89,7 +89,7 @@ public class DoLogin {
         for (int a = root.getSistemas().size(); a > 0; a--) {
             Sistema sistema = root.getSistemas().get(a - 1);
             boolean renderer = evaluar(sistema.getCo_sistem(), permisSistema);
-            System.out.println("sistema = " + sistema + "({" + renderer + "})");
+            System.out.println("sistema = " + sistema.getCo_sistem() + "({" + renderer + "})");
 
             if (!renderer) {
 
@@ -123,19 +123,19 @@ public class DoLogin {
 
                                         _mainMenu.getMenu().remove(d);
                                     } else {
+                                        if (menu.getSub() != null)
+                                            for (int e = menu.getSub().size(); e > 0; e--) {
+                                                MenuItem menuItem = menu.getSub().get(e - 1);
+                                                renderer = true;
 
-                                        for (int e = menu.getSub().size(); e > 0; e--) {
-                                            MenuItem menuItem = menu.getSub().get(e - 1);
-                                            renderer = true;
+                                                if (!renderer) {
 
-                                            if (!renderer) {
+                                                    menu.getSub().remove(e - 1);
+                                                } else {
 
-                                                menu.getSub().remove(e - 1);
-                                            } else {
-
-                                                //bis
+                                                    //bis
+                                                }
                                             }
-                                        }
                                     }
                                 }
                             }

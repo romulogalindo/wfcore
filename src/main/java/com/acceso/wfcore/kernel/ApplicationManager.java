@@ -3,6 +3,7 @@ package com.acceso.wfcore.kernel;
 import com.acceso.wfcore.dtos.SystemTreeDTO;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.servlets.LoginServlet;
+import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.web.Root;
 import com.google.gson.Gson;
 
@@ -28,5 +29,11 @@ public class ApplicationManager {
         Gson gson = new Gson();
         Root mainTree = gson.fromJson(systemTreeDTO.getTree(), Root.class);
         return mainTree;
+    }
+
+    public static Contenedor buildContainer(int co_conten) {
+        //cobnstruimos el objeto contenedor
+
+        return new Contenedor();
     }
 }

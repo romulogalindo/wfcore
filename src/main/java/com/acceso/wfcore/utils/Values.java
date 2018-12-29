@@ -48,6 +48,7 @@ public class Values {
 
     /*===CACHE===*/
     public static final String CACHE_MAIN_MENUTREE = "CACHE_MAIN_MENUTREE";
+    public static final String CACHE_MAIN_CONTAINER = "CACHE_MAIN_CONTAINER";
 
 
     /*===KERNEL===*/

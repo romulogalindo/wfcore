@@ -9,7 +9,9 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="mainBean" class="com.acceso.wfweb.beans.MainBean"/>
-<html>
+<jsp:useBean id="contenedorBean" class="com.acceso.wfweb.beans.ContenedorBean"/>
+
+<html co_conten="${contenedorBean.do64(pageContext.request)}">
 <head>
     <title>Main</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,97 +20,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
-    <!--ESTO DEBE IR EN UN CSS APARTE-->
-    <style>
-        * {
-            font-family: "Ubuntu Light"
-        }
+    <!--CSS-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
-        DIV.w3-teal {
-            position: fixed;
-            width: 100%;
-        }
-
-        DIV.wf_right {
-            position: fixed;
-            right: 0px;
-            display: block;
-            top: 5px;
-        }
-
-        .main_title_module {
-            margin: 0px;
-            color: white;
-            font-size: 26px;
-        }
-
-        .main_title_breadcrumbs {
-            margin: 0px;
-            padding: 0px;
-            color: white;
-            font-size: 14px;
-        }
-
-        .main_margin_etop {
-            padding-top: 70px;
-        }
-
-        @media (min-width: 993px) {
-            .w3-modal-content {
-                width: 900px
-            }
-
-            .w3-hide-large {
-                display: none !important;
-                /*display: unset;*/
-            }
-
-            .w3-sidebar.w3-collapse {
-                /*display: block !important*/
-                /*display: none !important*/
-                display: unset;
-            }
-        }
-
-        .wf4_iframe {
-            width: 100%;
-            height: 100%;
-            display: block;
-            border: none;
-        }
-    </style>
-
-    <script>
-        function w3_open() {
-            document.getElementById("mySidebar").style.display = "block";
-            document.getElementById("myOverlay").style.display = "block";
-        }
-
-        function w3_close() {
-            document.getElementById("mySidebar").style.display = "none";
-            document.getElementById("myOverlay").style.display = "none";
-        }
-
-        function viewtab(evt, cityName) {
-            var i, x, tablinks;
-            x = document.getElementsByClassName("menubloq");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < x.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " w3-red";
-        }
-    </script>
+    <!--JS -->
+    <link rel="script" href="${pageContext.request.contextPath}/jsp_exec/js/workflow.js">
 
 </head>
-<body>
+<body onload="workflow()">
 
 <!-- Sidebar -->
-<%--<div class="w3-sidebar w3-collapse w3-white w3-animate-left w3-large" style="z-index:3;width:300px;" id="mySidebar">--%>
 <div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;" id="mySidebar">
 
     <div class="w3-bar w3-black w3-center">

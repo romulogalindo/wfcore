@@ -34,15 +34,18 @@ public class Application {
         dataSourceService.start();
         javaScriptService.start();
 
-        //creamos la cache del menu
+        //creamos la cache del menu - LVL1
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_MENUTREE, String.class, Object.class);
+
+        //creamos la cache de contenedores - LVL2
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_CONTAINER, Integer.class, Object.class);
 
         //construiremos el objeto cache(no es renderer)
         SystemTreeDTO systemTreeDTO;
 
         //extyraer data del dao
         SystemDAO systemDAO = new SystemDAO();
-        systemTreeDTO = systemDAO.regsesini();
+        systemTreeDTO = systemDAO.getSystemTreeDTO();
         systemDAO.close();
 
         //el dto poner en modo super obj

@@ -1,13 +1,8 @@
 package com.acceso.wfcore.services;
 
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.Value;
-
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
-import java.util.List;
 
 public class JavaScriptService extends Service {
 
