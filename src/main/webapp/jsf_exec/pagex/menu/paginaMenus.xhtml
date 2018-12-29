@@ -77,7 +77,21 @@
                                         <h:outputText value="#{men.co_modulo}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{men.co_modulo}" style="width:100%"/>
+                                        <h:selectOneMenu id="co_modulo" value="#{men.co_modulo}"
+                                                         dynamic="true" style="width:100%">
+                                            <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                                            <f:selectItems value="#{menuBean.getComboModulos(men)}"/>
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Orden">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{men.or_elemen}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{men.or_elemen}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
@@ -87,12 +101,12 @@
                                         <h:outputText value="#{men.co_identi}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{men.co_identi}" style="width:100%"/>
+                                        <h:outputText value="#{men.co_identi}"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
                             <p:column style="width:32px">
-                                <p:rowEditor rendered="true"/>
+                                <p:rowEditor rendered="#{menuBean.isEditable(men)}"/>
                             </p:column>
 
                         </p:treeTable>

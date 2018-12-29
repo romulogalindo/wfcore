@@ -1,8 +1,12 @@
 package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.MenuDAO;
+import com.acceso.wfcore.daos.ModuloDAO;
+import com.acceso.wfcore.daos.SubSistemaDAO;
 import com.acceso.wfcore.dtos.MenuDTO;
 
+import com.acceso.wfcore.dtos.ModuloDTO;
+import com.acceso.wfcore.dtos.SubSistemaDTO;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -13,6 +17,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,230 +28,275 @@ import java.util.List;
 @SessionScoped
 public class MenuBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-    private static final String URL_LISTA = "/admin/jsf_exec/pagex/menu/paginaMenus.xhtml";
-    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/menu/paginaMenus.xhtml";
-    private static final String URL_EDITAR = "/admin/jsf_exec/pagex/menu/paginaRegMenu.xhtml";
-    private static final String URL_NEW = "/admin/jsf_exec/pagex/menu/paginaRegMenu.xhtml";
+   private static final String URL_LISTA = "/admin/jsf_exec/pagex/menu/paginaMenus.xhtml";
+   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/menu/paginaMenus.xhtml";
+   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/menu/paginaRegMenu.xhtml";
+   private static final String URL_NEW = "/admin/jsf_exec/pagex/menu/paginaRegMenu.xhtml";
 
 
-    private List<MenuDTO> menus;
-    private MenuDTO menu;
+   private List<MenuDTO> menus;
+   private MenuDTO menu;
 
-    private boolean isregEditable;
+   private boolean isregEditable;
 
-    private List<SelectItem> lstSubSistemabySistema;
-    private List<SelectItem> lstPaquetebySubSistema;
+   private List<SelectItem> lstModulobyPaquete;
 
-    private TreeNode root;
-    private TreeNode selectedNode;
+   private TreeNode root;
+   private TreeNode selectedNode;
+   private List<ModuloDTO> modulos;
 
-    public MenuBean() {
-        this.beanName = "Menus";
-        this.menu = new MenuDTO();
-        this.isregEditable = true;
-    }
+   public MenuBean() {
+      this.beanName = "Menus";
+      this.menu = new MenuDTO();
+      this.isregEditable = true;
+   }
 
-    public void createTreeNode() {
-        this.root = new DefaultTreeNode("Root Node", null);
+   public void createTreeNode() {
+      this.root = new DefaultTreeNode("Root Node", null);
 
-        List<MenuDTO> lstsistemas;
-        MenuDAO menuDAO = new MenuDAO();
-        lstsistemas = menuDAO.getMenus_Sistemas();
+      MenuDAO menuDAO = new MenuDAO();
+      List<MenuDTO> lstsistemas = menuDAO.getMenus_Sistemas();
+      List<MenuDTO> lstsubsis = menuDAO.getMenus_SubSistemas();
+      List<MenuDTO> lstpaquetes = menuDAO.getMenus_Paquete();
+      List<MenuDTO> lstmodpad = menuDAO.getMenus_ModPad();
+      List<MenuDTO> lstsub1 = menuDAO.getMenus_SubMod();
 
-        for (MenuDTO menusisDTO : lstsistemas) {
-            TreeNode nodesistema = new DefaultTreeNode(menusisDTO ,  this.root);
-            List<MenuDTO> lstsubsis = menuDAO.getMenus_SubSistemas(menusisDTO.getCo_elemen());
 
-            for (MenuDTO menusubDTO : lstsubsis) {
-                TreeNode nodesubsis = new DefaultTreeNode(menusubDTO ,  nodesistema);
-                List<MenuDTO> lstpaquetes = menuDAO.getMenus_Paquete(menusubDTO.getCo_elemen());
+      for (MenuDTO menusisDTO : lstsistemas) {
+         TreeNode nodesistema = new DefaultTreeNode(menusisDTO, this.root);
 
-                for (MenuDTO menupaqDTO : lstpaquetes) {
-                    TreeNode nodepaquete = new DefaultTreeNode(menupaqDTO ,  nodesubsis);
-                    List<MenuDTO> lstmodpad = menuDAO.getMenus_ModPad(menupaqDTO.getCo_elemen());
+         for (MenuDTO menusubDTO : lstsubsis) {
+            if (menusubDTO.getCo_sistem() == menusisDTO.getCo_elemen()) {
+               TreeNode nodesubsis = new DefaultTreeNode(menusubDTO, nodesistema);
 
-                    for (MenuDTO menupadDTO : lstmodpad) {
-                        TreeNode nodemodpad = new DefaultTreeNode(menupadDTO ,  nodepaquete);
-                        List<MenuDTO> lstsub1 = menuDAO.getMenus_SubMod(menupadDTO.getCo_elemen());
+               for (MenuDTO menupaqDTO : lstpaquetes) {
+                  if (menupaqDTO.getCo_subsis() == menusubDTO.getCo_elemen()) {
+                     TreeNode nodepaquete = new DefaultTreeNode(menupaqDTO, nodesubsis);
 
-                        for (MenuDTO menusb1DTO : lstsub1) {
-                            TreeNode nodesub1 = new DefaultTreeNode(menusb1DTO ,  nodemodpad);
-                            List<MenuDTO> lstsub2 = menuDAO.getMenus_SubMod(menusb1DTO.getCo_elemen());
+                     for (MenuDTO menupadDTO : lstmodpad) {
+                        if (menupadDTO.getCo_paquet() == menupaqDTO.getCo_elemen()) {
+                           TreeNode nodemodpad = new DefaultTreeNode(menupadDTO, nodepaquete);
 
-                            for (MenuDTO menusb2DTO : lstsub2) {
-                                TreeNode nodesub2 = new DefaultTreeNode(menusb2DTO ,  nodesub1);
-                                List<MenuDTO> lstsub3 = menuDAO.getMenus_SubMod(menusb2DTO.getCo_elemen());
+                           for (MenuDTO menusb1DTO : lstsub1) {
+                              if (menusb1DTO.getCo_menpad() == menupadDTO.getCo_elemen()) {
+                                 TreeNode nodesub1 = new DefaultTreeNode(menusb1DTO, nodemodpad);
 
-                                for (MenuDTO menusb3DTO : lstsub3) {
-                                    TreeNode nodesub3 = new DefaultTreeNode(menusb3DTO ,  nodesub2);
-                                    List<MenuDTO> lstsub4 = menuDAO.getMenus_SubMod(menusb3DTO.getCo_elemen());
+                                 for (MenuDTO menusb2DTO : lstsub1) {
+                                    if (menusb2DTO.getCo_menpad() == menusb1DTO.getCo_elemen()) {
+                                       TreeNode nodesub2 = new DefaultTreeNode(menusb2DTO, nodesub1);
 
-                                    for (MenuDTO menusb4DTO : lstsub4) {
-                                        TreeNode nodesub4 = new DefaultTreeNode(menusb4DTO ,  nodesub3);
-                                        List<MenuDTO> lstsub5 = menuDAO.getMenus_SubMod(menusb4DTO.getCo_elemen());
+                                       for (MenuDTO menusb3DTO : lstsub1) {
+                                          if (menusb3DTO.getCo_menpad() == menusb2DTO.getCo_elemen()) {
+                                             TreeNode nodesub3 = new DefaultTreeNode(menusb3DTO, nodesub2);
 
-                                        for (MenuDTO menusb5DTO : lstsub5) {
-                                            TreeNode nodesub5 = new DefaultTreeNode(menusb5DTO ,  nodesub4);
-                                        }
+                                             for (MenuDTO menusb4DTO : lstsub1) {
+                                                if (menusb4DTO.getCo_menpad() == menusb3DTO.getCo_elemen()) {
+                                                   TreeNode nodesub4 = new DefaultTreeNode(menusb4DTO, nodesub3);
+
+                                                   for (MenuDTO menusb5DTO : lstsub1) {
+                                                      if (menusb5DTO.getCo_menpad() == menusb4DTO.getCo_elemen()) {
+                                                         TreeNode nodesub5 = new DefaultTreeNode(menusb5DTO, nodesub4);
+                                                      }
+                                                   }
+                                                }
+                                             }
+                                          }
+                                       }
                                     }
-                                }
-                            }
+                                 }
+                              }
+                           }
                         }
-                    }
-                }
+                     }
+                  }
+               }
             }
+         }
 
-        }
-        menuDAO.close();
-        System.out.println("Final Bean:" + this.root.getData().toString());
-    }
+      }
+      menuDAO.close();
+      System.out.println("Final Bean:" + this.root.getData().toString());
+   }
 
-    public void onRowCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Edit Cancelled", ((TreeNode) event.getObject()).toString());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 
-    @Override
-    public String getBeanName() {
-        return beanName;
-    }
+   public List<SelectItem> getComboModulos(MenuDTO menuv) {
+      this.lstModulobyPaquete = new ArrayList<>();
 
-    @Override
-    public String load() {
-        System.out.println("load()");
-        this.isregEditable = true;
-        // LLENAR LOS BOTONES SECUNDARIOS
-        //doListener();
-        //CARGA INICIAL!!
-        //selectDto();
-        createTreeNode();
+      if (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
+         for (ModuloDTO mod : modulos) {
+            if (mod.getCo_paquet() == menuv.getCo_paquet()) {
+               SelectItem item = new SelectItem();
+               item.setLabel(mod.getNo_modulo());
+               item.setDescription(mod.getNo_modulo());
+               item.setValue(mod.getCo_modulo());
+               this.lstModulobyPaquete.add(item);
+            }
+         }
+      }
+      return this.lstModulobyPaquete;
+   }
 
-        return URL_LISTA;
-    }
+   public void cargarListaModulos() {
+      ModuloDAO dao = new ModuloDAO();
+      this.modulos = dao.getModulos();
+   }
 
-    @Override
-    public void doListener() {
-        //acceder al manager y decirle toma
-        FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
+   public void onRowCancel(RowEditEvent event) {
+      FacesMessage msg = new FacesMessage("Edit Cancelled", ((TreeNode) event.getObject()).toString());
+      FacesContext.getCurrentInstance().addMessage(null, msg);
+   }
 
-        System.out.println("listener()");
-    }
+   public boolean isEditable(MenuDTO menuv) {
+      Boolean isEditable = false;
+      if (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
+         isEditable = true;
+      }
 
-    @Override
-    public String defaultAction() {
-        // Para el nuevo registro
-        this.menu = new MenuDTO();
-        FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
-        //varias cosas para editar
-        return URL_NEW;
-    }
+      return isEditable;
+   }
 
-    @Override
-    public String newRegist() {
-        //Data la causistica el metodo nuevo esta encapsuado en defaultAction
-        return null;
-    }
+   @Override
+   public String getBeanName() {
+      return beanName;
+   }
 
-    @Override
-    public String updateRegist() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+   @Override
+   public String load() {
+      System.out.println("load()");
+      this.isregEditable = true;
+      // LLENAR LOS BOTONES SECUNDARIOS
+      //doListener();
+      //CARGA INICIAL!!
+      //selectDto();
+      createTreeNode();
+      cargarListaModulos();
 
-        return URL_EDITAR;
-    }
+      return URL_LISTA;
+   }
 
-    @Override
-    public String deleteRegist() {
-        deleteDto();
+   @Override
+   public void doListener() {
+      //acceder al manager y decirle toma
+      FacesContext context = FacesContext.getCurrentInstance();
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
 
-        return URL_LISTA;
-    }
+      System.out.println("listener()");
+   }
 
-    @Override
-    public String saveRegist() {
-        saveDto();
-        return URL_LISTA;
-    }
+   @Override
+   public String defaultAction() {
+      // Para el nuevo registro
+      this.menu = new MenuDTO();
+      FacesContext context = FacesContext.getCurrentInstance();
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
+      //varias cosas para editar
+      return URL_NEW;
+   }
 
-    @Override
-    public void selectDto() {
-        MenuDAO dao = new MenuDAO();
-        // this.menus = dao.getMenus(-1, -1);
-        dao.close();
-    }
+   @Override
+   public String newRegist() {
+      //Data la causistica el metodo nuevo esta encapsuado en defaultAction
+      return null;
+   }
 
-    @Override
-    public void saveDto() {
-        MenuDAO dao = new MenuDAO();
-        // this.menu = dao.grabarMenu(menu);
-        // this.menus = dao.getMenus(-1, -1);
+   @Override
+   public String updateRegist() {
+      FacesContext context = FacesContext.getCurrentInstance();
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
+      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+
+      return URL_EDITAR;
+   }
+
+   @Override
+   public String deleteRegist() {
+      deleteDto();
+
+      return URL_LISTA;
+   }
+
+   @Override
+   public String saveRegist() {
+      saveDto();
+      return URL_LISTA;
+   }
+
+   @Override
+   public void selectDto() {
+      MenuDAO dao = new MenuDAO();
+      // this.menus = dao.getMenus(-1, -1);
+      dao.close();
+   }
+
+   @Override
+   public void saveDto() {
+      MenuDAO dao = new MenuDAO();
+      // this.menu = dao.grabarMenu(menu);
+      // this.menus = dao.getMenus(-1, -1);
 //      System.out.println("MenuBean actualizarMenu = " + this.menu);
-        dao.close();
-    }
+      dao.close();
+   }
 
-    @Override
-    public void updateDto() {
-        MenuDAO dao = new MenuDAO();
-        //this.menu = dao.grabarMenu(menu);
-        // this.menus = dao.getMenus(-1, -1);
+   @Override
+   public void updateDto() {
+      MenuDAO dao = new MenuDAO();
+      //this.menu = dao.grabarMenu(menu);
+      // this.menus = dao.getMenus(-1, -1);
 //      System.out.println("MenuBean actualizarMenu = " + this.menu);
-        dao.close();
-    }
+      dao.close();
+   }
 
-    @Override
-    public void deleteDto() {
-        MenuDAO dao = new MenuDAO();
-        //String resultado = dao.deleteMenu(menu);
-        // this.menus = dao.getMenus(-1, -1);
-        dao.close();
-    }
+   @Override
+   public void deleteDto() {
+      MenuDAO dao = new MenuDAO();
+      //String resultado = dao.deleteMenu(menu);
+      // this.menus = dao.getMenus(-1, -1);
+      dao.close();
+   }
 
-    public List<MenuDTO> getMenus() {
-        return menus;
-    }
+   public List<MenuDTO> getMenus() {
+      return menus;
+   }
 
-    public void setMenus(List<MenuDTO> menus) {
-        this.menus = menus;
-    }
+   public void setMenus(List<MenuDTO> menus) {
+      this.menus = menus;
+   }
 
-    public MenuDTO getMenu() {
-        return menu;
-    }
+   public MenuDTO getMenu() {
+      return menu;
+   }
 
-    public void setMenu(MenuDTO menu) {
-        this.menu = menu;
-    }
+   public void setMenu(MenuDTO menu) {
+      this.menu = menu;
+   }
 
-    public boolean isIsregEditable() {
-        return isregEditable;
-    }
+   public boolean isIsregEditable() {
+      return isregEditable;
+   }
 
-    public void setIsregEditable(boolean isregEditable) {
-        this.isregEditable = isregEditable;
-    }
+   public void setIsregEditable(boolean isregEditable) {
+      this.isregEditable = isregEditable;
+   }
 
-    public TreeNode getRoot() {
-        return root;
-    }
+   public TreeNode getRoot() {
+      return root;
+   }
 
-    public void setRoot(TreeNode root) {
-        this.root = root;
-    }
+   public void setRoot(TreeNode root) {
+      this.root = root;
+   }
 
-    public TreeNode getSelectedNode() {
-        return selectedNode;
-    }
+   public TreeNode getSelectedNode() {
+      return selectedNode;
+   }
 
-    public void setSelectedNode(TreeNode selectedNode) {
-        this.selectedNode = selectedNode;
-    }
+   public void setSelectedNode(TreeNode selectedNode) {
+      this.selectedNode = selectedNode;
+   }
 }

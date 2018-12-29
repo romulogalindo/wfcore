@@ -30,8 +30,6 @@ public class MenuDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SISTEMA));
-            //nQuery.setInteger("co_paquet", co_paquet == null ? -1 : co_paquet);
-            //nQuery.setInteger("co_menpad", co_menpad == null ? -1 : co_menpad);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
@@ -45,7 +43,7 @@ public class MenuDAO {
         return menus;
     }
 
-    public List<MenuDTO> getMenus_SubSistemas(Integer co_sistem) {
+    public List<MenuDTO> getMenus_SubSistemas() {
 
         List<MenuDTO> menus = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -53,7 +51,6 @@ public class MenuDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SUBSISTEMA));
-            nQuery.setInteger("co_sistem", co_sistem == null ? -1 : co_sistem);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
@@ -67,7 +64,7 @@ public class MenuDAO {
         return menus;
     }
 
-    public List<MenuDTO> getMenus_Paquete(Integer co_subsis) {
+    public List<MenuDTO> getMenus_Paquete() {
 
         List<MenuDTO> menus = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -75,7 +72,6 @@ public class MenuDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_PAQUETE));
-            nQuery.setInteger("co_subsis", co_subsis == null ? -1 : co_subsis);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
@@ -89,7 +85,7 @@ public class MenuDAO {
         return menus;
     }
 
-    public List<MenuDTO> getMenus_ModPad(Integer co_paquet) {
+    public List<MenuDTO> getMenus_ModPad() {
 
         List<MenuDTO> menus = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -97,7 +93,6 @@ public class MenuDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_MODPAD));
-            nQuery.setInteger("co_paquet", co_paquet == null ? -1 : co_paquet);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
@@ -110,7 +105,7 @@ public class MenuDAO {
 
         return menus;
     }
-    public List<MenuDTO> getMenus_SubMod(Integer co_menpad) {
+    public List<MenuDTO> getMenus_SubMod() {
 
         List<MenuDTO> menus = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -118,7 +113,6 @@ public class MenuDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SUBMOD));
-            nQuery.setInteger("co_menpad", co_menpad == null ? -1 : co_menpad);
 
             System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
