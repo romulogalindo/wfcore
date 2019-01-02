@@ -126,6 +126,31 @@ public class MenuDAO {
         return menus;
     }
 
+    public String deleteMenu(MenuDTO menu) {
+
+        NQuery nQuery = new NQuery();
+
+        String resultado = null;
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_MENU));
+
+            nQuery.setInteger("co_mensis", menu.getCo_elemen());
+
+            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString());
+
+            resultado = nQuery.list().toString();
+
+            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + " R = " + resultado);
+
+        } catch (Exception ep) {
+            System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+        return resultado;
+    }
+
     public void close() {
         try {
             session.close();

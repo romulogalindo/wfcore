@@ -42,6 +42,10 @@ import javax.persistence.NamedNativeQuery;
       @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_DELETE_MODULO,
             query = "select * from wfsistem.pbmodulo_delete(:co_paquet) as va_result",
+            resultClass = DeleteDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_DELETE_MENU,
+            query = "select * from wfsistem.pbmenu_delete(:co_mensis) as va_result",
             resultClass = DeleteDTO.class)
 
 })

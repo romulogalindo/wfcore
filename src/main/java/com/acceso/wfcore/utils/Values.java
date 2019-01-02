@@ -44,6 +44,8 @@ public class Values {
     public static final String QUERYS_NATIVE_SELECT_MENU_PAQUETE = "wfcore.menu_paquete";
     public static final String QUERYS_NATIVE_SELECT_MENU_MODPAD = "wfcore.menu_modpad";
     public static final String QUERYS_NATIVE_SELECT_MENU_SUBMOD = "wfcore.menu_submod";
+    public static final String QUERYS_NATIVE_DELETE_MENU = "wfcore.menu_delete";
+
 
 
     /*===CACHE===*/

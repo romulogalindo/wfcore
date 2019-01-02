@@ -19,16 +19,8 @@
             box-sizing: border-box;
         }
 
-        .ui-treetable {
-            margin-top: 40px
-        }
-
         .ui-treetable table {
-            table-layout: fixed
-        }
-
-        body .ui-button {
-            margin: 10px 0 0 0;
+            table-layout: fixed;
         }
     </style>
 
@@ -61,7 +53,7 @@
                             <p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}"/>
                             <p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}"/>
 
-                            <p:column headerText="Nombre">
+                            <p:column headerText="Nombre" style="background-color:#{men.va_colele};">
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{men.no_elemen}"/>
@@ -71,10 +63,10 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column headerText="Modulo">
+                            <p:column headerText="Modulo" style="background-color:#{men.va_colele};">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{men.co_modulo}"/>
+                                        <h:outputText value="#{men.no_modulo}"/>
                                     </f:facet>
                                     <f:facet name="input">
                                         <h:selectOneMenu id="co_modulo" value="#{men.co_modulo}"
@@ -85,17 +77,17 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column headerText="Orden">
+                            <p:column headerText="Orden" style=" width:100px; background-color:#{men.va_colele};">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{men.or_elemen}"/>
+                                        <h:outputText value="#{men.or_elemen}" style="text-align: right"/>
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:inputText value="#{men.or_elemen}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column headerText="Identificador">
+                            <p:column headerText="Identificador" style=" width:100px; background-color:#{men.va_colele};">
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{men.co_identi}"/>
@@ -105,13 +97,19 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column style="width:32px">
+                            <p:column style="width:40px; background-color:#{men.va_colele};" >
                                 <p:rowEditor rendered="#{menuBean.isEditable(men)}"/>
+                            </p:column>
+                            <p:column style="width:40px; background-color:#{men.va_colele};" >
+                                <p:commandButton icon="fa fa-trash" action="#{menuBean.deleteRegist}"
+                                                 update=":form:lista" rendered="#{menuBean.isEditable(men)}">
+                                    <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
+                                    <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                               icon="fa fa-exclamation-triangle"/>
+                                </p:commandButton>
                             </p:column>
 
                         </p:treeTable>
-                        <p:commandButton value="Agregar" update="msgs" icon="pi pi-clone"
-                                         action="#"/>
                     </p:scrollPanel>
                 </p:panel>
 
