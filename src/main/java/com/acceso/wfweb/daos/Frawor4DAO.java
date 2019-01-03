@@ -62,7 +62,7 @@ public class Frawor4DAO extends DAO {
         return paginaDTOS;
     }
 
-    public List<TituloDTO> getTituloDTO(int p_co_pagina, int p_co_conten, int p_id_frawor) {
+    public List<TituloDTO> getTituloDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
 
         List<TituloDTO> tituloDTOS = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -71,7 +71,7 @@ public class Frawor4DAO extends DAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFPAGTIT), true, true);
             nQuery.setInteger("p_co_conten", p_co_conten);
-            nQuery.setInteger("p_id_frawor", p_id_frawor);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
             nQuery.setInteger("p_co_pagina", p_co_pagina);
             tituloDTOS = nQuery.list();
 
@@ -83,7 +83,7 @@ public class Frawor4DAO extends DAO {
         return tituloDTOS;
     }
 
-    public List<RegistroDTO> getRegistroDTO(int p_co_pagina, int p_co_conten, int p_id_frawor) {
+    public List<RegistroDTO> getRegistroDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
 
         List<RegistroDTO> registroDTOS = null;
         NQuery nQuery = new NQuery();
@@ -92,7 +92,7 @@ public class Frawor4DAO extends DAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFPAGREG), true, true);
             nQuery.setInteger("p_co_conten", p_co_conten);
-            nQuery.setInteger("p_id_frawor", p_id_frawor);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
             nQuery.setInteger("p_co_pagina", p_co_pagina);
             registroDTOS = nQuery.list();
 

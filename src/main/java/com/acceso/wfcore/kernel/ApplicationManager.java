@@ -4,15 +4,15 @@ import com.acceso.wfcore.dtos.SystemTreeDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.daos.Frawor4DAO;
-import com.acceso.wfweb.dtos.ContenedorDTO;
-import com.acceso.wfweb.dtos.IdfraworDTO;
-import com.acceso.wfweb.dtos.PaginaDTO;
+import com.acceso.wfweb.dtos.*;
 import com.acceso.wfweb.servlets.LoginServlet;
 import com.acceso.wfweb.units.Contenedor;
+import com.acceso.wfweb.units.Fila;
 import com.acceso.wfweb.units.Pagina;
 import com.acceso.wfweb.web.Root;
 import com.google.gson.Gson;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ApplicationManager {
@@ -55,13 +55,32 @@ public class ApplicationManager {
         dao = new Frawor4DAO();
         idfraworDTO = dao.getIdfraworDTO();
         paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
-        dao.close();
 
         //work!
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor(), contenedorDTO.getNo_contit());
         for (PaginaDTO paginaDTO : paginaDTOS) {
+            //pagina nueva
+            List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
+            List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
+
+            LinkedHashMap<String, Fila> ultraFilas = new LinkedHashMap<>();
+            //crear un row!!! -> elemtno unico de creaciòn
+            for (TituloDTO tituloDTO : tituloDTOS) {
+                //crear una row para su titulo
+//                Fila fila_subtitulo = new Fila(tituloDTO);
+                ultraFilas.put("P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit(), new Fila(tituloDTO));
+                for (RegistroDTO registroDTO : registroDTOS) {
+                    if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
+                        ultraFilas.put("P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg(), new Fila(tituloDTO));
+                    }
+                }
+            }
+
+
             contenedor.addPagina(new Pagina(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit()));
         }
+
+        dao.close();
 
         return contenedor;
     }

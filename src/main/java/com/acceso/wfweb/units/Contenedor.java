@@ -2,13 +2,15 @@ package com.acceso.wfweb.units;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Contenedor extends HTMLRenderer implements Serializable {
 
     //objeto de distribucion(ahora solo vertical)
     //referencia a paginas modo simple
-    List<Pagina> paginas;
+//    List<Pagina> paginas;
+    HashMap<Integer, Pagina> paginas;
     int co_conten;
     long id_frawor;
     String co_contit;
@@ -18,11 +20,12 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         this.id_frawor = id_frawor;
         this.co_contit = co_contit;
 
-        this.paginas = new ArrayList<>();
+//        this.paginas = new ArrayList<>();
+        this.paginas = new HashMap<>();
     }
 
     public void addPagina(Pagina pagina) {
-        paginas.add(pagina);
+        paginas.put(pagina.getCo_pagina(), pagina);
     }
 
     public int getCo_conten() {
@@ -52,14 +55,17 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     @Override
     public String toHTML() {
         String HTML = "";
-        for (Pagina pagina : paginas) {
-            HTML += "<script>var listconten={100628,103884,105054,100724,105748,100629,101956}</script>";
+
+        HTML += "<script>var listconten={100628,103884,105054,100724,105748,100629,101956};</script>";
+
+        for (Pagina pagina : paginas.values()) {
             HTML += "<div class=\"w3-row\"><div class=\"w3-quarter\" style=\"background:green;height: 200px;\">1/4</div>";
 
             HTML += "   <div class=\"w3-half\" style=\"background:red;height: 200px;\">" + "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.co_pagina + "\"></iframe>" + "</div>";
 
             HTML += "<div class=\"w3-quarter\" style=\"background:green;height: 200px;\">1/4</div></div>";
         }
+
         return HTML;
     }
 

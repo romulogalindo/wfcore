@@ -31,7 +31,9 @@
 
 <!-- Sidebar -->
 <div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;" id="mySidebar">
+
     <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor">
+
     <div class="w3-bar w3-black w3-center">
         <button class="w3-bar-item w3-button tablink w3-red" style="width:50%" onclick="viewtab(event,'menu64')">Menú
         </button>

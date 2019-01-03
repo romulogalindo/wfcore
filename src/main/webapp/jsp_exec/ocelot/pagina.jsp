@@ -9,6 +9,6 @@
     <title>UNNAMED</title>
 </head>
 <body>
-TODO contenido aquí!
+Paginta ${param.co_pagina}! & ${param.id_frawor}
 </body>
 </html>
