@@ -24,14 +24,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <link rel="script" href="${pageContext.request.contextPath}/jsp_exec/js/workflow.js">
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=1"></script>
 
 </head>
 <body onload="workflow()">
 
 <!-- Sidebar -->
 <div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;" id="mySidebar">
-
+    <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor">
     <div class="w3-bar w3-black w3-center">
         <button class="w3-bar-item w3-button tablink w3-red" style="width:50%" onclick="viewtab(event,'menu64')">Menú
         </button>
@@ -154,31 +154,32 @@
 
         <div class="w3-row" style="height: 30px;"></div>
 
-        <div class="w3-row">
-            <div class="w3-quarter" style="background:red;height: 200px;">
-                <iframe src="/jsp_exec/ocelot/pagina.jsp?rise=123456" class="wf4_iframe"></iframe>
-            </div>
-            <div class="w3-quarter" style="background:green;height: 200px;">1/4</div>
-            <div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>
-            <div class="w3-quarter" style="background:gray;height: 200px;">1/4</div>
-        </div>
+        <%--<div class="w3-row">--%>
+        <%--<div class="w3-quarter" style="background:red;height: 200px;">--%>
+        <%--<iframe src="/jsp_exec/ocelot/pagina.jsp?rise=123456" class="wf4_iframe" onload="readypagina(this)" on></iframe>--%>
+        <%--</div>--%>
+        <%--<div class="w3-quarter" style="background:green;height: 200px;">1/4</div>--%>
+        <%--<div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>--%>
+        <%--<div class="w3-quarter" style="background:gray;height: 200px;">1/4</div>--%>
+        <%--</div>--%>
 
-        <div class="w3-row">
-            <div class="w3-threequarter" style="background:red;height: 200px;">3/4</div>
-            <div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>
-        </div>
+        <%--<div class="w3-row">--%>
+        <%--<div class="w3-threequarter" style="background:red;height: 200px;">3/4</div>--%>
+        <%--<div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>--%>
+        <%--</div>--%>
 
-        <div class="w3-row">
-            <div class="w3-quarter" style="background:green;height: 200px;">1/4</div>
-            <div class="w3-threequarter" style="background:gray;height: 200px;">3/4</div>
-        </div>
+        <%--<div class="w3-row">--%>
+        <%--<div class="w3-quarter" style="background:green;height: 200px;">1/4</div>--%>
+        <%--<div class="w3-threequarter" style="background:gray;height: 200px;">3/4</div>--%>
+        <%--</div>--%>
 
-        <div class="w3-row">
-            <div class="w3-half" style="background:red;height: 200px;">2/4</div>
-            <div class="w3-half" style="background:green;height: 200px;">2/4</div>
-        </div>
+        <%--<div class="w3-row">--%>
+        <%--<div class="w3-half" style="background:red;height: 200px;">2/4</div>--%>
+        <%--<div class="w3-half" style="background:green;height: 200px;">2/4</div>--%>
+        <%--</div>--%>
 
-        <div>Aqui va todo el contenido</div>
+        <%--<div>Aqui va todo el contenido</div>--%>
+        ${contenedorBean.contenedor.toHTML()}
 
     </div>
 </div>

@@ -80,6 +80,10 @@
         <servlet-name>JSP Main</servlet-name>
         <jsp-file>/jsp_exec/ocelot/main.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>PaginaServlet</servlet-name>
+        <servlet-class>com.acceso.wfweb.servlets.PaginaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
@@ -96,6 +100,10 @@
     <servlet-mapping>
         <servlet-name>JSP Main</servlet-name>
         <url-pattern>/main</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaginaServlet</servlet-name>
+        <url-pattern>/karmic</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

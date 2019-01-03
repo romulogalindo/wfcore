@@ -9,7 +9,6 @@ import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Contenedor;
-import com.sun.xml.fastinfoset.algorithm.BuiltInEncodingAlgorithm;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 public class ContenedorBean implements Serializable {
@@ -18,7 +17,7 @@ public class ContenedorBean implements Serializable {
     public ContenedorBean() {
     }
 
-    public String do64(HttpRewriteWrappedRequest httpRewriteWrappedRequest) {
+    public void do64(HttpRewriteWrappedRequest httpRewriteWrappedRequest) {
         //Esto debe ser eliminado
         Enumeration<String> parameterNames = httpRewriteWrappedRequest.getParameterNames();
         while (parameterNames.hasMoreElements()) {
@@ -28,14 +27,28 @@ public class ContenedorBean implements Serializable {
         }
 
         //construir el conenedor!!
-        Integer co_conten = Util.toInt(httpRewriteWrappedRequest.getParameter("co_conten"));
+        Integer co_conten = Util.toInt(httpRewriteWrappedRequest.getParameter("co_conten"), -1);
 
         //preguntar a la cache si tienen este contenedor
         contenedor = (Contenedor) WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
+        System.out.println(">>>>co_conten = " + co_conten);
+
         if (contenedor == null) {
+
+            //crear el contenedor
             contenedor = ApplicationManager.buildContainer(co_conten);
+            System.out.println("{a->1}co_conten = " + co_conten);
+            //almancenar el contenedor
+            WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
         }
 
-        return "x";
+    }
+
+    public Contenedor getContenedor() {
+        return contenedor;
+    }
+
+    public void setContenedor(Contenedor contenedor) {
+        this.contenedor = contenedor;
     }
 }

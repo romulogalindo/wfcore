@@ -22,6 +22,19 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
-function workflow() {
+function id_frawor() {
+    return document.getElementById('id_frawor').value;
+}
 
+function workflow() {
+    var iframes = document.getElementsByTagName('IFRAME');
+    for (var i = 0; i < iframes.length; i++) {
+        var iframe = iframes[i];
+        var paginaId = iframe.getAttribute('id');
+        iframe.src = '/karmic?co_pagina=' + paginaId.replace('PAG', '') + '&id_frawor=' + id_frawor();
+    }
+}
+
+function readypagina(pag) {
+    console.log('La pàgina ya cargo:' + pag);
 }

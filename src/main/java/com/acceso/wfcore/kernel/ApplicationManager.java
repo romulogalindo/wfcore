@@ -1,11 +1,19 @@
 package com.acceso.wfcore.kernel;
 
 import com.acceso.wfcore.dtos.SystemTreeDTO;
+import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfweb.controls.LoginCTRL;
+import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.dtos.ContenedorDTO;
+import com.acceso.wfweb.dtos.IdfraworDTO;
+import com.acceso.wfweb.dtos.PaginaDTO;
 import com.acceso.wfweb.servlets.LoginServlet;
 import com.acceso.wfweb.units.Contenedor;
+import com.acceso.wfweb.units.Pagina;
 import com.acceso.wfweb.web.Root;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 public class ApplicationManager {
     public static LoginCTRL getLoginCTRL() {
@@ -33,7 +41,28 @@ public class ApplicationManager {
 
     public static Contenedor buildContainer(int co_conten) {
         //cobnstruimos el objeto contenedor
+        ContenedorDTO contenedorDTO = null;
+        IdfraworDTO idfraworDTO;
+        List<PaginaDTO> paginaDTOS;
 
-        return new Contenedor();
+        Frawor4DAO dao = new Frawor4DAO();
+        contenedorDTO = dao.getContenedorDTO(co_conten);
+        dao.close();
+
+        if (contenedorDTO == null)
+            return null;
+
+        dao = new Frawor4DAO();
+        idfraworDTO = dao.getIdfraworDTO();
+        paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
+        dao.close();
+
+        //work!
+        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor(), contenedorDTO.getNo_contit());
+        for (PaginaDTO paginaDTO : paginaDTOS) {
+            contenedor.addPagina(new Pagina(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit()));
+        }
+
+        return contenedor;
     }
 }

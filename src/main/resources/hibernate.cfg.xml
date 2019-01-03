@@ -45,5 +45,10 @@
 
         <!-- DTO's (Web) -->
         <mapping class="com.acceso.wfcore.dtos.SystemTreeDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.ContenedorDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.PaginaDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.TituloDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.RegistroDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.IdfraworDTO"/>
     </session-factory>
 </hibernate-configuration>
