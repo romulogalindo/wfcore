@@ -15,6 +15,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -118,7 +119,6 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       System.out.println("Final Bean:" + this.root.getData().toString());
    }
 
-
    public List<SelectItem> getComboModulos(MenuDTO menuv) {
       this.lstModulobyPaquete = new ArrayList<>();
 
@@ -141,15 +141,38 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       this.modulos = dao.getModulos();
    }
 
+   public void addChildNodeAction(ActionEvent event) {
+//      if (selectedNode == null) {
+//         // TODO: añadir excepcion no seleccionado
+//         FacesMessage msg = new FacesMessage("Alerta", "Seleccione una fila para agregar.");
+//         FacesContext.getCurrentInstance().addMessage(null, msg);
+//      }
+      MenuDTO nuevoMenu = new MenuDTO();
+      nuevoMenu.setCo_sistem(menu.getCo_sistem());
+      nuevoMenu.setCo_subsis(menu.getCo_subsis());
+      nuevoMenu.setCo_paquet(menu.getCo_paquet());
+      nuevoMenu.setCo_menpad(menu.getCo_elemen());
+      nuevoMenu.setCo_identi("MS");
+      nuevoMenu.setVa_colele("#f5b7b1");
+
+      TreeNode nueva = new DefaultTreeNode(nuevoMenu, selectedNode);
+
+      return;
+   }
+
    public void onRowCancel(RowEditEvent event) {
-      FacesMessage msg = new FacesMessage("Edit Cancelled", ((TreeNode) event.getObject()).toString());
+      FacesMessage msg = new FacesMessage("Edición Cancelada", ((TreeNode) event.getObject()).toString());
       FacesContext.getCurrentInstance().addMessage(null, msg);
    }
 
    public boolean isEditable(MenuDTO menuv) {
       Boolean isEditable = false;
-      if (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
+
+      if(menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
          isEditable = true;
+      }
+      if (menuv.getCo_elemen() == null){
+         isEditable = false;
       }
 
       return isEditable;
@@ -255,8 +278,8 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    @Override
    public void deleteDto() {
       MenuDAO dao = new MenuDAO();
-      //String resultado = dao.deleteMenu(menu);
-      // this.menus = dao.getMenus(-1, -1);
+      String resultado = dao.deleteMenu(menu);
+      System.out.println("resultado:" + resultado);
       dao.close();
    }
 

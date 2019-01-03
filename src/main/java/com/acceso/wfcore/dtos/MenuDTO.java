@@ -62,6 +62,10 @@ public class MenuDTO implements Serializable {
     Integer or_elemen;
     String va_colele;
 
+    public MenuDTO() {
+
+    }
+
     public Integer getCo_elemen() {
         return co_elemen;
     }
