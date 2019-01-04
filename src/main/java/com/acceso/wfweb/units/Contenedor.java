@@ -28,6 +28,10 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         paginas.put(pagina.getCo_pagina(), pagina);
     }
 
+    public Pagina getPagina(int co_pagina) {
+        return paginas.get(co_pagina);
+    }
+
     public int getCo_conten() {
         return co_conten;
     }
@@ -59,11 +63,11 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         HTML += "<script>var listconten={100628,103884,105054,100724,105748,100629,101956};</script>";
 
         for (Pagina pagina : paginas.values()) {
-            HTML += "<div class=\"w3-row\"><div class=\"w3-quarter\" style=\"background:green;height: 200px;\">1/4</div>";
+            HTML += "<div class=\"w3-row\"><div class=\"w3-quarter\" style=\"height: auto;\">1/4</div>";
 
-            HTML += "   <div class=\"w3-half\" style=\"background:red;height: 200px;\">" + "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.co_pagina + "\"></iframe>" + "</div>";
+            HTML += "   <div class=\"w3-half\" style=\"height: auto;\">" + "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.co_pagina + "\" onload=\"iframe(this)\" frameborder=0></iframe>" + "</div>";
 
-            HTML += "<div class=\"w3-quarter\" style=\"background:green;height: 200px;\">1/4</div></div>";
+            HTML += "<div class=\"w3-quarter\" style=\"height: auto;\">1/4</div></div>";
         }
 
         return HTML;

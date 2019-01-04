@@ -26,13 +26,29 @@ function id_frawor() {
     return document.getElementById('id_frawor').value;
 }
 
+function co_conten() {
+    return document.getElementById('co_conten').value;
+}
+
 function workflow() {
     var iframes = document.getElementsByTagName('IFRAME');
     for (var i = 0; i < iframes.length; i++) {
         var iframe = iframes[i];
         var paginaId = iframe.getAttribute('id');
-        iframe.src = '/karmic?co_pagina=' + paginaId.replace('PAG', '') + '&id_frawor=' + id_frawor();
+        iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + paginaId.replace('PAG', '') + '&id_frawor=' + id_frawor();
     }
+}
+
+function pagina() {
+    height_table = document.getElementsByTagName('TABLE')[0].style.height;
+    document.getElementById('height_table').value = '' + height_table;
+}
+
+function iframe(iframe) {
+    //var iframe = document.getElementById('iframeId');
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var height_table = getElementById("height_table").value + 20;
+    iframe.style.height = height_table + 'px';
 }
 
 function readypagina(pag) {

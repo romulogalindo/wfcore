@@ -54,3 +54,18 @@ DIV.wf_right {
     display: block;
     border: none;
 }
+
+.wf_f_stitle{
+    text-align: right !important;
+}
+
+.wf_f_titreg{
+    font-weight: 600;
+}
+
+TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
+    text-align: center !important;
+    margin: 0;
+    font-weight: 200;
+    font-size: 14px;
+}

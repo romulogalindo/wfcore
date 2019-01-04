@@ -11,6 +11,8 @@ import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Contenedor;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class ContenedorBean implements Serializable {
     Contenedor contenedor;
 
@@ -26,13 +28,15 @@ public class ContenedorBean implements Serializable {
             System.out.println("key = " + key + ",value = " + value);
         }
 
+        HttpServletRequest request = (HttpServletRequest) httpRewriteWrappedRequest.getRequest();
+
         //construir el conenedor!!
         Integer co_conten = Util.toInt(httpRewriteWrappedRequest.getParameter("co_conten"), -1);
 
         //preguntar a la cache si tienen este contenedor
         contenedor = (Contenedor) WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
         System.out.println(">>>>co_conten = " + co_conten);
-
+        httpRewriteWrappedRequest.getRequest();
         if (contenedor == null) {
 
             //crear el contenedor
@@ -42,6 +46,7 @@ public class ContenedorBean implements Serializable {
             WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
         }
 
+        request.getSession().setAttribute("" + contenedor.getCo_conten(), contenedor);
     }
 
     public Contenedor getContenedor() {

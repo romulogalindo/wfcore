@@ -67,17 +67,19 @@ public class ApplicationManager {
             //crear un row!!! -> elemtno unico de creaciòn
             for (TituloDTO tituloDTO : tituloDTOS) {
                 //crear una row para su titulo
-//                Fila fila_subtitulo = new Fila(tituloDTO);
-                ultraFilas.put("P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit(), new Fila(tituloDTO));
+                String idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit();
+                ultraFilas.put(idFila, new Fila(tituloDTO, idFila));
+
                 for (RegistroDTO registroDTO : registroDTOS) {
                     if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
-                        ultraFilas.put("P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg(), new Fila(tituloDTO));
+                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
+                        ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
                 }
             }
 
 
-            contenedor.addPagina(new Pagina(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit()));
+            contenedor.addPagina(new Pagina(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
         }
 
         dao.close();

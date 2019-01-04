@@ -27,4 +27,30 @@ public class Util {
 
         return int32;
     }
+
+    public static Long toLong(Object object) {
+        Long long32 = null;
+        String longString = object == null ? "" : ("" + object);
+
+        try {
+            long32 = Long.parseLong(longString);
+        } catch (Exception ep) {
+
+        }
+
+        return long32;
+    }
+
+    public static Long toLong(Object object, long defaultLong) {
+        Long long32 = null;
+        String longString = object == null ? "" : ("" + object);
+
+        try {
+            long32 = Long.parseLong(longString);
+        } catch (Exception ep) {
+            long32 = defaultLong;
+        }
+
+        return long32;
+    }
 }
