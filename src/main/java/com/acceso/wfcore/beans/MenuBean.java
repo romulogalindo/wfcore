@@ -44,6 +44,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
 
    private TreeNode root;
    private TreeNode selectedNode;
+   private TreeNode nodeAction;
    private List<ModuloDTO> modulos;
 
    public MenuBean() {
@@ -141,21 +142,33 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       this.modulos = dao.getModulos();
    }
 
-   public void addChildNodeAction(ActionEvent event) {
+   public void addChildNodeAction(TreeNode nodeActionSelect, MenuDTO menuSelect) {
 //      if (selectedNode == null) {
 //         // TODO: añadir excepcion no seleccionado
 //         FacesMessage msg = new FacesMessage("Alerta", "Seleccione una fila para agregar.");
 //         FacesContext.getCurrentInstance().addMessage(null, msg);
 //      }
       MenuDTO nuevoMenu = new MenuDTO();
-      nuevoMenu.setCo_sistem(menu.getCo_sistem());
-      nuevoMenu.setCo_subsis(menu.getCo_subsis());
-      nuevoMenu.setCo_paquet(menu.getCo_paquet());
-      nuevoMenu.setCo_menpad(menu.getCo_elemen());
+      nuevoMenu.setCo_sistem(menuSelect.getCo_sistem());
+      nuevoMenu.setCo_subsis(menuSelect.getCo_subsis());
+      nuevoMenu.setCo_paquet(menuSelect.getCo_paquet());
+      nuevoMenu.setCo_menpad(menuSelect.getCo_elemen());
       nuevoMenu.setCo_identi("MS");
       nuevoMenu.setVa_colele("#f5b7b1");
 
-      TreeNode nueva = new DefaultTreeNode(nuevoMenu, selectedNode);
+      System.out.println("addChildNodeAction - " + menuSelect.getNo_elemen());
+      System.out.println("addChildNodeAction - " + nodeActionSelect.getRowKey());
+      System.out.println("addChildNodeAction - " + nodeActionSelect.getData().toString());
+
+
+//      if (nodeAction.getChildCount() > 0) {
+//         if (nodeAction.getChildren().equals(nuevoMenu)) {
+//            System.out.println("addChildNodeAction - Exception" + menuSelect.getNo_elemen());
+//            return;
+//         }
+//      }
+      nodeActionSelect.setExpanded(true);
+      TreeNode nueva = new DefaultTreeNode(nuevoMenu, nodeActionSelect);
 
       return;
    }
@@ -168,10 +181,10 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    public boolean isEditable(MenuDTO menuv) {
       Boolean isEditable = false;
 
-      if(menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
+      if (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
          isEditable = true;
       }
-      if (menuv.getCo_elemen() == null){
+      if (menuv.getCo_elemen() == null) {
          isEditable = false;
       }
 
@@ -321,5 +334,13 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
 
    public void setSelectedNode(TreeNode selectedNode) {
       this.selectedNode = selectedNode;
+   }
+
+   public TreeNode getNodeAction() {
+      return nodeAction;
+   }
+
+   public void setNodeAction(TreeNode nodeAction) {
+      this.nodeAction = nodeAction;
    }
 }

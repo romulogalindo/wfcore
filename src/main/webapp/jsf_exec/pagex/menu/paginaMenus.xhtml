@@ -40,11 +40,12 @@
                     <p:scrollPanel style="width:1400px;height:1200px">
                         <p:treeTable id="lista"
                                      value="#{menuBean.root}"
+                                     nodeVar="nodeRowAction"
                                      var="men"
                                      editable="true"
                                      style="margin-bottom:20px"
                                      selectionMode="single"
-                                     selection="#{menuBean.selectedNode}">
+                                     >
 
                             <f:facet name="header">
                                 Lista de Menus
@@ -87,7 +88,8 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column headerText="Identificador" style=" width:100px; background-color:#{men.va_colele};">
+                            <p:column headerText="Identificador"
+                                      style=" width:100px; background-color:#{men.va_colele};">
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{men.co_identi}"/>
@@ -97,10 +99,10 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column style="width:40px; background-color:#{men.va_colele};" >
+                            <p:column style="width:40px; background-color:#{men.va_colele};">
                                 <p:rowEditor rendered="#{menuBean.isEditable(men)}"/>
                             </p:column>
-                            <p:column style="width:80px; background-color:#{men.va_colele};" >
+                            <p:column style="width:80px; background-color:#{men.va_colele};">
                                 <p:commandButton icon="fa fa-trash" action="#{menuBean.deleteRegist}"
                                                  update=":form:lista" rendered="#{menuBean.isEditable(men)}">
                                     <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
@@ -108,10 +110,11 @@
                                                icon="fa fa-exclamation-triangle"/>
                                 </p:commandButton>
                                 <p:commandButton icon="fa fa-plus"
-                                                 actionListener="#{menuBean.addChildNodeAction}"
-                                                 process="@this,lista" update=":form:lista"
+                                                 action="#{menuBean.addChildNodeAction(nodeRowAction, men)}"
+                                                 update=":form:lista"
                                                  rendered="#{menuBean.isEditable(men)}">
-                                    <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
+                                    <!--<f:setPropertyActionListener value="#{nodeRowAction}" target="#{menuBean.nodeAction}"/>-->
+                                    <!--<f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>-->
                                 </p:commandButton>
                             </p:column>
 
