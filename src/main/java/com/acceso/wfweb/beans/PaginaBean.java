@@ -19,13 +19,6 @@ public class PaginaBean implements Serializable {
     }
 
     public void do64(HttpRewriteWrappedRequest httpRewriteWrappedRequest) {
-        //Esto debe ser eliminado
-//        Enumeration<String> parameterNames = httpRewriteWrappedRequest.getParameterNames();
-//        while (parameterNames.hasMoreElements()) {
-//            String key = parameterNames.nextElement();
-//            String value = httpRewriteWrappedRequest.getParameter(key);
-//            System.out.println("key = " + key + ",value = " + value);
-//        }
 
         HttpServletRequest request = (HttpServletRequest) httpRewriteWrappedRequest.getRequest();
 

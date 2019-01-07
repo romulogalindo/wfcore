@@ -40,14 +40,18 @@ function workflow() {
 }
 
 function pagina() {
-    height_table = document.getElementsByTagName('TABLE')[0].style.height;
+    console.log('[1]de tabla a pagina = ' + height_table);
+    //height_table = document.getElementsByTagName('TABLE')[0].style.height;
+    height_table = document.getElementsByTagName('BODY')[0].offsetHeight
     document.getElementById('height_table').value = '' + height_table;
+    console.log('[2]de tabla a pagina = ' + height_table);
 }
 
 function iframe(iframe) {
     //var iframe = document.getElementById('iframeId');
     var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-    var height_table = getElementById("height_table").value + 20;
+    var height_table = parseInt(innerDoc.getElementById("height_table").value) + 20;
+    console.log('[3]recibido desde load iframe = ' + height_table);
     iframe.style.height = height_table + 'px';
 }
 

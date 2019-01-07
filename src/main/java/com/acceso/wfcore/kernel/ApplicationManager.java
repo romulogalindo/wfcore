@@ -6,9 +6,7 @@ import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.*;
 import com.acceso.wfweb.servlets.LoginServlet;
-import com.acceso.wfweb.units.Contenedor;
-import com.acceso.wfweb.units.Fila;
-import com.acceso.wfweb.units.Pagina;
+import com.acceso.wfweb.units.*;
 import com.acceso.wfweb.web.Root;
 import com.google.gson.Gson;
 
@@ -64,8 +62,10 @@ public class ApplicationManager {
             List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
 
             LinkedHashMap<String, Fila> ultraFilas = new LinkedHashMap<>();
+
             //crear un row!!! -> elemtno unico de creaciòn
             for (TituloDTO tituloDTO : tituloDTOS) {
+
                 //crear una row para su titulo
                 String idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit();
                 ultraFilas.put(idFila, new Fila(tituloDTO, idFila));
@@ -78,8 +78,11 @@ public class ApplicationManager {
                 }
             }
 
-
-            contenedor.addPagina(new Pagina(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
+            if (paginaDTO.getTi_pagina().contentEquals("R")) {
+                contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
+            } else if (paginaDTO.getTi_pagina().contentEquals("T")) {
+//                contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
+            }
         }
 
         dao.close();

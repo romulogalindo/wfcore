@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=1"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=2"></script>
 
 </head>
 <body onload="workflow()">
@@ -43,17 +43,18 @@
     </div>
 
     <div id="menu64" class="w3-bar-block menubloq">
-        <a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">
+        <%--<a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">--%>
             <%--<img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">--%>
-        </a>
+        <%--</a>--%>
 
-        <ul class="w3-ul w3-large">
+        <ul class="w3-ul w3-tiny" style="padding-top: 10px;">
             <c:forEach var="menu" items="${US.mainMenu.menu}">
 
-                <li class="w3-padding-16" style="font-size: 14px;">
+                <li class="" style="font-weight: 500; padding-left: 10px;">
 
                 <c:if test="${not empty menu.url}">
-                    <a href="${menu.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menu.name}</a>
+                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                    <a href="${menu.url}">${menu.name}</a>
                     </li>
                 </c:if>
 
@@ -62,10 +63,11 @@
                     </li>
 
                     <c:forEach var="menuitem" items="${menu.sub}">
-                        <li class="w3-padding-16" style="font-size: 14px;">
+                        <li class="" style="font-weight: 500;padding-left: 20px;">
 
                         <c:if test="${not empty menuitem.url}">
-                            <a href="${menuitem.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem.name}</a>
+                            <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                            <a href="${menuitem.url}">${menuitem.name}</a>
                             </li>
                         </c:if>
 
@@ -74,10 +76,11 @@
                             </li>
 
                             <c:forEach var="menuitem2" items="${menuitem.sub}">
-                                <li class="w3-padding-16" style="font-size: 14px;">
+                                <li class="" style="font-weight: 400;padding-left: 30px;">
 
                                 <c:if test="${not empty menuitem2.url}">
-                                    <a href="${menuitem2.url}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${menuitem2.name}</a>
+                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                    <a href="${menuitem2.url}">${menuitem2.name}</a>
                                     </li>
                                 </c:if>
 
@@ -96,22 +99,27 @@
 
     <div id="sistemas64" class="menubloq" style="display: none;">
 
-        <ul class="w3-ul w3-large ${US}-${US.root}">
+        <ul class="w3-ul w3-small" style="padding-top: 10px;">
             <c:forEach var="sistema" items="${US.root.sistemas}">
 
-                <li class="w3-padding-16" style="font-size: 14px;">
+                <li class="w3-padding-small" style="font-weight: 500; padding-left: 5px;">
                         ${sistema.no_sistem}
                 </li>
 
                 <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
 
-                    <li class="w3-padding-16" style="font-size: 16px;color:red;">
-                        &nbsp;&nbsp;&nbsp;${sub_sistema.no_subsis}
+                    <li class="w3-padding-small" style="padding-left: 15px !important;">
+                        <i class="fa fa-cubes"></i>
+                            ${sub_sistema.no_subsis}
                     </li>
 
                     <c:forEach var="paquete" items="${sub_sistema.paquetes}">
-                        <li class="w3-padding-16">
-                            <a href="#" style="font-size: 14px;color:blue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>${paquete.no_paquet}</a>
+                        <li class="w3-padding-small" style="padding-left: 30px !important;">
+
+                            <a href="#" style="">
+                                <i class="fa fa-folder-open"></i>
+                                    ${paquete.no_paquet}
+                            </a>
                         </li>
                     </c:forEach>
 

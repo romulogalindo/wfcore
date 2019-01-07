@@ -8,6 +8,9 @@ public class Fila extends HTMLRenderer {
     TituloDTO tituloDTO;
     RegistroDTO registroDTO;
     String id;
+    //SOlo para tipo tabla
+    int colspan;
+
 
     public Fila(TituloDTO tituloDTO, String id) {
         this.tituloDTO = tituloDTO;
@@ -17,6 +20,30 @@ public class Fila extends HTMLRenderer {
     public Fila(RegistroDTO registroDTO, String id) {
         this.registroDTO = registroDTO;
         this.id = id;
+    }
+
+    public TituloDTO getTituloDTO() {
+        return tituloDTO;
+    }
+
+    public void setTituloDTO(TituloDTO tituloDTO) {
+        this.tituloDTO = tituloDTO;
+    }
+
+    public RegistroDTO getRegistroDTO() {
+        return registroDTO;
+    }
+
+    public void setRegistroDTO(RegistroDTO registroDTO) {
+        this.registroDTO = registroDTO;
+    }
+
+    public int getColspan() {
+        return colspan;
+    }
+
+    public void setColspan(int colspan) {
+        this.colspan = colspan;
     }
 
     @Override
