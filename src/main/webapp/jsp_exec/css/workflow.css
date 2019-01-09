@@ -55,12 +55,23 @@ DIV.wf_right {
     border: none;
 }
 
-.wf_f_stitle{
-    text-align: right !important;
-}
-
 .wf_f_titreg{
     font-weight: 600;
+}
+
+.wf_f_stitle{
+    text-align: right !important;
+    padding: 5px 2px;
+}
+
+.wf_t_stitle{
+    text-align: center !important;
+    padding: 5px 2px;
+}
+
+.w3-highway-blue{
+    color: #fff;
+    background-color: #00477e;
 }
 
 TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {

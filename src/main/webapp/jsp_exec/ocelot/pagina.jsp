@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=3">
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=2"></script>
@@ -24,6 +24,10 @@
     var height_table = 0;
 </script>
 <input type="hidden" id="height_table" value="">
+<input type="hidden" id="id_frawor" value="${param.id_frawor}">
+<input type="hidden" id="co_conten" value="${param.co_conten}">
+<input type="hidden" id="co_pagina" value="${param.co_pagina}">
+
 ${paginaBean.pagina.toHTML()}
 </body>
 </html>

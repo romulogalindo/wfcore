@@ -78,10 +78,13 @@ public class ApplicationManager {
                 }
             }
 
+//            System.out.println("paginaDTO.getTi_pagina() = " + paginaDTO.getTi_pagina());
+//            System.out.println("paginaDTO.getTi_pagina().contentEquals(\"R\") = " + paginaDTO.getTi_pagina().contentEquals("R"));
+
             if (paginaDTO.getTi_pagina().contentEquals("R")) {
                 contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
             } else if (paginaDTO.getTi_pagina().contentEquals("T")) {
-//                contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
+                contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
             }
         }
 

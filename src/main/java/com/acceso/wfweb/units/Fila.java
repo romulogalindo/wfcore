@@ -52,7 +52,7 @@ public class Fila extends HTMLRenderer {
         html += "<tr name=" + id + ">";
 
         if (tituloDTO != null) {
-            html += "<th colspan=2 class=wf_f_stitle>";
+            html += "<th colspan=2 class=\"wf_f_stitle w3-highway-blue\" >";
             html += tituloDTO.getNo_pagtit();
             html += "</th>";
 

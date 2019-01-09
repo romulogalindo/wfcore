@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 
 public class PaginaFormulario extends Pagina implements Serializable{
 
-    int co_pagina;
-    String no_pagtit;
-    LinkedHashMap<String, Fila> ultraFilas;
+//    int co_pagina;
+//    String no_pagtit;
+//    LinkedHashMap<String, Fila> ultraFilas;
 
     public PaginaFormulario(int co_pagina, String no_pagtit, LinkedHashMap<String, Fila> ultraFilas) {
         this.co_pagina = co_pagina;
@@ -35,18 +35,18 @@ public class PaginaFormulario extends Pagina implements Serializable{
     public String toHTML() {
         String html = "";
 
-        html += "<table id=PAG" + co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";
+        html += "<table id=PAG" + this.co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";
         html += "<thead>";
         html += "<tr>";
         html += "<th colspan=2 >";
-        html += "<h3>" + no_pagtit + "</h3>";
+        html += "<h3>" + this.no_pagtit + "</h3>";
         html += "</th>";
         html += "<tr>";
         html += "</tr>";
         html += "</thead>";
         html += "<tbody>";
 
-        for (Fila fila : ultraFilas.values()) {
+        for (Fila fila : this.ultraFilas.values()) {
             html += fila.toHTML();
         }
 

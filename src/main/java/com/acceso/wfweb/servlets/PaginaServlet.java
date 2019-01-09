@@ -18,30 +18,23 @@ public class PaginaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestManager requestManager = new RequestManager(request, response);
-        String goToUrl = "/";
         RequestDispatcher dispatcher = getServletContext()
                 .getRequestDispatcher("/jsp_exec/ocelot/pagina.jsp");
-        System.out.println("dispatcher = " + dispatcher);
         dispatcher.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestManager requestManager = new RequestManager(request, response);
-        String goToUrl = "/";
         RequestDispatcher dispatcher = getServletContext()
                 .getRequestDispatcher("/jsp_exec/ocelot/pagina.jsp");
-        System.out.println("dispatcher = " + dispatcher);
         dispatcher.forward(request, response);
 
     }
 
-
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

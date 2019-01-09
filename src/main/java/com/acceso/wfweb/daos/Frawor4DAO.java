@@ -104,6 +104,45 @@ public class Frawor4DAO extends DAO {
         return registroDTOS;
     }
 
+    public List<ValpagDTO> getValPag_legacy(int p_co_pagina, int p_co_conten, long p_id_frawor) {
+        List<ValpagDTO> valpagDTOS = null;
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFVALPAG), true, true);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            valpagDTOS = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return valpagDTOS;
+    }
+
+    public String getVPJS(int p_co_pagina) {
+        String valpagJS = "";
+
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFVALPAGJS), true, true);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            valpagJS = nQuery.uniqueResult().toString();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return valpagJS;
+    }
+
     public IdfraworDTO getIdfraworDTO() {
 
         IdfraworDTO idfraworDTO = null;

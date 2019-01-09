@@ -50,5 +50,6 @@
         <mapping class="com.acceso.wfweb.dtos.TituloDTO"/>
         <mapping class="com.acceso.wfweb.dtos.RegistroDTO"/>
         <mapping class="com.acceso.wfweb.dtos.IdfraworDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.ValpagDTO"/>
     </session-factory>
 </hibernate-configuration>

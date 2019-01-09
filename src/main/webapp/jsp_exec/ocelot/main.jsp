@@ -150,8 +150,9 @@
 
     <div class="wf_right w3-quarter">
         <div class="w3-bar w3-xlarge">
-            <div class="w3-bar-item w3-button">${US.no_usulog}</div>
+            <%--<div class="w3-bar-item w3-button">${US.no_usulog}</div>--%>
             <a href="#" class="w3-bar-item w3-button w3-right">
+                ${US.no_usulog}
                 <img class="w3-hide-small w3-circle" src="${US.no_imgusu}"
                      style="height:40px;"/>
             </a>

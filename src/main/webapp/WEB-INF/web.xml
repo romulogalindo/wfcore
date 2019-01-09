@@ -84,6 +84,11 @@
         <servlet-name>PaginaServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.PaginaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ValpagServlet</servlet-name>
+        <servlet-class>com.acceso.wfweb.servlets.ValpagServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
@@ -104,6 +109,10 @@
     <servlet-mapping>
         <servlet-name>PaginaServlet</servlet-name>
         <url-pattern>/karmic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValpagServlet</servlet-name>
+        <url-pattern>/pangolin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

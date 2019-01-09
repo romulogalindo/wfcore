@@ -6,9 +6,9 @@ import java.util.LinkedList;
 
 public class PaginaRerporte extends Pagina implements Serializable {
 
-    int co_pagina;
-    String no_pagtit;
-    LinkedHashMap<String, Fila> ultraFilas;
+//    int co_pagina;
+//    String no_pagtit;
+//    LinkedHashMap<String, Fila> ultraFilas;
 
     public PaginaRerporte(int co_pagina, String no_pagtit, LinkedHashMap<String, Fila> ultraFilas) {
         this.co_pagina = co_pagina;
@@ -38,10 +38,11 @@ public class PaginaRerporte extends Pagina implements Serializable {
 
         LinkedList<Fila> titlelvl1 = new LinkedList<>();
 
+        int colspan = 0;
         for (Fila fila : ultraFilas.values()) {
             //html += fila.toHTML();->thead->lvl1
-            int colspan = 0;
             if (fila.getTituloDTO() != null) {
+//                System.out.println("Titulo>fila = " + fila);
                 //es un titulo
                 titlelvl1.add(fila);
                 colspan = 0;
@@ -50,6 +51,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
                 titlelvl1.get(titlelvl1.size() - 1).setColspan(colspan);
             }
         }
+        html += "<script>var estrategia =null;</script>";
 
 
         html += "<table id=PAG" + co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";
@@ -63,8 +65,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
         html += "<tr>";
         for (Fila fila : titlelvl1) {
 
-            html += "<th colspan=" + fila.getColspan() + " >";
-            html += "<h3>" + fila.getTituloDTO().getNo_pagtit() + "</h3>";
+            html += "<th colspan=" + fila.getColspan() + " class=\"wf_t_stitle w3-highway-blue\" >";
+            html += fila.getTituloDTO().getNo_pagtit();
             html += "</th>";
         }
 

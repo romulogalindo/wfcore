@@ -9,6 +9,10 @@ import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.web.Root;
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 public class Application {
     public static final String APPLICATION_PROJECT_NAME = "ZERO DAWN";
     public static final String APPLICATION_NAME = "Workflow AIO2";
@@ -21,12 +25,17 @@ public class Application {
     public DataSourceService dataSourceService;
     public JavaScriptService javaScriptService;
 
+    //Executor!!!!
+    ThreadPoolExecutor executor;
+
 
     public Application() {
-        loginCTRL = ApplicationManager.getLoginCTRL();
-        cacheService = new CacheService("AIOCACHE");
-        dataSourceService = new DataSourceService("DataSourceService");
-        javaScriptService = new JavaScriptService("JSEngine");
+        this.loginCTRL = ApplicationManager.getLoginCTRL();
+        this.cacheService = new CacheService("AIOCACHE");
+        this.dataSourceService = new DataSourceService("DataSourceService");
+        this.javaScriptService = new JavaScriptService("JSEngine");
+        this.executor = new ThreadPoolExecutor(100, 200, 50000L,
+                TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
     }
 
     public void run() {
@@ -83,9 +92,18 @@ public class Application {
         this.dataSourceService = dataSourceService;
     }
 
-    public void destroy(){
+    public ThreadPoolExecutor getExecutor() {
+        return executor;
+    }
+
+    public void setExecutor(ThreadPoolExecutor executor) {
+        this.executor = executor;
+    }
+
+    public void destroy() {
         cacheService.stop();
         dataSourceService.stop();
         javaScriptService.stop();
+        executor.shutdown();
     }
 }
