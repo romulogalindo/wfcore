@@ -51,8 +51,8 @@
                                 Lista de Menus
                             </f:facet>
 
-                            <p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" update=":form:lista"/>
-                            <p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}" update=":form:lista" />
+                            <p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" update="lista"/>
+                            <p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}" update="lista" />
 
                             <p:column headerText="Nombre" style="background-color:#{men.va_colele};">
                                 <p:cellEditor>
@@ -103,7 +103,7 @@
                                 <p:rowEditor rendered="#{menuBean.isEditable(men)}" id="Edit"/>
                             </p:column>
                             <p:column style="width:80px; background-color:#{men.va_colele};">
-                                <p:commandButton icon="fa fa-trash" action="#{menuBean.deleteRegist}"
+                                <p:commandButton icon="fa fa-trash" action="#{menuBean.onRowDelete(nodeRowAction)}"
                                                  update=":form:lista" rendered="#{menuBean.isDelete(men)}">
                                     <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
                                     <p:confirm header="Confirmación" message="¿Desea continuar?"
@@ -117,7 +117,7 @@
                                 </p:commandButton>
                                 <p:commandButton icon="fa fa-save"
                                                  action="#{menuBean.saveDto}"
-                                                 update=":form:lista"
+                                                 update="lista"
                                                  rendered="#{menuBean.isSave(men)}">
                                     <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
                                 </p:commandButton>

@@ -27,11 +27,11 @@
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  paginator="true"
                                  paginatorPosition="bottom"
-                                 rows="100"
+                                 rows="20"
                                  widgetVar="widTable"
                                  rowKey="#{mdl.co_modulo}"
                                  rowIndexVar="N"
-                                 style="width:1800px;height:600px">
+                                 style="width:1600px;height:800px">
 
                         <f:facet name="header">
                             Lista de Modulos
@@ -57,9 +57,9 @@
                             <h:outputText value="#{mdl.ur_modulo}"/>
                         </p:column>
 
-                        <p:column headerText="Cod. Anterior" sortBy="#{mdl.co_modant}">
-                            <h:outputText value="#{mdl.co_modant}"/>
-                        </p:column>
+                        <!--<p:column headerText="Cod. Anterior" sortBy="#{mdl.co_modant}">-->
+                            <!--<h:outputText value="#{mdl.co_modant}"/>-->
+                        <!--</p:column>-->
 
                         <p:column headerText="Sistema" sortBy="#{mdl.no_sistem}" width="180">
                             <h:outputText value="#{mdl.no_sistem}"/>

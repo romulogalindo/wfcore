@@ -140,7 +140,7 @@ public class MenuDAO {
 
             System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString());
 
-            resultado = nQuery.list().toString();
+            resultado = nQuery.uniqueResult().toString();
 
             System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
             System.out.println("[MenuDAO:deleteMenu] Q = " + nQuery.getQueryString() + " R = " + resultado);

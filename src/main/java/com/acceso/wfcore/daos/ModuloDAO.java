@@ -70,12 +70,11 @@ public class ModuloDAO {
 
         try {
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_MODULO));
-//:co_modulo, :no_modulo, :ur_modulo, :co_paquet, :co_modant, :co_subsis, :co_plataf
+
             nQuery.setInteger("co_modulo", modulo.getCo_modulo() == null ? -1 : modulo.getCo_modulo());
             nQuery.setString("no_modulo", modulo.getNo_modulo());
             nQuery.setString("ur_modulo", modulo.getUr_modulo());
             nQuery.setInteger("co_paquet", modulo.getCo_paquet());
-            nQuery.setInteger("co_modant", modulo.getCo_modant());
             nQuery.setInteger("co_subsis", modulo.getCo_subsis());
             nQuery.setInteger("co_plataf", modulo.getCo_plataf() == null ? 1 : modulo.getCo_plataf());
 

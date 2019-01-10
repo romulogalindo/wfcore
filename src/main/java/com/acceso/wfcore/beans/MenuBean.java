@@ -209,9 +209,35 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    public void onRowEdit(RowEditEvent event) {
       TreeNode nodeActionSelect = ((TreeNode) event.getObject());
       MenuDTO selectMenu = (MenuDTO) nodeActionSelect.getData();
-      System.out.println("Termino: " + selectMenu.getCo_elemen() + " - " + selectMenu.getNo_elemen());
+      //System.out.println("Termino: " + selectMenu.getCo_elemen() + " - " + selectMenu.getNo_elemen());
+      MenuDAO dao = new MenuDAO();
+      this.menu = dao.grabarMenu(selectMenu);
+      dao.close();
+
+      if (selectMenu.getCo_elemen() == null){
+         TreeNode parent = nodeActionSelect.getParent();
+         parent.getChildren().remove(nodeActionSelect);
+         TreeNode nueva = new DefaultTreeNode(this.menu, parent);
+      }
 
       FacesMessage msg = new FacesMessage("Edición", "Se realizó la modificación");
+      FacesContext.getCurrentInstance().addMessage(null, msg);
+
+   }
+
+   public void onRowDelete(TreeNode nodeActionSelect) {
+      MenuDTO selectMenu = (MenuDTO) nodeActionSelect.getData();
+
+      if (selectMenu.getCo_elemen() != null){
+         MenuDAO dao = new MenuDAO();
+         dao.deleteMenu(selectMenu);
+         dao.close();
+      }
+
+      TreeNode parent = nodeActionSelect.getParent();
+      parent.getChildren().remove(nodeActionSelect);
+
+      FacesMessage msg = new FacesMessage("Eliminación", "Se eliminó correctamente");
       FacesContext.getCurrentInstance().addMessage(null, msg);
 
    }
@@ -239,7 +265,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    public boolean isAdd(MenuDTO menuv) {
       Boolean isEditable = false;
 
-      if (menuv.getCo_elemen() != null && (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP"))) {
+      if (menuv.getCo_elemen() != null && (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) && menuv.getCo_modulo() == null) {
          isEditable = true;
       }
 

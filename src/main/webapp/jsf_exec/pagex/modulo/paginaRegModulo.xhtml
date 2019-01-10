@@ -34,12 +34,6 @@
                     </p:inputText>
                     <p:outputLabel value="#{moduloBean.modulo.ur_modulo}" rendered="#{!moduloBean.isregEditable}"/>
 
-                    <p:outputLabel for="co_modant" value="Modulo Anterior:"/>
-                    <p:inputText id="co_modant" value="#{moduloBean.modulo.co_modant}"
-                                 rendered="#{moduloBean.isregEditable}">
-                    </p:inputText>
-                    <p:outputLabel value="#{moduloBean.modulo.co_modant}" rendered="#{!moduloBean.isregEditable}"/>
-
                     <p:outputLabel for="co_sistem" value="Sistema:"/>
                     <h:selectOneMenu id="co_sistem" value="#{moduloBean.modulo.co_sistem}"
                                      required="true" requiredMessage="Debe ingresar un Sistema."
