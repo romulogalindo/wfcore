@@ -43,6 +43,27 @@ public class ModuloDAO {
         return modulos;
     }
 
+    public List<ModuloDTO> getModulosMenu() {
+
+        List<ModuloDTO> modulos = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MODULO_MENU));
+
+            System.out.println("[ModuloDAO:getModulosMenu] Q = " + nQuery.getQueryString());
+            modulos = nQuery.list();
+            System.out.println("[ModuloDAO:getModulosMenu] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[ModuloDAO:getModulosMenu] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return modulos;
+    }
+
     public ModuloDTO grabarModulo(ModuloDTO modulo) {
 
         NQuery nQuery = new NQuery();
@@ -56,7 +77,7 @@ public class ModuloDAO {
             nQuery.setInteger("co_paquet", modulo.getCo_paquet());
             nQuery.setInteger("co_modant", modulo.getCo_modant());
             nQuery.setInteger("co_subsis", modulo.getCo_subsis());
-            nQuery.setInteger("co_plataf", modulo.getCo_plataf());
+            nQuery.setInteger("co_plataf", modulo.getCo_plataf() == null ? 1 : modulo.getCo_plataf());
 
             System.out.println("[ModuloDAO:grabarModulo] Q = " + nQuery.getQueryString());
 

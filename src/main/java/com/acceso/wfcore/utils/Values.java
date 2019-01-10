@@ -32,6 +32,7 @@ public class Values {
     public static final String QUERYS_NATIVE_DELETE_PAQUETE = "wfcore.paquete_delete";
 
     public static final String QUERYS_NATIVE_SELECT_MODULO = "wfcore.modulo_select";
+    public static final String QUERYS_NATIVE_SELECT_MODULO_MENU = "wfcore.modulo_select_menu";
     public static final String QUERYS_NATIVE_GRABAR_MODULO = "wfcore.modulo_update";
     public static final String QUERYS_NATIVE_DELETE_MODULO = "wfcore.modulo_delete";
 
@@ -45,6 +46,7 @@ public class Values {
     public static final String QUERYS_NATIVE_SELECT_MENU_MODPAD = "wfcore.menu_modpad";
     public static final String QUERYS_NATIVE_SELECT_MENU_SUBMOD = "wfcore.menu_submod";
     public static final String QUERYS_NATIVE_DELETE_MENU = "wfcore.menu_delete";
+    public static final String QUERYS_NATIVE_GRABAR_MENU = "wfcore.menu_update";
 
 
 

@@ -1,6 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.MenuDTO;
+import com.acceso.wfcore.dtos.ModuloDTO;
 import com.acceso.wfcore.dtos.PaqueteDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
@@ -31,12 +32,12 @@ public class MenuDAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SISTEMA));
 
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            System.out.println("[MenuDAO:getMenus_Sistemas] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[MenuDAO:getMenus_Sistemas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
         } catch (Exception ep) {
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            System.out.println("[MenuDAO:getMenus_Sistemas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
@@ -52,12 +53,12 @@ public class MenuDAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SUBSISTEMA));
 
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            System.out.println("[MenuDAO:getMenus_SubSistemas] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[MenuDAO:getMenus_SubSistemas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
         } catch (Exception ep) {
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            System.out.println("[MenuDAO:getMenus_SubSistemas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
@@ -73,12 +74,12 @@ public class MenuDAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_PAQUETE));
 
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            System.out.println("[MenuDAO:getMenus_Paquete] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[MenuDAO:getMenus_Paquete] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
         } catch (Exception ep) {
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            System.out.println("[MenuDAO:getMenus_Paquete] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
@@ -94,12 +95,12 @@ public class MenuDAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_MODPAD));
 
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            System.out.println("[MenuDAO:getMenus_ModPad] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[MenuDAO:getMenus_ModPad] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
         } catch (Exception ep) {
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            System.out.println("[MenuDAO:getMenus_ModPad] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
@@ -114,12 +115,12 @@ public class MenuDAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_MENU_SUBMOD));
 
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString());
+            System.out.println("[MenuDAO:getMenus_SubMod] Q = " + nQuery.getQueryString());
             menus = nQuery.list();
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[MenuDAO:getMenus_SubMod] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
         } catch (Exception ep) {
-            System.out.println("[MenuDAO:getMenus] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            System.out.println("[MenuDAO:getMenus_SubMod] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
@@ -149,6 +150,34 @@ public class MenuDAO {
             ep.printStackTrace();
         }
         return resultado;
+    }
+
+    public MenuDTO grabarMenu(MenuDTO menu) {
+
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GRABAR_MENU));
+
+            nQuery.setInteger("co_mensis", menu.getCo_elemen() == null ? -1 : menu.getCo_elemen());
+            nQuery.setString("no_mensis", menu.getNo_elemen());
+            nQuery.setInteger("co_menpad", menu.getCo_menpad());
+            nQuery.setInteger("co_modulo", menu.getCo_modulo());
+            nQuery.setInteger("co_paquet", menu.getCo_paquet());
+            nQuery.setInteger("or_mensis", menu.getOr_elemen());
+            nQuery.setInteger("co_subsis", menu.getCo_subsis());
+
+            System.out.println("[MenuDAO:grabarMenu] Q = " + nQuery.getQueryString());
+
+            menu = (MenuDTO) nQuery.list().get(0);
+
+            System.out.println("[MenuDAO:grabarMenu] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+        } catch (Exception ep) {
+            System.out.println("[MenuDAO:grabarMenu] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return menu;
     }
 
     public void close() {

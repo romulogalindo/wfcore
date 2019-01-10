@@ -51,8 +51,8 @@
                                 Lista de Menus
                             </f:facet>
 
-                            <p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}"/>
-                            <p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}"/>
+                            <p:ajax event="rowEdit" listener="#{menuBean.onRowEdit}" update=":form:lista"/>
+                            <p:ajax event="rowEditCancel" listener="#{menuBean.onRowCancel}" update=":form:lista" />
 
                             <p:column headerText="Nombre" style="background-color:#{men.va_colele};">
                                 <p:cellEditor>
@@ -84,7 +84,7 @@
                                         <h:outputText value="#{men.or_elemen}" style="text-align: right"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{men.or_elemen}" style="width:100%"/>
+                                        <p:inputText value="#{men.or_elemen}" style="width:90%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
@@ -100,11 +100,11 @@
                                 </p:cellEditor>
                             </p:column>
                             <p:column style="width:40px; background-color:#{men.va_colele};">
-                                <p:rowEditor rendered="#{menuBean.isEditable(men)}"/>
+                                <p:rowEditor rendered="#{menuBean.isEditable(men)}" id="Edit"/>
                             </p:column>
                             <p:column style="width:80px; background-color:#{men.va_colele};">
                                 <p:commandButton icon="fa fa-trash" action="#{menuBean.deleteRegist}"
-                                                 update=":form:lista" rendered="#{menuBean.isEditable(men)}">
+                                                 update=":form:lista" rendered="#{menuBean.isDelete(men)}">
                                     <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
                                     <p:confirm header="Confirmación" message="¿Desea continuar?"
                                                icon="fa fa-exclamation-triangle"/>
@@ -112,9 +112,14 @@
                                 <p:commandButton icon="fa fa-plus"
                                                  action="#{menuBean.addChildNodeAction(nodeRowAction, men)}"
                                                  update=":form:lista"
-                                                 rendered="#{menuBean.isEditable(men)}">
-                                    <!--<f:setPropertyActionListener value="#{nodeRowAction}" target="#{menuBean.nodeAction}"/>-->
-                                    <!--<f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>-->
+                                                 rendered="#{menuBean.isAdd(men)}">
+
+                                </p:commandButton>
+                                <p:commandButton icon="fa fa-save"
+                                                 action="#{menuBean.saveDto}"
+                                                 update=":form:lista"
+                                                 rendered="#{menuBean.isSave(men)}">
+                                    <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
                                 </p:commandButton>
                             </p:column>
 

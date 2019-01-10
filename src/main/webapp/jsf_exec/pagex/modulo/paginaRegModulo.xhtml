@@ -21,17 +21,16 @@
                                  rendered="#{moduloBean.isregEditable}"/>
                     <p:outputLabel value="#{moduloBean.modulo.co_modulo}" rendered="#{!moduloBean.isregEditable}"/>
 
-                    <p:outputLabel for="no_paquet" value="Nombre:"/>
-                    <p:inputText id="no_paquet" value="#{moduloBean.modulo.no_paquet}"
+                    <p:outputLabel for="no_modulo" value="Nombre:"/>
+                    <p:inputText id="no_modulo" value="#{moduloBean.modulo.no_modulo}"
                                  required="true" requiredMessage="Debe ingresar un Nombre."
                                  rendered="#{moduloBean.isregEditable}"/>
-                    <p:outputLabel value="#{moduloBean.modulo.no_paquet}" rendered="#{!moduloBean.isregEditable}"/>
+                    <p:outputLabel value="#{moduloBean.modulo.no_modulo}" rendered="#{!moduloBean.isregEditable}"/>
 
                     <p:outputLabel for="ur_modulo" value="URL:"/>
                     <p:inputText id="ur_modulo" value="#{moduloBean.modulo.ur_modulo}"
                                  required="true" requiredMessage="Debe ingresar un URL."
                                  rendered="#{moduloBean.isregEditable}">
-                        <p:keyFilter mask="num"/>
                     </p:inputText>
                     <p:outputLabel value="#{moduloBean.modulo.ur_modulo}" rendered="#{!moduloBean.isregEditable}"/>
 

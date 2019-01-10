@@ -44,6 +44,11 @@ import java.io.Serializable;
             name = Values.QUERYS_NATIVE_SELECT_MENU_SUBMOD,
             query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi, no_modulo, or_elemen, va_colele "
                   + "from wfsistem.pbgetmenu_submod()",
+            resultClass = MenuDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_GRABAR_MENU,
+            query = "select co_elemen, no_elemen, co_menpad, co_modulo, co_sistem, co_subsis, co_paquet, co_identi, no_modulo, or_elemen, va_colele "
+                  + "from wfsistem.pbmenu_save(:co_mensis, :no_mensis, :co_menpad, :co_modulo, :co_paquet, :or_mensis, :co_subsis)",
             resultClass = MenuDTO.class)
 })
 public class MenuDTO implements Serializable {

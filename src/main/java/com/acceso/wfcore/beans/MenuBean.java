@@ -7,18 +7,25 @@ import com.acceso.wfcore.dtos.MenuDTO;
 
 import com.acceso.wfcore.dtos.ModuloDTO;
 import com.acceso.wfcore.dtos.SubSistemaDTO;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import org.primefaces.component.roweditor.RowEditor;
+import org.primefaces.component.treetable.TreeTable;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
+import org.primefaces.util.ComponentUtils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -68,35 +75,35 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
          TreeNode nodesistema = new DefaultTreeNode(menusisDTO, this.root);
 
          for (MenuDTO menusubDTO : lstsubsis) {
-            if (menusubDTO.getCo_sistem() == menusisDTO.getCo_elemen()) {
+            if (menusubDTO.getCo_sistem().intValue() == menusisDTO.getCo_elemen().intValue()) {
                TreeNode nodesubsis = new DefaultTreeNode(menusubDTO, nodesistema);
 
                for (MenuDTO menupaqDTO : lstpaquetes) {
-                  if (menupaqDTO.getCo_subsis() == menusubDTO.getCo_elemen()) {
+                  if (menupaqDTO.getCo_subsis().intValue() == menusubDTO.getCo_elemen().intValue()) {
                      TreeNode nodepaquete = new DefaultTreeNode(menupaqDTO, nodesubsis);
 
                      for (MenuDTO menupadDTO : lstmodpad) {
-                        if (menupadDTO.getCo_paquet() == menupaqDTO.getCo_elemen()) {
+                        if (menupadDTO.getCo_paquet().intValue() == menupaqDTO.getCo_elemen().intValue()) {
                            TreeNode nodemodpad = new DefaultTreeNode(menupadDTO, nodepaquete);
 
                            for (MenuDTO menusb1DTO : lstsub1) {
-                              if (menusb1DTO.getCo_menpad() == menupadDTO.getCo_elemen()) {
+                              if (menusb1DTO.getCo_menpad().intValue() == menupadDTO.getCo_elemen().intValue()) {
                                  TreeNode nodesub1 = new DefaultTreeNode(menusb1DTO, nodemodpad);
 
                                  for (MenuDTO menusb2DTO : lstsub1) {
-                                    if (menusb2DTO.getCo_menpad() == menusb1DTO.getCo_elemen()) {
+                                    if (menusb2DTO.getCo_menpad().intValue() == menusb1DTO.getCo_elemen().intValue()) {
                                        TreeNode nodesub2 = new DefaultTreeNode(menusb2DTO, nodesub1);
 
                                        for (MenuDTO menusb3DTO : lstsub1) {
-                                          if (menusb3DTO.getCo_menpad() == menusb2DTO.getCo_elemen()) {
+                                          if (menusb3DTO.getCo_menpad().intValue() == menusb2DTO.getCo_elemen().intValue()) {
                                              TreeNode nodesub3 = new DefaultTreeNode(menusb3DTO, nodesub2);
 
                                              for (MenuDTO menusb4DTO : lstsub1) {
-                                                if (menusb4DTO.getCo_menpad() == menusb3DTO.getCo_elemen()) {
+                                                if (menusb4DTO.getCo_menpad().intValue() == menusb3DTO.getCo_elemen().intValue()) {
                                                    TreeNode nodesub4 = new DefaultTreeNode(menusb4DTO, nodesub3);
 
                                                    for (MenuDTO menusb5DTO : lstsub1) {
-                                                      if (menusb5DTO.getCo_menpad() == menusb4DTO.getCo_elemen()) {
+                                                      if (menusb5DTO.getCo_menpad().intValue() == menusb4DTO.getCo_elemen().intValue()) {
                                                          TreeNode nodesub5 = new DefaultTreeNode(menusb5DTO, nodesub4);
                                                       }
                                                    }
@@ -139,15 +146,11 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
 
    public void cargarListaModulos() {
       ModuloDAO dao = new ModuloDAO();
-      this.modulos = dao.getModulos();
+      this.modulos = dao.getModulosMenu();
    }
 
    public void addChildNodeAction(TreeNode nodeActionSelect, MenuDTO menuSelect) {
-//      if (selectedNode == null) {
-//         // TODO: añadir excepcion no seleccionado
-//         FacesMessage msg = new FacesMessage("Alerta", "Seleccione una fila para agregar.");
-//         FacesContext.getCurrentInstance().addMessage(null, msg);
-//      }
+
       MenuDTO nuevoMenu = new MenuDTO();
       nuevoMenu.setCo_sistem(menuSelect.getCo_sistem());
       nuevoMenu.setCo_subsis(menuSelect.getCo_subsis());
@@ -156,26 +159,61 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       nuevoMenu.setCo_identi("MS");
       nuevoMenu.setVa_colele("#f5b7b1");
 
-      System.out.println("addChildNodeAction - " + menuSelect.getNo_elemen());
-      System.out.println("addChildNodeAction - " + nodeActionSelect.getRowKey());
-      System.out.println("addChildNodeAction - " + nodeActionSelect.getData().toString());
+      for (TreeNode node : nodeActionSelect.getChildren()) {
+         if (((MenuDTO)node.getData()).getCo_elemen() == null){
+            FacesMessage msg = new FacesMessage("Alerta", "Solo se puede agregar una fila");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return;
+         }
+      }
 
-
-//      if (nodeAction.getChildCount() > 0) {
-//         if (nodeAction.getChildren().equals(nuevoMenu)) {
-//            System.out.println("addChildNodeAction - Exception" + menuSelect.getNo_elemen());
-//            return;
-//         }
-//      }
       nodeActionSelect.setExpanded(true);
       TreeNode nueva = new DefaultTreeNode(nuevoMenu, nodeActionSelect);
+      nueva.setSelected(true);
+
+      System.out.println("addChildNodeAction: " + "jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
+      RequestContext.getCurrentInstance().execute("jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
 
       return;
    }
 
    public void onRowCancel(RowEditEvent event) {
-      FacesMessage msg = new FacesMessage("Edición Cancelada", ((TreeNode) event.getObject()).toString());
+      System.out.println("0");
+      TreeNode nodeActionSelect = ((TreeNode) event.getObject());
+      System.out.println("0.5");
+      MenuDTO selectMenu = (MenuDTO) nodeActionSelect.getData();
+      System.out.println("1");
+
+      // SE ELIMINA LA FILA SI SE CANCELA LA FILA QUE SE AGREGO.
+//      if (selectMenu.getCo_elemen() == null){
+//         System.out.println("2");
+////         TreeNode parent = nodeActionSelect.getParent();
+////         //parent.setExpanded(false);
+////         parent.getChildren().remove(nodeActionSelect);
+//
+//         final Iterator<TreeNode> it = nodeActionSelect.getParent().getChildren().iterator();
+//         while (it.hasNext()) {
+//            final TreeNode currentNode = it.next();
+//            if (currentNode.equals(nodeActionSelect)) {
+//               it.remove();
+//            }
+//         }
+//      }
+
+      System.out.println("3");
+      FacesMessage msg = new FacesMessage("Edición Cancelada", "No se realizo ninguna modificación");
       FacesContext.getCurrentInstance().addMessage(null, msg);
+      System.out.println("4");
+   }
+
+   public void onRowEdit(RowEditEvent event) {
+      TreeNode nodeActionSelect = ((TreeNode) event.getObject());
+      MenuDTO selectMenu = (MenuDTO) nodeActionSelect.getData();
+      System.out.println("Termino: " + selectMenu.getCo_elemen() + " - " + selectMenu.getNo_elemen());
+
+      FacesMessage msg = new FacesMessage("Edición", "Se realizó la modificación");
+      FacesContext.getCurrentInstance().addMessage(null, msg);
+
    }
 
    public boolean isEditable(MenuDTO menuv) {
@@ -184,8 +222,35 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       if (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP")) {
          isEditable = true;
       }
+
+      return isEditable;
+   }
+
+   public boolean isDelete(MenuDTO menuv) {
+      Boolean isEditable = false;
+
+      if (menuv.getCo_elemen() != null && (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP"))) {
+         isEditable = true;
+      }
+
+      return isEditable;
+   }
+
+   public boolean isAdd(MenuDTO menuv) {
+      Boolean isEditable = false;
+
+      if (menuv.getCo_elemen() != null && (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP"))) {
+         isEditable = true;
+      }
+
+      return isEditable;
+   }
+
+   public boolean isSave(MenuDTO menuv) {
+      Boolean isEditable = false;
+
       if (menuv.getCo_elemen() == null) {
-         isEditable = false;
+         isEditable = true;
       }
 
       return isEditable;
@@ -273,9 +338,8 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    @Override
    public void saveDto() {
       MenuDAO dao = new MenuDAO();
-      // this.menu = dao.grabarMenu(menu);
-      // this.menus = dao.getMenus(-1, -1);
-//      System.out.println("MenuBean actualizarMenu = " + this.menu);
+      this.menu = dao.grabarMenu(menu);
+      System.out.println("MenuBean actualizarMenu = " + this.menu);
       dao.close();
    }
 

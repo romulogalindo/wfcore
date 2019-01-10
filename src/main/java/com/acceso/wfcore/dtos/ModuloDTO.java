@@ -29,6 +29,11 @@ import java.io.Serializable;
             name = Values.QUERYS_NATIVE_GRABAR_MODULO,
             query = "select co_modulo, no_modulo, ur_modulo, co_modant, co_sistem, no_sistem, co_subsis, no_subsis, co_paquet, no_paquet, co_plataf, no_plataf "
             + "from wfsistem.pbmodulo_save(:co_modulo, :no_modulo, :ur_modulo, :co_paquet, :co_modant, :co_subsis, :co_plataf)",
+            resultClass = ModuloDTO.class),
+      @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_MODULO_MENU,
+            query = "select co_modulo, no_modulo, ur_modulo, co_modant, co_sistem, no_sistem, co_subsis, no_subsis, co_paquet, no_paquet, co_plataf, no_plataf "
+                  + "from wfsistem.pbmodulo_list_menu()",
             resultClass = ModuloDTO.class)
 })
 public class ModuloDTO implements Serializable {
