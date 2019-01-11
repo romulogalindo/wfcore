@@ -49,8 +49,13 @@ function pagina() {
     document.getElementById('height_table').value = '' + height_table;
 
     //pedimos que ejecute el valpag y que nos de solo el contenido
-    var jsonData = VPAsync();
+    // var jsonData = VPAsync();
+    var jsonData = $D.getJSON('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
+
     console.log('jsonData = ' + jsonData);
+    console.log('jsonData = ' + jsonData.status);
+    console.log('jsonData = ' + jsonData.result);
+
     var rows = [];
     rows = jsonData.result.rows;
 
@@ -76,12 +81,27 @@ function readypagina(pag) {
 }
 
 /*CORE JS*/
-async function VPAsync() {
-    // await response of fetch call
-    let response = await fetch('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
-    // only proceed once promise is resolved
-    let data = await response.json();
-    // only proceed once second promise is resolved
-    console.log('La data ya llego::' + data);
-    return data;
-}
+// async function VPAsync() {
+//     // await response of fetch call
+//     let response = await fetch('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
+//     // only proceed once promise is resolved
+//     // let data = await response.text();
+//      let data = await response.json();
+//     // only proceed once second promise is resolved
+//
+//     // console.log('>>>>'+data);
+//
+//     return response.json();;
+// }
+
+// function VPAsync() {
+//     var url = '/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor();
+//     return fetch(url).then(response =>
+//         response.json().then(data => ({
+//                 data: data,
+//                 status: response.status
+//             })
+//         ).then(res => {
+//             console.log(res.status, res.data.title)
+//         }));
+// }
