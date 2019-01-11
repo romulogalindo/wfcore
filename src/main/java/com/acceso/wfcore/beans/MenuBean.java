@@ -147,6 +147,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    public void cargarListaModulos() {
       ModuloDAO dao = new ModuloDAO();
       this.modulos = dao.getModulosMenu();
+      dao.close();
    }
 
    public void addChildNodeAction(TreeNode nodeActionSelect, MenuDTO menuSelect) {
@@ -169,7 +170,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
 
       nodeActionSelect.setExpanded(true);
       TreeNode nueva = new DefaultTreeNode(nuevoMenu, nodeActionSelect);
-      nueva.setSelected(true);
+      // nueva.setSelected(true);
 
       System.out.println("addChildNodeAction: " + "jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
       RequestContext.getCurrentInstance().execute("jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
@@ -178,32 +179,11 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    }
 
    public void onRowCancel(RowEditEvent event) {
-      System.out.println("0");
       TreeNode nodeActionSelect = ((TreeNode) event.getObject());
-      System.out.println("0.5");
       MenuDTO selectMenu = (MenuDTO) nodeActionSelect.getData();
-      System.out.println("1");
 
-      // SE ELIMINA LA FILA SI SE CANCELA LA FILA QUE SE AGREGO.
-//      if (selectMenu.getCo_elemen() == null){
-//         System.out.println("2");
-////         TreeNode parent = nodeActionSelect.getParent();
-////         //parent.setExpanded(false);
-////         parent.getChildren().remove(nodeActionSelect);
-//
-//         final Iterator<TreeNode> it = nodeActionSelect.getParent().getChildren().iterator();
-//         while (it.hasNext()) {
-//            final TreeNode currentNode = it.next();
-//            if (currentNode.equals(nodeActionSelect)) {
-//               it.remove();
-//            }
-//         }
-//      }
-
-      System.out.println("3");
       FacesMessage msg = new FacesMessage("Edición Cancelada", "No se realizo ninguna modificación");
       FacesContext.getCurrentInstance().addMessage(null, msg);
-      System.out.println("4");
    }
 
    public void onRowEdit(RowEditEvent event) {
@@ -255,7 +235,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
    public boolean isDelete(MenuDTO menuv) {
       Boolean isEditable = false;
 
-      if (menuv.getCo_elemen() != null && (menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP"))) {
+      if ((menuv.getCo_identi().equals("MS") || menuv.getCo_identi().equals("MP"))) {
          isEditable = true;
       }
 
