@@ -38,6 +38,14 @@ public class Fila extends HTMLRenderer {
         this.registroDTO = registroDTO;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public int getColspan() {
         return colspan;
     }
@@ -61,8 +69,14 @@ public class Fila extends HTMLRenderer {
             html += registroDTO.getNo_pagreg();
             html += "</td>";
 
-            html += "<td name=" + id + "V class=wf_f_valreg>";
-            html += registroDTO.getNo_pagreg();
+            html += "<td class=wf_f_valreg>";
+            switch (registroDTO.getTi_pagreg()) {
+                case 1: {
+                    html += "<span name=" + id + "V></span>";
+                    break;
+                }
+            }
+
             html += "</td>";
         }
 

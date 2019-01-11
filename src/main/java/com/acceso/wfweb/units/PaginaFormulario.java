@@ -3,7 +3,7 @@ package com.acceso.wfweb.units;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-public class PaginaFormulario extends Pagina implements Serializable{
+public class PaginaFormulario extends Pagina implements Serializable {
 
 //    int co_pagina;
 //    String no_pagtit;
@@ -34,6 +34,20 @@ public class PaginaFormulario extends Pagina implements Serializable{
     @Override
     public String toHTML() {
         String html = "";
+
+//        html += "<script>\n" +
+//                "function loadReporte64(row){\n";
+//
+//        html += "for (var x = 0; x < row.regs.length; x++) {\n" +
+//                "                var reg = row.regs[x];\n" +
+//                "                console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);;\n" +
+//                "                document.getElementsByName('P'+co_pagina()+'T1R'+reg.regist + 'V')[0].innerHTML = reg.value;\n" +
+//                "            }\n";
+//
+//        html += "}</script>";
+
+        html += "<input type=hidden id=ti_pagina value=F/>";
+
 
         html += "<table id=PAG" + this.co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";
         html += "<thead>";

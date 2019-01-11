@@ -35,6 +35,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
     @Override
     public String toHTML() {
         String html = "";
+        String itr = "";
 
         LinkedList<Fila> titlelvl1 = new LinkedList<>();
 
@@ -51,8 +52,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
                 titlelvl1.get(titlelvl1.size() - 1).setColspan(colspan);
             }
         }
-        html += "<script>var estrategia =null;</script>";
 
+        html += "<input type=hidden id=ti_pagina value=R />";
 
         html += "<table id=PAG" + co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";
         html += "<thead>";
@@ -73,21 +74,33 @@ public class PaginaRerporte extends Pagina implements Serializable {
         html += "</tr>";
 
         html += "<tr>";
+        itr += "<tr>";
         for (Fila fila : ultraFilas.values()) {
 
             if (fila.getRegistroDTO() != null) {
                 html += "<th>";
                 html += "<span>" + fila.getRegistroDTO().getNo_pagreg() + "</span>";
                 html += "</th>";
+
+                switch (fila.getRegistroDTO().getTi_pagreg()) {
+                    case 1: {
+
+                        itr += "<td><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
+                        break;
+                    }
+                }
             }
         }
         html += "</tr>";
+        itr += "</tr>";
 
         html += "</thead>";
         html += "<tbody>";
 
         html += "</tbody>";
         html += "</table>";
+
+        html += "<script>var itr='" + itr + "';</script>";
 
         return html;
     }

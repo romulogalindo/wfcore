@@ -18,7 +18,7 @@
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=2"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js.js?a=2"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=2"></script>
 </head>
 <body style="padding: 5px 10px 20px;" onload="pagina()">
 <script>

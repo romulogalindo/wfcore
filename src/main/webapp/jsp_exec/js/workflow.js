@@ -1,3 +1,5 @@
+var $D = document;
+
 function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
     document.getElementById("myOverlay").style.display = "block";
@@ -34,6 +36,10 @@ function co_pagina() {
     return document.getElementById('co_pagina').value;
 }
 
+function ti_pagina() {
+    return document.getElementById('ti_pagina').value;
+}
+
 function workflow() {
     var iframes = document.getElementsByTagName('IFRAME');
     for (var i = 0; i < iframes.length; i++) {
@@ -53,18 +59,29 @@ function pagina() {
     var jsonData = $D.getJSON('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
 
     console.log('jsonData = ' + jsonData);
-    console.log('jsonData = ' + jsonData.status);
-    console.log('jsonData = ' + jsonData.result);
+    console.log('jsonData.status = ' + jsonData.status);
+    console.log('jsonData.result = ' + jsonData.result);
 
     var rows = [];
     rows = jsonData.result.rows;
 
     for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        for (var o = 0; o < row.regs.length; o++) {
-            var reg = row.regs[o];
-            console.log("Registro vivo>>" + reg);
-        }
+        console.log('------>>>' + rows[i]);
+        console.log('------>>>' + rows[i].regs);
+        // try {
+        //     console.log('------>>>' + rows[i].regs.xx);
+        //     var row;
+        //     for (var x = 0; i < row.regs.length(); x++) {
+        //         var reg = row.regs[x];
+        //         document.getElementsByName(reg.id + 'V').innerText = reg.value;
+        //     }
+        // } catch (e) {
+        // }
+        // up64(rows[i]);
+        if (ti_pagina() == 'F')
+            loadFormulario64(rows[i]);
+        else
+            loadReporte64(rows[i]);
     }
 }
 
@@ -80,28 +97,28 @@ function readypagina(pag) {
     console.log('La pàgina ya cargo:' + pag);
 }
 
-/*CORE JS*/
-// async function VPAsync() {
-//     // await response of fetch call
-//     let response = await fetch('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
-//     // only proceed once promise is resolved
-//     // let data = await response.text();
-//      let data = await response.json();
-//     // only proceed once second promise is resolved
-//
-//     // console.log('>>>>'+data);
-//
-//     return response.json();;
-// }
 
-// function VPAsync() {
-//     var url = '/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor();
-//     return fetch(url).then(response =>
-//         response.json().then(data => ({
-//                 data: data,
-//                 status: response.status
-//             })
-//         ).then(res => {
-//             console.log(res.status, res.data.title)
-//         }));
-// }
+function loadFormulario64(row) {
+    console.log('Cargando tipo Formulario->ex reporte');
+    for (var x = 0; x < row.regs.length; x++) {
+        var reg = row.regs[x];
+        console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
+        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+        document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
+    }
+}
+
+function loadReporte64(row) {
+    console.log('Cargando tipo Reporte->ex tabla');
+    var n_itr = itr;
+    // var all_tr = '';
+
+    for (var x = 0; x < row.regs.length; x++) {
+        var reg = row.regs[x];
+        console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
+        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+        document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+        n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
+    }
+    document.getElementById('PAG' + co_pagina()).getElementsByTagName('TBODY')[0].appendChild(document.createElement(n_itr));
+}

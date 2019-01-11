@@ -1,13 +1,13 @@
 package com.acceso.wfcore.utils;
 
 /**
- *
  * @author rgalindo
  */
 public class RegJson {
 
     int co_pagreg;
     String va_pagreg;
+    String tx_pagreg;
 
     public RegJson() {
     }
@@ -31,5 +31,13 @@ public class RegJson {
 
     public void setVa_pagreg(String va_pagreg) {
         this.va_pagreg = va_pagreg;
+    }
+
+    public String getTx_pagreg() {
+        return tx_pagreg;
+    }
+
+    public void setTx_pagreg(String tx_pagreg) {
+        this.tx_pagreg = tx_pagreg;
     }
 }
