@@ -14,46 +14,49 @@ import java.io.Serializable;
  */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_PFVALPAG,
-                query = "select * from frawor4.pfvalpag( :p_co_pagina , :p_id_frawor , :p_co_conten )",
-                resultClass = ValpagDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_PFVALPAG,
+            query = "select * from frawor4.pfvalpag( :p_co_pagina , :p_id_frawor , :p_co_conten )",
+            resultClass = ValpagDTO.class)
 })
 public class ValpagDTO implements Serializable {
 
     @Id
+    int id_valpag;
+    /*innecesario*/
+    int co_pagina;
+
     int co_pagreg;
 
-    int co_pagtit;
+    String va_pagreg;
 
     String no_pagreg;
 
-    int or_pagreg;
-
-    int ti_pagreg;
+    Integer ti_pagreg;
 
     String ti_estreg;
 
-    String va_alireg;
+    String tx_pagreg;
 
-    String no_desreg;
-
-    int ca_carcol;
-
-    int ca_carrow;
-
-    String ti_nowrap;
-
-    boolean il_onchan;
-
-    String va_valign;
-
-    boolean il_guareg;
-
-    int ca_caract;
-
+    String ur_pagreg;
 
     public ValpagDTO() {
+    }
+
+    public int getId_valpag() {
+        return id_valpag;
+    }
+
+    public void setId_valpag(int id_valpag) {
+        this.id_valpag = id_valpag;
+    }
+
+    public int getCo_pagina() {
+        return co_pagina;
+    }
+
+    public void setCo_pagina(int co_pagina) {
+        this.co_pagina = co_pagina;
     }
 
     public int getCo_pagreg() {
@@ -64,12 +67,12 @@ public class ValpagDTO implements Serializable {
         this.co_pagreg = co_pagreg;
     }
 
-    public int getCo_pagtit() {
-        return co_pagtit;
+    public String getVa_pagreg() {
+        return va_pagreg;
     }
 
-    public void setCo_pagtit(int co_pagtit) {
-        this.co_pagtit = co_pagtit;
+    public void setVa_pagreg(String va_pagreg) {
+        this.va_pagreg = va_pagreg;
     }
 
     public String getNo_pagreg() {
@@ -78,14 +81,6 @@ public class ValpagDTO implements Serializable {
 
     public void setNo_pagreg(String no_pagreg) {
         this.no_pagreg = no_pagreg;
-    }
-
-    public int getOr_pagreg() {
-        return or_pagreg;
-    }
-
-    public void setOr_pagreg(int or_pagreg) {
-        this.or_pagreg = or_pagreg;
     }
 
     public int getTi_pagreg() {
@@ -104,75 +99,20 @@ public class ValpagDTO implements Serializable {
         this.ti_estreg = ti_estreg;
     }
 
-    public String getVa_alireg() {
-        return va_alireg;
+    public String getTx_pagreg() {
+        return tx_pagreg;
     }
 
-    public void setVa_alireg(String va_alireg) {
-        this.va_alireg = va_alireg;
+    public void setTx_pagreg(String tx_pagreg) {
+        this.tx_pagreg = tx_pagreg;
     }
 
-    public String getNo_desreg() {
-        return no_desreg;
+    public String getUr_pagreg() {
+        return ur_pagreg;
     }
 
-    public void setNo_desreg(String no_desreg) {
-        this.no_desreg = no_desreg;
+    public void setUr_pagreg(String ur_pagreg) {
+        this.ur_pagreg = ur_pagreg;
     }
 
-    public int getCa_carcol() {
-        return ca_carcol;
-    }
-
-    public void setCa_carcol(int ca_carcol) {
-        this.ca_carcol = ca_carcol;
-    }
-
-    public int getCa_carrow() {
-        return ca_carrow;
-    }
-
-    public void setCa_carrow(int ca_carrow) {
-        this.ca_carrow = ca_carrow;
-    }
-
-    public String getTi_nowrap() {
-        return ti_nowrap;
-    }
-
-    public void setTi_nowrap(String ti_nowrap) {
-        this.ti_nowrap = ti_nowrap;
-    }
-
-    public boolean isIl_onchan() {
-        return il_onchan;
-    }
-
-    public void setIl_onchan(boolean il_onchan) {
-        this.il_onchan = il_onchan;
-    }
-
-    public String getVa_valign() {
-        return va_valign;
-    }
-
-    public void setVa_valign(String va_valign) {
-        this.va_valign = va_valign;
-    }
-
-    public boolean isIl_guareg() {
-        return il_guareg;
-    }
-
-    public void setIl_guareg(boolean il_guareg) {
-        this.il_guareg = il_guareg;
-    }
-
-    public int getCa_caract() {
-        return ca_caract;
-    }
-
-    public void setCa_caract(int ca_caract) {
-        this.ca_caract = ca_caract;
-    }
 }

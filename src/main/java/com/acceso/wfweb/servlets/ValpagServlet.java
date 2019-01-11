@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author rgalindo
+ * @author Rómulo Galindo Tanta
  */
 public class ValpagServlet extends HttpServlet {
 
@@ -29,10 +29,6 @@ public class ValpagServlet extends HttpServlet {
 
         WFCoreListener.APP.getExecutor().execute(new AsyncRequestProcessor(asyncCtx, 10000));
 
-        long endTime = System.currentTimeMillis();
-        System.out.println("AsyncLongRunningServlet End::Name="
-                + Thread.currentThread().getName() + "::ID="
-                + Thread.currentThread().getId() + "::Time Taken=");
     }
 
     @Override

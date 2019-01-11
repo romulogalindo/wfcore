@@ -10,7 +10,10 @@ ID_FRAWOR : indicador unico de proceso
 US : unidad de usuario(co_usuari, nombre)
 * */
 function do_valpag(ID_FRAWOR, US){
+
 /*USUAERIO*/
     return API_DATA.SQL('WFACR','select * from frawor2.pfvalpag(ID_FRAWORD)');
 }
-API_DATA.SQL('WFACR','select * from frawor2.pfvalpag()');
+
+//API_DATA.SQL('WFACR','select * from frawor2.pfvalpag()');
+do_valpag();

@@ -51,6 +51,16 @@ function pagina() {
     //pedimos que ejecute el valpag y que nos de solo el contenido
     var jsonData = VPAsync();
     console.log('jsonData = ' + jsonData);
+    var rows = [];
+    rows = jsonData.result.rows;
+
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        for (var o = 0; o < row.regs.length; o++) {
+            var reg = row.regs[o];
+            console.log("Registro vivo>>" + reg);
+        }
+    }
 }
 
 function iframe(iframe) {
@@ -68,10 +78,10 @@ function readypagina(pag) {
 /*CORE JS*/
 async function VPAsync() {
     // await response of fetch call
-    let response = await fetch('/pangolin?co_conten=' + co_conten() + '&co_pagina='+co_pagina() + '&id_fraword=' + id_frawor());
+    let response = await fetch('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
     // only proceed once promise is resolved
     let data = await response.json();
     // only proceed once second promise is resolved
-    console.log('La data ya llego::'+data);
+    console.log('La data ya llego::' + data);
     return data;
 }

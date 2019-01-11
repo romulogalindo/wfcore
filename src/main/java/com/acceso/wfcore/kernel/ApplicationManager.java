@@ -2,6 +2,10 @@ package com.acceso.wfcore.kernel;
 
 import com.acceso.wfcore.dtos.SystemTreeDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.utils.RegJson;
+import com.acceso.wfcore.utils.RegJsonAdapter;
+import com.acceso.wfcore.utils.RowJson;
+import com.acceso.wfcore.utils.ValpagJson;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.*;
@@ -9,11 +13,20 @@ import com.acceso.wfweb.servlets.LoginServlet;
 import com.acceso.wfweb.units.*;
 import com.acceso.wfweb.web.Root;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ApplicationManager {
+
     public static LoginCTRL getLoginCTRL() {
         LoginCTRL loginCTRL = new LoginCTRL();
         loginCTRL.setLogin_page_title("Inicia sesión");
@@ -47,8 +60,9 @@ public class ApplicationManager {
         contenedorDTO = dao.getContenedorDTO(co_conten);
         dao.close();
 
-        if (contenedorDTO == null)
+        if (contenedorDTO == null) {
             return null;
+        }
 
         dao = new Frawor4DAO();
         idfraworDTO = dao.getIdfraworDTO();
@@ -80,7 +94,6 @@ public class ApplicationManager {
 
 //            System.out.println("paginaDTO.getTi_pagina() = " + paginaDTO.getTi_pagina());
 //            System.out.println("paginaDTO.getTi_pagina().contentEquals(\"R\") = " + paginaDTO.getTi_pagina().contentEquals("R"));
-
             if (paginaDTO.getTi_pagina().contentEquals("R")) {
                 contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
             } else if (paginaDTO.getTi_pagina().contentEquals("T")) {
@@ -92,4 +105,28 @@ public class ApplicationManager {
 
         return contenedor;
     }
+
+    public static ValpagJson buildNValPag(List<ValpagDTO> valpagDTOs) {
+//        String ultraJS = "";
+        ValpagJson valpagJson = new ValpagJson();
+
+        if (valpagDTOs.size() > 0) {
+            //indicador indice!
+            ValpagDTO valpagDTO_i = valpagDTOs.get(0);
+
+            List<RowJson> rows = new ArrayList<>();
+            for (ValpagDTO valpagDTO : valpagDTOs) {
+
+                if (valpagDTO_i.getCo_pagreg() == valpagDTO.getCo_pagreg()) {
+                    rows.add(new RowJson());
+                }
+
+                rows.get(rows.size() - 1).getRegs().add(new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg()));
+            }
+            valpagJson.setRows(rows);
+        }
+
+        return valpagJson;
+    }
+
 }
