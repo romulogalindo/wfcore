@@ -107,8 +107,7 @@
                                        icon="fa fa-exclamation-triangle"/>
                         </p:commandButton>
 
-                        <p:commandButton icon="fa fa-list" title="Permisos" action="#{usuarioBean.urlPermisos}"
-                                         actionListener="#{menuBean.load}">
+                        <p:commandButton icon="fa fa-lock" title="Permisos" action="#{usuarioBean.urlPermisos}">
                             <f:setPropertyActionListener value="#{user}" target="#{usuarioBean.usuario}"/>
                         </p:commandButton>
                     </p:column>

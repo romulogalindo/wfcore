@@ -40,6 +40,9 @@ public class Values {
     public static final String QUERYS_NATIVE_GRABAR_USUARIO = "wfcore.usuario_update";
     public static final String QUERYS_NATIVE_DELETE_USUARIO = "wfcore.usuario_delete";
 
+    public static final String QUERYS_NATIVE_SELECT_PERMIS = "wfcore.permis_select";
+    public static final String QUERYS_NATIVE_GRABAR_PERMIS = "wfcore.permis_update";
+
     public static final String QUERYS_NATIVE_SELECT_MENU_SISTEMA = "wfcore.menu_sistema";
     public static final String QUERYS_NATIVE_SELECT_MENU_SUBSISTEMA = "wfcore.menu_subsistema";
     public static final String QUERYS_NATIVE_SELECT_MENU_PAQUETE = "wfcore.menu_paquete";
