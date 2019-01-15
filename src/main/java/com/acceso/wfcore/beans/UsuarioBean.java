@@ -1,12 +1,17 @@
 package com.acceso.wfcore.beans;
 
-import com.acceso.wfcore.daos.ConexionDAO;
-import com.acceso.wfcore.dtos.ConexionDTO;
+import com.acceso.wfcore.daos.SubSistemaDAO;
+import com.acceso.wfcore.daos.UsuarioDAO;
+import com.acceso.wfcore.dtos.SubSistemaDTO;
+import com.acceso.wfcore.dtos.UsuarioDTO;
+import org.primefaces.model.TreeNode;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,24 +22,55 @@ import java.util.List;
 @SessionScoped
 public class UsuarioBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
+   private static final String URL_LISTA = "/admin/jsf_exec/pagex/usuario/paginaUsuarios.xhtml";
+   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/usuario/paginaUsuarios.xhtml";
+   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/usuario/paginaRegUsuario.xhtml";
+   private static final String URL_NEW = "/admin/jsf_exec/pagex/usuario/paginaRegUsuario.xhtml";
+   private static final String URL_PERMISO = "/admin/jsf_exec/pagex/usuario/paginaPermisos.xhtml";
 
 
-   private List<ConexionDTO> conexiones;
-   private ConexionDTO conexion;
+   private List<UsuarioDTO> usuarios;
+   private UsuarioDTO usuario;
 
    private boolean isregEditable;
-
+   private List<SelectItem> lstSubSistemabySistema;
+   private TreeNode[] selectedNodes;
 
    public UsuarioBean() {
-      this.beanName = "Conexiones";
-      this.conexion = new ConexionDTO();
+      this.beanName = "Usuarios";
+      this.usuario = new UsuarioDTO();
       this.isregEditable = true;
    }
 
+   public void onSistemaChange(Integer co_sistem) {
+      this.lstSubSistemabySistema = new ArrayList<>();
+      List<SubSistemaDTO> subsistemas;
+      SubSistemaDAO dao = new SubSistemaDAO();
+      subsistemas = dao.getSubSistemas();
+      if (co_sistem == 0) {
+         for (SubSistemaDTO sis : subsistemas) {
+            SelectItem item = new SelectItem();
+            item.setLabel(sis.getNo_subsis());
+            item.setDescription(sis.getNo_subsis());
+            item.setValue(sis.getCo_subsis());
+            this.lstSubSistemabySistema.add(item);
+         }
+      } else {
+         for (SubSistemaDTO sis : subsistemas) {
+            if (sis.getCo_sistem() == co_sistem) {
+               SelectItem item = new SelectItem();
+               item.setLabel(sis.getNo_subsis());
+               item.setDescription(sis.getNo_subsis());
+               item.setValue(sis.getCo_subsis());
+               this.lstSubSistemabySistema.add(item);
+            }
+         }
+      }
+   }
+
+   public  String urlPermisos(){
+      return  URL_PERMISO;
+   }
 
    @Override
    public String getBeanName() {
@@ -70,7 +106,7 @@ public class UsuarioBean extends MainBean implements Serializable, DefaultMainte
    @Override
    public String defaultAction() {
       // Para el nuevo registro
-      this.conexion = new ConexionDTO();
+      this.usuario = new UsuarioDTO();
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
@@ -90,6 +126,8 @@ public class UsuarioBean extends MainBean implements Serializable, DefaultMainte
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
+      // CARGAMOS COMBOS DE SUBSISTEMA
+      onSistemaChange(0);
       return URL_EDITAR;
    }
 
@@ -108,51 +146,51 @@ public class UsuarioBean extends MainBean implements Serializable, DefaultMainte
 
    @Override
    public void selectDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexiones = dao.getConexiones();
+      UsuarioDAO dao = new UsuarioDAO();
+      this.usuarios = dao.getUsuarios();
       dao.close();
    }
 
    @Override
    public void saveDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
-//      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
+      UsuarioDAO dao = new UsuarioDAO();
+      this.usuario = dao.grabarUsuario(usuario);
+      this.usuarios = dao.getUsuarios();
+//      Sistema.out.println("UsuarioBean actualizarUsuario = " + this.usuario);
       dao.close();
    }
 
    @Override
    public void updateDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
-//      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
+      UsuarioDAO dao = new UsuarioDAO();
+      this.usuario = dao.grabarUsuario(usuario);
+      this.usuarios = dao.getUsuarios();
+//      Sistema.out.println("UsuarioBean actualizarUsuario = " + this.usuario);
       dao.close();
    }
 
    @Override
    public void deleteDto() {
-      ConexionDAO dao = new ConexionDAO();
-      String resultado = dao.deleteConexion(conexion);
-      this.conexiones = dao.getConexiones();
+      UsuarioDAO dao = new UsuarioDAO();
+      String resultado = dao.deleteUsuario(usuario);
+      this.usuarios = dao.getUsuarios();
       dao.close();
    }
 
-   public ConexionDTO getConexion() {
-      return conexion;
+   public UsuarioDTO getUsuario() {
+      return usuario;
    }
 
-   public void setConexion(ConexionDTO conexion) {
-      this.conexion = conexion;
+   public void setUsuario(UsuarioDTO usuario) {
+      this.usuario = usuario;
    }
 
-   public List<ConexionDTO> getConexiones() {
-      return conexiones;
+   public List<UsuarioDTO> getUsuarios() {
+      return usuarios;
    }
 
-   public void setConexiones(List<ConexionDTO> conexiones) {
-      this.conexiones = conexiones;
+   public void setUsuarios(List<UsuarioDTO> usuarios) {
+      this.usuarios = usuarios;
    }
 
    public boolean isIsregEditable() {
@@ -161,5 +199,21 @@ public class UsuarioBean extends MainBean implements Serializable, DefaultMainte
 
    public void setIsregEditable(boolean isregEditable) {
       this.isregEditable = isregEditable;
+   }
+
+   public List<SelectItem> getLstSubSistemabySistema() {
+      return lstSubSistemabySistema;
+   }
+
+   public void setLstSubSistemabySistema(List<SelectItem> lstSubSistemabySistema) {
+      this.lstSubSistemabySistema = lstSubSistemabySistema;
+   }
+
+   public TreeNode[] getSelectedNodes() {
+      return selectedNodes;
+   }
+
+   public void setSelectedNodes(TreeNode[] selectedNodes) {
+      this.selectedNodes = selectedNodes;
    }
 }

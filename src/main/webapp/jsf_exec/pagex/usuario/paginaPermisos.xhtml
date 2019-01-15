@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<style type="text/css">
+    .ui-treetable {
+        margin-top: 40px
+    }
+
+    .ui-treetable table {
+        table-layout: fixed
+    }
+
+    body .ui-button {
+        margin: 10px 0 0 0;
+    }
+</style>
+
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
+
+        <h:form id="form">
+
+            <p:panel id="panelListaPermiso">
+
+                <p:growl id="msgs" showDetail="true"/>
+                <p:treeTable id="lista"
+                             value="#{menuBean.root}"
+                             nodeVar="nodeRowAction"
+                             var="men"
+                             editable="true"
+                             style="margin-bottom:20px"
+                             selectionMode="checkbox"
+                >
+
+                    <f:facet name="header">
+                        Lista de Permisos -> ( #{usuarioBean.usuario.no_usuari} )
+                    </f:facet>
+
+                    <p:column headerText="Nombre" style="background-color:#{men.va_colele};">
+                        <h:outputText value="#{men.no_elemen}"/>
+                    </p:column>
+
+                    <p:column headerText="Identificador"
+                              style=" width:100px; background-color:#{men.va_colele};">
+                        <h:outputText value="#{men.co_identi}"/>
+                    </p:column>
+                </p:treeTable>
+                <p:commandButton value="Display" update="msgs" icon="fa fa-clone"
+                                 />
+            </p:panel>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+
+</html>

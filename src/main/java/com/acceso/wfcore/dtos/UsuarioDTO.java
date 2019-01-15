@@ -24,13 +24,13 @@ import java.util.Date;
 @NamedNativeQueries({
       @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SELECT_USUARIO,
-            query = "select co_usuari, co_usulog, no_usuari, pw_usuari, fe_regist, fe_bloque, ca_pwdinc, ca_pwdmax, fe_ultlog, ti_usuari, co_person, pw_usuant, co_sistem, co_subsis"
+            query = "select co_usuari, co_usulog, no_usuari, fe_regist, fe_bloque, fe_ultlog, ti_usuari, co_person, co_sistem, co_subsis, pw_usuari, no_sistem, no_subsis "
                   + "from wfsistem.pbusuario_list()",
             resultClass = UsuarioDTO.class),
       @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GRABAR_USUARIO,
-            query = "co_usuari, co_usulog, no_usuari, pw_usuari, fe_regist, fe_bloque, ca_pwdinc, ca_pwdmax, fe_ultlog, ti_usuari, co_person, pw_usuant, co_sistem, co_subsis"
-                  + "from wfsistem.pbusuario_save(:co_usuari, :co_usulog, :no_usuari, :pw_usuari, :ca_pwdinc, :ca_pwdmax, :ti_usuari, :co_person, :pw_usuant, :co_sistem, :co_subsis)",
+            query = "select co_usuari, co_usulog, no_usuari, fe_regist, fe_bloque, fe_ultlog, ti_usuari, co_person, co_sistem, co_subsis, pw_usuari, no_sistem, no_subsis "
+                  + "from wfsistem.pbusuario_save(:co_usuari, :co_usulog, :no_usuari, :pw_usuari, :ti_usuari, :co_person, :co_sistem, :co_subsis)",
             resultClass = UsuarioDTO.class)
 })
 public class UsuarioDTO implements Serializable {
@@ -43,14 +43,13 @@ public class UsuarioDTO implements Serializable {
    String pw_usuari;
    Date fe_regist;
    Date fe_bloque;
-   Integer ca_pwdinc;
-   Integer ca_pwdmax;
    Date fe_ultlog;
    String ti_usuari;
    Integer co_person;
-   String pw_usuant;
    Integer co_sistem;
    Integer co_subsis;
+   String no_sistem;
+   String no_subsis;
 
    public Integer getCo_usuari() {
       return co_usuari;
@@ -100,22 +99,6 @@ public class UsuarioDTO implements Serializable {
       this.fe_bloque = fe_bloque;
    }
 
-   public Integer getCa_pwdinc() {
-      return ca_pwdinc;
-   }
-
-   public void setCa_pwdinc(Integer ca_pwdinc) {
-      this.ca_pwdinc = ca_pwdinc;
-   }
-
-   public Integer getCa_pwdmax() {
-      return ca_pwdmax;
-   }
-
-   public void setCa_pwdmax(Integer ca_pwdmax) {
-      this.ca_pwdmax = ca_pwdmax;
-   }
-
    public Date getFe_ultlog() {
       return fe_ultlog;
    }
@@ -140,14 +123,6 @@ public class UsuarioDTO implements Serializable {
       this.co_person = co_person;
    }
 
-   public String getPw_usuant() {
-      return pw_usuant;
-   }
-
-   public void setPw_usuant(String pw_usuant) {
-      this.pw_usuant = pw_usuant;
-   }
-
    public Integer getCo_sistem() {
       return co_sistem;
    }
@@ -164,6 +139,22 @@ public class UsuarioDTO implements Serializable {
       this.co_subsis = co_subsis;
    }
 
+   public String getNo_sistem() {
+      return no_sistem;
+   }
+
+   public void setNo_sistem(String no_sistem) {
+      this.no_sistem = no_sistem;
+   }
+
+   public String getNo_subsis() {
+      return no_subsis;
+   }
+
+   public void setNo_subsis(String no_subsis) {
+      this.no_subsis = no_subsis;
+   }
+
    @Override
    public String toString() {
       return "UsuarioDTO{" +
@@ -173,14 +164,13 @@ public class UsuarioDTO implements Serializable {
             ", pw_usuari='" + pw_usuari + '\'' +
             ", fe_regist=" + fe_regist +
             ", fe_bloque=" + fe_bloque +
-            ", ca_pwdinc=" + ca_pwdinc +
-            ", ca_pwdmax=" + ca_pwdmax +
             ", fe_ultlog=" + fe_ultlog +
             ", ti_usuari='" + ti_usuari + '\'' +
             ", co_person=" + co_person +
-            ", pw_usuant='" + pw_usuant + '\'' +
             ", co_sistem=" + co_sistem +
             ", co_subsis=" + co_subsis +
+            ", no_sistem='" + no_sistem + '\'' +
+            ", no_subsis='" + no_subsis + '\'' +
             '}';
    }
 }

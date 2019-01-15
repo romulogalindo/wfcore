@@ -12,80 +12,90 @@
 
             <ui:define name="content">
                 <h:form> 
-                    <p:panel id="panelActualizarCnx">
-                        <p:panelGrid columns="2"  style="width: 400px">
+                    <p:panel id="panelActualizarUser">
+                        <p:panelGrid columns="2"  style="width: 500px">
                             
-                            <p:outputLabel for="co_conexi" value="Id:" />
-                            <p:inputText id="co_conexi" value="#{conexionBean.conexion.co_conexi}" rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.co_conexi}" rendered="#{!conexionBean.isregEditable}"/>
+                            <p:outputLabel for="co_usuari" value="Id:" />
+                            <p:outputLabel id="co_usuari" value="#{usuarioBean.usuario.co_usuari}"/>
 
-                            <p:outputLabel for="no_conexi" value="Nombre:" />
-                            <p:inputText id="no_conexi" value="#{conexionBean.conexion.no_conexi}"
+                            <p:outputLabel for="no_usuari" value="Nombre:" />
+                            <p:inputText id="no_usuari" value="#{usuarioBean.usuario.no_usuari}"
                                          required="true" requiredMessage="Debe ingresar un Nombre."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_conexi}" rendered="#{!conexionBean.isregEditable}"/>
+                                         rendered="#{usuarioBean.isregEditable}"/>
+                            <p:outputLabel value="#{usuarioBean.usuario.no_usuari}" rendered="#{!usuarioBean.isregEditable}"/>
 
-                            <p:outputLabel for="nu_maxpoo" value="Max Pool:" />
-                            <p:inputText  id="nu_maxpoo" value="#{conexionBean.conexion.nu_maxpoo}"
-                                          required="true" requiredMessage="Debe ingresar un Max Pool."
-                                          rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_maxpoo}" rendered="#{!conexionBean.isregEditable}"/>
-
-                            <p:outputLabel for="nu_timout" value="Time Out:" />
-                            <p:inputText id="nu_timout" value="#{conexionBean.conexion.nu_timout}"
-                                         required="true" requiredMessage="Debe ingresar un Time Out."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num" />
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_timout}" rendered="#{!conexionBean.isregEditable}"/>
-
-                            <p:outputLabel for="no_usuari" value="Usuario:" />
-                            <p:inputText id="no_usuari" value="#{conexionBean.conexion.no_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Usuario."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_usuari}" rendered="#{!conexionBean.isregEditable}"/>
+                            <p:outputLabel for="co_usulog" value="Usuario:" />
+                            <p:inputText  id="co_usulog" value="#{usuarioBean.usuario.co_usulog}"
+                                          required="true" requiredMessage="Debe ingresar un Usuario."
+                                          rendered="#{usuarioBean.isregEditable}"/>
+                            <p:outputLabel value="#{usuarioBean.usuario.co_usulog}" rendered="#{!usuarioBean.isregEditable}"/>
 
                             <p:outputLabel for="pw_usuari" value="Password:" />
-                            <p:inputText id="pw_usuari" value="#{conexionBean.conexion.pw_usuari}"
+                            <p:inputText id="pw_usuari" value="#{usuarioBean.usuario.pw_usuari}"
                                          required="true" requiredMessage="Debe ingresar un Password."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.pw_usuari}" rendered="#{!conexionBean.isregEditable}"/>
+                                         rendered="#{usuarioBean.isregEditable}"/>
+                            <p:outputLabel value="#{usuarioBean.usuario.pw_usuari}" rendered="#{!usuarioBean.isregEditable}"/>
 
-                            <p:outputLabel for="ur_domini" value="Dominio:" />
-                            <p:inputText id="ur_domini" value="#{conexionBean.conexion.ur_domini}"
-                                         required="true" requiredMessage="Debe ingresar un Dominio."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.ur_domini}" rendered="#{!conexionBean.isregEditable}"/>
 
-                            <p:outputLabel for="nu_puerto" value="Puerto:" />
-                            <p:inputText id="nu_puerto" value="#{conexionBean.conexion.nu_puerto}"
-                                         required="true" requiredMessage="Debe ingresar un Puerto."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_puerto}" rendered="#{!conexionBean.isregEditable}"/>
+                            <p:outputLabel for="ti_usuari" value="Tipo de Usuario:"/>
+                            <h:selectOneMenu id="ti_usuari" value="#{usuarioBean.usuario.ti_usuari}"
+                                             required="true" requiredMessage="Debe ingresar un Tipo de Usuario."
+                                             rendered="#{usuarioBean.isregEditable}">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="Único" itemValue="U"/>
+                                <f:selectItem itemLabel="Maestro" itemValue="M"/>
+                            </h:selectOneMenu>
+                            <p:outputLabel value="#{usuarioBean.usuario.ti_usuari}" rendered="#{!usuarioBean.isregEditable}"/>
 
-                            <p:outputLabel for="no_datbas" value="BD:" />
-                            <p:inputText id="no_datbas" value="#{conexionBean.conexion.no_datbas}"
-                                         required="true" requiredMessage="Debe ingresar una BD."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_datbas}" rendered="#{!conexionBean.isregEditable}"/>
+                            <p:outputLabel for="co_sistem" value="Sistema:"/>
+                            <h:selectOneMenu id="co_sistem" value="#{usuarioBean.usuario.co_sistem}"
+                                             required="true" requiredMessage="Debe ingresar un Sistema."
+                                             rendered="#{usuarioBean.isregEditable}"
+                                             dynamic="true">
+                                <p:ajax listener="#{usuarioBean.onSistemaChange(usuarioBean.usuario.co_sistem)}" update="co_subsis" />
+                                <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                                <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
+                            </h:selectOneMenu>
+                            <p:outputLabel value="#{usuarioBean.usuario.no_sistem}" rendered="#{!usuarioBean.isregEditable}"/>
+
+                            <p:outputLabel for="co_subsis" value="Sub Sistema:"/>
+                            <h:selectOneMenu id="co_subsis" value="#{usuarioBean.usuario.co_subsis}"
+                                             required="true" requiredMessage="Debe ingresar un Sub Sistema."
+                                             rendered="#{usuarioBean.isregEditable}"
+                                             dynamic="true">
+                                <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                                <f:selectItems value="#{usuarioBean.lstSubSistemabySistema}"/>
+                            </h:selectOneMenu>
+                            <p:outputLabel value="#{usuarioBean.usuario.no_subsis}" rendered="#{!usuarioBean.isregEditable}"/>
+
+                            <p:outputLabel for="fe_regist" value="Fecha de Registro:" />
+                            <p:outputLabel id="fe_regist"  value="#{usuarioBean.usuario.fe_regist}">
+                                <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
+                            </p:outputLabel>
+
+                            <p:outputLabel for="fe_bloque" value="Fecha de Bloqueo:" />
+                            <p:outputLabel id="fe_bloque"  value="#{usuarioBean.usuario.fe_bloque}">
+                                <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
+                            </p:outputLabel>
+
+                            <p:outputLabel for="fe_ultlog" value="Fecha de Último Logueo:" />
+                            <p:outputLabel id="fe_ultlog"  value="#{usuarioBean.usuario.fe_ultlog}">
+                                <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
+                            </p:outputLabel>
 
                         </p:panelGrid>
                         <p:panelGrid style="width: 400px" >
-                            <p:commandButton  action="#{conexionBean.load()}"
-                                              actionListener="#{conexionBean.doListener()}"
+                            <p:commandButton  action="#{usuarioBean.load()}"
+                                              actionListener="#{usuarioBean.doListener()}"
                                               value="Atrás"
-                                              title="Volver al reporte de conexiones"
+                                              title="Volver al reporte de usuarios"
                                               immediate="true">
                             </p:commandButton>
                             <p:commandButton value="Grabar"
-                                             action="#{conexionBean.saveRegist}"
+                                             action="#{usuarioBean.saveRegist}"
                                              type="submit"
-                                             update="panelActualizarCnx">
-                                <p:ajax rendered="panelActualizarCnx"/>
+                                             update="panelActualizarUser">
+                                <p:ajax rendered="panelActualizarUser"/>
                             </p:commandButton>
                             
                         </p:panelGrid>

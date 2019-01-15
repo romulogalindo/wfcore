@@ -54,10 +54,8 @@ public class UsuarioDAO {
             nQuery.setString("co_usulog", usuario.getCo_usulog());
             nQuery.setString("no_usuari", usuario.getNo_usuari());
             nQuery.setString("pw_usuari", usuario.getPw_usuari());
-            nQuery.setInteger("ca_pwdinc", usuario.getCa_pwdinc());
             nQuery.setString("ti_usuari", usuario.getTi_usuari());
             nQuery.setInteger("co_person", usuario.getCo_person());
-            nQuery.setString("pw_usuant", usuario.getPw_usuant());
             nQuery.setInteger("co_sistem", usuario.getCo_sistem());
             nQuery.setInteger("co_subsis", usuario.getCo_subsis());
 

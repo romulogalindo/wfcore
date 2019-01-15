@@ -6,6 +6,11 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+<style type="text/css">
+    .ui-datatable-header {
+        height: 50px
+    }
+</style>
 
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
@@ -20,84 +25,81 @@
             <p:panel id="panelListaMod">
 
                 <p:growl id="msgs" showDetail="true"/>
-                <p:scrollPanel style="width:1400px;height:650px">
-                    <p:dataTable id="lista"
-                                 var="mdl"
-                                 value="#{moduloBean.modulos}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 rows="20"
-                                 widgetVar="widTable"
-                                 rowKey="#{mdl.co_modulo}"
-                                 rowIndexVar="N"
-                                 style="width:1600px;height:800px">
+                <p:dataTable id="lista"
+                             var="mdl"
+                             value="#{moduloBean.modulos}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rows="20"
+                             widgetVar="widTable"
+                             rowKey="#{mdl.co_modulo}"
+                             rowIndexVar="N"
+                             style="width:1600px;height:800px">
 
+                    <f:facet name="header" style="position: relative; border:2px solid red">
+                        Lista de Modulos
+                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:end"
+                                         icon="fa fa-align-justify"/>
+                        <p:columnToggler datasource="lista" trigger="toggler"/>
+
+                    </f:facet>
+
+                    <p:ajax event="sort" skipChildren="false"/>
+
+                    <p:column style="text-align: right" width="20">
                         <f:facet name="header">
-                            Lista de Modulos
+                            <h:outputText value="#"/>
                         </f:facet>
+                        <h:outputText value="#{N + 1}"/>
+                    </p:column>
 
-                        <p:ajax event="sort" skipChildren="false"/>
+                    <p:column sortBy="#{mdl.no_modulo}" width="250">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{mdl.no_modulo}"/>
+                    </p:column>
 
-                        <p:column style="text-align: right" width="20">
-                            <f:facet name="header">
-                                <h:outputText value="#"/>
-                            </f:facet>
-                            <h:outputText value="#{N + 1}"/>
-                        </p:column>
+                    <p:column headerText="URL" sortBy="#{mdl.ur_modulo}" width="250">
+                        <h:outputText value="#{mdl.ur_modulo}"/>
+                    </p:column>
 
-                        <p:column sortBy="#{mdl.no_modulo}" width="200">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{mdl.no_modulo}"/>
-                        </p:column>
+                    <p:column headerText="Sistema" sortBy="#{mdl.no_sistem}" width="180">
+                        <h:outputText value="#{mdl.no_sistem}"/>
+                    </p:column>
 
-                        <p:column headerText="URL" sortBy="#{mdl.ur_modulo}" width="250">
-                            <h:outputText value="#{mdl.ur_modulo}"/>
-                        </p:column>
+                    <p:column headerText="Sub Sistema" sortBy="#{mdl.no_subsis}">
+                        <h:outputText value="#{mdl.no_subsis}"/>
+                    </p:column>
 
-                        <!--<p:column headerText="Cod. Anterior" sortBy="#{mdl.co_modant}">-->
-                            <!--<h:outputText value="#{mdl.co_modant}"/>-->
-                        <!--</p:column>-->
+                    <p:column headerText="Paquete" sortBy="#{mdl.no_paquet}">
+                        <h:outputText value="#{mdl.no_paquet}"/>
+                    </p:column>
 
-                        <p:column headerText="Sistema" sortBy="#{mdl.no_sistem}" width="180">
-                            <h:outputText value="#{mdl.no_sistem}"/>
-                        </p:column>
+                    <p:column headerText="Plataforma" sortBy="#{mdl.no_plataf}" width="130">
+                        <h:outputText value="#{mdl.no_plataf}"/>
+                    </p:column>
 
-                        <p:column headerText="Sub Sistema" sortBy="#{mdl.no_subsis}">
-                            <h:outputText value="#{mdl.no_subsis}"/>
-                        </p:column>
+                    <p:column headerText="Acciones" style="width:160px;text-align: center">
+                        <p:commandButton action="#{moduloBean.updateRegist}" icon="fa fa-search" title="Ver">
+                            <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
+                            <f:setPropertyActionListener value="false" target="#{moduloBean.isregEditable}"/>
+                        </p:commandButton>
 
-                        <p:column headerText="Paquete" sortBy="#{mdl.no_paquet}">
-                            <h:outputText value="#{mdl.no_paquet}"/>
-                        </p:column>
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
+                                         action="#{moduloBean.updateRegist}">
+                            <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
+                        </p:commandButton>
 
-                        <p:column headerText="Plataforma" sortBy="#{mdl.no_plataf}" width="130">
-                            <h:outputText value="#{mdl.no_plataf}"/>
-                        </p:column>
-
-                        <p:column style="width:160px;text-align: center">
-                            <p:commandButton action="#{moduloBean.updateRegist}" icon="fa fa-search" title="Ver">
-                                <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
-                                <f:setPropertyActionListener value="false" target="#{moduloBean.isregEditable}"/>
-                            </p:commandButton>
-
-                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                             action="#{moduloBean.updateRegist}">
-                                <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
-                            </p:commandButton>
-
-                            <p:commandButton icon="fa fa-trash" action="#{moduloBean.deleteRegist}"
-                                             update=":form:lista">
-                                <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
-                                <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                           icon="fa fa-exclamation-triangle"/>
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </p:scrollPanel>
+                        <p:commandButton icon="fa fa-trash" action="#{moduloBean.deleteRegist}"
+                                         update=":form:lista">
+                            <f:setPropertyActionListener value="#{mdl}" target="#{moduloBean.mdluete}"/>
+                            <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                       icon="fa fa-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
             </p:panel>
 
         </h:form>
