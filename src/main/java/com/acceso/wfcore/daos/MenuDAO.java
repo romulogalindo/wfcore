@@ -162,7 +162,7 @@ public class MenuDAO {
             nQuery.setInteger("co_mensis", menu.getCo_elemen() == null ? -1 : menu.getCo_elemen());
             nQuery.setString("no_mensis", menu.getNo_elemen());
             nQuery.setInteger("co_menpad", menu.getCo_menpad());
-            nQuery.setInteger("co_modulo", menu.getCo_modulo());
+            nQuery.setInteger("co_modulo", menu.getCo_modulo() == null ? -1 : menu.getCo_modulo());
             nQuery.setInteger("co_paquet", menu.getCo_paquet());
             nQuery.setInteger("or_mensis", menu.getOr_elemen());
             nQuery.setInteger("co_subsis", menu.getCo_subsis());

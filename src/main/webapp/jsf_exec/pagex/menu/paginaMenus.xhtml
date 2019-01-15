@@ -113,13 +113,6 @@
                                                  action="#{menuBean.addChildNodeAction(nodeRowAction, men)}"
                                                  update=":form:lista"
                                                  rendered="#{menuBean.isAdd(men)}">
-
-                                </p:commandButton>
-                                <p:commandButton icon="fa fa-save"
-                                                 action="#{menuBean.saveDto}"
-                                                 update="lista"
-                                                 rendered="#{menuBean.isSave(men)}">
-                                    <f:setPropertyActionListener value="#{men}" target="#{menuBean.menu}"/>
                                 </p:commandButton>
                             </p:column>
 
