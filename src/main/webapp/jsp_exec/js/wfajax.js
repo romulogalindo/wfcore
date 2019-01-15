@@ -4,70 +4,37 @@
 
 function inet() {
     var xmlHttp = false;
+    // try {
+    //     xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    // } catch (e) {
     try {
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        xmlHttp = new XMLHttpRequest();
     } catch (e) {
-        try {
-            xmlHttp = new XMLHttpRequest();
-        } catch (e) {
-            try {
-                xmlHttp = new ActiveXObject("MSXML2.XMLHTTP");
-            } catch (e) {
-                xmlHttp = false;
-            }
-        }
+        // try {
+        //     xmlHttp = new ActiveXObject("MSXML2.XMLHTTP");
+        // } catch (e) {
+        //     xmlHttp = false;
+        // }
     }
+    // }
     return xmlHttp;
 }
 
-$D.getJSON = function (url) {
+//$D.getJSON = function (url) {
+$D.doPagJson = function (url) {
     var net = new inet();
-    net.open("POST", url, false); //false para que sea sincrono
+    net.open("GET", url, true); //false para que sea sincrono
 
-    var json;
-    var t = navigator.userAgent;
-    var t2 = t.indexOf("F");
-    if (t2 > -1) {
-        t2 = t.substring(t2, t.length);
-        t2 = t2.replace("Firefox/", "");
-    } else {
-        t2 = "";
-    }
-
-    if (t2.indexOf("3") > -1) {
-        net.onload = net.onerror = net.onabort = function () {
-            var m_res = net.responseText;
-            try {
-                json = eval(m_res);
-            } catch (e) {
-                try {
-                    json = JSON.parse(m_res);
-                } catch (e2) {
-                    json = "[E]" + m_res;
-                }
-            }
-        };
-    } else {
-        net.onreadystatechange = function () {
-            if (net.readyState == 4) {
-                if (net.status == 200) {
-                    var m_res = net.responseText;
-                    try {
-                        json = eval(m_res);
-                    } catch (e) {
-                        try {
-                            json = JSON.parse(m_res);
-                        } catch (e2) {
-                            json = "[E]" + m_res;
-                        }
-                    }
-                }
-            }
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+            console.log('{NET(' + url + ')} ::::' + net.responseText)
+            var json = JSON.parse(net.responseText);
+            pagina_onload(json);
         }
+
     }
     net.send(null);
-    return json;
-};
+}
 
 $D.getJSONE = function (url) {
     var net = new inet();

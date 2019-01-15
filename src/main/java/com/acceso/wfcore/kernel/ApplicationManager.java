@@ -124,7 +124,7 @@ public class ApplicationManager {
 
 //                System.out.println("/*-!/rows.size() = " + rows.size());
 //                System.out.println("/*-!/valpagDTO.getCo_pagreg() = " + valpagDTO.getCo_pagreg() + ", valpagDTO.getVa_pagreg() = " + valpagDTO.getVa_pagreg());
-                rows.get(rows.size() - 1).getRegs().add(new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg()));
+                rows.get(rows.size() - 1).getRegs().add(new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg(), valpagDTO.getTx_pagreg()));
             }
             valpagJson.setRows(rows);
         }

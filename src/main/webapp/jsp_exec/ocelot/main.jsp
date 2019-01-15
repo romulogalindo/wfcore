@@ -7,12 +7,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1" language="java" %>
 <jsp:useBean id="mainBean" class="com.acceso.wfweb.beans.MainBean"/>
 <jsp:useBean id="contenedorBean" class="com.acceso.wfweb.beans.ContenedorBean"/>
 
 <html co_conten="${contenedorBean.do64(pageContext.request)}">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <title>Main</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -24,7 +25,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=2"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=3"></script>
 
 </head>
 <body onload="workflow()">

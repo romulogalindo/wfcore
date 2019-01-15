@@ -46,7 +46,7 @@ public class PaginaFormulario extends Pagina implements Serializable {
 //
 //        html += "}</script>";
 
-        html += "<input type=hidden id=ti_pagina value=F/>";
+        html += "<input type=hidden id=ti_pagina value=F />";
 
 
         html += "<table id=PAG" + this.co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";

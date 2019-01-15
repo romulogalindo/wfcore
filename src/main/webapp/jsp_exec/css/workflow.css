@@ -57,6 +57,11 @@ DIV.wf_right {
 
 .wf_f_titreg{
     font-weight: 600;
+    width: 40%;
+}
+
+.wf_f_valreg{
+    width: 60%;
 }
 
 .wf_f_stitle{

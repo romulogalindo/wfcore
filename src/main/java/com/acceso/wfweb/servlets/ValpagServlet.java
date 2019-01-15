@@ -22,10 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ValpagServlet extends HttpServlet {
 
     public void do64(HttpServletRequest request, HttpServletResponse response) {
+        response.setCharacterEncoding("ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
 //        asyncCtx.addListener(new AppAsyncListener());
-        asyncCtx.setTimeout(1000);//1 Seg
+        asyncCtx.setTimeout(5000);//1 Seg
 
         WFCoreListener.APP.getExecutor().execute(new AsyncRequestProcessor(asyncCtx, 10000));
 

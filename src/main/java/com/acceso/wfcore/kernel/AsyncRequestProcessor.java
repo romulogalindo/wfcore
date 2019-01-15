@@ -57,6 +57,7 @@ public class AsyncRequestProcessor implements Runnable {
 
 //            String
             ValpagJson valpagJson = ApplicationManager.buildNValPag(resultado_valpag);
+
             JsonResponse jsonResponse = new JsonResponse();
             jsonResponse.setStatus("OK");
             jsonResponse.setResult(valpagJson);

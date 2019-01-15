@@ -12,9 +12,10 @@ public class RegJson {
     public RegJson() {
     }
 
-    public RegJson(int co_pagreg, String va_pagreg) {
+    public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg){
         this.co_pagreg = co_pagreg;
         this.va_pagreg = va_pagreg;
+        this.tx_pagreg = tx_pagreg;
     }
 
     public int getCo_pagreg() {
