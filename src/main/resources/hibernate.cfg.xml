@@ -3,7 +3,8 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <!--property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property-->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 
         <!--CONEXION TOMCAT-->
@@ -50,6 +51,7 @@
         <mapping class="com.acceso.wfweb.dtos.PaginaDTO"/>
         <mapping class="com.acceso.wfweb.dtos.TituloDTO"/>
         <mapping class="com.acceso.wfweb.dtos.RegistroDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.BotonDTO"/>
         <mapping class="com.acceso.wfweb.dtos.IdfraworDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ValpagDTO"/>
     </session-factory>

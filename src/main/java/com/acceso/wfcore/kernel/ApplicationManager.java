@@ -45,7 +45,7 @@ public class ApplicationManager {
     }
 
     public static Root buildRootTree(SystemTreeDTO systemTreeDTO) {
-        System.out.println(">>>>>>>>>>>" + systemTreeDTO);
+        //System.out.println(">>>>>>>>>>>" + systemTreeDTO);
         Gson gson = new Gson();
         Root mainTree = gson.fromJson(systemTreeDTO.getTree(), Root.class);
         return mainTree;
@@ -76,6 +76,7 @@ public class ApplicationManager {
             //pagina nueva
             List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
             List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
+            List<BotonDTO> botonDTOS = dao.getButonDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
 
             LinkedHashMap<String, Fila> ultraFilas = new LinkedHashMap<>();
 
@@ -91,6 +92,10 @@ public class ApplicationManager {
                         idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
                         ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
+                }
+
+                if (!botonDTOS.isEmpty() || botonDTOS.size() > 0) {
+                    ultraFilas.put(idFila, new Fila(botonDTOS, idFila + "B"));
                 }
             }
 

@@ -23,7 +23,7 @@ function inet() {
 //$D.getJSON = function (url) {
 $D.doPagJson = function (url) {
     var net = new inet();
-    net.open("GET", url, true); //false para que sea sincrono
+    net.open("POST", url, true); //false para que sea sincrono
 
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
@@ -45,6 +45,19 @@ $D.doLogoutJson = function () {
             // console.log('{NET(' + url + ')} ::::' + net.responseText)
             console.log('al cerrar:' + window.location.host);
             window.location.href = '//' + window.location.host + '/';
+        }
+    }
+
+    net.send(null);
+}
+
+$D.doPropag = function (url) {
+    var net = new inet();
+    net.open("POST", "/propag", true); //false para que sea sincrono
+
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+            window.location.href = url;
         }
     }
 

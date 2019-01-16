@@ -1,12 +1,16 @@
 package com.acceso.wfweb.units;
 
+import com.acceso.wfweb.dtos.BotonDTO;
 import com.acceso.wfweb.dtos.RegistroDTO;
 import com.acceso.wfweb.dtos.TituloDTO;
+
+import java.util.List;
 
 public class Fila extends HTMLRenderer {
 
     TituloDTO tituloDTO;
     RegistroDTO registroDTO;
+    List<BotonDTO> botonDTOS;
     String id;
     //SOlo para tipo tabla
     int colspan;
@@ -19,6 +23,11 @@ public class Fila extends HTMLRenderer {
 
     public Fila(RegistroDTO registroDTO, String id) {
         this.registroDTO = registroDTO;
+        this.id = id;
+    }
+
+    public Fila(List<BotonDTO> botonDTOS, String id) {
+        this.botonDTOS = botonDTOS;
         this.id = id;
     }
 
@@ -75,6 +84,15 @@ public class Fila extends HTMLRenderer {
                     html += "<span name=" + id + "V></span>";
                     break;
                 }
+            }
+
+            html += "</td>";
+        } else if (botonDTOS != null) {
+            html += "<td name=" + id + "K class=wf_f_titreg></td>";
+
+            html += "<td class=wf_f_valreg>";
+            for (BotonDTO botonDTO : botonDTOS) {
+                html += "<botton name=" + id + "B class=\"w3-button w3-tiny w3-teal\" onclick=propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ") >" + botonDTO.getNo_pagbot() + "</span>";
             }
 
             html += "</td>";

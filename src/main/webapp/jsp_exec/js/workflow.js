@@ -182,7 +182,15 @@ function loadReporte64(row) {
 
 }
 
-/**/
+function propag(co_button, il_proces, co_condes) {
+    //var id_frawor = id_frawor();
+    //var co_pagina = co_pagina();
+    //var co_conten = co_conten();
+    $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes);
+    //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
+}
+
+/*LOGOUT*/
 function logout() {
     $D.doLogoutJson();
 }

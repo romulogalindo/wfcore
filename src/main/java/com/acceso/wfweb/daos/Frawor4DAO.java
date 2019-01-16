@@ -104,6 +104,26 @@ public class Frawor4DAO extends DAO {
         return registroDTOS;
     }
 
+    public List<BotonDTO> getButonDTO(int p_co_pagina, int p_co_conten, long p_id_frawor){
+        List<BotonDTO> botonDTOS = null;
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFPAGBOT), true, true);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            botonDTOS = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return botonDTOS;
+    }
+
     public List<ValpagDTO> getValPag_legacy(int p_co_pagina, int p_co_conten, long p_id_frawor) {
         List<ValpagDTO> valpagDTOS = null;
         NQuery nQuery = new NQuery();

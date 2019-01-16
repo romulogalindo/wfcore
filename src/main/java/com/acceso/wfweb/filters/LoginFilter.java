@@ -28,19 +28,23 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        System.out.println("LoginServlet.LOGINSERVLET_LOGIN64 = " + LoginServlet.LOGINSERVLET_LOGOUT64);
-        System.out.println("LoginServlet.((HttpServletRequest) request).getServletPath() = " + ((HttpServletRequest) request).getServletPath());
-        System.out.println("LoginServlet.eval = " + (((HttpServletRequest) request).getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)));
-        System.out.println("LoginServlet.eval2 = " + (!((HttpServletRequest) request).getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)));
+        //System.out.println("LoginServlet.LOGINSERVLET_LOGIN64 = " + LoginServlet.LOGINSERVLET_LOGOUT64);
+        //System.out.println("LoginServlet.((HttpServletRequest) request).getServletPath() = " + ((HttpServletRequest) request).getServletPath());
+        //ystem.out.println("LoginServlet.eval = " + (((HttpServletRequest) request).getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)));
+        //System.out.println("LoginServlet.eval2 = " + (!((HttpServletRequest) request).getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)));
 
         /*Se valida si existe el atributo de session*/
         if (!((HttpServletRequest) request).getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)) {
+            //System.out.println("LoginServlet.securidad = " + ((HttpServletRequest) request).getServletPath());
+
             if (req.getSession().getAttribute("US") != null) {
                 res.sendRedirect("/main");
             } else {
                 chain.doFilter(req, res);
             }
         } else {
+            //System.out.println("LoginServlet.Evaluando path = " + ((HttpServletRequest) request).getServletPath());
+
             chain.doFilter(req, res);
         }
 
