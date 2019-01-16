@@ -17,33 +17,24 @@
 
                 <p:growl id="msgs" showDetail="true"/>
 
-                <p:treeTable id="lista"
-                             value="#{usuarioBean.root}"
-                             nodeVar="nodeRowAction"
-                             var="men"
-                             style="margin-bottom:20px"
-                             selectionMode="checkbox"
-                             selection="#{usuarioBean.selectedNodes}"
-                             showUnselectableCheckbox="true"
-                disabledTextSelection="true">
+                <p:tree id="lista"
+                        value="#{usuarioBean.root}"
+                        nodeVar="nodeRowAction"
+                        var="men"
+                        style="margin-bottom:20px; width:auto"
+                        selection="#{usuarioBean.selectedNodes}"
+                        selectionMode="checkbox">
 
                     <f:facet name="header">
                         Lista de Permisos
                     </f:facet>
 
-                    <p:column headerText="Nombre" style="background-color:#{men.va_colele};">
+                    <p:treeNode icon="#{men.co_modulo == null ? ' fa fa-folder' : 'fa fa-paperclip'}">
                         <h:outputText value="#{men.no_elemen}"/>
-                    </p:column>
+                    </p:treeNode>
 
-                    <p:column headerText="Identificador"
-                              style=" width:100px; background-color:#{men.va_colele};">
-                        <h:outputText value="#{men.co_identi}"/>
-                    </p:column>
-                    <p:column>
-                        <p:selectBooleanCheckbox/>
-                    </p:column>
 
-                </p:treeTable>
+                </p:tree>
                 <p:commandButton action="#{usuarioBean.load()}"
                                  actionListener="#{usuarioBean.doListener()}"
                                  value="Atrás"

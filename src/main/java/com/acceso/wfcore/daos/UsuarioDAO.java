@@ -55,7 +55,7 @@ public class UsuarioDAO {
             nQuery.setString("no_usuari", usuario.getNo_usuari());
             nQuery.setString("pw_usuari", usuario.getPw_usuari());
             nQuery.setString("ti_usuari", usuario.getTi_usuari());
-            nQuery.setInteger("co_person", usuario.getCo_person());
+            nQuery.setInteger("co_person", usuario.getCo_person() == null ? -1 : usuario.getCo_person());
             nQuery.setInteger("co_sistem", usuario.getCo_sistem());
             nQuery.setInteger("co_subsis", usuario.getCo_subsis());
 
