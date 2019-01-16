@@ -3,6 +3,7 @@ package com.acceso.wfweb.units;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Contenedor extends HTMLRenderer implements Serializable {
@@ -10,7 +11,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     //objeto de distribucion(ahora solo vertical)
     //referencia a paginas modo simple
 //    List<Pagina> paginas;
-    HashMap<Integer, Pagina> paginas;
+    LinkedHashMap<Integer, Pagina> paginas;
     int co_conten;
     long id_frawor;
     String co_contit;
@@ -21,7 +22,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         this.co_contit = co_contit;
 
 //        this.paginas = new ArrayList<>();
-        this.paginas = new HashMap<>();
+        this.paginas = new LinkedHashMap<>();
     }
 
     public void addPagina(Pagina pagina) {

@@ -3,7 +3,6 @@ package com.acceso.wfcore.utils;
 import java.util.List;
 
 /**
- *
  * @author rgalindo
  */
 public class ValpagJson {
@@ -21,4 +20,10 @@ public class ValpagJson {
         this.rows = rows;
     }
 
+    @Override
+    public String toString() {
+        return "ValpagJson{" +
+                "rows=" + rows +
+                '}';
+    }
 }

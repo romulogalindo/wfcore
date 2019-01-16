@@ -1,5 +1,8 @@
 package com.acceso.wfcore.utils;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 public class Util {
 
     public static Integer toInt(Object object) {
@@ -52,5 +55,24 @@ public class Util {
         }
 
         return long32;
+    }
+
+
+    public static String getText(String filename) {
+        String result = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result = result + line+"\n";
+            }
+            reader.close();
+//            return records;
+        } catch (Exception e) {
+            System.err.format("Exception occurred trying to read '%s'.", filename);
+            e.printStackTrace();
+            return null;
+        }
+        return result;
     }
 }

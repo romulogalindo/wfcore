@@ -141,7 +141,7 @@
                     <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
                 </td>
                 <td>
-                    <div><h1 class="main_title_module">Nombre del módulo</h1></div>
+                    <div><h1 class="main_title_module">${contenedorBean.contenedor.co_contit}</h1></div>
                     <div class="main_title_breadcrumbs">/ruta/completa/del/modulo</div>
                 </td>
             </tr>

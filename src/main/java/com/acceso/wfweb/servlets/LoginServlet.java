@@ -52,7 +52,8 @@ public class LoginServlet extends HttpServlet {
                 //doLogin.getUsuario();
                 requestManager.save_over_request("goto", "go!");
                 requestManager.save_over_session("US", doLogin.getUsuario());
-                goToUrl = "/main";
+                //deberia darme una linea por default>>>>ejeurl-->444
+                goToUrl = "/main?co_conten=444";
             } else {
                 //redigir pero mensaje de error
                 requestManager.save_over_request("goto", "go!");

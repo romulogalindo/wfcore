@@ -21,8 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ValpagServlet extends HttpServlet {
 
-    public void do64(HttpServletRequest request, HttpServletResponse response) {
-        response.setCharacterEncoding("ISO-8859-1");
+    public void do64(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("ISO-8859-1");
+
+        response.setContentType("text/html;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
 //        asyncCtx.addListener(new AppAsyncListener());

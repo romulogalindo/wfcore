@@ -100,6 +100,14 @@ public class Application {
         this.executor = executor;
     }
 
+    public JavaScriptService getJavaScriptService() {
+        return javaScriptService;
+    }
+
+    public void setJavaScriptService(JavaScriptService javaScriptService) {
+        this.javaScriptService = javaScriptService;
+    }
+
     public void destroy() {
         cacheService.stop();
         dataSourceService.stop();

@@ -105,6 +105,8 @@ function pagina_onload(jsonData) {
         window.parent.iframe2('PAG' + co_pagina(), height_table);
 
     } else {
+        document.getElementById('PAG' + co_pagina()).style.display = 'none';
+        window.parent.iframe2('PAG' + co_pagina(), -1);
         console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
     }
 }
@@ -122,7 +124,15 @@ function iframe(iframe) {
 
 function iframe2(pagina, height_table) {
     console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
-    document.getElementById(pagina).style.height = height_table + 'px';
+    if (height_table == -1) {
+        console.log('Llego -14>->>' + height_table + ",>>>" + pagina);
+        document.getElementById(pagina).parentNode.parentNode.style.display = 'none';
+        document.getElementById(pagina).parentNode.parentNode.setAttribute('style', 'display:none;');
+    } else {
+        document.getElementById(pagina).style.height = height_table + 'px';
+        // document.getElementById('PAG628').parentNode.parentNode
+    }
+
 }
 
 function readypagina(pag) {
@@ -135,6 +145,7 @@ function loadFormulario64(row) {
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte' + row);
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte>regs' + row.regs);
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte>regs' + row.regs.length);
+
 
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];

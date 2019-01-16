@@ -1,19 +1,10 @@
-/*
-* MAIN JS FILE TO RUN! ALL!
-* */
+/*MAIN JS FILE TO RUN! ALL!*/
 var main_api_acr_data_api = Java.type('com.acceso.wfcore.apis.DataAPI');
 var API_DATA = new main_api_acr_data_api();
 
-/*
-Ha de recibir los parametros que daran la idea de herencia
-ID_FRAWOR : indicador unico de proceso
-US : unidad de usuario(co_usuari, nombre)
-* */
-function do_valpag(ID_FRAWOR, US){
+function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA) {
 
-/*USUAERIO*/
-    return API_DATA.SQL('WFACR','select * from frawor2.pfvalpag(ID_FRAWORD)');
+    /*USU*/
+    // return API_DATA.JSON_VALPAG(API_DATA.SQL_LEAGCY('WFACR_CONX', 'select * from frawor2.pfvalpag(CO_CONTEN, ID_FRAWOR, CO_PAGINA)'));
+    USUARI_DATA_JS_TEXT
 }
-
-//API_DATA.SQL('WFACR','select * from frawor2.pfvalpag()');
-do_valpag();

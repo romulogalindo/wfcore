@@ -72,6 +72,7 @@ public class ApplicationManager {
         //work!
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor(), contenedorDTO.getNo_contit());
         for (PaginaDTO paginaDTO : paginaDTOS) {
+//            System.out.println("AM:" + paginaDTO.getCo_pagina() + ",:::" + paginaDTO.getTi_pagina() + ",:::" + paginaDTO.getNo_pagtit());
             //pagina nueva
             List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
             List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
@@ -122,8 +123,6 @@ public class ApplicationManager {
                     rows.add(new RowJson());
                 }
 
-//                System.out.println("/*-!/rows.size() = " + rows.size());
-//                System.out.println("/*-!/valpagDTO.getCo_pagreg() = " + valpagDTO.getCo_pagreg() + ", valpagDTO.getVa_pagreg() = " + valpagDTO.getVa_pagreg());
                 rows.get(rows.size() - 1).getRegs().add(new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg(), valpagDTO.getTx_pagreg()));
             }
             valpagJson.setRows(rows);
