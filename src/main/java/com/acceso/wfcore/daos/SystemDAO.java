@@ -1,14 +1,20 @@
 package com.acceso.wfcore.daos;
 
+import com.acceso.wfcore.dtos.EstadoDTO;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfcore.dtos.SystemTreeDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
+import org.hibernate.StatelessSession;
 
 public class SystemDAO extends DAO {
 
     public SystemDAO() {
         this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+    }
+
+    public SystemDAO(StatelessSession session) {
+        this.session = session;
     }
 
     public SystemTreeDTO getSystemTreeDTO() {
@@ -25,6 +31,24 @@ public class SystemDAO extends DAO {
         }
 
         return systemTreeDTO;
+    }
+
+    public EstadoDTO check() {
+        EstadoDTO estadoDTO = null;
+
+        NQuery nQuery = new NQuery(this);
+
+        try {
+            nQuery.work(this.session.getNamedQuery(Values.SYSQUERYS_NATIVE_GET_STATUS), true, true);
+
+            estadoDTO = (EstadoDTO) nQuery.uniqueResult();
+        } catch (Exception ep) {
+            estadoDTO = new EstadoDTO();
+            estadoDTO.setNo_estado("FAIL:" + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return estadoDTO;
     }
 
 }

@@ -30,4 +30,6 @@ public interface DataBasePowerfull {
     public Session getHibernateSession();
 
     public abstract int getStatus();
+
+    public abstract String getName();
 }

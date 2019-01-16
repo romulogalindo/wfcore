@@ -16,7 +16,7 @@
 
         <!-- Disable the second-level cache  -->
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-        <!--<property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>-->
+        <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="hibernate.show_sql">false</property>
@@ -31,21 +31,13 @@
         <property name="hibernate.connection.CharSet">ISO-8859-1</property>
         <property name="hibernate.connection.characterEncoding">ISO-8859-1</property>
 
-        <!--<property name="hibernate.hikari.connectionTimeout">20000</property>-->
-        <!--<property name="hibernate.hikari.minimumIdle">20</property>-->
-        <!--<property name="hibernate.hikari.maximumPoolSize">50</property>-->
-        <!--<property name="hibernate.hikari.idleTimeout">300000</property>-->
 
-        <!-- DTO's -->
-        <mapping class="com.acceso.wfcore.dtos.ConexionDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.DeleteDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.UsuarioDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.SistemaDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.SubSistemaDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.PaqueteDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.ModuloDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.MenuDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.PermisDTO"/>
+        <property name="hibernate.hikari.connectionTimeout">20000</property>
+        <property name="hibernate.hikari.minimumIdle">20</property>
+        <property name="hibernate.hikari.maximumPoolSize">50</property>
+        <property name="hibernate.hikari.idleTimeout">300000</property>
+
+        <!-- DTO's  -->
         <mapping class="com.acceso.wfcore.dtos.EstadoDTO"/>
 
         <!-- DTO's (security) -->

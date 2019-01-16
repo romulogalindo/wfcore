@@ -90,7 +90,7 @@
         <servlet-class>com.acceso.wfweb.servlets.PaginaServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ValpagServlet</servlet-name>
+        <servlet-name>ProcessServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.ValpagServlet</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
@@ -116,13 +116,14 @@
         <url-pattern>/karmic</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ValpagServlet</servlet-name>
-        <url-pattern>/pangolin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>JSP Main</servlet-name>
         <url-pattern>/main</url-pattern>
         <url-pattern>/wf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcessServlet</servlet-name>
+        <url-pattern>/beaver</url-pattern>
+        <url-pattern>/pangolin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

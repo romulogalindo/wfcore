@@ -1,11 +1,8 @@
 package com.acceso.wfcore.kernel;
 
+import com.acceso.wfcore.dtos.ConexionDTO;
 import com.acceso.wfcore.dtos.SystemTreeDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
-import com.acceso.wfcore.utils.RegJson;
-import com.acceso.wfcore.utils.RegJsonAdapter;
-import com.acceso.wfcore.utils.RowJson;
-import com.acceso.wfcore.utils.ValpagJson;
+import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.*;
@@ -13,14 +10,7 @@ import com.acceso.wfweb.servlets.LoginServlet;
 import com.acceso.wfweb.units.*;
 import com.acceso.wfweb.web.Root;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
-import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import java.util.LinkedHashMap;
@@ -94,9 +84,11 @@ public class ApplicationManager {
                     }
                 }
 
-                if (!botonDTOS.isEmpty() || botonDTOS.size() > 0) {
-                    ultraFilas.put(idFila, new Fila(botonDTOS, idFila + "B"));
-                }
+
+            }
+
+            if (!botonDTOS.isEmpty() || botonDTOS.size() > 0) {
+                ultraFilas.put("BTN", new Fila(botonDTOS, "BTN"));
             }
 
 //            System.out.println("paginaDTO.getTi_pagina() = " + paginaDTO.getTi_pagina());
@@ -134,6 +126,25 @@ public class ApplicationManager {
         }
 
         return valpagJson;
+    }
+
+    public static WFProperties buildDefaultProperties(ConexionDTO dto) {
+        WFProperties nativeConexionProperties = new WFProperties();
+        nativeConexionProperties.add("hibernate.connection.url", "jdbc:postgresql://" + dto.getUr_domini() + ":" + dto.getNu_puerto() + "/" + dto.getNo_datbas());
+        nativeConexionProperties.add("hibernate.connection.username", dto.getNo_usuari());
+        nativeConexionProperties.add("hibernate.connection.password", dto.getPw_usuari());
+        nativeConexionProperties.add("hibernate.connection.pool_size", "" + dto.getNu_maxpoo());
+
+        // Maximum waiting time for a connection from the pool
+        nativeConexionProperties.add("hibernate.hikari.connectionTimeout", "20000");
+        // Minimum number of ideal connections in the pool
+        nativeConexionProperties.add("hibernate.hikari.minimumIdle", "20");
+        // Maximum number of actual connection in the pool
+        nativeConexionProperties.add("hibernate.hikari.maximumPoolSize", "50");
+        // Maximum time that a connection is allowed to sit ideal in the pool
+        nativeConexionProperties.add("hibernate.hikari.idleTimeout", "300000");
+
+        return nativeConexionProperties;
     }
 
 }

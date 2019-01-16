@@ -109,6 +109,10 @@ DIV.wf_right {
 
 }
 
+.w3-btn, .w3-button {
+    padding: 4px 8px;
+}
+
 TABLE, TR, TD {
     border-collapse: collapse;
 }

@@ -42,7 +42,7 @@ public class AsyncProPag extends AsyncProcessor {
             //Frawor4DAO dao = new Frawor4DAO();
 
 //            valpag_js = dao.getVPJS(co_pagina);
-            valpag_js = "return API_DATA.JSON_PROPAG(API_DATA.SQL_LEGACY('WFACR_CONX', 'select * from frawor4.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')'));";
+            valpag_js = "return API_DATA.JSON_PROPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')'));";
             //dao.close();
 
 //            new FileInputStream(asyncContext.getRequest().getServletContext().getRealPath("/") + "js/main_Acr_shell.js");

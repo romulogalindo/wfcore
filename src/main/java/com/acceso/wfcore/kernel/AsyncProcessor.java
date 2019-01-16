@@ -3,6 +3,7 @@ package com.acceso.wfcore.kernel;
 import javax.servlet.AsyncContext;
 
 public abstract class AsyncProcessor implements Runnable {
+
     AsyncContext asyncContext;
     int secs;
 
@@ -10,4 +11,5 @@ public abstract class AsyncProcessor implements Runnable {
         this.asyncContext = asyncCtx;
         this.secs = secs;
     }
+
 }

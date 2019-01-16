@@ -92,7 +92,10 @@ public class Fila extends HTMLRenderer {
 
             html += "<td class=wf_f_valreg>";
             for (BotonDTO botonDTO : botonDTOS) {
-                html += "<botton name=" + id + "B class=\"w3-button w3-tiny w3-teal\" onclick=propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ") >" + botonDTO.getNo_pagbot() + "</span>";
+                html += "<botton name=" + id + "B class=\"w3-button w3-tiny w3-teal\" onclick=propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ") >" +
+                        "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n" +
+                        botonDTO.getNo_pagbot() +
+                        "</botton>";
             }
 
             html += "</td>";

@@ -15,6 +15,8 @@ public class Values {
 
     public static final String SYSQUERYS_NATIVE_GET_ALLCNX = "wfcore.sys_get_all_cnx";
 
+    public static final String SYSQUERYS_NATIVE_GET_STATUS = "get.status";
+
     public static final String QUERYS_NATIVE_SELECT_CNX = "wfcore.cnx_select";
     public static final String QUERYS_NATIVE_GRABAR_CNX = "wfcore.cnx_update";
     public static final String QUERYS_NATIVE_DELETE_CNX = "wfcore.cnx_delete";
