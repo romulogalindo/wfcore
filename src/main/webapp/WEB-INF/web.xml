@@ -103,6 +103,10 @@
         <url-pattern>/login64</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/logout64</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>JSP Main</servlet-name>
         <url-pattern>/main</url-pattern>
     </servlet-mapping>

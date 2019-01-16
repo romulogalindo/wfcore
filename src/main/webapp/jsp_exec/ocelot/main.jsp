@@ -21,14 +21,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png">
+    <link rel='shortcut icon' type='image/x-icon' href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
+
     <!--CSS-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=3"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=5"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=5.1"></script>
 
 </head>
-<body onload="workflow()">
+<body onload="workflow()" style="background: #ededed;">
 
 <!-- Sidebar -->
 <div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;" id="mySidebar">
@@ -36,16 +40,21 @@
     <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor">
     <input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten">
 
-    <div class="w3-bar w3-black w3-center">
-        <button class="w3-bar-item w3-button tablink w3-red" style="width:50%" onclick="viewtab(event,'menu64')">MenÃº
-        </button>
-        <button class="w3-bar-item w3-button tablink" style="width:50%" onclick="viewtab(event,'sistemas64')">Sistemas
-        </button>
+    <div style="position: sticky;height: 43px;top: 0px;">
+        <div class="w3-bar w3-black w3-center">
+            <button class="w3-bar-item w3-button tablink w3-red" style="width:50%" onclick="viewtab(event,'menu64')">
+                Menú
+            </button>
+            <button class="w3-bar-item w3-button tablink" style="width:50%" onclick="viewtab(event,'sistemas64')">
+                Sistemas
+            </button>
+        </div>
     </div>
+    <!--div style="height: 40px;"></div-->
 
     <div id="menu64" class="w3-bar-block menubloq">
         <%--<a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">--%>
-            <%--<img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">--%>
+        <%--<img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">--%>
         <%--</a>--%>
 
         <ul class="w3-ul w3-tiny" style="padding-top: 10px;">
@@ -129,6 +138,15 @@
             </c:forEach>
         </ul>
     </div>
+
+    <div style="position: sticky;height: 43px;bottom: 0px;">
+        <div class="w3-bar w3-black w3-center">
+            <button class="w3-bar-item w3-button tablink w3-gray" style="width:100%" onclick="logout()">
+                <i class="fa fa-power-off" aria-hidden="true"></i>
+                Cerrar sesión
+            </button>
+        </div>
+    </div>
 </div>
 
 <div class="w3-overlay " onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
@@ -138,7 +156,9 @@
         <table>
             <tr>
                 <td>
-                    <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">â˜°</button>
+                    <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </button>
                 </td>
                 <td>
                     <div><h1 class="main_title_module">${contenedorBean.contenedor.co_contit}</h1></div>

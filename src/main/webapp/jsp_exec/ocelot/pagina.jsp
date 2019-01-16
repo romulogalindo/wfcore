@@ -18,10 +18,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=3">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=4"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=4"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=5"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=5"></script>
 </head>
-<body style="padding: 5px 10px 20px;" onload="pagina()">
+<body style="padding: 20px;" onload="pagina();">
 <script>
     var height_table = 0;
 </script>

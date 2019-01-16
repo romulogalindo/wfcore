@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginServlet extends HttpServlet {
     public static String LOGINSERVLET_LOGIN64 = "/login64";
+    public static String LOGINSERVLET_LOGOUT64 = "/logout64";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 
         System.out.println(">>>>" + requestManager.getPath() + "vs" + LOGINSERVLET_LOGIN64 + "--->" + requestManager.getPath().contains(LOGINSERVLET_LOGIN64));
 
-        if (requestManager.getPath().contains(LOGINSERVLET_LOGIN64) | requestManager.getPath().contains("/")) {
+        if (requestManager.getPath().contains(LOGINSERVLET_LOGIN64) || requestManager.getPath().contentEquals("/")) {
             //Validar parametros
             if (doLogin.SecurityLogin(requestManager)) {
                 //todo bien y redirigir
@@ -61,15 +62,15 @@ public class LoginServlet extends HttpServlet {
 
                 goToUrl = "/";
             }
-
+        }else if(requestManager.getPath().contains(LOGINSERVLET_LOGOUT64)){
+            request.getSession().invalidate();
+            goToUrl = "/";
         }
-
 
         try {
             requestManager.redirect(goToUrl);
         } catch (Exception ep) {
             ep.printStackTrace();
-
         }
     }
 

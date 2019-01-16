@@ -139,7 +139,6 @@ function readypagina(pag) {
     console.log('La pàgina ya cargo:' + pag);
 }
 
-
 function loadFormulario64(row) {
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte' + row);
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte' + row);
@@ -181,4 +180,9 @@ function loadReporte64(row) {
     dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
 
 
+}
+
+/**/
+function logout() {
+    $D.doLogoutJson();
 }

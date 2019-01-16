@@ -28,7 +28,7 @@ public class ValpagServlet extends HttpServlet {
 
         AsyncContext asyncCtx = request.startAsync();
 //        asyncCtx.addListener(new AppAsyncListener());
-        asyncCtx.setTimeout(5000);//1 Seg
+        asyncCtx.setTimeout(100000);//1 Seg
 
         WFCoreListener.APP.getExecutor().execute(new AsyncRequestProcessor(asyncCtx, 10000));
 

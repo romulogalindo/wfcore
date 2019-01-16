@@ -36,6 +36,21 @@ $D.doPagJson = function (url) {
     net.send(null);
 }
 
+$D.doLogoutJson = function () {
+    var net = new inet();
+    net.open("POST", "/logout64", true); //false para que sea sincrono
+
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+            // console.log('{NET(' + url + ')} ::::' + net.responseText)
+            console.log('al cerrar:' + window.location.host);
+            window.location.href = '//' + window.location.host + '/';
+        }
+    }
+
+    net.send(null);
+}
+
 $D.getJSONE = function (url) {
     var net = new inet();
     net.open("POST", url, false); //false para que sea sincrono
