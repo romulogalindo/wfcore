@@ -30,8 +30,8 @@ public class DataAPI extends GenericAPI {
 //        Gson gson = new Gson();
         List<ValpagDTO> valReturn = new ArrayList<>();
 
-        StatelessSession session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
-//        StatelessSession session = WFCoreListener.APP.getDataSourceService().getMainManager().getNativeSession();
+        //StatelessSession session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+        StatelessSession session = WFCoreListener.APP.getDataSourceService().getMainManager().getNativeSession();
         NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
         System.out.println("[SQL_LEGACY]sql.getQueryString() = " + sql.getQueryString());
         valReturn = sql.list();

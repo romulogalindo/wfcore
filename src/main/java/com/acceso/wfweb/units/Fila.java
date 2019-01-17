@@ -3,6 +3,8 @@ package com.acceso.wfweb.units;
 import com.acceso.wfweb.dtos.BotonDTO;
 import com.acceso.wfweb.dtos.RegistroDTO;
 import com.acceso.wfweb.dtos.TituloDTO;
+import com.acceso.wfweb.units.registers.Regist1;
+import com.acceso.wfweb.units.registers.Regist22;
 
 import java.util.List;
 
@@ -66,42 +68,40 @@ public class Fila extends HTMLRenderer {
     @Override
     public String toHTML() {
         String html = "";
-        html += "<tr name=" + id + ">";
 
         if (tituloDTO != null) {
+            html += "<tr name=" + id + ">";
             html += "<th colspan=2 class=\"wf_f_stitle w3-highway-blue\" >";
             html += tituloDTO.getNo_pagtit();
             html += "</th>";
+            html += "</tr>";
 
         } else if (registroDTO != null) {
-            html += "<td name=" + id + "K class=wf_f_titreg>";
-            html += registroDTO.getNo_pagreg();
-            html += "</td>";
-
-            html += "<td class=wf_f_valreg>";
-            switch (registroDTO.getTi_pagreg()) {
-                case 1: {
-                    html += "<span name=" + id + "V></span>";
-                    break;
-                }
+            switch (registroDTO.getTi_pagreg()){
+                case 1:{
+                    html += new Regist1(id, registroDTO).toHTML();
+                    break;}
+                case 22:{
+                    html += new Regist22(id, registroDTO).toHTML();
+                    break;}
             }
 
-            html += "</td>";
         } else if (botonDTOS != null) {
+            html += "<tr name=" + id + ">";
             html += "<td name=" + id + "K class=wf_f_titreg></td>";
 
             html += "<td class=wf_f_valreg>";
             for (BotonDTO botonDTO : botonDTOS) {
-                html += "<botton name=" + id + "B class=\"w3-button w3-tiny w3-teal\" onclick=propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ") >" +
+                html += "<botton name=" + id + "B class=\"w3-button w3-ripple w3-tiny w3-teal\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
                         "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n" +
                         botonDTO.getNo_pagbot() +
                         "</botton>";
             }
 
             html += "</td>";
+            html += "</tr>";
         }
 
-        html += "</tr>";
         return html;
     }
 }

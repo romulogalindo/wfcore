@@ -148,7 +148,8 @@ function loadFormulario64(row) {
 
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
-        // console.log('[loadFormulario64@' + co_pagina() + ']reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
+        console.log('::>>P' + co_pagina() + 'T1R' + reg.regist + 'V');
+        console.log('::>>V>>' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
         document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
@@ -183,9 +184,10 @@ function loadReporte64(row) {
 }
 
 function propag(co_button, il_proces, co_condes) {
-    //var id_frawor = id_frawor();
-    //var co_pagina = co_pagina();
-    //var co_conten = co_conten();
+    var id_frawor = id_frawor();
+    var co_pagina = co_pagina();
+    var co_conten = co_conten();
+
     $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes);
     //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
 }
