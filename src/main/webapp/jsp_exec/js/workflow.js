@@ -184,11 +184,31 @@ function loadReporte64(row) {
 }
 
 function propag(co_button, il_proces, co_condes) {
-    var id_frawor = id_frawor();
-    var co_pagina = co_pagina();
-    var co_conten = co_conten();
+    var idFrawor = id_frawor();
+    var coPagina = co_pagina();
+    var coConten = co_conten();
 
-    $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes);
+    var data = new FormData();
+    data.append('id_frawor', '' + id_frawor());
+    data.append('co_pagina', '' + co_pagina());
+    data.append('co_conten', '' + co_conten());
+    data.append('co_botone', '' + co_button);
+    data.append('il_proces', '' + il_proces);
+
+    var ls_regist = document.getElementsByClassName('pagreg');
+    for (var i = 0; i < ls_regist.length; i++) {
+        var ele = ls_regist[i];
+        var id = "";
+        var val = "";
+        if (ele.tagName == 'INPUT') {
+            id = ele.id.substring(ele.id.indexOf('R') + 1, ele.id.indexOf('V'));
+            val = ele.value;
+        }
+        console.log('K=' + id + ',V=' + val);
+        data.append('co_regist' + id, val);
+    }
+
+    $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes, data);
     //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
 }
 

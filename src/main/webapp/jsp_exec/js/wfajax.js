@@ -51,17 +51,17 @@ $D.doLogoutJson = function () {
     net.send(null);
 }
 
-$D.doPropag = function (url) {
+$D.doPropag = function (url, data) {
     var net = new inet();
-    net.open("POST", "/propag", true); //false para que sea sincrono
+    net.open("POST", "/beaver", true); //false para que sea sincrono
 
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-            window.location.href = url;
+            window.parent.location.href = url;
         }
     }
 
-    net.send(null);
+    net.send(data);
 }
 
 $D.getJSONE = function (url) {

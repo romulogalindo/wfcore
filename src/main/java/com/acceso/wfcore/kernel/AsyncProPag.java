@@ -33,6 +33,7 @@ public class AsyncProPag extends AsyncProcessor {
             Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
             Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
+            Integer co_botone = Util.toInt(asyncContext.getRequest().getParameter("co_botone"), -1);
 
             //ejecuta eñ valpag
             //el list del valpag;

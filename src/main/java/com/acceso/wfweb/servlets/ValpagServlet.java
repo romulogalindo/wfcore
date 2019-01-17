@@ -64,7 +64,7 @@ public class ValpagServlet extends HttpServlet {
                 WFCoreListener.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000));
                 break;
             }
-            case "/berver": {
+            case "/beaver": {
                 //propag
                 WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000));
                 break;
