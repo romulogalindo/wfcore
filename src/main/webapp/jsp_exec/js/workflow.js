@@ -109,6 +109,8 @@ function pagina_onload(jsonData) {
         window.parent.iframe2('PAG' + co_pagina(), -1);
         console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
     }
+
+    document.getElementById('loader').style.display = 'none';
 }
 
 function iframe(iframe) {

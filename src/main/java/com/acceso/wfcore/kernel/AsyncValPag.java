@@ -40,7 +40,7 @@ public class AsyncValPag extends AsyncProcessor {
 
             Frawor4DAO dao = new Frawor4DAO();
 //            valpag_js = dao.getVPJS(co_pagina);
-            valpag_js = "return API_DATA.JSON_VALPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor4.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')'));";
+            valpag_js = "return API_DATA.JSON_VALPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')'));";
             dao.close();
 
             String jsText = Util.getText(asyncContext.getRequest().getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js");

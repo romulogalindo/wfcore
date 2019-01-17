@@ -38,7 +38,7 @@ public class LoginFilter implements Filter {
             //System.out.println("LoginServlet.securidad = " + ((HttpServletRequest) request).getServletPath());
 
             if (req.getSession().getAttribute("US") != null) {
-                res.sendRedirect("/main");
+                res.sendRedirect("/wf?co_conten=444");
             } else {
                 chain.doFilter(req, res);
             }

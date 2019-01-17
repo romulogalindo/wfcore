@@ -14,7 +14,7 @@
 <html co_conten="${contenedorBean.do64(pageContext.request)}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>Main</title>
+    <title>${contenedorBean.contenedor.co_contit} - AIO2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
@@ -22,7 +22,8 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <!--link rel="icon" type="image/png" href="{pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png"-->
-    <link rel='shortcut icon' type='image/x-icon' href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
+    <link rel='shortcut icon' type='image/x-icon'
+          href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
