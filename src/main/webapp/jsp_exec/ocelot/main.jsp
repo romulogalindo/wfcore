@@ -152,7 +152,7 @@
 <div class="w3-overlay " onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
 
 <div class="w3-row w3-padding w3-teal w3-xlarge">
-    <div class="w3-full">
+    <div class="w3-col" style="width: 70%;padding: auto 0px;">
         <table>
             <tr>
                 <td>
@@ -169,8 +169,8 @@
     </div>
 
 
-    <div class="wf_right w3-quarter">
-        <div class="w3-bar w3-xlarge">
+    <div class="w3-col" style="width: 30%">
+        <div class="w3-bar w3-xlarge23">
             <%--<div class="w3-bar-item w3-button">${US.no_usulog}</div>--%>
             <a href="#" class="w3-bar-item w3-button w3-right">
                 ${US.no_usulog}
