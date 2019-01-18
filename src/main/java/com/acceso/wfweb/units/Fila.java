@@ -77,13 +77,17 @@ public class Fila extends HTMLRenderer {
             html += "</tr>";
 
         } else if (registroDTO != null) {
-            switch (registroDTO.getTi_pagreg()){
-                case 1:{
+            switch (registroDTO.getTi_pagreg()) {
+                case 1: {
                     html += new Regist1(id, registroDTO).toHTML();
-                    break;}
-                case 22:{
+                    break;
+                }
+                case 22: {
                     html += new Regist22(id, registroDTO).toHTML();
-                    break;}
+                    break;
+                }
+                default:
+                    html += new Regist1(id, registroDTO).toHTML();
             }
 
         } else if (botonDTOS != null) {
