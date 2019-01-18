@@ -31,19 +31,13 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 //   private ContenedorDTO contenedor;
 
    private boolean isregEditable;
-   private List<Integer> columns;
-   private Map<Integer, Integer> hmap = new HashMap<>();
+
+   private Map<Integer, Integer> hmap;
 
    @PostConstruct
    public void init() {
-      columns = new ArrayList<Integer>();
-      for (int i = 1; i <2; i++) {
-         columns.add(i);
-      }
-      System.out.println("init: " + columns.toString());
-
+      hmap = new HashMap<>();
       hmap.put(1,1);
-      System.out.println("init - map: " + hmap.keySet().toString());
    }
 
    public ContenedorBean() {
@@ -57,14 +51,12 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
       if (hmap.size() < 11) {
          hmap.put(hmap.size() + 1,1);
       }
-      System.out.println("incrementFila: " + hmap.keySet().toString());
    }
 
    public void decreaseFila() {
       if (hmap.size() > 1) {
          hmap.remove(hmap.size());
       }
-      System.out.println("decreaseFila: " + hmap.keySet().toString());
    }
 
    public void incrementColumna(Integer fila) {
@@ -73,7 +65,6 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
          columna = columna + 1;
          hmap.replace(fila, columna);
       }
-      System.out.println("incrementColumna: " + hmap.get(fila));
    }
 
    public void decreaseColumna(Integer fila) {
@@ -82,12 +73,11 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
          columna = columna - 1;
          hmap.replace(fila, columna);
       }
-      System.out.println("decreaseColumna: " + hmap.get(fila));
    }
 
    public List<Integer> getFilas(){
       List<Integer> filas = new ArrayList<>();
-      for (int i = 1; i <hmap.size(); i++) {
+      for (int i = 1; i <(hmap.size()+1); i++) {
          filas.add(i);
       }
       return filas;
@@ -228,14 +218,6 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
    public void setIsregEditable(boolean isregEditable) {
       this.isregEditable = isregEditable;
-   }
-
-   public List<Integer> getColumns() {
-      return columns;
-   }
-
-   public void setColumns(List<Integer> columns) {
-      this.columns = columns;
    }
 
    public Map<Integer, Integer> getHmap() {

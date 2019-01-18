@@ -17,32 +17,46 @@
                              styleClass="buttonnuevo"/>
             <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseFila}" update="outputFila"
                              styleClass="buttonnuevo"/>
-            <br></br>
+            <p:row/>
             <p:outputPanel id="outputFila">
 
                 <ui:repeat var="fila" value="#{contenedorBean.getFilas()}">
-                    <p:row>
-                        <b>Fila #{fila} </b>- Columnas
-                        <p:commandButton icon="fa fa-plus" action="#{contenedorBean.incrementColumna(fila)}"
-                                         update="output"
-                                         styleClass="buttonnuevo"/>
-                        <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseColumna(fila)}"
-                                         update="output"
-                                         styleClass="buttonnuevo"/>
+                    <p:panelGrid style="width: 95%">
+                        <p:row>
+                            <p:column colspan="2" style="text-align: center; font-size: 140%">
+                                <b>#{fila} </b>
+                            </p:column>
+                            <p:column rowspan="2">
+                                <p:outputPanel id="output">
 
-                        <p:outputPanel id="output">
-
-                            <div id="output#{fila}" class="p-grid">
-                                <ui:repeat var="column" value="#{contenedorBean.getColumnas(fila)}">
-                                    <div class="p-col">
-                                        <div class="box">
-                                            #{column}
-                                        </div>
+                                    <div id="output#{fila}" class="p-grid">
+                                        <ui:repeat var="column" value="#{contenedorBean.getColumnas(fila)}">
+                                            <div class="p-col">
+                                                <div class="box">
+                                                    #{column}
+                                                </div>
+                                            </div>
+                                        </ui:repeat>
                                     </div>
-                                </ui:repeat>
-                            </div>
-                        </p:outputPanel>
-                    </p:row>
+                                </p:outputPanel>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="width: 20px; padding: 1px 2px">
+
+                                <p:commandButton icon="fa fa-plus" action="#{contenedorBean.incrementColumna(fila)}"
+                                                 update="output"
+                                                 styleClass="buttonnuevo"/>
+                            </p:column>
+                            <p:column style="width: 20px; padding: 1px 2px">
+                                <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseColumna(fila)}"
+                                                 update="output"
+                                                 styleClass="buttonnuevo"/>
+                            </p:column>
+                        </p:row>
+
+
+                    </p:panelGrid>
                 </ui:repeat>
 
             </p:outputPanel>
