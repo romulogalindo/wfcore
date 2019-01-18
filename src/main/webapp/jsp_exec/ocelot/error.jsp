@@ -34,6 +34,13 @@
     <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=6"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=6"></script>
     <style>
+        h3 {
+            color: black;
+            margin: 0px;
+            padding: 0px;
+            line-height: 20px;
+            color:#616161;
+        }
         h1 {
             color: black;
         }
@@ -70,26 +77,39 @@
             String error_code = "" + request.getAttribute("javax.servlet.error.status_code");
             String error_uri = "" + request.getAttribute("javax.servlet.error.request_uri");
         %>
-        <h3>Còdigo:</h3>:
+        <h3>Código:</h3>
         <h1><%=error_code%> - <%=servlet_name%>
         </h1>
 
         <hr/>
 
-        <h3>Mensaje:</h3>:
-        <h1><%=error_message%>
+        <h3>Mensaje:</h3>
+        <h1>
+            <%
+                switch (error_code) {
+                    case "404":{
+                        out.println("No se encontro la ruta solicitada");
+                        break;
+                    }
+                    default: {
+                        out.println(error_message);
+                        break;
+                    }
+                }
+
+            %>
         </h1>
 
         <hr/>
 
-        <h3>Mensaje</h3>:
-        <h1><%=error_message%>
+        <h3>Ruta:</h3>
+        <h1><%=error_uri%>
         </h1>:
         <%
-            Enumeration<String> attrs = request.getAttributeNames();
-            while (attrs.hasMoreElements()) {
-                out.println("<h1>" + attrs.nextElement() + "</h1>\n");
-            }
+//            Enumeration<String> attrs = request.getAttributeNames();
+//            while (attrs.hasMoreElements()) {
+//                out.println("<h1>" + attrs.nextElement() + "</h1>\n");
+//            }
 //            StringWriter stringWriter = new StringWriter();
 //            PrintWriter printWriter = new PrintWriter(stringWriter);
 //            exception.printStackTrace(printWriter);
