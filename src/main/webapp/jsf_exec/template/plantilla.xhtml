@@ -13,17 +13,65 @@
     <title>WFCORE</title>
     <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>
     <style type="text/css">
-        .ui-treetable {
-            margin-top: 40px
+        .p-grid {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex !important;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -0.5em;
+            margin-left: -0.5em;
+            margin-top: 0.5em;
+        }
+        .box{
+            background-color: #cce4f7;
+            text-align: center;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            border-radius: 4px;
+            color: #30383c;
+        }
+        .p-col {
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+            padding: 0.5em;
+        }
+        .buttonnuevo {
+            background: transparent !important;
+            background-color: rgb(17, 111, 191) !important;
+            border-bottom-color: rgb(0, 122, 217) !important;
+            border-bottom-left-radius: 3px !important;
+            border-bottom-right-radius: 3px !important;
+            border-bottom-style: solid !important;
+            border-bottom-width: 1.43333px !important;
+            border-image-outset: 0 !important;
+            border-image-repeat: stretch stretch !important;
+            border-image-slice: 100% !important;
+            border-image-source: none !important;
+            border-image-width: 1 !important;
+            border-left-color: rgb(0, 122, 217) !important;
+            border-left-style: solid !important;
+            border-left-width: 1.43333px !important;
+            border-right-color: rgb(0, 122, 217)!important;
+            border-right-style: solid !important;
+            border-right-width: 1.43333px !important;
+            border-top-color: rgb(0, 122, 217) !important;
+            border-top-left-radius: 3px !important;
+            border-top-right-radius: 3px !important;
+            border-top-style: solid !important;
+            border-top-width: 1.43333px !important;
+            box-sizing: border-box !important;
+            color: rgb(255, 255, 255) !important;
+            cursor: pointer !important;
+            display: inline-block !important;
+            font-family: "Open Sans", "Helvetica Neue", sans-serif !important;
+            font-size: 14px !important;
+
         }
 
-        .ui-treetable table {
-            table-layout: fixed
-        }
-
-        body .ui-button {
-            margin: 10px 0 0 0;
-        }
     </style>
 </h:head>
 
