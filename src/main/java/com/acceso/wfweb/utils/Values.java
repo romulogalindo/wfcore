@@ -8,6 +8,7 @@ public class Values {
     public static final String QUERYS_WEB_SELECT_PFPAGREG = "frawor4.pfpagreg";
     public static final String QUERYS_WEB_SELECT_PFPAGBOT = "frawor4.pfpagbot";
     public static final String QUERYS_WEB_SELECT_IDFRAWOR = "frawor4.idfrawor";
+    public static final String QUERYS_WEB_SELECT_PFCONPAR = "frawor4.pfconpar";
     //legacy
     public static final String QUERYS_WEB_SELECT_PFVALPAG = "frawor4.pfvalpag";
     public static final String QUERYS_WEB_SELECT_PFVALPAGJS = "frawor4.pfvalpagjs";

@@ -41,10 +41,10 @@ public class ApplicationManager {
         return mainTree;
     }
 
-    public static Contenedor buildContainer(int co_conten) {
+    public static Contenedor buildContainer(int co_conten, long id_frawor) {
         //cobnstruimos el objeto contenedor
         ContenedorDTO contenedorDTO = null;
-        IdfraworDTO idfraworDTO;
+        //IdfraworDTO idfraworDTO;
         List<PaginaDTO> paginaDTOS;
 
         Frawor4DAO dao = new Frawor4DAO();
@@ -56,17 +56,17 @@ public class ApplicationManager {
         }
 
         dao = new Frawor4DAO();
-        idfraworDTO = dao.getIdfraworDTO();
-        paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
+        //idfraworDTO = dao.getIdfraworDTO();
+        paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), id_frawor);
 
         //work!
-        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor(), contenedorDTO.getNo_contit());
+        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
         for (PaginaDTO paginaDTO : paginaDTOS) {
 //            System.out.println("AM:" + paginaDTO.getCo_pagina() + ",:::" + paginaDTO.getTi_pagina() + ",:::" + paginaDTO.getNo_pagtit());
             //pagina nueva
-            List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
-            List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
-            List<BotonDTO> botonDTOS = dao.getButonDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), idfraworDTO.getId_frawor());
+            List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
+            List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
+            List<BotonDTO> botonDTOS = dao.getButonDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
 
             LinkedHashMap<String, Fila> ultraFilas = new LinkedHashMap<>();
 

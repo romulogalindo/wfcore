@@ -104,7 +104,7 @@ public class Frawor4DAO extends DAO {
         return registroDTOS;
     }
 
-    public List<BotonDTO> getButonDTO(int p_co_pagina, int p_co_conten, long p_id_frawor){
+    public List<BotonDTO> getButonDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
         List<BotonDTO> botonDTOS = null;
         NQuery nQuery = new NQuery();
 
@@ -179,6 +179,26 @@ public class Frawor4DAO extends DAO {
         }
 
         return idfraworDTO;
+    }
+
+    public void saveCompar(long p_id_frawor, int p_co_conten, int p_co_conpar, String p_va_conpar) {
+        ProcesoDTO procesoDTO;
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONPAR), true, true);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setInteger("p_co_conpar", p_co_conpar);
+            nQuery.setString("p_va_conpar", p_va_conpar);
+
+            procesoDTO = (ProcesoDTO) nQuery.uniqueResult();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
     }
 
     @Override

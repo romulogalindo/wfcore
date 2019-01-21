@@ -1,7 +1,11 @@
 package com.acceso.wfweb.utils;
 
+import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
+import java.util.HashMap;
 
 public class RequestManager {
     public static String REQUEST_METHOD_GET = "GET";
@@ -12,6 +16,11 @@ public class RequestManager {
 
     public RequestManager(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
+        this.response = response;
+    }
+
+    public RequestManager(HttpRewriteWrappedRequest httpRewriteWrappedRequest, HttpServletResponse response) {
+        this.request = (HttpServletRequest) request;
         this.response = response;
     }
 
@@ -44,5 +53,19 @@ public class RequestManager {
     public void redirect(String url) throws Exception {
         System.out.println("redirect to>" + url);
         this.response.sendRedirect(url);
+    }
+
+    public HashMap<Integer, String> getConpars() {
+        HashMap<Integer, String> conpars = new HashMap<>();
+
+        Enumeration<String> parametersNames = this.request.getParameterNames();
+        while (parametersNames.hasMoreElements()) {
+            String paramKey = parametersNames.nextElement();
+            if (paramKey.contains("co_conpar")) {
+//                conpars.put(paramKey, this.request.getParameter(paramKey));
+            }
+        }
+
+        return conpars;
     }
 }
