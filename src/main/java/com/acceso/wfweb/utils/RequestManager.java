@@ -1,5 +1,6 @@
 package com.acceso.wfweb.utils;
 
+import com.acceso.wfcore.utils.Util;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class RequestManager {
     }
 
     public RequestManager(HttpRewriteWrappedRequest httpRewriteWrappedRequest, HttpServletResponse response) {
-        this.request = (HttpServletRequest) request;
+        this.request = (HttpServletRequest) httpRewriteWrappedRequest;
         this.response = response;
     }
 
@@ -61,8 +62,8 @@ public class RequestManager {
         Enumeration<String> parametersNames = this.request.getParameterNames();
         while (parametersNames.hasMoreElements()) {
             String paramKey = parametersNames.nextElement();
-            if (paramKey.contains("co_conpar")) {
-//                conpars.put(paramKey, this.request.getParameter(paramKey));
+            if (paramKey.contains("co_conpar_")) {
+                conpars.put(Util.toInt(paramKey.replace("co_conpar_", "")), this.request.getParameter(paramKey));
             }
         }
 

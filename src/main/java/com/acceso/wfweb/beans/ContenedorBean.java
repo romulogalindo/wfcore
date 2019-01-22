@@ -33,13 +33,17 @@ public class ContenedorBean implements Serializable {
 
         //construir el conenedor!!
         Frawor4DAO dao = new Frawor4DAO();
+        Frawor4DAO dao_fdb = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+
         id_frawor = dao.getIdfraworDTO().getId_frawor();
         for (Map.Entry<Integer, String> entry : requestManager.getConpars().entrySet()) {
             System.out.println("Item : " + entry.getKey() + " Count : " + entry.getValue());
-            dao.saveCompar(id_frawor, co_conten,1,entry.getValue());
+            dao.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue());
+            dao_fdb.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue());
         }
-        dao.close();
 
+        dao_fdb.close();
+        dao.close();
 
 
         //preguntar a la cache si tienen este contenedor

@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_PFPAGTIT,
+                name = Values.QUERYS_WEB_SELECT_PFCONPAR,
                 query = "select select pfins_tbconpar as proceso from frawor2.pfins_tbconpar(:p_id_frawor ,  :p_co_conten, :p_co_conpar, :p_va_conpar )",
                 resultClass = ProcesoDTO.class)
 })

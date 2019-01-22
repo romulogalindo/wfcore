@@ -20,7 +20,11 @@ public class Frawor4DAO extends DAO {
     StatelessSession session;
 
     public Frawor4DAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+    }
+
+    public Frawor4DAO(StatelessSession session){
+        this.session = session;
     }
 
     public ContenedorDTO getContenedorDTO(int co_conten) {

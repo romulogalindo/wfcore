@@ -50,7 +50,7 @@ public class ValpagServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //do64(request, response);
+
         request.setCharacterEncoding("ISO-8859-1");
         response.setContentType("text/html;charset=ISO-8859-1");
 
@@ -71,8 +71,6 @@ public class ValpagServlet extends HttpServlet {
             }
         }
 
-
-        //WFCoreListener.APP.getExecutor().execute(asyncProcessor);
     }
 
     @Override
