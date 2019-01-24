@@ -2,11 +2,9 @@ package com.acceso.wfweb.dtos;
 
 import com.acceso.wfweb.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Rómulo Galindo<romulogalindo@gmail.com>
@@ -39,6 +37,9 @@ public class BotonDTO implements Serializable {
     boolean il_autent;
 
     int co_condes;
+
+    @Transient
+    List<ParametroDTO> parametros;
 
     public BotonDTO() {
     }
@@ -113,5 +114,13 @@ public class BotonDTO implements Serializable {
 
     public void setCo_condes(int co_condes) {
         this.co_condes = co_condes;
+    }
+
+    public List<ParametroDTO> getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(List<ParametroDTO> parametros) {
+        this.parametros = parametros;
     }
 }

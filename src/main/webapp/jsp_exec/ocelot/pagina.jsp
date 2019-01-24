@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=3">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=7"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=7"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=8"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=8"></script>
 </head>
 <body style="padding: 20px;" onload="pagina();">
 <script>

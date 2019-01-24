@@ -210,6 +210,26 @@ public class Frawor4DAO extends DAO {
         return procesoDTO;
     }
 
+    public List<ParametroDTO> getParams(int p_co_conten, int p_co_pagina, short p_co_pagbot) {
+        List<ParametroDTO> parametroDTOS = null;
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFPAGPAR), true, true);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setShort("p_co_pagbot", p_co_pagbot);
+            parametroDTOS = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return parametroDTOS;
+    }
+
     @Override
     public void close() {
         try {

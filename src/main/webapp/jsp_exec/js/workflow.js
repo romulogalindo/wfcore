@@ -1,5 +1,18 @@
 var $D = document;
 
+function param(co_pagreg, co_conpar) {
+    this.conpar = co_conpar;
+    this.pagreg = co_pagreg;
+
+    this.getConpar = function () {
+        return this.conpar
+    };
+
+    this.getPagreg = function () {
+        return this.pagreg
+    };
+}
+
 function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
     document.getElementById("myOverlay").style.display = "block";
@@ -150,10 +163,27 @@ function loadFormulario64(row) {
 
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
-        console.log('::>>P' + co_pagina() + 'T1R' + reg.regist + 'V');
+        // console.log('::>>P' + co_pagina() + '' + reg.regist + 'V');
+        console.log('::>>P' + co_pagina() + 'R' + reg.regist + 'V');
         console.log('::>>V>>' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
-        document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
+        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
+        var eledom = document.getElementsByName('P' + co_pagina() + 'R' + reg.regist + 'V')[0];
+
+        console.log('::>>eledom>>' + eledom + ',>>>' + eledom.tagName);
+        var valdom = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
+        console.log('::>>valdom>>' + valdom);
+
+        switch (eledom.tagName) {
+            case "INPUT": {
+                eledom.value = valdom;
+                break;
+            }
+            default: {
+                eledom.innerHTML = valdom;
+            }
+        }
+        // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
 }
 
@@ -190,6 +220,7 @@ function propag(co_button, il_proces, co_condes) {
     var coPagina = co_pagina();
     var coConten = co_conten();
 
+    var parametros = '';
     var data = new FormData();
     data.append('id_frawor', '' + id_frawor());
     data.append('co_pagina', '' + co_pagina());
@@ -209,8 +240,26 @@ function propag(co_button, il_proces, co_condes) {
         console.log('K=' + id + ',V=' + val);
         data.append('co_regist' + id, val);
     }
+    for (var i; i < eval('BTN' + co_button + 'P').length; i++) {
+        var param = eval('BTN' + co_button + 'P')[i];
+        var spagreg = param.getPagreg();
+        var sconpar = param.getConpar();
 
-    $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes, data);
+        var eledom = document.getElementById('P' + coPagina + 'R' + spagreg + 'V');
+        var valdom = '';
+        switch (eledom.tagName) {
+            case "INPUT": {
+                valdom = eledom.value;
+                break;
+            }
+            default: {
+                valdom = eledom.innerHTML;
+            }
+        }
+
+        parametros = (parametros.length == 0 ? '&' : '') + 'co_conpar_' + sconpar + '=' + valdom;
+    }
+    $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
     //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
 }
 

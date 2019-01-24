@@ -79,7 +79,8 @@ public class ApplicationManager {
 
                 for (RegistroDTO registroDTO : registroDTOS) {
                     if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
-                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
+//                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
+                        idFila = "P" + paginaDTO.getCo_pagina() + "R" + registroDTO.getCo_pagreg();
                         ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
                 }
@@ -88,7 +89,12 @@ public class ApplicationManager {
             }
 
             if (!botonDTOS.isEmpty() || botonDTOS.size() > 0) {
+                for (BotonDTO botonDTO : botonDTOS) {
+                    List<ParametroDTO> parametroDTOS = dao.getParams(contenedorDTO.getCo_conten(), paginaDTO.getCo_pagina(), (short) botonDTO.getCo_pagbot());
+                    botonDTO.setParametros(parametroDTOS);
+                }
                 ultraFilas.put("BTN", new Fila(botonDTOS, "BTN"));
+
             }
 
 //            System.out.println("paginaDTO.getTi_pagina() = " + paginaDTO.getTi_pagina());

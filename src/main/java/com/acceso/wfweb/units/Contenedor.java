@@ -9,8 +9,7 @@ import java.util.List;
 public class Contenedor extends HTMLRenderer implements Serializable {
 
     //objeto de distribucion(ahora solo vertical)
-    //referencia a paginas modo simple
-//    List<Pagina> paginas;
+
     LinkedHashMap<Integer, Pagina> paginas;
     int co_conten;
     long id_frawor;

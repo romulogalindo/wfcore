@@ -63,6 +63,8 @@ public class ContenedorBean implements Serializable {
             System.out.println("{a->1}co_conten = " + co_conten);
             //almancenar el contenedor
             WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
+        } else {
+            contenedor.setId_frawor(id_frawor);
         }
 
         requestManager.save_over_session("" + contenedor.getCo_conten(), contenedor);

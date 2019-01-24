@@ -1,6 +1,7 @@
 package com.acceso.wfweb.units;
 
 import com.acceso.wfweb.dtos.BotonDTO;
+import com.acceso.wfweb.dtos.ParametroDTO;
 import com.acceso.wfweb.dtos.RegistroDTO;
 import com.acceso.wfweb.dtos.TituloDTO;
 import com.acceso.wfweb.units.registers.Regist1;
@@ -93,17 +94,27 @@ public class Fila extends HTMLRenderer implements Serializable {
 
         } else if (botonDTOS != null) {
             html += "<tr name=" + id + ">";
-            html += "<td name=" + id + "K class=wf_f_titreg></td>";
+            html += "   <td name=" + id + "K class=wf_f_titreg></td>";
 
             html += "<td class=wf_f_valreg>";
+            html += "<script> var cfila=1;</script>";
+
             for (BotonDTO botonDTO : botonDTOS) {
-                html += "<botton name=" + id + "B class=\"w3-button w3-ripple w3-tiny w3-teal\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
+
+                html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[];";
+                for (ParametroDTO parametroDTO : botonDTO.getParametros()) {
+                    html += "" + id + botonDTO.getCo_pagbot() + "P[" + id + botonDTO.getCo_pagbot() + "P.length] = new param(" + parametroDTO.getCo_pagreg() + "," + parametroDTO.getCo_conpar() + ");";
+                }
+                html += "</script>";
+
+
+                html += "<botton name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
                         "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n" +
                         botonDTO.getNo_pagbot() +
                         "</botton>";
             }
 
-            html += "</td>";
+            html += "   </td>";
             html += "</tr>";
         }
 
