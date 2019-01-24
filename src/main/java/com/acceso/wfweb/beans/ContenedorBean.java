@@ -10,6 +10,7 @@ import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.dtos.ProcesoDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.utils.RequestManager;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
@@ -38,12 +39,15 @@ public class ContenedorBean implements Serializable {
         id_frawor = dao.getIdfraworDTO().getId_frawor();
         for (Map.Entry<Integer, String> entry : requestManager.getConpars().entrySet()) {
             System.out.println("Item : " + entry.getKey() + " Count : " + entry.getValue());
-            dao.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue());
-            dao_fdb.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue());
+            ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue(), true);
+            ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue(), false);
+
+            System.out.println("procesoDTO = " + procesoDTO);
+            System.out.println("procesoDTO2 = " + procesoDTO2);
         }
 
-        dao_fdb.close();
         dao.close();
+        dao_fdb.close();
 
 
         //preguntar a la cache si tienen este contenedor
@@ -61,7 +65,7 @@ public class ContenedorBean implements Serializable {
             WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
         }
 
-//        request.getSession().setAttribute("" + contenedor.getCo_conten(), contenedor);
+        requestManager.save_over_session("" + contenedor.getCo_conten(), contenedor);
     }
 
     public Contenedor getContenedor() {

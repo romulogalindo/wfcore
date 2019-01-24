@@ -6,9 +6,10 @@ import com.acceso.wfweb.dtos.TituloDTO;
 import com.acceso.wfweb.units.registers.Regist1;
 import com.acceso.wfweb.units.registers.Regist22;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Fila extends HTMLRenderer {
+public class Fila extends HTMLRenderer implements Serializable {
 
     TituloDTO tituloDTO;
     RegistroDTO registroDTO;

@@ -72,6 +72,11 @@ public class NQuery {
         queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value));
     }
 
+    public void setShort(String param_name, Short param_value) {
+        query.setShort(param_name, param_value);
+        queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value));
+    }
+
     /**
      * @return
      */

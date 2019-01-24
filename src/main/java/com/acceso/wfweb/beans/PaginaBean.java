@@ -29,7 +29,7 @@ public class PaginaBean implements Serializable {
 
         //preguntar a la cache si tienen este contenedor
         Contenedor contenedor = (Contenedor) request.getSession().getAttribute("" + co_conten);
-//        System.out.println("Para extraer=" + co_pagina + "-->" + contenedor.getPagina(co_pagina));
+        System.out.println("Para extraer=" + co_pagina + "-->" + contenedor.getPagina(co_pagina));
         pagina = contenedor.getPagina(co_pagina);
 
     }

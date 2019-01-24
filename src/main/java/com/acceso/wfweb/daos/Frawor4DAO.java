@@ -6,6 +6,7 @@ import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfweb.dtos.*;
 import com.acceso.wfweb.utils.Values;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Frawor4DAO extends DAO {
         this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
     }
 
-    public Frawor4DAO(StatelessSession session){
+    public Frawor4DAO(StatelessSession session) {
         this.session = session;
     }
 
@@ -185,24 +186,28 @@ public class Frawor4DAO extends DAO {
         return idfraworDTO;
     }
 
-    public void saveCompar(long p_id_frawor, int p_co_conten, int p_co_conpar, String p_va_conpar) {
-        ProcesoDTO procesoDTO;
+    public ProcesoDTO saveCompar(long p_id_frawor, int p_co_conten, int p_co_conpar, String p_va_conpar, boolean islocal) {
+        ProcesoDTO procesoDTO = null;
         NQuery nQuery = new NQuery();
 
         try {
-
-            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONPAR), true, true);
+            //Codigo que hace explicito la transaccion
+            Transaction transaction = session.beginTransaction();
+            nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_PFCONPAR : Values.QUERYS_WEB_SELECT_PFCONPAR2), true, true);
             nQuery.setLong("p_id_frawor", p_id_frawor);
             nQuery.setInteger("p_co_conten", p_co_conten);
-            nQuery.setInteger("p_co_conpar", p_co_conpar);
+            nQuery.setShort("p_co_conpar", (short) p_co_conpar);
             nQuery.setString("p_va_conpar", p_va_conpar);
 
             procesoDTO = (ProcesoDTO) nQuery.uniqueResult();
-
+            transaction.commit();
+            //CIerra la transaccion explicita!
         } catch (Exception ep) {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
+
+        return procesoDTO;
     }
 
     @Override
