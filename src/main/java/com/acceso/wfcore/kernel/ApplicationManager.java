@@ -142,11 +142,11 @@ public class ApplicationManager {
         nativeConexionProperties.add("hibernate.connection.pool_size", "" + dto.getNu_maxpoo());
 
         // Maximum waiting time for a connection from the pool
-        nativeConexionProperties.add("hibernate.hikari.connectionTimeout", "20000");
+        nativeConexionProperties.add("hibernate.hikari.connectionTimeout", "" + dto.getNu_timout());
         // Minimum number of ideal connections in the pool
-        nativeConexionProperties.add("hibernate.hikari.minimumIdle", "20");
+        nativeConexionProperties.add("hibernate.hikari.minimumIdle", "3");
         // Maximum number of actual connection in the pool
-        nativeConexionProperties.add("hibernate.hikari.maximumPoolSize", "50");
+        nativeConexionProperties.add("hibernate.hikari.maximumPoolSize", "" + dto.getNu_maxpoo());
         // Maximum time that a connection is allowed to sit ideal in the pool
         nativeConexionProperties.add("hibernate.hikari.idleTimeout", "300000");
 

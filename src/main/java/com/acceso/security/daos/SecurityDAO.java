@@ -11,6 +11,8 @@ import java.util.List;
 
 public class SecurityDAO extends DAO {
 
+    public static String TAG = "SECURE";
+
     public SecurityDAO() {
 
         this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
@@ -20,7 +22,7 @@ public class SecurityDAO extends DAO {
     public RegsesiniDTO regsesini(String p_username, String p_password, String p_remoteip) {
         RegsesiniDTO regsesiniDTO = null;
 
-        NQuery nQuery = new NQuery(this);
+        NQuery nQuery = new NQuery(TAG+":REGSES");
 
         try {
             nQuery.work(this.session.getNamedQuery(Values.QUERYS_SECURITY_REGSESINI_WEB), true, true);
@@ -40,7 +42,7 @@ public class SecurityDAO extends DAO {
     public List<PermisbloDTO> getListBloq(int p_co_usuari) {
         List<PermisbloDTO> regsesiniDTO = null;
 
-        NQuery nQuery = new NQuery(this);
+        NQuery nQuery = new NQuery(TAG+":LISBLO");
 
         try {
             nQuery.work(this.session.getNamedQuery(Values.QUERYS_SECURITY_PERMISBLO_WEB), true, true);

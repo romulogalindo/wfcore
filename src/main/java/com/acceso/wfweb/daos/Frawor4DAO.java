@@ -18,7 +18,8 @@ import java.util.List;
 
 public class Frawor4DAO extends DAO {
 
-    StatelessSession session;
+    public static String TAG = "FRAWOR";
+    public StatelessSession session;
 
     public Frawor4DAO() {
         this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
@@ -31,7 +32,7 @@ public class Frawor4DAO extends DAO {
     public ContenedorDTO getContenedorDTO(int co_conten) {
 
         ContenedorDTO contenedorDTO = null;
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":CONTEN");
 
         try {
 
@@ -50,7 +51,7 @@ public class Frawor4DAO extends DAO {
     public List<PaginaDTO> getPaginaDTO(int p_co_conten, long p_id_frawor) {
 
         List<PaginaDTO> paginaDTOS = new ArrayList<>();
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
 
@@ -70,7 +71,7 @@ public class Frawor4DAO extends DAO {
     public List<TituloDTO> getTituloDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
 
         List<TituloDTO> tituloDTOS = new ArrayList<>();
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":TITULO");
 
         try {
 
@@ -91,7 +92,7 @@ public class Frawor4DAO extends DAO {
     public List<RegistroDTO> getRegistroDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
 
         List<RegistroDTO> registroDTOS = null;
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":REGIST");
 
         try {
 
@@ -111,7 +112,7 @@ public class Frawor4DAO extends DAO {
 
     public List<BotonDTO> getButonDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
         List<BotonDTO> botonDTOS = null;
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":BOTONE");
 
         try {
 
@@ -129,25 +130,25 @@ public class Frawor4DAO extends DAO {
         return botonDTOS;
     }
 
-    public List<ValpagDTO> getValPag_legacy(int p_co_pagina, int p_co_conten, long p_id_frawor) {
-        List<ValpagDTO> valpagDTOS = null;
-        NQuery nQuery = new NQuery();
-
-        try {
-
-            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFVALPAG), true, true);
-            nQuery.setInteger("p_co_conten", p_co_conten);
-            nQuery.setLong("p_id_frawor", p_id_frawor);
-            nQuery.setInteger("p_co_pagina", p_co_pagina);
-            valpagDTOS = nQuery.list();
-
-        } catch (Exception ep) {
-            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-            ep.printStackTrace();
-        }
-
-        return valpagDTOS;
-    }
+//    public List<ValpagDTO> getValPag_legacy(int p_co_pagina, int p_co_conten, long p_id_frawor) {
+//        List<ValpagDTO> valpagDTOS = null;
+//        NQuery nQuery = new NQuery(this);
+//
+//        try {
+//
+//            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFVALPAG), true, true);
+//            nQuery.setInteger("p_co_conten", p_co_conten);
+//            nQuery.setLong("p_id_frawor", p_id_frawor);
+//            nQuery.setInteger("p_co_pagina", p_co_pagina);
+//            valpagDTOS = nQuery.list();
+//
+//        } catch (Exception ep) {
+//            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+//            ep.printStackTrace();
+//        }
+//
+//        return valpagDTOS;
+//    }
 
     public String getVPJS(int p_co_pagina) {
         String valpagJS = "";
@@ -171,7 +172,7 @@ public class Frawor4DAO extends DAO {
     public IdfraworDTO getIdfraworDTO() {
 
         IdfraworDTO idfraworDTO = null;
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":FRAWOR");
 
         try {
 
@@ -188,11 +189,12 @@ public class Frawor4DAO extends DAO {
 
     public ProcesoDTO saveCompar(long p_id_frawor, int p_co_conten, int p_co_conpar, String p_va_conpar, boolean islocal) {
         ProcesoDTO procesoDTO = null;
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":CONPAR");
+        Transaction transaction = null;
 
         try {
             //Codigo que hace explicito la transaccion
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_PFCONPAR : Values.QUERYS_WEB_SELECT_PFCONPAR2), true, true);
             nQuery.setLong("p_id_frawor", p_id_frawor);
             nQuery.setInteger("p_co_conten", p_co_conten);
@@ -203,6 +205,9 @@ public class Frawor4DAO extends DAO {
             transaction.commit();
             //CIerra la transaccion explicita!
         } catch (Exception ep) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
@@ -212,7 +217,7 @@ public class Frawor4DAO extends DAO {
 
     public List<ParametroDTO> getParams(int p_co_conten, int p_co_pagina, short p_co_pagbot) {
         List<ParametroDTO> parametroDTOS = null;
-        NQuery nQuery = new NQuery();
+        NQuery nQuery = new NQuery(TAG + ":PAGPAR");
 
         try {
 

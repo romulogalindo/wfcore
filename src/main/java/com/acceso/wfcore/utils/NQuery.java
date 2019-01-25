@@ -26,7 +26,8 @@ public class NQuery {
     }
 
     public NQuery(Object object) {
-        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + "] ";
+        this.LOG = (object == null ? "" : "[" + object + "] ");
+//        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + "] ";
 //        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + ":" + (object == null ? "" : object.getClass().getEnclosingMethod().getName()) + "] ";
     }
 
@@ -74,7 +75,7 @@ public class NQuery {
 
     public void setShort(String param_name, Short param_value) {
         query.setShort(param_name, param_value);
-        queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value));
+        queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value) + "::SMALLINT");
     }
 
     /**
