@@ -22,59 +22,60 @@ import java.util.Date;
 @Entity
 @NamedNativeQueries({
       @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_USUARIO,
-            query = "select co_usuari, co_usulog, no_usuari, fe_regist, fe_bloque, fe_ultlog, ti_usuari, co_person, co_sistem, co_subsis, pw_usuari, no_sistem, no_subsis "
-                  + "from wfsistem.pbusuario_list()",
+            name = Values.QUERYS_NATIVE_SELECT_CONTENEDOR,
+            query = "select co_conten, no_contit, de_conten, il_sesion, db_progra, fe_regist "
+                  + "from wfsistem.pbcontenedor_list()",
             resultClass = ContenedorDTO.class)
 })
 public class ContenedorDTO implements Serializable {
 
    @Id
-   Integer co_usuari;
+   Integer co_conten;
 
-   String co_usulog;
-   String no_usuari;
-   String pw_usuari;
+   String no_contit;
+   String de_conten;
+   Boolean il_sesion;
+   String db_progra;
    Date fe_regist;
-   Date fe_bloque;
-   Date fe_ultlog;
-   String ti_usuari;
-   Integer co_person;
-   Integer co_sistem;
-   Integer co_subsis;
-   String no_sistem;
-   String no_subsis;
 
-   public Integer getCo_usuari() {
-      return co_usuari;
+   public Integer getCo_conten() {
+      return co_conten;
    }
 
-   public void setCo_usuari(Integer co_usuari) {
-      this.co_usuari = co_usuari;
+   public void setCo_conten(Integer co_conten) {
+      this.co_conten = co_conten;
    }
 
-   public String getCo_usulog() {
-      return co_usulog;
+   public String getNo_contit() {
+      return no_contit;
    }
 
-   public void setCo_usulog(String co_usulog) {
-      this.co_usulog = co_usulog;
+   public void setNo_contit(String no_contit) {
+      this.no_contit = no_contit;
    }
 
-   public String getNo_usuari() {
-      return no_usuari;
+   public String getDe_conten() {
+      return de_conten;
    }
 
-   public void setNo_usuari(String no_usuari) {
-      this.no_usuari = no_usuari;
+   public void setDe_conten(String de_conten) {
+      this.de_conten = de_conten;
    }
 
-   public String getPw_usuari() {
-      return pw_usuari;
+   public Boolean getIl_sesion() {
+      return il_sesion;
    }
 
-   public void setPw_usuari(String pw_usuari) {
-      this.pw_usuari = pw_usuari;
+   public void setIl_sesion(Boolean il_sesion) {
+      this.il_sesion = il_sesion;
+   }
+
+   public String getDb_progra() {
+      return db_progra;
+   }
+
+   public void setDb_progra(String db_progra) {
+      this.db_progra = db_progra;
    }
 
    public Date getFe_regist() {
@@ -85,86 +86,15 @@ public class ContenedorDTO implements Serializable {
       this.fe_regist = fe_regist;
    }
 
-   public Date getFe_bloque() {
-      return fe_bloque;
-   }
-
-   public void setFe_bloque(Date fe_bloque) {
-      this.fe_bloque = fe_bloque;
-   }
-
-   public Date getFe_ultlog() {
-      return fe_ultlog;
-   }
-
-   public void setFe_ultlog(Date fe_ultlog) {
-      this.fe_ultlog = fe_ultlog;
-   }
-
-   public String getTi_usuari() {
-      return ti_usuari;
-   }
-
-   public void setTi_usuari(String ti_usuari) {
-      this.ti_usuari = ti_usuari;
-   }
-
-   public Integer getCo_person() {
-      return co_person;
-   }
-
-   public void setCo_person(Integer co_person) {
-      this.co_person = co_person;
-   }
-
-   public Integer getCo_sistem() {
-      return co_sistem;
-   }
-
-   public void setCo_sistem(Integer co_sistem) {
-      this.co_sistem = co_sistem;
-   }
-
-   public Integer getCo_subsis() {
-      return co_subsis;
-   }
-
-   public void setCo_subsis(Integer co_subsis) {
-      this.co_subsis = co_subsis;
-   }
-
-   public String getNo_sistem() {
-      return no_sistem;
-   }
-
-   public void setNo_sistem(String no_sistem) {
-      this.no_sistem = no_sistem;
-   }
-
-   public String getNo_subsis() {
-      return no_subsis;
-   }
-
-   public void setNo_subsis(String no_subsis) {
-      this.no_subsis = no_subsis;
-   }
-
    @Override
    public String toString() {
-      return "UsuarioDTO{" +
-            "co_usuari=" + co_usuari +
-            ", co_usulog='" + co_usulog + '\'' +
-            ", no_usuari='" + no_usuari + '\'' +
-            ", pw_usuari='" + pw_usuari + '\'' +
+      return "ContenedorDTO{" +
+            "co_conten=" + co_conten +
+            ", no_contit='" + no_contit + '\'' +
+            ", de_conten='" + de_conten + '\'' +
+            ", il_sesion=" + il_sesion +
+            ", db_progra='" + db_progra + '\'' +
             ", fe_regist=" + fe_regist +
-            ", fe_bloque=" + fe_bloque +
-            ", fe_ultlog=" + fe_ultlog +
-            ", ti_usuari='" + ti_usuari + '\'' +
-            ", co_person=" + co_person +
-            ", co_sistem=" + co_sistem +
-            ", co_subsis=" + co_subsis +
-            ", no_sistem='" + no_sistem + '\'' +
-            ", no_subsis='" + no_subsis + '\'' +
             '}';
    }
 }

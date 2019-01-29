@@ -47,6 +47,7 @@
         <mapping class="com.acceso.wfcore.dtos.MenuDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PermisDTO"/>
         <mapping class="com.acceso.wfcore.dtos.EstadoDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.ContenedorDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>

@@ -53,6 +53,7 @@ public class Values {
     public static final String QUERYS_NATIVE_DELETE_MENU = "wfcore.menu_delete";
     public static final String QUERYS_NATIVE_GRABAR_MENU = "wfcore.menu_update";
 
+    public static final String QUERYS_NATIVE_SELECT_CONTENEDOR = "wfcore.contenedor_select";
 
 
     /*===CACHE===*/

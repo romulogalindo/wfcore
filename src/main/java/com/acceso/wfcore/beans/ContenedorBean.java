@@ -1,5 +1,8 @@
 package com.acceso.wfcore.beans;
 
+import com.acceso.wfcore.daos.ContenedorDAO;
+import com.acceso.wfcore.dtos.ContenedorDTO;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,8 +27,9 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
    private static final String URL_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegContenedor.xhtml";
 
 
-//   private List<ContenedorDTO> contenedores;
-//   private ContenedorDTO contenedor;
+   private List<ContenedorDTO> contenedores;
+   private ContenedorDTO contenedor;
+   private List<ContenedorDTO> filtroContenedor;
 
    private boolean isregEditable;
 
@@ -162,9 +166,9 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
    @Override
    public void selectDto() {
-//      ContenedorDAO dao = new ContenedorDAO();
-//      this.contenedores = dao.getContenedores();
-//      dao.close();
+      ContenedorDAO dao = new ContenedorDAO();
+      this.contenedores = dao.getContenedores();
+      dao.close();
    }
 
    @Override
@@ -193,21 +197,21 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 //      dao.close();
    }
 
-//   public ContenedorDTO getContenedor() {
-//      return contenedor;
-//   }
-//
-//   public void setContenedor(ContenedorDTO contenedor) {
-//      this.contenedor = contenedor;
-//   }
-//
-//   public List<ContenedorDTO> getContenedores() {
-//      return contenedores;
-//   }
-//
-//   public void setContenedores(List<ContenedorDTO> contenedores) {
-//      this.contenedores = contenedores;
-//   }
+   public ContenedorDTO getContenedor() {
+      return contenedor;
+   }
+
+   public void setContenedor(ContenedorDTO contenedor) {
+      this.contenedor = contenedor;
+   }
+
+   public List<ContenedorDTO> getContenedores() {
+      return contenedores;
+   }
+
+   public void setContenedores(List<ContenedorDTO> contenedores) {
+      this.contenedores = contenedores;
+   }
 
    public boolean isIsregEditable() {
       return isregEditable;
@@ -223,5 +227,13 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
    public void setHmap(Map<Integer, Integer> hmap) {
       this.hmap = hmap;
+   }
+
+   public List<ContenedorDTO> getFiltroContenedor() {
+      return filtroContenedor;
+   }
+
+   public void setFiltroContenedor(List<ContenedorDTO> filtroContenedor) {
+      this.filtroContenedor = filtroContenedor;
    }
 }
