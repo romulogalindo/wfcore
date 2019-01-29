@@ -34,11 +34,17 @@ public class ApplicationManager {
         return loginCTRL;
     }
 
-    public static Root buildRootTree(SystemTreeDTO systemTreeDTO) {
-        //System.out.println(">>>>>>>>>>>" + systemTreeDTO);
+    public static Root buildRootTree(SystemTreeDTO systemTreeDTO) throws Exception {
         Gson gson = new Gson();
-        Root mainTree = gson.fromJson(systemTreeDTO.getTree(), Root.class);
-        return mainTree;
+        Root mainTree = null;
+
+        try {
+            mainTree = gson.fromJson(systemTreeDTO.getTree(), Root.class);
+
+            return mainTree;
+        } catch (Exception ep) {
+            throw new Exception("Error al convertir el String::JSON en objeto:" + ep.getMessage());
+        }
     }
 
     public static Contenedor buildContainer(int co_conten, long id_frawor) {
@@ -84,7 +90,6 @@ public class ApplicationManager {
                         ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
                 }
-
 
             }
 

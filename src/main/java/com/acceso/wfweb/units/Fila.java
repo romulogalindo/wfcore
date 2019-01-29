@@ -4,8 +4,7 @@ import com.acceso.wfweb.dtos.BotonDTO;
 import com.acceso.wfweb.dtos.ParametroDTO;
 import com.acceso.wfweb.dtos.RegistroDTO;
 import com.acceso.wfweb.dtos.TituloDTO;
-import com.acceso.wfweb.units.registers.Regist1;
-import com.acceso.wfweb.units.registers.Regist22;
+import com.acceso.wfweb.units.registers.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -84,8 +83,20 @@ public class Fila extends HTMLRenderer implements Serializable {
                     html += new Regist1(id, registroDTO).toHTML();
                     break;
                 }
+                case 3: {
+                    html += new Regist3(id, registroDTO).toHTML();
+                    break;
+                }
+                case 13: {
+                    html += new Regist13(id, registroDTO).toHTML();
+                    break;
+                }
                 case 22: {
                     html += new Regist22(id, registroDTO).toHTML();
+                    break;
+                }
+                case 38: {
+                    html += new Regist38(id, registroDTO).toHTML();
                     break;
                 }
                 default:
@@ -108,10 +119,10 @@ public class Fila extends HTMLRenderer implements Serializable {
                 html += "</script>";
 
 
-                html += "<botton name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
+                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal wfbutton\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
                         "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n" +
                         botonDTO.getNo_pagbot() +
-                        "</botton>";
+                        "</button>";
             }
 
             html += "   </td>";

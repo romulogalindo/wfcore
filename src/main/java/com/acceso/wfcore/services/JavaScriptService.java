@@ -38,9 +38,8 @@ public class JavaScriptService extends Service {
             System.out.println("ENGINE 2 (error)");
             ep.printStackTrace();
         }
-
     }
-    
+
     @Override
     public void stop() {
         engine_nashornjs = null;

@@ -82,6 +82,20 @@ function pagina() {
     // ASYNBC
     $D.doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
 
+    var input_cansubmit = document.getElementsByTagName('INPUT');
+
+    for (var i = 0; i < input_cansubmit.length; i++) {
+        var input_submit = input_cansubmit[i];
+        if (input_submit.getAttribute('type').toUpperCase() == 'TEXT') {
+            input_submit.addEventListener('keyup', doformulariosubmit);
+        }
+    }
+}
+
+function doformulariosubmit(keyEvent) {
+    if (keyEvent.which == 10 || keyEvent.which == 13) {
+        document.getElementsByClassName('wfbutton')[0].click();
+    }
 }
 
 function pagina_onload(jsonData) {
@@ -179,6 +193,17 @@ function loadFormulario64(row) {
                 eledom.value = valdom;
                 break;
             }
+            case "A": {
+                var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                if (ti_pagreg == '13') {
+                    eledom.setAttribute('href', valdom);
+                    eledom.parentNode.removeAttribute('style');
+                } else if (ti_pagreg) {
+                    //hacer algo diferente para el tipo 38
+                }
+
+                break;
+            }
             default: {
                 eledom.innerHTML = valdom;
             }
@@ -237,7 +262,7 @@ function propag(co_button, il_proces, co_condes) {
         var val = "";
 
         //console.log('ele = '+ele);
-        alert('ele = ' + ele);
+        //alert('ele = ' + ele);
 
         if (ele.tagName == 'INPUT') {
             id = ele.id.substring(ele.id.indexOf('R') + 1, ele.id.indexOf('V'));
@@ -245,11 +270,11 @@ function propag(co_button, il_proces, co_condes) {
         }
 
         //console.log('K=' + id + ',V=' + val);
-        alert('K=' + id + ',V=' + val);
+        //alert('K=' + id + ',V=' + val);
         data.append('co_regist' + id, val);
     }
 
-    alert('>>>>' + eval('BTN' + co_button + 'P') + ',-->' + eval('BTN' + co_button + 'P').length);
+    //alert('>>>>' + eval('BTN' + co_button + 'P') + ',-->' + eval('BTN' + co_button + 'P').length);
     for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
         var param = eval('BTN' + co_button + 'P')[i];
         var spagreg = param.getPagreg();
@@ -270,7 +295,7 @@ function propag(co_button, il_proces, co_condes) {
         parametros = (parametros.length == 0 ? '&' : '') + 'co_conpar_' + sconpar + '=' + valdom;
     }
 
-    alert('DO! ' + parametros);
+    //alert('DO! ' + parametros);
     $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
     //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
 }

@@ -57,8 +57,14 @@ public class Application {
         systemTreeDTO = systemDAO.getSystemTreeDTO();
         systemDAO.close();
 
-        //el dto poner en modo super obj
-        Root mainTree = ApplicationManager.buildRootTree(systemTreeDTO);
+        //====>Crear el Menu!
+        Root mainTree;
+        try {
+            mainTree = ApplicationManager.buildRootTree(systemTreeDTO);
+        } catch (Exception ep) {
+            System.out.println("Error al crear el arbol principal:" + ep.getMessage());
+            mainTree = new Root();
+        }
 
         //poner rootTree en la cache
         cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).put("ROOT_TREE", mainTree);
