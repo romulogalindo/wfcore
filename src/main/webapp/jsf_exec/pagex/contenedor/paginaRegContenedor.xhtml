@@ -12,54 +12,83 @@
     <ui:define name="content">
 
         <h:form id="form">
-            <h3>Filas</h3>
-            <p:commandButton icon="fa fa-plus" action="#{contenedorBean.incrementFila}" update="outputFila"
-                             styleClass="buttonnuevo"/>
-            <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseFila}" update="outputFila"
-                             styleClass="buttonnuevo"/>
-            <p:row/>
-            <p:outputPanel id="outputFila">
+            <h3 style="margin-top:0">Contenedor</h3>
+            <p:tabView>
+                <p:tab title="Datos">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel for="co_conten" value="ID:"/>
+                        <p:inputText id="co_conten" value="#{contenedorBean.contenedor.co_conten}"
+                                     rendered="#{contenedorBean.isregEditable}"/>
 
-                <ui:repeat var="fila" value="#{contenedorBean.getFilas()}">
-                    <p:panelGrid style="width: 95%">
-                        <p:row>
-                            <p:column colspan="2" style="text-align: center; font-size: 140%">
-                                <b>#{fila} </b>
-                            </p:column>
-                            <p:column rowspan="2">
-                                <p:outputPanel id="output">
+                        <p:outputLabel for="no_contit" value="Nombre:"/>
+                        <p:inputText id="no_contit" value="#{contenedorBean.contenedor.no_contit}"
+                                     required="true" requiredMessage="Debe ingresar un Nombre."
+                                     rendered="#{contenedorBean.isregEditable}"/>
 
-                                    <div id="output#{fila}" class="p-grid">
-                                        <ui:repeat var="column" value="#{contenedorBean.getColumnas(fila)}">
-                                            <div class="p-col">
-                                                <div class="box">
-                                                    #{column}
-                                                </div>
+                        <p:outputLabel for="de_conten" value="Descripción:"/>
+                        <p:inputText id="de_conten" value="#{contenedorBean.contenedor.de_conten}"
+                                     required="true" requiredMessage="Debe ingresar una Descripción."
+                                     rendered="#{contenedorBean.isregEditable}"/>
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Organización">
+                    <h3>Filas</h3>
+                    <p:commandButton icon="fa fa-plus" action="#{contenedorBean.incrementFila}" update="outputFila"
+                                     styleClass="buttonnuevo" immediate="true"/>
+                    <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseFila}" update="outputFila"
+                                     styleClass="buttonnuevo" immediate="true"/>
+                    <p:row/>
+                    <p:outputPanel id="outputFila">
+
+                        <ui:repeat var="fila" value="#{contenedorBean.getFilas()}">
+                            <p:panelGrid style="width: 95%">
+                                <p:row>
+                                    <p:column colspan="2" style="text-align: center; font-size: 140%">
+                                        <b>#{fila} </b>
+                                    </p:column>
+                                    <p:column rowspan="2">
+                                        <p:outputPanel id="output">
+
+                                            <div id="output#{fila}" class="p-grid">
+                                                <ui:repeat var="column" value="#{contenedorBean.getColumnas(fila)}">
+                                                    <div class="p-col">
+                                                        <div class="box">
+                                                            #{column}
+                                                        </div>
+                                                    </div>
+                                                </ui:repeat>
                                             </div>
-                                        </ui:repeat>
-                                    </div>
-                                </p:outputPanel>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column style="width: 20px; padding: 1px 2px">
+                                        </p:outputPanel>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column style="width: 20px; padding: 1px 2px">
 
-                                <p:commandButton icon="fa fa-plus" action="#{contenedorBean.incrementColumna(fila)}"
-                                                 update="output"
-                                                 styleClass="buttonnuevo"/>
-                            </p:column>
-                            <p:column style="width: 20px; padding: 1px 2px">
-                                <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseColumna(fila)}"
-                                                 update="output"
-                                                 styleClass="buttonnuevo"/>
-                            </p:column>
-                        </p:row>
+                                        <p:commandButton icon="fa fa-plus"
+                                                         action="#{contenedorBean.incrementColumna(fila)}"
+                                                         update="output"
+                                                         styleClass="buttonnuevo"
+                                                         immediate="true"/>
+                                    </p:column>
+                                    <p:column style="width: 20px; padding: 1px 2px">
+                                        <p:commandButton icon="fa fa-minus"
+                                                         action="#{contenedorBean.decreaseColumna(fila)}"
+                                                         update="output"
+                                                         styleClass="buttonnuevo"
+                                                         immediate="true"/>
+                                    </p:column>
+                                </p:row>
 
 
-                    </p:panelGrid>
-                </ui:repeat>
+                            </p:panelGrid>
+                        </ui:repeat>
 
-            </p:outputPanel>
+                    </p:outputPanel>
+                </p:tab>
+                <p:tab title="Parametros">Parametros</p:tab>
+            </p:tabView>
+
+
         </h:form>
 
     </ui:define>
