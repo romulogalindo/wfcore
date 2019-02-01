@@ -4,17 +4,14 @@
  */
 package com.acceso.wfweb.beans.legacy;
 
-import com.acceso.wfcore.dtos.legacy.Modelo_AeDto;
+import com.acceso.wfweb.dtos.legacy.Modelo_AeDto;
 //import com.wf3.dao.AccesoHibernate;
 //import acceso.util.Escritor;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.StatelessSession;
+import com.acceso.wfweb.daos.FraworLegacyDAO;
 //import wf.dto.pagesp.Modelo_AeDto;
 //import wf.dto.pagesp.Reporte_SolicitudDto;
 
 /**
- *
  * @author edsonsuarez
  */
 public class ModeloAeBean {
@@ -30,9 +27,9 @@ public class ModeloAeBean {
         setModelo_ae(imp(p_id_frawor));
     }
 
-    public void setP_id_frawor(int p_id_frawor, int co_conexi) {
-        setModelo_ae(imp(p_id_frawor, co_conexi));
-    }
+//    public void setP_id_frawor(int p_id_frawor, int co_conexi) {
+//        setModelo_ae(imp(p_id_frawor, co_conexi));
+//    }
 
     public Modelo_AeDto getModelo_ae() {
         return modelo_ae;
@@ -44,56 +41,62 @@ public class ModeloAeBean {
 
     public Modelo_AeDto imp(int p_id_frawor) {
         Modelo_AeDto mod = null;
-        StatelessSession HSESSION = null;
-        try {
-            HSESSION = AccesoHibernate.new_session();
-            Query HQUERY = HSESSION.getNamedQuery("get_modAe");
-            HQUERY.setInteger("p_id_frawor", (p_id_frawor));
-//            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_id_frawor", "" + p_id_frawor));
-            mod = (Modelo_AeDto) HQUERY.uniqueResult();
 
-        } catch (HibernateException e) {
-            throw e;
-        } finally {
-            try {
-                if (HSESSION != null) {
-                    if (!HSESSION.connection().isClosed()) {
-                        HSESSION.close();
-                    }
-                }
-            } catch (Exception ep) {
-                HSESSION = null;
-            }
-        }
+        FraworLegacyDAO dao = new FraworLegacyDAO();
+        mod = dao.getModelo_aeDto(p_id_frawor);
+        dao.close();
 
-        return mod;
-    }
-
-    public Modelo_AeDto imp(int p_id_frawor, int co_conexi) {
-        Modelo_AeDto mod = null;
-        StatelessSession HSESSION = null;
-        try {
-            HSESSION = AccesoHibernate.new_session();;
-            Query HQUERY = HSESSION.getNamedQuery("get_modAe");
-            HQUERY.setInteger("p_id_frawor", (p_id_frawor));
-//            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_id_frawor", "" + p_id_frawor));
-            mod = (Modelo_AeDto) HQUERY.uniqueResult();
-
-        } catch (HibernateException e) {
-            throw e;
-        } finally {
-            try {
-                if (HSESSION != null) {
-                    if (!HSESSION.connection().isClosed()) {
-                        HSESSION.close();
-                    }
-                }
-            } catch (Exception ep) {
-                HSESSION = null;
-            }
-        }
+//        StatelessSession HSESSION = null;
+//        try {
+//            HSESSION = AccesoHibernate.new_session();
+//            Query HQUERY = HSESSION.getNamedQuery("get_modAe");
+//            HQUERY.setInteger("p_id_frawor", (p_id_frawor));
+////            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_id_frawor", "" + p_id_frawor));
+//            mod = (Modelo_AeDto) HQUERY.uniqueResult();
+//
+//        } catch (HibernateException e) {
+//            throw e;
+//        } finally {
+//            try {
+//                if (HSESSION != null) {
+//                    if (!HSESSION.connection().isClosed()) {
+//                        HSESSION.close();
+//                    }
+//                }
+//            } catch (Exception ep) {
+//                HSESSION = null;
+//            }
+//        }
 
         return mod;
     }
+
+//    public Modelo_AeDto imp(int p_id_frawor, int co_conexi) {
+//        Modelo_AeDto mod = null;
+//        StatelessSession HSESSION = null;
+//        try {
+//            HSESSION = AccesoHibernate.new_session();
+//            ;
+//            Query HQUERY = HSESSION.getNamedQuery("get_modAe");
+//            HQUERY.setInteger("p_id_frawor", (p_id_frawor));
+////            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_id_frawor", "" + p_id_frawor));
+//            mod = (Modelo_AeDto) HQUERY.uniqueResult();
+//
+//        } catch (HibernateException e) {
+//            throw e;
+//        } finally {
+//            try {
+//                if (HSESSION != null) {
+//                    if (!HSESSION.connection().isClosed()) {
+//                        HSESSION.close();
+//                    }
+//                }
+//            } catch (Exception ep) {
+//                HSESSION = null;
+//            }
+//        }
+//
+//        return mod;
+//    }
 
 }

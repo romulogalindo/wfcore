@@ -64,5 +64,15 @@
         <mapping class="com.acceso.wfweb.dtos.ValpagDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ProcesoDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ParametroDTO"/>
+
+        <!-- DTO's LEGACY!-->
+        <mapping class="com.acceso.wfweb.dtos.legacy.CartaRetiroDto"/>
+        <mapping class="com.acceso.wfweb.dtos.legacy.ModeloAbacoDto"/>
+        <mapping class="com.acceso.wfweb.dtos.legacy.Modelo_AeDto"/>
+        <mapping class="com.acceso.wfweb.dtos.legacy.PaginaEspecialDto"/>
+        <mapping class="com.acceso.wfweb.dtos.legacy.Reporte_SolicitudDto"/>
+        <mapping class="com.acceso.wfweb.dtos.legacy.Solicitud_credito_datos_soliciDto"/>
+        <mapping class="com.acceso.wfweb.dtos.legacy.Solicitud_creditoDto"/>
+
     </session-factory>
 </hibernate-configuration>

@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.acceso.wfcore.dtos.legacy;
+package com.acceso.wfweb.dtos.legacy;
+
+import com.acceso.wfweb.utils.Values;
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -11,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /**
  *
@@ -20,7 +21,7 @@ import javax.persistence.Transient;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = "get_repsol",
+            name = Values.QUERYS_WEB_SELECT_GETREPSOL,
             query = "select * from expedi.pbcooperativa_pacifico(:p_co_expedi)",
 //            query = "select\n"
 //            + "   pp.co_expedi,\n"

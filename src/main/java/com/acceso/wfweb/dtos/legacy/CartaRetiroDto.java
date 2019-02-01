@@ -2,16 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.acceso.wfcore.dtos.legacy;
+package com.acceso.wfweb.dtos.legacy;
+
+import com.acceso.wfweb.utils.Values;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -19,8 +19,8 @@ import javax.persistence.Temporal;
  */
 @Entity
 @NamedNativeQueries({
-    @NamedNativeQuery(package com.acceso.wfcore.dtos.legacy;
-            name = "pbcarta_retiro_abaco",
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_PBCARTA_RETIRO_ABACO,
             query = "select * from pbcarta_retiro_abaco(:p_co_expedi)",
             resultClass = CartaRetiroDto.class)
 })

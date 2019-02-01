@@ -4,20 +4,15 @@
  */
 package com.acceso.wfweb.beans.legacy;
 
-import com.acceso.wfcore.dtos.legacy.Reporte_SolicitudDto;
+import com.acceso.wfweb.dtos.legacy.Reporte_SolicitudDto;
 //import wf.dto.pagesp.Reporte_SolicitudDto;
-import com.wf3.dao.AccesoHibernate;
+import com.acceso.wfweb.daos.FraworLegacyDAO;
+//import com.wf3.dao.AccesoHibernate;
 //import acceso.util.Escritor;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.StatelessSession;
-import org.postgresql.jdbc2.optional.SimpleDataSource;
 
 /**
- *
  * @author edavalos
  */
 public class RepSoliciBean {
@@ -40,13 +35,13 @@ public class RepSoliciBean {
         setAnio(new SimpleDateFormat("yyyy").format(new Date()));
     }
 
-    public void setCo_expedi(String co_expedi, int co_conexi) {
-        setReporte_solicitudDto(repor(Integer.parseInt(co_expedi), co_conexi));
-
-        setDia(new SimpleDateFormat("dd").format(new Date()));
-        setMes(new SimpleDateFormat("MM").format(new Date()));
-        setAnio(new SimpleDateFormat("yyyy").format(new Date()));
-    }
+//    public void setCo_expedi(String co_expedi, int co_conexi) {
+//        setReporte_solicitudDto(repor(Integer.parseInt(co_expedi), co_conexi));
+//
+//        setDia(new SimpleDateFormat("dd").format(new Date()));
+//        setMes(new SimpleDateFormat("MM").format(new Date()));
+//        setAnio(new SimpleDateFormat("yyyy").format(new Date()));
+//    }
 
     public Reporte_SolicitudDto getReporte_solicitudDto() {
         return reporte_solicitudDto;
@@ -80,60 +75,66 @@ public class RepSoliciBean {
         this.mes = mes;
     }
 
-    public Reporte_SolicitudDto repor(int co_expedi) {
+    public Reporte_SolicitudDto repor(int p_co_expedi) {
         Reporte_SolicitudDto rep = null;
-        StatelessSession HSESSION = null;
-        try {
 
-            HSESSION = AccesoHibernate.new_session();
-            Query HQUERY = HSESSION.getNamedQuery("get_repsol");
-            HQUERY.setInteger("p_co_expedi", (co_expedi));
-//            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_co_expedi", "" + co_expedi));
-            rep = (Reporte_SolicitudDto) HQUERY.uniqueResult();
+        FraworLegacyDAO dao = new FraworLegacyDAO();
+        rep = dao.getReporteSolicitudDto(p_co_expedi);
+        dao.close();
 
-        } catch (HibernateException e) {
-            throw e;
-        } finally {
-            try {
-                if (HSESSION != null) {
-                    if (!HSESSION.connection().isClosed()) {
-                        HSESSION.close();
-                    }
-                }
-            } catch (Exception ep) {
-                HSESSION = null;
-            }
-        }
+//        StatelessSession HSESSION = null;
+//        try {
+//
+//            HSESSION = AccesoHibernate.new_session();
+//            Query HQUERY = HSESSION.getNamedQuery("get_repsol");
+//            HQUERY.setInteger("p_co_expedi", (co_expedi));
+////            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_co_expedi", "" + co_expedi));
+//            rep = (Reporte_SolicitudDto) HQUERY.uniqueResult();
+//
+//        } catch (HibernateException e) {
+//            throw e;
+//        } finally {
+//            try {
+//                if (HSESSION != null) {
+//                    if (!HSESSION.connection().isClosed()) {
+//                        HSESSION.close();
+//                    }
+//                }
+//            } catch (Exception ep) {
+//                HSESSION = null;
+//            }
+//        }
 
         return rep;
     }
 
-    public Reporte_SolicitudDto repor(int co_expedi, int co_conexi) {
-        Reporte_SolicitudDto rep = null;
-        StatelessSession HSESSION = null;
-        try {
-
-            HSESSION = AccesoHibernate.new_session();;
-            Query HQUERY = HSESSION.getNamedQuery("get_repsol");
-            HQUERY.setInteger("p_co_expedi", (co_expedi));
-//            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_co_expedi", "" + co_expedi));
-            rep = (Reporte_SolicitudDto) HQUERY.uniqueResult();
-
-        } catch (HibernateException e) {
-            throw e;
-        } finally {
-            try {
-                if (HSESSION != null) {
-                    if (!HSESSION.connection().isClosed()) {
-                        HSESSION.close();
-                    }
-                }
-            } catch (Exception ep) {
-                HSESSION = null;
-            }
-        }
-
-        return rep;
-    }
+//    public Reporte_SolicitudDto repor(int co_expedi, int co_conexi) {
+//        Reporte_SolicitudDto rep = null;
+//        StatelessSession HSESSION = null;
+//        try {
+//
+//            HSESSION = AccesoHibernate.new_session();
+//            ;
+//            Query HQUERY = HSESSION.getNamedQuery("get_repsol");
+//            HQUERY.setInteger("p_co_expedi", (co_expedi));
+////            Escritor.escribe_frawor(HQUERY.getQueryString().replaceAll(":p_co_expedi", "" + co_expedi));
+//            rep = (Reporte_SolicitudDto) HQUERY.uniqueResult();
+//
+//        } catch (HibernateException e) {
+//            throw e;
+//        } finally {
+//            try {
+//                if (HSESSION != null) {
+//                    if (!HSESSION.connection().isClosed()) {
+//                        HSESSION.close();
+//                    }
+//                }
+//            } catch (Exception ep) {
+//                HSESSION = null;
+//            }
+//        }
+//
+//        return rep;
+//    }
 
 }

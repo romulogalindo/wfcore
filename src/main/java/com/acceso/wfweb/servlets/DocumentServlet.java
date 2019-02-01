@@ -1,55 +1,29 @@
 package com.acceso.wfweb.servlets;
 
-import acceso.beans.CartaRetiroBean;
-import acceso.beans.ModeloAeBean;
-import acceso.beans.PagEspBean;
-import acceso.beans.RepAbacoBean;
-import acceso.beans.RepSoliciBean;
-import acceso.beans.SolCreditBean;
-import acceso.util.Escritor;
+import com.acceso.wfweb.beans.legacy.*;
+import com.acceso.wfweb.dtos.legacy.Solicitud_credito_datos_soliciDto;
 import com.google.gson.Gson;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.usermodel.CharacterRun;
+import org.apache.poi.hwpf.usermodel.Range;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.usermodel.CharacterRun;
-import org.apache.poi.hwpf.usermodel.Range;
-import wf.dto.pagesp.Solicitud_credito_datos_soliciDto;
-import pe.wf3.util.FrameworkUtil;
+import java.io.*;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.*;
+//import wf.dto.pagesp.Solicitud_credito_datos_soliciDto;
+//import pe.wf3.util.FrameworkUtil;
 
 /**
- *
  * @author rgalindo
  */
 public class DocumentServlet extends HttpServlet {
@@ -60,15 +34,15 @@ public class DocumentServlet extends HttpServlet {
     private Map<String, int[]> coordenadas_abaco;
     private List<int[]> coordenadas_abaco_vacio;
     private Map<String, int[]> coordenadas_carta_de_retiro;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -77,11 +51,11 @@ public class DocumentServlet extends HttpServlet {
         try {
             String tipo_doc = request.getParameter("ti_docume");
 
-            if (request.getAttribute("co_conexi") == null) {
-                co_conexi = FrameworkUtil.searchPackage(request).getCo_conexi();
-            } else {
-                co_conexi = Integer.parseInt(request.getAttribute("co_conexi").toString());
-            }
+//            if (request.getAttribute("co_conexi") == null) {
+//                co_conexi = FrameworkUtil.searchPackage(request).getCo_conexi();
+//            } else {
+//                co_conexi = Integer.parseInt(request.getAttribute("co_conexi").toString());
+//            }
 
             switch (tipo_doc) {
                 case "1": {
@@ -92,15 +66,18 @@ public class DocumentServlet extends HttpServlet {
                     String co_expedi = request.getParameter("co_expedi");
                     if (co_expedi != null && !co_expedi.equals("")) {
                         RepSoliciBean reporte = new RepSoliciBean();
-                        reporte.setCo_expedi(co_expedi, co_conexi);
-                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "/font/MyriadPro-Light.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
+
+//                        reporte.setCo_expedi(co_expedi, co_conexi);
+                        reporte.setCo_expedi(co_expedi);
+
+                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/fonts/MyriadPro-Light.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
                         Font f_default = new Font(base, 6f, Font.BOLD);
                         Font f_extensa = new Font(base, 5f);
                         Document document = new Document(PageSize.A4);
                         PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
                         document.open();
                         PdfContentByte cb = writer.getDirectContent();
-                        PdfReader reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "/reportes/reporte_solicitud.pdf");
+                        PdfReader reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/reporte_solicitud.pdf");
                         PdfImportedPage page = writer.getImportedPage(reader, 1);
                         document.newPage();
                         cb.addTemplate(page, 0, 0);
@@ -226,10 +203,12 @@ public class DocumentServlet extends HttpServlet {
                     int p_id_frawor = Integer.parseInt(request.getParameter("id_frawor"));
                     if (p_id_frawor != 0) {
                         ModeloAeBean modAe = new ModeloAeBean();
-                        modAe.setP_id_frawor(p_id_frawor, co_conexi);
+
+//                        modAe.setP_id_frawor(p_id_frawor, co_conexi);
+                        modAe.setP_id_frawor(p_id_frawor);
 
                         try {
-                            doc = new HWPFDocument(new FileInputStream(request.getSession().getServletContext().getRealPath("/") + "/reportes/Modelo AE - Asume Deuda.doc"));
+                            doc = new HWPFDocument(new FileInputStream(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/Modelo AE - Asume Deuda.doc"));
                             Range range = doc.getRange();
                             range.replaceText(":no_usureg", "" + modAe.getModelo_ae().getNo_usureg());
                             range.replaceText(":co_docreg", "" + modAe.getModelo_ae().getCo_docreg());
@@ -268,7 +247,7 @@ public class DocumentServlet extends HttpServlet {
                             doc.write(out);
 
                         } catch (Exception exep) {
-                            Escritor.escribe_errors("[]" + exep);
+//                            Escritor.escribe_errors("[]" + exep);
                         }
                     }
                     // </editor-fold>
@@ -283,9 +262,12 @@ public class DocumentServlet extends HttpServlet {
                     int p_id_frawor = Integer.parseInt(request.getParameter("id_frawor"));
                     if (p_id_frawor != 0) {
                         ModeloAeBean modAe = new ModeloAeBean();
-                        modAe.setP_id_frawor(p_id_frawor, co_conexi);
+
+//                        modAe.setP_id_frawor(p_id_frawor, co_conexi);
+                        modAe.setP_id_frawor(p_id_frawor);
+
                         try {
-                            doc = new HWPFDocument(new FileInputStream(request.getSession().getServletContext().getRealPath("/") + "/reportes/Modelo AE - Firma Titular.doc"));
+                            doc = new HWPFDocument(new FileInputStream(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/Modelo AE - Firma Titular.doc"));
                             Range range = doc.getRange();
                             range.replaceText(":no_usureg", "" + modAe.getModelo_ae().getNo_usureg());
                             range.replaceText(":co_docreg", "" + modAe.getModelo_ae().getCo_docreg());
@@ -317,7 +299,7 @@ public class DocumentServlet extends HttpServlet {
                             doc.write(out);
 
                         } catch (Exception exep) {
-                            Escritor.escribe_errors("[]" + exep);
+//                            Escritor.escribe_errors("[]" + exep);
                         }
                     }
 // </editor-fold>
@@ -331,16 +313,18 @@ public class DocumentServlet extends HttpServlet {
                     String co_expedi = request.getParameter("co_expedi");
                     if (co_expedi != null && !co_expedi.equals("")) {
                         SolCreditBean solicitud = new SolCreditBean();
-                        solicitud.setCo_expedi(Integer.parseInt(co_expedi), co_conexi);
 
-                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "/font/MyriadPro-Regular.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
+//                        solicitud.setCo_expedi(Integer.parseInt(co_expedi), co_conexi);
+                        solicitud.setCo_expedi(Integer.parseInt(co_expedi));
+
+                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/fonts/MyriadPro-Regular.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
                         Font f_default = new Font(base, 6f, Font.NORMAL);
                         Font f_extensa = new Font(base, 5f);
                         Document document = new Document(PageSize.A4);
                         PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
                         document.open();
                         PdfContentByte cb = writer.getDirectContent();
-                        PdfReader reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "/reportes/solicitud_credito.pdf");
+                        PdfReader reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/solicitud_credito.pdf");
                         PdfImportedPage page = writer.getImportedPage(reader, 1);
                         document.newPage();
                         cb.addTemplate(page, 0, 0);
@@ -543,17 +527,17 @@ public class DocumentServlet extends HttpServlet {
                     switch (analista) {
                         case "norma": {
                             response.setHeader("Content-disposition", "attachment;filename=garantia_actual_norma.pdf");
-                            file = new File(request.getSession().getServletContext().getRealPath("/") + "/reportes/garantia_actual_norma.pdf");
+                            file = new File(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/garantia_actual_norma.pdf");
                             break;
                         }
                         case "edith": {
                             response.setHeader("Content-disposition", "attachment;filename=garantia_actual_edith.pdf");
-                            file = new File(request.getSession().getServletContext().getRealPath("/") + "/reportes/garantia_actual_edith.pdf");
+                            file = new File(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/garantia_actual_edith.pdf");
                             break;
                         }
                         case "veronica": {
                             response.setHeader("Content-disposition", "attachment;filename=garantia_actual_veronica.pdf");
-                            file = new File(request.getSession().getServletContext().getRealPath("/") + "/reportes/garantia_actual_veronica.pdf");
+                            file = new File(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/garantia_actual_veronica.pdf");
                             break;
                         }
                     }
@@ -585,10 +569,13 @@ public class DocumentServlet extends HttpServlet {
                     String co_expedi = request.getParameter("co_expedi");
                     if (co_expedi != null && !co_expedi.equals("")) {
                         RepAbacoBean abaco = new RepAbacoBean();
-                        abaco.setCo_expedi(co_expedi, co_conexi);
+
+//                        abaco.setCo_expedi(co_expedi, co_conexi);
+                        abaco.setCo_expedi(co_expedi);
+
                         boolean tieneConyugue = false;
 
-                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "/font/MyriadPro-Regular.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
+                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/fonts/MyriadPro-Regular.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
                         Font f_default = new Font(base, 6f, Font.NORMAL);
                         Font f_extensa = new Font(base, 5f);
                         Document document = new Document(PageSize.A4);
@@ -597,10 +584,10 @@ public class DocumentServlet extends HttpServlet {
                         PdfContentByte cb = writer.getDirectContent();
                         PdfReader reader;
                         if (abaco.getModelo_abaco_dto().getNo_apecon() != null && !abaco.getModelo_abaco_dto().getNo_apecon().isEmpty() && !abaco.getModelo_abaco_dto().getNo_apecon().toLowerCase().equals("null")) {
-                            reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "/reportes/Ficha_abaco.pdf");
+                            reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/Ficha_abaco.pdf");
                             tieneConyugue = true;
                         } else {
-                            reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "/reportes/Ficha_abaco_2.pdf");
+                            reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/Ficha_abaco_2.pdf");
                         }
                         PdfImportedPage page = writer.getImportedPage(reader, 1);
                         document.newPage();
@@ -741,16 +728,18 @@ public class DocumentServlet extends HttpServlet {
                     String co_expedi = request.getParameter("co_expedi");
                     if (co_expedi != null && !co_expedi.equals("")) {
                         CartaRetiroBean carta = new CartaRetiroBean();
-                        carta.setCo_expedi(co_expedi, co_conexi);
 
-                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "/font/MyriadPro-Regular.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
+//                        carta.setCo_expedi(co_expedi, co_conexi);
+                        carta.setCo_expedi(co_expedi);
+
+                        BaseFont base = BaseFont.createFont(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/fonts/MyriadPro-Regular.otf", BaseFont.WINANSI, BaseFont.EMBEDDED);
                         Font f_default = new Font(base, 11f, Font.NORMAL);
                         Font f_extensa = new Font(base, 5f);
                         Document document = new Document(PageSize.A4);
                         PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
                         document.open();
                         PdfContentByte cb = writer.getDirectContent();
-                        PdfReader reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "/reportes/carta_de_retiro.pdf");
+                        PdfReader reader = new PdfReader(request.getSession().getServletContext().getRealPath("/") + "WEB-INF/classes/files/carta_de_retiro.pdf");
                         PdfImportedPage page = writer.getImportedPage(reader, 1);
                         document.newPage();
                         cb.addTemplate(page, 0, 0);
@@ -809,21 +798,28 @@ public class DocumentServlet extends HttpServlet {
                         request.setAttribute("pag", gson(json));
                         (request.getSession()).removeAttribute(request.getParameter("co_regist"));
                     }
-                    RequestDispatcher rd = request.getRequestDispatcher("workflow2/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0"));
+
+                    //la ruta
+
+                    String goTo = "/jsp_exec/legacy/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0");
+                    System.out.println("goTo = " + goTo);
+//                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp_exec/legacy/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0"));
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher(goTo);
+                    System.out.println("rd = " + rd);
                     rd.forward(request, response);
                     // </editor-fold>
-                    break;
+//                    break;
                 }
             }
 
-        } catch (Exception ex) {
-            Escritor.escribe_errors("[reporte_solicitud]" + ex);
-            ex.printStackTrace();
+        } catch (Exception ep) {
+//            Escritor.escribe_errors("[reporte_solicitud]" + ex);
+            ep.printStackTrace();
         } /*finally {
          out.close();
          }*/
     }
-    
+
     @Override
     public void init(ServletConfig config)
             throws ServletException {
@@ -1138,14 +1134,26 @@ public class DocumentServlet extends HttpServlet {
 
     }
 
+    private PagEspBean gson(String atr) {
+        PagEspBean p = null;
+        try {
+            Gson gson = new Gson();
+            p = gson.fromJson(atr, PagEspBean.class);
+        } catch (Exception e) {
+//            Escritor.escribe_errors("Leyendo el Json \n" + e.toString());
+        }
+        return p;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -1156,10 +1164,10 @@ public class DocumentServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

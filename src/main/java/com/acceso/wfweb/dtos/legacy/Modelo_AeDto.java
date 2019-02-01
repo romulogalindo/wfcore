@@ -2,16 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.acceso.wfcore.dtos.legacy;
+package com.acceso.wfweb.dtos.legacy;
+
+import com.acceso.wfweb.utils.Values;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-	name = "get_modAe",
+	name = Values.QUERYS_WEB_SELECT_PBMODAE,
     query = "select "
    +"max(case when co_pagreg = 1 then va_pagreg end) as ti_docume, "
    +"max(case when co_pagreg = 2 then va_pagreg end) as fe_docume, "

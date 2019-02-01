@@ -4,18 +4,16 @@
  */
 package com.acceso.wfweb.beans.legacy;
 
-import com.acceso.wfcore.dtos.legacy.PaginaEspecialDto;
-import com.wf3.dao.AQuery;
+import com.acceso.wfweb.daos.FraworLegacyDAO;
+//import com.wf3.dao.AQuery;
 //import wf.dto.pagesp.PaginaEspecialDto;
 //import com.wf3.dao.AccesoHibernate;
 //import acceso.util.Escritor;
 import java.util.ArrayList;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
+
 import org.hibernate.StatelessSession;
 
 /**
- *
  * @author Esteban Dávalos
  */
 public class PagEspBean {
@@ -39,45 +37,28 @@ public class PagEspBean {
         this.ls_parame = ls_parame;
     }
 
-    public String docume(int co_docume, ArrayList<String> p, int co_conexi) {
+    public String docume(int p_co_docume, ArrayList<String> p, int co_conexi) {
 
         StatelessSession HSESSION = null;
 
         String no_docume = "";
         String aux = "";
 
-        try {
-            HSESSION = AccesoHibernate.new_session();;
-            AQuery query = new AQuery(HSESSION.getNamedQuery("get_docume"), co_conexi);
-            query.setInteger("p_co_docume", (co_docume));
-            PaginaEspecialDto pag = (PaginaEspecialDto) query.uniqueResult();
+        FraworLegacyDAO dao = new FraworLegacyDAO();
+        no_docume = dao.getPaginaEspecialDto(p_co_docume).getNo_docume();
+        dao.close();
 
-            no_docume = pag.getNo_docume();
-
-            for (int i = 1; i < p.size(); i++) {
-                if (p.get(i) != null) {
-                    if (i < 10) {
-                        aux = no_docume.replace("$$00" + i, p.get(i));
-                    } else if (i >= 10 && i < 100) {
-                        aux = no_docume.replace("$$0" + i, p.get(i));
-                    } else if (i >= 100) {
-                        aux = no_docume.replace("$$" + i, p.get(i));
-                    }
+        for (int i = 1; i < p.size(); i++) {
+            if (p.get(i) != null) {
+                if (i < 10) {
+                    aux = no_docume.replace("$$00" + i, p.get(i));
+                } else if (i >= 10 && i < 100) {
+                    aux = no_docume.replace("$$0" + i, p.get(i));
+                } else if (i >= 100) {
+                    aux = no_docume.replace("$$" + i, p.get(i));
                 }
-                no_docume = aux;
             }
-        } catch (HibernateException ep) {
-            throw ep;
-        } finally {
-            try {
-                if (HSESSION != null) {
-                    if (!HSESSION.connection().isClosed()) {
-                        HSESSION.close();
-                    }
-                }
-            } catch (Exception ep) {
-                HSESSION = null;
-            }
+            no_docume = aux;
         }
 
         return no_docume;

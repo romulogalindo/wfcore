@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.acceso.wfcore.dtos.legacy;
+package com.acceso.wfweb.dtos.legacy;
+
+import com.acceso.wfweb.utils.Values;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -12,28 +14,27 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 
 /**
- *
  * @author edavalos
  */
 
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-	name = "get_docume",
-	query = "select * from docume.tbdocume where co_docume = :p_co_docume",
-	resultClass = PaginaEspecialDto.class
-	)
+                name = Values.QUERYS_WEB_SELECT_PBGETDOCUME,
+                query = "select * from docume.tbdocume where co_docume = :p_co_docume",
+                resultClass = PaginaEspecialDto.class
+        )
 })
 public class PaginaEspecialDto implements Serializable {
 
     @Id
-    @Column(name="co_docume")
+    @Column(name = "co_docume")
     private int co_docume;
-    
-    @Column(name="no_docume")
+
+    @Column(name = "no_docume")
     private String no_docume;
-    
-    @Column(name="no_descri")
+
+    @Column(name = "no_descri")
     private String no_descri;
 
     /**

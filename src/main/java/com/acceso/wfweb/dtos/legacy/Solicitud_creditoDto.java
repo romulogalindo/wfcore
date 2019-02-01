@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.acceso.wfcore.dtos.legacy;
+package com.acceso.wfweb.dtos.legacy;
 
-import java.util.Date;
+import com.acceso.wfweb.utils.Values;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ import javax.persistence.Transient;
 @Entity
 @NamedNativeQueries({
     @NamedNativeQuery(
-            name = "get_solcre",
+            name = Values.QUERYS_WEB_SELECT_SOLCRE,
             query = "select * from expedi.pbdatosdelexpediente(:p_co_expedi)",
             resultClass = Solicitud_creditoDto.class)
 })
