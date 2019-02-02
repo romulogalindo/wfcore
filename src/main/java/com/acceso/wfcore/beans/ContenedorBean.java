@@ -62,7 +62,7 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
    public void incrementColumna(Integer fila) {
       Integer columna = hmap.get(fila);
-      if (columna < 13) {
+      if (columna < 9) {
          columna = columna + 1;
          hmap.replace(fila, columna);
       }

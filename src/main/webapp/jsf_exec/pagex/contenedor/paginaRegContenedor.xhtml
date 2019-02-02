@@ -12,6 +12,7 @@
     <ui:define name="content">
 
         <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
             <h3 style="margin-top:0">Contenedor</h3>
             <p:tabView>
                 <p:tab title="Datos">
@@ -37,7 +38,7 @@
                                      styleClass="buttonnuevo" immediate="true"/>
                     <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseFila}" update="outputFila"
                                      styleClass="buttonnuevo" immediate="true"/>
-                    <p:row/>
+                    <p:separator/>
                     <p:outputPanel id="outputFila">
 
                         <ui:repeat var="fila" value="#{contenedorBean.getFilas()}">
@@ -85,7 +86,45 @@
 
                     </p:outputPanel>
                 </p:tab>
-                <p:tab title="Parametros">Parametros</p:tab>
+                <p:tab title="Parametros">
+                    <p:dataTable id="listaParametros" widgetVar="param1" var="param" value="" editable="true"
+                                 style="margin-bottom:20px">
+                        <f:facet name="header">
+                            Parametros
+                        </f:facet>
+
+                        <p:ajax event="rowEdit" listener="#{contenedorBean.onRowEdit}" update=":form:msgs"/>
+                        <p:ajax event="rowEditCancel" listener="#{contenedorBean.onRowCancel}" update=":form:msgs"/>
+
+                        <p:column headerText="Id">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{param.co_conten}"/></f:facet>
+                                <f:facet name="input"><p:inputText id="modelInput" value="#{param.co_conten}"
+                                                                   style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Nombre">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{param.no_parame}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{param.no_parame}" style="width:100%" label="nombre"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:rowEditor/>
+                        </p:column>
+                    </p:dataTable>
+
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="Add new row" styleClass="ui-priority-primary" process="@this"
+                                             update=":form:msgs"
+                                             action="#{contenedorBean.onAddNew()}" oncomplete="PF('listaParametros').addRow();"/>
+                        </div>
+                    </div>
+
+                </p:tab>
             </p:tabView>
 
 

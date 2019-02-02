@@ -128,8 +128,8 @@
                                     actionListener="#{contenedorBean.doListener}" ajax="true" async="false"
                                     update="mainPanel" icon="fa fa-check"/>
 
-                        <p:menuitem value="Pagina" action="#{contenedorBean.load}"
-                                    actionListener="#{contenedorBean.doListener}" ajax="true" async="false"
+                        <p:menuitem value="#{paginaBean.beanName}" action="#{paginaBean.load}"
+                                    actionListener="#{paginaBean.doListener}" ajax="true" async="false"
                                     update="mainPanel" icon="fa fa-check"/>
 
                     </p:submenu>
