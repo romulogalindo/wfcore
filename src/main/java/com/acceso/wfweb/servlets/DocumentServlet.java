@@ -1,10 +1,13 @@
 package com.acceso.wfweb.servlets;
 
+import com.acceso.wfcore.utils.Util;
 import com.acceso.wfweb.beans.legacy.*;
+import com.acceso.wfweb.dtos.legacy.PaginaEspecialDto;
 import com.acceso.wfweb.dtos.legacy.Solicitud_credito_datos_soliciDto;
 import com.google.gson.Gson;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.CharacterRun;
 import org.apache.poi.hwpf.usermodel.Range;
@@ -12,11 +15,13 @@ import org.apache.poi.hwpf.usermodel.Range;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
@@ -799,14 +804,160 @@ public class DocumentServlet extends HttpServlet {
                         (request.getSession()).removeAttribute(request.getParameter("co_regist"));
                     }
 
-                    //la ruta
+                    /*HTML -> PDF*/
+                    String[] sparams;
+                    try {
+                        sparams = java.net.URLDecoder.decode(request.getQueryString(), "ISO-8859-1").split("&");
+                    } catch (Exception ep) {
+                        sparams = new String[0];
+                        ep.printStackTrace();
+                    }
 
-                    String goTo = "/jsp_exec/legacy/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0");
-                    System.out.println("goTo = " + goTo);
-//                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp_exec/legacy/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0"));
-                    RequestDispatcher rd = getServletContext().getRequestDispatcher(goTo);
-                    System.out.println("rd = " + rd);
-                    rd.forward(request, response);
+                    String no_docume = "";
+                    int nu = -1;
+                    int max = 0;
+                    ArrayList<String> p = new ArrayList<>();
+
+                    PaginaEspecialDto paginaEspecialDto = null;
+                    try {
+//                        Integer co_conexi = -1;//request.getAttribute("co_conexi") != null ? Integer.parseInt(request.getAttribute("co_conexi") + "") : paq.getCo_conexi();
+//        System.out.println("request.getAttribute(\"pag\") = > " + request.getAttribute("pag"));
+
+                        if (request.getAttribute("pag") != null) {
+                            PagEspBean pag = (PagEspBean) request.getAttribute("pag");
+                            String del = "[~]+";
+                            String[] params = null;
+                            String[][] req = new String[pag.getLs_parame().size()][2];
+                            for (int i = 0; i < pag.getLs_parame().size(); i++) {
+                                params = pag.getLs_parame().get(i).split(del, 2);
+                                req[i][0] = params[0];
+                                if (params.length > 1) {
+                                    req[i][1] = params[1];
+                                } else {
+                                    req[i][1] = "";
+                                }
+                            }
+                            for (int i = 0; i < req.length; i++) {
+                                nu = Integer.parseInt(req[i][0].substring(1));
+                                if (nu > max) {
+                                    max = nu;
+                                }
+                            }
+                            int aux = 0;
+                            int pos;
+                            while (p.size() <= max) {
+                                pos = -1;
+                                for (int i = 0; i < req.length; i++) {
+                                    if (Integer.parseInt(req[i][0].substring(1)) == aux) {
+                                        pos = i;
+                                    }
+                                }
+                                if (pos != -1) {
+                                    p.add(req[pos][1]);
+                                } else {
+                                    p.add(null);
+                                }
+                                aux = aux + 1;
+                            }
+                            paginaEspecialDto = pag.docume(pag.getCo_docume(), p, co_conexi);
+                            no_docume = paginaEspecialDto.getNo_docume();
+                        } else {
+                            Enumeration en = request.getParameterNames();
+                            while (en.hasMoreElements()) {
+                                String paramName = (String) en.nextElement();
+                                if (paramName.startsWith("p")) {
+                                    nu = Integer.parseInt(paramName.substring(1));
+                                    if (nu > max) {
+                                        max = nu;
+                                    }
+                                }
+                            }
+
+                            p.add(null);
+                            for (int i = 1; i <= max; i++) {
+                                String m_value = null;
+                                String m1 = "p" + i;
+                                for (int o = 0; o < sparams.length; o++) {
+                                    String e0 = sparams[o];
+                                    if (e0.indexOf(m1) == 0) {
+                                        m_value = (e0.split("=").length == 2 ? e0.split("=")[1] : "");
+                                        o = 190;
+                                    }
+                                }
+
+                                String mp = null;
+                                if (m_value != null) {
+                                    mp = m_value;
+                                } else {
+                                    mp = request.getParameter(m1);
+                                }
+
+                                p.add(mp);
+                            }
+
+//            System.out.println("LA>p = " + p);
+
+                            PagEspBean pag = new PagEspBean();
+//                Escritor.escribe_debug("docume:" + WorkflowUtil.convertir_entero(request.getParameter("co_docume")) + "->" + co_conexi);
+                            paginaEspecialDto = pag.docume(Util.toInt(request.getParameter("co_docume")), p, co_conexi);
+                            no_docume = paginaEspecialDto.getNo_docume();
+//            System.out.println("no_docume = " + no_docume);
+                        }
+                    } catch (Exception ep) {
+//        System.out.println("ep = " + ep);
+                        ep.printStackTrace();
+                    }
+
+
+                    no_docume = no_docume.replaceAll("<BR>", "<BR></BR>");
+                    no_docume = no_docume.replaceAll("<br>", "<br></br>");
+                    no_docume = no_docume.replaceAll("</span></p>", "");
+                    no_docume = no_docume.replaceAll("../img/Firma_Jose_Mazuelos.png", "http://127.0.0.1:8080/jsp_exec/imgs/legacy/Firma_Jose_Mazuelos.png");
+                    System.out.println("no_docume" + no_docume);
+
+                    File pdfTempFile = File.createTempFile("" + System.currentTimeMillis(), ".pdf");
+//                    System.out.println("pdfTempFile = " + pdfTempFile + ",>size:" + pdfTempFile.length());
+
+                    Document document = new Document();
+                    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfTempFile));
+                    document.open();
+                    document.addAuthor("Edpyme Acceso Crediticio S.A.");
+                    document.addCreationDate();
+                    System.out.println("paginaEspecialDto.getNo_descri() = " + paginaEspecialDto.getNo_descri());
+//                    document.addTitle(paginaEspecialDto.getNo_descri());
+                    document.addTitle("jkfawseghe");
+                    InputStream stream = new ByteArrayInputStream(no_docume.getBytes(StandardCharsets.ISO_8859_1));
+                    XMLWorkerHelper.getInstance().parseXHtml(writer, document, stream);
+                    document.close();
+
+//                    System.out.println("pdfTempFile = " + pdfTempFile + ",>size:" + pdfTempFile.length());
+
+                    response.setContentType("application/pdf");
+                    //response.addHeader("Content-Disposition", "attachment; filename=" + pdfTempFile.getName());
+                    System.out.println("pdfTempFile.getName() = " + pdfTempFile.getName());
+                    response.addHeader("Content-Disposition", "inline; filename=" + pdfTempFile.getName());
+                    response.setContentLength((int) pdfTempFile.length());
+
+                    out = response.getOutputStream();
+//                    System.out.println("fileInputstream length : " + fileInputStream.available());
+                    int length;
+                    byte[] buffer = new byte[4096];
+                    FileInputStream fileInputStream = new FileInputStream(pdfTempFile);
+                    while ((length = fileInputStream.read(buffer)) > 0) {
+                        out.write(buffer, 0, length);
+                    }
+//                    System.out.println(" outputstream length : " + out.toString());
+                    fileInputStream.close();
+                    out.flush();
+                    out.close();
+
+
+//                    String goTo = "/jsp_exec/legacy/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0");
+////                    System.out.println("goTo = " + goTo);
+//                    RequestDispatcher rd = getServletContext().getRequestDispatcher(goTo);
+////                    System.out.println("rd = " + rd);
+//                    rd.forward(request, response);
+
                     // </editor-fold>
 //                    break;
                 }

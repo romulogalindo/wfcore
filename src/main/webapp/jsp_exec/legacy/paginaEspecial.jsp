@@ -12,7 +12,7 @@
     request.setCharacterEncoding("ISO-8859-1");
     response.setContentType("text/html;charset=ISO-8859-1");
 
-    System.out.println("request.getQueryString() = " + request.getQueryString());
+//    System.out.println("request.getQueryString() = " + request.getQueryString());
     String[] sparams;
     try {
         sparams = java.net.URLDecoder.decode(request.getQueryString(), "ISO-8859-1").split("&");
@@ -24,10 +24,11 @@
     String no_docume = "";
     int nu = -1;
     int max = 0;
-    ArrayList<String> p = new ArrayList<String>();
+    ArrayList<String> p = new ArrayList<>();
 
     try {
         Integer co_conexi = -1;//request.getAttribute("co_conexi") != null ? Integer.parseInt(request.getAttribute("co_conexi") + "") : paq.getCo_conexi();
+//        System.out.println("request.getAttribute(\"pag\") = > " + request.getAttribute("pag"));
 
         if (request.getAttribute("pag") != null) {
             PagEspBean pag = (PagEspBean) request.getAttribute("pag");
@@ -77,6 +78,7 @@
                     }
                 }
             }
+
             p.add(null);
             for (int i = 1; i <= max; i++) {
                 String m_value = null;
@@ -98,15 +100,18 @@
 
                 p.add(mp);
             }
+
+//            System.out.println("LA>p = " + p);
+
             PagEspBean pag = new PagEspBean();
 //                Escritor.escribe_debug("docume:" + WorkflowUtil.convertir_entero(request.getParameter("co_docume")) + "->" + co_conexi);
-            no_docume = pag.docume(Util.toInt("co_docume"), p, co_conexi);
-            System.out.println("no_docume = " + no_docume);
+            no_docume = pag.docume(Util.toInt(request.getParameter("co_docume")), p, co_conexi);
+//            System.out.println("no_docume = " + no_docume);
         }
     } catch (Exception ep) {
-        System.out.println("ep = " + ep);
+//        System.out.println("ep = " + ep);
         ep.printStackTrace();
     }
 %>
-<%--<%=no_docume%>--%>
+<%=no_docume%>
 </html>

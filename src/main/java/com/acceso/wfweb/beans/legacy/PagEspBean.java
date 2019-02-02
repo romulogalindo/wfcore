@@ -11,6 +11,7 @@ import com.acceso.wfweb.daos.FraworLegacyDAO;
 //import acceso.util.Escritor;
 import java.util.ArrayList;
 
+import com.acceso.wfweb.dtos.legacy.PaginaEspecialDto;
 import org.hibernate.StatelessSession;
 
 /**
@@ -37,16 +38,18 @@ public class PagEspBean {
         this.ls_parame = ls_parame;
     }
 
-    public String docume(int p_co_docume, ArrayList<String> p, int co_conexi) {
+    //    public String docume(int p_co_docume, ArrayList<String> p, int co_conexi) {
+    public PaginaEspecialDto docume(int p_co_docume, ArrayList<String> p, int co_conexi) {
 
-        StatelessSession HSESSION = null;
-
-        String no_docume = "";
+        PaginaEspecialDto paginaEspecialDto;
+        String no_docume;
         String aux = "";
 
         FraworLegacyDAO dao = new FraworLegacyDAO();
-        no_docume = dao.getPaginaEspecialDto(p_co_docume).getNo_docume();
+        paginaEspecialDto = dao.getPaginaEspecialDto(p_co_docume);//.getNo_docume();
         dao.close();
+
+        no_docume = paginaEspecialDto.getNo_docume();
 
         for (int i = 1; i < p.size(); i++) {
             if (p.get(i) != null) {
@@ -60,7 +63,8 @@ public class PagEspBean {
             }
             no_docume = aux;
         }
+        paginaEspecialDto.setNo_docume(no_docume);
 
-        return no_docume;
+        return paginaEspecialDto;
     }
 }

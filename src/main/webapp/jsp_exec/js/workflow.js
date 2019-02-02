@@ -196,6 +196,7 @@ function loadFormulario64(row) {
             case "A": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
+                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?','/doc?ti_docume=E&');
                     eledom.setAttribute('href', valdom);
                     eledom.parentNode.removeAttribute('style');
                 } else if (ti_pagreg) {
