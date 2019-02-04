@@ -60,14 +60,16 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     public String toHTML() {
         String HTML = "";
 
-        HTML += "<script>var listconten={100628,103884,105054,100724,105748,100629,101956};</script>";
+        HTML += "";
 
         for (Pagina pagina : paginas.values()) {
-            HTML += "<div class=\"w3-row\"><div class=\"w3-quarter\" style=\"height: auto;color:#ededed\">1/4</div>";
+            HTML += "<div class=\"w3-row\">" +
+                    "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed\">1/4</div>";
 
             HTML += "   <div class=\"w3-half\" style=\"height: auto;\">" + "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.co_pagina + "\" onload=\"iframe(this)\" frameborder=0></iframe>" + "</div>";
 
-            HTML += "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed;\">1/4</div></div>";
+            HTML += "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed;\">1/4</div>" +
+                    "</div>";
         }
 
         return HTML;

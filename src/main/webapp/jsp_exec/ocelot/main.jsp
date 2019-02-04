@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=6"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=6"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=7"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=7"></script>
 
 </head>
 <body onload="workflow()" style="background: #ededed;">
@@ -187,30 +187,6 @@
     <div class="main_margin_etop" style="background:#ededed;color:white;">
 
         <div class="w3-row" style="height: 30px;"></div>
-
-        <%--<div class="w3-row">--%>
-        <%--<div class="w3-quarter" style="background:red;height: 200px;">--%>
-        <%--<iframe src="/jsp_exec/ocelot/pagina.jsp?rise=123456" class="wf4_iframe" onload="readypagina(this)" on></iframe>--%>
-        <%--</div>--%>
-        <%--<div class="w3-quarter" style="background:green;height: 200px;">1/4</div>--%>
-        <%--<div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>--%>
-        <%--<div class="w3-quarter" style="background:gray;height: 200px;">1/4</div>--%>
-        <%--</div>--%>
-
-        <%--<div class="w3-row">--%>
-        <%--<div class="w3-threequarter" style="background:red;height: 200px;">3/4</div>--%>
-        <%--<div class="w3-quarter" style="background:blue;height: 200px;">1/4</div>--%>
-        <%--</div>--%>
-
-        <%--<div class="w3-row">--%>
-        <%--<div class="w3-quarter" style="background:green;height: 200px;">1/4</div>--%>
-        <%--<div class="w3-threequarter" style="background:gray;height: 200px;">3/4</div>--%>
-        <%--</div>--%>
-
-        <%--<div class="w3-row">--%>
-        <%--<div class="w3-half" style="background:red;height: 200px;">2/4</div>--%>
-        <%--<div class="w3-half" style="background:green;height: 200px;">2/4</div>--%>
-        <%--</div>--%>
 
         <%--<div>Aqui va todo el contenido</div>--%>
         ${contenedorBean.contenedor.toHTML()}

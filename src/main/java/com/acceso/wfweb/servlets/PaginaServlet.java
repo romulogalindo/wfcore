@@ -18,7 +18,7 @@ public class PaginaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("ISO-8859-1");
 
         RequestDispatcher dispatcher = getServletContext()
                 .getRequestDispatcher("/jsp_exec/ocelot/pagina.jsp");
