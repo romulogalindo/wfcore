@@ -57,12 +57,8 @@ function ti_pagina() {
 }
 
 function workflow() {
-    var iframes = document.getElementsByTagName('IFRAME');
-
-    for (var i = 0; i < iframes.length; i++) {
-        var iframe = iframes[i];
-        var paginaId = iframe.getAttribute('id');
-        iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + paginaId.replace('PAG', '') + '&id_frawor=' + id_frawor();
+    for (var iframe of document.getElementsByTagName('IFRAME')) {
+        iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
     }
 }
 
@@ -196,7 +192,7 @@ function loadFormulario64(row) {
             case "A": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
-                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?','/doc?ti_docume=E&');
+                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.setAttribute('href', valdom);
                     eledom.parentNode.removeAttribute('style');
                 } else if (ti_pagreg) {

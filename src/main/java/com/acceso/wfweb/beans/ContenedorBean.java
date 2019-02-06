@@ -18,6 +18,7 @@ import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 import javax.servlet.http.HttpServletRequest;
 
 public class ContenedorBean implements Serializable {
+
     Contenedor contenedor;
 
     public ContenedorBean() {
@@ -25,37 +26,31 @@ public class ContenedorBean implements Serializable {
 
     public void do64(HttpRewriteWrappedRequest httpRewriteWrappedRequest) {
         //Esto debe ser eliminado
-
-        //HttpServletRequest request = (HttpServletRequest) httpRewriteWrappedRequest.getRequest();
         RequestManager requestManager = new RequestManager(httpRewriteWrappedRequest, null);
-        long id_frawor;
+        Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
 
-        Integer co_conten = Util.toInt(httpRewriteWrappedRequest.getParameter("co_conten"), -1);
+        long id_frawor;
 
         //construir el conenedor!!
         Frawor4DAO dao = new Frawor4DAO();
         Frawor4DAO dao_fdb = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
 
         id_frawor = dao.getIdfraworDTO().getId_frawor();
-        for (Map.Entry<Integer, String> entry : requestManager.getConpars().entrySet()) {
-            System.out.println("Item : " + entry.getKey() + " Count : " + entry.getValue());
-            ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue(), true);
-            ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, entry.getKey(), entry.getValue(), false);
 
-            System.out.println("procesoDTO = " + procesoDTO);
-            System.out.println("procesoDTO2 = " + procesoDTO2);
-        }
+        //Grabando co_compar
+        requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
+            ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), true);
+            ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), false);
+        });
 
         dao.close();
         dao_fdb.close();
-
 
         //preguntar a la cache si tienen este contenedor
         contenedor = (Contenedor) WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
         System.out.println(">>>>co_conten = " + co_conten);
 
         //httpRewriteWrappedRequest.getRequest();
-
         if (contenedor == null) {
 
             //crear el contenedor
