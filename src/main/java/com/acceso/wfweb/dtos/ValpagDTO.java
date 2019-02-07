@@ -83,11 +83,11 @@ public class ValpagDTO implements Serializable {
         this.no_pagreg = no_pagreg;
     }
 
-    public int getTi_pagreg() {
+    public Integer getTi_pagreg() {
         return ti_pagreg;
     }
 
-    public void setTi_pagreg(int ti_pagreg) {
+    public void setTi_pagreg(Integer ti_pagreg) {
         this.ti_pagreg = ti_pagreg;
     }
 
