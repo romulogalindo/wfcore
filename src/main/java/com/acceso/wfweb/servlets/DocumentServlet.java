@@ -895,13 +895,10 @@ public class DocumentServlet extends HttpServlet {
                                 p.add(mp);
                             }
 
-//            System.out.println("LA>p = " + p);
 
                             PagEspBean pag = new PagEspBean();
-//                Escritor.escribe_debug("docume:" + WorkflowUtil.convertir_entero(request.getParameter("co_docume")) + "->" + co_conexi);
                             paginaEspecialDto = pag.docume(Util.toInt(request.getParameter("co_docume")), p, co_conexi);
                             no_docume = paginaEspecialDto.getNo_docume();
-//            System.out.println("no_docume = " + no_docume);
                         }
                     } catch (Exception ep) {
 //        System.out.println("ep = " + ep);

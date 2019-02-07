@@ -19,7 +19,11 @@ public class RegJsonAdapter implements JsonSerializer<RegJson> {
         JsonObject obj = new JsonObject();
         obj.addProperty("regist", src.co_pagreg);
         obj.addProperty("value", src.va_pagreg);
-        obj.addProperty("front", src.tx_pagreg);
+        obj.addProperty("text", src.tx_pagreg);
+        obj.addProperty("label", src.no_pagreg);
+        obj.addProperty("type", src.ti_pagreg);
+        obj.addProperty("state", src.ti_estreg);
+        obj.addProperty("link", src.ur_pagreg);
 
         return obj;
     }

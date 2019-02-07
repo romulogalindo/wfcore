@@ -28,9 +28,8 @@ public class Regist1 extends HTMLRenderer {
                 html += "</tr>";
                 break;
             }
-
             case "E": {
-                html += "<tr name=" + id + " >";
+                html += "<tr name=" + id + " style=\"display:none;\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";
@@ -42,7 +41,7 @@ public class Regist1 extends HTMLRenderer {
                 break;
             }
             case "L": {
-                html += "<tr name=" + id + ">";
+                html += "<tr name=" + id + " style=\"display:none;\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";

@@ -175,18 +175,38 @@ function loadFormulario64(row) {
         var reg = row.regs[x];
         // console.log('::>>P' + co_pagina() + '' + reg.regist + 'V');
         console.log('::>>P' + co_pagina() + 'R' + reg.regist + 'V');
-        console.log('::>>V>>' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
+        console.log('::>>V>>' + (reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text));
         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
         var eledom = document.getElementsByName('P' + co_pagina() + 'R' + reg.regist + 'V')[0];
 
-        console.log('::>>eledom>>' + eledom + ',>>>' + eledom.tagName);
-        var valdom = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
-        console.log('::>>valdom>>' + valdom);
+        // console.log('::>>eledom=[' + eledom + ':' + eledom.tagName);
+        var valdom = reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text;
+        console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
 
         switch (eledom.tagName) {
             case "INPUT": {
                 eledom.value = valdom;
+                if (eledom.getAttribute("type") != "hidden")
+                    domtr(eledom).removeAttribute('style');
+                break;
+            }
+            case "SPAN": {
+                var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
+                if (ti_pagreg == '13') {
+                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+
+                } else if (ti_pagreg == '38') {
+                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    eledom.getElementsByTagName("A")[0].setAttribute('href', 'doc?ti_docume=J&tmp_file=jsdklfakljsjgklasjdglkasj');
+
+                } else {
+                    //hacer algo diferente para el tipo 38
+                    eledom.innerHTML = valdom;
+                }
+                domtr(eledom).removeAttribute('style');
                 break;
             }
             case "A": {
@@ -194,7 +214,7 @@ function loadFormulario64(row) {
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.setAttribute('href', valdom);
-                    eledom.parentNode.removeAttribute('style');
+                    domtr(eledom).removeAttribute('style');
                 } else if (ti_pagreg) {
                     //hacer algo diferente para el tipo 38
                 }
@@ -203,6 +223,7 @@ function loadFormulario64(row) {
             }
             default: {
                 eledom.innerHTML = valdom;
+                domtr(eledom).removeAttribute('style');
             }
         }
         // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
@@ -295,6 +316,20 @@ function propag(co_button, il_proces, co_condes) {
     //alert('DO! ' + parametros);
     $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
     //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
+}
+
+
+function domtr(eledom) {
+    if (eledom.tagName == 'TR') return eledom;
+
+    eledom = eledom.parentNode;
+
+    if (eledom.tagName == 'TR') return eledom;
+
+
+    eledom = eledom.parentNode;
+
+    if (eledom.tagName == 'TR') return eledom;
 }
 
 /*LOGOUT*/
