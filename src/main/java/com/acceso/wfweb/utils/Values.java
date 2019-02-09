@@ -24,4 +24,8 @@ public class Values {
     public static final String QUERYS_WEB_SELECT_SOLCRE= "get_solcre";
     public static final String QUERYS_WEB_SELECT_SOLCRE_SOLICI= "get_solcredatos_solici";
 
+    public static final String QUERYS_WEB_ARCADJ= "arcadj.pbarcadj";
+    public static final String QUERYS_WEB_ARCHIV_READ= "wfarchiv.pbarchiv_read";
+    public static final String QUERYS_WEB_ARCHIV_INS= "wfarchiv.pbarchiv_ins";
+
 }

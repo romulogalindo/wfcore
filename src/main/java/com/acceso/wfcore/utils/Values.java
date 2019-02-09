@@ -67,4 +67,8 @@ public class Values {
 
     /*===KERNEL===*/
     public static final String QUERY_MAINTREE = "wfsistem.ppmenugeneral_web(";
+
+    /*====PDF====*/
+    public static final String PDF_ORIENTATION_PORTRAIT="portrait";
+    public static final String PDF_ORIENTATION_LANDSCAPE="landscape";
 }

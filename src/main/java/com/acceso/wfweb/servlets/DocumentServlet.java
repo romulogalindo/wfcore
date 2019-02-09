@@ -820,8 +820,6 @@ public class DocumentServlet extends HttpServlet {
 
                     PaginaEspecialDto paginaEspecialDto = null;
                     try {
-//                        Integer co_conexi = -1;//request.getAttribute("co_conexi") != null ? Integer.parseInt(request.getAttribute("co_conexi") + "") : paq.getCo_conexi();
-//        System.out.println("request.getAttribute(\"pag\") = > " + request.getAttribute("pag"));
 
                         if (request.getAttribute("pag") != null) {
                             PagEspBean pag = (PagEspBean) request.getAttribute("pag");
@@ -901,7 +899,6 @@ public class DocumentServlet extends HttpServlet {
                             no_docume = paginaEspecialDto.getNo_docume();
                         }
                     } catch (Exception ep) {
-//        System.out.println("ep = " + ep);
                         ep.printStackTrace();
                     }
 
@@ -920,44 +917,35 @@ public class DocumentServlet extends HttpServlet {
                     document.open();
                     document.addAuthor("Edpyme Acceso Crediticio S.A.");
                     document.addCreationDate();
-                    System.out.println("paginaEspecialDto.getNo_descri() = " + paginaEspecialDto.getNo_descri());
-//                    document.addTitle(paginaEspecialDto.getNo_descri());
                     document.addTitle("jkfawseghe");
                     InputStream stream = new ByteArrayInputStream(no_docume.getBytes(StandardCharsets.ISO_8859_1));
                     XMLWorkerHelper.getInstance().parseXHtml(writer, document, stream);
                     document.close();
 
-//                    System.out.println("pdfTempFile = " + pdfTempFile + ",>size:" + pdfTempFile.length());
-
                     response.setContentType("application/pdf");
-                    //response.addHeader("Content-Disposition", "attachment; filename=" + pdfTempFile.getName());
-                    System.out.println("pdfTempFile.getName() = " + pdfTempFile.getName());
                     response.addHeader("Content-Disposition", "inline; filename=" + pdfTempFile.getName());
                     response.setContentLength((int) pdfTempFile.length());
 
                     out = response.getOutputStream();
-//                    System.out.println("fileInputstream length : " + fileInputStream.available());
                     int length;
                     byte[] buffer = new byte[4096];
                     FileInputStream fileInputStream = new FileInputStream(pdfTempFile);
                     while ((length = fileInputStream.read(buffer)) > 0) {
                         out.write(buffer, 0, length);
                     }
-//                    System.out.println(" outputstream length : " + out.toString());
                     fileInputStream.close();
                     out.flush();
                     out.close();
+                    // </editor-fold>
+                    break;
+                }case "J": {
+                    // <editor-fold defaultstate="collapsed" desc="CASE J:: PAGINA ESPECIAL">
 
 
-//                    String goTo = "/jsp_exec/legacy/paginaEspecial.jsp?imprimir=" + (request.getParameter("imprimir") != null ? request.getParameter("imprimir") : "0");
-////                    System.out.println("goTo = " + goTo);
-//                    RequestDispatcher rd = getServletContext().getRequestDispatcher(goTo);
-////                    System.out.println("rd = " + rd);
-//                    rd.forward(request, response);
 
 
                     // </editor-fold>
-//                    break;
+                    break;
                 }
             }
 
