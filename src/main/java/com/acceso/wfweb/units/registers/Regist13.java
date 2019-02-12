@@ -36,9 +36,9 @@ public class Regist13 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span style=\"display:none;\" id='" + id + "V' name='" + id + "V' ti_pagreg=\"13\" >" +
-                                "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Ver</a>]" +
-                                "</span>";
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"13\" >" +
+                        "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Ver</a>]" +
+                        "</span>";
                 html += "   </td>";
                 html += "</tr>";
                 break;

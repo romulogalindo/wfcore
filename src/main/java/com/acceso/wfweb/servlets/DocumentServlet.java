@@ -912,30 +912,43 @@ public class DocumentServlet extends HttpServlet {
                     System.out.println("no_docume" + no_docume);
 
                     File pdfTempFile = File.createTempFile("" + System.currentTimeMillis(), ".pdf");
-//                    System.out.println("pdfTempFile = " + pdfTempFile + ",>size:" + pdfTempFile.length());
+                    String erroMessage = "";
 
-                    Document document = new Document();
-                    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfTempFile));
-                    document.open();
-                    document.addAuthor("Edpyme Acceso Crediticio S.A.");
-                    document.addCreationDate();
-                    document.addTitle("jkfawseghe");
-                    InputStream stream = new ByteArrayInputStream(no_docume.getBytes(StandardCharsets.ISO_8859_1));
-                    XMLWorkerHelper.getInstance().parseXHtml(writer, document, stream);
-                    document.close();
+                    try {
+                        Document document = new Document();
+                        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfTempFile));
+                        document.open();
+                        document.addAuthor("Edpyme Acceso Crediticio S.A.");
+                        document.addCreationDate();
+                        InputStream stream = new ByteArrayInputStream(no_docume.getBytes(StandardCharsets.ISO_8859_1));
+                        XMLWorkerHelper.getInstance().parseXHtml(writer, document, stream);
+                        document.close();
 
-                    response.setContentType("application/pdf");
-                    response.addHeader("Content-Disposition", "inline; filename=" + pdfTempFile.getName());
-                    response.setContentLength((int) pdfTempFile.length());
+
+                    } catch (Exception ep) {
+                        pdfTempFile = null;
+                        erroMessage = ep.getMessage() + ":" + ep.getLocalizedMessage();
+                    }
 
                     out = response.getOutputStream();
-                    int length;
-                    byte[] buffer = new byte[4096];
-                    FileInputStream fileInputStream = new FileInputStream(pdfTempFile);
-                    while ((length = fileInputStream.read(buffer)) > 0) {
-                        out.write(buffer, 0, length);
+                    if (pdfTempFile != null) {
+                        response.setContentType("application/pdf");
+                        response.addHeader("Content-Disposition", "inline; filename=" + pdfTempFile.getName());
+                        response.setContentLength((int) pdfTempFile.length());
+
+                        int length;
+                        byte[] buffer = new byte[4096];
+                        FileInputStream fileInputStream = new FileInputStream(pdfTempFile);
+                        while ((length = fileInputStream.read(buffer)) > 0) {
+                            out.write(buffer, 0, length);
+                        }
+                        fileInputStream.close();
+                    } else {
+                        response.setContentType("text/html;charset=ISO-8859-1");
+                        out = response.getOutputStream();
+                        ((ServletOutputStream) out).println("El archivo no esta disponible.<br/>Causa:<br/>" + erroMessage);
                     }
-                    fileInputStream.close();
+
                     out.flush();
                     out.close();
                     // </editor-fold>
@@ -943,16 +956,20 @@ public class DocumentServlet extends HttpServlet {
                 }
                 case "J": {
                     // <editor-fold defaultstate="collapsed" desc="CASE J:: PAGINA ESPECIAL">
-                    if (request.getParameter("co_arctem") != null) {
-                        //buscar el file en el space temp en base al codigo
-                        System.out.println("Falta còdigo aquì>" + request.getParameter("co_arctem"));
-                        File pdfFile = (File)WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem"));
+                    boolean showpdf = true;
+
+                    if (request.getParameter("co_arctem") == null || WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem")) == null) {
+                        showpdf = false;
+                    }
+
+                    out = response.getOutputStream();
+                    if (showpdf) {
+                        File pdfFile = (File) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem"));
 
                         response.setContentType("application/pdf");
                         response.addHeader("Content-Disposition", "inline; filename=" + pdfFile.getName());
                         response.setContentLength((int) pdfFile.length());
 
-                        out = response.getOutputStream();
                         int length;
                         byte[] buffer = new byte[4096];
                         FileInputStream fileInputStream = new FileInputStream(pdfFile);
@@ -960,15 +977,23 @@ public class DocumentServlet extends HttpServlet {
                             out.write(buffer, 0, length);
                         }
                         fileInputStream.close();
-                        out.flush();
-                        out.close();
+                    } else {
+                        response.setContentType("text/html;charset=ISO-8859-1");
+                        out = response.getOutputStream();
+                        ((ServletOutputStream) out).println("El archivo no esta disponible.");
 
                     }
 
+                    out.flush();
+                    out.close();
 
                     // </editor-fold>
                     break;
+
+//                System.out.println("valpagDTO = " + valpagDTO);
                 }
+
+//                System.out.println("valpagDTO = " + valpagDTO);
             }
 
         } catch (Exception ep) {

@@ -48,7 +48,7 @@ public class ZeroDawnCache extends MainCache {
             cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100)).build();
         } else {
             cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100))
-                    .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(20)))
+                    .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeExpire)))
                     .build();
         }
 

@@ -50,7 +50,7 @@ public class Application {
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_CONTAINER, Integer.class, Object.class, -1);
 
         //creamos la cache de archivos - LVL2
-        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 20);
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 1200);
 
         //construiremos el objeto cache(no es renderer)
         SystemTreeDTO systemTreeDTO;

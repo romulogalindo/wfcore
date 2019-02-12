@@ -83,7 +83,7 @@ public class FraworLegacyDAO extends DAO {
         return paginaEspecialDto;
     }
 
-    public ModeloAbacoDto getModeloAbacoDto(int p_co_docume) {
+    public ModeloAbacoDto getModeloAbacoDto(int p_co_expedi) {
 
         ModeloAbacoDto modeloAbacoDto = null;
         NQuery nQuery = new NQuery(TAG + ":CONTEN");
@@ -91,7 +91,7 @@ public class FraworLegacyDAO extends DAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFABACO), true, true);
-            nQuery.setInteger("p_co_docume", p_co_docume);
+            nQuery.setInteger("p_co_expedi", p_co_expedi);
             modeloAbacoDto = (ModeloAbacoDto) nQuery.uniqueResult();
 
         } catch (Exception ep) {
