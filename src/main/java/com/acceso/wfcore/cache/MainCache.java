@@ -7,7 +7,7 @@ public abstract class MainCache {
 
     public abstract void destroy();
 
-    public abstract void createSpace(String name, Class classKeyType, Class classValueType);
+    public abstract void createSpace(String name, Class classKeyType, Class classValueType, int timeExpire);
 
     public abstract Cache getSpace(String name);
 }

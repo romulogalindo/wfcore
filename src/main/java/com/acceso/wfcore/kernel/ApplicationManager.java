@@ -2,6 +2,7 @@ package com.acceso.wfcore.kernel;
 
 import com.acceso.wfcore.dtos.ConexionDTO;
 import com.acceso.wfcore.dtos.SystemTreeDTO;
+import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.daos.Frawor4DAO;
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -143,7 +145,15 @@ public class ApplicationManager {
 
                 PdfJson pdfJson = evalRegist38(valpagDTO.getVa_pagreg());
                 if (pdfJson != null) {
-                    valpagDTO.setVa_pagreg(createPdf(pdfJson, valpagDTO));
+                    String codigounico = System.currentTimeMillis() + ".pdf";
+
+                    File pdfFile = createPdf(pdfJson, valpagDTO);
+                    System.out.println("-->" + pdfFile);
+
+                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
+                    //cerar un spce que caduce cada 30min
+
+                    valpagDTO.setVa_pagreg("/doc?ti_docume=J&co_arctem=" + codigounico);
                 }
 
                 RegJson regJson = new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg(), valpagDTO.getTx_pagreg(), valpagDTO.getNo_pagreg(), valpagDTO.getTi_pagreg(), valpagDTO.getTi_estreg(), valpagDTO.getUr_pagreg());
@@ -171,87 +181,60 @@ public class ApplicationManager {
         return pdfJson;
     }
 
-    public static String createPdf(PdfJson pdfJson, ValpagDTO valpagDTO) {
+    public static File createPdf(PdfJson pdfJson, ValpagDTO valpagDTO) {
+
         Document doc = pdfJson.getOrientation().contentEquals(Values.PDF_ORIENTATION_LANDSCAPE) ? new Document(PageSize.A4.rotate()) : new Document(PageSize.A4);
 
-//        HttpSession s = request.getSession();
-        String codimp = "" + System.currentTimeMillis();//request.getParameter("codimp");
-//        String cad = (String) s.getAttribute(codimp);
-        int nPages = 1;
-
+        File pdfTempFile = null;
         PdfReader reader = null;
 
-//        JsonElement json = null;
-//        Paquete paq = null;
-//
-        OutputStream out2;
-
+        int nPages = 1;
         String spre_url = "";
+
         try {
-//            json = new JsonParser().parse(cad);
-//
-//            JsonArray array = json.getAsJsonArray();
-
-//            response.setContentType("application/pdf");
-//            if (request.getParameter("v").contentEquals("d")) {
-//                response.setHeader("Content-disposition", "attachment;filename=imprimir.pdf");
-//            }
-//
-//            out2 = response.getOutputStream();
-
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(codimp + ".pdf"));
+            pdfTempFile = File.createTempFile("" + System.currentTimeMillis(), ".pdf");
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(pdfTempFile));
             doc.open();
 
-//            int co_imagen = Util.toInt(valpagDTO.getNo_pagreg(), -1);
-
             if (Util.toInt(valpagDTO.getNo_pagreg(), -1) > 0) {
+                ArchivDTO archivDTO = null;
+
+                Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfaio").getNativeSession());
+                archivDTO = dao.getArchiv(Util.toInt(valpagDTO.getNo_pagreg(), -1));
+                dao.close();
+
+                String nombre_a = archivDTO.getCo_archiv() + archivDTO.getNo_archiv().substring(archivDTO.getNo_archiv().indexOf("."), archivDTO.getNo_archiv().length());
+
                 try {
-//                Paquete paq = FrameworkUtil.searchPackage(request);
-//                    Escritor.escribe_errors("coenxion:" + paq.getCo_conexi() + "--" + paq.getNo_prefij() + "--" + paq.getUr_arcadj());
-                    spre_url = "";//paq.getUr_arcadj();
-                    ArchivDTO archivDTO = null;
+                    reader = new PdfReader(
+                            new FileInputStream(
+                                    new File("/backup/WFACR/DOCUMENTOS/" + new SimpleDateFormat("yyyy/MM/dd").format(archivDTO.getFe_archiv()) + "/" + nombre_a)
+                            )
+                    );
 
-                    Frawor4DAO dao = new Frawor4DAO();
-                    archivDTO = dao.getArchiv(Util.toLong(valpagDTO.getNo_pagreg(), -1));
-                    dao.close();
-//                    Escritor.escribe_debug("acabo la respuesta-->:" + arcadj);
-//                String nom_arc_gra = arcadj.getNo_arcadj();
-
-                    String nombre_a = archivDTO.getCo_archiv() + archivDTO.getNo_archiv().substring(archivDTO.getNo_archiv().indexOf("."), archivDTO.getNo_archiv().length());
-//                    Escritor.escribe_debug("her:" + spre_url + "/algo/" + nombre_a);
-
-                    String pre_url = "";
-                    try {
-//                    pre_url = paq.getUr_arcadj();
-                        pre_url = spre_url;
-                        System.out.println("Esto hemos recuperado(2):" + pre_url);
-                    } catch (Exception ep) {
-                        pre_url = "/backup/WFACR/DOCUMENTOS";
+                    if (reader.getNumberOfPages() < 1) {
+                        nPages = 1;
                     }
-//                pre_url = pre_url + "/" + new SimpleDateFormat("yyyy/MM/dd").format(arcadj.getFe_arcadj()) + "/" + nombre_a;
-                    pre_url = pre_url + "/" + new SimpleDateFormat("yyyy/MM/dd").format(archivDTO.getFe_archiv()) + "/" + nombre_a;
-//                    Escritor.escribe_debug("file=" + pre_url);
+                } catch (Exception ep) {
 
-                    reader = new PdfReader(new FileInputStream(pre_url));
-
-                    nPages = reader.getNumberOfPages();
-
-                } catch (Exception ex) {
-//                    Escritor.escribe_errors("error general:" + ex.getMessage());
-                    ex.printStackTrace();
                 }
             }
 
-            if (nPages == 0) {
-                nPages = 1;
+
+            for (PdfRegistJson pdfRegistJson : pdfJson.getRegists()) {
+                if (pdfRegistJson.getPage() != null) {
+                    nPages = nPages < pdfRegistJson.getPage().intValue() ? pdfRegistJson.getPage().intValue() : nPages;
+                }
             }
 
             for (int i = 0; i < nPages; i++) {
                 doc.newPage();
 
-                PdfContentByte cb = writer.getDirectContent();
-                PdfImportedPage pageb = writer.getImportedPage(reader, (i + 1));
-                cb.addTemplate(pageb, 0, 0);
+                if (reader != null) {
+                    PdfContentByte cb = writer.getDirectContent();
+                    PdfImportedPage pageb = writer.getImportedPage(reader, (i + 1));
+                    cb.addTemplate(pageb, 0, 0);
+                }
 
                 System.out.println("procesando página:" + (i + 1));
                 PdfPTable table;
@@ -260,8 +243,6 @@ public class ApplicationManager {
 
                 doc.setPageCount((i + 1));
 
-//                Iterator iterator = array.iterator();
-//                while (iterator.hasNext()) {
                 for (PdfRegistJson pdfRegistJson : pdfJson.getRegists()) {
                     if (pdfRegistJson.getPage() == (i + 1)) {
                         table = new PdfPTable(1);
@@ -281,28 +262,14 @@ public class ApplicationManager {
 
                         if (pdfRegistJson.getCadena() == null && (pdfRegistJson.getImg() != null & pdfRegistJson.getImg().length() > 0)) {
 
-                            //primero evaluar si es una imagen valida
-                            String pre_url = "";
-                            try {
-//                                Escritor.escribe_debug("paq=" + paq);
-//                            pre_url = paq.getUr_arcadj();
-                                pre_url = spre_url;
-//                                Escritor.escribe_debug("Esto hemos recuperado:" + pre_url);
-                            } catch (Exception ep) {
-//                                Escritor.escribe_debug("ep=" + ep);
-                                pre_url = "/backup/WFACR/DOCUMENTOS";
-                                ep.printStackTrace();
-                            }
-
                             ArcadjDTO arcadjDTO = null;
-                            Frawor4DAO dao = new Frawor4DAO();
-                            arcadjDTO = dao.getArcadj(Util.toLong(valpagDTO.getNo_pagreg(), -1));
+                            Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+                            arcadjDTO = dao.getArcadj(Util.toInt(valpagDTO.getNo_pagreg(), -1));
                             dao.close();
 
                             String nombre_a = arcadjDTO.getId_arcadj() + arcadjDTO.getNo_arcadj().substring(arcadjDTO.getNo_arcadj().indexOf("."), arcadjDTO.getNo_arcadj().length());
 
-                            pre_url = pre_url + "/" + new SimpleDateFormat("yyyy/MM/dd").format(arcadjDTO.getFe_arcadj()) + "/" + nombre_a;
-//                            Escritor.escribe_debug("Buscando imagen pre_url=" + pre_url);
+                            String pre_url = "/backup/WFACR/DOCUMENTOS/" + new SimpleDateFormat("yyyy/MM/dd").format(arcadjDTO.getFe_arcadj()) + "/" + nombre_a;
 
                             if (pre_url != null) {
 
@@ -365,32 +332,28 @@ public class ApplicationManager {
 
 
             doc.close();
-//            out2.close();
-        } catch (Exception ex) {
-            System.out.println("Erorr " + ex);
-            System.out.println("instance :" + ex.getClass());
 
-//            s.setAttribute(FrameworkUtil.PARAM_ERROR, ex);
-//            response.sendRedirect("../Error/contenedorError.jsp");
+        } catch (Exception ep) {
+            ep.printStackTrace();
         }
 
-        return null;
+        return pdfTempFile;
     }
 
-    public static BaseColor getBaseColor(String color){
-        BaseColor baseColor=null;
-        if(color==null || color.length()<1){
-            return new BaseColor(0,0,0);
+    public static BaseColor getBaseColor(String color) {
+        BaseColor baseColor = null;
+        if (color == null || color.length() < 1) {
+            return new BaseColor(0, 0, 0);
         }
 
         String[] rgb = color.split(",");
-        if(rgb.length==3){
+        if (rgb.length == 3) {
             String r = rgb[0].trim();
             String g = rgb[1].trim();
             String b = rgb[2].trim();
-            return new BaseColor(Util.toInt(r,0),Util.toInt(g,0), Util.toInt(b,0));
-        }else{
-            return new BaseColor(0,0,0);
+            return new BaseColor(Util.toInt(r, 0), Util.toInt(g, 0), Util.toInt(b, 0));
+        } else {
+            return new BaseColor(0, 0, 0);
         }
     }
 
