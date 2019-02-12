@@ -200,7 +200,7 @@ function loadFormulario64(row) {
 
                 } else if (ti_pagreg == '38') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    eledom.getElementsByTagName("A")[0].setAttribute('href', 'doc?ti_docume=J&tmp_file=jsdklfakljsjgklasjdglkasj');
+                    eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
 
                 } else {
                     //hacer algo diferente para el tipo 38

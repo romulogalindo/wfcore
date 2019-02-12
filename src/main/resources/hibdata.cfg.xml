@@ -64,5 +64,10 @@
         <mapping class="com.acceso.wfweb.dtos.legacy.Reporte_SolicitudDto"/>
         <mapping class="com.acceso.wfweb.dtos.legacy.Solicitud_credito_datos_soliciDto"/>
         <mapping class="com.acceso.wfweb.dtos.legacy.Solicitud_creditoDto"/>
+
+        <!-- DTO's LEGACY!-->
+        <mapping class="com.acceso.wfweb.dtos.ArchivDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.ArcadjDTO"/>
+
     </session-factory>
 </hibernate-configuration>

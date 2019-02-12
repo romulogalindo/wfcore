@@ -5,8 +5,13 @@ import org.ehcache.CacheManager;
 import org.ehcache.config.CacheConfiguration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.expiry.Expirations;
+import org.ehcache.xml.model.TimeUnit;
 
+//import java.time.Duration;
+import java.time.Duration;
 import java.util.HashMap;
 
 public class ZeroDawnCache extends MainCache {
@@ -36,9 +41,16 @@ public class ZeroDawnCache extends MainCache {
     }
 
     @Override
-    public void createSpace(String name, Class objectKeyType, Class objectValueType) {
+    public void createSpace(String name, Class objectKeyType, Class objectValueType, int timeExpire) {
         //Se genera la configuracion
-        CacheConfiguration cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100)).build();
+        CacheConfiguration cacheConfiguration = null;
+        if (timeExpire == -1) {
+            cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100)).build();
+        } else {
+            cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100))
+                    .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(20)))
+                    .build();
+        }
 
         //se agrega la configuracion al manager
         Cache cache = cacheManager.createCache(name, cacheConfiguration);

@@ -1,6 +1,8 @@
 package com.acceso.wfweb.servlets;
 
+import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
+import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.beans.legacy.*;
 import com.acceso.wfweb.dtos.legacy.PaginaEspecialDto;
 import com.acceso.wfweb.dtos.legacy.Solicitud_credito_datos_soliciDto;
@@ -938,10 +940,30 @@ public class DocumentServlet extends HttpServlet {
                     out.close();
                     // </editor-fold>
                     break;
-                }case "J": {
+                }
+                case "J": {
                     // <editor-fold defaultstate="collapsed" desc="CASE J:: PAGINA ESPECIAL">
+                    if (request.getParameter("co_arctem") != null) {
+                        //buscar el file en el space temp en base al codigo
+                        System.out.println("Falta còdigo aquì>" + request.getParameter("co_arctem"));
+                        File pdfFile = (File)WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem"));
 
+                        response.setContentType("application/pdf");
+                        response.addHeader("Content-Disposition", "inline; filename=" + pdfFile.getName());
+                        response.setContentLength((int) pdfFile.length());
 
+                        out = response.getOutputStream();
+                        int length;
+                        byte[] buffer = new byte[4096];
+                        FileInputStream fileInputStream = new FileInputStream(pdfFile);
+                        while ((length = fileInputStream.read(buffer)) > 0) {
+                            out.write(buffer, 0, length);
+                        }
+                        fileInputStream.close();
+                        out.flush();
+                        out.close();
+
+                    }
 
 
                     // </editor-fold>

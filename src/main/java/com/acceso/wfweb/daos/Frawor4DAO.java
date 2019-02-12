@@ -235,14 +235,14 @@ public class Frawor4DAO extends DAO {
         return parametroDTOS;
     }
 
-    public ArcadjDTO getArcadj(long p_id_arcadj) {
+    public ArcadjDTO getArcadj(int p_id_arcadj) {
         ArcadjDTO arcadjDTO = null;
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCADJ), true, true);
-            nQuery.setLong("p_id_arcadj", p_id_arcadj);
+            nQuery.setInteger("p_id_arcadj", p_id_arcadj);
             arcadjDTO = (ArcadjDTO) nQuery.uniqueResult();
 
         } catch (Exception ep) {
@@ -253,14 +253,14 @@ public class Frawor4DAO extends DAO {
         return arcadjDTO;
     }
 
-    public ArchivDTO getArchiv(long p_co_archiv) {
+    public ArchivDTO getArchiv(int p_co_archiv) {
         ArchivDTO archivDTO = null;
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCHIV_READ), true, true);
-            nQuery.setLong("p_co_archiv", p_co_archiv);
+            nQuery.setInteger("p_co_archiv", p_co_archiv);
             archivDTO = (ArchivDTO) nQuery.uniqueResult();
 
         } catch (Exception ep) {
@@ -277,7 +277,7 @@ public class Frawor4DAO extends DAO {
 
         try {
 
-            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCHIV_READ), true, true);
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCHIV_INS), true, true);
             nQuery.setString("p_no_archiv", p_no_archiv);
             archivDTO = (ArchivDTO) nQuery.uniqueResult();
 
