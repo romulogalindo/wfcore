@@ -139,8 +139,6 @@ public class ApplicationManager {
                 if (valpagDTO_i.getCo_pagreg() == valpagDTO.getCo_pagreg()) {
                     rows.add(new RowJson());
                 }
-
-//                System.out.println("valpagDTO = " + valpagDTO);
                 //Evalucacion para el tipo 38
 
                 PdfJson pdfJson = evalRegist38(valpagDTO.getVa_pagreg());
@@ -269,11 +267,11 @@ public class ApplicationManager {
 
                             String nombre_a = arcadjDTO.getId_arcadj() + arcadjDTO.getNo_arcadj().substring(arcadjDTO.getNo_arcadj().indexOf("."), arcadjDTO.getNo_arcadj().length());
 
-                            String pre_url = "/backup/WFACR/DOCUMENTOS/" + new SimpleDateFormat("yyyy/MM/dd").format(arcadjDTO.getFe_arcadj()) + "/" + nombre_a;
+                            File imgFile = new File("/backup/WFACR/DOCUMENTOS/" + new SimpleDateFormat("yyyy/MM/dd").format(arcadjDTO.getFe_arcadj()) + "/" + nombre_a);
 
-                            if (pre_url != null) {
+                            if (imgFile.exists()) {
 
-                                Image image = Image.getInstance(pre_url);
+                                Image image = Image.getInstance(imgFile.getAbsolutePath());
                                 image.setAlignment(Image.ALIGN_RIGHT);
                                 image.setAbsolutePosition(0f, 0f);
                                 image.scaleAbsolute(pdfRegistJson.getWidth() == null ? image.getWidth() : pdfRegistJson.getWidth(), pdfRegistJson.getHeight() == null ? image.getHeight() : pdfRegistJson.getHeight());
