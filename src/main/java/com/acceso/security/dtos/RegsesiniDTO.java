@@ -2,10 +2,7 @@ package com.acceso.security.dtos;
 
 import com.acceso.security.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -36,6 +33,9 @@ public class RegsesiniDTO implements Serializable {
 
     int co_mensaj;
     String de_mensaj;
+
+    @Transient
+    String ip_remoto;
 
     public RegsesiniDTO() {
     }
@@ -126,5 +126,13 @@ public class RegsesiniDTO implements Serializable {
 
     public void setDe_mensaj(String de_mensaj) {
         this.de_mensaj = de_mensaj;
+    }
+
+    public String getIp_remoto() {
+        return ip_remoto;
+    }
+
+    public void setIp_remoto(String ip_remoto) {
+        this.ip_remoto = ip_remoto;
     }
 }

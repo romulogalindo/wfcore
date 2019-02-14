@@ -289,6 +289,31 @@ public class Frawor4DAO extends DAO {
         return archivDTO;
     }
 
+    public void joinTF(long p_id_sesion, long p_id_frawor, long p_id_fraant, int p_co_conten, boolean islocal) {
+        JoinDTO joinDTO = null;
+        NQuery nQuery = new NQuery(TAG + ":PAGINA");
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_JOIN_TRANSA_FRAWOR : Values.QUERYS_WEB_SELECT_JOIN_TRANSA_FRAWOR2), true, true);
+            nQuery.setInteger("p_id_sesion", (int) p_id_sesion);
+            nQuery.setInteger("p_id_frawor", (int) p_id_frawor);
+            nQuery.setInteger("p_id_fraant", (int) p_id_fraant);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            joinDTO = (JoinDTO) nQuery.uniqueResult();
+            transaction.commit();
+        } catch (Exception ep) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+//        return joinDTO;
+    }
+
     @Override
     public void close() {
         try {

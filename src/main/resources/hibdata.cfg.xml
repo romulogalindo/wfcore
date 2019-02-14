@@ -42,6 +42,7 @@
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>
+        <mapping class="com.acceso.security.dtos.RegsesinifDTO"/>
         <mapping class="com.acceso.security.dtos.PermisbloDTO"/>
 
         <!-- DTO's (Web) -->
@@ -55,6 +56,7 @@
         <mapping class="com.acceso.wfweb.dtos.ValpagDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ProcesoDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ParametroDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.JoinDTO"/>
 
         <!--DTOS's Legacy-->
         <mapping class="com.acceso.wfweb.dtos.legacy.CartaRetiroDto"/>

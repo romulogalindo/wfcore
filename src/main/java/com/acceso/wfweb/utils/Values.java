@@ -23,6 +23,8 @@ public class Values {
     public static final String QUERYS_WEB_SELECT_GETREPSOL= "get_repsol";
     public static final String QUERYS_WEB_SELECT_SOLCRE= "get_solcre";
     public static final String QUERYS_WEB_SELECT_SOLCRE_SOLICI= "get_solcredatos_solici";
+    public static final String QUERYS_WEB_SELECT_JOIN_TRANSA_FRAWOR= "frawor4.pfins_tbfrawor";
+    public static final String QUERYS_WEB_SELECT_JOIN_TRANSA_FRAWOR2= "frawor2.pfins_tbfrawor";
 
     public static final String QUERYS_WEB_ARCADJ= "arcadj.pbarcadj";
     public static final String QUERYS_WEB_ARCHIV_READ= "wfarchiv.pbarchiv_read";
