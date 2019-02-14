@@ -43,6 +43,8 @@ public class DoLogin {
 //        permisbloDTO = securityDAO.getListBloq(regsesiniDTO.getCo_usuari());
         securityDAO.close();
 
+        regsesiniDTO.setIp_remoto(remoteip);
+
         //Logica de seguridad
         if (regsesiniDTO.getCo_mensaj() == LOGIN_OK) {
 
@@ -69,6 +71,10 @@ public class DoLogin {
         SecurityDAO securityDAO = new SecurityDAO();
         permisbloDTO = securityDAO.getListBloq((int) regsesiniDTO.getCo_usuari());
         securityDAO.close();
+
+        SecurityDAO securityfDAO = new SecurityDAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+        securityfDAO.regsesinif(regsesiniDTO.getId_sesion(), regsesiniDTO.getCo_usuari(), regsesiniDTO.getIp_remoto());
+        securityfDAO.close();
 
         //elementos que han sido capados por la capa de securidad ->>> desde la cache
         Root root = (Root) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE");

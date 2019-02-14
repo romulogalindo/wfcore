@@ -1,6 +1,7 @@
 package com.acceso.wfweb.utils;
 
 import com.acceso.wfcore.utils.Util;
+import com.acceso.wfweb.units.Usuario;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,5 +69,9 @@ public class RequestManager {
         }
 
         return conpars;
+    }
+
+    public Usuario getUser() {
+        return (Usuario) this.request.getSession().getAttribute("US");
     }
 }
