@@ -55,6 +55,12 @@ public class Values {
 
     public static final String QUERYS_NATIVE_SELECT_CONTENEDOR = "wfcore.contenedor_select";
 
+    public static final String QUERYS_NATIVE_SELECT_PAGINA = "wfcore.pagina_select";
+
+    public static final String QUERYS_NATIVE_SELECT_PARAMETRO = "wfcore.parametro_select";
+    public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
+
+    public static final String QUERYS_NATIVE_SELECT_REGISTRO = "wfcore.registro_select";
 
     /*===CACHE===*/
     public static final String CACHE_MAIN_MENUTREE = "CACHE_MAIN_MENUTREE";

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            <h3 style="margin-top:0">Página</h3>
+            <p:tabView>
+                <p:tab title="Datos">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:outputLabel for="co_pagina" value="ID:"/>
+                        <p:inputText id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
+                                     rendered="#{paginaBean.isregEditable}"/>
+
+                        <p:outputLabel for="no_pagtit" value="Nombre:"/>
+                        <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
+                                     required="true" requiredMessage="Debe ingresar un Nombre."
+                                     rendered="#{paginaBean.isregEditable}"/>
+
+                        <p:outputLabel for="de_pagina" value="Descripción:"/>
+                        <p:inputText id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
+                                     required="true" requiredMessage="Debe ingresar una Descripción."
+                                     rendered="#{paginaBean.isregEditable}"/>
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="Organización">
+                    <p:pickList id="PojoPickList" value="#{paginaBean.registrosPick}"
+                                var="registro"
+                                itemValue="#{registro}" itemLabel="#{registro.no_tipreg}"
+                                showSourceControls="true" showTargetControls="true">
+
+                        <f:facet name="sourceCaption">Registros</f:facet>
+                        <f:facet name="targetCaption">Pagina</f:facet>
+
+                        <p:ajax event="transfer" listener="#{paginaBean.onTransfer}"/>
+                        <p:ajax event="select" listener="#{paginaBean.onSelect}"/>
+                        <p:ajax event="unselect" listener="#{paginaBean.onUnselect}"/>
+                        <p:ajax event="reorder" listener="#{paginaBean.onReorder}"/>
+
+                        <p:column style="width:15%">
+                            <h:outputText value="#{registro.co_tipreg}"/>
+                        </p:column>
+
+                        <p:column style="width:85%;">
+                            <h:outputText value="#{registro.no_tipreg}"/>
+                        </p:column>
+                    </p:pickList>
+
+                </p:tab>
+            </p:tabView>
+
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+
+</html>
