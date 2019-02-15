@@ -125,3 +125,14 @@ TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
     font-weight: 200;
     font-size: 14px;
 }
+
+.wf-button-transparent{
+    border:none;
+    background: none;
+    color: #008080;
+    cursor: pointer;
+}
+
+.wf-button-transparent:hover{
+    color: #000000;
+}

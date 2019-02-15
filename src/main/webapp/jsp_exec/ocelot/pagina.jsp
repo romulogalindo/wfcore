@@ -15,11 +15,11 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=4">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=5">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=14"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=14"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=15"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=15"></script>
 </head>
 <body style="padding: 20px;" onload="pagina();">
 <script>

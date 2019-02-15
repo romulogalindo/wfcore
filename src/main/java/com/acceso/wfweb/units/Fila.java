@@ -71,7 +71,7 @@ public class Fila extends HTMLRenderer implements Serializable {
         String html = "";
 
         if (tituloDTO != null) {
-            html += "<tr name=" + id + ">";
+            html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + tituloDTO.getCo_pagtit() + "\">";
             html += "<th colspan=2 class=\"wf_f_stitle w3-highway-blue\" >";
             html += tituloDTO.getNo_pagtit();
             html += "</th>";
@@ -93,6 +93,10 @@ public class Fila extends HTMLRenderer implements Serializable {
                 }
                 case 22: {
                     html += new Regist22(id, registroDTO).toHTML();
+                    break;
+                }
+                case 34: {
+                    html += new Regist34(id, registroDTO).toHTML();
                     break;
                 }
                 case 38: {

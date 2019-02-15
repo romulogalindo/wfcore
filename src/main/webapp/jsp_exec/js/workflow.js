@@ -197,7 +197,11 @@ function loadFormulario64(row) {
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
-
+                } else if (ti_pagreg == '34') {
+                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    //eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+                    eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                    eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '38') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -225,7 +229,13 @@ function loadFormulario64(row) {
                 eledom.innerHTML = valdom;
                 domtr(eledom).removeAttribute('style');
             }
+
         }
+        //muestra al padre
+        console.log("DOMELE: " + "P" + co_pagina() + "T" + eledom.getAttribute("co_pagtit"));
+        var domtitle = document.getElementsByName("P" + co_pagina() + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
+        domtitle.setAttribute("style", "");
+
         // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
 }
@@ -330,6 +340,31 @@ function domtr(eledom) {
     eledom = eledom.parentNode;
 
     if (eledom.tagName == 'TR') return eledom;
+}
+
+function child_popup(u, ele, c, tit1, tit2) {
+    var vp;
+    u = $D.getBase() + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
+    var l = $D.g_ID(ele);
+    if (l.tagName == "LABEL") {
+//        console.log("co_conpar_1:" + escape(l.getAttribute('valpag')));
+        console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
+        console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
+        vp = u + "" + "&co_conpar_1=" + encodeURIComponent(l.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(l.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1&fe_solini=" + new Date().getTime();
+    } else {
+        console.log("co_conpar_1:" + encodeURIComponent(l.value));
+        console.log("co_conpar_2:" + encodeURIComponent(l.value));
+        vp = u + "" + "&co_conpar_1=" + encodeURIComponent(l.value) + "&co_conpar_2=" + encodeURIComponent(l.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1&fe_solini=" + new Date().getTime();
+    }
+
+    console.log("vp:" + vp);
+
+    $D.g_ID("popup_head").innerHTML = tit1 + "  >  <b>" + tit2 + "</b>";
+    $D.g_ID("popup_body").onload = popup_resize;
+    $D.g_ID("popup_body").setAttribute("ele", ele);
+    $D.g_ID("popup_body").src = vp;
+    $D.lock();
+    $D.g_ID('popup').style.display = "block";
 }
 
 /*LOGOUT*/

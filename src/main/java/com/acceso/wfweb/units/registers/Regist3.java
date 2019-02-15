@@ -17,7 +17,7 @@ public class Regist3 extends HTMLRenderer {
         String html = "";
         switch (registroDTO.getTi_estreg()) {
             case "O": {
-                html += "<tr name=" + id + " style=\"display:none;\">";
+                html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";
@@ -30,7 +30,7 @@ public class Regist3 extends HTMLRenderer {
             }
 
             case "E": {
-                html += "<tr name=" + id + " >";
+                html += "<tr name=" + id + " co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";
@@ -43,7 +43,7 @@ public class Regist3 extends HTMLRenderer {
             }
 
             case "L": {
-                html += "<tr name=" + id + ">";
+                html += "<tr name=" + id + " co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";

@@ -121,7 +121,6 @@ public class FraworLegacyDAO extends DAO {
         return reporteSolicitudDto;
     }
 
-
     public Solicitud_creditoDto getSolicitudCreditoDto(int p_co_expedi) {
 
         Solicitud_creditoDto solicitudCreditoDto = null;
