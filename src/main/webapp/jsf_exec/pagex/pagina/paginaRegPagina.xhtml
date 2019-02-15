@@ -35,13 +35,13 @@
                 <p:tab title="Organización">
                     <p:pickList id="PojoPickList" value="#{paginaBean.registrosPick}"
                                 var="registro"
-                                itemValue="#{registro}" itemLabel="#{registro.no_tipreg}"
-                                showSourceControls="true" showTargetControls="true">
+                                itemValue="#{registro}"
+                                showTargetControls="true" >
 
                         <f:facet name="sourceCaption">Registros</f:facet>
                         <f:facet name="targetCaption">Pagina</f:facet>
 
-                        <p:ajax event="transfer" listener="#{paginaBean.onTransfer}"/>
+                        <p:ajax event="transfer" listener="#{paginaBean.onTransfer}" update="form"/>
                         <p:ajax event="select" listener="#{paginaBean.onSelect}"/>
                         <p:ajax event="unselect" listener="#{paginaBean.onUnselect}"/>
                         <p:ajax event="reorder" listener="#{paginaBean.onReorder}"/>

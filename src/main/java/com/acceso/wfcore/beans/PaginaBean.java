@@ -1,12 +1,19 @@
 package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.PaginaDAO;
+import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.PaginaDTO;
+import com.acceso.wfcore.dtos.RegistroDTO;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.event.UnselectEvent;
+import org.primefaces.model.DualListModel;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +35,9 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
    private List<PaginaDTO> filtroPagina;
 
    private boolean isregEditable;
+
+   private DualListModel<RegistroDTO> registrosPick;
+   private List<RegistroDTO> registroSourceTemp;
 
 
    public PaginaBean() {
@@ -75,7 +85,10 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
       FacesContext context = FacesContext.getCurrentInstance();
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
-      //varias cosas para editar
+
+      //Cargar Pick List
+      loadPickList(0);
+
       return URL_NEW;
    }
 
@@ -140,6 +153,52 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //      dao.close();
    }
 
+   public void onTransfer(TransferEvent event) {
+//      StringBuilder builder = new StringBuilder();
+//      for(Object item : event.getItems()) {
+//         builder.append(((Theme) item).getName()).append("<br />");
+//      }
+//
+//      FacesMessage msg = new FacesMessage();
+//      msg.setSeverity(FacesMessage.SEVERITY_INFO);
+//      msg.setSummary("Items Transferred");
+//      msg.setDetail(builder.toString());
+//
+//      FacesContext.getCurrentInstance().addMessage(null, msg);
+
+      registrosPick.setSource(registroSourceTemp);
+
+      System.out.println("Source" + registrosPick.getSource().toString());
+      System.out.println("Target" + registrosPick.getTarget().toString());
+
+   }
+
+   public void onSelect(SelectEvent event) {
+//      FacesContext context = FacesContext.getCurrentInstance();
+//      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
+   }
+
+   public void onUnselect(UnselectEvent event) {
+//      FacesContext context = FacesContext.getCurrentInstance();
+//      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Unselected", event.getObject().toString()));
+   }
+
+   public void onReorder() {
+//      FacesContext context = FacesContext.getCurrentInstance();
+//      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
+   }
+
+   public void loadPickList (Integer co_pagina){
+      RegistroDAO dao = new RegistroDAO();
+
+      List<RegistroDTO> registroSource = dao.getRegistros();
+      List<RegistroDTO> registroTarget = new ArrayList<RegistroDTO>();
+
+      registroSourceTemp = registroSource;
+
+      registrosPick = new DualListModel<RegistroDTO>(registroSource, registroTarget);
+   }
+
    public PaginaDTO getPagina() {
       return pagina;
    }
@@ -170,5 +229,21 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
    public void setFiltroPagina(List<PaginaDTO> filtroPagina) {
       this.filtroPagina = filtroPagina;
+   }
+
+   public DualListModel<RegistroDTO> getRegistrosPick() {
+      return registrosPick;
+   }
+
+   public void setRegistrosPick(DualListModel<RegistroDTO> registrosPick) {
+      this.registrosPick = registrosPick;
+   }
+
+   public List<RegistroDTO> getRegistroSourceTemp() {
+      return registroSourceTemp;
+   }
+
+   public void setRegistroSourceTemp(List<RegistroDTO> registroSourceTemp) {
+      this.registroSourceTemp = registroSourceTemp;
    }
 }
