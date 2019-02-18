@@ -3,13 +3,13 @@ package com.acceso.wfcore.apis;
 import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.ValpagJson;
+import com.acceso.wfweb.dtos.PropagDTO;
 import com.acceso.wfweb.dtos.ValpagDTO;
 import com.google.gson.Gson;
 import org.hibernate.StatelessSession;
 import org.hibernate.query.NativeQuery;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DataAPI extends GenericAPI {
 
@@ -25,9 +25,11 @@ public class DataAPI extends GenericAPI {
         return sqlResult;
     }
 
-    public List<ValpagDTO> SQL_LEGACY(String conectionName, String sqlQuery) throws Exception {
+    //public List<ValpagDTO> SQL_LEGACY(String conectionName, String sqlQuery) throws Exception {
+    public List<Object[]> SQL_LEGACY(String conectionName, String sqlQuery) throws Exception {
         long execution_time;
-        List<ValpagDTO> valReturn = new ArrayList<>();
+        //List<ValpagDTO> valReturn = new ArrayList<>();
+        List<Object[]> valReturn = new ArrayList<>();
         StatelessSession session = null;
 
         execution_time = System.currentTimeMillis();
@@ -36,8 +38,35 @@ public class DataAPI extends GenericAPI {
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
 
-            NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
-            valReturn = sql.list();
+            //NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
+
+            NativeQuery sql = session.createNativeQuery(sqlQuery);
+
+            valReturn = sql.getResultList();
+
+            for (Object[] valreturn : valReturn) {
+                for (Object valre : valreturn) {
+                    System.out.println("valre=" + valre);
+                }
+                System.out.println("\n");
+            }
+
+            List<Object> querysx = Arrays.asList(sql.getQueryReturns());
+            for (Object queryh : querysx) {
+                System.out.println("queryh=" + queryh);
+
+            }
+
+            for (Map.Entry<String, Object> entry : sql.getHints().entrySet()) {
+                System.out.println("K,V => " + entry.getKey() + ":" + entry.getValue());
+            }
+
+            Iterator<String> spaces = sql.getSynchronizedQuerySpaces().iterator();
+            while(spaces.hasNext()){
+                System.out.println("spaces? = " + spaces.next());
+            }
+
+            //valReturn = sql.list();
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
 
@@ -59,4 +88,11 @@ public class DataAPI extends GenericAPI {
         ValpagJson valpagJson = ApplicationManager.buildNValPag(valpagDTOS);
         return valpagJson;
     }
+
+    //    public PropagDTO SQL_LEGACY(){
+//
+//    }
+//    public PropagJson JSON_PROPAG() {
+//
+//    }
 }

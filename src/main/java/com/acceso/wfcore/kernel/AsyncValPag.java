@@ -48,7 +48,7 @@ public class AsyncValPag extends AsyncProcessor {
            // System.out.println("jsText = " + jsText);
 
 //            ValpagJson valpagJson_ = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doJS64(jsText, "do_valpag(" + id_frawor + "," + co_conten + "," + co_pagina + ")");
-            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doJS64(jsText, "do_valpag", id_frawor, co_conten, co_pagina);
+            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(jsText, "do_valpag", id_frawor, co_conten, co_pagina);
 
             //System.out.println("[2]valpagJson = " + valpagJson);
 

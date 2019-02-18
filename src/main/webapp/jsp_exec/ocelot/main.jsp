@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=16"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=16"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=18"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=18"></script>
 
 </head>
 <body onload="workflow()" style="background: #ededed;">
@@ -190,8 +190,8 @@
     <div class="w3-modal-content w3-animate-top w3-card-4">
         <header class="w3-container w3-teal" style="height:auto;">
             <h5 id="popup_head">Ventana emergente</h5>
-            <span onclick="CLOSE_POPUP()" class="w3-large w3-display-topright "
-                  style="margin: 10px;font-size: 25px !important;">
+            <span onclick="master_popup_close()" class="w3-large w3-display-topright "
+                  style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </span>
         </header>

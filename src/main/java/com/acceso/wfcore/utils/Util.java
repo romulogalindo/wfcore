@@ -87,7 +87,7 @@ public class Util {
         return bool32;
     }
 
-    public static Boolean toBoolean(Object object, boolean defaultBoolean) {
+    public static boolean toBoolean(Object object, boolean defaultBoolean) {
         Boolean bool32 = null;
         String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
         if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {

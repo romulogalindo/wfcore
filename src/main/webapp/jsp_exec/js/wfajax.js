@@ -2,7 +2,7 @@
  * wfajax ver 1.0.0
  */
 
-function inet() {
+function Inet() {
     var xmlHttp = false;
     // try {
     //     xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
@@ -21,8 +21,8 @@ function inet() {
 }
 
 //$D.getJSON = function (url) {
-$D.doPagJson = function (url) {
-    var net = new inet();
+doPagJson = function (url) {
+    var net = new Inet();
     net.open("POST", url, true); //false para que sea sincrono
 
     net.onreadystatechange = function () {
@@ -51,8 +51,8 @@ $D.doLogoutJson = function () {
     net.send(null);
 }
 
-$D.doPropag = function (url, data) {
-    var net = new inet();
+doPropag = function (url, data) {
+    var net = new Inet();
     net.open("POST", "/beaver", true); //false para que sea sincrono
 
     net.onreadystatechange = function () {

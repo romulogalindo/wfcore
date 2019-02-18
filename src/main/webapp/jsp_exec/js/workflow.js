@@ -1,6 +1,6 @@
 var $D = document;
 
-function param(co_pagreg, co_conpar) {
+function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
 
@@ -80,7 +80,7 @@ function pagina() {
     //pedimos que ejecute el valpag y que nos de solo el contenido
 
     // ASYNBC
-    $D.doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
+    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
 
     var input_cansubmit = document.getElementsByTagName('INPUT');
 
@@ -327,11 +327,11 @@ function propag(co_button, il_proces, co_condes) {
             }
         }
 
-        parametros = (parametros.length == 0 ? '&' : '') + 'co_conpar_' + sconpar + '=' + valdom;
+        parametros = parametros + '&co_conpar_' + sconpar + '=' + valdom;
     }
 
     //alert('DO! ' + parametros);
-    $D.doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
+    doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
     //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
 }
 
@@ -383,6 +383,12 @@ function master_popup(urlpopup, ele, titulo) {
     document.getElementById("popup").style.display = "block";
     document.getElementById("popup_body").src = urlpopup;
 
+}
+
+function master_popup_close() {
+    document.getElementById("popup").style.display = "none";
+    overlay(false);
+    document.getElementById("popup_body").src = '';
 }
 
 /*LOGOUT*/

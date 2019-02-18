@@ -126,7 +126,6 @@ public class ApplicationManager {
     }
 
     public static ValpagJson buildNValPag(List<ValpagDTO> valpagDTOs) {
-//        String ultraJS = "";
         ValpagJson valpagJson = new ValpagJson();
 
         if (valpagDTOs.size() > 0) {
@@ -164,6 +163,11 @@ public class ApplicationManager {
 
         return valpagJson;
     }
+
+//    public static PropagJson buildNPropag(PropagDTO propagDTO){
+//
+//        return null;
+//    }
 
     public static PdfJson evalRegist38(String va_pagreg) {
         PdfJson pdfJson = null;
