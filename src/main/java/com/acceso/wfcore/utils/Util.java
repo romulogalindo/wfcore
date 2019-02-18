@@ -57,14 +57,13 @@ public class Util {
         return long32;
     }
 
-
     public static String getText(String filename) {
         String result = "";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line;
             while ((line = reader.readLine()) != null) {
-                result = result + line+"\n";
+                result = result + line + "\n";
             }
             reader.close();
 //            return records;
@@ -74,5 +73,31 @@ public class Util {
             return null;
         }
         return result;
+    }
+
+    public static Boolean toBoolean(Object object) {
+        Boolean bool32 = null;
+        String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
+        if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {
+            bool32 = false;
+        } else if (mboolean.contentEquals("true") | mboolean.contentEquals("t") | mboolean.contentEquals("1") | mboolean.contentEquals("yes") | mboolean.contentEquals("si")) {
+            bool32 = true;
+        }
+
+        return bool32;
+    }
+
+    public static Boolean toBoolean(Object object, boolean defaultBoolean) {
+        Boolean bool32 = null;
+        String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
+        if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {
+            bool32 = false;
+        } else if (mboolean.contentEquals("true") | mboolean.contentEquals("t") | mboolean.contentEquals("1") | mboolean.contentEquals("yes") | mboolean.contentEquals("si")) {
+            bool32 = true;
+        } else {
+            bool32 = defaultBoolean;
+        }
+
+        return bool32;
     }
 }

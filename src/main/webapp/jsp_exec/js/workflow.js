@@ -13,14 +13,18 @@ function param(co_pagreg, co_conpar) {
     };
 }
 
+function overlay(show) {
+    document.getElementById("myOverlay").style.display = show == true ? "block" : "none";
+}
+
 function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
+    overlay(true);
 }
 
 function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
+    overlay(false);
 }
 
 function viewtab(evt, cityName) {
@@ -201,6 +205,9 @@ function loadFormulario64(row) {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     //eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
                     eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                    var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                    console.log('onclicktext = ' + onclicktext);
+                    eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
                     eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '38') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -342,29 +349,40 @@ function domtr(eledom) {
     if (eledom.tagName == 'TR') return eledom;
 }
 
-function child_popup(u, ele, c, tit1, tit2) {
-    var vp;
-    u = $D.getBase() + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
-    var l = $D.g_ID(ele);
-    if (l.tagName == "LABEL") {
+function child_popup(u, eleid, c, tit1, tit2) {
+    var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
+
+    var eledom = document.getElementsByName(eleid)[0];
+
+    if (eledom.tagName == "LABEL") {
 //        console.log("co_conpar_1:" + escape(l.getAttribute('valpag')));
-        console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
-        console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
-        vp = u + "" + "&co_conpar_1=" + encodeURIComponent(l.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(l.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1&fe_solini=" + new Date().getTime();
+        //console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
+        //console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
+        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
     } else {
-        console.log("co_conpar_1:" + encodeURIComponent(l.value));
-        console.log("co_conpar_2:" + encodeURIComponent(l.value));
-        vp = u + "" + "&co_conpar_1=" + encodeURIComponent(l.value) + "&co_conpar_2=" + encodeURIComponent(l.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1&fe_solini=" + new Date().getTime();
+        //console.log("co_conpar_1:" + encodeURIComponent(l.value));
+        //console.log("co_conpar_2:" + encodeURIComponent(l.value));
+        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
     }
 
-    console.log("vp:" + vp);
+    urlpopup = urlpopup + "&il_header=false";
+    console.log("vp:" + urlpopup);
 
-    $D.g_ID("popup_head").innerHTML = tit1 + "  >  <b>" + tit2 + "</b>";
-    $D.g_ID("popup_body").onload = popup_resize;
-    $D.g_ID("popup_body").setAttribute("ele", ele);
-    $D.g_ID("popup_body").src = vp;
-    $D.lock();
-    $D.g_ID('popup').style.display = "block";
+    // $D.g_ID("popup_head").innerHTML = tit1 + "  >  <b>" + tit2 + "</b>";
+    // // $D.g_ID("popup_body").onload = popup_resize;
+    // $D.g_ID("popup_body").setAttribute("ele", ele);
+    // $D.g_ID("popup_body").src = urlpopup;
+    // $D.lock();
+    // $D.g_ID('popup').style.display = "block";
+
+    window.parent.master_popup(urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
+}
+
+function master_popup(urlpopup, ele, titulo) {
+    overlay(true);
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("popup_body").src = urlpopup;
+
 }
 
 /*LOGOUT*/

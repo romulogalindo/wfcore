@@ -38,8 +38,8 @@ public class ContenedorBean implements Serializable {
         id_frawor = dao.getIdfraworDTO().getId_frawor();
 
         //unir la session con el idfrawor
-        dao.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten,true);
-        dao_fdb.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten,false);
+        dao.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten, true);
+        dao_fdb.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten, false);
 
         //Grabando co_compar
         requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
@@ -66,6 +66,7 @@ public class ContenedorBean implements Serializable {
             contenedor.setId_frawor(id_frawor);
         }
 
+        contenedor.setIl_header(Util.toBoolean(requestManager.getParam("il_header"), true));
         requestManager.save_over_session("" + contenedor.getCo_conten(), contenedor);
     }
 

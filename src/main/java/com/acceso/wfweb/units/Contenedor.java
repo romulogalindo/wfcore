@@ -14,6 +14,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     int co_conten;
     long id_frawor;
     String co_contit;
+    boolean il_header;
 
     public Contenedor(int co_conten, long id_frawor, String co_contit) {
         this.co_conten = co_conten;
@@ -54,6 +55,14 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 
     public void setCo_contit(String co_contit) {
         this.co_contit = co_contit;
+    }
+
+    public boolean isIl_header() {
+        return il_header;
+    }
+
+    public void setIl_header(boolean il_header) {
+        this.il_header = il_header;
     }
 
     @Override
