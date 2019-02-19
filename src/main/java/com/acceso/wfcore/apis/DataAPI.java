@@ -8,65 +8,25 @@ import com.acceso.wfweb.dtos.ValpagDTO;
 import com.google.gson.Gson;
 import org.hibernate.StatelessSession;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
 import java.util.*;
 
 public class DataAPI extends GenericAPI {
 
-    public String SQL(String conectionName, String sqlQuery) {
-        String sqlResult = "{}";
-        Gson gson = new Gson();
-        StatelessSession session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
-        NativeQuery sql = session.createNativeQuery(sqlQuery);
-        List<Object[]> rows = sql.list();
-        session.close();
-        sqlResult = gson.toJson(rows);
-
-        return sqlResult;
-    }
-
-    //public List<ValpagDTO> SQL_LEGACY(String conectionName, String sqlQuery) throws Exception {
-    public List<Object[]> SQL_LEGACY(String conectionName, String sqlQuery) throws Exception {
+    public List<Map<String, Object>> SQL(String conectionName, String sqlQuery) {
         long execution_time;
-        //List<ValpagDTO> valReturn = new ArrayList<>();
-        List<Object[]> valReturn = new ArrayList<>();
+        List<Map<String, Object>> valReturn = new ArrayList<>();
         StatelessSession session = null;
 
         execution_time = System.currentTimeMillis();
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
-
-            //NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
-
             NativeQuery sql = session.createNativeQuery(sqlQuery);
+            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
             valReturn = sql.getResultList();
-
-            for (Object[] valreturn : valReturn) {
-                for (Object valre : valreturn) {
-                    System.out.println("valre=" + valre);
-                }
-                System.out.println("\n");
-            }
-
-            List<Object> querysx = Arrays.asList(sql.getQueryReturns());
-            for (Object queryh : querysx) {
-                System.out.println("queryh=" + queryh);
-
-            }
-
-            for (Map.Entry<String, Object> entry : sql.getHints().entrySet()) {
-                System.out.println("K,V => " + entry.getKey() + ":" + entry.getValue());
-            }
-
-            Iterator<String> spaces = sql.getSynchronizedQuerySpaces().iterator();
-            while(spaces.hasNext()){
-                System.out.println("spaces? = " + spaces.next());
-            }
-
-            //valReturn = sql.list();
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
 
@@ -84,10 +44,40 @@ public class DataAPI extends GenericAPI {
         return valReturn;
     }
 
-    public ValpagJson JSON_VALPAG(List<ValpagDTO> valpagDTOS) {
-        ValpagJson valpagJson = ApplicationManager.buildNValPag(valpagDTOS);
-        return valpagJson;
+    //public List<ValpagDTO> VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {
+    public ValpagJson VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {
+
+        long execution_time;
+        List<ValpagDTO> valReturn = new ArrayList<>();
+        StatelessSession session = null;
+
+        execution_time = System.currentTimeMillis();
+        try {
+            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+
+            NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
+
+            valReturn = sql.getResultList();
+            session.close();
+        } catch (Exception ep) {
+
+            if (session != null) {
+                session = null;
+            }
+
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " E = " + ep.getMessage() + "");
+            throw ep;
+        }
+
+        return ApplicationManager.buildNValPag(valReturn);
     }
+
+//    public ValpagJson JSON_VALPAG(List<ValpagDTO> valpagDTOS) {
+//        ValpagJson valpagJson = ApplicationManager.buildNValPag(valpagDTOS);
+//        return valpagJson;
+//    }
 
     //    public PropagDTO SQL_LEGACY(){
 //
