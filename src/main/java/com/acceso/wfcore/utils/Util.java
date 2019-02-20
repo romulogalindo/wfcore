@@ -5,6 +5,61 @@ import java.io.FileReader;
 
 public class Util {
 
+    public static Boolean toBoolean(Object object) {
+        Boolean bool32 = null;
+        String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
+        if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {
+            bool32 = false;
+        } else if (mboolean.contentEquals("true") | mboolean.contentEquals("t") | mboolean.contentEquals("1") | mboolean.contentEquals("yes") | mboolean.contentEquals("si")) {
+            bool32 = true;
+        }
+
+        return bool32;
+    }
+
+    public static boolean toBoolean(Object object, boolean defaultBoolean) {
+        Boolean bool32 = null;
+        String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
+        if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {
+            bool32 = false;
+        } else if (mboolean.contentEquals("true") | mboolean.contentEquals("t") | mboolean.contentEquals("1") | mboolean.contentEquals("yes") | mboolean.contentEquals("si")) {
+            bool32 = true;
+        } else {
+            bool32 = defaultBoolean;
+        }
+
+        return bool32;
+    }
+
+
+    public static Short toShort(Object object) {
+        Short short32 = null;
+        String shortString = object == null ? "" : ("" + object);
+
+        try {
+            short32 = Short.parseShort(shortString);
+        } catch (Exception ep) {
+
+        }
+
+        return short32;
+    }
+
+
+    public static short toShort(Object object, short defaultShort) {
+        Short short32 = null;
+        String shortString = object == null ? "" : ("" + object);
+
+        try {
+            short32 = Short.parseShort(shortString);
+        } catch (Exception ep) {
+            short32 = defaultShort;
+        }
+
+        return short32;
+    }
+
+
     public static Integer toInt(Object object) {
         Integer int32 = null;
         String intString = object == null ? "" : ("" + object);
@@ -75,29 +130,5 @@ public class Util {
         return result;
     }
 
-    public static Boolean toBoolean(Object object) {
-        Boolean bool32 = null;
-        String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
-        if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {
-            bool32 = false;
-        } else if (mboolean.contentEquals("true") | mboolean.contentEquals("t") | mboolean.contentEquals("1") | mboolean.contentEquals("yes") | mboolean.contentEquals("si")) {
-            bool32 = true;
-        }
 
-        return bool32;
-    }
-
-    public static boolean toBoolean(Object object, boolean defaultBoolean) {
-        Boolean bool32 = null;
-        String mboolean = object == null ? "" : ("" + object).trim().toLowerCase();
-        if (mboolean.contentEquals("false") | mboolean.contentEquals("f") | mboolean.contentEquals("0") | mboolean.contentEquals("no")) {
-            bool32 = false;
-        } else if (mboolean.contentEquals("true") | mboolean.contentEquals("t") | mboolean.contentEquals("1") | mboolean.contentEquals("yes") | mboolean.contentEquals("si")) {
-            bool32 = true;
-        } else {
-            bool32 = defaultBoolean;
-        }
-
-        return bool32;
-    }
 }

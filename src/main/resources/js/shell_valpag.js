@@ -69,6 +69,6 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA) {
     //
     // return rows;
     //return API_DATA.VALPAG_LEGACY('WFACR_CONX', 'select * from frawor2.pfvalpag(CO_CONTEN, ID_FRAWOR, CO_PAGINA)');
-    //USUARI_DATA_JS_TEXT
+    USUARI_DATA_JS_TEXT
 }
 

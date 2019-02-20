@@ -26,6 +26,8 @@ public class DataAPI extends GenericAPI {
             NativeQuery sql = session.createNativeQuery(sqlQuery);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+
             valReturn = sql.getResultList();
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
@@ -44,24 +46,25 @@ public class DataAPI extends GenericAPI {
         return valReturn;
     }
 
-    //public List<ValpagDTO> VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {
     public ValpagJson VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {
 
-        long execution_time;
-        List<ValpagDTO> valReturn = new ArrayList<>();
+        long execution_time = System.currentTimeMillis();
+        List<ValpagDTO> valReturn;
         StatelessSession session = null;
 
-        execution_time = System.currentTimeMillis();
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
 
             NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
-
             valReturn = sql.getResultList();
+
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+
             session.close();
         } catch (Exception ep) {
+            valReturn = new ArrayList<>();
 
             if (session != null) {
                 session = null;
@@ -74,15 +77,4 @@ public class DataAPI extends GenericAPI {
         return ApplicationManager.buildNValPag(valReturn);
     }
 
-//    public ValpagJson JSON_VALPAG(List<ValpagDTO> valpagDTOS) {
-//        ValpagJson valpagJson = ApplicationManager.buildNValPag(valpagDTOS);
-//        return valpagJson;
-//    }
-
-    //    public PropagDTO SQL_LEGACY(){
-//
-//    }
-//    public PropagJson JSON_PROPAG() {
-//
-//    }
 }

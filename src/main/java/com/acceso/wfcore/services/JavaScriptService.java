@@ -63,7 +63,7 @@ public class JavaScriptService extends Service {
     }
 
     //    function exec valpag
-    public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, int co_pagbot) {
+    public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, short co_pagbot) {
         Object result = null;
         try {
 //            Object fn = engine_nashornjs.eval(JSText);

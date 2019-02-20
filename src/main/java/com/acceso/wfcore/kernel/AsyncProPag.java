@@ -30,10 +30,10 @@ public class AsyncProPag extends AsyncProcessor {
             PrintWriter out = this.asyncContext.getResponse().getWriter();
 
             HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();//request.
-            Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
-            Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
-            Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
-            Integer co_botone = Util.toInt(asyncContext.getRequest().getParameter("co_botone"), -1);
+            int co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
+            int co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
+            long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
+            short co_botone = Util.toShort(asyncContext.getRequest().getParameter("co_botone"), (short) -1);
             boolean il_proces = Util.toBoolean(asyncContext.getRequest().getParameter("il_proces"), false);
 
             //ejecuta eñ valpag
@@ -44,7 +44,8 @@ public class AsyncProPag extends AsyncProcessor {
             //Frawor4DAO dao = new Frawor4DAO();
 
 //            valpag_js = dao.getVPJS(co_pagina);
-            valpag_js = "return API_DATA.JSON_PROPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\',\'+CO_PAGBOT+\')'));";
+            //valpag_js = "return API_DATA.JSON_PROPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\',\'+CO_PAGBOT+\')'));";
+            valpag_js = "return API_DATA.SQL('wfacr', 'select * from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\',\'+CO_PAGBOT+\')');";
             //dao.close();
 
 //            new FileInputStream(asyncContext.getRequest().getServletContext().getRealPath("/") + "js/main_Acr_shell.js");
@@ -54,16 +55,16 @@ public class AsyncProPag extends AsyncProcessor {
             System.out.println("jsText = " + jsText);
 
 //            ValpagJson valpagJson_ = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doJS64(jsText, "do_valpag(" + id_frawor + "," + co_conten + "," + co_pagina + ")");
-            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doPropag64(jsText, "do_propag", co_pagina, id_frawor, co_conten, co_botone);
+            Object object = (Object) WFCoreListener.APP.getJavaScriptService().doPropag64(jsText, "do_propag", co_pagina, id_frawor, co_conten, co_botone);
 
-//            System.out.println("[1]valpagJson_ = " + valpagJson_);
+            System.out.println("[1]object = " + object);
 //            String
 //            ValpagJson valpagJson = ApplicationManager.buildNValPag(resultado_valpag);
-            System.out.println("[2]valpagJson = " + valpagJson);
+//            System.out.println("[2]valpagJson = " + object);
 
             JsonResponse jsonResponse = new JsonResponse();
             jsonResponse.setStatus("OK");
-            jsonResponse.setResult(valpagJson);
+            jsonResponse.setResult(object);
 
             //Gson gson = new Gson();
             Gson gson = new GsonBuilder()

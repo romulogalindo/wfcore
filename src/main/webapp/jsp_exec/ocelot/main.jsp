@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=18"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=18"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=19"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=19"></script>
 
 </head>
 <body onload="workflow()" style="background: #ededed;">

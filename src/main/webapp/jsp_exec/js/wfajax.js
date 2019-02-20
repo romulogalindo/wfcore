@@ -57,6 +57,8 @@ doPropag = function (url, data) {
 
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
+            alert('[' + net.responseText + "]");
+            //var json = JSON.parse(net.responseText);
             window.parent.location.href = url;
         }
     }
