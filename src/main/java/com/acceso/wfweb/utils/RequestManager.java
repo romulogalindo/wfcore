@@ -2,12 +2,18 @@ package com.acceso.wfweb.utils;
 
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfweb.units.Usuario;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 
 public class RequestManager {
     public static String REQUEST_METHOD_GET = "GET";
@@ -15,19 +21,43 @@ public class RequestManager {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private boolean ismultipart;
+    private List<FileItem> fileItemList;
 
     public RequestManager(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("me llamaron agui!");
         this.request = request;
         this.response = response;
+
+        validMultiPart(request);
     }
 
     public RequestManager(HttpRewriteWrappedRequest httpRewriteWrappedRequest, HttpServletResponse response) {
+        System.out.println("me llamaron agui2!");
         this.request = (HttpServletRequest) httpRewriteWrappedRequest;
         this.response = response;
+
+        validMultiPart((HttpServletRequest) httpRewriteWrappedRequest);
+    }
+
+    public void validMultiPart(HttpServletRequest request) {
+        this.ismultipart = ServletFileUpload.isMultipartContent(request);
+
+        if (this.ismultipart) {
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+            ServletFileUpload sfu = new ServletFileUpload(factory);
+
+            try {
+                this.fileItemList = sfu.parseRequest(request);
+            } catch (Exception ep) {
+                fileItemList = new ArrayList<>();
+                ep.printStackTrace();
+            }
+        }
     }
 
     public String getPath() {
-//        return this.request.getPathInfo();
         return this.request.getServletPath();
 
     }
@@ -41,7 +71,17 @@ public class RequestManager {
     }
 
     public String getParam(String paranName) {
-        return this.request.getParameter(paranName);
+        if (this.ismultipart) {
+            for (FileItem fileItem : this.fileItemList) {
+                if (fileItem.getFieldName().contentEquals(paranName)) {
+                    return fileItem.getString();
+                }
+            }
+            return null;
+        } else {
+            return this.request.getParameter(paranName);
+        }
+
     }
 
     public void save_over_session(String objectKey, Object objectValue) {

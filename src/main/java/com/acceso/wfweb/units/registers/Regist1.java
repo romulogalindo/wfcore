@@ -47,7 +47,7 @@ public class Regist1 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' class=\"pagreg\" name='" + id + "V' ></span>";
+                html += "<span id='" + id + "V' class=\"pagreg\" name='" + id + "V' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

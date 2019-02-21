@@ -198,7 +198,10 @@ function loadFormulario64(row) {
             case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
-                if (ti_pagreg == '13') {
+                if (ti_pagreg == '1') {
+                    eledom.setAttribute("va_pagreg", reg.value);
+                    eledom.innerHTML = valdom;
+                } else if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
                 } else if (ti_pagreg == '34') {
@@ -292,16 +295,72 @@ function propag(co_button, il_proces, co_condes) {
     console.log('ls_regist = ' + ls_regist);
 
     for (var i = 0; i < ls_regist.length; i++) {
-        var ele = ls_regist[i];
+        var eledom = ls_regist[i];
         var id = "";
         var val = "";
 
         //console.log('ele = '+ele);
         //alert('ele = ' + ele);
 
-        if (ele.tagName == 'INPUT') {
-            id = ele.id.substring(ele.id.indexOf('R') + 1, ele.id.indexOf('V'));
-            val = ele.value;
+        // if (eledom.tagName == 'INPUT') {
+        //     id = ele.id.substring(ele.id.indexOf('R') + 1, ele.id.indexOf('V'));
+        //     val = ele.value;
+        // }else{
+        //
+        // }
+
+        switch (eledom.tagName) {
+            case "INPUT": {
+                id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+                val = eledom.value;
+
+                break;
+            }
+            case "SPAN": {
+                id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+
+                var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
+                if (ti_pagreg == '1') {
+                    val = eledom.getAttribute("va_pagreg");
+                } else if (ti_pagreg == '13') {
+                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+                } else if (ti_pagreg == '34') {
+                    //PWNDIENTE MARIO!!!
+                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                    //
+                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
+                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                } else if (ti_pagreg == '38') {
+
+                    // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+
+                } else {
+                    //hacer algo diferente para el tipo 38
+                    // eledom.innerHTML = valdom;
+                }
+
+                break;
+            }
+            case "A": {
+                var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                if (ti_pagreg == '13') {
+                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    eledom.setAttribute('href', valdom);
+                    domtr(eledom).removeAttribute('style');
+                } else if (ti_pagreg) {
+                    //hacer algo diferente para el tipo 38
+                }
+
+                break;
+            }
+            default: {
+                eledom.innerHTML = valdom;
+                domtr(eledom).removeAttribute('style');
+            }
+
         }
 
         //console.log('K=' + id + ',V=' + val);

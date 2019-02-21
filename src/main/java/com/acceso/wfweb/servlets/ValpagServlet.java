@@ -12,6 +12,7 @@ import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfweb.utils.RequestManager;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,10 +56,9 @@ public class ValpagServlet extends HttpServlet {
         response.setContentType("text/html;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
-        asyncCtx.setTimeout(100000);//1 Seg
+        asyncCtx.setTimeout(100000);//10 Seg
 
-        RequestManager requestManager = new RequestManager(request, response);
-        switch (requestManager.getPath()) {
+        switch (request.getServletPath()) {
             case "/pangolin": {
                 //valpag
                 WFCoreListener.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000));
