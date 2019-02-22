@@ -6,6 +6,7 @@ import org.hibernate.exception.DataException;
 import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.SQLGrammarException;
 
+import javax.persistence.PersistenceException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.SQLException;
@@ -139,8 +140,19 @@ public class Util {
         System.out.println("error class:" + ep.getClass());
         String message = "";
 
-        
-        if (ep instanceof HibernateException) {
+        if (ep instanceof PersistenceException) {
+            message = ((GenericJDBCException) ep.getCause()).getSQLException().getLocalizedMessage();
+            if (message.contains("Where:")) {
+                message = message.substring(0, message.indexOf("Where:")).trim();
+            }
+            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getLocalizedMessage());
+            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getMessage());
+            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getSQL());
+            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getSQLException().getClass());
+            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getSQLException().getMessage());
+            System.out.println("ep.getCause(2) = " + ((GenericJDBCException) ep.getCause()).getSQLException().getLocalizedMessage());
+//            message = ((PersistenceException) ep).getMessage();
+        } else if (ep instanceof HibernateException) {
             message = ((HibernateException) ep).getMessage();
         } else if (ep instanceof GenericJDBCException) {
             message = ((GenericJDBCException) ep).getSQLException().getMessage();

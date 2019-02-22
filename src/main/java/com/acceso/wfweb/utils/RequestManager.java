@@ -84,6 +84,33 @@ public class RequestManager {
 
     }
 
+    public HashMap<Integer, String> getPagregs() {
+        HashMap<Integer, String> pagregs = new HashMap<>();
+
+        if (this.ismultipart) {
+            for (FileItem fileItem : this.fileItemList) {
+                System.out.println("><" + fileItem.getFieldName());
+                if (fileItem.getFieldName().contains("co_regist")) {
+                    Integer id = Integer.parseInt(fileItem.getFieldName().replace("co_regist", ""));
+                    String value = fileItem.getString();
+                    pagregs.put(id, value);
+                }
+            }
+        } else {
+            Enumeration<String> paramnames = request.getParameterNames();
+            while (paramnames.hasMoreElements()) {
+                String paramname = paramnames.nextElement();
+                if (paramname.contains("co_regist")) {
+                    Integer id = Integer.parseInt(paramname.replace("co_regist", ""));
+                    String value = ("" + request.getParameter(paramname)).trim();
+                    pagregs.put(id, value);
+                }
+            }
+        }
+
+        return pagregs;
+    }
+
     public void save_over_session(String objectKey, Object objectValue) {
         this.request.getSession().setAttribute(objectKey, objectValue);
     }

@@ -63,19 +63,20 @@ public class JavaScriptService extends Service {
     }
 
     //    function exec valpag
-    public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, short co_pagbot) {
+    public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, short co_pagbot) throws Exception {
         Object result = null;
-        try {
+//        try {
 //            Object fn = engine_nashornjs.eval(JSText);
-            engine_nashornjs.eval(JSText);
-            Invocable inv = (Invocable) engine_nashornjs;
+        engine_nashornjs.eval(JSText);
+        Invocable inv = (Invocable) engine_nashornjs;
 //            Invocable inv = (Invocable) engine_nashornjs;
-            result = inv.invokeFunction(JSFunction, co_pagina, id_frawor, co_conten, co_pagbot);
-            System.out.println("(ENGINE2)result = " + result);
-        } catch (Exception ep) {
-            System.out.println("ENGINE 2 (error)");
-            ep.printStackTrace();
-        }
-        return result;
+//        result = inv.invokeFunction(JSFunction, co_pagina, id_frawor, co_conten, co_pagbot);
+        return inv.invokeFunction(JSFunction, co_pagina, id_frawor, co_conten, co_pagbot);
+//        System.out.println("(ENGINE2)result = " + result);
+//        } catch (Exception ep) {
+//            System.out.println("ENGINE 2 (error)");
+//            ep.printStackTrace();
+//        }
+//        return result;
     }
 }

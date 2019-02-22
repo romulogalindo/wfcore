@@ -57,9 +57,14 @@ doPropag = function (url, data) {
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-            alert('[' + net.responseText + "]");
-            //var json = JSON.parse(net.responseText);
-            window.parent.location.href = url;
+
+            var rpta = JSON.parse(net.responseText);
+            if (rpta.error) {
+                alert('' + rpta.error.message + "");
+            } else {
+                window.parent.location.href = url;
+            }
+
         }
     }
 

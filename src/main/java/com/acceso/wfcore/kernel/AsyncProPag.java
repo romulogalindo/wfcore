@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.fileupload.FileItem;
 
@@ -33,59 +34,62 @@ public class AsyncProPag extends AsyncProcessor {
 
     @Override
     public void run() {
+        PrintWriter out = null;
+
         try {
-            PrintWriter out = this.asyncContext.getResponse().getWriter();
-
-            HttpServletRequest httpServletRequest = (HttpServletRequest) asyncContext.getRequest();
-//            RequestManager requestManager = new RequestManager(httpServletRequest, null);
-            RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
-
-            int co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
-            int co_pagina = Util.toInt(requestManager.getParam("co_pagina"), -1);
-            long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
-            short co_botone = Util.toShort(requestManager.getParam("co_botone"), (short) -1);
-            boolean il_proces = Util.toBoolean(requestManager.getParam("il_proces"), false);
-
-            String valpag_js = "";
-
-            Frawor4DAO dao = new Frawor4DAO();
-
-//            valpag_js = dao.getVPJS(co_pagina);
-            //valpag_js = "return API_DATA.JSON_PROPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\',\'+CO_PAGBOT+\')'));";
-            valpag_js = "return API_DATA.SQL('wfacr', 'select 1 as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
-            dao.close();
-
-
-            String jsText = Util.getText(asyncContext.getRequest().getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_propag.js");
-            jsText = jsText.replace("USUARI_DATA_JS_TEXT", valpag_js);
-            System.out.println("jsText = " + jsText);
-
-            Object object = (Object) WFCoreListener.APP.getJavaScriptService().doPropag64(jsText, "do_propag", co_pagina, id_frawor, co_conten, co_botone);
-
-            System.out.println("[1]object = " + object);
-//            String
-//            ValpagJson valpagJson = ApplicationManager.buildNValPag(resultado_valpag);
-//            System.out.println("[2]valpagJson = " + object);
-
-            JsonResponse jsonResponse = new JsonResponse();
-            jsonResponse.setStatus("OK");
-            jsonResponse.setResult(object);
-
-            //Gson gson = new Gson();
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(RegJson.class, new RegJsonAdapter())
-                    .create();
-
-//            ultraJS = gson.toJson(iValPag);
-            String urpta = gson.toJson(jsonResponse);
-
-            System.out.println("propag? = " + urpta);
-
-            out.write(urpta);
-        } catch (IOException e) {
-            e.printStackTrace();
+            out = this.asyncContext.getResponse().getWriter();
+        } catch (Exception ep) {
         }
 
+        if (out != null) {
+            try {
+                RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
+
+                int co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
+                int co_pagina = Util.toInt(requestManager.getParam("co_pagina"), -1);
+                long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
+                short co_botone = Util.toShort(requestManager.getParam("co_botone"), (short) -1);
+                boolean il_proces = Util.toBoolean(requestManager.getParam("il_proces"), false);
+
+                String valpag_js = "";
+
+                Frawor4DAO dao = new Frawor4DAO();
+                Frawor4DAO dao2 = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+
+                dao.deletePagreg(id_frawor, co_pagina, true);
+                dao2.deletePagreg(id_frawor, co_pagina, false);
+
+                for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
+                    dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
+                    dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
+                }
+
+                // valpag_js = dao.getVPJS(co_pagina);
+                valpag_js = "return API_DATA.SQL('wfacr', 'select 1 as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
+                dao.close();
+                dao2.close();
+
+
+                String jsText = Util.getText(asyncContext.getRequest().getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_propag.js");
+                jsText = jsText.replace("USUARI_DATA_JS_TEXT", valpag_js);
+                System.out.println("jsText = " + jsText);
+
+                Object object = WFCoreListener.APP.getJavaScriptService().doPropag64(jsText, "do_propag", co_pagina, id_frawor, co_conten, co_botone);
+
+                System.out.println("[1]PROPAG devolvio = " + object);
+
+                out.write(object.toString());
+
+            } catch (Exception ep) {
+//                ep.printStackTrace();
+                //Si algo no se puede controlar directamente en este flujo se debe devolver el objeto
+                JsonResponse jsonResponse = new JsonResponse();
+                jsonResponse.setStatus("OK");
+                jsonResponse.setResult(null);
+                jsonResponse.setError(Util.getError(ep));
+                out.write(new Gson().toJson(jsonResponse));
+            }
+        }
         //complete the processing
         asyncContext.complete();
     }

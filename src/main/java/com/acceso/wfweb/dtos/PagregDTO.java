@@ -15,22 +15,33 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = "frawor2.pfins_tbpagreg",
-                query = "select * from frawor2.pfins_tbpagreg(:p_id_frawor,:p_co_pagina,:p_co_pagreg,:p_nu_pagfil,:p_va_pagreg)",
+                name = Values.QUERYS_WEB_SELECT_INSTBPAGREG_FRAWOR2,
+                query = "select pfins_tbpagreg as pagreg from frawor2.pfins_tbpagreg(:p_id_frawor,:p_co_pagina,:p_co_pagreg,:p_nu_pagfil,:p_va_pagreg)",
+                resultClass = PagregDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_WEB_SELECT_INSTBPAGREG_FRAWOR4,
+                query = "select pfins_tbpagreg as pagreg from frawor4.pfins_tbpagreg(:p_id_frawor,:p_co_pagina,:p_co_pagreg,:p_nu_pagfil,:p_va_pagreg)",
+                resultClass = PagregDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR2,
+                query = "select pfdel_tbpagreg as pagreg from frawor2.pfdel_tbpagreg(:p_id_frawor,:p_co_pagina)",
+                resultClass = PagregDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR4,
+                query = "select pfdel_tbpagreg as pagreg from frawor4.pfdel_tbpagreg(:p_id_frawor,:p_co_pagina)",
                 resultClass = PagregDTO.class)
 })
 public class PagregDTO implements Serializable {
 
     @Id
-    String pfins_tbpagreg;
+    String pagreg;
 
-    //@Id
-    public String getPfins_tbpagreg() {
-        return pfins_tbpagreg;
+    public String getPagreg() {
+        return pagreg;
     }
 
-    public void setPfins_tbpagreg(String pfins_tbpagreg) {
-        this.pfins_tbpagreg = pfins_tbpagreg;
+    public void setPagreg(String pagreg) {
+        this.pagreg = pagreg;
     }
 }
 
