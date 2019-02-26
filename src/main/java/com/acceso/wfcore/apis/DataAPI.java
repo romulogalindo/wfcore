@@ -2,9 +2,9 @@ package com.acceso.wfcore.apis;
 
 import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.ValpagJson;
-import com.acceso.wfweb.dtos.PropagDTO;
 import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.google.gson.Gson;
@@ -13,12 +13,12 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
-import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class DataAPI extends GenericAPI {
 
-    //public List<Map<String, Object>> SQL(String conectionName, String sqlQuery) {
     public String SQL(String conectionName, String sqlQuery) {
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();
@@ -29,7 +29,6 @@ public class DataAPI extends GenericAPI {
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 
-//            NativeQuery sql = session.createNativeQuery(sqlQuery);
             Query sql = session.createNativeQuery(sqlQuery);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
@@ -50,9 +49,16 @@ public class DataAPI extends GenericAPI {
                 session = null;
             }
 
-            jsonResponse.setStatus(JsonResponse.ERROR);
-            jsonResponse.setResult(null);
-            jsonResponse.setError(Util.getError(ep));
+            ErrorMessage errormessage = Util.getError(ep);
+            if (errormessage == null) {
+                jsonResponse.setStatus(JsonResponse.OK);
+                jsonResponse.setResult("[]");
+                jsonResponse.setError(null);
+            } else {
+                jsonResponse.setStatus(JsonResponse.ERROR);
+                jsonResponse.setResult(null);
+                jsonResponse.setError(Util.getError(ep));
+            }
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getMessage() + ": E1 = " + ep.getMessage() + "");
             //throw ep;
