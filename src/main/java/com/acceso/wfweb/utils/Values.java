@@ -34,6 +34,9 @@ public class Values {
     public static final String QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR2 = "frawor2.pfdel_tbpagreg";
     public static final String QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR4 = "frawor4.pfdel_tbpagreg";
 
+    public static final String QUERYS_WEB_SELECT_PFCOMPAG = "frawor2.pfcompag";
+    public static final String QUERYS_WEB_SELECT_PFCOMPAGPOS = "frawor2.pfcompagpos";
+
     public static final String QUERYS_WEB_ARCADJ = "arcadj.pbarcadj";
     public static final String QUERYS_WEB_ARCHIV_READ = "wfarchiv.pbarchiv_read";
     public static final String QUERYS_WEB_ARCHIV_INS = "wfarchiv.pbarchiv_ins";

@@ -52,6 +52,7 @@ $D.doLogoutJson = function () {
 }
 
 doPropag = function (url, data) {
+
     var net = new Inet();
     net.open("POST", "/beaver", true); //false para que sea sincrono
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -69,10 +70,8 @@ doPropag = function (url, data) {
     }
 
     net.send(data);
-    console.log("lellendo el var=====>" + data);
-    for (var i = 0; i < data.length; i++) {
-        console.log("var[" + i + "]=" + data[i]);
-    }
+
+
 }
 
 $D.getJSONE = function (url) {

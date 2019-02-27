@@ -30,26 +30,30 @@ public class Regist3 extends HTMLRenderer {
             }
 
             case "E": {
-                html += "<tr name=" + id + " co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
+                html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span><select id='" + id + "V' href=\"\" class=\"pagreg\" name='" + id + "V' ti_pagreg=\"3\"></select></span>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" >" ;
+                html += "       <select></select>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;
             }
 
             case "L": {
-                html += "<tr name=" + id + " co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
+                html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span><select id='" + id + "V' href=\"\" class=\"pagreg\" name='" + id + "V' ti_pagreg=\"3\"></select></span>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" >" ;
+                html += "       <select disabled></select>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

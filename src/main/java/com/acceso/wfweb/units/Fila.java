@@ -87,6 +87,10 @@ public class Fila extends HTMLRenderer implements Serializable {
                     html += new Regist3(id, registroDTO).toHTML();
                     break;
                 }
+                case 4: {
+                    html += new Regist4(id, registroDTO).toHTML();
+                    break;
+                }
                 case 13: {
                     html += new Regist13(id, registroDTO).toHTML();
                     break;

@@ -10,6 +10,7 @@ public class JsonResponse implements Serializable {
 
     String status;
     Object result;
+    Object aditional;
     String message;
     ErrorMessage error;
 
@@ -30,6 +31,14 @@ public class JsonResponse implements Serializable {
 
     public void setResult(Object result) {
         this.result = result;
+    }
+
+    public Object getAditional() {
+        return aditional;
+    }
+
+    public void setAditional(Object aditional) {
+        this.aditional = aditional;
     }
 
     public String getMessage() {

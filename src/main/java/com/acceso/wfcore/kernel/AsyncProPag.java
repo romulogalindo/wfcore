@@ -65,7 +65,9 @@ public class AsyncProPag extends AsyncProcessor {
                 }
 
                 // valpag_js = dao.getVPJS(co_pagina);
-                valpag_js = "return API_DATA.SQL('wfacr', 'select 1 as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
+//                valpag_js = "return API_DATA.SQL('wfacr', 'select 1 as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
+
+                valpag_js = "return API_DATA.SQL('wfacr', 'select * from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
                 dao.close();
                 dao2.close();
 
@@ -74,9 +76,9 @@ public class AsyncProPag extends AsyncProcessor {
                 jsText = jsText.replace("USUARI_DATA_JS_TEXT", valpag_js);
                 System.out.println("jsText = " + jsText);
 
-                Object object = WFCoreListener.APP.getJavaScriptService().doPropag64(jsText, "do_propag", co_pagina, id_frawor, co_conten, co_botone);
+                Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(jsText, "do_propag", co_pagina, id_frawor, co_conten, co_botone) : "{}";
 
-                System.out.println("[1]PROPAG devolvio = " + object);
+//                System.out.println("[1]PROPAG devolvio = " + object);
 
                 out.write(object.toString());
 

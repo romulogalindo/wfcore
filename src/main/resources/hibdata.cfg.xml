@@ -16,7 +16,9 @@
 
         <!-- Disable the second-level cache  -->
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-        <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
+        <property name="hibernate.connection.provider_class">
+            org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+        </property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="hibernate.show_sql">false</property>
@@ -57,6 +59,7 @@
         <mapping class="com.acceso.wfweb.dtos.ProcesoDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ParametroDTO"/>
         <mapping class="com.acceso.wfweb.dtos.PagregDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.ComboDTO"/>
         <mapping class="com.acceso.wfweb.dtos.JoinDTO"/>
 
         <!--DTOS's Legacy-->

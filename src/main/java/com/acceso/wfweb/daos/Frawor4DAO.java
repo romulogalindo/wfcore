@@ -360,6 +360,27 @@ public class Frawor4DAO extends DAO {
 
     }
 
+    public List<ComboDTO> getCombo(int p_co_pagina, long p_id_frawor, int p_co_conten, short p_co_regist) {
+        List<ComboDTO> comboDTOS = null;
+        NQuery nQuery = new NQuery(TAG + ":PAGPAR");
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCOMPAG), true, true);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setShort("p_co_regist", p_co_regist);
+            comboDTOS = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return comboDTOS;
+    }
+
     @Override
     public void close() {
         try {

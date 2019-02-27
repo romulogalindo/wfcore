@@ -141,17 +141,17 @@ public class Util {
         String message = "";
 
         if (ep instanceof PersistenceException) {
-            message = ((GenericJDBCException) ep.getCause()).getSQLException().getLocalizedMessage();
-            if (message.contains("Where:")) {
-                message = message.substring(0, message.indexOf("Where:")).trim();
+
+            if (ep.getCause() instanceof org.hibernate.MappingException) {
+                return null;
+            } else if (ep.getCause() instanceof GenericJDBCException) {
+                message = ((GenericJDBCException) ep.getCause()).getSQLException().getLocalizedMessage();
+
+                if (message.contains("Where:")) {
+                    message = message.substring(0, message.indexOf("Where:")).trim();
+                }
             }
-            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getLocalizedMessage());
-            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getMessage());
-            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getSQL());
-            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getSQLException().getClass());
-            System.out.println("ep.getCause(1) = " + ((GenericJDBCException) ep.getCause()).getSQLException().getMessage());
-            System.out.println("ep.getCause(2) = " + ((GenericJDBCException) ep.getCause()).getSQLException().getLocalizedMessage());
-//            message = ((PersistenceException) ep).getMessage();
+
         } else if (ep instanceof HibernateException) {
             message = ((HibernateException) ep).getMessage();
         } else if (ep instanceof GenericJDBCException) {
@@ -177,13 +177,8 @@ public class Util {
 
         message = message.replace("ERROR: ", "").replace("{", "").replace("}", "").replace("\n", " ").replace("\"", "\\'").replace("\'", "\\'");
 
-
-        System.out.println("internal message:" + message);
         errorMessage.setType((message.contains("{") && message.contains("}")) ? ErrorMessage.ERROR_TYPE_USER : ErrorMessage.ERROR_TYPE_SYSTEM);
         errorMessage.setMessage(message);
-
-        System.out.println("error final:" + errorMessage.getMessage());
-
 
         return errorMessage;
     }

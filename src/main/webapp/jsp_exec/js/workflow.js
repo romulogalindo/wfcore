@@ -60,6 +60,10 @@ function ti_pagina() {
     return document.getElementById('ti_pagina').value;
 }
 
+function ls_hamoda() {
+    return document.getElementById('ls_hamoda').value;
+}
+
 function workflow() {
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
@@ -80,7 +84,7 @@ function pagina() {
     //pedimos que ejecute el valpag y que nos de solo el contenido
 
     // ASYNBC
-    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor());
+    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
 
     var input_cansubmit = document.getElementsByTagName('INPUT');
 
@@ -120,7 +124,7 @@ function pagina_onload(jsonData) {
             // console.log('[paginaload@' + co_pagina() + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
 
             if (ti_pagina() == 'F')
-                loadFormulario64(rows[i]);
+                loadFormulario64(rows[i], jsonData.aditional);
             else
                 loadReporte64(rows[i]);
         }
@@ -168,7 +172,7 @@ function readypagina(pag) {
     console.log('La pàgina ya cargo:' + pag);
 }
 
-function loadFormulario64(row) {
+function loadFormulario64(row, aditional) {
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte' + row);
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte' + row);
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte>regs' + row.regs);
@@ -215,6 +219,34 @@ function loadFormulario64(row) {
                 } else if (ti_pagreg == '38') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+
+                } else if (ti_pagreg == '3') {
+                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
+                    //reg.regist
+                    var ls_compag = aditional[reg.regist];
+                    var dom_compag = "<option value=\"\"></option>";
+
+                    for (var i = 0; i < ls_compag.length; i++) {
+                        compag = ls_compag[i];
+
+                        dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                    }
+                    eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+
+                } else if (ti_pagreg == '4') {
+                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
+                    //reg.regist
+                    var ls_compag = aditional[reg.regist];
+                    var dom_compag = "";
+
+                    for (var i = 0; i < ls_compag.length; i++) {
+                        compag = ls_compag[i];
+
+                        dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                    }
+                    eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
 
                 } else {
                     //hacer algo diferente para el tipo 38
@@ -323,6 +355,14 @@ function propag(co_button, il_proces, co_condes) {
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
                     val = eledom.getAttribute("va_pagreg");
+                } else if (ti_pagreg == '3') {
+                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
+                    val = dom_select.options[dom_select.selectedIndex].value;
+                } else if (ti_pagreg == '4') {
+                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
+                    val = dom_select.options[dom_select.selectedIndex].value;
                 } else if (ti_pagreg == '13') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -379,6 +419,22 @@ function propag(co_button, il_proces, co_condes) {
         switch (eledom.tagName) {
             case "INPUT": {
                 valdom = eledom.value;
+                break;
+            }
+            case "SPAN": {
+                var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
+                if (ti_pagreg == '1') {
+                    valdom = eledom.getAttribute("va_pagreg");
+                } else if (ti_pagreg == '3') {
+                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
+                    valdom = dom_select.options[dom_select.selectedIndex].value;
+                } else if (ti_pagreg == '4') {
+                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
+                    valdom = dom_select.options[dom_select.selectedIndex].value;
+                }
                 break;
             }
             default: {

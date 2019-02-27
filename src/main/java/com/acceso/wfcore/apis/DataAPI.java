@@ -85,6 +85,7 @@ public class DataAPI extends GenericAPI {
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
 
             session.close();
+
         } catch (Exception ep) {
             valReturn = new ArrayList<>();
 

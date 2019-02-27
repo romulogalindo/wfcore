@@ -2,10 +2,7 @@ package com.acceso.wfweb.dtos;
 
 import com.acceso.wfweb.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -52,6 +49,8 @@ public class RegistroDTO implements Serializable {
 
     int ca_caract;
 
+    @Transient
+    boolean il_hamoda;
 
     public RegistroDTO() {
     }
@@ -174,5 +173,13 @@ public class RegistroDTO implements Serializable {
 
     public void setCa_caract(int ca_caract) {
         this.ca_caract = ca_caract;
+    }
+
+    public boolean isIl_hamoda() {
+        return il_hamoda;
+    }
+
+    public void setIl_hamoda(boolean il_hamoda) {
+        this.il_hamoda = il_hamoda;
     }
 }

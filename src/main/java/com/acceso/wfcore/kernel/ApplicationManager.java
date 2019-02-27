@@ -158,16 +158,12 @@ public class ApplicationManager {
 //                System.out.println("regJson = " + regJson);
                 rows.get(rows.size() - 1).getRegs().add(regJson);
             }
+
             valpagJson.setRows(rows);
         }
 
         return valpagJson;
     }
-
-//    public static PropagJson buildNPropag(PropagDTO propagDTO){
-//
-//        return null;
-//    }
 
     public static PdfJson evalRegist38(String va_pagreg) {
         PdfJson pdfJson = null;
