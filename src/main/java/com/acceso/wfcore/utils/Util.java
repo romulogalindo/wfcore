@@ -1,5 +1,6 @@
 package com.acceso.wfcore.utils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
@@ -10,8 +11,14 @@ import javax.persistence.PersistenceException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class Util {
+    private static List<String> exts = Arrays.asList("tar.gz", "tgz", "gz", "zip");
+    public static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
 
     public static Boolean toBoolean(Object object) {
         Boolean bool32 = null;
@@ -133,6 +140,53 @@ public class Util {
             return null;
         }
         return result;
+    }
+
+    public static String formatName(String name) {
+        String myName = name;
+
+        myName = myName.toLowerCase().trim();
+        myName = myName.replaceAll("  ", "_");
+        myName = myName.replaceAll("á", "a");
+        myName = myName.replaceAll("é", "e");
+        myName = myName.replaceAll("í", "i");
+        myName = myName.replaceAll("ó", "o");
+        myName = myName.replaceAll("ú", "u");
+        myName = myName.replaceAll("ñ", "n");
+
+        String fileextension = getFileExtension(name);
+        try {
+            myName = myName.substring(0, myName.lastIndexOf(fileextension) - 1);
+            myName = myName.replaceAll("\\.", "_");
+            myName = myName + "." + fileextension;
+        } catch (Exception ep) {
+        }
+
+        return myName;
+    }
+
+    public static String getFileExtension(String filename) {
+        String ext = null;
+
+        for (String xt : exts) {
+            if (filename.endsWith("." + xt)) {
+                if (ext == null || ext.length() < xt.length()) {
+                    ext = xt;
+                }
+            }
+        }
+
+        if (ext == null) {
+            ext = FilenameUtils.getExtension(filename);
+        }
+        return ext;
+    }
+
+    /**
+     * Utiliza SDF => yyyy/MM/dd
+     * */
+    public static String formatDate1(Date date) {
+        return date != null ? sdf1.format(date) : null;
     }
 
     public static ErrorMessage getError(Exception ep) {

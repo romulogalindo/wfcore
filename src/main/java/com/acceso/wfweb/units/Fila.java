@@ -7,6 +7,7 @@ import com.acceso.wfweb.dtos.TituloDTO;
 import com.acceso.wfweb.units.registers.*;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 public class Fila extends HTMLRenderer implements Serializable {
@@ -78,37 +79,14 @@ public class Fila extends HTMLRenderer implements Serializable {
             html += "</tr>";
 
         } else if (registroDTO != null) {
-            switch (registroDTO.getTi_pagreg()) {
-                case 1: {
-                    html += new Regist1(id, registroDTO).toHTML();
-                    break;
-                }
-                case 3: {
-                    html += new Regist3(id, registroDTO).toHTML();
-                    break;
-                }
-                case 4: {
-                    html += new Regist4(id, registroDTO).toHTML();
-                    break;
-                }
-                case 13: {
-                    html += new Regist13(id, registroDTO).toHTML();
-                    break;
-                }
-                case 22: {
-                    html += new Regist22(id, registroDTO).toHTML();
-                    break;
-                }
-                case 34: {
-                    html += new Regist34(id, registroDTO).toHTML();
-                    break;
-                }
-                case 38: {
-                    html += new Regist38(id, registroDTO).toHTML();
-                    break;
-                }
-                default:
-                    html += new Regist1(id, registroDTO).toHTML();
+
+            try {
+                html += ((HTMLRenderer) Class.forName("com.acceso.wfweb.units.registers.Regist" + registroDTO.getTi_pagreg())
+                        .getConstructor(String.class, RegistroDTO.class)
+                        .newInstance(id, registroDTO))
+                        .toHTML();
+            } catch (Exception ep) {
+                html += new Regist1(id, registroDTO).toHTML();
             }
 
         } else if (botonDTOS != null) {
