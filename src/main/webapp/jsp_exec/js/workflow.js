@@ -395,10 +395,11 @@ function propag(co_button, il_proces, co_condes) {
 
                     if (vafile != undefined) {
                         //do-precarga
-                        var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+                        var vaframe = valdom.getElementsByTagName("IFRAME")[0]
+                        var vafile = vaframe.contentWindow.document.getElementById("vafile");
                         if (vafile.files.length > 0) {
                             vaform.submit();
-                            var jsonrptafile= dowaitover()
+                            var jsonrptafile = dowaitover(vaframe);
                         }
                     }
 
@@ -561,6 +562,40 @@ function onchange_vafile(vafile, lbfile) {
         lbfile.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
     }
 
+}
+
+async function dowaitover(vaframe) {
+    var seg_esp = 90;
+    for (var i = 0; i < seg_esp; i++) {
+
+    }
+    await waitover();
+    //---------------
+    var waitForHello = timeoutms => new Promise((r, j) => {
+        var check = () => {
+            console.warn('checking')
+            if (e.innerHTML == 'Hello world')
+                r()
+            else if ((timeoutms -= 100) < 0)
+                j('timed out!')
+            else
+                setTimeout(check, 1000)
+        }
+        setTimeout(check, 1000)
+    })
+
+    //setTimeout(()=>{e.innerHTML='Hello world'}, 1000)
+
+    (async () => {
+        a.innerHTML = 'waiting..'
+        waitForHello(2000)
+    })()
+}
+
+function waitover() {
+    var rtn = false;
+
+    return rtn;
 }
 
 /*LOGOUT*/

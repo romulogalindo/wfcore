@@ -1001,7 +1001,7 @@ public class DocumentServlet extends HttpServlet {
 //                System.out.println("valpagDTO = " + valpagDTO);
                 }
                 case "U": {
-                    // <editor-fold defaultstate="collapsed" desc="CASE J:: PAGINA ESPECIAL">
+                    // <editor-fold defaultstate="collapsed" desc="SUBIR ARCHIVO WFACR?">
                     out = response.getOutputStream();
                     JsonResponse response1 = new JsonResponse();
 
@@ -1012,10 +1012,10 @@ public class DocumentServlet extends HttpServlet {
                             .filter(item -> !item.isFormField())
                             .filter(item -> item.getSize() <= Values.UPLOAD_FILE_MAXSIZE)
                             .forEach(item -> {
-                                ArchivDTO arcadj;
                                 String fileName = Util.formatName(item.getName());
+                                ArchivDTO arcadj;
 
-                                Frawor4DAO dao = new Frawor4DAO();
+                                Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfaio").getNativeSession());
                                 arcadj = dao.setArchiv(item.getName());
                                 dao.close();
 
