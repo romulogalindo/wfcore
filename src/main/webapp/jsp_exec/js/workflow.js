@@ -210,7 +210,13 @@ function loadFormulario64(row, aditional) {
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
                 } else if (ti_pagreg == '36') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    //eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+                    var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+                    var lbfile = eledom.getElementsByTagName("SPAN")[0];
+                    // eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile").setAttribute("onchange", onchange_vafile(vafile, lbfile))
+                    eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile").onchange = function () {
+                        onchange_vafile(vafile, lbfile);
+                    };
+
                     // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
                     // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
                     // console.log('onclicktext = ' + onclicktext);
@@ -381,6 +387,26 @@ function propag(co_button, il_proces, co_condes) {
                     //
                     // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
                     // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                } else if (ti_pagreg == '36') {
+                    //PWNDIENTE MARIO!!!
+                    //precarga
+                    // var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+                    var vaform = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
+
+                    if (vafile != undefined) {
+                        //do-precarga
+                        var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+                        if (vafile.files.length > 0) {
+                            vaform.submit();
+                            var jsonrptafile= dowaitover()
+                        }
+                    }
+
+                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                    //
+                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
+                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '38') {
 
                     // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -518,12 +544,23 @@ function doupload(ele) {
     var valdom = document.getElementById(ele);
     var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
     vafile.click();
+
+    return false;
 }
 
-function inputuploadchange(ele) {
-    var valdom = document.getElementById(ele);
-    var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-    valdom.getElementsByTagName("A")[0].innerHTML = vafile.value;
+// function inputuploadchange(ele) {
+//     var valdom = document.getElementById(ele);
+//     var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+//     valdom.getElementsByTagName("A")[0].innerHTML = vafile.value;
+// }
+
+function onchange_vafile(vafile, lbfile) {
+    console.log("vafile=" + vafile + " && lbfile=" + lbfile + " && " + vafile.files.length);
+    // console.log("vafile=" + vafile + "\nlbfile=" + lbfile);
+    if (vafile.files.length > 0) {
+        lbfile.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
+    }
+
 }
 
 /*LOGOUT*/

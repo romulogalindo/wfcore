@@ -19,7 +19,8 @@
     <%--Seleccione archivo--%>
     <%--</buttom>--%>
 
-    <input id="vafile" type="file" name="vafile" onchange="handleFileSelect(event)"/>
+    <%--<input id="vafile" type="file" name="vafile" onchange="handleFileSelect(event)"/>--%>
+    <input id="vafile" type="file" name="vafile" />
 </form>
 <%--<label id="NAME_FILE" class="tdPagina4" name="" estado="UNCOMPLETE" style="display:none;"></label>--%>
 </body>

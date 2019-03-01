@@ -106,6 +106,10 @@ DIV.wf_right {
 
 }
 
+.w3-table td select, .w3-table-all td select{
+    width: 100%;
+}
+
 .w3-btn, .w3-button {
     padding: 4px 8px;
     margin-right: 5px;

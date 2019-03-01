@@ -26,11 +26,11 @@
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=6">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=22"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=22"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=23"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=23"></script>
 
 </head>
 <body onload="workflow()" style="background: #ededed;">
