@@ -338,7 +338,8 @@ function propag(co_button, il_proces, co_condes) {
     data.append('il_proces', '' + il_proces);
 
     var ls_regist = document.getElementsByClassName('pagreg');
-    console.log('ls_regist = ' + ls_regist);
+    // console.log('[1]ls_regist = ' + ls_regist);
+    // console.log('[2]ls_regist.length = ' + ls_regist.length);
 
     for (var i = 0; i < ls_regist.length; i++) {
         var eledom = ls_regist[i];
@@ -354,6 +355,9 @@ function propag(co_button, il_proces, co_condes) {
         // }else{
         //
         // }
+        // console.log('[3]eledom=' + eledom);
+        // console.log('[3]eledom=' + eledom.tagName);
+        // console.log('[3]eledom=' + eledom.innerHTML);
 
         switch (eledom.tagName) {
             case "INPUT": {
@@ -391,15 +395,21 @@ function propag(co_button, il_proces, co_condes) {
                     //PWNDIENTE MARIO!!!
                     //precarga
                     // var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                    var vaform = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
+                    console.log("valdom=" + eledom);
+                    // console.log("valdom.getElementsByTagName(\"IFRAME\")=" + eledom.getElementsByTagName("IFRAME")[0]);
+                    // console.log("vvaldom.getElementsByTagName(\"IFRAME\")[0].contentWindow=" + eledom.getElementsByTagName("IFRAME")[0].contentWindow);
+                    // console.log("vvaldom.getElementsByTagName(\"IFRAME\")[0].contentWindow.document=" + eledom.getElementsByTagName("IFRAME")[0].contentWindow.document);
+                    var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
 
-                    if (vafile != undefined) {
+                    if (vaform != undefined) {
                         //do-precarga
-                        var vaframe = valdom.getElementsByTagName("IFRAME")[0]
+                        var vaframe = eledom.getElementsByTagName("IFRAME")[0]
                         var vafile = vaframe.contentWindow.document.getElementById("vafile");
                         if (vafile.files.length > 0) {
                             vaform.submit();
-                            var jsonrptafile = dowaitover(vaframe);
+                            console.log("elemento submiteado!!!");
+                            var jsonrptafile = waitForMe(vaframe);
+                            console.log("jsonrptafile=" + jsonrptafile);
                         }
                     }
 
@@ -532,7 +542,6 @@ function master_popup(urlpopup, ele, titulo) {
     overlay(true);
     document.getElementById("popup").style.display = "block";
     document.getElementById("popup_body").src = urlpopup;
-
 }
 
 function master_popup_close() {
@@ -549,11 +558,6 @@ function doupload(ele) {
     return false;
 }
 
-// function inputuploadchange(ele) {
-//     var valdom = document.getElementById(ele);
-//     var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-//     valdom.getElementsByTagName("A")[0].innerHTML = vafile.value;
-// }
 
 function onchange_vafile(vafile, lbfile) {
     console.log("vafile=" + vafile + " && lbfile=" + lbfile + " && " + vafile.files.length);
@@ -564,39 +568,42 @@ function onchange_vafile(vafile, lbfile) {
 
 }
 
-async function dowaitover(vaframe) {
-    var seg_esp = 90;
-    for (var i = 0; i < seg_esp; i++) {
+async function waitForMe(vaframe) {
+    var segwaiting = 90;
+    var futureJson = "";
 
-    }
-    await waitover();
-    //---------------
-    var waitForHello = timeoutms => new Promise((r, j) => {
-        var check = () => {
-            console.warn('checking')
-            if (e.innerHTML == 'Hello world')
-                r()
-            else if ((timeoutms -= 100) < 0)
-                j('timed out!')
-            else
-                setTimeout(check, 1000)
+    for (var i = 0; i < segwaiting; i++) {
+        await delay(1000);
+        //await sleep(1000);
+        futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+        console.log("[1]futureJson=" + futureJson);
+        var valfun = false;
+
+        try {
+            futureJson = JSON.parse(futureJson);
+            valfun = true;
+        } catch (e) {
         }
-        setTimeout(check, 1000)
-    })
 
-    //setTimeout(()=>{e.innerHTML='Hello world'}, 1000)
+        if (valfun) {
+            i = segwaiting + 10000;
+        }
+    }
 
-    (async () => {
-        a.innerHTML = 'waiting..'
-        waitForHello(2000)
-    })()
+    return futureJson;
 }
 
-function waitover() {
-    var rtn = false;
+async function delay(n) {
+    // n = n || 2000;
+    // return new Promise(done => {
+    //     setTimeout(() => {
+    //         done();
+    //     }, n);
+    // });
 
-    return rtn;
+    return new Promise(r => setTimeout(r, n));
 }
+
 
 /*LOGOUT*/
 function logout() {
