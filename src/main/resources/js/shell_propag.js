@@ -9,5 +9,5 @@ function do_propag(CO_PAGINA, ID_FRAWOR, CO_CONTEN, CO_PAGBOT) {
     /*USU*/
     // return API_DATA.JSON_VALPAG(API_DATA.SQL_LEAGCY('WFACR_CONX', 'select * from frawor2.pfvalpag(CO_CONTEN, ID_FRAWOR, CO_PAGINA)'));
     USUARI_DATA_JS_TEXT
-
+// return null;
 }

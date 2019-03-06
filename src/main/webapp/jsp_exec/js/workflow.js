@@ -178,7 +178,6 @@ function loadFormulario64(row, aditional) {
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte>regs' + row.regs);
     // console.log('[loadFormulario64@' + co_pagina() + ']Cargando tipo Formulario->ex reporte>regs' + row.regs.length);
 
-
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
         // console.log('::>>P' + co_pagina() + '' + reg.regist + 'V');
@@ -294,6 +293,7 @@ function loadFormulario64(row, aditional) {
 
         // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
+    //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
 function loadReporte64(row) {
@@ -325,11 +325,6 @@ function loadReporte64(row) {
 }
 
 function propag(co_button, il_proces, co_condes) {
-    var idFrawor = id_frawor();
-    var coPagina = co_pagina();
-    var coConten = co_conten();
-
-    var parametros = '';
     var data = new FormData();
     data.append('id_frawor', '' + id_frawor());
     data.append('co_pagina', '' + co_pagina());
@@ -337,38 +332,19 @@ function propag(co_button, il_proces, co_condes) {
     data.append('co_botone', '' + co_button);
     data.append('il_proces', '' + il_proces);
 
-    var ls_regist = document.getElementsByClassName('pagreg');
-    // console.log('[1]ls_regist = ' + ls_regist);
-    // console.log('[2]ls_regist.length = ' + ls_regist.length);
+    var preimg = [];
 
-    for (var i = 0; i < ls_regist.length; i++) {
-        var eledom = ls_regist[i];
-        var id = "";
-        var val = "";
+    for (var eledom of document.getElementsByClassName('pagreg')) {
 
-        //console.log('ele = '+ele);
-        //alert('ele = ' + ele);
-
-        // if (eledom.tagName == 'INPUT') {
-        //     id = ele.id.substring(ele.id.indexOf('R') + 1, ele.id.indexOf('V'));
-        //     val = ele.value;
-        // }else{
-        //
-        // }
-        // console.log('[3]eledom=' + eledom);
-        // console.log('[3]eledom=' + eledom.tagName);
-        // console.log('[3]eledom=' + eledom.innerHTML);
+        var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+        var val = null;
 
         switch (eledom.tagName) {
             case "INPUT": {
-                id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
                 val = eledom.value;
-
                 break;
             }
             case "SPAN": {
-                id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -392,32 +368,15 @@ function propag(co_button, il_proces, co_condes) {
                     // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
                     // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '36') {
-                    //PWNDIENTE MARIO!!!
-                    //precarga
-                    // var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                    console.log("valdom=" + eledom);
-                    // console.log("valdom.getElementsByTagName(\"IFRAME\")=" + eledom.getElementsByTagName("IFRAME")[0]);
-                    // console.log("vvaldom.getElementsByTagName(\"IFRAME\")[0].contentWindow=" + eledom.getElementsByTagName("IFRAME")[0].contentWindow);
-                    // console.log("vvaldom.getElementsByTagName(\"IFRAME\")[0].contentWindow.document=" + eledom.getElementsByTagName("IFRAME")[0].contentWindow.document);
                     var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
 
                     if (vaform != undefined) {
-                        //do-precarga
-                        var vaframe = eledom.getElementsByTagName("IFRAME")[0]
-                        var vafile = vaframe.contentWindow.document.getElementById("vafile");
+                        var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
                         if (vafile.files.length > 0) {
-                            vaform.submit();
-                            console.log("elemento submiteado!!!");
-                            var jsonrptafile = waitForMe(vaframe);
-                            console.log("jsonrptafile=" + jsonrptafile);
+                            preimg[preimg.length] = eledom.getAttribute('id');
                         }
+                        val = null;
                     }
-
-                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
-                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
-                    //
-                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
-                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '38') {
 
                     // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -441,25 +400,83 @@ function propag(co_button, il_proces, co_condes) {
 
                 break;
             }
-            default: {
-                eledom.innerHTML = valdom;
-                domtr(eledom).removeAttribute('style');
-            }
-
         }
 
-        //console.log('K=' + id + ',V=' + val);
-        //alert('K=' + id + ',V=' + val);
         data.append('co_regist' + id, val);
     }
 
-    //alert('>>>>' + eval('BTN' + co_button + 'P') + ',-->' + eval('BTN' + co_button + 'P').length);
+    if (preimg.length == 0) {
+        prepair_parameters_propag64(co_button, il_proces, co_condes, preimg, '', data);
+    } else {
+        console.log('preimg[0]=>' + preimg[0]);
+
+        document.getElementById(preimg[0]).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0].submit();
+        setTimeout(function () {
+            preproces_propag64(co_button, il_proces, co_condes, preimg, preimg[0], data)
+        }, 10);
+    }
+}
+
+function preproces_propag64(co_button, il_proces, co_condes, preimg, proimg, data) {
+    // console.log('[' + new Date() + '][co_button=' + co_button + '][il_proces=' + il_proces + '][co_condes=' + co_condes + '][preimg=' + preimg + '][proimg=' + proimg + '][data=' + data + ']');
+
+    if (preimg.length == 0 & proimg.length == 0) {
+        prepair_parameters_propag64(co_button, il_proces, co_condes, data);
+    } else if (proimg.length > 0) {
+        var vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0];
+        var futureJson;
+        var waitfor = false;
+
+        try {
+            futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+            futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+            console.log('futureJson=' + futureJson)
+            futureJson = JSON.parse(futureJson);
+
+            if (futureJson.status = 'OK') {
+                var eledom = document.getElementById(proimg);
+                id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+
+                data.set('co_regist' + id, '' + futureJson.result[0].co_archiv);
+            }
+
+            proimg = '';
+            preimg.shift();
+
+            if (preimg.length > 0) {
+                proimg = preimg[0];
+                vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0];
+                vaframe.submit();
+                waitfor = true;
+            }
+            //si es un json
+        } catch (e) {
+            console.log('error subtimi::::::' + e);
+            //no hacer nada y seguir esperando
+            waitfor = true;
+        }
+
+        if (waitfor)
+            setTimeout(function () {
+                preproces_propag64(co_button, il_proces, co_condes, preimg, proimg, data)
+            }, 1000);
+        else
+            preproces_propag64(co_button, il_proces, co_condes, preimg, proimg, data);
+    }
+
+}
+
+function prepair_parameters_propag64(co_button, il_proces, co_condes, data) {
+    // console.log('@@submit![' + new Date() + '][co_button=' + co_button + '][il_proces=' + il_proces + '][co_condes=' + co_condes + '][data=' + data + ']');
+
+    var parametros = '';
+
     for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
         var param = eval('BTN' + co_button + 'P')[i];
         var spagreg = param.getPagreg();
         var sconpar = param.getConpar();
 
-        var eledom = document.getElementById('P' + coPagina + 'R' + spagreg + 'V');
+        var eledom = document.getElementById('P' + co_pagina() + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
             case "INPUT": {
@@ -472,11 +489,9 @@ function propag(co_button, il_proces, co_condes) {
                 if (ti_pagreg == '1') {
                     valdom = eledom.getAttribute("va_pagreg");
                 } else if (ti_pagreg == '3') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     valdom = dom_select.options[dom_select.selectedIndex].value;
                 } else if (ti_pagreg == '4') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     valdom = dom_select.options[dom_select.selectedIndex].value;
                 }
@@ -490,9 +505,7 @@ function propag(co_button, il_proces, co_condes) {
         parametros = parametros + '&co_conpar_' + sconpar + '=' + valdom;
     }
 
-    //alert('DO! ' + parametros);
     doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
-    //window.location.href = '//' + window.location.host + '/wf?co_conten=' + co_condes;
 }
 
 
@@ -568,41 +581,6 @@ function onchange_vafile(vafile, lbfile) {
 
 }
 
-async function waitForMe(vaframe) {
-    var segwaiting = 90;
-    var futureJson = "";
-
-    for (var i = 0; i < segwaiting; i++) {
-        await delay(1000);
-        //await sleep(1000);
-        futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
-        console.log("[1]futureJson=" + futureJson);
-        var valfun = false;
-
-        try {
-            futureJson = JSON.parse(futureJson);
-            valfun = true;
-        } catch (e) {
-        }
-
-        if (valfun) {
-            i = segwaiting + 10000;
-        }
-    }
-
-    return futureJson;
-}
-
-async function delay(n) {
-    // n = n || 2000;
-    // return new Promise(done => {
-    //     setTimeout(() => {
-    //         done();
-    //     }, n);
-    // });
-
-    return new Promise(r => setTimeout(r, n));
-}
 
 
 /*LOGOUT*/

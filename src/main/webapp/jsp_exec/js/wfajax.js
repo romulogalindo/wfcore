@@ -61,7 +61,7 @@ doPropag = function (url, data) {
 
             var rpta = JSON.parse(net.responseText);
             if (rpta.error) {
-                alert('' + rpta.error.message + "");
+                alert('E' + rpta.error.message + '');
             } else {
                 window.parent.location.href = url;
             }

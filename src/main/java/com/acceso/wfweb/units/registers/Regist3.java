@@ -36,7 +36,7 @@ public class Regist3 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" >" ;
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" class=\"pagreg\" >" ;
                 html += "       <select></select>";
                 html += "   </span>";
                 html += "</td>";
@@ -51,7 +51,7 @@ public class Regist3 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" >" ;
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" class=\"pagreg\" >" ;
                 html += "       <select disabled></select>";
                 html += "   </span>";
                 html += "</td>";

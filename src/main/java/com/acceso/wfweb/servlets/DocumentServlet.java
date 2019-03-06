@@ -1002,16 +1002,26 @@ public class DocumentServlet extends HttpServlet {
                 }
                 case "U": {
                     // <editor-fold defaultstate="collapsed" desc="SUBIR ARCHIVO WFACR?">
+
+                    response.setContentType("text/plain;charset=ISO-8859-1");
+
                     out = response.getOutputStream();
                     JsonResponse response1 = new JsonResponse();
 
+                    System.out.println("ejecutando U:" + request);
+
                     List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                     List<ArchivDTO> items2 = new ArrayList<>();
+
+                    System.out.println("ejecutando U:" + items);
+                    System.out.println("ejecutando U:" + items.isEmpty());
 
                     items.stream()
                             .filter(item -> !item.isFormField())
                             .filter(item -> item.getSize() <= Values.UPLOAD_FILE_MAXSIZE)
                             .forEach(item -> {
+                                System.out.println("item = " + item);
+
                                 String fileName = Util.formatName(item.getName());
                                 ArchivDTO arcadj;
 
@@ -1019,20 +1029,25 @@ public class DocumentServlet extends HttpServlet {
                                 arcadj = dao.setArchiv(item.getName());
                                 dao.close();
 
-                                String pre_url = "";
+                                String pre_url = "/home/rgalindo/wfacr_files";
 
-                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()));
+//                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+                                System.out.println("archivo(1) = " + archivo);
 
-                                if (archivo.exists()) {
-                                    archivo.mkdirs();
-                                }
-
-                                //
                                 try {
+                                    System.out.println("archivo(2) = " + archivo.exists());
+
+                                    if (!archivo.exists()) {
+                                        archivo.mkdirs();
+                                    }
+
+                                    archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+
                                     item.write(archivo);
                                     items2.add(arcadj);
                                 } catch (Exception ep) {
-
+                                    ep.printStackTrace();
                                 }
                             });
 
@@ -1060,7 +1075,8 @@ public class DocumentServlet extends HttpServlet {
         } catch (Exception ep) {
 //            Escritor.escribe_errors("[reporte_solicitud]" + ex);
             ep.printStackTrace();
-        } /*finally {
+        }
+        /*finally {
          out.close();
          }*/
     }
