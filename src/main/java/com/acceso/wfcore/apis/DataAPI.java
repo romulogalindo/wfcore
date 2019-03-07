@@ -9,6 +9,7 @@ import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.google.gson.Gson;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
@@ -24,10 +25,11 @@ public class DataAPI extends GenericAPI {
         JsonResponse jsonResponse = new JsonResponse();
         List<Map<String, Object>> valReturn = new ArrayList<>();
         StatelessSession session = null;
-
+        Transaction transaction = null;
         execution_time = System.currentTimeMillis();
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+            transaction = session.beginTransaction();
 
             Query sql = session.createNativeQuery(sqlQuery);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -37,13 +39,19 @@ public class DataAPI extends GenericAPI {
             valReturn = sql.getResultList();
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
-
+            transaction.commit();
             session.close();
             jsonResponse.setStatus(JsonResponse.OK);
             jsonResponse.setResult(valReturn);
 
         } catch (Exception ep) {
             System.out.println("[1]ep = " + ep);
+
+            try {
+                if (transaction != null) transaction.rollback();
+            } catch (Exception ep2) {
+                transaction = null;
+            }
 
             if (session != null) {
                 session = null;

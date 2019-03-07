@@ -204,23 +204,19 @@ function loadFormulario64(row, aditional) {
                 if (ti_pagreg == '1') {
                     eledom.setAttribute("va_pagreg", reg.value);
                     eledom.innerHTML = valdom;
+                } else if (ti_pagreg == '9') {
+                    // eledom.setAttribute("va_pagreg", reg.value);
+                    eledom.getElementsByTagName("TEXTAREA")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
                 } else if (ti_pagreg == '36') {
-                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                    var lbfile = eledom.getElementsByTagName("SPAN")[0];
-                    // eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile").setAttribute("onchange", onchange_vafile(vafile, lbfile))
+
+                    // var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
                     eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile").onchange = function () {
-                        onchange_vafile(vafile, lbfile);
+                        onchange_vafile(this);
                     };
 
-                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
-                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
-                    // console.log('onclicktext = ' + onclicktext);
-                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
-                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '34') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     //eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -286,6 +282,7 @@ function loadFormulario64(row, aditional) {
             }
 
         }
+
         //muestra al padre
         console.log("DOMELE: " + "P" + co_pagina() + "T" + eledom.getAttribute("co_pagtit"));
         var domtitle = document.getElementsByName("P" + co_pagina() + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -357,6 +354,10 @@ function propag(co_button, il_proces, co_condes) {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     val = dom_select.options[dom_select.selectedIndex].value;
+                } else if (ti_pagreg == '9') {
+                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    var dom_select = eledom.getElementsByTagName("TEXTAREA")[0];
+                    val = dom_select.value;
                 } else if (ti_pagreg == '13') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -406,10 +407,8 @@ function propag(co_button, il_proces, co_condes) {
     }
 
     if (preimg.length == 0) {
-        prepair_parameters_propag64(co_button, il_proces, co_condes, preimg, '', data);
+        prepair_parameters_propag64(co_button, il_proces, co_condes, data);
     } else {
-        console.log('preimg[0]=>' + preimg[0]);
-
         document.getElementById(preimg[0]).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0].submit();
         setTimeout(function () {
             preproces_propag64(co_button, il_proces, co_condes, preimg, preimg[0], data)
@@ -467,8 +466,6 @@ function preproces_propag64(co_button, il_proces, co_condes, preimg, proimg, dat
 }
 
 function prepair_parameters_propag64(co_button, il_proces, co_condes, data) {
-    // console.log('@@submit![' + new Date() + '][co_button=' + co_button + '][il_proces=' + il_proces + '][co_condes=' + co_condes + '][data=' + data + ']');
-
     var parametros = '';
 
     for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
@@ -572,15 +569,31 @@ function doupload(ele) {
 }
 
 
-function onchange_vafile(vafile, lbfile) {
-    console.log("vafile=" + vafile + " && lbfile=" + lbfile + " && " + vafile.files.length);
-    // console.log("vafile=" + vafile + "\nlbfile=" + lbfile);
+// function onchange_vafile(vafile, lbfile) {
+function onchange_vafile(vafile) {
+    // console.log("vafile=" + vafile + " && lbfile=" + lbfile + " && ");
+    console.log("vafile=" + vafile.innerHTML);
+    console.log("vafile=" + vafile.files);
+    // console.log("vafile=" + vafile.files.length);
+    // console.log("vafile=" + vafile.files.length);
+
+    console.log("this!=" + this);
+    console.log("this!=" + this.files);
+    // console.log("this!=" + this.files.length);
+    // console.log("lbfile!=" + lbfile);
+    console.log("2lbfile!=" + vafile.getAttribute('domid') + 'V');
+    console.log("3lbfile!=" + document.getElementById(vafile.getAttribute('domid') + 'V'));
+    // var label = document.getElementById(lbfile).getElementsByTagName("SPAN")[0];
+    var label = document.getElementById(vafile.getAttribute('domid') + 'V').getElementsByTagName("SPAN")[0];
     if (vafile.files.length > 0) {
-        lbfile.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
+        console.log("vafile.files[0].name=" + vafile.files[0].name);
+        console.log(">>vafile.files[0].name=" + (vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name));
+        // console.log("vafile.files[0].name="+vafile.files[0].name);
+        // lbfile.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
+        label.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
     }
 
 }
-
 
 
 /*LOGOUT*/

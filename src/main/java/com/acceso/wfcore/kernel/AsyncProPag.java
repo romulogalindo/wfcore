@@ -67,7 +67,7 @@ public class AsyncProPag extends AsyncProcessor {
                 // valpag_js = dao.getVPJS(co_pagina);
 //                valpag_js = "return API_DATA.SQL('wfacr', 'select 1 as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
 
-                valpag_js = "return API_DATA.SQL('wfacr', 'select * from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
+                valpag_js = "return API_DATA.SQL('wfacr', 'select true as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
                 dao.close();
                 dao2.close();
 

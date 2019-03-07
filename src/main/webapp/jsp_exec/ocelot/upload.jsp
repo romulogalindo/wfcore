@@ -20,7 +20,7 @@
     <%--</buttom>--%>
 
     <%--<input id="vafile" type="file" name="vafile" onchange="handleFileSelect(event)"/>--%>
-    <input id="vafile" type="file" name="vafile" />
+    <input id="vafile" type="file" name="vafile" domid="${param.id}"/>
 </form>
 <%--<label id="NAME_FILE" class="tdPagina4" name="" estado="UNCOMPLETE" style="display:none;"></label>--%>
 </body>

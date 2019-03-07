@@ -38,7 +38,7 @@ public class Regist36 extends HTMLRenderer {
                 html += "       <span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"36\" >" +
                         "   <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">" +
                         "<i class=\"fa fa-upload\" aria-hidden=\"true\"></i> <span>Subir archivo<span></a>" +
-                        "   <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "'\" style=\"display:none;\"></iframe>" +
+                        "   <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "\" style=\"display:none;\"></iframe>" +
                         "</span>";
                 html += "   </td>";
                 html += "</tr>";
