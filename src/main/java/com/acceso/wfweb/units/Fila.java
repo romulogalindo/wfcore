@@ -105,7 +105,7 @@ public class Fila extends HTMLRenderer implements Serializable {
                 html += "</script>";
 
 
-                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal wfbutton\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
+                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal wfbutton\" onclick=\"propag(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
                         "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n" +
                         botonDTO.getNo_pagbot() +
                         "</button>";

@@ -42,7 +42,7 @@ public class PaginaFormulario extends Pagina implements Serializable {
         html += "       </th>";
         html += "   </tr>";
         html += "</thead>";
-        html += "<tbody>";
+        html += "<tbody id=\"row1\">";
 
         html = this.ultraFilas.values().stream().map((fila) -> fila.toHTML()).reduce(html, String::concat);
         /*this.ultraFilas.values().stream().forEach(fila -> {

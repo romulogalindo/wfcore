@@ -89,13 +89,13 @@ public class ApplicationManager {
             for (TituloDTO tituloDTO : tituloDTOS) {
 
                 //crear una row para su titulo
-                String idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit();
+                String idFila = "P" + paginaDTO.getCo_pagina() + "C1T" + tituloDTO.getCo_pagtit();
                 ultraFilas.put(idFila, new Fila(tituloDTO, idFila));
 
                 for (RegistroDTO registroDTO : registroDTOS) {
                     if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
 //                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
-                        idFila = "P" + paginaDTO.getCo_pagina() + "R" + registroDTO.getCo_pagreg();
+                        idFila = "P" + paginaDTO.getCo_pagina() + "C1R" + registroDTO.getCo_pagreg();
                         ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
                 }
