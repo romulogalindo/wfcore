@@ -20,6 +20,7 @@
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=26"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=26"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
 </head>
 <body style="padding: 20px;" onload="pagina();">
 <script>

@@ -205,6 +205,22 @@ function loadFormulario64(index, row, aditional, dom2) {
                 if (ti_pagreg == '1') {
                     eledom.setAttribute("va_pagreg", reg.value);
                     eledom.innerHTML = valdom;
+                } else if (ti_pagreg == '6') {
+                    // eledom.setAttribute("va_pagreg", reg.value);
+                    eledom.getElementsByTagName("INPUT")[0].checked = reg.value;
+                } else if (ti_pagreg == '7') {
+                    // eledom.setAttribute("va_pagreg", reg.value);
+                    eledom.getElementByid(eledom.getAttribute('id') + 'dd').value = reg.value.substring(8, 10);
+                    eledom.getElementByid(eledom.getAttribute('id') + 'mm').value = reg.value.substring(5, 7);
+                    eledom.getElementByid(eledom.getAttribute('id') + 'yyyy').value = reg.value.substring(0, 4);
+                    eledom.getElementById(eledom.getAttribute('id') + '_date').value = reg.value;
+                    Calendar.setup({
+                        inputField: eledom.getAttribute('id') + '_date', // id of the input field
+                        ifFormat: "%Y-%m-%d", // format of the input field
+                        button: eledom.getAttribute('id') + '_btn', // trigger for the calendar (button ID)
+                        align: "cc", // alignment (defaults to "Bl")
+                        singleClick: true
+                    });
                 } else if (ti_pagreg == '9') {
                     // eledom.setAttribute("va_pagreg", reg.value);
                     eledom.getElementsByTagName("TEXTAREA")[0].innerHTML = valdom;

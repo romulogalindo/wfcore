@@ -142,15 +142,14 @@ public class ApplicationManager {
 
                 PdfJson pdfJson = evalRegist38(valpagDTO.getVa_pagreg());
                 if (pdfJson != null) {
-                    String codigounico = System.currentTimeMillis() + ".pdf";
-
-                    File pdfFile = createPdf(pdfJson, valpagDTO);
-                    System.out.println("-->" + pdfFile);
-
-                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
-                    //cerar un spce que caduce cada 30min
-
-                    valpagDTO.setVa_pagreg("/doc?ti_docume=J&co_arctem=" + codigounico);
+//                    String codigounico = System.currentTimeMillis() + ".pdf";
+//
+//                    File pdfFile = createPdf(pdfJson, valpagDTO);
+//                    System.out.println("-->" + pdfFile);
+//
+//                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
+//
+//                    valpagDTO.setVa_pagreg("/doc?ti_docume=J&co_arctem=" + codigounico);
                 }
 
                 RegJson regJson = new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg(), valpagDTO.getTx_pagreg(), valpagDTO.getNo_pagreg(), valpagDTO.getTi_pagreg(), valpagDTO.getTi_estreg(), valpagDTO.getUr_pagreg());
