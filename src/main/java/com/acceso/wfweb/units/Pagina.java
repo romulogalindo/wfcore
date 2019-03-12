@@ -39,7 +39,7 @@ public abstract class Pagina extends HTMLRenderer implements Serializable {
             if (entry.getValue().getRegistroDTO() != null) {
                 RegistroDTO registroDTO = entry.getValue().getRegistroDTO();
 //                int co_pagreg = entry.getValue().getRegistroDTO().getCo_pagreg();
-                if (registroDTO.getTi_pagreg() == 3 | registroDTO.getTi_pagreg() == 4) {
+                if (registroDTO.getTi_pagreg() == 3 | registroDTO.getTi_pagreg() == 4 | registroDTO.getTi_pagreg() == 5 | registroDTO.getTi_pagreg() == 8) {
                     ls_hamoda = ls_hamoda + registroDTO.getCo_pagreg() + ",";
                 }
             }

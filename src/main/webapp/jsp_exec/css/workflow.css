@@ -106,7 +106,7 @@ DIV.wf_right {
 
 }
 
-.w3-table td select, .w3-table-all td select{
+.w3-table td select, .w3-table-all td select {
     width: 100%;
 }
 
@@ -130,13 +130,42 @@ TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
     font-size: 14px;
 }
 
-.wf-button-transparent{
-    border:none;
+.wf-button-transparent {
+    border: none;
     background: none;
     color: #008080;
     cursor: pointer;
 }
 
-.wf-button-transparent:hover{
+.wf-button-transparent:hover {
     color: #000000;
+}
+
+.wf_box_length2 {
+    width: 20px;
+}
+
+.wf_box_length4 {
+    width: 40px;
+}
+
+.wf_inline {
+    display: inline;
+}
+
+span.pagreg[ti_pagreg='7'] {
+    display: inline-block;
+    border: 1px solid #616161;
+    border-radius: 2px;
+}
+
+span.pagreg[ti_pagreg='7'] input {
+    border: none !important;
+    text-align: center;
+}
+
+span.pagreg[ti_pagreg='7'] span.wf-cal {
+    padding: 2px 4px;
+    cursor: pointer;
+    background: #cdcdcd;
 }

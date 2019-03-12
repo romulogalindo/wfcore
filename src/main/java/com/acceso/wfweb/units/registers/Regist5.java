@@ -3,11 +3,11 @@ package com.acceso.wfweb.units.registers;
 import com.acceso.wfweb.dtos.RegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
-public class Regist7 extends HTMLRenderer {
+public class Regist5 extends HTMLRenderer {
     RegistroDTO registroDTO;
     String id;
 
-    public Regist7(String id, RegistroDTO registroDTO) {
+    public Regist5(String id, RegistroDTO registroDTO) {
         this.id = id;
         this.registroDTO = registroDTO;
     }
@@ -28,6 +28,7 @@ public class Regist7 extends HTMLRenderer {
                 html += "</tr>";
                 break;
             }
+
             case "E": {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
@@ -35,19 +36,14 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"7\" >";
-                html += "<input type=text id=\"" + id + "V_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" />";
-                html += "<span>/</span>";
-                html += "<input type=text id=\"" + id + "V_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" />";
-                html += "<span>/</span>";
-                html += "<input type=text id=\"" + id + "V_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" />";
-                html += "<span id=\"" + id + "V_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fa fa-calendar\" aria-hidden=\"true\"></i></span>";
-                html += "<input type=hidden id=\"" + id + "V_date\" class=\"w3-input w3-border\" />";
-                html += "</span>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"5\" class=\"pagreg\" >";
+                html += "       <input type=hidden id=\"" + id + "V_rb\" value=\"PAGREG5\"/>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;
             }
+
             case "L": {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
@@ -55,9 +51,9 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"6\" >";
-                html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
-                html += "</span>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"5\" class=\"pagreg\" >";
+                html += "       <input type=hidden id=\"" + id + "V_rb\" value=\"PAGREG5\"/>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;
