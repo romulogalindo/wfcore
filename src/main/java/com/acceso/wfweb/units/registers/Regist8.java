@@ -37,6 +37,7 @@ public class Regist8 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"8\" class=\"pagreg\" >";
+                html += "       <button id='" + id + "V_btn' name='" + id + "V' ti_pagreg=\"8\" class=\"wf-button-transparent\"><i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>Agregar</buttton>";
                 html += "       <input type=hidden id=\"" + id + "V_ms\" value=\"PAGREG5\"/>";
                 html += "   </span>";
                 html += "</td>";
@@ -52,6 +53,7 @@ public class Regist8 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"8\" class=\"pagreg\" >";
+                html += "       <button id='" + id + "V_btn' name='" + id + "V' ti_pagreg=\"8\" class=\"wf-button-transparent\"><i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>Agregar</buttton>";
                 html += "       <input type=hidden id=\"" + id + "V_ms\" value=\"PAGREG5\"/>";
                 html += "   </span>";
                 html += "</td>";

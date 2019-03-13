@@ -169,3 +169,29 @@ span.pagreg[ti_pagreg='7'] span.wf-cal {
     cursor: pointer;
     background: #cdcdcd;
 }
+
+span.pagreg[ti_pagreg='8'] span.item {
+    display: inline-block;
+    margin: 2px;
+    border: 1px solid #616161;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+span.pagreg[ti_pagreg='8'] span.item:first-child {
+    margin-left: 0px !important;
+}
+
+span.pagreg[ti_pagreg='8'] span.item:hover {
+    background: #cdcdcd;
+}
+
+span.pagreg[ti_pagreg='8'] span.item span {
+    padding: 0px 5px 0 4px;
+}
+
+span.pagreg[ti_pagreg='8'] span.item span.close {
+    border-right: 1px solid #616161;
+    padding: 0px 2px 0px 4px !important;
+}
+

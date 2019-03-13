@@ -26,7 +26,7 @@
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=6">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7">
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=27"></script>
@@ -199,6 +199,27 @@
             <iframe id="popup_body" src="" style="width: 100%;height: 75%;" class="wf4_iframe">
             </iframe>
         </div>
+
+
+    </div>
+</div>
+
+<div id="popup2" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-teal" style="height:auto;">
+            <h5 id="popup_head2">Ventana emergente</h5>
+            <span onclick="master_popup_close()" class="w3-large w3-display-topright "
+                  style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+        </header>
+        <div id="popup2_body" class="w3-container" style="padding: 0px;">
+
+        </div>
+        <footer>
+            <buttton >Cancelar</buttton>
+            <buttton >Agregar</buttton>
+        </footer>
 
 
     </div>

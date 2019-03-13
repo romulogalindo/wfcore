@@ -1,4 +1,5 @@
 var $D = document;
+var $MAP = {};
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -246,21 +247,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                 } else if (ti_pagreg == '6') {
                     // eledom.setAttribute("va_pagreg", reg.value);
                     eledom.getElementsByTagName("INPUT")[0].checked = reg.value;
-                }  else if (ti_pagreg == '8') {
-                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
-                    //reg.regist
-                    var ls_compag = aditional[reg.regist];
-                    var dom_compag = "";
-
-                    for (var i = 0; i < ls_compag.length; i++) {
-                        compag = ls_compag[i];
-                        var funstr = "rb_change(this,'" + eledom.getAttribute('id') + "')";
-                        dom_compag += "<span ><input id='" + eledom.getAttribute('id') + "_" + compag.co_compag + "' name='" + eledom.getAttribute('id') + "' type='radio' value='" + compag.co_compag + "' " + (reg.value == compag.co_compag ? "checked" : "") + " onchange=\"" + funstr + "\" ><label for='" + eledom.getAttribute('id') + "_" + compag.co_compag + "'>" + compag.no_compag + "</label></span>";
-                    }
-                    eledom.innerHTML = dom_compag + eledom.innerHTML.replace('PAGREG5', valdom);
-
-                }else if (ti_pagreg == '7') {
+                } else if (ti_pagreg == '7') {
                     // eledom.setAttribute("va_pagreg", reg.value);
                     document.getElementById(eledom.getAttribute('id') + '_dd').value = reg.value.substring(8, 10);
                     document.getElementById(eledom.getAttribute('id') + '_mm').value = reg.value.substring(5, 7);
@@ -282,6 +269,50 @@ function loadFormulario64(index, row, aditional, dom2) {
                         align: "cc", // alignment (defaults to "Bl")
                         singleClick: true
                     });
+                } else if (ti_pagreg == '8') {
+                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
+                    //reg.regist
+                    $MAP[eledom.getAttribute('id')] = aditional[reg.regist];
+
+                    document.getElementById(eledom.getAttribute('id') + '_ms').value = valdom;
+                    document.getElementById(eledom.getAttribute('id') + '_btn').onclick = function () {
+                        do_open_multiselect(eledom.getAttribute('id'));
+                    }
+
+                    console.log('valdom=' + valdom + ',==>' + reg.value);
+
+                    var allids = valdom.split(',');
+                    for (var i = 0; i < allids.length; i++) {
+                        var compag = null;
+                        for (var o = 0; o < $MAP[eledom.getAttribute('id')].length; o++) {
+                            console.log('allids[i]=' + allids[i] + ',$MAP[eledom.getAttribute(\'id\')][o]=' + $MAP[eledom.getAttribute('id')][o] + ',=>' + (allids[i] == $MAP[eledom.getAttribute('id')][o]));
+                            if (allids[i] == $MAP[eledom.getAttribute('id')][o].co_compag) {
+                                compag = $MAP[eledom.getAttribute('id')][o];
+                                o = $MAP[eledom.getAttribute('id')].length + 100;
+                            }
+                        }
+                        console.log('>>compag=' + compag + ',??>>' + allids[i]);
+                        //--
+                        var dele = document.createElement('SPAN');
+                        dele.setAttribute('class', 'item');
+                        dele.setAttribute('id', eledom.getAttribute('id') + '_' + compag.co_compag);
+                        dele.innerHTML = '<span class="close" onclick="quitar(\'' + eledom.getAttribute('id') + '\',\'' + compag.co_compag + '\')"><i class="fa fa-times" aria-hidden="true"></i></span><span va_pagreg="' + compag.co_compag + '">' + compag.no_compag + '</span>';
+                        // eledom.insertAdjacentElement('afterbegin', dele);
+                        eledom.insertBefore(dele, eledom.firstChild);
+                    }
+
+                    // var ls_compag = aditional[reg.regist];
+                    // var dom_compag = "";
+                    //
+                    // for (var i = 0; i < ls_compag.length; i++) {
+                    //     compag = ls_compag[i];
+                    //     var funstr = "rb_change(this,'" + eledom.getAttribute('id') + "')";
+                    //     dom_compag += "<span ><input id='" + eledom.getAttribute('id') + "_" + compag.co_compag + "' name='" + eledom.getAttribute('id') + "' type='radio' value='" + compag.co_compag + "' " + (reg.value == compag.co_compag ? "checked" : "") + " onchange=\"" + funstr + "\" ><label for='" + eledom.getAttribute('id') + "_" + compag.co_compag + "'>" + compag.no_compag + "</label></span>";
+                    // }
+                    //
+                    // eledom.innerHTML = dom_compag + eledom.innerHTML.replace('PAGREG5', valdom);
+
                 } else if (ti_pagreg == '9') {
                     // eledom.setAttribute("va_pagreg", reg.value);
                     eledom.getElementsByTagName("TEXTAREA")[0].innerHTML = valdom;
@@ -659,6 +690,29 @@ function onchange_vafile(vafile) {
 
 }
 
+function quitar(father, item) {
+    var elechild = document.getElementById(father + '_' + item);
+    document.getElementById(father).removeChild(elechild);
+}
+
+function do_open_multiselect(eleid) {
+    window.parent.master_open_multiselect('PAG' + co_pagina(), eleid, $MAP[eleid], document.getElementById(eleid + '_sm').value);
+}
+
+function master_open_multiselect(pagid, refid, data, val) {
+    overlay(true);
+    document.getElementById("popup2").style.display = "block";
+    var neo_dom = '<table>';
+    neo_dom += '<tr><td colspan="2">Selecciona</td></tr>';
+
+    for (var i = 0; i < data.length; i++) {
+        var compag = data[i];
+        neo_dom += '<tr><td><input type="checkbox" id="item' + compag.co_compag + '"></td><td><label for="item' + compag.co_compag + '">' + compag.no_compag + '</label>label></td></tr>';
+    }
+
+    neo_dom += '</table>';
+    document.getElementById("popup2_body").innerText = neo_dom;
+}
 
 /*LOGOUT*/
 function logout() {
