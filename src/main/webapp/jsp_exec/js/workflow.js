@@ -277,41 +277,12 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     document.getElementById(eledom.getAttribute('id') + '_ms').value = valdom;
                     document.getElementById(eledom.getAttribute('id') + '_btn').onclick = function () {
-                        do_open_multiselect(eledom.getAttribute('id'));
+                        // do_open_multiselect(eledom.getAttribute('id'));
+                        do_open_multiselect(this);
                     }
 
                     console.log('valdom=' + valdom + ',==>' + reg.value);
-
-                    var allids = valdom.split(',');
-                    for (var i = 0; i < allids.length; i++) {
-                        var compag = null;
-                        for (var o = 0; o < $MAP[eledom.getAttribute('id')].length; o++) {
-                            console.log('allids[i]=' + allids[i] + ',$MAP[eledom.getAttribute(\'id\')][o]=' + $MAP[eledom.getAttribute('id')][o] + ',=>' + (allids[i] == $MAP[eledom.getAttribute('id')][o]));
-                            if (allids[i] == $MAP[eledom.getAttribute('id')][o].co_compag) {
-                                compag = $MAP[eledom.getAttribute('id')][o];
-                                o = $MAP[eledom.getAttribute('id')].length + 100;
-                            }
-                        }
-                        console.log('>>compag=' + compag + ',??>>' + allids[i]);
-                        //--
-                        var dele = document.createElement('SPAN');
-                        dele.setAttribute('class', 'item');
-                        dele.setAttribute('id', eledom.getAttribute('id') + '_' + compag.co_compag);
-                        dele.innerHTML = '<span class="close" onclick="quitar(\'' + eledom.getAttribute('id') + '\',\'' + compag.co_compag + '\')"><i class="fa fa-times" aria-hidden="true"></i></span><span va_pagreg="' + compag.co_compag + '">' + compag.no_compag + '</span>';
-                        // eledom.insertAdjacentElement('afterbegin', dele);
-                        eledom.insertBefore(dele, eledom.firstChild);
-                    }
-
-                    // var ls_compag = aditional[reg.regist];
-                    // var dom_compag = "";
-                    //
-                    // for (var i = 0; i < ls_compag.length; i++) {
-                    //     compag = ls_compag[i];
-                    //     var funstr = "rb_change(this,'" + eledom.getAttribute('id') + "')";
-                    //     dom_compag += "<span ><input id='" + eledom.getAttribute('id') + "_" + compag.co_compag + "' name='" + eledom.getAttribute('id') + "' type='radio' value='" + compag.co_compag + "' " + (reg.value == compag.co_compag ? "checked" : "") + " onchange=\"" + funstr + "\" ><label for='" + eledom.getAttribute('id') + "_" + compag.co_compag + "'>" + compag.no_compag + "</label></span>";
-                    // }
-                    //
-                    // eledom.innerHTML = dom_compag + eledom.innerHTML.replace('PAGREG5', valdom);
+                    load_multiselect(eledom.getAttribute('id'), valdom)
 
                 } else if (ti_pagreg == '9') {
                     // eledom.setAttribute("va_pagreg", reg.value);
@@ -609,6 +580,44 @@ function domtr(eledom) {
     if (eledom.tagName == 'TR') return eledom;
 }
 
+function load_multiselect(valid, valdom) {
+    var allids = valdom.split(',');
+
+    //eliminar los elementos
+    var eled = document.getElementById(valid);
+    var allitems = eled.getElementsByClassName('friedrichhabetler');
+
+    console.log('allitems=' + allitems);
+    console.log('allitems=' + allitems.length);
+
+    for (var w = allitems.length - 1; w > -1; w--) {
+        console.log('elimando:' + allitems[w]);
+        console.log('elimando.id:' + allitems[w].id);
+        eled.removeChild(allitems[w]);
+    }
+
+    //-------------
+    for (var i = 0; i < allids.length; i++) {
+        var compag = null;
+        for (var o = 0; o < $MAP[valid].length; o++) {
+            // console.log('allids[i]=' + allids[i] + ',$MAP[eledom.getAttribute(\'id\')][o]=' + $MAP[eledom.getAttribute('id')][o] + ',=>' + (allids[i] == $MAP[eledom.getAttribute('id')][o]));
+            if (allids[i] == $MAP[valid][o].co_compag) {
+                compag = $MAP[valid][o];
+                o = $MAP[valid].length + 100;
+            }
+        }
+        console.log('>>compag=' + compag + ',??>>' + allids[i]);
+        //--
+        var dele = document.createElement('SPAN');
+        dele.setAttribute('class', 'friedrichhabetler item');
+        dele.setAttribute('id', valid + '_' + compag.co_compag);
+        dele.innerHTML = '<span class="close" onclick="quitar(\'' + valid + '\',\'' + compag.co_compag + '\')"><i class="fa fa-times" aria-hidden="true"></i></span><span va_pagreg="' + compag.co_compag + '">' + compag.no_compag + '</span>';
+        // eledom.insertAdjacentElement('afterbegin', dele);
+        // eledom.insertBefore(dele, eledom.firstChild);
+        document.getElementById(valid).insertBefore(dele, document.getElementById(valid).firstChild);
+    }
+}
+
 function child_popup(u, eleid, c, tit1, tit2) {
     var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
 
@@ -648,6 +657,12 @@ function master_popup_close() {
     document.getElementById("popup").style.display = "none";
     overlay(false);
     document.getElementById("popup_body").src = '';
+}
+
+function master_popup_close2() {
+    document.getElementById("popup2").style.display = "none";
+    overlay(false);
+    // document.getElementById("popup_body").src = '';
 }
 
 function doupload(ele) {
@@ -693,25 +708,83 @@ function onchange_vafile(vafile) {
 function quitar(father, item) {
     var elechild = document.getElementById(father + '_' + item);
     document.getElementById(father).removeChild(elechild);
+
+    var ror = document.getElementById(father + '_ms').value.split(',');
+    var nror = ''
+    for (var i = 0; i < ror.length; i++) {
+        if (ror[i] != item) {
+            nror += ror[i] + ',';
+        }
+    }
+    nror = nror.substring(0, nror.length - 1);
+    document.getElementById(father + '_ms').value = nror;
 }
 
 function do_open_multiselect(eleid) {
-    window.parent.master_open_multiselect('PAG' + co_pagina(), eleid, $MAP[eleid], document.getElementById(eleid + '_sm').value);
+    console.log('eleid=' + eleid);
+    console.log('eleid=' + eleid.id);
+    console.log('ele=' + document.getElementById(eleid + '_ms'));
+    //--
+    // var proms = '';
+    // var allmsi = document.getElementsByClassName('friedrichhabetler');
+    //
+    // for (var i = 0; i < allmsi.length; i++) {
+    //     if (allmsi[i].checked == true)
+    //         proms += allmsi[i].value + ','
+    // }
+    //
+    // proms = proms.substring(0, proms.length - 1);
+    //--
+    var mid = eleid.id.replace('_btn', '');
+    // document.getElementById(mid + '_ms').value = proms;
+    // window.parent.master_open_multiselect('PAG' + co_pagina(), mid, $MAP[mid], document.getElementById(mid + '_ms').value);
+    window.parent.master_open_multiselect('PAG' + co_pagina(), mid, $MAP[mid], document.getElementById(mid + '_ms').value);
 }
 
 function master_open_multiselect(pagid, refid, data, val) {
+    console.log('refid=' + refid + ', data-refid=' + refid + ',data=' + data + ', val=' + val);
     overlay(true);
     document.getElementById("popup2").style.display = "block";
-    var neo_dom = '<table>';
-    neo_dom += '<tr><td colspan="2">Selecciona</td></tr>';
+
+    var neo_dom = '<table style="display: inline-block">';
+    neo_dom += '<tr><th colspan="2">Selecciona</th></tr>';
 
     for (var i = 0; i < data.length; i++) {
         var compag = data[i];
-        neo_dom += '<tr><td><input type="checkbox" id="item' + compag.co_compag + '"></td><td><label for="item' + compag.co_compag + '">' + compag.no_compag + '</label>label></td></tr>';
+        neo_dom += '<tr><td><input type="checkbox" id="friedrichhabetler' + compag.co_compag + '" class="friedrichhabetler" value="' + compag.co_compag + '"></td><td><label for="friedrichhabetler' + compag.co_compag + '">' + compag.no_compag + '</label></td></tr>';
     }
 
     neo_dom += '</table>';
-    document.getElementById("popup2_body").innerText = neo_dom;
+
+    document.getElementById("popup2_body").innerHTML = neo_dom;
+    document.getElementById("val_ms").value = val;
+    document.getElementById("popup2_btn_ok").setAttribute('onclick', 'master_process_multiselect(\'' + pagid + '\', \'' + refid + '\')');
+
+    //seleccionar los elementos
+    var mval = val.split(',');
+    for (var i = 0; i < mval.length; i++) {
+        document.getElementById('friedrichhabetler' + mval[i]).checked = true;
+    }
+}
+
+function master_process_multiselect(pagid, refid) {
+    var proms = '';
+    var allmsi = document.getElementsByClassName('friedrichhabetler');
+
+    for (var i = 0; i < allmsi.length; i++) {
+        if (allmsi[i].checked == true)
+            proms += allmsi[i].value + ','
+    }
+
+    proms = proms.substring(0, proms.length - 1);
+
+    console.log('lo seleccionado=' + proms);
+    var iframe = document.getElementById(pagid);
+    iframe.contentWindow.load_multiselect(refid, proms);
+    (iframe.contentDocument || iframe.contentWindow.document).getElementById(refid + '_ms').value = proms;
+
+    document.getElementById("popup2").style.display = "none";
+    overlay(false);
 }
 
 /*LOGOUT*/

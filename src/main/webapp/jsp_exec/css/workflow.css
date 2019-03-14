@@ -130,6 +130,31 @@ TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
     font-size: 14px;
 }
 
+.w3-modal #popup2_body {
+    text-align: center;
+}
+
+.w3-modal #popup2_body table {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 10px 0px;
+}
+
+.w3-modal #popup2_body table tr {
+    height: 25px;
+}
+
+.w3-modal #popup2_body table tr td label{
+    padding-left: 6px;
+}
+
+.w3-modal > div > footer {
+    text-align: center;
+    padding: 10px 0px 10px;
+}
+
+
 .wf-button-transparent {
     border: none;
     background: none;

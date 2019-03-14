@@ -208,7 +208,7 @@
     <div class="w3-modal-content w3-animate-top w3-card-4">
         <header class="w3-container w3-teal" style="height:auto;">
             <h5 id="popup_head2">Ventana emergente</h5>
-            <span onclick="master_popup_close()" class="w3-large w3-display-topright "
+            <span onclick="master_popup_close2()" class="w3-large w3-display-topright "
                   style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
                 <i class="fa fa-times" aria-hidden="true"></i>
             </span>
@@ -217,8 +217,9 @@
 
         </div>
         <footer>
-            <buttton >Cancelar</buttton>
-            <buttton >Agregar</buttton>
+            <input type="hidden" id="val_ms" value=""/>
+            <buttton id="popup2_btn_cancel" class="w3-button" onclick="master_popup_close2()">Cancelar</buttton>
+            <buttton id="popup2_btn_ok" class="w3-button" onclick="master_popup_close2()">Agregar</buttton>
         </footer>
 
 
