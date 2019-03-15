@@ -59,8 +59,9 @@ public class ApplicationManager {
     public static Contenedor buildContainer(int co_conten, long id_frawor) {
         //cobnstruimos el objeto contenedor
         ContenedorDTO contenedorDTO = null;
-        //IdfraworDTO idfraworDTO;
+
         List<PaginaDTO> paginaDTOS;
+        List<ContabDTO> contabDTOS;
 
         Frawor4DAO dao = new Frawor4DAO();
         contenedorDTO = dao.getContenedorDTO(co_conten);
@@ -73,6 +74,7 @@ public class ApplicationManager {
         dao = new Frawor4DAO();
         //idfraworDTO = dao.getIdfraworDTO();
         paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), id_frawor);
+        contabDTOS = dao.getContabDTO(contenedorDTO.getCo_conten());
 
         //work!
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());

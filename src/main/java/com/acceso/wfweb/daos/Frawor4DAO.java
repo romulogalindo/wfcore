@@ -48,6 +48,25 @@ public class Frawor4DAO extends DAO {
         return contenedorDTO;
     }
 
+    public List<ContabDTO> getContabDTO(int co_conten) {
+
+        List<ContabDTO> contabDTOs = null;
+        NQuery nQuery = new NQuery(TAG + ":CONTEN");
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONPAG), true, true);
+            nQuery.setInteger("p_co_conten", co_conten);
+            contabDTOs = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return contabDTOs;
+    }
+
     public List<PaginaDTO> getPaginaDTO(int p_co_conten, long p_id_frawor) {
 
         List<PaginaDTO> paginaDTOS = new ArrayList<>();

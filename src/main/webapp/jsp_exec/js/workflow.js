@@ -716,8 +716,9 @@ function quitar(father, item) {
             nror += ror[i] + ',';
         }
     }
+
     nror = nror.substring(0, nror.length - 1);
-    document.getElementById(father + '_ms').value = nror;
+    document.getElementById(father + '_ms').value.split(',');
 }
 
 function do_open_multiselect(eleid) {
