@@ -48,6 +48,25 @@ public class Frawor4DAO extends DAO {
         return contenedorDTO;
     }
 
+    public List<ContabDTO> getContabDTO(int co_conten) {
+
+        List<ContabDTO> contabDTOs = null;
+        NQuery nQuery = new NQuery(TAG + ":CONTEN");
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONPAG), true, true);
+            nQuery.setInteger("p_co_conten", co_conten);
+            contabDTOs = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return contabDTOs;
+    }
+
     public List<PaginaDTO> getPaginaDTO(int p_co_conten, long p_id_frawor) {
 
         List<PaginaDTO> paginaDTOS = new ArrayList<>();
@@ -313,19 +332,17 @@ public class Frawor4DAO extends DAO {
 
     }
 
-    public void insertPagreg(long p_id_sesion, long p_id_frawor, long p_id_fraant, int p_co_conten, boolean islocal) {
-        JoinDTO joinDTO = null;
+    public void deletePagreg(long p_id_frawor, int p_co_pagina, boolean islocal) {
+        PagregDTO pagregDTO = null;
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
-            nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_JOIN_TRANSA_FRAWOR : Values.QUERYS_WEB_SELECT_JOIN_TRANSA_FRAWOR2), true, true);
-            nQuery.setInteger("p_id_sesion", (int) p_id_sesion);
-            nQuery.setInteger("p_id_frawor", (int) p_id_frawor);
-            nQuery.setInteger("p_id_fraant", (int) p_id_fraant);
-            nQuery.setInteger("p_co_conten", p_co_conten);
-            joinDTO = (JoinDTO) nQuery.uniqueResult();
+            nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR4 : Values.QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR2), true, true);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_pagina", (int) p_co_pagina);
+            pagregDTO = (PagregDTO) nQuery.uniqueResult();
             transaction.commit();
         } catch (Exception ep) {
             if (transaction != null) {
@@ -335,6 +352,52 @@ public class Frawor4DAO extends DAO {
             ep.printStackTrace();
         }
 
+    }
+
+    public void insertPagreg(long p_id_frawor, int p_co_pagina, short p_co_pagreg, short p_nu_pagfil, String p_va_pagreg, boolean islocal) {
+        PagregDTO pagregDTO = null;
+        NQuery nQuery = new NQuery(TAG + ":PAGINA");
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_INSTBPAGREG_FRAWOR4 : Values.QUERYS_WEB_SELECT_INSTBPAGREG_FRAWOR2), true, true);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_pagina", (int) p_co_pagina);
+            nQuery.setShort("p_co_pagreg", p_co_pagreg);
+            nQuery.setShort("p_nu_pagfil", p_nu_pagfil);
+            nQuery.setString("p_va_pagreg", p_va_pagreg);
+            pagregDTO = (PagregDTO) nQuery.uniqueResult();
+            transaction.commit();
+        } catch (Exception ep) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+    }
+
+    public List<ComboDTO> getCombo(int p_co_pagina, long p_id_frawor, int p_co_conten, short p_co_regist) {
+        List<ComboDTO> comboDTOS = null;
+        NQuery nQuery = new NQuery(TAG + ":PAGPAR");
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCOMPAG), true, true);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setShort("p_co_regist", p_co_regist);
+            comboDTOS = nQuery.list();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return comboDTOS;
     }
 
     @Override

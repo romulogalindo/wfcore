@@ -4,12 +4,19 @@ import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.beans.legacy.*;
+import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.dtos.ArchivDTO;
 import com.acceso.wfweb.dtos.legacy.PaginaEspecialDto;
 import com.acceso.wfweb.dtos.legacy.Solicitud_credito_datos_soliciDto;
+import com.acceso.wfweb.utils.JsonResponse;
 import com.google.gson.Gson;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.CharacterRun;
 import org.apache.poi.hwpf.usermodel.Range;
@@ -954,6 +961,7 @@ public class DocumentServlet extends HttpServlet {
                     // </editor-fold>
                     break;
                 }
+
                 case "J": {
                     // <editor-fold defaultstate="collapsed" desc="CASE J:: PAGINA ESPECIAL">
                     boolean showpdf = true;
@@ -992,6 +1000,74 @@ public class DocumentServlet extends HttpServlet {
 
 //                System.out.println("valpagDTO = " + valpagDTO);
                 }
+                case "U": {
+                    // <editor-fold defaultstate="collapsed" desc="SUBIR ARCHIVO WFACR?">
+
+                    response.setContentType("text/plain;charset=ISO-8859-1");
+
+                    out = response.getOutputStream();
+                    JsonResponse response1 = new JsonResponse();
+
+                    System.out.println("ejecutando U:" + request);
+
+                    List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+                    List<ArchivDTO> items2 = new ArrayList<>();
+
+                    System.out.println("ejecutando U:" + items);
+                    System.out.println("ejecutando U:" + items.isEmpty());
+
+                    items.stream()
+                            .filter(item -> !item.isFormField())
+                            .filter(item -> item.getSize() <= Values.UPLOAD_FILE_MAXSIZE)
+                            .forEach(item -> {
+                                System.out.println("item = " + item);
+
+                                String fileName = Util.formatName(item.getName());
+                                ArchivDTO arcadj;
+
+                                Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfaio").getNativeSession());
+                                arcadj = dao.setArchiv(item.getName());
+                                dao.close();
+
+                                String pre_url = "/home/rgalindo/wfacr_files";
+
+                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()));
+//                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+                                System.out.println("archivo(1) = " + archivo);
+
+                                try {
+                                    System.out.println("archivo(2) = " + archivo.exists());
+
+                                    if (!archivo.exists()) {
+                                        archivo.mkdirs();
+                                    }
+
+                                    archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+
+                                    item.write(archivo);
+                                    items2.add(arcadj);
+                                } catch (Exception ep) {
+                                    ep.printStackTrace();
+                                }
+                            });
+
+                    if (!items2.isEmpty()) {
+                        response1.setStatus(JsonResponse.OK);
+                    } else {
+                        response1.setStatus(JsonResponse.ERROR);
+                    }
+
+                    response1.setResult(items2);
+
+                    ((ServletOutputStream) out).println(new Gson().toJson(response1));
+
+                    out.flush();
+                    out.close();
+                    // </editor-fold>
+                    break;
+
+//                System.out.println("valpagDTO = " + valpagDTO);
+                }
 
 //                System.out.println("valpagDTO = " + valpagDTO);
             }
@@ -999,7 +1075,8 @@ public class DocumentServlet extends HttpServlet {
         } catch (Exception ep) {
 //            Escritor.escribe_errors("[reporte_solicitud]" + ex);
             ep.printStackTrace();
-        } /*finally {
+        }
+        /*finally {
          out.close();
          }*/
     }

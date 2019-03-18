@@ -37,7 +37,8 @@ public class Regist34 extends HTMLRenderer {
 
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" >" +
-                        "           [<a target=\"_blank\" href=\"#\" class=\"pagreg\" ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Ver</a>]";
+                        "           <span valpag=\"\"></span>+" +
+                        "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
 //                html += "       &nbsp;&nbsp;";
 //                html += "[      <a id='" + id + "V' target=\"_blank\" href=\"#\" class=\"pagreg\" name='" + id + "V' ti_pagreg=\"38\"><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]";
                 html += "       </span>";

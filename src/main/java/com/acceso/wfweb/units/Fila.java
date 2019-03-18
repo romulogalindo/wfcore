@@ -7,6 +7,7 @@ import com.acceso.wfweb.dtos.TituloDTO;
 import com.acceso.wfweb.units.registers.*;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 public class Fila extends HTMLRenderer implements Serializable {
@@ -78,33 +79,14 @@ public class Fila extends HTMLRenderer implements Serializable {
             html += "</tr>";
 
         } else if (registroDTO != null) {
-            switch (registroDTO.getTi_pagreg()) {
-                case 1: {
-                    html += new Regist1(id, registroDTO).toHTML();
-                    break;
-                }
-                case 3: {
-                    html += new Regist3(id, registroDTO).toHTML();
-                    break;
-                }
-                case 13: {
-                    html += new Regist13(id, registroDTO).toHTML();
-                    break;
-                }
-                case 22: {
-                    html += new Regist22(id, registroDTO).toHTML();
-                    break;
-                }
-                case 34: {
-                    html += new Regist34(id, registroDTO).toHTML();
-                    break;
-                }
-                case 38: {
-                    html += new Regist38(id, registroDTO).toHTML();
-                    break;
-                }
-                default:
-                    html += new Regist1(id, registroDTO).toHTML();
+
+            try {
+                html += ((HTMLRenderer) Class.forName("com.acceso.wfweb.units.registers.Regist" + registroDTO.getTi_pagreg())
+                        .getConstructor(String.class, RegistroDTO.class)
+                        .newInstance(id, registroDTO))
+                        .toHTML();
+            } catch (Exception ep) {
+                html += new Regist1(id, registroDTO).toHTML();
             }
 
         } else if (botonDTOS != null) {
@@ -123,7 +105,7 @@ public class Fila extends HTMLRenderer implements Serializable {
                 html += "</script>";
 
 
-                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal wfbutton\" onclick=\"propag(" + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
+                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"w3-button w3-ripple w3-tiny w3-teal wfbutton\" onclick=\"propag(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >" +
                         "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n" +
                         botonDTO.getNo_pagbot() +
                         "</button>";

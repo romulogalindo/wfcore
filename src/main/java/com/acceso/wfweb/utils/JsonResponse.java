@@ -1,11 +1,18 @@
 package com.acceso.wfweb.utils;
 
+import com.acceso.wfcore.utils.ErrorMessage;
+
 import java.io.Serializable;
 
 public class JsonResponse implements Serializable {
+    public static final String OK = "OK";
+    public static final String ERROR = "ERROR";
+
     String status;
     Object result;
+    Object aditional;
     String message;
+    ErrorMessage error;
 
     public JsonResponse() {
     }
@@ -26,11 +33,27 @@ public class JsonResponse implements Serializable {
         this.result = result;
     }
 
+    public Object getAditional() {
+        return aditional;
+    }
+
+    public void setAditional(Object aditional) {
+        this.aditional = aditional;
+    }
+
     public String getMessage() {
         return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public ErrorMessage getError() {
+        return error;
+    }
+
+    public void setError(ErrorMessage error) {
+        this.error = error;
     }
 }

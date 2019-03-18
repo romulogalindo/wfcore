@@ -15,11 +15,15 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=5">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=20"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=20"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=27"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
 </head>
 <body style="padding: 20px;" onload="pagina();">
 <script>

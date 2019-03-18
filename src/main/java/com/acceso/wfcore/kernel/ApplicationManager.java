@@ -59,8 +59,9 @@ public class ApplicationManager {
     public static Contenedor buildContainer(int co_conten, long id_frawor) {
         //cobnstruimos el objeto contenedor
         ContenedorDTO contenedorDTO = null;
-        //IdfraworDTO idfraworDTO;
+
         List<PaginaDTO> paginaDTOS;
+        List<ContabDTO> contabDTOS;
 
         Frawor4DAO dao = new Frawor4DAO();
         contenedorDTO = dao.getContenedorDTO(co_conten);
@@ -73,6 +74,7 @@ public class ApplicationManager {
         dao = new Frawor4DAO();
         //idfraworDTO = dao.getIdfraworDTO();
         paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), id_frawor);
+        contabDTOS = dao.getContabDTO(contenedorDTO.getCo_conten());
 
         //work!
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
@@ -89,13 +91,13 @@ public class ApplicationManager {
             for (TituloDTO tituloDTO : tituloDTOS) {
 
                 //crear una row para su titulo
-                String idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit();
+                String idFila = "P" + paginaDTO.getCo_pagina() + "C1T" + tituloDTO.getCo_pagtit();
                 ultraFilas.put(idFila, new Fila(tituloDTO, idFila));
 
                 for (RegistroDTO registroDTO : registroDTOS) {
                     if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
 //                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
-                        idFila = "P" + paginaDTO.getCo_pagina() + "R" + registroDTO.getCo_pagreg();
+                        idFila = "P" + paginaDTO.getCo_pagina() + "C1R" + registroDTO.getCo_pagreg();
                         ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
                 }
@@ -142,15 +144,14 @@ public class ApplicationManager {
 
                 PdfJson pdfJson = evalRegist38(valpagDTO.getVa_pagreg());
                 if (pdfJson != null) {
-                    String codigounico = System.currentTimeMillis() + ".pdf";
-
-                    File pdfFile = createPdf(pdfJson, valpagDTO);
-                    System.out.println("-->" + pdfFile);
-
-                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
-                    //cerar un spce que caduce cada 30min
-
-                    valpagDTO.setVa_pagreg("/doc?ti_docume=J&co_arctem=" + codigounico);
+//                    String codigounico = System.currentTimeMillis() + ".pdf";
+//
+//                    File pdfFile = createPdf(pdfJson, valpagDTO);
+//                    System.out.println("-->" + pdfFile);
+//
+//                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
+//
+//                    valpagDTO.setVa_pagreg("/doc?ti_docume=J&co_arctem=" + codigounico);
                 }
 
                 RegJson regJson = new RegJson(valpagDTO.getCo_pagreg(), valpagDTO.getVa_pagreg(), valpagDTO.getTx_pagreg(), valpagDTO.getNo_pagreg(), valpagDTO.getTi_pagreg(), valpagDTO.getTi_estreg(), valpagDTO.getUr_pagreg());
@@ -158,16 +159,12 @@ public class ApplicationManager {
 //                System.out.println("regJson = " + regJson);
                 rows.get(rows.size() - 1).getRegs().add(regJson);
             }
+
             valpagJson.setRows(rows);
         }
 
         return valpagJson;
     }
-
-//    public static PropagJson buildNPropag(PropagDTO propagDTO){
-//
-//        return null;
-//    }
 
     public static PdfJson evalRegist38(String va_pagreg) {
         PdfJson pdfJson = null;

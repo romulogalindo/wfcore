@@ -74,4 +74,6 @@ public class Values {
     /*====PDF====*/
     public static final String PDF_ORIENTATION_PORTRAIT="portrait";
     public static final String PDF_ORIENTATION_LANDSCAPE="landscape";
+    
+    public static final int UPLOAD_FILE_MAXSIZE= 1024 * 1024 * 8;
 }

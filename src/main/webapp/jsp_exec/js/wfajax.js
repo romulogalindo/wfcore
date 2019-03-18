@@ -52,22 +52,26 @@ $D.doLogoutJson = function () {
 }
 
 doPropag = function (url, data) {
+
     var net = new Inet();
     net.open("POST", "/beaver", true); //false para que sea sincrono
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-            alert('[' + net.responseText + "]");
-            //var json = JSON.parse(net.responseText);
-            window.parent.location.href = url;
+
+            var rpta = JSON.parse(net.responseText);
+            if (rpta.error) {
+                alert('' + rpta.error.message + '');
+            } else {
+                window.parent.location.href = url;
+            }
+
         }
     }
 
     net.send(data);
-    console.log("lellendo el var=====>" + data);
-    for (var i = 0; i < data.length; i++) {
-        console.log("var[" + i + "]=" + data[i]);
-    }
+
+
 }
 
 $D.getJSONE = function (url) {
