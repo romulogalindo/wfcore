@@ -4,6 +4,7 @@ import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.RegistroDTO;
+import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.event.UnselectEvent;
@@ -36,15 +37,28 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
    private boolean isregEditable;
 
-   private DualListModel<RegistroDTO> registrosPick;
-   private List<RegistroDTO> registroSourceTemp;
+   private List<RegistroDTO> registros;
+   private List<RegistroDTO> registrosCargados;
+
 
 
    public PaginaBean() {
       this.beanName = "Paginas";
 //      this.pagina = new PaginaDTO();
       this.isregEditable = true;
+      this.registrosCargados = new ArrayList<>();
+   }
 
+   public void onRegistroSeleccionado(DragDropEvent ddEvent) {
+      System.out.println("-->> onRegistroSeleccionado - INICIO" + ddEvent.getData());
+      RegistroDTO registro = ((RegistroDTO) ddEvent.getData());
+      System.out.println("-->> onRegistroSeleccionado - 1");
+
+      registrosCargados.add(registro);
+      System.out.println("-->> onRegistroSeleccionado - 2");
+      registros.remove(registro);
+
+      System.out.println("-->> onRegistroSeleccionado - FIN");
    }
 
    @Override
@@ -60,6 +74,9 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
       //doListener();
       //CARGA INICIAL!!
       selectDto();
+
+      //Carga de listado de registros
+      cargarRegistros();
 
       return URL_LISTA;
    }
@@ -87,7 +104,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
       ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
 
       //Cargar Pick List
-      loadPickList(0);
 
       return URL_NEW;
    }
@@ -125,6 +141,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
       PaginaDAO dao = new PaginaDAO();
       this.paginas = dao.getPaginas();
       dao.close();
+
    }
 
    @Override
@@ -153,51 +170,13 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //      dao.close();
    }
 
-   public void onTransfer(TransferEvent event) {
-//      StringBuilder builder = new StringBuilder();
-//      for(Object item : event.getItems()) {
-//         builder.append(((Theme) item).getName()).append("<br />");
-//      }
-//
-//      FacesMessage msg = new FacesMessage();
-//      msg.setSeverity(FacesMessage.SEVERITY_INFO);
-//      msg.setSummary("Items Transferred");
-//      msg.setDetail(builder.toString());
-//
-//      FacesContext.getCurrentInstance().addMessage(null, msg);
 
-      registrosPick.setSource(registroSourceTemp);
-
-      System.out.println("Source" + registrosPick.getSource().toString());
-      System.out.println("Target" + registrosPick.getTarget().toString());
-
-   }
-
-   public void onSelect(SelectEvent event) {
-//      FacesContext context = FacesContext.getCurrentInstance();
-//      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
-   }
-
-   public void onUnselect(UnselectEvent event) {
-//      FacesContext context = FacesContext.getCurrentInstance();
-//      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Unselected", event.getObject().toString()));
-   }
-
-   public void onReorder() {
-//      FacesContext context = FacesContext.getCurrentInstance();
-//      context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
-   }
-
-   public void loadPickList (Integer co_pagina){
+   public void cargarRegistros(){
       RegistroDAO dao = new RegistroDAO();
-
-      List<RegistroDTO> registroSource = dao.getRegistros();
-      List<RegistroDTO> registroTarget = new ArrayList<RegistroDTO>();
-
-      registroSourceTemp = registroSource;
-
-      registrosPick = new DualListModel<RegistroDTO>(registroSource, registroTarget);
+      registros = dao.getRegistros();
+      dao.close();
    }
+
 
    public PaginaDTO getPagina() {
       return pagina;
@@ -231,19 +210,19 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
       this.filtroPagina = filtroPagina;
    }
 
-   public DualListModel<RegistroDTO> getRegistrosPick() {
-      return registrosPick;
+   public List<RegistroDTO> getRegistros() {
+      return registros;
    }
 
-   public void setRegistrosPick(DualListModel<RegistroDTO> registrosPick) {
-      this.registrosPick = registrosPick;
+   public void setRegistros(List<RegistroDTO> registros) {
+      this.registros = registros;
    }
 
-   public List<RegistroDTO> getRegistroSourceTemp() {
-      return registroSourceTemp;
+   public List<RegistroDTO> getRegistrosCargados() {
+      return registrosCargados;
    }
 
-   public void setRegistroSourceTemp(List<RegistroDTO> registroSourceTemp) {
-      this.registroSourceTemp = registroSourceTemp;
+   public void setRegistrosCargados(List<RegistroDTO> registrosCargados) {
+      this.registrosCargados = registrosCargados;
    }
 }

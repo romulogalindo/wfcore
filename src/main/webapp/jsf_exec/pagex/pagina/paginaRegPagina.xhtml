@@ -7,13 +7,12 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
 
         <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <h3 style="margin-top:0">Página</h3>
+            <h3 style="margin-top:0">Página 2</h3>
             <p:tabView>
                 <p:tab title="Datos">
                     <h:panelGrid columns="2" cellpadding="10">
@@ -33,62 +32,41 @@
                     </h:panelGrid>
                 </p:tab>
                 <p:tab title="Organización">
-                    <p:fieldset id="availableCarsField" legend="Available Cars">
-                        <p:dataTable id="availableCars" var="car" value="#{dndCarsView.cars}">
+                    <p:fieldset id="availableRegistrosField" legend="Registros">
+                        <p:dataTable id="availableRegistros" var="registro" value="#{paginaBean.registros}">
                             <p:column style="width:20px">
-                                <h:outputText id="dragIcon" styleClass="ui-icon pi pi-plus" />
+                                <h:outputText id="dragIcon" styleClass="ui-icon fa fa-plus" />
                                 <p:draggable for="dragIcon" revert="true" helper="clone"/>
                             </p:column>
 
                             <p:column headerText="Id">
-                                <h:outputText value="#{car.id}" />
+                                <h:outputText value="#{registro.co_tipreg}" />
                             </p:column>
 
-                            <p:column headerText="Year">
-                                <h:outputText value="#{car.year}" />
+                            <p:column headerText="Tipo de Registro">
+                                <h:outputText value="#{registro.no_tipreg}" />
                             </p:column>
 
-                            <p:column headerText="Brand">
-                                <h:outputText value="#{car.brand}" />
-                            </p:column>
-
-                            <p:column headerText="Color">
-                                <h:outputText value="#{car.color}" />
-                            </p:column>
                         </p:dataTable>
                     </p:fieldset>
 
-                    <p:fieldset id="selectedCars" legend="Selected Cars" style="margin-top:20px">
+                    <p:fieldset id="selectedRegistros" legend="Registros Seleccionados" style="margin-top:20px">
                         <p:outputPanel id="dropArea">
-                            <h:outputText value="!!!Drop here!!!" rendered="#{empty dndCarsView.droppedCars}" style="font-size:24px;" />
-                            <p:dataTable id="selectedCarsTable" var="car" value="#{dndCarsView.droppedCars}" rendered="#{not empty dndCarsView.droppedCars}">
+                            <h:outputText value="!!!Arrastrar Aqui!!!" rendered="#{empty paginaBean.registrosCargados}" style="font-size:24px;" />
+                            <p:dataTable id="selectedRegistrosTable" var="registro" value="#{paginaBean.registrosCargados}" rendered="#{not empty paginaBean.registrosCargados}">
                                 <p:column headerText="Id">
-                                    <h:outputText value="#{car.id}" />
+                                    <h:outputText value="#{registro.co_tipreg}" />
                                 </p:column>
 
-                                <p:column headerText="Year">
-                                    <h:outputText value="#{car.year}" />
-                                </p:column>
-
-                                <p:column headerText="Brand">
-                                    <h:outputText value="#{car.brand}" />
-                                </p:column>
-
-                                <p:column headerText="Color">
-                                    <h:outputText value="#{car.color}" />
-                                </p:column>
-
-                                <p:column style="width:32px">
-                                    <p:commandButton update=":carForm:display" oncomplete="PF('carDialog').show()" icon="pi pi-search">
-                                        <f:setPropertyActionListener value="#{car}" target="#{dndCarsView.selectedCar}" />
-                                    </p:commandButton>
+                                <p:column headerText="Tipo de Registro">
+                                    <h:outputText value="#{registro.no_tipreg}" />
                                 </p:column>
                             </p:dataTable>
                         </p:outputPanel>
                     </p:fieldset>
 
-                    <p:droppable for="selectedCars" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableCars" onDrop="handleDrop">
-                        <p:ajax listener="#{dndCarsView.onCarDrop}" update="dropArea availableCars" />
+                    <p:droppable for="selectedRegistros" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableRegistros" onDrop="handleDrop">
+                        <p:ajax listener="#{paginaBean.onRegistroSeleccionado}" update="dropArea availableRegistros" />
                     </p:droppable>
 
                 </p:tab>

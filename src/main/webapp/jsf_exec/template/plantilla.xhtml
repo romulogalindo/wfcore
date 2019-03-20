@@ -9,6 +9,13 @@
 
 <h:head>
     <script name="jquery/jquery.js" library="primefaces"></script>
+    <script type="text/javascript">
+        function handleDrop(event, ui) {
+            var droppedCar = ui.draggable;
+
+            droppedCar.fadeOut('fast');
+        }
+    </script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>WFCORE</title>
     <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>
