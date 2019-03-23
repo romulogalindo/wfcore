@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: rgalindo
@@ -12,229 +13,472 @@
 <jsp:useBean id="contenedorBean" class="com.acceso.wfweb.beans.ContenedorBean"/>
 
 <html co_conten="${contenedorBean.do64(pageContext.request)}">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>${contenedorBean.contenedor.co_contit} - AIO2</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <head>        
+        <title>${contenedorBean.contenedor.co_contit} - AIO2</title>
 
-    <!--link rel="icon" type="image/png" href="{pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png"-->
-    <link rel='shortcut icon' type='image/x-icon'
-          href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7">
+        <!--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+            <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">-->
 
-    <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=27"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/bootstrap.min.css" rel="stylesheet">-->
+        <!-- Material Design Bootstrap -->
+        <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/mdb.min.css" rel="stylesheet">-->
+        <!-- Your custom styles (optional) -->
+        <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/style.css" rel="stylesheet">-->
+        <link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">
 
-</head>
-<body onload="workflow()" style="background: #ededed;">
-<input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor">
-<input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten">
 
-<!-- Sidebar -->
-<c:if test="${contenedorBean.contenedor.il_header}">
-    <div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;"
-         id="mySidebar">
-        <div style="position: sticky;height: 43px;top: 0px;">
-            <div class="w3-bar w3-black w3-center">
-                <button class="w3-bar-item w3-button tablink w3-red" style="width:50%"
-                        onclick="viewtab(event,'menu64')">
-                    Menú
-                </button>
-                <button class="w3-bar-item w3-button tablink" style="width:50%" onclick="viewtab(event,'sistemas64')">
-                    Sistemas
-                </button>
-            </div>
-        </div>
-        <!--div style="height: 40px;"></div-->
+        <!--link rel="icon" type="image/png" href="{pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png"-->
+        <link rel='shortcut icon' type='image/x-icon' href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
-        <div id="menu64" class="w3-bar-block menubloq">
-                <%--<a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">--%>
-                <%--<img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">--%>
-                <%--</a>--%>
+        <!--CSS-->
+        <!--link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7"-->
 
-            <ul class="w3-ul w3-tiny" style="padding-top: 10px;">
-                <c:forEach var="menu" items="${US.mainMenu.menu}">
 
-                    <li class="" style="font-weight: 500; padding-left: 10px;">
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/jquery-3.3.1.min.js"></script>-->
+        <!-- Bootstrap tooltips -->
+        <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/popper.min.js"></script>-->
+        <!-- Bootstrap core JavaScript -->
+        <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/bootstrap.min.js"></script>-->
+        <!-- MDB core JavaScript -->
+        <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/mdb.js"></script>-->
 
-                    <c:if test="${not empty menu.url}">
-                        <i class="fa fa-window-maximize" aria-hidden="true"></i>
-                        <a href="${menu.url}">${menu.name}</a>
-                        </li>
-                    </c:if>
 
-                    <c:if test="${empty menu.url}">
-                        <span style="color:green;">${menu.name}</span>
-                        </li>
+        <!--JS -->
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=27"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
 
-                        <c:forEach var="menuitem" items="${menu.sub}">
-                            <li class="" style="font-weight: 500;padding-left: 20px;">
+        <script>
+            function dofend() {
+                // SideNav Button Initialization
+                $(".button-collapse").sideNav();
+                // SideNav Scrollbar Initialization
+                var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+                Ps.initialize(sideNavScrollbar);
 
-                            <c:if test="${not empty menuitem.url}">
-                                <i class="fa fa-window-maximize" aria-hidden="true"></i>
-                                <a href="${menuitem.url}">${menuitem.name}</a>
+                // Material Select Initialization
+                $(document).ready(function () {
+                    $('.mdb-select').material_select();
+                });
+            }
+
+        </script>
+
+        <style>
+            .side-nav .logo-sn {
+                padding-bottom: 1rem;
+                padding-top: 1rem;
+            }
+
+            .side-nav .logo-sn img {
+                height: 38px;
+            }
+
+            .side-nav .search-form input[type=text] {
+                margin-top: 0;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                border-top: 1px solid rgba(255, 255, 255, 0.3);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            }
+
+            body {
+                background-color: #eee;
+            }
+
+            .accordion .card {
+                margin-bottom: 1.2rem;
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            }
+
+            .accordion .card .card-body {
+                border-top: 1px solid #eee;
+            }
+
+        </style>
+    </head>
+    <body onload="dofend();workflow()" style="background: #ededed;">
+        <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor">
+        <input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten">
+
+        <!-- Sidebar -->
+        <c:if test="${!contenedorBean.contenedor.il_header}">
+            <div class="w3-sidebar w3-white w3-animate-left w3-large" style="z-index:3;width:300px; display: none;"
+                 id="mySidebar">
+                <div style="position: sticky;height: 43px;top: 0px;">
+                    <div class="w3-bar w3-black w3-center">
+                        <button class="w3-bar-item w3-button tablink w3-red" style="width:50%"
+                                onclick="viewtab(event, 'menu64')">
+                            Menú
+                        </button>
+                        <button class="w3-bar-item w3-button tablink" style="width:50%" onclick="viewtab(event, 'sistemas64')">
+                            Sistemas
+                        </button>
+                    </div>
+                </div>
+                <!--div style="height: 40px;"></div-->
+
+                <div id="menu64" class="w3-bar-block menubloq">
+                    <%--<a class="w3-bar-item w3-button w3-border-bottom w3-large" href="#">--%>
+                    <%--<img src="https://www.w3schools.com/images/w3schools.png" style="width:80%;">--%>
+                    <%--</a>--%>
+
+                    <ul class="w3-ul w3-tiny" style="padding-top: 10px;">
+                        <c:forEach var="menu" items="${US.mainMenu.menu}">
+
+                            <li class="" style="font-weight: 500; padding-left: 10px;">
+
+                                <c:if test="${not empty menu.url}">
+                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                    <a href="${menu.url}">${menu.name}</a>
                                 </li>
                             </c:if>
 
-                            <c:if test="${empty menuitem.url}">
-                                <span style="color: blue;">${menuitem.name}</span>
+                            <c:if test="${empty menu.url}">
+                                <span style="color:green;">${menu.name}</span>
                                 </li>
 
-                                <c:forEach var="menuitem2" items="${menuitem.sub}">
-                                    <li class="" style="font-weight: 400;padding-left: 30px;">
+                                <c:forEach var="menuitem" items="${menu.sub}">
+                                    <li class="" style="font-weight: 500;padding-left: 20px;">
 
-                                    <c:if test="${not empty menuitem2.url}">
-                                        <i class="fa fa-window-maximize" aria-hidden="true"></i>
-                                        <a href="${menuitem2.url}">${menuitem2.name}</a>
+                                        <c:if test="${not empty menuitem.url}">
+                                            <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                            <a href="${menuitem.url}">${menuitem.name}</a>
                                         </li>
                                     </c:if>
 
-                                    <c:if test="${empty menuitem2.url}">
-                                        <span style="color: orange;">${menuitem2.name}</span>
+                                    <c:if test="${empty menuitem.url}">
+                                        <span style="color: blue;">${menuitem.name}</span>
                                         </li>
+
+                                        <c:forEach var="menuitem2" items="${menuitem.sub}">
+                                            <li class="" style="font-weight: 400;padding-left: 30px;">
+
+                                                <c:if test="${not empty menuitem2.url}">
+                                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                                    <a href="${menuitem2.url}">${menuitem2.name}</a>
+                                                </li>
+                                            </c:if>
+
+                                            <c:if test="${empty menuitem2.url}">
+                                                <span style="color: orange;">${menuitem2.name}</span>
+                                                </li>
+                                            </c:if>
+                                        </c:forEach>
                                     </c:if>
+
                                 </c:forEach>
                             </c:if>
-
                         </c:forEach>
-                    </c:if>
-                </c:forEach>
-            </ul>
-        </div>
+                    </ul>
+                </div>
 
-        <div id="sistemas64" class="menubloq" style="display: none;">
-
-            <ul class="w3-ul w3-small" style="padding-top: 10px;">
-                <c:forEach var="sistema" items="${US.root.sistemas}">
-
-                    <li class="w3-padding-small" style="font-weight: 500; padding-left: 5px;">
-                            ${sistema.no_sistem}
-                    </li>
-
-                    <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
-
-                        <li class="w3-padding-small" style="padding-left: 15px !important;">
-                            <i class="fa fa-cubes"></i>
-                                ${sub_sistema.no_subsis}
-                        </li>
-
-                        <c:forEach var="paquete" items="${sub_sistema.paquetes}">
-                            <li class="w3-padding-small" style="padding-left: 30px !important;">
-
-                                <a href="#" style="">
-                                    <i class="fa fa-folder-open"></i>
-                                        ${paquete.no_paquet}
-                                </a>
-                            </li>
-                        </c:forEach>
-
-                    </c:forEach>
-
-                </c:forEach>
-            </ul>
-        </div>
-
-        <div style="position: sticky;height: 43px;bottom: 0px;">
-            <div class="w3-bar w3-black w3-center">
-                <button class="w3-bar-item w3-button tablink w3-gray" style="width:100%" onclick="logout()">
-                    <i class="fa fa-power-off" aria-hidden="true"></i>
-                    Cerrar sesión
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="w3-overlay " onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
-
-    <div class="w3-row w3-padding w3-teal w3-xlarge">
-        <div class="w3-col" style="width: 70%;padding: auto 0px;">
-            <table>
-                <tr>
-                    <td>
-                        <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">
-                            <i class="fa fa-bars" aria-hidden="true"></i>
+                <div style="position: sticky;height: 43px;bottom: 0px;">
+                    <div class="w3-bar w3-black w3-center">
+                        <button class="w3-bar-item w3-button tablink w3-gray" style="width:100%" onclick="logout()">
+                            <i class="fa fa-power-off" aria-hidden="true"></i>
+                            Cerrar sesión
                         </button>
-                    </td>
-                    <td>
-                        <div><h1 class="main_title_module">${contenedorBean.contenedor.co_contit}</h1></div>
-                        <div class="main_title_breadcrumbs">/ruta/completa/del/modulo</div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-
-        <div class="w3-col" style="width: 30%">
-            <div class="w3-bar w3-xlarge23">
-                    <%--<div class="w3-bar-item w3-button">${US.no_usulog}</div>--%>
-                <a href="#" class="w3-bar-item w3-button w3-right">
-                        ${US.no_usulog}
-                    <img class="w3-hide-small w3-circle" src="${US.no_imgusu}"
-                         style="height:40px;"/>
-                </a>
+                    </div>
+                </div>
             </div>
 
-        </div>
-    </div>
-</c:if>
+            <div class="w3-overlay " onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>
+
+            <div class="w3-row w3-padding w3-teal w3-xlarge">
+                <div class="w3-col" style="width: 70%;padding: auto 0px;">
+                    <table>
+                        <tr>
+                            <td>
+                                <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <div><h1 class="main_title_module">${contenedorBean.contenedor.co_contit}</h1></div>
+                                <div class="main_title_breadcrumbs">/ruta/completa/del/modulo</div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
 
-<div id="popup" class="w3-modal">
-    <div class="w3-modal-content w3-animate-top w3-card-4">
-        <header class="w3-container w3-teal" style="height:auto;">
-            <h5 id="popup_head">Ventana emergente</h5>
-            <span onclick="master_popup_close()" class="w3-large w3-display-topright "
-                  style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </span>
+                <div class="w3-col" style="width: 30%">
+                    <div class="w3-bar w3-xlarge23">
+                        <%--<div class="w3-bar-item w3-button">${US.no_usulog}</div>--%>
+                        <a href="#" class="w3-bar-item w3-button w3-right">
+                            ${US.no_usulog}
+                            <img class="w3-hide-small w3-circle" src="${US.no_imgusu}"
+                                 style="height:40px;"/>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </c:if>
+
+        <!--Main Navigation-->
+        <header>
+
+            <!--Navbar-->
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar double-nav default-color">
+
+                <!-- SideNav slide-out button -->
+                <div class="float-left">
+                    <a href="#" data-activates="slide-out" class="button-collapse">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </div>
+
+                <!-- Breadcrumb-->
+                <div class="breadcrumb-dn mr-auto white-text">
+                    <p>Material Design for Bootstrap</p>
+                </div>
+
+                <!-- Links -->
+                <ul class="nav navbar-nav nav-flex-icons ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fas fa-envelope"></i>
+                            <span class="clearfix d-none d-sm-inline-block">Mensajes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span class="clearfix d-none d-sm-inline-block">Otros links</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            <span class="clearfix d-none d-sm-inline-block">MESPINOZA</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Configuración</a>
+                            <a class="dropdown-item" href="#">Cerrar sesión</a>
+                        </div>
+                    </li>
+                </ul>
+
+            </nav>
+            <!--/.Navbar-->
+
+            <!-- Sidebar navigation -->
+            <div id="slide-out" class="side-nav fixed">
+                <ul class="custom-scrollbar">
+                    <!-- Logo -->
+                    <li class="logo-sn waves-effect">
+                        <div class=" text-center">
+                            <a href="#" class="pl-0">
+                                <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="">
+                            </a>
+                        </div>
+                    </li>
+                    <!--/. Logo -->
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs md-tabs nav-justified primary-color" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#panel555" role="tab">
+                                <i class="fas fa-user pr-2"></i>Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel666" role="tab">
+                                <i class="fas fa-heart pr-2"></i>Follow</a>
+                        </li>
+                    </ul>
+                    <!-- Nav tabs -->
+
+                    <!-- Tab panels -->
+                    <div class="tab-content">
+
+                        <!-- Panel 1 -->
+                        <div class="tab-pane fade in show active" id="panel555" role="tabpanel">
+
+                            <!-- Nav tabs -->
+                            <div class="row">
+                                <ul style="width: 100%;">
+                                    <!--Search Form-->
+                                    <li>
+                                        <form class="search-form" role="search">
+                                            <div class="form-group md-form mt-0 pt-1 waves-light">
+                                                <input type="text" class="form-control" placeholder="Search">
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <!--/.Search Form-->
+
+                                    <!-- Side navigation links -->
+                                    <li>
+                                        <ul class="collapsible collapsible-accordion">
+                                            <c:forEach var="menu" items="${US.mainMenu.menu}">
+                                                <li>
+                                                    <c:if test="${empty menu.url and fn:length(menu.sub) > 0}">
+                                                        <a class="collapsible-header waves-effect arrow-r">
+                                                            <i class="fas fa-chevron-right"></i>
+                                                            ${menu.name}
+                                                            <i class="fas fa-angle-down rotate-icon"></i>
+                                                        </a>
+                                                        <div class="collapsible-body">
+                                                            <ul>
+                                                                <c:forEach var="menuitem" items="${menu.sub}">
+                                                                    <li>
+                                                                        <c:if test="${empty menuitem.url and fn:length(menuitem.sub) > 0}">
+                                                                            <a class="collapsible-header waves-effect arrow-r">
+                                                                                <i class="fas fa-chevron-right"></i>
+                                                                                ${menuitem.name}
+                                                                                <i class="fas fa-angle-down rotate-icon"></i>
+                                                                            </a>
+                                                                            <div class="collapsible-body">
+                                                                                <ul>
+                                                                                    <c:forEach var="menuitem2" items="${menuitem.sub}">
+                                                                                        <c:if test="${not empty menuitem2.url and fn:length(menuitem2.sub) eq 0}">
+                                                                                            <li>
+                                                                                                <a href="${menuitem2.url}" class="waves-effect">${menuitem2.name}</a>
+                                                                                            </li>
+                                                                                        </c:if>
+                                                                                    </c:forEach>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </c:if>
+                                                                        <c:if test="${not empty menuitem.url and fn:length(menuitem.sub) eq 0}">
+                                                                            <a href="${menuitem.url}" class="waves-effect">${menuitem.name}</a>
+                                                                        </c:if>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </div>
+                                                    </c:if>
+                                                    <c:if test="${not empty menu.url }">
+                                                        <a href="${menu.url}" class="waves-effect">${menu.name}</a>
+                                                    </c:if>
+
+                                                </li>                                            
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
+                                    <!--/. Side navigation links -->
+                                </ul>
+                            </div>
+                            <!-- Nav tabs -->
+
+                        </div>
+                        <!-- Panel 1 -->
+
+                        <!-- Panel 2 -->
+                        <div class="tab-pane fade" id="panel666" role="tabpanel">
+
+                            <!-- Nav tabs -->
+                            <div class="row">
+                                <ul style="width: 100%;">
+                                    <!-- Side navigation links -->
+                                    <c:forEach var="sistema" items="${US.root.sistemas}">
+                                        <li>
+                                            <span style="text-align: center;display: block;">${sistema.no_sistem}</span>
+                                            <ul class="collapsible collapsible-accordion" style="margin-top: 2px;">
+
+                                                <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
+                                                    <li>
+                                                        <a class="collapsible-header waves-effect arrow-r">
+                                                            <i class="fas fa-chevron-right"></i>
+                                                            ${sub_sistema.no_subsis}<i class="fas fa-angle-down rotate-icon"></i>
+                                                        </a>
+                                                        <div class="collapsible-body">
+                                                            <ul>
+                                                                <c:forEach var="paquete" items="${sub_sistema.paquetes}">
+                                                                    <li>
+                                                                        <a href="#" class="waves-effect">${paquete.no_paquet}</a>
+                                                                    </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+
+                                        </li>
+                                    </c:forEach>
+
+                                    <!--/. Side navigation links -->
+                                </ul>
+                            </div>
+                            <!-- Nav tabs -->
+
+                        </div>
+                        <!-- Panel 2 -->
+
+                    </div>
+                    <!-- Tab panels -->
+
+
+                </ul>
+                <div class="sidenav-bg rgba-blue-strong"></div>
+            </div>
+            <!--/. Sidebar navigation -->
+
         </header>
-        <div class="w3-container" style="padding: 0px;">
-            <iframe id="popup_body" src="" style="width: 100%;height: 75%;" class="wf4_iframe">
-            </iframe>
+        <!--Main Navigation-->
+
+        <!--div id="popup" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-teal" style="height:auto;">
+                    <h5 id="popup_head">Ventana emergente</h5>
+                    <span onclick="master_popup_close()" class="w3-large w3-display-topright "
+                          style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                </header>
+                <div class="w3-container" style="padding: 0px;">
+                    <iframe id="popup_body" src="" style="width: 100%;height: 75%;" class="wf4_iframe">
+                    </iframe>
+                </div>
+
+
+            </div>
         </div>
 
+        <div id="popup2" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-teal" style="height:auto;">
+                    <h5 id="popup_head2">Ventana emergente</h5>
+                    <span onclick="master_popup_close2()" class="w3-large w3-display-topright "
+                          style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </span>
+                </header>
+                <div id="popup2_body" class="w3-container" style="padding: 0px;">
 
-    </div>
-</div>
+                </div>
+                <footer>
+                    <input type="hidden" id="val_ms" value=""/>
+                    <buttton id="popup2_btn_cancel" class="w3-button" onclick="master_popup_close2()">Cancelar</buttton>
+                    <buttton id="popup2_btn_ok" class="w3-button" onclick="master_popup_close2()">Agregar</buttton>
+                </footer>
+                
+            </div>
+        </div-->
 
-<div id="popup2" class="w3-modal">
-    <div class="w3-modal-content w3-animate-top w3-card-4">
-        <header class="w3-container w3-teal" style="height:auto;">
-            <h5 id="popup_head2">Ventana emergente</h5>
-            <span onclick="master_popup_close2()" class="w3-large w3-display-topright "
-                  style="margin: 10px;font-size: 25px !important;cursor:pointer; ">
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </span>
-        </header>
-        <div id="popup2_body" class="w3-container" style="padding: 0px;">
+        <div class="w3-content ">
+            <div class="main_margin_etop" style="background:#ededed;color:white;">
 
+                <div class="w3-row" style="height: 30px;"></div>
+
+                <%--<div>Aqui va todo el contenido</div>--%>
+                ${contenedorBean.contenedor.toHTML()}
+
+            </div>
         </div>
-        <footer>
-            <input type="hidden" id="val_ms" value=""/>
-            <buttton id="popup2_btn_cancel" class="w3-button" onclick="master_popup_close2()">Cancelar</buttton>
-            <buttton id="popup2_btn_ok" class="w3-button" onclick="master_popup_close2()">Agregar</buttton>
-        </footer>
-
-
-    </div>
-</div>
-
-<div class="w3-content ">
-    <div class="main_margin_etop" style="background:#ededed;color:white;">
-
-        <div class="w3-row" style="height: 30px;"></div>
-
-        <%--<div>Aqui va todo el contenido</div>--%>
-        ${contenedorBean.contenedor.toHTML()}
-
-    </div>
-</div>
-</body>
+        <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>
+    </body>
 </html>
