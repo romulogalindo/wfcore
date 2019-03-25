@@ -78,22 +78,18 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     public String toHTML() {
         String HTML = "";
 
-        HTML += "";
-
-        int act_or_numrow = 1;
         HashMap<Integer, List<ContabDTO>> rows = new HashMap<>();
 
         List<ContabDTO> cols = new ArrayList<>();
-        System.out.println("contabs.size()=" + contabs.size());
+//        System.out.println("contabs.size()=" + contabs.size());
         for (int i = 0; i < contabs.size(); i++) {
             ContabDTO contab = contabs.get(i);
-            System.out.println("eval>>[contab =" + contab + ":" + i + "]");
-//            System.out.println("eval>>[cols.size() =" + cols.size() + "]>[cols.get(cols.size() - 1).getOr_numrow()=" + cols.get(cols.size() - 1).getOr_numrow() + "]!=[contab.getOr_numrow()=" + contab.getOr_numrow() + "] ==>(" + (cols.size() != 0 && (cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow())) + ")");
+//            System.out.println("eval>>[contab =" + contab + ":" + i + "]");
 
             if (i == 0) {
                 cols.add(contab);
             } else {
-                System.out.println("[cols.get(cols.size() - 1).getOr_numrow()=" + (cols.get(cols.size() - 1).getOr_numrow()) + "]!=[contab.getOr_numrow()=" + contab.getOr_numrow() + "]");
+//                System.out.println("[cols.get(cols.size() - 1).getOr_numrow()=" + (cols.get(cols.size() - 1).getOr_numrow()) + "]!=[contab.getOr_numrow()=" + contab.getOr_numrow() + "]");
                 if (cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow()) {
                     rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
                     cols = new ArrayList<>();
@@ -104,18 +100,9 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 
 
             if ((contabs.size() - 1) == (i)) {
-                System.out.println("ultimo elemento>" + i);
+//                System.out.println("ultimo elemento>" + i);
                 rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
             }
-
-//            if ((cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow())) {
-//                rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
-//                cols.clear();
-//                cols.add(contab);
-//            } else {
-//                cols.add(contab);
-//            }
-
 
         }
 
@@ -127,58 +114,22 @@ public class Contenedor extends HTMLRenderer implements Serializable {
             for (ContabDTO contab : rowx.getValue()) {
                 HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";
 
-                for (Pagina pagina : paginas.values()) {
-                    System.out.println("compara>>" + pagina.getCo_contab() + "::" + contab.getCo_contab());
-                    if (pagina.getCo_contab() == contab.getCo_contab()) {
-                        HTML += "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
-                    }
-                }
+//                for (Pagina pagina : paginas.values()) {
+////                    System.out.println("compara>>" + pagina.getCo_contab() + "::" + contab.getCo_contab());
+//                    if (pagina.getCo_contab() == contab.getCo_contab()) {
+//                        HTML += "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
+//                    }
+//                }
+
+                HTML = paginas.values().stream()
+                        .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
+                        .map((pagina) -> "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
+                        .reduce(HTML, String::concat);
 
                 HTML += "</div>";
             }
             HTML += "</div>";
         }
-
-//        for (int i = 0; i < contabs.size(); i++) {
-//            ContabDTO contab = contabs.get(i);
-//            if (i == 0) {
-//                HTML += "<div class=\"w3-row\">" +
-//                        "<div class=\"\" style=\"height: auto;\">";
-//            }
-//
-//
-//            for (Pagina pagina : paginas.values()) {
-//                System.out.println("compara>>" + pagina.getCo_contab() + "::" + contab.getCo_contab());
-//                if (pagina.getCo_contab() == contab.getCo_contab()) {
-//                    HTML += "<div class=\"\" style=\"height: auto;\">" +
-//                            "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>" +
-//                            "</div>";
-//                }
-//            }
-//
-//            if (contab.getOr_numrow() != act_or_numrow) {
-//                HTML += "</div>";
-//            }
-//
-//            act_or_numrow = contab.getOr_numrow();
-//
-//        }
-//
-//        HTML += "</div>";
-
-//        for (Pagina pagina : paginas.values()) {
-//            HTML += "<div class=\"w3-row\">" +
-//
-//                    "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed\">1/4</div>";
-//
-//            HTML += "<div class=\"w3-half\" style=\"height: auto;\">" +
-//                    "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.co_pagina + "\" onload=\"iframe(this)\" frameborder=0></iframe>" +
-//                    "</div>";
-//
-//            HTML += "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed;\">1/4</div>" +
-//
-//                    "</div>";
-//        }
 
         return HTML;
     }
