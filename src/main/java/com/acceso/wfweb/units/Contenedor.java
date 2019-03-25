@@ -120,9 +120,9 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         }
 
         for (Map.Entry<Integer, List<ContabDTO>> rowx : rows.entrySet()) {
-            HTML += "<div class=\"w3-row\">";
+            HTML += "<div class=\"row\">";
             int filas = rowx.getValue().size();
-            String varcolwidth = filas == 1 ? "w3-rest" : (filas == 2 ? "w3-half" : (filas == 3 ? "w3-third" : "w3-quarter"));
+            String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
 
             for (ContabDTO contab : rowx.getValue()) {
                 HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";

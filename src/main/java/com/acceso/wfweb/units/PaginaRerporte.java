@@ -62,13 +62,13 @@ public class PaginaRerporte extends Pagina implements Serializable {
         html += "<input type=hidden id=ti_pagina value=R />";
         html += "<input type=hidden id=ls_hamoda value=\"" + getLs_hamoda() + "\" />";
 
-        html += "<table id=PAG" + co_pagina + " class=\"w3-table-all w3-tiny w3-hoverable w3-card-4\">";
+        html += "<table id=PAG" + co_pagina + " class=\"table table-hover mb-0\">";
         html += "<thead>";
-        html += "<tr>";
-        html += "<th colspan=" + ultraFilas.size() + " >";
-        html += "<h3>" + no_pagtit + "</h3>";
-        html += "</th>";
-        html += "</tr>";
+//        html += "<tr>";
+//        html += "<th colspan=" + ultraFilas.size() + " >";
+//        html += "<h3>" + no_pagtit + "</h3>";
+//        html += "</th>";
+//        html += "</tr>";
 
         html += "<tr>";
         for (Fila fila : titlelvl1) {

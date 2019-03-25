@@ -6,49 +6,110 @@
 <jsp:useBean id="paginaBean" class="com.acceso.wfweb.beans.PaginaBean"/>
 <%@ page contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1" language="java" %>
 <html co_conten="${paginaBean.do64(pageContext.request)}">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-    <title>UNNAMED</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+        <title>UNNAMED</title>
+        <!--        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+                <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">-->
 
-    <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
+        <!--CSS-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
+        <link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">
 
-    <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=27"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
-</head>
-<body style="padding: 20px;" onload="pagina();">
-<script>
-    var height_table = 0;
-</script>
-<input type="hidden" id="height_table" value="">
-<input type="hidden" id="id_frawor" value="${param.id_frawor}">
-<input type="hidden" id="co_conten" value="${param.co_conten}">
-<input type="hidden" id="co_pagina" value="${param.co_pagina}">
+        <!--JS -->
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=27"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
 
-${paginaBean.pagina.toHTML()}
+        <style>
+            body{
+                background-color:unset;
+            }
 
-<div id="loader" style="position:fixed; width:100%;height:100%;top: 0;left: 0;background-color: rgba(255,255,255,0.5);">
-    <table style="width: 100%;height: 100%">
-        <tr>
-            <td style="vertical-align:bottom;text-align: center;height: 50%;color: darkgray;">
-                <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-            </td>
-        </tr>
-        <tr>
-            <td style="height: 50%; vertical-align: top;text-align: center">
-                Cargando página
-            </td>
-        </tr>
-    </table>
-</div>
-</body>
+            table td{
+                border-top:unset !important;
+            }
+            table tbody td{
+                border-bottom: 1px solid #dee2e6 !important;
+            }
+
+            .btn{
+                margin: 0px;
+                padding: .30rem 1.02rem;
+            }
+        </style>
+    </head>
+    <body style="padding: 20px;" onload="pagina();">
+        <script>
+            var height_table = 0;
+        </script>
+        <input type="hidden" id="height_table" value="">
+        <input type="hidden" id="id_frawor" value="${param.id_frawor}">
+        <input type="hidden" id="co_conten" value="${param.co_conten}">
+        <input type="hidden" id="co_pagina" value="${param.co_pagina}">
+
+        <div class="card card-cascade narrower">
+            <!--Card image-->
+            <div class="view view-cascade gradient-card-header default-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+                <!--                <div>
+                                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                        <i class="fas fa-th-large mt-0"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                        <i class="fas fa-columns mt-0"></i>
+                                    </button>
+                                </div>-->
+
+                <span style="width: 100%;" class="white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
+
+                <!--                <div>
+                                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                        <i class="fas fa-pencil-alt mt-0"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                        <i class="far fa-trash-alt mt-0"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+                                        <i class="fas fa-info-circle mt-0"></i>
+                                    </button>
+                                </div>-->
+
+            </div>
+            <!--/Card image-->
+
+            <div class="px-4">
+
+                <div class="table-wrapper">
+                    ${paginaBean.pagina.toHTML()}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div id="loader" style="position:fixed; width:100%;height:100%;top: 0;left: 0;background-color: rgba(255,255,255,0.5);">
+            <table style="width: 100%;height: 100%">
+                <tr>
+                    <td style="vertical-align:bottom;text-align: center;height: 50%;color: darkgray;">
+                        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 50%; vertical-align: top;text-align: center">
+                        Cargando página
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>
+    </body>
 </html>
