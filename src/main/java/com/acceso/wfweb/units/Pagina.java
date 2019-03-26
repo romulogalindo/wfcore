@@ -10,6 +10,12 @@ public abstract class Pagina extends HTMLRenderer implements Serializable {
 
     int co_pagina;
     String no_pagtit;
+    String ti_pagina;
+    int nu_rowspa;
+    int nu_colspa;
+    int or_numrow;
+    int or_numcol;
+    int co_contab;
     LinkedHashMap<String, Fila> ultraFilas;
 
     public int getCo_pagina() {
@@ -26,6 +32,54 @@ public abstract class Pagina extends HTMLRenderer implements Serializable {
 
     public void setNo_pagtit(String no_pagtit) {
         this.no_pagtit = no_pagtit;
+    }
+
+    public String getTi_pagina() {
+        return ti_pagina;
+    }
+
+    public void setTi_pagina(String ti_pagina) {
+        this.ti_pagina = ti_pagina;
+    }
+
+    public int getNu_rowspa() {
+        return nu_rowspa;
+    }
+
+    public void setNu_rowspa(int nu_rowspa) {
+        this.nu_rowspa = nu_rowspa;
+    }
+
+    public int getNu_colspa() {
+        return nu_colspa;
+    }
+
+    public void setNu_colspa(int nu_colspa) {
+        this.nu_colspa = nu_colspa;
+    }
+
+    public int getOr_numrow() {
+        return or_numrow;
+    }
+
+    public void setOr_numrow(int or_numrow) {
+        this.or_numrow = or_numrow;
+    }
+
+    public int getOr_numcol() {
+        return or_numcol;
+    }
+
+    public void setOr_numcol(int or_numcol) {
+        this.or_numcol = or_numcol;
+    }
+
+    public int getCo_contab() {
+        return co_contab;
+    }
+
+    public void setCo_contab(int co_contab) {
+        this.co_contab = co_contab;
     }
 
     public String getLs_hamoda() {

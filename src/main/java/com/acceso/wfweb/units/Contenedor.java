@@ -1,28 +1,29 @@
 package com.acceso.wfweb.units;
 
+import com.acceso.wfweb.dtos.ContabDTO;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class Contenedor extends HTMLRenderer implements Serializable {
 
     //objeto de distribucion(ahora solo vertical)
 
     LinkedHashMap<Integer, Pagina> paginas;
+    List<ContabDTO> contabs;
     int co_conten;
     long id_frawor;
     String co_contit;
     boolean il_header;
 
-    public Contenedor(int co_conten, long id_frawor, String co_contit) {
+    //    public Contenedor(int co_conten, long id_frawor, String co_contit) {
+    public Contenedor(int co_conten, long id_frawor, String co_contit, List<ContabDTO> contabs) {
         this.co_conten = co_conten;
         this.id_frawor = id_frawor;
         this.co_contit = co_contit;
 
-//        this.paginas = new ArrayList<>();
         this.paginas = new LinkedHashMap<>();
+        this.contabs = contabs;
     }
 
     public void addPagina(Pagina pagina) {
@@ -65,20 +66,69 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         this.il_header = il_header;
     }
 
+    public List<ContabDTO> getContabs() {
+        return contabs;
+    }
+
+    public void setContabs(List<ContabDTO> contabs) {
+        this.contabs = contabs;
+    }
+
     @Override
     public String toHTML() {
         String HTML = "";
 
-        HTML += "";
+        HashMap<Integer, List<ContabDTO>> rows = new HashMap<>();
 
-        for (Pagina pagina : paginas.values()) {
-            HTML += "<div class=\"w3-row\">" +
-                    "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed\">1/4</div>";
+        List<ContabDTO> cols = new ArrayList<>();
+//        System.out.println("contabs.size()=" + contabs.size());
+        for (int i = 0; i < contabs.size(); i++) {
+            ContabDTO contab = contabs.get(i);
+//            System.out.println("eval>>[contab =" + contab + ":" + i + "]");
 
-            HTML += "   <div class=\"w3-half\" style=\"height: auto;\">" + "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.co_pagina + "\" onload=\"iframe(this)\" frameborder=0></iframe>" + "</div>";
+            if (i == 0) {
+                cols.add(contab);
+            } else {
+//                System.out.println("[cols.get(cols.size() - 1).getOr_numrow()=" + (cols.get(cols.size() - 1).getOr_numrow()) + "]!=[contab.getOr_numrow()=" + contab.getOr_numrow() + "]");
+                if (cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow()) {
+                    rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
+                    cols = new ArrayList<>();
+                }
 
-            HTML += "<div class=\"w3-quarter\" style=\"height: auto;color:#ededed;\">1/4</div>" +
-                    "</div>";
+                cols.add(contab);
+            }
+
+
+            if ((contabs.size() - 1) == (i)) {
+//                System.out.println("ultimo elemento>" + i);
+                rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
+            }
+
+        }
+
+        for (Map.Entry<Integer, List<ContabDTO>> rowx : rows.entrySet()) {
+            HTML += "<div class=\"row\">";
+            int filas = rowx.getValue().size();
+            String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
+
+            for (ContabDTO contab : rowx.getValue()) {
+                HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";
+
+//                for (Pagina pagina : paginas.values()) {
+////                    System.out.println("compara>>" + pagina.getCo_contab() + "::" + contab.getCo_contab());
+//                    if (pagina.getCo_contab() == contab.getCo_contab()) {
+//                        HTML += "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
+//                    }
+//                }
+
+                HTML = paginas.values().stream()
+                        .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
+                        .map((pagina) -> "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
+                        .reduce(HTML, String::concat);
+
+                HTML += "</div>";
+            }
+            HTML += "</div>";
         }
 
         return HTML;

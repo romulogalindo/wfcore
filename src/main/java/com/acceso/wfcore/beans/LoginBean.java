@@ -64,7 +64,7 @@ public class LoginBean extends MainBean implements Serializable {
         System.out.println(">>>>>>>>>><logeado=" + logeado);
         if (logeado) {
             //context.addCallbackParam("view", "gauge.xhtml");
-
+            ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).setAttribute("SYS_USER", true);
             return URL_CONTENMAIN;
         } else {
             return URL_LOGIN;

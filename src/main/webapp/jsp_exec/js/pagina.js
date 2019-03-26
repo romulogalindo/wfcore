@@ -65,24 +65,21 @@ function ls_hamoda() {
     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
 }
 
-function workflow() {
-    for (var iframe of document.getElementsByTagName('IFRAME')) {
-        iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
-    }
-}
+//function workflow() {
+//    for (var iframe of document.getElementsByTagName('IFRAME')) {
+//        iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
+//    }
+//}
 
 function size_of_pagina() {
     height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
+//    alert('pagina=' + co_pagina() + ']=>' + height_table);
     document.getElementById('height_table').value = '' + height_table;
 }
 
 function pagina() {
     //Seteamos el height para que lo absorva el iframe!<main.jsp
     size_of_pagina();
-
-    // console.log('[pagina@' + co_pagina() + ']inut#height_table = ' + document.getElementById('height_table'));
-    // console.log('[pagina@' + co_pagina() + ']inut#height_table.value = ' + document.getElementById('height_table').value);
-    //pedimos que ejecute el valpag y que nos de solo el contenido
 
     // ASYNBC
     doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
@@ -148,16 +145,16 @@ function pagina_onload(jsonData) {
     document.getElementById('loader').style.display = 'none';
 }
 
-function iframe(iframe) {
-
-    var input_height_table = (iframe.contentDocument || iframe.contentWindow.document).getElementById("height_table");
-
-    if (input_height_table != undefined) {
-        var height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0) + 20;
-        iframe.style.height = height_table + 'px';
-    }
-
-}
+//function iframe(iframe) {
+//
+//    var input_height_table = (iframe.contentDocument || iframe.contentWindow.document).getElementById("height_table");
+//
+//    if (input_height_table != undefined) {
+//        var height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0) + 20;
+//        iframe.style.height = height_table + 'px';
+//    }
+//
+//}
 
 function iframe2(pagina, height_table) {
     console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
@@ -194,13 +191,15 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 eledom.value = valdom;
                 if (eledom.getAttribute("type") != "hidden")
                     domtr(eledom).removeAttribute('style');
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -317,8 +316,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                 break;
             }
             case
-            "A"
-            : {
+                    "A"
+                    :
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -330,7 +330,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                 break;
             }
-            default: {
+            default:
+            {
                 eledom.innerHTML = valdom;
                 domtr(eledom).removeAttribute('style');
             }
@@ -392,11 +393,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 val = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -450,7 +453,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A": {
+            case "A":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -537,11 +541,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -555,7 +561,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -568,16 +575,19 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
 
 
 function domtr(eledom) {
-    if (eledom.tagName == 'TR') return eledom;
+    if (eledom.tagName == 'TR')
+        return eledom;
 
     eledom = eledom.parentNode;
 
-    if (eledom.tagName == 'TR') return eledom;
+    if (eledom.tagName == 'TR')
+        return eledom;
 
 
     eledom = eledom.parentNode;
 
-    if (eledom.tagName == 'TR') return eledom;
+    if (eledom.tagName == 'TR')
+        return eledom;
 }
 
 function load_multiselect(valid, valdom) {

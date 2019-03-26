@@ -76,8 +76,10 @@ public class ApplicationManager {
         paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), id_frawor);
         contabDTOS = dao.getContabDTO(contenedorDTO.getCo_conten());
 
+
         //work!
-        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
+//        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
+        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit(), contabDTOS);
         for (PaginaDTO paginaDTO : paginaDTOS) {
 //            System.out.println("AM:" + paginaDTO.getCo_pagina() + ",:::" + paginaDTO.getTi_pagina() + ",:::" + paginaDTO.getNo_pagtit());
             //pagina nueva
@@ -116,9 +118,9 @@ public class ApplicationManager {
 //            System.out.println("paginaDTO.getTi_pagina() = " + paginaDTO.getTi_pagina());
 //            System.out.println("paginaDTO.getTi_pagina().contentEquals(\"R\") = " + paginaDTO.getTi_pagina().contentEquals("R"));
             if (paginaDTO.getTi_pagina().contentEquals("R")) {
-                contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
+                contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
             } else if (paginaDTO.getTi_pagina().contentEquals("T")) {
-                contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), ultraFilas));
+                contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
             }
         }
 

@@ -55,7 +55,7 @@ public class Frawor4DAO extends DAO {
 
         try {
 
-            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONPAG), true, true);
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONTAB), true, true);
             nQuery.setInteger("p_co_conten", co_conten);
             contabDTOs = nQuery.list();
 

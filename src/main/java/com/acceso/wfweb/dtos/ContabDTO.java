@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_PFCONTAG,
-                query = "select T.* from frawor2.pfpagtab(:p_co_conten) T ",
+                name = Values.QUERYS_WEB_SELECT_PFCONTAB,
+                query = "select T.* from frawor4.pfpagtab(:p_co_conten) T ",
                 resultClass = ContabDTO.class)
 })
 public class ContabDTO implements Serializable {
