@@ -71,7 +71,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.2</version>
+            <version>7.0</version>
         </dependency>
         <!--        <dependency>
             <groupId>org.primefaces</groupId>
@@ -79,11 +79,11 @@
             <version>6.3-SNAPSHOT</version>
         </dependency>-->
         <!-- Themes -->
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>all-themes</artifactId>
-            <version>1.0.10</version>
-        </dependency>
+        <!--        <dependency>
+                    <groupId>org.primefaces.themes</groupId>
+                    <artifactId>all-themes</artifactId>
+                    <version>1.0.10</version>
+                </dependency>-->
 
 
         <!--        <dependency>

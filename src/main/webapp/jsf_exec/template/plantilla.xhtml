@@ -8,7 +8,8 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <script name="jquery/jquery.js" library="primefaces"></script>
+    <!--<script name="jquery/jquery.js" library="primefaces">-->
+    <!--</script>-->
     <script type="text/javascript">
         function handleDrop(event, ui) {
             var droppedCar = ui.draggable;
@@ -16,6 +17,7 @@
             droppedCar.fadeOut('fast');
         }
     </script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>WFCORE</title>
     <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>
@@ -30,7 +32,8 @@
             margin-left: -0.5em;
             margin-top: 0.5em;
         }
-        .box{
+
+        .box {
             background-color: #cce4f7;
             text-align: center;
             padding-top: 1em;
@@ -38,6 +41,7 @@
             border-radius: 4px;
             color: #30383c;
         }
+
         .p-col {
             -webkit-box-flex: 1;
             -ms-flex-positive: 1;
@@ -46,6 +50,7 @@
             flex-basis: 0;
             padding: 0.5em;
         }
+
         .buttonnuevo {
             background: transparent !important;
             background-color: rgb(17, 111, 191) !important;
@@ -62,7 +67,7 @@
             border-left-color: rgb(0, 122, 217) !important;
             border-left-style: solid !important;
             border-left-width: 1.43333px !important;
-            border-right-color: rgb(0, 122, 217)!important;
+            border-right-color: rgb(0, 122, 217) !important;
             border-right-style: solid !important;
             border-right-width: 1.43333px !important;
             border-top-color: rgb(0, 122, 217) !important;
@@ -79,6 +84,49 @@
 
         }
 
+        .ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
+            border: none;
+        }
+
+        .ui-layout-resizer {
+            width: 0px !important;
+        }
+
+        .main_breadcrumb {
+            border: none !important;
+            padding: .0em !important;
+        }
+
+        .main_opt_buttons td {
+            padding: 0px !important;
+            border: none !important;
+        }
+
+        #mainPanel > div.ui-panel > div.ui-panel-content {
+            border: none !important;
+            padding: 0px !important;
+        }
+
+        div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid {
+            display: inline-block;
+        }
+
+        div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid td.ui-panelgrid-cell {
+            border: none !important;
+        }
+
+        #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid .ui-panelgrid-cell {
+            border: none !important;
+        }
+
+        #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid {
+            display: block;
+        }
+
+        .form_col_title {
+            text-align: right;
+            border-right: 1px solid #cdcdcd !important;
+        }
     </style>
 </h:head>
 
@@ -86,21 +134,30 @@
 
     <p:layout fullPage="true">
 
-        <p:layoutUnit position="west" size="230" resizable="false">
-            <ui:insert name="left"></ui:insert>
+        <p:layoutUnit position="west" size="230" resizable="false" closable="false" collapsible="true" collapsed="false"
+                      style="text-align:left;border: none;" gutter="0">
+            <!--<ui:insert name="left"></ui:insert>-->
+
+
+            <p:growl id="messages" showDetail="true">
+                <p:autoUpdate/>
+            </p:growl>
+
+            <p:outputPanel style="text-align: center;">
+                <p:graphicImage style="height: 70px; width: 180px"
+                                value="#{FacesContext.getCurrentInstance().getExternalContext()}/jsf_exec/resources/img/logo2.png"/>
+            </p:outputPanel>
+
+            <p:outputPanel style="border: none; text-align: center;">
+                <p:outputLabel value="#{loginBean.nombre}"/>
+                <br/>
+                <p:outputLabel value="user@acceso.com.pe"/>
+            </p:outputPanel>
+
+            <p:separator/>
+
             <h:form id="menuForm">
-                <p:panel style="height:150px; width:220px">
-                    <p:graphicImage style="height: 70px; width: 180px"
-                                    value="#{FacesContext.getCurrentInstance().getExternalContext()}/jsf_exec/resources/img/logo2.png"/>
-                    Usuario 123
-                    user@acceso.com.pe
-                </p:panel>
-
-                <p:growl id="messages" showDetail="true">
-                    <p:autoUpdate/>
-                </p:growl>
-
-                <p:panelMenu style="width:220px">
+                <p:menu style="width:220px">
                     <p:submenu label="Maestros" expanded="true">
                         <p:menuitem value="#{conexionBean.beanName}" action="#{conexionBean.load}"
                                     actionListener="#{conexionBean.doListener}" ajax="true" async="false"
@@ -147,41 +204,46 @@
                         <p:menuitem value="Configuración" action="#{menuView.exit}" icon="fa fa-gear"/>
                         <p:menuitem value="Log Out" action="#{menuView.exit}" icon="fa fa-sign-out"/>
                     </p:submenu>
-                </p:panelMenu>
+                </p:menu>
             </h:form>
         </p:layoutUnit>
 
-        <p:layoutUnit position="center">
+        <p:layoutUnit position="center" resizable="false">
             <p:outputPanel id="mainPanel">
 
-                <p:breadCrumb model="#{managerBean.model}">
-
+                <p:breadCrumb styleClass="main_breadcrumb" model="#{managerBean.model}">
                     <f:facet name="options">
                         <h:form>
-                            <p:outputPanel>
-                                <p:panelGrid columns="2">
-                                    <p:row>
-                                        <p:column>
-                                            <p:commandButton id="defaultActionButton"
-                                                             value="#{managerBean.defaultActionNameButton}"
-                                                             action="#{managerBean.defaultAction}"
-                                                             rendered="#{managerBean.renderedCommandButton}"
-                                                             icon="#{managerBean.defaultActionIcoButton}"/>
-                                        </p:column>
-                                        <p:column>
-                                            <p:menuButton id="optionalActionsMenuButton"
-                                                          model="#{managerBean.menuButton}"
-                                                          rendered="#{managerBean.renderedMenuButton}"
-                                                          icon="fa fa-bars">
-                                            </p:menuButton>
-                                        </p:column>
-                                    </p:row>
-                                </p:panelGrid>
-                            </p:outputPanel>
+                            <p:panelGrid styleClass="main_opt_buttons">
+                                <p:row>
+                                    <p:column>
+                                        <p:spacer width="1" height="24"
+                                                  style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:commandButton id="defaultActionButton"
+                                                         value="#{managerBean.defaultActionNameButton}"
+                                                         action="#{managerBean.defaultAction}"
+                                                         rendered="#{managerBean.renderedCommandButton}"
+                                                         icon="#{managerBean.defaultActionIcoButton}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <p:menuButton id="optionalActionsMenuButton"
+                                                      model="#{managerBean.menuButton}"
+                                                      rendered="#{managerBean.renderedMenuButton}"
+                                                      icon="fa fa-bars">
+                                        </p:menuButton>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
                         </h:form>
 
                     </f:facet>
                 </p:breadCrumb>
+
+                <p:separator/>
 
                 <ui:insert name="content">Content</ui:insert>
             </p:outputPanel>

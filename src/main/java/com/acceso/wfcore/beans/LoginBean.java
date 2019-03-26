@@ -1,6 +1,6 @@
 package com.acceso.wfcore.beans;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -47,7 +47,7 @@ public class LoginBean extends MainBean implements Serializable {
     }
 
     public String login() {
-        RequestContext context = RequestContext.getCurrentInstance();
+        PrimeRequestContext context = PrimeRequestContext.getCurrentInstance();
         FacesMessage msg = null;
         if (nombre != null && nombre.equals("admin") && clave != null
                 && clave.equals("admin")) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,20 +7,17 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="../template/plantilla.xhtml">
-        <ui:define name="content">
+<ui:composition template="../template/plantilla.xhtml">
+    <ui:define name="content">
 
-            <h:form id="form">
-                <p:panel>
+        <p:panel>
 
-                    <p:graphicImage style="height: 400px; width: 1000px"
-                                    value="#{FacesContext.getCurrentInstance().getExternalContext()}/jsf_exec/resources/img/logo3.png"/>
-                </p:panel>
+            <p:graphicImage style="height: 400px; width: 100%;opacity: .2;"
+                            value="#{FacesContext.getCurrentInstance().getExternalContext()}/jsf_exec/resources/img/logo3.png"/>
+        </p:panel>
 
-            </h:form>
+    </ui:define>
 
-        </ui:define>
-
-    </ui:composition>
+</ui:composition>
 
 </html>

@@ -10,17 +10,19 @@
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
 
-        <h:form id="form">
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
-            </p:confirmDialog>
 
-            <p:panel id="panelListaCnx">
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+        </p:confirmDialog>
 
-                <p:growl id="msgs" showDetail="true"/>
 
+        <p:panel id="panelListaCnx">
+
+            <p:growl id="msgs" showDetail="true"/>
+
+            <h:form id="form">
                 <p:dataTable id="lista"
                              var="cnx"
                              value="#{conexionBean.conexiones}"
@@ -99,9 +101,10 @@
                     </p:column>
 
                 </p:dataTable>
-            </p:panel>
+            </h:form>
+        </p:panel>
 
-        </h:form>
+
 
     </ui:define>
 

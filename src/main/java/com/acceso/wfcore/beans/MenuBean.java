@@ -5,7 +5,7 @@ import com.acceso.wfcore.daos.ModuloDAO;
 import com.acceso.wfcore.dtos.MenuDTO;
 
 import com.acceso.wfcore.dtos.ModuloDTO;
-import org.primefaces.context.RequestContext;
+import org.primefaces.context.PrimeRequestContext;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -164,7 +164,7 @@ public class MenuBean extends MainBean implements Serializable, DefaultMaintence
       // nueva.setSelected(true);
 
       System.out.println("addChildNodeAction: " + "jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
-      RequestContext.getCurrentInstance().execute("jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
+//      RequestContext.getCurrentInstance().execute("jQuery('#form\\\\:lista\\\\:" + nueva.getRowKey() + "\\\\:Edit').find('span.ui-icon-pencil').each(function(){jQuery(this).click()})");
 
       return;
    }
