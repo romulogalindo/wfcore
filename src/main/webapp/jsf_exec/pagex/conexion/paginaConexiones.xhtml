@@ -80,13 +80,9 @@
                     </p:column>
 
                     <p:column headerText="Estado" width="70">
-                        <p:outputLabel rendered="#{cnx.il_conexi}">
-                            <i class="pi pi-circle-on" style="color: green;"></i>
-                            <h:outputText value="Conectado"/>
-                        </p:outputLabel>
-                        <p:outputLabel rendered="#{!cnx.il_conexi}">
-                            <i class="pi pi-circle-on" style="color: red;"></i>
-                            <h:outputText value="Desconectado" />
+                        <p:outputLabel>
+                            <i class="pi pi-circle-on" style="color: #{cnx.il_conexi ? 'green' : 'red'};"></i>
+                            <h:outputText value="#{cnx.il_conexi ? 'Conectado' : 'Desconectado'}"/>
                         </p:outputLabel>
                     </p:column>
 
