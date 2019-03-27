@@ -29,22 +29,18 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
 
+    public static final String BEAN_NAME = "conexionBean";
 
     private List<ConexionDTO> conexiones;
     private ConexionDTO conexion;
 
     private boolean isregEditable;
 
-
     public ConexionBean() {
-        this.beanName = "Conexiones";
+        this.beanName = BEAN_NAME;
+        this.titleName = "Conexiones";
         this.conexion = new ConexionDTO();
         this.isregEditable = true;
-    }
-
-    @Override
-    public String getBeanName() {
-        return beanName;
     }
 
     @Override
@@ -65,10 +61,13 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
         FacesContext context = FacesContext.getCurrentInstance();
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(this.titleName, URL_LISTA);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
+
+        //ManagerBean -> Open!
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setOpenedModule(this.beanName);
 
         System.out.println("listener()");
     }
@@ -124,7 +123,6 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
         ConexionDAO dao = new ConexionDAO();
         this.conexion = dao.grabarConexion(conexion);
         this.conexiones = dao.getConexiones();
-//      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
         dao.close();
     }
 
@@ -133,7 +131,6 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
         ConexionDAO dao = new ConexionDAO();
         this.conexion = dao.grabarConexion(conexion);
         this.conexiones = dao.getConexiones();
-//      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
         dao.close();
     }
 
@@ -158,10 +155,11 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
             valid = connection.isValid(1000 * 10);
 
         } catch (Exception ep) {
-            if (ep instanceof java.sql.SQLException)
+            if (ep instanceof java.sql.SQLException) {
                 message = "TEST FALLÓ: [" + ((java.sql.SQLException) ep).getErrorCode() + "] " + ((java.sql.SQLException) ep).getMessage();
-            else
+            } else {
                 message = "TEST FALLÓ: " + ep.getMessage();
+            }
         }
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -186,7 +184,6 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
         dataManager.init();
         System.out.println("conexion inicializada");
     }
-
 
     public ConexionDTO getConexion() {
         return conexion;
@@ -220,5 +217,10 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
 
     public void setIsregEditable(boolean isregEditable) {
         this.isregEditable = isregEditable;
+    }
+
+    @Override
+    public boolean isOpen() {
+        return this.open;
     }
 }

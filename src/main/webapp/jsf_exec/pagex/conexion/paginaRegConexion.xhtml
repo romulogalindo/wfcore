@@ -1,194 +1,191 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<body>
+    <ui:composition template="../../template/plantilla.xhtml">
+        <ui:define name="content">
 
-<ui:composition template="../../template/plantilla.xhtml">
+            <h:form>
+                <p:panel id="panelActualizarCnx" style="text-align: center;">
 
-    <ui:define name="content">
-        <h:form>
-            <p:panel id="panelActualizarCnx" style="text-align: center;">
-                <p:panelGrid>
+                    <p:panelGrid>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="co_conexi" value="Id:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="co_conexi" value="#{conexionBean.conexion.co_conexi}"
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.co_conexi}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="co_conexi" value="Id:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="co_conexi" value="#{conexionBean.conexion.co_conexi}"
+                                             rendered="#{conexionBean.isregEditable}"/>
+                                <p:outputLabel value="#{conexionBean.conexion.co_conexi}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="no_conexi" value="Nombre:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="no_conexi" value="#{conexionBean.conexion.no_conexi}"
-                                         required="true" requiredMessage="Debe ingresar un Nombre."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_conexi}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="no_conexi" value="Nombre:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="no_conexi" value="#{conexionBean.conexion.no_conexi}"
+                                             required="true" requiredMessage="Debe ingresar un Nombre."
+                                             rendered="#{conexionBean.isregEditable}"/>
+                                <p:outputLabel value="#{conexionBean.conexion.no_conexi}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="nu_maxpoo" value="Max Pool:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="nu_maxpoo" value="#{conexionBean.conexion.nu_maxpoo}"
-                                         required="true" requiredMessage="Debe ingresar un Max Pool."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_maxpoo}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="nu_maxpoo" value="Max Pool:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="nu_maxpoo" value="#{conexionBean.conexion.nu_maxpoo}"
+                                             required="true" requiredMessage="Debe ingresar un Max Pool."
+                                             rendered="#{conexionBean.isregEditable}">
+                                    <p:keyFilter mask="num"/>
+                                </p:inputText>
+                                <p:outputLabel value="#{conexionBean.conexion.nu_maxpoo}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="nu_timout" value="Time Out:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="nu_timout" value="#{conexionBean.conexion.nu_timout}"
-                                         required="true" requiredMessage="Debe ingresar un Time Out."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_timout}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="nu_timout" value="Time Out:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="nu_timout" value="#{conexionBean.conexion.nu_timout}"
+                                             required="true" requiredMessage="Debe ingresar un Time Out."
+                                             rendered="#{conexionBean.isregEditable}">
+                                    <p:keyFilter mask="num"/>
+                                </p:inputText>
+                                <p:outputLabel value="#{conexionBean.conexion.nu_timout}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="no_usuari" value="Usuario:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="no_usuari" value="#{conexionBean.conexion.no_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Usuario."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_usuari}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="no_usuari" value="Usuario:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="no_usuari" value="#{conexionBean.conexion.no_usuari}"
+                                             required="true" requiredMessage="Debe ingresar un Usuario."
+                                             rendered="#{conexionBean.isregEditable}"/>
+                                <p:outputLabel value="#{conexionBean.conexion.no_usuari}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="pw_usuari" value="Password:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="pw_usuari" value="#{conexionBean.conexion.pw_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Password."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.pw_usuari}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="pw_usuari" value="Password:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="pw_usuari" value="#{conexionBean.conexion.pw_usuari}"
+                                             required="true" requiredMessage="Debe ingresar un Password."
+                                             rendered="#{conexionBean.isregEditable}"/>
+                                <p:outputLabel value="#{conexionBean.conexion.pw_usuari}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="ur_domini" value="Dominio:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="ur_domini" value="#{conexionBean.conexion.ur_domini}"
-                                         required="true" requiredMessage="Debe ingresar un Dominio."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.ur_domini}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="ur_domini" value="Dominio:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="ur_domini" value="#{conexionBean.conexion.ur_domini}"
+                                             required="true" requiredMessage="Debe ingresar un Dominio."
+                                             rendered="#{conexionBean.isregEditable}"/>
+                                <p:outputLabel value="#{conexionBean.conexion.ur_domini}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="nu_puerto" value="Puerto:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="nu_puerto" value="#{conexionBean.conexion.nu_puerto}"
-                                         required="true" requiredMessage="Debe ingresar un Puerto."
-                                         rendered="#{conexionBean.isregEditable}">
-                                <p:keyFilter mask="num"/>
-                            </p:inputText>
-                            <p:outputLabel value="#{conexionBean.conexion.nu_puerto}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="nu_puerto" value="Puerto:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="nu_puerto" value="#{conexionBean.conexion.nu_puerto}"
+                                             required="true" requiredMessage="Debe ingresar un Puerto."
+                                             rendered="#{conexionBean.isregEditable}">
+                                    <p:keyFilter mask="num"/>
+                                </p:inputText>
+                                <p:outputLabel value="#{conexionBean.conexion.nu_puerto}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column styleClass="form_col_title">
-                            <p:outputLabel for="no_datbas" value="BD:"/>
-                        </p:column>
-                        <p:column styleClass="form_col_detail">
-                            <p:inputText id="no_datbas" value="#{conexionBean.conexion.no_datbas}"
-                                         required="true" requiredMessage="Debe ingresar una BD."
-                                         rendered="#{conexionBean.isregEditable}"/>
-                            <p:outputLabel value="#{conexionBean.conexion.no_datbas}"
-                                           rendered="#{!conexionBean.isregEditable}"/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="no_datbas" value="BD:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="no_datbas" value="#{conexionBean.conexion.no_datbas}"
+                                             required="true" requiredMessage="Debe ingresar una BD."
+                                             rendered="#{conexionBean.isregEditable}"/>
+                                <p:outputLabel value="#{conexionBean.conexion.no_datbas}"
+                                               rendered="#{!conexionBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column colspan="2">
-                            <p:separator/>
-                        </p:column>
-                    </p:row>
+                        <p:row>
+                            <p:column colspan="2">
+                                <p:separator/>
+                            </p:column>
+                        </p:row>
 
-                    <p:row>
-                        <p:column style="text-align: left;">
-                            <p:commandButton action="#{conexionBean.load()}"
-                                             actionListener="#{conexionBean.doListener()}"
-                                             value="Atrás"
-                                             title="Volver al reporte de conexiones"
-                                             immediate="true"
-                                             icon="pi pi-arrow-left">
-                            </p:commandButton>
-                        </p:column>
-                        <p:column>
-                            <p:commandButton value="Probar conexión"
-                                             action="#{conexionBean.testConexion}"
-                                             type="submit"
-                                             update="panelActualizarCnx"
-                                             icon="pi pi-save">
-                                <p:ajax rendered="panelActualizarCnx"/>
-                            </p:commandButton>
+                        <p:row>
+                            <p:column style="text-align: left;">
+                                <p:commandButton action="#{conexionBean.load()}"
+                                                 actionListener="#{conexionBean.doListener()}"
+                                                 value="Atrás"
+                                                 title="Volver al reporte de conexiones"
+                                                 immediate="true"
+                                                 icon="pi pi-arrow-left">
+                                </p:commandButton>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Probar conexión"
+                                                 action="#{conexionBean.testConexion}"
+                                                 type="submit"
+                                                 update="panelActualizarCnx"
+                                                 icon="pi pi-save">
+                                    <p:ajax rendered="panelActualizarCnx"/>
+                                </p:commandButton>
 
-                            <p:commandButton value="Grabar"
-                                             action="#{conexionBean.saveRegist}"
-                                             type="submit"
-                                             update="panelActualizarCnx"
-                                             icon="pi pi-save">
-                                <p:ajax rendered="panelActualizarCnx"/>
-                            </p:commandButton>
+                                <p:commandButton value="Grabar"
+                                                 action="#{conexionBean.saveRegist}"
+                                                 type="submit"
+                                                 update="panelActualizarCnx"
+                                                 icon="pi pi-save">
+                                    <p:ajax rendered="panelActualizarCnx"/>
+                                </p:commandButton>
 
-                            <p:commandButton value="Grabar y Aplicar"
-                                             action="#{conexionBean.aplicarCambios}"
-                                             type="submit"
-                                             update="panelActualizarCnx"
-                                             icon="pi pi-save">
-                                <p:ajax rendered="panelActualizarCnx"/>
-                            </p:commandButton>
-                        </p:column>
-                    </p:row>
+                                <p:commandButton value="Grabar y Aplicar"
+                                                 action="#{conexionBean.aplicarCambios}"
+                                                 type="submit"
+                                                 update="panelActualizarCnx"
+                                                 icon="pi pi-save">
+                                    <p:ajax rendered="panelActualizarCnx"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:row>
 
-                </p:panelGrid>
+                    </p:panelGrid>
 
-            </p:panel>
+                </p:panel>
+            </h:form>
+        </ui:define>
 
-        </h:form>
-    </ui:define>
+    </ui:composition>
 
-</ui:composition>
-
-</body>
 </html>

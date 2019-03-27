@@ -98,13 +98,58 @@
         <div id="loader" style="position:fixed; width:100%;height:100%;top: 0;left: 0;background-color: rgba(255,255,255,0.5);">
             <table style="width: 100%;height: 100%">
                 <tr>
-                    <td style="vertical-align:bottom;text-align: center;height: 50%;color: darkgray;">
-                        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    <td style="vertical-align:bottom;text-align: center;height: 50%;color: darkgray; border:none !important;">
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                            <div class="spinner-layer spinner-red">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                            <div class="spinner-layer spinner-yellow">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                            <div class="spinner-layer spinner-green">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="gap-patch">
+                                    <div class="circle"></div>
+                                </div>
+                                <div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td style="height: 50%; vertical-align: top;text-align: center">
-                        Cargando página
+                    <td style="height: 50%; vertical-align: top;text-align: center;font-size: 1.2em;font-weight: bold;">
+                        Cargando página...
                     </td>
                 </tr>
             </table>

@@ -19,161 +19,161 @@ import java.util.List;
 @SessionScoped
 public class SistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
+    private static final String URL_LISTA = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
+    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
+    private static final String URL_EDITAR = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
+    private static final String URL_NEW = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
 
+    public static final String BEAN_NAME = "sistemaBean";
 
-   private List<SistemaDTO> sistemas;
-   private SistemaDTO sistema;
+    private List<SistemaDTO> sistemas;
+    private SistemaDTO sistema;
 
-   private boolean isregEditable;
+    private boolean isregEditable;
 
+    public SistemaBean() {
+        this.beanName = BEAN_NAME;
+        this.titleName = "Sistemas";
+        this.sistema = new SistemaDTO();
+        this.isregEditable = true;
+    }
 
-   public SistemaBean() {
-      this.beanName = "Sistemas";
-      this.sistema = new SistemaDTO();
-      this.isregEditable = true;
-   }
+    public List<SelectItem> getComboSistema() {
+        List<SelectItem> res = new ArrayList<>();
+        selectDto();
+        for (SistemaDTO sis : sistemas) {
+            SelectItem item = new SelectItem();
+            item.setLabel(sis.getNo_sistem());
+            item.setDescription(sis.getDe_sistem());
+            item.setValue(sis.getCo_sistem());
+            res.add(item);
+        }
+        return res;
+    }
 
-   public List<SelectItem> getComboSistema(){
-      List<SelectItem> res = new ArrayList<>();
-      selectDto();
-      for (SistemaDTO sis:sistemas) {
-         SelectItem item = new SelectItem();
-         item.setLabel(sis.getNo_sistem());
-         item.setDescription(sis.getDe_sistem());
-         item.setValue(sis.getCo_sistem());
-         res.add(item);
-      }
-      return res;
-   }
+    @Override
+    public String load() {
+        System.out.println("load()");
+        this.isregEditable = true;
+        // LLENAR LOS BOTONES SECUNDARIOS
+        //doListener();
+        //CARGA INICIAL!!
+        selectDto();
 
-   @Override
-   public String getBeanName() {
-      return beanName;
-   }
+        return URL_LISTA;
+    }
 
-   @Override
-   public String load() {
-      System.out.println("load()");
-      this.isregEditable = true;
-      // LLENAR LOS BOTONES SECUNDARIOS
-      //doListener();
-      //CARGA INICIAL!!
-      selectDto();
+    @Override
+    public void doListener() {
+        //acceder al manager y decirle toma
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
 
-      return URL_LISTA;
-   }
+        //ManagerBean -> Open!
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setOpenedModule(this.beanName);
 
-   @Override
-   public void doListener() {
-      //acceder al manager y decirle toma
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
+        System.out.println("listener()");
+    }
 
-      System.out.println("listener()");
-   }
+    @Override
+    public String defaultAction() {
+        // Para el nuevo registro
+        this.sistema = new SistemaDTO();
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
+        //varias cosas para editar
+        return URL_NEW;
+    }
 
-   @Override
-   public String defaultAction() {
-      // Para el nuevo registro
-      this.sistema = new SistemaDTO();
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
-      //varias cosas para editar
-      return URL_NEW;
-   }
+    @Override
+    public String newRegist() {
+        //Data la causistica el metodo nuevo esta encapsuado en defaultAction
+        return null;
+    }
 
-   @Override
-   public String newRegist() {
-      //Data la causistica el metodo nuevo esta encapsuado en defaultAction
-      return null;
-   }
+    @Override
+    public String updateRegist() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
-   @Override
-   public String updateRegist() {
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+        return URL_EDITAR;
+    }
 
-      return URL_EDITAR;
-   }
+    @Override
+    public String deleteRegist() {
+        deleteDto();
 
-   @Override
-   public String deleteRegist() {
-      deleteDto();
+        return URL_LISTA;
+    }
 
-      return URL_LISTA;
-   }
+    @Override
+    public String saveRegist() {
+        saveDto();
+        return URL_LISTA;
+    }
 
-   @Override
-   public String saveRegist() {
-      saveDto();
-      return URL_LISTA;
-   }
+    @Override
+    public void selectDto() {
+        SistemaDAO dao = new SistemaDAO();
+        this.sistemas = dao.getSistemas();
+        dao.close();
+    }
 
-   @Override
-   public void selectDto() {
-      SistemaDAO dao = new SistemaDAO();
-      this.sistemas = dao.getSistemas();
-      dao.close();
-   }
-
-   @Override
-   public void saveDto() {
-      SistemaDAO dao = new SistemaDAO();
-      this.sistema = dao.grabarSistema(sistema);
-      this.sistemas = dao.getSistemas();
+    @Override
+    public void saveDto() {
+        SistemaDAO dao = new SistemaDAO();
+        this.sistema = dao.grabarSistema(sistema);
+        this.sistemas = dao.getSistemas();
 //      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
-      dao.close();
-   }
+        dao.close();
+    }
 
-   @Override
-   public void updateDto() {
-      SistemaDAO dao = new SistemaDAO();
-      this.sistema = dao.grabarSistema(sistema);
-      this.sistemas = dao.getSistemas();
+    @Override
+    public void updateDto() {
+        SistemaDAO dao = new SistemaDAO();
+        this.sistema = dao.grabarSistema(sistema);
+        this.sistemas = dao.getSistemas();
 //      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
-      dao.close();
-   }
+        dao.close();
+    }
 
-   @Override
-   public void deleteDto() {
-      SistemaDAO dao = new SistemaDAO();
-      String resultado = dao.deleteSistema(sistema);
-      this.sistemas = dao.getSistemas();
-      dao.close();
-   }
+    @Override
+    public void deleteDto() {
+        SistemaDAO dao = new SistemaDAO();
+        String resultado = dao.deleteSistema(sistema);
+        this.sistemas = dao.getSistemas();
+        dao.close();
+    }
 
-   public List<SistemaDTO> getSistemas() {
-      return sistemas;
-   }
+    public List<SistemaDTO> getSistemas() {
+        return sistemas;
+    }
 
-   public void setSistemas(List<SistemaDTO> sistemas) {
-      this.sistemas = sistemas;
-   }
+    public void setSistemas(List<SistemaDTO> sistemas) {
+        this.sistemas = sistemas;
+    }
 
-   public SistemaDTO getSistema() {
-      return sistema;
-   }
+    public SistemaDTO getSistema() {
+        return sistema;
+    }
 
-   public void setSistema(SistemaDTO sistema) {
-      this.sistema = sistema;
-   }
+    public void setSistema(SistemaDTO sistema) {
+        this.sistema = sistema;
+    }
 
-   public boolean isIsregEditable() {
-      return isregEditable;
-   }
+    public boolean isIsregEditable() {
+        return isregEditable;
+    }
 
-   public void setIsregEditable(boolean isregEditable) {
-      this.isregEditable = isregEditable;
-   }
+    public void setIsregEditable(boolean isregEditable) {
+        this.isregEditable = isregEditable;
+    }
+
 }

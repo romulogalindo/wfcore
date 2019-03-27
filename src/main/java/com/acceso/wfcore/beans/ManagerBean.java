@@ -1,13 +1,9 @@
 package com.acceso.wfcore.beans;
 
-import org.primefaces.component.menubutton.MenuButton;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
-import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
-
 import javax.faces.context.FacesContext;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -15,6 +11,7 @@ import java.io.Serializable;
 @ManagedBean
 @SessionScoped
 public class ManagerBean extends MainBean implements Serializable {
+
     private MenuModel model;
 
     private MenuModel menuButton;
@@ -25,11 +22,12 @@ public class ManagerBean extends MainBean implements Serializable {
     private MainBean currentBean;
 
     public ManagerBean() {
-        this.beanName = "Manager";
+        this.beanName = "ManagerBean";
+        this.titleName = "Manager";
         this.renderedMenuButton = false;
         this.renderedCommandButton = false;
-        this.defaultActionNameButton="Nuevo";
-        this.defaultActionIcoButton="fa fa-plus";
+        this.defaultActionNameButton = "Nuevo";
+        this.defaultActionIcoButton = "fa fa-plus";
 
         initBreadCumBar();
         initMenuButton();
@@ -50,14 +48,6 @@ public class ManagerBean extends MainBean implements Serializable {
     public void initMenuButton() {
         this.menuButton = new DefaultMenuModel();
     }
-
-//   public void updateMenuButton(String title, String action) {
-//
-////      DefaultMenuItem button = new DefaultMenuItem("Ajax Action");
-////      button.setUrl("https://www.journaldev.com");
-//
-////      this.menuButton.addElement(button);
-//   }
 
     public void updateBreadCumBar(String title, String url) {
         //DefaultSubMenu firstSubmenu = new DefaultSubMenu("Dynamic Submenu");
@@ -112,23 +102,23 @@ public class ManagerBean extends MainBean implements Serializable {
         this.currentBean = currentBean;
     }
 
-   public boolean isRenderedCommandButton() {
-      return renderedCommandButton;
-   }
+    public boolean isRenderedCommandButton() {
+        return renderedCommandButton;
+    }
 
-   public void setRenderedCommandButton(boolean renderedCommandButton) {
-      this.renderedCommandButton = renderedCommandButton;
-   }
+    public void setRenderedCommandButton(boolean renderedCommandButton) {
+        this.renderedCommandButton = renderedCommandButton;
+    }
 
-   public String getDefaultActionIcoButton() {
-      return defaultActionIcoButton;
-   }
+    public String getDefaultActionIcoButton() {
+        return defaultActionIcoButton;
+    }
 
-   public void setDefaultActionIcoButton(String defaultActionIcoButton) {
-      this.defaultActionIcoButton = defaultActionIcoButton;
-   }
+    public void setDefaultActionIcoButton(String defaultActionIcoButton) {
+        this.defaultActionIcoButton = defaultActionIcoButton;
+    }
 
-   @Override
+    @Override
     public String load() {
         return null;
     }
@@ -141,5 +131,22 @@ public class ManagerBean extends MainBean implements Serializable {
     @Override
     public String defaultAction() {
         return currentBean.defaultAction();
+    }
+
+    public void setOpenedModule(String module) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, ConexionBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, SistemaBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, SubSistemaBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, PaqueteBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, ModuloBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, MenuBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, UsuarioBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, ContenedorBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, PaginaBean.BEAN_NAME)).setOpen(false);
+
+        //set module open!
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, module)).setOpen(true);
+
     }
 }

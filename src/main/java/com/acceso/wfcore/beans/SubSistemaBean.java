@@ -6,9 +6,7 @@ import com.acceso.wfcore.dtos.SubSistemaDTO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,150 +17,148 @@ import java.util.List;
 @SessionScoped
 public class SubSistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
+    private static final String URL_LISTA = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
+    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
+    private static final String URL_EDITAR = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
+    private static final String URL_NEW = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
 
+    public static final String BEAN_NAME = "subSistemaBean";
 
-   private List<SubSistemaDTO> subsistemas;
-   private SubSistemaDTO subsistema;
+    private List<SubSistemaDTO> subsistemas;
+    private SubSistemaDTO subsistema;
 
-   private boolean isregEditable;
+    private boolean isregEditable;
 
+    public SubSistemaBean() {
+        this.beanName = BEAN_NAME;
+        this.titleName = "Sub Sistema";
+        this.subsistema = new SubSistemaDTO();
+        this.isregEditable = true;
+    }
 
-   public SubSistemaBean() {
-      this.beanName = "Sub Sistema";
-      this.subsistema = new SubSistemaDTO();
-      this.isregEditable = true;
-   }
+    @Override
+    public String load() {
+        System.out.println("load()");
+        this.isregEditable = true;
+        // LLENAR LOS BOTONES SECUNDARIOS
+        //doListener();
+        //CARGA INICIAL!!
+        selectDto();
 
-   @Override
-   public String getBeanName() {
-      return beanName;
-   }
+        return URL_LISTA;
+    }
 
-   @Override
-   public String load() {
-      System.out.println("load()");
-      this.isregEditable = true;
-      // LLENAR LOS BOTONES SECUNDARIOS
-      //doListener();
-      //CARGA INICIAL!!
-      selectDto();
+    @Override
+    public void doListener() {
+        //acceder al manager y decirle toma
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
 
-      return URL_LISTA;
-   }
+        //ManagerBean -> Open!
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setOpenedModule(this.beanName);
 
-   @Override
-   public void doListener() {
-      //acceder al manager y decirle toma
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
+        System.out.println("listener()");
+    }
 
-      System.out.println("listener()");
-   }
+    @Override
+    public String defaultAction() {
+        // Para el nuevo registro
+        this.subsistema = new SubSistemaDTO();
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
+        //varias cosas para editar
+        return URL_NEW;
+    }
 
-   @Override
-   public String defaultAction() {
-      // Para el nuevo registro
-      this.subsistema = new SubSistemaDTO();
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
-      //varias cosas para editar
-      return URL_NEW;
-   }
+    @Override
+    public String newRegist() {
+        //Data la causistica el metodo nuevo esta encapsuado en defaultAction
+        return null;
+    }
 
-   @Override
-   public String newRegist() {
-      //Data la causistica el metodo nuevo esta encapsuado en defaultAction
-      return null;
-   }
+    @Override
+    public String updateRegist() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
-   @Override
-   public String updateRegist() {
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+        return URL_EDITAR;
+    }
 
-      return URL_EDITAR;
-   }
+    @Override
+    public String deleteRegist() {
+        deleteDto();
 
-   @Override
-   public String deleteRegist() {
-      deleteDto();
+        return URL_LISTA;
+    }
 
-      return URL_LISTA;
-   }
+    @Override
+    public String saveRegist() {
+        saveDto();
+        return URL_LISTA;
+    }
 
-   @Override
-   public String saveRegist() {
-      saveDto();
-      return URL_LISTA;
-   }
+    @Override
+    public void selectDto() {
+        SubSistemaDAO dao = new SubSistemaDAO();
+        this.subsistemas = dao.getSubSistemas();
+        dao.close();
+    }
 
-   @Override
-   public void selectDto() {
-      SubSistemaDAO dao = new SubSistemaDAO();
-      this.subsistemas = dao.getSubSistemas();
-      dao.close();
-   }
-
-   @Override
-   public void saveDto() {
-      SubSistemaDAO dao = new SubSistemaDAO();
-      this.subsistema = dao.grabarSubSistema(subsistema);
-      this.subsistemas = dao.getSubSistemas();
+    @Override
+    public void saveDto() {
+        SubSistemaDAO dao = new SubSistemaDAO();
+        this.subsistema = dao.grabarSubSistema(subsistema);
+        this.subsistemas = dao.getSubSistemas();
 //      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
-      dao.close();
-   }
+        dao.close();
+    }
 
-   @Override
-   public void updateDto() {
-      SubSistemaDAO dao = new SubSistemaDAO();
-      this.subsistema = dao.grabarSubSistema(subsistema);
-      this.subsistemas = dao.getSubSistemas();
+    @Override
+    public void updateDto() {
+        SubSistemaDAO dao = new SubSistemaDAO();
+        this.subsistema = dao.grabarSubSistema(subsistema);
+        this.subsistemas = dao.getSubSistemas();
 //      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
-      dao.close();
-   }
+        dao.close();
+    }
 
-   @Override
-   public void deleteDto() {
-      SubSistemaDAO dao = new SubSistemaDAO();
-      String resultado = dao.deleteSubSistema(subsistema);
-      this.subsistemas = dao.getSubSistemas();
-      dao.close();
-   }
+    @Override
+    public void deleteDto() {
+        SubSistemaDAO dao = new SubSistemaDAO();
+        String resultado = dao.deleteSubSistema(subsistema);
+        this.subsistemas = dao.getSubSistemas();
+        dao.close();
+    }
 
-   public List<SubSistemaDTO> getSubsistemas() {
-      return subsistemas;
-   }
+    public List<SubSistemaDTO> getSubsistemas() {
+        return subsistemas;
+    }
 
-   public void setSubsistemas(List<SubSistemaDTO> subsistemas) {
-      this.subsistemas = subsistemas;
-   }
+    public void setSubsistemas(List<SubSistemaDTO> subsistemas) {
+        this.subsistemas = subsistemas;
+    }
 
-   public SubSistemaDTO getSubsistema() {
-      return subsistema;
-   }
+    public SubSistemaDTO getSubsistema() {
+        return subsistema;
+    }
 
-   public void setSubsistema(SubSistemaDTO subsistema) {
-      this.subsistema = subsistema;
-   }
+    public void setSubsistema(SubSistemaDTO subsistema) {
+        this.subsistema = subsistema;
+    }
 
-   public boolean isIsregEditable() {
-      return isregEditable;
-   }
+    public boolean isIsregEditable() {
+        return isregEditable;
+    }
 
-   public void setIsregEditable(boolean isregEditable) {
-      this.isregEditable = isregEditable;
-   }
-
+    public void setIsregEditable(boolean isregEditable) {
+        this.isregEditable = isregEditable;
+    }
 
 }
