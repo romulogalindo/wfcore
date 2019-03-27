@@ -1,8 +1,8 @@
 package com.acceso.wfweb.units;
 
 import com.acceso.wfweb.dtos.BotonDTO;
-import com.acceso.wfweb.dtos.ParametroDTO;
-import com.acceso.wfweb.dtos.RegistroDTO;
+import com.acceso.wfweb.dtos.WParametroDTO;
+import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.dtos.TituloDTO;
 import com.acceso.wfweb.units.registers.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class Fila extends HTMLRenderer implements Serializable {
 
     TituloDTO tituloDTO;
-    RegistroDTO registroDTO;
+    WRegistroDTO registroDTO;
     List<BotonDTO> botonDTOS;
     String id;
     //SOlo para tipo tabla
@@ -24,7 +24,7 @@ public class Fila extends HTMLRenderer implements Serializable {
         this.id = id;
     }
 
-    public Fila(RegistroDTO registroDTO, String id) {
+    public Fila(WRegistroDTO registroDTO, String id) {
         this.registroDTO = registroDTO;
         this.id = id;
     }
@@ -42,11 +42,11 @@ public class Fila extends HTMLRenderer implements Serializable {
         this.tituloDTO = tituloDTO;
     }
 
-    public RegistroDTO getRegistroDTO() {
+    public WRegistroDTO getRegistroDTO() {
         return registroDTO;
     }
 
-    public void setRegistroDTO(RegistroDTO registroDTO) {
+    public void setRegistroDTO(WRegistroDTO registroDTO) {
         this.registroDTO = registroDTO;
     }
 
@@ -81,7 +81,7 @@ public class Fila extends HTMLRenderer implements Serializable {
 
             try {
                 html += ((HTMLRenderer) Class.forName("com.acceso.wfweb.units.registers.Regist" + registroDTO.getTi_pagreg())
-                        .getConstructor(String.class, RegistroDTO.class)
+                        .getConstructor(String.class, WRegistroDTO.class)
                         .newInstance(id, registroDTO))
                         .toHTML();
             } catch (Exception ep) {
@@ -100,7 +100,7 @@ public class Fila extends HTMLRenderer implements Serializable {
             for (BotonDTO botonDTO : botonDTOS) {
 
                 html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[];";
-                for (ParametroDTO parametroDTO : botonDTO.getParametros()) {
+                for (WParametroDTO parametroDTO : botonDTO.getParametros()) {
                     html += "" + id + botonDTO.getCo_pagbot() + "P[" + id + botonDTO.getCo_pagbot() + "P.length] = new Parameter(" + parametroDTO.getCo_pagreg() + "," + parametroDTO.getCo_conpar() + ");";
                 }
                 html += "</script>";

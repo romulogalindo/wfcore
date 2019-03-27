@@ -1,6 +1,7 @@
 package com.acceso.wfcore.managers;
 
 import com.acceso.wfcore.utils.WFProperties;
+import org.hibernate.SessionFactory;
 
 /**
  * @author Rómulo Galindo<romulogalindo@gmail.com>
@@ -18,5 +19,9 @@ public abstract class Manager {
         this.name = name;
     }
 
+    public abstract SessionFactory getFactory();
+
     public abstract void init();
+
+    public abstract void terminate();
 }

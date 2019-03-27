@@ -39,7 +39,7 @@ public class BotonDTO implements Serializable {
     int co_condes;
 
     @Transient
-    List<ParametroDTO> parametros;
+    List<WParametroDTO> parametros;
 
     public BotonDTO() {
     }
@@ -116,11 +116,11 @@ public class BotonDTO implements Serializable {
         this.co_condes = co_condes;
     }
 
-    public List<ParametroDTO> getParametros() {
+    public List<WParametroDTO> getParametros() {
         return parametros;
     }
 
-    public void setParametros(List<ParametroDTO> parametros) {
+    public void setParametros(List<WParametroDTO> parametros) {
         this.parametros = parametros;
     }
 }

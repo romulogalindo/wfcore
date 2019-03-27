@@ -6,34 +6,31 @@
 package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
+
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 
 /**
- *
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
 @Entity
 @NamedNativeQueries({
-    @NamedNativeQuery(
-            name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbconexion_list()",
-            resultClass = ConexionDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbconexion_list()",
-            resultClass = ConexionDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GRABAR_CNX,
-            query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
-            + "from wfsistem.pbconexion_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
-            resultClass = ConexionDTO.class)
+        @NamedNativeQuery(
+                name = Values.SYSQUERYS_NATIVE_GET_ALLCNX,
+                query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+                        + "from wfsistem.pbconexion_list()",
+                resultClass = ConexionDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_SELECT_CNX,
+                query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+                        + "from wfsistem.pbconexion_list()",
+                resultClass = ConexionDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_GRABAR_CNX,
+                query = "select co_conexi, no_conexi, nu_maxpoo, nu_timout, no_usuari, pw_usuari, ur_domini, nu_puerto, no_datbas "
+                        + "from wfsistem.pbconexion_save(:co_conexi, :no_conexi, :nu_maxpoo, :nu_timout, :no_usuari, :pw_usuari, :ur_domini, :nu_puerto, :no_datbas)",
+                resultClass = ConexionDTO.class)
 })
 public class ConexionDTO implements Serializable {
 
@@ -48,6 +45,9 @@ public class ConexionDTO implements Serializable {
     String ur_domini;
     Integer nu_puerto;
     String no_datbas;
+
+    @Transient
+    boolean il_conexi;
 
     public Integer getCo_conexi() {
         return co_conexi;
@@ -119,6 +119,14 @@ public class ConexionDTO implements Serializable {
 
     public void setNo_datbas(String no_datbas) {
         this.no_datbas = no_datbas;
+    }
+
+    public boolean isIl_conexi() {
+        return il_conexi;
+    }
+
+    public void setIl_conexi(boolean il_conexi) {
+        this.il_conexi = il_conexi;
     }
 
     @Override

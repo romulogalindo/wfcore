@@ -8,8 +8,6 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <!--<script name="jquery/jquery.js" library="primefaces">-->
-    <!--</script>-->
     <script type="text/javascript">
         function handleDrop(event, ui) {
             var droppedCar = ui.draggable;
@@ -19,8 +17,10 @@
     </script>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
     <title>WFCORE</title>
-    <h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>
+
+    <!--<h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>-->
     <style type="text/css">
         .p-grid {
             display: -webkit-box;
@@ -84,6 +84,7 @@
 
         }
 
+        /*===RG=====DEL*/
         .ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
             border: none;
         }
@@ -112,7 +113,7 @@
         }
 
         div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid td.ui-panelgrid-cell {
-            border: none !important;
+            border: unset;
         }
 
         #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid .ui-panelgrid-cell {
@@ -126,6 +127,11 @@
         .form_col_title {
             text-align: right;
             border-right: 1px solid #cdcdcd !important;
+        }
+
+        .form_col_detail {
+            text-align: left;
+            font-weight: bold;
         }
     </style>
 </h:head>

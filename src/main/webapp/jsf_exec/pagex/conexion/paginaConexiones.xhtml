@@ -11,7 +11,6 @@
     <ui:define name="content">
 
 
-
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
             <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
@@ -31,6 +30,8 @@
                              paginatorPosition="bottom"
                              rows="100"
                              widgetVar="widTable"
+                             selectionMode="single"
+                             selection="#{conexionBean.conexion}"
                              rowKey="#{cnx.co_conexi}"
                              rowIndexVar="N">
 
@@ -47,42 +48,49 @@
                         <h:outputText value="#{N + 1}"/>
                     </p:column>
 
-                    <p:column sortBy="#{cnx.no_conexi}">
+                    <p:column sortBy="#{cnx.no_conexi}" width="40">
                         <f:facet name="header">
                             <h:outputText value="Nombre"/>
                         </f:facet>
-                        <h:outputText value="#{cnx.no_conexi}"/>
+                        <h:outputText value="#{cnx.no_conexi}" style="font-weight: bold;"/>
                     </p:column>
 
-                    <p:column headerText="Max Pool" style="text-align: right" sortBy="#{cnx.nu_maxpoo}">
+                    <p:column headerText="Max Pool" style="text-align: right" width="30">
                         <h:outputText value="#{cnx.nu_maxpoo}"/>
                     </p:column>
 
-                    <p:column headerText="Time Out" style="text-align: right" sortBy="#{cnx.nu_timout}">
+                    <p:column headerText="Time Out" style="text-align: right" width="30">
                         <h:outputText value="#{cnx.nu_timout}"/>
                     </p:column>
 
-                    <p:column headerText="Usuario" sortBy="#{cnx.no_usuari}">
+                    <p:column headerText="Usuario" sortBy="#{cnx.no_usuari}" width="40">
                         <h:outputText value="#{cnx.no_usuari}"/>
                     </p:column>
 
-                    <p:column headerText="Contraseña" sortBy="#{cnx.pw_usuari}">
-                        <h:outputText value="#{cnx.pw_usuari}"/>
-                    </p:column>
-
-                    <p:column headerText="Host" sortBy="#{cnx.ur_domini}">
+                    <p:column headerText="Host" sortBy="#{cnx.ur_domini}" width="80">
                         <h:outputText value="#{cnx.ur_domini}"/>
                     </p:column>
 
-                    <p:column headerText="Puerto" style="text-align: right" sortBy="#{cnx.nu_puerto}">
+                    <p:column headerText="Puerto" style="text-align: right" width="30">
                         <h:outputText value="#{cnx.nu_puerto}"/>
                     </p:column>
 
-                    <p:column headerText="BD" sortBy="#{cnx.no_datbas}">
+                    <p:column headerText="BD" sortBy="#{cnx.no_datbas}" width="30">
                         <h:outputText value="#{cnx.no_datbas}"/>
                     </p:column>
 
-                    <p:column style="width:160px;text-align: center">
+                    <p:column headerText="Estado" width="70">
+                        <p:outputLabel rendered="#{cnx.il_conexi}">
+                            <i class="pi pi-circle-on" style="color: green;"></i>
+                            <h:outputText value="Conectado"/>
+                        </p:outputLabel>
+                        <p:outputLabel rendered="#{!cnx.il_conexi}">
+                            <i class="pi pi-circle-on" style="color: red;"></i>
+                            <h:outputText value="Desconectado" />
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column style="text-align: center" width="100">
                         <p:commandButton action="#{conexionBean.updateRegist}" icon="fa fa-search" title="Ver">
                             <f:setPropertyActionListener value="#{cnx}" target="#{conexionBean.conexion}"/>
                             <f:setPropertyActionListener value="false" target="#{conexionBean.isregEditable}"/>
@@ -103,7 +111,6 @@
                 </p:dataTable>
             </h:form>
         </p:panel>
-
 
 
     </ui:define>

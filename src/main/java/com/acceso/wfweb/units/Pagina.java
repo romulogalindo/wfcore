@@ -1,6 +1,6 @@
 package com.acceso.wfweb.units;
 
-import com.acceso.wfweb.dtos.RegistroDTO;
+import com.acceso.wfweb.dtos.WRegistroDTO;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -91,7 +91,7 @@ public abstract class Pagina extends HTMLRenderer implements Serializable {
 //            System.out.println("entry = " + entry.getValue().getRegistroDTO());
 
             if (entry.getValue().getRegistroDTO() != null) {
-                RegistroDTO registroDTO = entry.getValue().getRegistroDTO();
+                WRegistroDTO registroDTO = entry.getValue().getRegistroDTO();
 //                int co_pagreg = entry.getValue().getRegistroDTO().getCo_pagreg();
                 if (registroDTO.getTi_pagreg() == 3 | registroDTO.getTi_pagreg() == 4 | registroDTO.getTi_pagreg() == 5 | registroDTO.getTi_pagreg() == 8) {
                     ls_hamoda = ls_hamoda + registroDTO.getCo_pagreg() + ",";

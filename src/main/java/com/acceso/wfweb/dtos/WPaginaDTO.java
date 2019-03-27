@@ -17,9 +17,9 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_PFCONPAG,
                 query = "select * from frawor4.pfconpag(:p_id_frawor , :p_co_conten )",
-                resultClass = PaginaDTO.class)
+                resultClass = WPaginaDTO.class)
 })
-public class PaginaDTO implements Serializable {
+public class WPaginaDTO implements Serializable {
 
     @Id
     int co_pagina;
@@ -46,7 +46,7 @@ public class PaginaDTO implements Serializable {
 
     String ca_tamano;
 
-    public PaginaDTO() {
+    public WPaginaDTO() {
     }
 
     public int getCo_pagina() {

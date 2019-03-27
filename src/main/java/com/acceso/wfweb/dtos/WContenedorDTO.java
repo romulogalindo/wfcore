@@ -17,9 +17,9 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_PFCONTEN,
                 query = "select * from frawor4.pfconten( :p_co_conten )",
-                resultClass = ContenedorDTO.class)
+                resultClass = WContenedorDTO.class)
 })
-public class ContenedorDTO implements Serializable {
+public class WContenedorDTO implements Serializable {
 
     @Id
     int co_conten;
@@ -46,7 +46,7 @@ public class ContenedorDTO implements Serializable {
 
     boolean il_deterr;
 
-    public ContenedorDTO() {
+    public WContenedorDTO() {
     }
 
     public int getCo_conten() {

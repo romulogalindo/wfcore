@@ -14,9 +14,9 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_PFPAGREG,
                 query = "select * from frawor4.pfpagreg( :p_co_pagina , :p_id_frawor , :p_co_conten )",
-                resultClass = RegistroDTO.class)
+                resultClass = WRegistroDTO.class)
 })
-public class RegistroDTO implements Serializable {
+public class WRegistroDTO implements Serializable {
 
     @Id
     int co_pagreg;
@@ -52,7 +52,7 @@ public class RegistroDTO implements Serializable {
     @Transient
     boolean il_hamoda;
 
-    public RegistroDTO() {
+    public WRegistroDTO() {
     }
 
     public int getCo_pagreg() {

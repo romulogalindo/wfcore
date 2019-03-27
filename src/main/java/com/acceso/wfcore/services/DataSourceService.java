@@ -59,6 +59,10 @@ public class DataSourceService extends Service {
         return managers.get(managerName);
     }
 
+    public DataManager setManager(String managerName, DataManager dataManager) {
+        return managers.put(managerName, dataManager);
+    }
+
     @Override
     public void stop() {
 

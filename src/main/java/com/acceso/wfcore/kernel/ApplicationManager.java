@@ -58,9 +58,9 @@ public class ApplicationManager {
 
     public static Contenedor buildContainer(int co_conten, long id_frawor) {
         //cobnstruimos el objeto contenedor
-        ContenedorDTO contenedorDTO = null;
+        WContenedorDTO contenedorDTO = null;
 
-        List<PaginaDTO> paginaDTOS;
+        List<WPaginaDTO> paginaDTOS;
         List<ContabDTO> contabDTOS;
 
         Frawor4DAO dao = new Frawor4DAO();
@@ -80,11 +80,11 @@ public class ApplicationManager {
         //work!
 //        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit(), contabDTOS);
-        for (PaginaDTO paginaDTO : paginaDTOS) {
+        for (WPaginaDTO paginaDTO : paginaDTOS) {
 //            System.out.println("AM:" + paginaDTO.getCo_pagina() + ",:::" + paginaDTO.getTi_pagina() + ",:::" + paginaDTO.getNo_pagtit());
             //pagina nueva
             List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
-            List<RegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
+            List<WRegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
             List<BotonDTO> botonDTOS = dao.getButonDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
 
             LinkedHashMap<String, Fila> ultraFilas = new LinkedHashMap<>();
@@ -96,7 +96,7 @@ public class ApplicationManager {
                 String idFila = "P" + paginaDTO.getCo_pagina() + "C1T" + tituloDTO.getCo_pagtit();
                 ultraFilas.put(idFila, new Fila(tituloDTO, idFila));
 
-                for (RegistroDTO registroDTO : registroDTOS) {
+                for (WRegistroDTO registroDTO : registroDTOS) {
                     if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
 //                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
                         idFila = "P" + paginaDTO.getCo_pagina() + "C1R" + registroDTO.getCo_pagreg();
@@ -108,7 +108,7 @@ public class ApplicationManager {
 
             if (!botonDTOS.isEmpty() || botonDTOS.size() > 0) {
                 for (BotonDTO botonDTO : botonDTOS) {
-                    List<ParametroDTO> parametroDTOS = dao.getParams(contenedorDTO.getCo_conten(), paginaDTO.getCo_pagina(), (short) botonDTO.getCo_pagbot());
+                    List<WParametroDTO> parametroDTOS = dao.getParams(contenedorDTO.getCo_conten(), paginaDTO.getCo_pagina(), (short) botonDTO.getCo_pagbot());
                     botonDTO.setParametros(parametroDTOS);
                 }
                 ultraFilas.put("BTN", new Fila(botonDTOS, "BTN"));

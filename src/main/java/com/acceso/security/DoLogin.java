@@ -78,7 +78,7 @@ public class DoLogin {
 
         //elementos que han sido capados por la capa de securidad ->>> desde la cache
         Root root = (Root) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE");
-
+        System.out.println("root = " + root);
         MainMenu mainMenu;// = ((Root) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE")).getSistemas().get(0).getSubsistemas().get(0).getPaquetes().get(0).getMmenu();
 
         List<PermisbloDTO> permisSistema = getPermisBy("SISTEMA");

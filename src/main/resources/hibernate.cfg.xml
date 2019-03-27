@@ -59,16 +59,16 @@
 
         <!-- DTO's (Web) -->
         <mapping class="com.acceso.wfcore.dtos.SystemTreeDTO"/>
-        <mapping class="com.acceso.wfweb.dtos.ContenedorDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WContenedorDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ContabDTO"/>
-        <mapping class="com.acceso.wfweb.dtos.PaginaDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WPaginaDTO"/>
         <mapping class="com.acceso.wfweb.dtos.TituloDTO"/>
-        <mapping class="com.acceso.wfweb.dtos.RegistroDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WRegistroDTO"/>
         <mapping class="com.acceso.wfweb.dtos.BotonDTO"/>
         <mapping class="com.acceso.wfweb.dtos.IdfraworDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ValpagDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ProcesoDTO"/>
-        <mapping class="com.acceso.wfweb.dtos.ParametroDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WParametroDTO"/>
         <mapping class="com.acceso.wfweb.dtos.PagregDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ComboDTO"/>
         <mapping class="com.acceso.wfweb.dtos.JoinDTO"/>

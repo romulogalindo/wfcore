@@ -15,6 +15,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * @author Rómulo Galindo<romulogalindo@gmail.com>
@@ -42,8 +43,8 @@ public class DataManager extends Manager implements DataBasePowerfull {
             properties.getKeys().stream().forEach(k -> standardServiceRegistryBuilder.applySetting(k, properties.get(k)));
 
             //Se genera el registro
-            StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
-
+//            StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
+            ServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
             //se registra el meta
             Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
 
@@ -73,6 +74,17 @@ public class DataManager extends Manager implements DataBasePowerfull {
     }
 
     @Override
+    public void terminate() {
+        if (sessionFactory != null) {
+            try {
+                sessionFactory.close();
+            } catch (Exception ep) {
+                sessionFactory = null;
+            }
+        }
+    }
+
+    @Override
     public StatelessSession getNativeSession() {
         return status == DataBasePowerfull.ACTIVE ? sessionFactory.openStatelessSession() : null;
     }
@@ -81,6 +93,12 @@ public class DataManager extends Manager implements DataBasePowerfull {
     public Session getHibernateSession() {
         return sessionFactory.openSession();
     }
+
+    @Override
+    public SessionFactory getFactory() {
+        return sessionFactory;
+    }
+
 
     @Override
     public int getStatus() {

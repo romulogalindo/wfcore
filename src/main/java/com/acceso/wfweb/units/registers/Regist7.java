@@ -1,13 +1,13 @@
 package com.acceso.wfweb.units.registers;
 
-import com.acceso.wfweb.dtos.RegistroDTO;
+import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist7 extends HTMLRenderer {
-    RegistroDTO registroDTO;
+    WRegistroDTO registroDTO;
     String id;
 
-    public Regist7(String id, RegistroDTO registroDTO) {
+    public Regist7(String id, WRegistroDTO registroDTO) {
         this.id = id;
         this.registroDTO = registroDTO;
     }

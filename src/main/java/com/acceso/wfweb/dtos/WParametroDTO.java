@@ -17,9 +17,9 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_PFPAGPAR,
                 query = "select * from frawor4.pfpagpar (:p_co_conten, :p_co_pagina , :p_co_pagbot )",
-                resultClass = ParametroDTO.class)
+                resultClass = WParametroDTO.class)
 })
-public class ParametroDTO implements Serializable {
+public class WParametroDTO implements Serializable {
 
     @Id
     int co_pagreg;
@@ -28,7 +28,7 @@ public class ParametroDTO implements Serializable {
 
     int co_conpar;
 
-    public ParametroDTO() {
+    public WParametroDTO() {
     }
 
     public int getCo_pagreg() {

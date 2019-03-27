@@ -29,16 +29,16 @@ public class Frawor4DAO extends DAO {
         this.session = session;
     }
 
-    public ContenedorDTO getContenedorDTO(int co_conten) {
+    public WContenedorDTO getContenedorDTO(int co_conten) {
 
-        ContenedorDTO contenedorDTO = null;
+        WContenedorDTO contenedorDTO = null;
         NQuery nQuery = new NQuery(TAG + ":CONTEN");
 
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFCONTEN), true, true);
             nQuery.setInteger("p_co_conten", co_conten);
-            contenedorDTO = (ContenedorDTO) nQuery.uniqueResult();
+            contenedorDTO = (WContenedorDTO) nQuery.uniqueResult();
 
         } catch (Exception ep) {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
@@ -67,9 +67,9 @@ public class Frawor4DAO extends DAO {
         return contabDTOs;
     }
 
-    public List<PaginaDTO> getPaginaDTO(int p_co_conten, long p_id_frawor) {
+    public List<WPaginaDTO> getPaginaDTO(int p_co_conten, long p_id_frawor) {
 
-        List<PaginaDTO> paginaDTOS = new ArrayList<>();
+        List<WPaginaDTO> paginaDTOS = new ArrayList<>();
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
@@ -108,9 +108,9 @@ public class Frawor4DAO extends DAO {
         return tituloDTOS;
     }
 
-    public List<RegistroDTO> getRegistroDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
+    public List<WRegistroDTO> getRegistroDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
 
-        List<RegistroDTO> registroDTOS = null;
+        List<WRegistroDTO> registroDTOS = null;
         NQuery nQuery = new NQuery(TAG + ":REGIST");
 
         try {
@@ -234,8 +234,8 @@ public class Frawor4DAO extends DAO {
         return procesoDTO;
     }
 
-    public List<ParametroDTO> getParams(int p_co_conten, int p_co_pagina, short p_co_pagbot) {
-        List<ParametroDTO> parametroDTOS = null;
+    public List<WParametroDTO> getParams(int p_co_conten, int p_co_pagina, short p_co_pagbot) {
+        List<WParametroDTO> parametroDTOS = null;
         NQuery nQuery = new NQuery(TAG + ":PAGPAR");
 
         try {

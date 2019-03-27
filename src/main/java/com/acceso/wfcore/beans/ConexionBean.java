@@ -2,9 +2,16 @@ package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.ConexionDAO;
 import com.acceso.wfcore.dtos.ConexionDTO;
+import com.acceso.wfcore.kernel.ApplicationManager;
+import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.managers.DataManager;
+import org.hibernate.stat.Statistics;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -17,149 +24,201 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class ConexionBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-   private static final String URL_LISTA = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_DETALLE = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
-   private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
-   private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
+    private static final String URL_LISTA = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
+    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
+    private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
+    private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
 
 
-   private List<ConexionDTO> conexiones;
-   private ConexionDTO conexion;
+    private List<ConexionDTO> conexiones;
+    private ConexionDTO conexion;
 
-   private boolean isregEditable;
-
-
-   public ConexionBean() {
-      this.beanName = "Conexiones";
-      this.conexion = new ConexionDTO();
-      this.isregEditable = true;
-   }
+    private boolean isregEditable;
 
 
-   @Override
-   public String getBeanName() {
-      return beanName;
-   }
+    public ConexionBean() {
+        this.beanName = "Conexiones";
+        this.conexion = new ConexionDTO();
+        this.isregEditable = true;
+    }
 
-   @Override
-   public String load() {
-      System.out.println("load()");
-      this.isregEditable = true;
-      // LLENAR LOS BOTONES SECUNDARIOS
-      //doListener();
-      //CARGA INICIAL!!
-      selectDto();
+    @Override
+    public String getBeanName() {
+        return beanName;
+    }
 
-      return URL_LISTA;
-   }
+    @Override
+    public String load() {
+        System.out.println("load()");
+        this.isregEditable = true;
+        // LLENAR LOS BOTONES SECUNDARIOS
+        //doListener();
+        //CARGA INICIAL!!
+        selectDto();
 
-   @Override
-   public void doListener() {
-      //acceder al manager y decirle toma
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
+        return URL_LISTA;
+    }
 
-      System.out.println("listener()");
-   }
+    @Override
+    public void doListener() {
+        //acceder al manager y decirle toma
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedMenuButton(false);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).initBreadCumBar();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar(beanName, URL_LISTA);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(true);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setCurrentBean(this);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setDefaultActionNameButton("NUEVO");
 
-   @Override
-   public String defaultAction() {
-      // Para el nuevo registro
-      this.conexion = new ConexionDTO();
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
-      //varias cosas para editar
-      return URL_NEW;
-   }
+        System.out.println("listener()");
+    }
 
-   @Override
-   public String newRegist() {
-      //Data la causistica el metodo nuevo esta encapsuado en defaultAction
-      return null;
-   }
+    @Override
+    public String defaultAction() {
+        // Para el nuevo registro
+        this.conexion = new ConexionDTO();
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
+        //varias cosas para editar
+        return URL_NEW;
+    }
 
-   @Override
-   public String updateRegist() {
-      FacesContext context = FacesContext.getCurrentInstance();
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
-      ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+    @Override
+    public String newRegist() {
+        //Data la causistica el metodo nuevo esta encapsuado en defaultAction
+        return null;
+    }
 
-      return URL_EDITAR;
-   }
+    @Override
+    public String updateRegist() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
-   @Override
-   public String deleteRegist() {
-      deleteDto();
+        return URL_EDITAR;
+    }
 
-      return URL_LISTA;
-   }
+    @Override
+    public String deleteRegist() {
+        deleteDto();
 
-   @Override
-   public String saveRegist() {
-      saveDto();
-      return URL_LISTA;
-   }
+        return URL_LISTA;
+    }
 
-   @Override
-   public void selectDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexiones = dao.getConexiones();
-      dao.close();
-   }
+    @Override
+    public String saveRegist() {
+        saveDto();
+        return URL_LISTA;
+    }
 
-   @Override
-   public void saveDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
+    @Override
+    public void selectDto() {
+        ConexionDAO dao = new ConexionDAO();
+        this.conexiones = dao.getConexiones();
+        dao.close();
+    }
+
+    @Override
+    public void saveDto() {
+        ConexionDAO dao = new ConexionDAO();
+        this.conexion = dao.grabarConexion(conexion);
+        this.conexiones = dao.getConexiones();
 //      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
-      dao.close();
-   }
+        dao.close();
+    }
 
-   @Override
-   public void updateDto() {
-      ConexionDAO dao = new ConexionDAO();
-      this.conexion = dao.grabarConexion(conexion);
-      this.conexiones = dao.getConexiones();
+    @Override
+    public void updateDto() {
+        ConexionDAO dao = new ConexionDAO();
+        this.conexion = dao.grabarConexion(conexion);
+        this.conexiones = dao.getConexiones();
 //      Sistema.out.println("ConexionBean actualizarConexion = " + this.conexion);
-      dao.close();
-   }
+        dao.close();
+    }
 
-   @Override
-   public void deleteDto() {
-      ConexionDAO dao = new ConexionDAO();
-      String resultado = dao.deleteConexion(conexion);
-      this.conexiones = dao.getConexiones();
-      dao.close();
-   }
+    @Override
+    public void deleteDto() {
+        ConexionDAO dao = new ConexionDAO();
+        String resultado = dao.deleteConexion(conexion);
+        this.conexiones = dao.getConexiones();
+        dao.close();
+    }
 
-   public ConexionDTO getConexion() {
-      return conexion;
-   }
+    /*Prueba la conexión a la base de datos*/
+    public void testConexion() {
+        boolean valid = false;
+        String message = "TEST OK";
 
-   public void setConexion(ConexionDTO conexion) {
-      this.conexion = conexion;
-   }
+        try {
 
-   public List<ConexionDTO> getConexiones() {
-      return conexiones;
-   }
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://" + conexion.getUr_domini() + ":" + conexion.getNu_puerto() + "/" + conexion.getNo_datbas(), conexion.getNo_usuari(), conexion.getPw_usuari());
 
-   public void setConexiones(List<ConexionDTO> conexiones) {
-      this.conexiones = conexiones;
-   }
+            valid = connection.isValid(1000 * 10);
 
-   public boolean isIsregEditable() {
-      return isregEditable;
-   }
+        } catch (Exception ep) {
+            if (ep instanceof java.sql.SQLException)
+                message = "TEST FALLÓ: [" + ((java.sql.SQLException) ep).getErrorCode() + "] " + ((java.sql.SQLException) ep).getMessage();
+            else
+                message = "TEST FALLÓ: " + ep.getMessage();
+        }
 
-   public void setIsregEditable(boolean isregEditable) {
-      this.isregEditable = isregEditable;
-   }
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (valid) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "OK!", message));
+        } else {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "FALLO!", message));
+        }
+
+    }
+
+    public void aplicarCambios() {
+        /*con todo el input*/
+        System.out.println("Creando datamanager!");
+        DataManager dataManager = new DataManager(conexion.getNo_conexi(), "hibdata.cfg.xml", ApplicationManager.buildDefaultProperties(conexion));
+
+        System.out.println("empieza el cambio");
+        WFCoreListener.APP.getDataSourceService().getManager(conexion.getNo_conexi()).terminate();
+        System.out.println("cerrando antigua conexion");
+        WFCoreListener.APP.getDataSourceService().setManager(conexion.getNo_conexi(), dataManager);
+        System.out.println("poniendo nueva conexion");
+        dataManager.init();
+        System.out.println("conexion inicializada");
+    }
+
+
+    public ConexionDTO getConexion() {
+        return conexion;
+    }
+
+    public void setConexion(ConexionDTO conexion) {
+        this.conexion = conexion;
+    }
+
+    public List<ConexionDTO> getConexiones() {
+        for (ConexionDTO conexionDTO : conexiones) {
+//            Statistics statistics = WFCoreListener.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()).getFactory().getStatistics();
+//            System.out.println("statistics.isStatisticsEnabled() = " + statistics.isStatisticsEnabled());
+//            System.out.println("statistics.getSessionOpenCount() = " + statistics.getSessionOpenCount());
+//            System.out.println("statistics.getSessionCloseCount() = " + statistics.getSessionCloseCount());
+//            System.out.println("statistics.getQueries() = " + statistics.getQueries());
+//            System.out.println("statistics.getConnectCount() = " + statistics.getConnectCount());
+            conexionDTO.setIl_conexi(WFCoreListener.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()).getStatus() == DataManager.ACTIVE);
+        }
+
+        return conexiones;
+    }
+
+    public void setConexiones(List<ConexionDTO> conexiones) {
+        this.conexiones = conexiones;
+    }
+
+    public boolean isIsregEditable() {
+        return isregEditable;
+    }
+
+    public void setIsregEditable(boolean isregEditable) {
+        this.isregEditable = isregEditable;
+    }
 }
