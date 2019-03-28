@@ -1,110 +1,227 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <body>
 
-        <ui:composition template="../../template/plantilla.xhtml">
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
 
-            <ui:define name="content">
-                <h:form> 
-                    <p:panel id="panelActualizarUser">
-                        <p:panelGrid columns="2"  style="width: 500px">
-                            
-                            <p:outputLabel for="co_usuari" value="Id:" />
-                            <p:outputLabel id="co_usuari" value="#{usuarioBean.usuario.co_usuari}"/>
+        <h:form>
+            <p:panel id="panelActualizarUser">
 
-                            <p:outputLabel for="no_usuari" value="Nombre:" />
-                            <p:inputText id="no_usuari" value="#{usuarioBean.usuario.no_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Nombre."
-                                         rendered="#{usuarioBean.isregEditable}"/>
-                            <p:outputLabel value="#{usuarioBean.usuario.no_usuari}" rendered="#{!usuarioBean.isregEditable}"/>
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column colspan="3" style="text-align: center">
+                            <p:panelGrid style="display: inline-block;">
 
-                            <p:outputLabel for="co_usulog" value="Usuario:" />
-                            <p:inputText  id="co_usulog" value="#{usuarioBean.usuario.co_usulog}"
-                                          required="true" requiredMessage="Debe ingresar un Usuario."
-                                          rendered="#{usuarioBean.isregEditable}"/>
-                            <p:outputLabel value="#{usuarioBean.usuario.co_usulog}" rendered="#{!usuarioBean.isregEditable}"/>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="co_usuari" value="Id:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty">
+                                        <p:spacer width="1" height="24"
+                                                  style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:outputLabel id="co_usuari" value="#{usuarioBean.usuario.co_usuari}"/>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="pw_usuari" value="Password:" />
-                            <p:inputText id="pw_usuari" value="#{usuarioBean.usuario.pw_usuari}"
-                                         required="true" requiredMessage="Debe ingresar un Password."
-                                         rendered="#{usuarioBean.isregEditable}"/>
-                            <p:outputLabel value="#{usuarioBean.usuario.pw_usuari}" rendered="#{!usuarioBean.isregEditable}"/>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="no_usuari" value="Nombre:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:inputText id="no_usuari" value="#{usuarioBean.usuario.no_usuari}"
+                                                     required="true" requiredMessage="Debe ingresar un Nombre."
+                                                     rendered="#{usuarioBean.isregEditable}"/>
+                                        <p:outputLabel value="#{usuarioBean.usuario.no_usuari}"
+                                                       rendered="#{!usuarioBean.isregEditable}"/>
+                                    </p:column>
+                                </p:row>
 
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="co_usulog" value="Usuario:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:inputText id="co_usulog" value="#{usuarioBean.usuario.co_usulog}"
+                                                     required="true" requiredMessage="Debe ingresar un Usuario."
+                                                     rendered="#{usuarioBean.isregEditable}"/>
+                                        <p:outputLabel value="#{usuarioBean.usuario.co_usulog}"
+                                                       rendered="#{!usuarioBean.isregEditable}"/>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="ti_usuari" value="Tipo de Usuario:"/>
-                            <h:selectOneMenu id="ti_usuari" value="#{usuarioBean.usuario.ti_usuari}"
-                                             required="true" requiredMessage="Debe ingresar un Tipo de Usuario."
-                                             rendered="#{usuarioBean.isregEditable}">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="" noSelectionOption="true"/>
-                                <f:selectItem itemLabel="Único" itemValue="U"/>
-                                <f:selectItem itemLabel="Maestro" itemValue="M"/>
-                            </h:selectOneMenu>
-                            <p:outputLabel value="#{usuarioBean.usuario.ti_usuari}" rendered="#{!usuarioBean.isregEditable}"/>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="pw_usuari" value="Password:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:inputText id="pw_usuari" value="#{usuarioBean.usuario.pw_usuari}"
+                                                     required="true" requiredMessage="Debe ingresar un Password."
+                                                     rendered="#{usuarioBean.isregEditable}"/>
+                                        <p:outputLabel value="#{usuarioBean.usuario.pw_usuari}"
+                                                       rendered="#{!usuarioBean.isregEditable}"/>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="co_sistem" value="Sistema:"/>
-                            <h:selectOneMenu id="co_sistem" value="#{usuarioBean.usuario.co_sistem}"
-                                             required="true" requiredMessage="Debe ingresar un Sistema."
-                                             rendered="#{usuarioBean.isregEditable}"
-                                             dynamic="true">
-                                <p:ajax listener="#{usuarioBean.onSistemaChange(usuarioBean.usuario.co_sistem)}" update="co_subsis" />
-                                <f:selectItem itemLabel="Seleccionar" itemValue=""/>
-                                <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
-                            </h:selectOneMenu>
-                            <p:outputLabel value="#{usuarioBean.usuario.no_sistem}" rendered="#{!usuarioBean.isregEditable}"/>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="ti_usuari" value="Tipo de Usuario:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <h:selectOneMenu id="ti_usuari" value="#{usuarioBean.usuario.ti_usuari}"
+                                                         required="true"
+                                                         requiredMessage="Debe ingresar un Tipo de Usuario."
+                                                         rendered="#{usuarioBean.isregEditable}">
+                                            <f:selectItem itemLabel="Seleccionar" itemValue=""
+                                                          noSelectionOption="true"/>
+                                            <f:selectItem itemLabel="Único" itemValue="U"/>
+                                            <f:selectItem itemLabel="Maestro" itemValue="M"/>
+                                        </h:selectOneMenu>
+                                        <p:outputLabel value="#{usuarioBean.usuario.ti_usuari}"
+                                                       rendered="#{!usuarioBean.isregEditable}"/>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="co_subsis" value="Sub Sistema:"/>
-                            <h:selectOneMenu id="co_subsis" value="#{usuarioBean.usuario.co_subsis}"
-                                             required="true" requiredMessage="Debe ingresar un Sub Sistema."
-                                             rendered="#{usuarioBean.isregEditable}"
-                                             dynamic="true">
-                                <f:selectItem itemLabel="Seleccionar" itemValue=""/>
-                                <f:selectItems value="#{usuarioBean.lstSubSistemabySistema}"/>
-                            </h:selectOneMenu>
-                            <p:outputLabel value="#{usuarioBean.usuario.no_subsis}" rendered="#{!usuarioBean.isregEditable}"/>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="co_sistem" value="Sistema:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <h:selectOneMenu id="co_sistem" value="#{usuarioBean.usuario.co_sistem}"
+                                                         required="true" requiredMessage="Debe ingresar un Sistema."
+                                                         rendered="#{usuarioBean.isregEditable}"
+                                                         dynamic="true">
+                                            <p:ajax listener="#{usuarioBean.onSistemaChange(usuarioBean.usuario.co_sistem)}"
+                                                    update="co_subsis"/>
+                                            <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                                            <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
+                                        </h:selectOneMenu>
+                                        <p:outputLabel value="#{usuarioBean.usuario.no_sistem}"
+                                                       rendered="#{!usuarioBean.isregEditable}"/>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="fe_regist" value="Fecha de Registro:" />
-                            <p:outputLabel id="fe_regist"  value="#{usuarioBean.usuario.fe_regist}">
-                                <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
-                            </p:outputLabel>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="co_subsis" value="Sub Sistema:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <h:selectOneMenu id="co_subsis" value="#{usuarioBean.usuario.co_subsis}"
+                                                         required="true" requiredMessage="Debe ingresar un Sub Sistema."
+                                                         rendered="#{usuarioBean.isregEditable}"
+                                                         dynamic="true">
+                                            <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                                            <f:selectItems value="#{usuarioBean.lstSubSistemabySistema}"/>
+                                        </h:selectOneMenu>
+                                        <p:outputLabel value="#{usuarioBean.usuario.no_subsis}"
+                                                       rendered="#{!usuarioBean.isregEditable}"/>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="fe_bloque" value="Fecha de Bloqueo:" />
-                            <p:outputLabel id="fe_bloque"  value="#{usuarioBean.usuario.fe_bloque}">
-                                <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
-                            </p:outputLabel>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="fe_regist" value="Fecha de Registro:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:outputLabel id="fe_regist" value="#{usuarioBean.usuario.fe_regist}">
+                                            <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
+                                        </p:outputLabel>
+                                    </p:column>
+                                </p:row>
 
-                            <p:outputLabel for="fe_ultlog" value="Fecha de Último Logueo:" />
-                            <p:outputLabel id="fe_ultlog"  value="#{usuarioBean.usuario.fe_ultlog}">
-                                <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
-                            </p:outputLabel>
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="fe_bloque" value="Fecha de Bloqueo:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:outputLabel id="fe_bloque" value="#{usuarioBean.usuario.fe_bloque}">
+                                            <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
+                                        </p:outputLabel>
+                                    </p:column>
+                                </p:row>
 
-                        </p:panelGrid>
-                        <p:panelGrid style="width: 400px" >
-                            <p:commandButton  action="#{usuarioBean.load()}"
-                                              actionListener="#{usuarioBean.doListener()}"
-                                              value="Atrás"
-                                              title="Volver al reporte de usuarios"
-                                              immediate="true">
+                                <p:row>
+                                    <p:column styleClass="form_col_title">
+                                        <p:outputLabel for="fe_ultlog" value="Fecha de Último Logueo:"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_empty"> <p:spacer width="1" height="24"
+                                                                                     style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                    </p:column>
+                                    <p:column styleClass="form_col_detail">
+                                        <p:outputLabel id="fe_ultlog" value="#{usuarioBean.usuario.fe_ultlog}">
+                                            <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
+                                        </p:outputLabel>
+                                    </p:column>
+                                </p:row>
+
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:separator/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandButton action="#{usuarioBean.load()}"
+                                             actionListener="#{usuarioBean.doListener()}"
+                                             value="Atrás"
+                                             title="Volver al reporte de usuarios"
+                                             immediate="true">
                             </p:commandButton>
+                        </p:column>
+                        <p:column>
                             <p:commandButton value="Grabar"
                                              action="#{usuarioBean.saveRegist}"
                                              type="submit"
                                              update="panelActualizarUser">
                                 <p:ajax rendered="panelActualizarUser"/>
                             </p:commandButton>
-                            
-                        </p:panelGrid>
-                    </p:panel>
+                        </p:column>
+                        <p:column>
 
-                </h:form>
-            </ui:define>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
 
-        </ui:composition>
 
-    </body>
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
 </html>

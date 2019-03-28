@@ -15,34 +15,36 @@ import java.util.List;
  */
 
 public class PaginaDAO {
-   StatelessSession session;
+    StatelessSession session;
 
-   public PaginaDAO() {
-      session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
-   }
+    public PaginaDAO() {
+        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+    }
 
-   public List<PaginaDTO> getPaginas() {
+    public List<PaginaDTO> getPaginas() {
 
-      List<PaginaDTO> paginas = new ArrayList<>();
-      NQuery nQuery = new NQuery();
+        List<PaginaDTO> paginas = new ArrayList<>();
+        NQuery nQuery = new NQuery();
 
-      try {
+        try {
 
-         nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGINA));
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGINA));
 
-         System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString());
-         paginas = nQuery.list();
-         System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString());
+            paginas = nQuery.list();
+            System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
-      } catch (Exception ep) {
-         System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-         ep.printStackTrace();
-      }
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
 
-      return paginas;
-   }
+        return paginas;
+    }
 
-   //    public PaginaDTO grabarPagina(PaginaDTO pagina) {
+//    public
+
+    //    public PaginaDTO grabarPagina(PaginaDTO pagina) {
 //
 //        NQuery nQuery = new NQuery();
 //
@@ -97,12 +99,12 @@ public class PaginaDAO {
 //        return resultado;
 //    }
 //
-   public void close() {
-      try {
-         session.close();
-      } catch (Exception ep) {
-         session = null;
-      }
-   }
+    public void close() {
+        try {
+            session.close();
+        } catch (Exception ep) {
+            session = null;
+        }
+    }
 
 }

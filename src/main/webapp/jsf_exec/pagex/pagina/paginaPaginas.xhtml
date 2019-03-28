@@ -10,36 +10,31 @@
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
 
-        <h:form id="form">
+        <!--<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">-->
+            <!--<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>-->
+            <!--<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>-->
+        <!--</p:confirmDialog>-->
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
-            </p:confirmDialog>
+        <p:panel id="panelListaPagina">
 
-            <p:panel id="panelListaPagina">
-
-                <p:growl id="msgs" showDetail="true"/>
-
+            <!--<p:growl id="msgs" showDetail="true"/>-->
+            <h:form id="form">
                 <p:dataTable id="lista"
                              var="pag"
                              value="#{paginaBean.paginas}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true"
-                             multiViewState="true"
                              paginatorPosition="bottom"
                              rows="100"
                              widgetVar="widTable"
+                             selectionMode="single"
+                             selection="#{paginaBean.pagina}"
                              rowKey="#{pag.co_pagina}"
                              rowIndexVar="N"
-                             style="width:1500px;height:800px"
-                             filteredValue="#{paginaBean.filtroPagina}">
+                             style="width:100%; ">
 
                     <f:facet name="header">
                         Lista de Paginas
-                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:end"
-                                         icon="fa fa-align-justify"/>
-                        <p:columnToggler datasource="lista" trigger="toggler"/>
                     </f:facet>
 
                     <p:ajax event="sort" skipChildren="false"/>
@@ -51,22 +46,27 @@
                         <h:outputText value="#{N + 1}"/>
                     </p:column>
 
-                    <p:column sortBy="#{pag.no_pagtit}" width="450" filterBy="#{pag.no_pagtit}" filterMatchMode="contains">
-                        <f:facet name="header">
-                            <h:outputText value="Nombre"/>
-                        </f:facet>
+                    <p:column headerText="COD" sortBy="#{pag.co_pagina}" width="50" filterBy="#{pag.co_pagina}"
+                              filterMatchMode="contains" styleClass="table_cell_left">
+                        <h:outputText value="#{pag.co_pagina}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre" sortBy="#{pag.no_pagtit}" width="200" filterBy="#{pag.no_pagtit}"
+                              filterMatchMode="contains" styleClass="table_cell_left">
                         <h:outputText value="#{pag.no_pagtit}"/>
                     </p:column>
 
-                    <p:column headerText="Descripción" sortBy="#{pag.de_pagina}" filterBy="#{pag.de_pagina}" filterMatchMode="contains">
+                    <p:column headerText="Descripción" sortBy="#{pag.de_pagina}" width="250" filterBy="#{pag.de_pagina}"
+                              filterMatchMode="contains">
                         <h:outputText value="#{pag.de_pagina}"/>
                     </p:column>
 
-                    <p:column headerText="Programador" sortBy="#{pag.db_progra}" filterBy="#{pag.db_progra}" filterMatchMode="contains" width="160">
-                        <h:outputText value="#{pag.db_progra}" />
+                    <p:column headerText="Programador" sortBy="#{pag.db_progra}" filterBy="#{pag.db_progra}"
+                              filterMatchMode="contains" width="120">
+                        <h:outputText value="#{pag.db_progra}"/>
                     </p:column>
 
-                    <p:column headerText="Registro" sortBy="#{pag.fe_regist}" width="160">
+                    <p:column headerText="Registro" sortBy="#{pag.fe_regist}" width="80" styleClass="table_cell_center  ">
                         <h:outputText value="#{pag.fe_regist}">
                             <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
                         </h:outputText>
@@ -92,12 +92,11 @@
                     </p:column>
 
                 </p:dataTable>
-            </p:panel>
+            </h:form>
+        </p:panel>
 
-        </h:form>
 
     </ui:define>
-
 </ui:composition>
 
 </html>

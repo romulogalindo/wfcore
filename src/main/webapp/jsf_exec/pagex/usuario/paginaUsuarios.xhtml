@@ -10,17 +10,15 @@
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
 
-        <h:form id="form">
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+        </p:confirmDialog>
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
-            </p:confirmDialog>
+        <p:panel id="panelListaUser">
 
-            <p:panel id="panelListaUser">
-
-                <p:growl id="msgs" showDetail="true"/>
-
+            <!--<p:growl id="msgs" showDetail="true"/>-->
+            <h:form id="form">
                 <p:dataTable id="lista"
                              var="user"
                              value="#{usuarioBean.usuarios}"
@@ -29,65 +27,49 @@
                              paginatorPosition="bottom"
                              rows="100"
                              widgetVar="widTable"
+                             selectionMode="single"
+                             selection="#{usuarioBean.usuario}"
                              rowKey="#{user.co_usuari}"
                              rowIndexVar="N"
-                             style="width:1600px;height:800px">
+                             style="width:100%; ">
 
                     <f:facet name="header">
                         Lista de Usuarios
-                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:end"
-                                         icon="fa fa-align-justify"/>
-                        <p:columnToggler datasource="lista" trigger="toggler"/>
+                        <!--<p:commandButton id="toggler" type="button" value="Columnas" style="float:end"-->
+                        <!--icon="fa fa-align-justify"/>-->
+                        <!--<p:columnToggler datasource="lista" trigger="toggler"/>-->
                     </f:facet>
 
                     <p:ajax event="sort" skipChildren="false"/>
 
-                    <p:column style="text-align: right" width="20">
-                        <f:facet name="header">
-                            <h:outputText value="#"/>
-                        </f:facet>
+
+                    <p:column headerText="#" width="20" styleClass="table_cell_right">
                         <h:outputText value="#{N + 1}"/>
                     </p:column>
 
-                    <p:column sortBy="#{user.no_usuari}" width="200">
-                        <f:facet name="header">
-                            <h:outputText value="Nombre"/>
-                        </f:facet>
-                        <h:outputText value="#{user.no_usuari}"/>
-                    </p:column>
-
-                    <p:column headerText="Usuario" sortBy="#{user.co_usulog}">
+                    <p:column headerText="Usuario" sortBy="#{user.co_usulog}" filterBy="#{user.co_usulog}" width="80"
+                              styleClass="table_cell_left">
                         <h:outputText value="#{user.co_usulog}"/>
                     </p:column>
 
-                    <p:column headerText="Registro" sortBy="#{user.fe_regist}" width="160">
-                        <h:outputText value="#{user.fe_regist}">
-                            <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
-                        </h:outputText>
+                    <p:column headerText="Nombre" sortBy="#{user.no_usuari}" filterBy="#{user.no_usuari}" width="300"
+                              styleClass="table_cell_left">
+                        <h:outputText value="#{user.no_usuari}"/>
                     </p:column>
 
-                    <p:column headerText="Bloqueo" sortBy="#{user.fe_bloque}" width="160">
-                        <h:outputText value="#{user.fe_bloque}">
-                            <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column headerText="Último Logueo" sortBy="#{user.fe_ultlog}" width="160">
+                    <p:column headerText="Últ. Log." sortBy="#{user.fe_ultlog}" width="100"
+                              styleClass="table_cell_center">
                         <h:outputText value="#{user.fe_ultlog}">
                             <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
                         </h:outputText>
                     </p:column>
 
-                    <p:column headerText="Tipo" sortBy="#{user.ti_usuari}">
+                    <p:column headerText="Tipo" sortBy="#{user.ti_usuari}" width="50" styleClass="table_cell_center">
                         <h:outputText value="#{user.ti_usuari}"/>
                     </p:column>
 
-                    <p:column headerText="Sistema" sortBy="#{user.no_sistem}" width="160">
-                        <h:outputText value="#{user.no_sistem}"/>
-                    </p:column>
-
-                    <p:column headerText="Subsistema" sortBy="#{user.no_subsis}" width="160">
-                        <h:outputText value="#{user.no_subsis}"/>
+                    <p:column headerText="Ruta/Defecto" width="160" styleClass="table_cell_left">
+                        <h:outputText value="#{user.no_sistem}/#{user.no_subsis}"/>
                     </p:column>
 
                     <p:column headerText="Acciones" style="width:180px;text-align: center">
@@ -113,9 +95,9 @@
                     </p:column>
 
                 </p:dataTable>
-            </p:panel>
+            </h:form>
+        </p:panel>
 
-        </h:form>
 
     </ui:define>
 
