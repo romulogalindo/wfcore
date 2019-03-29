@@ -81,11 +81,7 @@ function pagina() {
     //Seteamos el height para que lo absorva el iframe!<main.jsp
     size_of_pagina();
 
-    // ASYNBC
-    var data = new FormData();
-    data.append('ls_conpar', '' + window.parent.document.getElementById('ls_conpar').innerText);
-
-    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda(), data);
+    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
 
     var input_cansubmit = document.getElementsByTagName('INPUT');
 

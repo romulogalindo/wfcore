@@ -27,7 +27,7 @@ public class WFCoreListener implements ServletContextListener {
         dataSourceService.start();
 
         //prototipo de run>>>>>>>>>>>
-        APP.run();
+        APP.run(sce);
         //*carga de valores estaticos...
 //        Application application = new Application();
         //en teoria debe estar todo el datasoruce aqui!

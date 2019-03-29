@@ -56,4 +56,11 @@ public class JsonResponse implements Serializable {
     public void setError(ErrorMessage error) {
         this.error = error;
     }
+
+    public static JsonResponse defultJsonResponseOK(Object result) {
+        JsonResponse jsonResponse = new JsonResponse();
+        jsonResponse.setStatus(JsonResponse.OK);
+        jsonResponse.setResult(result);
+        return jsonResponse;
+    }
 }

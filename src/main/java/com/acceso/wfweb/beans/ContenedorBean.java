@@ -31,7 +31,7 @@ public class ContenedorBean implements Serializable {
         Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
 
         long id_frawor;
-        String ls_conpar = "{";
+        String ls_conpar = "{ ";
 
         //construir el conenedor!!
         Frawor4DAO dao = new Frawor4DAO();
@@ -40,20 +40,20 @@ public class ContenedorBean implements Serializable {
         id_frawor = dao.getIdfraworDTO().getId_frawor();
 
         //unir la session con el idfrawor
-        dao.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten, true);
+        dao.joinTF(requestManager.getUser().getId_sesion(), id_frawor, -1, co_conten, true);
         dao_fdb.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten, false);
 
         //Grabando co_compar
         requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
             ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), true);
             ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), false);
-
         });
 
         ls_conpar = requestManager.getConpars().entrySet().stream()
-//                .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
                 .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getKey() + "\",")
                 .reduce(ls_conpar, String::concat);
+
+        ls_conpar = ls_conpar.substring(0, ls_conpar.length() - 1);
         ls_conpar += "}";
 
         dao.close();
@@ -61,24 +61,20 @@ public class ContenedorBean implements Serializable {
 
         //preguntar a la cache si tienen este contenedor
         contenedor = (Contenedor) WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
-        System.out.println(">>>>co_conten = " + co_conten);
 
-        //httpRewriteWrappedRequest.getRequest();
         if (contenedor == null) {
 
-            //crear el contenedor
             contenedor = ApplicationManager.buildContainer(co_conten, id_frawor);
-            System.out.println("{a->1}co_conten = " + co_conten);
-            //almancenar el contenedor
             WFCoreListener.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
         } else {
+
             contenedor.setId_frawor(id_frawor);
         }
 
         contenedor.setIl_header(Util.toBoolean(requestManager.getParam("il_header"), true));
         contenedor.setLs_conpar(ls_conpar);
 
-        requestManager.save_over_session("" + contenedor.getCo_conten(), contenedor);
+        requestManager.save_over_session("CNT" + contenedor.getCo_conten() + ":" + id_frawor, contenedor);
     }
 
     public Contenedor getContenedor() {

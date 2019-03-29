@@ -128,7 +128,7 @@
 
             <!-- Breadcrumb-->
             <div class="breadcrumb-dn mr-auto white-text">
-                <p>Material Design for Bootstrap</p>
+                <p>${contenedorBean.contenedor.co_contit}</p>
             </div>
 
             <!-- Links -->
@@ -168,7 +168,7 @@
                 <li class="logo-sn waves-effect">
                     <div class=" text-center">
                         <a href="#" class="pl-0">
-                            <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="">
+                            <%--<img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="">--%>
                         </a>
                     </div>
                 </li>

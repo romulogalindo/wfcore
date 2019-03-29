@@ -39,16 +39,17 @@ function Registro(id_valpag, co_pagina, co_pagreg, va_pagreg, tx_pagreg, ti_pagr
 
 }
 
-//function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, FRAANT) {
-function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, LS_COMPAR, CO_USUARI, ID_FRAANT) {
+function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, ID_FRAANT) {
     var VALPAGJS = null;
+    var LS_CONPAR = JSON.parse(CONPAR);
 
-    print("ID_FRAWOR" + ID_FRAWOR);
-    print("CO_CONTEN" + CO_CONTEN);
-    print("CO_PAGINA" + CO_PAGINA);
-    print("LS_COMPAR" + LS_COMPAR);
-    print("CO_USUARI" + CO_USUARI);
-    print("ID_FRAANT" + ID_FRAANT);
+    // print("ID_FRAWOR:" + ID_FRAWOR);
+    // print("CO_CONTEN:" + CO_CONTEN);
+    // print("CO_PAGINA:" + CO_PAGINA);
+    // print("LS_COMPAR:" + LS_CONPAR);
+    // print("?1?LS_COMPAR:" + LS_CONPAR.co_conpar_1);
+    // print("CO_USUARI:" + CO_USUARI);
+    // print("ID_FRAANT:" + ID_FRAANT);
 
     USUARI_DATA_JS_TEXT
 

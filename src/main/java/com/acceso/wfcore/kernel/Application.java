@@ -9,6 +9,7 @@ import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.web.Root;
 
+import javax.servlet.ServletContextEvent;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,10 @@ public class Application {
     public DataSourceService dataSourceService;
     public JavaScriptService javaScriptService;
 
+    //Variables
+    public String VALPAGJS = "";
+    public String PROPAGJS = "";
+
     //Executor!!!!
     ThreadPoolExecutor executor;
 
@@ -38,7 +43,12 @@ public class Application {
                 TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
     }
 
-    public void run() {
+    public void run(ServletContextEvent sce) {
+        /*Obtenemos variables del arranque!*/
+        VALPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js";
+        PROPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js";
+
+                /*SERVICES */
         cacheService.start();
         dataSourceService.start();
         javaScriptService.start();
@@ -48,6 +58,9 @@ public class Application {
 
         //creamos la cache de contenedores - LVL2
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_CONTAINER, Integer.class, Object.class, -1);
+
+        //creamos la cache de script - LVL2 -->Posiblemente sea CNT:PAG
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PAGINA, Integer.class, Object.class, -1);
 
         //creamos la cache de archivos - LVL2
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 1200);

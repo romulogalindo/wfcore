@@ -28,9 +28,8 @@ public class PaginaBean implements Serializable {
         Long id_frawor = Util.toLong(httpRewriteWrappedRequest.getParameter("id_frawor"), -1);
 
         //preguntar a la cache si tienen este contenedor
-        Contenedor contenedor = (Contenedor) request.getSession().getAttribute("" + co_conten);
+        Contenedor contenedor = (Contenedor) request.getSession().getAttribute("CNT" + co_conten + ":" + id_frawor);
         pagina = contenedor.getPagina(co_pagina);
-
     }
 
     public Pagina getPagina() {

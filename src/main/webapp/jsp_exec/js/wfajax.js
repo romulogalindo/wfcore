@@ -21,7 +21,7 @@ function Inet() {
 }
 
 //VALPAG
-doPagJson = function (url, data) {
+doPagJson = function (url) {
     var net = new Inet();
     net.open("POST", url, true); //false para que sea sincrono
 
@@ -34,7 +34,7 @@ doPagJson = function (url, data) {
 
     }
     // net.send(null);
-    net.send(data);
+    net.send();
 }
 
 $D.doLogoutJson = function () {

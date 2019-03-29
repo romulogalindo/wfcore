@@ -1,13 +1,11 @@
 package com.acceso.wfcore.kernel;
 
 import com.acceso.wfcore.listerners.WFCoreListener;
-import com.acceso.wfcore.utils.RegJson;
-import com.acceso.wfcore.utils.RegJsonAdapter;
-import com.acceso.wfcore.utils.Util;
-import com.acceso.wfcore.utils.ValpagJson;
+import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ComboDTO;
 import com.acceso.wfweb.dtos.ValpagDTO;
+import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.acceso.wfweb.utils.RequestManager;
@@ -34,47 +32,38 @@ public class AsyncValPag extends AsyncProcessor {
         try {
             PrintWriter out = this.asyncContext.getResponse().getWriter();
 
-            RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
+            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();//request.
+            Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
+            Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
+            Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
+            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
+            String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
 
-//            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();//request.
-//            Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
-//            Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
-//            Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
-//            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
-//            String ls_conpar = asyncContext.getRequest().getParameter("ls_conpar");
-
-            Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
-            Integer co_pagina = Util.toInt(requestManager.getParam("co_pagina"), -1);
-            Long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
-            String ls_hamoda = requestManager.getParam("ls_hamoda");
-            String ls_conpar = "\"" + requestManager.getParam("ls_conpar") + "\"";
-
-            System.out.println("[@AsyncValPag]co_conten = " + co_conten);
-            System.out.println("[@AsyncValPag]ls_conpar = " + ls_conpar);
 
             //ejecuta eñ valpag
-            String valpag_js = "";
+            String valpag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGINA).get(co_pagina);
 
-            Frawor4DAO dao = new Frawor4DAO();
-//            valpag_js = dao.getVPJS(co_pagina);
-            //valpag_js = "return API_DATA.JSON_VALPAG(API_DATA.SQL_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')'));";
-            valpag_js = "return API_DATA.VALPAG_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');";
-            dao.close();
+            if (valpag_js == null) {
+                Frawor4DAO dao = new Frawor4DAO();
+                valpag_js = dao.getPaginaDTO(co_pagina).getJs_valpag();
+                dao.close();
 
-            String jsText = Util.getText(asyncContext.getRequest().getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js");
-            jsText = jsText.replace("USUARI_DATA_JS_TEXT", valpag_js);
-            // System.out.println("jsText = " + jsText);
+                if (valpag_js == null) {
+                    valpag_js = "VALPAGJS = API_DATA.VALPAG_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');";
+                }
 
-            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(jsText, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, requestManager.getUser().getCo_usuari(), 1);
+                WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGINA).put(co_pagina, valpag_js);
+            }
 
-            JsonResponse jsonResponse = new JsonResponse();
-            jsonResponse.setStatus("OK");
-            jsonResponse.setResult(valpagJson);
+            valpag_js = Util.getText(WFCoreListener.APP.VALPAGJS).replace("USUARI_DATA_JS_TEXT", valpag_js);
 
+            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US")).getCo_usuari(), 1);
 
-            System.out.println("[" + co_pagina + "]valpagJson0 = " + valpagJson);
-            System.out.println("[" + co_pagina + "]valpagJson1 = " + valpagJson.getRows());
-            System.out.println("[" + co_pagina + "]ls_hamoda = " + ls_hamoda);
+            JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK(valpagJson);
+
+//            System.out.println("[" + co_pagina + "]valpagJson0 = " + valpagJson);
+//            System.out.println("[" + co_pagina + "]valpagJson1 = " + valpagJson.getRows());
+//            System.out.println("[" + co_pagina + "]ls_hamoda = " + ls_hamoda);
 //            System.out.println("[X]valpagJson2 = " + (valpagJson.getRows() != null || !valpagJson.getRows().isEmpty()));
 
             if ((valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
@@ -86,7 +75,7 @@ public class AsyncValPag extends AsyncProcessor {
                 for (int i = 0; i < hamodas.length; i++) {
                     String hamoda = hamodas[i];
                     List<ComboDTO> comboDTOS = new ArrayList<>();
-                    dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+                    Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
                     comboDTOS = dao.getCombo(co_pagina, id_frawor, co_conten, Util.toShort(hamoda, (short) -1));
                     dao.close();
                     map_hamodas.put(hamoda, comboDTOS);

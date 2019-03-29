@@ -144,4 +144,5 @@ public class WPaginaDTO implements Serializable {
     public void setCa_tamano(String ca_tamano) {
         this.ca_tamano = ca_tamano;
     }
+
 }

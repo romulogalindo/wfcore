@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -23,10 +24,9 @@ public class RequestManager {
     private Map<String, String[]> parameters;
 
     public RequestManager(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("me llamaron agui!");
+        this.parameters = request.getParameterMap();
         this.request = request;
         this.response = response;
-        this.parameters = request.getParameterMap();
         validMultiPart(request);
     }
 
@@ -34,8 +34,15 @@ public class RequestManager {
         System.out.println("me llamaron agui2!");
         this.request = (HttpServletRequest) httpRewriteWrappedRequest;
         this.response = response;
-
+        this.parameters = request.getParameterMap();
         validMultiPart((HttpServletRequest) httpRewriteWrappedRequest);
+    }
+
+    public RequestManager(ServletRequest request) {
+        System.out.println("me llamaron agui!");
+        this.parameters = request.getParameterMap();
+        this.request = (HttpServletRequest) request;
+        validMultiPart((HttpServletRequest) request);
     }
 
     public void validMultiPart(HttpServletRequest request) {
@@ -77,7 +84,13 @@ public class RequestManager {
             }
             return null;
         } else {
-            return this.request.getParameter(paranName);
+            String params[] = parameters.get(paranName);
+
+            if (params == null || params.length == 0) {
+                return null;
+            } else {
+                return params[0];
+            }
         }
 
     }
@@ -125,13 +138,19 @@ public class RequestManager {
     public HashMap<Integer, String> getConpars() {
         HashMap<Integer, String> conpars = new HashMap<>();
 
-        Enumeration<String> parametersNames = this.request.getParameterNames();
-        while (parametersNames.hasMoreElements()) {
-            String paramKey = parametersNames.nextElement();
-            if (paramKey.contains("co_conpar_")) {
-                conpars.put(Util.toInt(paramKey.replace("co_conpar_", "")), this.request.getParameter(paramKey));
+        for (HashMap.Entry<String, String[]> param : this.parameters.entrySet()) {
+            if (param.getKey().contains("co_conpar_")) {
+                conpars.put(Util.toInt(param.getKey().replace("co_conpar_", "")), param.getValue()[0]);
             }
         }
+
+//        Enumeration<String> parametersNames = this.request.getParameterNames();
+//        while (parametersNames.hasMoreElements()) {
+//            String paramKey = parametersNames.nextElement();
+//            if (paramKey.contains("co_conpar_")) {
+//                conpars.put(Util.toInt(paramKey.replace("co_conpar_", "")), this.request.getParameter(paramKey));
+//            }
+//        }
 
         return conpars;
     }

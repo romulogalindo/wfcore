@@ -73,6 +73,8 @@
         <mapping class="com.acceso.wfweb.dtos.PagregDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ComboDTO"/>
         <mapping class="com.acceso.wfweb.dtos.JoinDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WScriptDTO"/>
+
 
         <!-- DTO's LEGACY!-->
         <mapping class="com.acceso.wfweb.dtos.legacy.CartaRetiroDto"/>
