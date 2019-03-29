@@ -10,10 +10,7 @@ import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class RequestManager {
     public static String REQUEST_METHOD_GET = "GET";
@@ -23,12 +20,13 @@ public class RequestManager {
     private HttpServletResponse response;
     private boolean ismultipart;
     private List<FileItem> fileItemList;
+    private Map<String, String[]> parameters;
 
     public RequestManager(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("me llamaron agui!");
         this.request = request;
         this.response = response;
-
+        this.parameters = request.getParameterMap();
         validMultiPart(request);
     }
 

@@ -15,6 +15,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     long id_frawor;
     String co_contit;
     boolean il_header;
+    String ls_conpar;
 
     //    public Contenedor(int co_conten, long id_frawor, String co_contit) {
     public Contenedor(int co_conten, long id_frawor, String co_contit, List<ContabDTO> contabs) {
@@ -72,6 +73,14 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 
     public void setContabs(List<ContabDTO> contabs) {
         this.contabs = contabs;
+    }
+
+    public String getLs_conpar() {
+        return ls_conpar;
+    }
+
+    public void setLs_conpar(String ls_conpar) {
+        this.ls_conpar = ls_conpar;
     }
 
     @Override

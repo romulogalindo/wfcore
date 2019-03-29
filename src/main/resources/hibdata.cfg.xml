@@ -41,6 +41,7 @@
 
         <!-- DTO's  -->
         <mapping class="com.acceso.wfcore.dtos.EstadoDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.ScriptDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>

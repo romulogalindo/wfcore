@@ -8,7 +8,9 @@ import com.acceso.wfcore.utils.ValpagJson;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ComboDTO;
 import com.acceso.wfweb.dtos.ValpagDTO;
+import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
+import com.acceso.wfweb.utils.RequestManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -32,11 +34,23 @@ public class AsyncValPag extends AsyncProcessor {
         try {
             PrintWriter out = this.asyncContext.getResponse().getWriter();
 
-            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();//request.
-            Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
-            Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
-            Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
-            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
+            RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
+
+//            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();//request.
+//            Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
+//            Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
+//            Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
+//            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
+//            String ls_conpar = asyncContext.getRequest().getParameter("ls_conpar");
+
+            Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
+            Integer co_pagina = Util.toInt(requestManager.getParam("co_pagina"), -1);
+            Long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
+            String ls_hamoda = requestManager.getParam("ls_hamoda");
+            String ls_conpar = "\"" + requestManager.getParam("ls_conpar") + "\"";
+
+            System.out.println("[@AsyncValPag]co_conten = " + co_conten);
+            System.out.println("[@AsyncValPag]ls_conpar = " + ls_conpar);
 
             //ejecuta eñ valpag
             String valpag_js = "";
@@ -51,8 +65,7 @@ public class AsyncValPag extends AsyncProcessor {
             jsText = jsText.replace("USUARI_DATA_JS_TEXT", valpag_js);
             // System.out.println("jsText = " + jsText);
 
-//            ValpagJson valpagJson_ = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doJS64(jsText, "do_valpag(" + id_frawor + "," + co_conten + "," + co_pagina + ")");
-            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(jsText, "do_valpag", id_frawor, co_conten, co_pagina);
+            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(jsText, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, requestManager.getUser().getCo_usuari(), 1);
 
             JsonResponse jsonResponse = new JsonResponse();
             jsonResponse.setStatus("OK");

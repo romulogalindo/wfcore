@@ -5,7 +5,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
@@ -16,37 +17,83 @@
 
             <p:tabView>
                 <p:tab title="Datos">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel for="co_pagina" value="ID:"/>
-                        <p:inputText id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
-                                     rendered="#{paginaBean.isregEditable}"/>
 
-                        <p:outputLabel for="no_pagtit" value="Nombre:"/>
-                        <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
-                                     required="true" requiredMessage="Debe ingresar un Nombre."
-                                     rendered="#{paginaBean.isregEditable}"/>
+                    <p:panelGrid style="display: inline-block;">
 
-                        <p:outputLabel for="de_pagina" value="Descripción:"/>
-                        <p:inputText id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
-                                     required="true" requiredMessage="Debe ingresar una Descripción."
-                                     rendered="#{paginaBean.isregEditable}"/>
-                    </h:panelGrid>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="co_pagina" value="ID:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_empty">
+                                <p:spacer width="1" height="24"
+                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
+                                             rendered="#{paginaBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="no_pagtit" value="Nombre:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_empty">
+                                <p:spacer width="1" height="24"
+                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
+                                             required="true" requiredMessage="Debe ingresar un Nombre."
+                                             rendered="#{paginaBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="de_pagina" value="Descripción:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_empty">
+                                <p:spacer width="1" height="24"
+                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
+                                             required="true" requiredMessage="Debe ingresar una Descripción."
+                                             rendered="#{paginaBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column styleClass="form_col_title">
+                                <p:outputLabel for="ti_pagina" value="Tipo:"/>
+                            </p:column>
+                            <p:column styleClass="form_col_empty">
+                                <p:spacer width="1" height="24"
+                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                            </p:column>
+                            <p:column styleClass="form_col_detail">
+                                <p:inputText id="ti_pagina" value=""
+                                             required="true" requiredMessage="Debe ingresar una Descripción."
+                                             rendered="#{paginaBean.isregEditable}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+
                 </p:tab>
 
                 <p:tab title="Organización">
                     <p:fieldset id="availableRegistrosField" legend="Registros">
                         <p:dataTable id="availableRegistros" var="registro" value="#{paginaBean.registros}">
                             <p:column style="width:20px">
-                                <h:outputText id="dragIcon" styleClass="ui-icon fa fa-plus" />
+                                <h:outputText id="dragIcon" styleClass="ui-icon fa fa-plus"/>
                                 <p:draggable for="dragIcon" revert="true" helper="clone"/>
                             </p:column>
 
                             <p:column headerText="Id">
-                                <h:outputText value="#{registro.co_tipreg}" />
+                                <h:outputText value="#{registro.co_tipreg}"/>
                             </p:column>
 
                             <p:column headerText="Tipo de Registro">
-                                <h:outputText value="#{registro.no_tipreg}" />
+                                <h:outputText value="#{registro.no_tipreg}"/>
                             </p:column>
 
                         </p:dataTable>
@@ -54,21 +101,25 @@
 
                     <p:fieldset id="selectedRegistros" legend="Registros Seleccionados" style="margin-top:20px">
                         <p:outputPanel id="dropArea">
-                            <h:outputText value="!!!Arrastrar Aqui!!!" rendered="#{empty paginaBean.registrosCargados}" style="font-size:24px;" />
-                            <p:dataTable id="selectedRegistrosTable" var="registro" value="#{paginaBean.registrosCargados}" rendered="#{not empty paginaBean.registrosCargados}">
+                            <h:outputText value="!!!Arrastrar Aqui!!!" rendered="#{empty paginaBean.registrosCargados}"
+                                          style="font-size:24px;"/>
+                            <p:dataTable id="selectedRegistrosTable" var="registro"
+                                         value="#{paginaBean.registrosCargados}"
+                                         rendered="#{not empty paginaBean.registrosCargados}">
                                 <p:column headerText="Id">
-                                    <h:outputText value="#{registro.co_tipreg}" />
+                                    <h:outputText value="#{registro.co_tipreg}"/>
                                 </p:column>
 
                                 <p:column headerText="Tipo de Registro">
-                                    <h:outputText value="#{registro.no_tipreg}" />
+                                    <h:outputText value="#{registro.no_tipreg}"/>
                                 </p:column>
                             </p:dataTable>
                         </p:outputPanel>
                     </p:fieldset>
 
-                    <p:droppable for="selectedRegistros" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableRegistros" onDrop="handleDrop">
-                        <p:ajax listener="#{paginaBean.onRegistroSeleccionado}" update="dropArea availableRegistros" />
+                    <p:droppable for="selectedRegistros" tolerance="touch" activeStyleClass="ui-state-highlight"
+                                 datasource="availableRegistros" onDrop="handleDrop">
+                        <p:ajax listener="#{paginaBean.onRegistroSeleccionado}" update="dropArea availableRegistros"/>
                     </p:droppable>
 
                 </p:tab>
@@ -78,7 +129,39 @@
                 </p:tab>
 
                 <p:tab title="Script de Carga">
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Tipo de código"></p:outputLabel>
+                                <p:selectOneRadio id="ti_script" value="1" unselectable="true">
+                                    <f:selectItem itemLabel="Valpag JS" itemValue="1"/>
+                                    <f:selectItem itemLabel="Vaqlpag SP" itemValue="2"/>
+                                </p:selectOneRadio>
+                                <p:outputLabel
+                                        value="Si el codigo Valpag JS esta en blanco por default se llamara al Valpag SP."></p:outputLabel>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
 
+                                <p:tabView>
+                                    <p:tab title="JavaScript">
+                                        <pe:codeMirror id="cadeJS" mode="javascript"
+                                                       value="#{paginaBean.pagina.js_valpag}"
+                                                       lineNumbers="true"
+                                                       matchBrackets="true"/>
+                                    </p:tab>
+                                    <p:tab title="Store Procedure">
+                                        <pe:codeMirror id="codeSP" mode="sql"
+                                                       value="#{paginaBean.script.no_script}"
+                                                       lineNumbers="true"
+                                                       matchBrackets="true"/>
+                                    </p:tab>
+                                </p:tabView>
+
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
                 </p:tab>
 
                 <p:tab title="Script de Proceso">

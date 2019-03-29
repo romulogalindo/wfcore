@@ -20,8 +20,8 @@ function Inet() {
     return xmlHttp;
 }
 
-//$D.getJSON = function (url) {
-doPagJson = function (url) {
+//VALPAG
+doPagJson = function (url, data) {
     var net = new Inet();
     net.open("POST", url, true); //false para que sea sincrono
 
@@ -33,7 +33,8 @@ doPagJson = function (url) {
         }
 
     }
-    net.send(null);
+    // net.send(null);
+    net.send(data);
 }
 
 $D.doLogoutJson = function () {

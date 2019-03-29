@@ -13,6 +13,7 @@ import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ProcesoDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.utils.RequestManager;
+import com.google.gson.Gson;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class ContenedorBean implements Serializable {
         Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
 
         long id_frawor;
+        String ls_conpar = "{";
 
         //construir el conenedor!!
         Frawor4DAO dao = new Frawor4DAO();
@@ -45,7 +47,14 @@ public class ContenedorBean implements Serializable {
         requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
             ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), true);
             ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), false);
+
         });
+
+        ls_conpar = requestManager.getConpars().entrySet().stream()
+//                .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
+                .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getKey() + "\",")
+                .reduce(ls_conpar, String::concat);
+        ls_conpar += "}";
 
         dao.close();
         dao_fdb.close();
@@ -67,6 +76,8 @@ public class ContenedorBean implements Serializable {
         }
 
         contenedor.setIl_header(Util.toBoolean(requestManager.getParam("il_header"), true));
+        contenedor.setLs_conpar(ls_conpar);
+
         requestManager.save_over_session("" + contenedor.getCo_conten(), contenedor);
     }
 

@@ -1,6 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.PaginaDTO;
+import com.acceso.wfcore.dtos.ScriptDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
@@ -18,7 +19,11 @@ public class PaginaDAO {
     StatelessSession session;
 
     public PaginaDAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+    }
+
+    public PaginaDAO(StatelessSession session) {
+        this.session = session;
     }
 
     public List<PaginaDTO> getPaginas() {
@@ -42,7 +47,28 @@ public class PaginaDAO {
         return paginas;
     }
 
-//    public
+    public ScriptDTO getScript(int p_co_pagina) {
+
+        ScriptDTO scriptDTO = null;
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GET_SCRIPT));
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+
+            System.out.println("[ScriptDTO:getScript] Q = " + nQuery.getQueryString());
+            scriptDTO = (ScriptDTO) nQuery.uniqueResult();
+            System.out.println("[ScriptDTO:getScript] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[ScriptDTO:getScript] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return scriptDTO;
+    }
+
 
     //    public PaginaDTO grabarPagina(PaginaDTO pagina) {
 //

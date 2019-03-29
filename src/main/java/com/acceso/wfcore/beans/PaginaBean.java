@@ -4,6 +4,8 @@ import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.RegistroDTO;
+import com.acceso.wfcore.dtos.ScriptDTO;
+import com.acceso.wfcore.listerners.WFCoreListener;
 import org.primefaces.event.DragDropEvent;
 
 import javax.faces.bean.ManagedBean;
@@ -36,6 +38,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     private List<RegistroDTO> registros;
     private List<RegistroDTO> registrosCargados;
+
+    public ScriptDTO script;
 
     public PaginaBean() {
         this.beanName = BEAN_NAME;
@@ -112,6 +116,19 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         FacesContext context = FacesContext.getCurrentInstance();
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+
+        //Setar botone
+
+        //Cargar script1
+        ScriptDTO scriptDTO;
+        PaginaDAO dao = new PaginaDAO(WFCoreListener.APP.getDataSourceService().getManager("wfacr").getNativeSession());
+        scriptDTO = dao.getScript(pagina.getCo_pagina());
+        dao.close();
+
+        //aplicar validacion
+        script = scriptDTO;
+
+        //Cargar script2
 
         return URL_EDITAR;
     }
@@ -215,5 +232,13 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setRegistrosCargados(List<RegistroDTO> registrosCargados) {
         this.registrosCargados = registrosCargados;
+    }
+
+    public ScriptDTO getScript() {
+        return script;
+    }
+
+    public void setScript(ScriptDTO script) {
+        this.script = script;
     }
 }

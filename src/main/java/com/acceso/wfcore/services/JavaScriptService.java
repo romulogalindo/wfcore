@@ -46,13 +46,13 @@ public class JavaScriptService extends Service {
     }
 
     //    function exec valpag
-    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina) {
+    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long co_usuari, int id_fraant) {
         Object result = null;
         try {
             engine_nashornjs.eval(JSText);
             Invocable inv = (Invocable) engine_nashornjs;
 
-            result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina);
+            result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, ls_conpar, co_usuari, id_fraant);
             System.out.println("(ENGINE2)result = " + result);
         } catch (Exception ep) {
             System.out.println("ENGINE 2 (error)");
