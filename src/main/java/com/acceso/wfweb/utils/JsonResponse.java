@@ -5,6 +5,7 @@ import com.acceso.wfcore.utils.ErrorMessage;
 import java.io.Serializable;
 
 public class JsonResponse implements Serializable {
+
     public static final String OK = "OK";
     public static final String ERROR = "ERROR";
 
@@ -61,6 +62,13 @@ public class JsonResponse implements Serializable {
         JsonResponse jsonResponse = new JsonResponse();
         jsonResponse.setStatus(JsonResponse.OK);
         jsonResponse.setResult(result);
+        return jsonResponse;
+    }
+
+    public static JsonResponse defultJsonResponseERROR(ErrorMessage error) {
+        JsonResponse jsonResponse = new JsonResponse();
+        jsonResponse.setStatus(JsonResponse.ERROR);
+        jsonResponse.setError(error);
         return jsonResponse;
     }
 }

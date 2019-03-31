@@ -13,9 +13,9 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 
-public class AsyncProPag extends AsyncProcessor {
+public class AsyncMessage extends AsyncProcessor {
 
-    public AsyncProPag(AsyncContext asyncCtx, int secs) {
+    public AsyncMessage(AsyncContext asyncCtx, int secs) {
         super(asyncCtx, secs);
     }
 

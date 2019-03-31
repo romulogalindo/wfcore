@@ -21,17 +21,24 @@ import java.util.Map;
 public class DataAPI extends GenericAPI {
 
     public String SQL(String conectionName, String sqlQuery) {
+        return SQL(conectionName, sqlQuery, 30);
+    }
+
+    public String SQL(String conectionName, String sqlQuery, int timeoutseg) {
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();
-        List<Map<String, Object>> valReturn = new ArrayList<>();
+        List<Map<String, Object>> valReturn;
         StatelessSession session = null;
         Transaction transaction = null;
         execution_time = System.currentTimeMillis();
+
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
             transaction = session.beginTransaction();
+            transaction.setTimeout(timeoutseg);
 
             Query sql = session.createNativeQuery(sqlQuery);
+            sql.setTimeout(timeoutseg);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
@@ -48,7 +55,9 @@ public class DataAPI extends GenericAPI {
             System.out.println("[1]ep = " + ep);
 
             try {
-                if (transaction != null) transaction.rollback();
+                if (transaction != null) {
+                    transaction.rollback();
+                }
             } catch (Exception ep2) {
                 transaction = null;
             }
@@ -69,7 +78,7 @@ public class DataAPI extends GenericAPI {
             }
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getMessage() + ": E1 = " + ep.getMessage() + "");
-            //throw ep;
+
             ep.printStackTrace();
         }
 

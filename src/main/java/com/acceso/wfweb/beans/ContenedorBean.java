@@ -1,10 +1,6 @@
 package com.acceso.wfweb.beans;
 
 import java.io.Serializable;
-import java.util.Enumeration;
-import java.util.Map;
-
-import com.acceso.wfcore.kernel.Application;
 import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
@@ -13,10 +9,7 @@ import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ProcesoDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.utils.RequestManager;
-import com.google.gson.Gson;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class ContenedorBean implements Serializable {
 
@@ -53,8 +46,7 @@ public class ContenedorBean implements Serializable {
                 .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getKey() + "\",")
                 .reduce(ls_conpar, String::concat);
 
-        ls_conpar = ls_conpar.substring(0, ls_conpar.length() - 1);
-        ls_conpar += "}";
+        ls_conpar = ls_conpar.substring(0, ls_conpar.length() - 1) + "}";
 
         dao.close();
         dao_fdb.close();

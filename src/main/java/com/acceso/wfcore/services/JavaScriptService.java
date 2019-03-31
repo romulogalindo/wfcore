@@ -62,9 +62,9 @@ public class JavaScriptService extends Service {
         return result;
     }
 
-    public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, short co_pagbot) throws Exception {
+    public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_regist, long co_usuari) throws Exception {
         engine_nashornjs.eval(JSText);
         Invocable inv = (Invocable) engine_nashornjs;
-        return inv.invokeFunction(JSFunction, co_pagina, id_frawor, co_conten, co_pagbot);
+        return inv.invokeFunction(JSFunction, co_pagina, id_frawor, co_conten, co_pagbot, ls_regist, co_usuari);
     }
 }

@@ -1,6 +1,12 @@
 /*MAIN JS FILE TO RUN! ALL!*/
 var main_api_acr_data_api = Java.type('com.acceso.wfcore.apis.DataAPI');
-var API_DATA = new main_api_acr_data_api();
+var main_api_acr_http_api = Java.type('com.acceso.wfcore.apis.HttpAPI');
+var main_api_acr_shell_api = Java.type('com.acceso.wfcore.apis.ShellAPI');
+var main_api_acr_cache_api = Java.type('com.acceso.wfcore.apis.CacheAPI');
+var DATA = new main_api_acr_data_api();
+var HTTP = new main_api_acr_http_api();
+var SHELL = new main_api_acr_shell_api();
+var CACHE = new main_api_acr_cache_api();
 
 function Fila() {
     this.registros = [];

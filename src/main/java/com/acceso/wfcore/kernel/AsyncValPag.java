@@ -4,13 +4,9 @@ import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ComboDTO;
-import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
-import com.acceso.wfweb.utils.RequestManager;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,16 +28,14 @@ public class AsyncValPag extends AsyncProcessor {
         try {
             PrintWriter out = this.asyncContext.getResponse().getWriter();
 
-            HttpServletRequest request = (HttpServletRequest) asyncContext.getRequest();//request.
             Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
             Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
             String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
 
-
-            //ejecuta eñ valpag
-            String valpag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGINA).get(co_pagina);
+            //ejecutar valpag
+            String valpag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_pagina);
 
             if (valpag_js == null) {
                 Frawor4DAO dao = new Frawor4DAO();
@@ -49,10 +43,10 @@ public class AsyncValPag extends AsyncProcessor {
                 dao.close();
 
                 if (valpag_js == null) {
-                    valpag_js = "VALPAGJS = API_DATA.VALPAG_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');";
+                    valpag_js = "VALPAGJS = DATA.VALPAG_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');";
                 }
 
-                WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGINA).put(co_pagina, valpag_js);
+                WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).put(co_pagina, valpag_js);
             }
 
             valpag_js = Util.getText(WFCoreListener.APP.VALPAGJS).replace("USUARI_DATA_JS_TEXT", valpag_js);
@@ -65,7 +59,6 @@ public class AsyncValPag extends AsyncProcessor {
 //            System.out.println("[" + co_pagina + "]valpagJson1 = " + valpagJson.getRows());
 //            System.out.println("[" + co_pagina + "]ls_hamoda = " + ls_hamoda);
 //            System.out.println("[X]valpagJson2 = " + (valpagJson.getRows() != null || !valpagJson.getRows().isEmpty()));
-
             if ((valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
 //                if (!valpagJson.getRows().isEmpty()) {
                 System.out.println("[" + co_pagina + "]==>" + valpagJson);
@@ -85,12 +78,7 @@ public class AsyncValPag extends AsyncProcessor {
 //                }
             }
 
-            //Gson gson = new Gson();
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(RegJson.class, new RegJsonAdapter())
-                    .create();
-
-            String urpta = gson.toJson(jsonResponse);
+            String urpta = Util.toJSON2(jsonResponse);
 
             System.out.println("[" + co_pagina + "]valpag? = " + urpta);
 

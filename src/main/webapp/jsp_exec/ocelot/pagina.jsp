@@ -20,8 +20,8 @@
         <link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">
 
         <!--JS -->
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=27"></script>
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=28"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=28"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
@@ -53,7 +53,7 @@
         <input type="hidden" id="co_conten" value="${param.co_conten}">
         <input type="hidden" id="co_pagina" value="${param.co_pagina}">
 
-        <div class="card card-cascade narrower">
+        <div id="mainpagina" class="card card-cascade narrower">
             <!--Card image-->
             <div class="view view-cascade gradient-card-header default-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
@@ -91,11 +91,9 @@
 
             </div>
 
-
         </div>
 
-
-        <div id="loader" style="position:fixed; width:100%;height:100%;top: 0;left: 0;background-color: rgba(255,255,255,0.5);">
+        <div id="loader" style="position:fixed; width:100%;height:300px;top: 0;left: 0;background-color: rgba(238,238,238,0.7);">
             <table style="width: 100%;height: 100%">
                 <tr>
                     <td style="vertical-align:bottom;text-align: center;height: 50%;color: darkgray; border:none !important;">

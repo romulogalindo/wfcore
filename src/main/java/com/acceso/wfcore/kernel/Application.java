@@ -5,6 +5,7 @@ import com.acceso.wfcore.dtos.SystemTreeDTO;
 import com.acceso.wfcore.services.CacheService;
 import com.acceso.wfcore.services.DataSourceService;
 import com.acceso.wfcore.services.JavaScriptService;
+import com.acceso.wfcore.services.MessageService;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.web.Root;
@@ -15,6 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class Application {
+
     public static final String APPLICATION_PROJECT_NAME = "ZERO DAWN";
     public static final String APPLICATION_NAME = "Workflow AIO2";
     public static final String APPLICATION_DEFAULT_LOCALE = "ES_PE";
@@ -25,6 +27,7 @@ public class Application {
     public CacheService cacheService;
     public DataSourceService dataSourceService;
     public JavaScriptService javaScriptService;
+    public MessageService messageService;
 
     //Variables
     public String VALPAGJS = "";
@@ -33,12 +36,13 @@ public class Application {
     //Executor!!!!
     ThreadPoolExecutor executor;
 
-
     public Application() {
         this.loginCTRL = ApplicationManager.getLoginCTRL();
         this.cacheService = new CacheService("AIOCACHE");
         this.dataSourceService = new DataSourceService("DataSourceService");
         this.javaScriptService = new JavaScriptService("JSEngine");
+        this.messageService = new MessageService("MessageService");
+
         this.executor = new ThreadPoolExecutor(100, 200, 50000L,
                 TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(100));
     }
@@ -46,12 +50,13 @@ public class Application {
     public void run(ServletContextEvent sce) {
         /*Obtenemos variables del arranque!*/
         VALPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js";
-        PROPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js";
+        PROPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_propag.js";
 
-                /*SERVICES */
+        /*SERVICES */
         cacheService.start();
         dataSourceService.start();
         javaScriptService.start();
+        messageService.start();
 
         //creamos la cache del menu - LVL1
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_MENUTREE, String.class, Object.class, -1);
@@ -59,8 +64,11 @@ public class Application {
         //creamos la cache de contenedores - LVL2
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_CONTAINER, Integer.class, Object.class, -1);
 
-        //creamos la cache de script - LVL2 -->Posiblemente sea CNT:PAG
-        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PAGINA, Integer.class, Object.class, -1);
+        //creamos la cache de script - LVL2 -->Posiblemente sea CNT:VALPAG
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_VALPAGJS, Integer.class, Object.class, -1);
+
+        //creamos la cache de script - LVL2 -->Posiblemente sea CNT:PROPAG
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PROPAGJS, Integer.class, Object.class, -1);
 
         //creamos la cache de archivos - LVL2
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 1200);
@@ -88,7 +96,6 @@ public class Application {
         System.out.println("mainTree = " + mainTree);
 
     }
-
 
     public LoginCTRL getLoginCTRL() {
         return this.loginCTRL;

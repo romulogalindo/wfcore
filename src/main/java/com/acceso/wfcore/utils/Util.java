@@ -1,5 +1,7 @@
 package com.acceso.wfcore.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
@@ -17,8 +19,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Util {
+
     private static List<String> exts = Arrays.asList("tar.gz", "tgz", "gz", "zip");
     public static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
+    public static Gson gson_typeA = new Gson();
+    public static Gson gson_typeB = new GsonBuilder()
+            .registerTypeAdapter(RegJson.class, new RegJsonAdapter())
+            .create();
 
     public static Boolean toBoolean(Object object) {
         Boolean bool32 = null;
@@ -184,7 +191,8 @@ public class Util {
 
     /**
      * Utiliza SDF => yyyy/MM/dd
-     * */
+     *
+     */
     public static String formatDate1(Date date) {
         return date != null ? sdf1.format(date) : null;
     }
@@ -235,5 +243,15 @@ public class Util {
         errorMessage.setMessage(message);
 
         return errorMessage;
+    }
+
+    /*Conversor tradicional*/
+    public static String toJSON(Object object) {
+        return gson_typeA.toJson(object);
+    }
+
+    /*Para uso con el valpag*/
+    public static String toJSON2(Object object) {
+        return gson_typeB.toJson(object);
     }
 }

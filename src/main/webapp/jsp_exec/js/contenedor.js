@@ -65,6 +65,10 @@ function ls_hamoda() {
     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
 }
 
+function co_usuari() {
+    return document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
+}
+
 function workflow() {
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
@@ -74,6 +78,7 @@ function workflow() {
 function size_of_pagina() {
     height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
     document.getElementById('height_table').value = '' + height_table;
+    document.getElementById('loader').style.height = '' + height_table + 'px';
 }
 
 function pagina() {
@@ -103,50 +108,50 @@ function doformulariosubmit(keyEvent) {
     }
 }
 
-function pagina_onload(jsonData) {
-    // console.log('[paginaload@' + co_pagina() + ']jsonData = ' + jsonData);
-    // console.log('[paginaload@' + co_pagina() + ']jsonData.status = ' + jsonData.status);
-    // console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result);
-    // try {
-    //     console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result.rows);
-    // } catch (e) {
-    //     console.log('[paginaload@' + co_pagina() + ']jsonData.result  rows no existen= ');
-    // }
-
-    if (jsonData.result.rows != undefined) {
-        var rows = [];
-        rows = jsonData.result.rows;
-
-        // var dom2= document.getElementsByClassName("row1")[0].cloneNode(true);
-        // var dom2 = '<tbody>' + document.getElementById("row1").innerHTML + '</tbody>'
-        var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
-
-        for (var i = 0; i < rows.length; i++) {
-            // console.log('[paginaload@' + co_pagina() + ']rows= ' + rows[i]);
-            // console.log('[paginaload@' + co_pagina() + ']rows.regs = ' + rows[i].regs);
-            // console.log('[paginaload@' + co_pagina() + ']ti_pagina()  = ' + ti_pagina());
-            // console.log('[paginaload@' + co_pagina() + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
-
-            if (ti_pagina() == 'F')
-                loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
-            else
-                loadReporte64(rows[i]);
-        }
-
-        //devuevo actualizar el height;
-        size_of_pagina();
-        // var miframe = window;//.parent.document.getElementById('#target');
-        // window.parent.document.iframe2('PAG' + co_pagina(), height_table);
-        window.parent.iframe2('PAG' + co_pagina(), height_table);
-
-    } else {
-        document.getElementById('PAG' + co_pagina()).style.display = 'none';
-        window.parent.iframe2('PAG' + co_pagina(), -1);
-        console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
-    }
-
-    document.getElementById('loader').style.display = 'none';
-}
+//function pagina_onload(jsonData) {
+//    // console.log('[paginaload@' + co_pagina() + ']jsonData = ' + jsonData);
+//    // console.log('[paginaload@' + co_pagina() + ']jsonData.status = ' + jsonData.status);
+//    // console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result);
+//    // try {
+//    //     console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result.rows);
+//    // } catch (e) {
+//    //     console.log('[paginaload@' + co_pagina() + ']jsonData.result  rows no existen= ');
+//    // }
+//
+//    if (jsonData.result.rows != undefined) {
+//        var rows = [];
+//        rows = jsonData.result.rows;
+//
+//        // var dom2= document.getElementsByClassName("row1")[0].cloneNode(true);
+//        // var dom2 = '<tbody>' + document.getElementById("row1").innerHTML + '</tbody>'
+//        var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
+//
+//        for (var i = 0; i < rows.length; i++) {
+//            // console.log('[paginaload@' + co_pagina() + ']rows= ' + rows[i]);
+//            // console.log('[paginaload@' + co_pagina() + ']rows.regs = ' + rows[i].regs);
+//            // console.log('[paginaload@' + co_pagina() + ']ti_pagina()  = ' + ti_pagina());
+//            // console.log('[paginaload@' + co_pagina() + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
+//
+//            if (ti_pagina() == 'F')
+//                loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
+//            else
+//                loadReporte64(rows[i]);
+//        }
+//
+//        //devuevo actualizar el height;
+//        size_of_pagina();
+//        // var miframe = window;//.parent.document.getElementById('#target');
+//        // window.parent.document.iframe2('PAG' + co_pagina(), height_table);
+//        window.parent.iframe2('PAG' + co_pagina(), height_table);
+//
+//    } else {
+//        document.getElementById('PAG' + co_pagina()).style.display = 'none';
+//        window.parent.iframe2('PAG' + co_pagina(), -1);
+//        console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
+//    }
+//
+//    document.getElementById('loader').style.display = 'none';
+//}
 
 function iframe(iframe) {
 

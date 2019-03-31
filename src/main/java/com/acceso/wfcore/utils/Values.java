@@ -64,10 +64,18 @@ public class Values {
 
     public static final String QUERYS_NATIVE_SELECT_REGISTRO = "wfcore.registro_select";
 
+    public static final int QUERYS_SYSTEM_TIMEOUT = 10;
+    public static final int QUERYS_USER_TIMEOUT = 10;
+    public static final int HTTP_REQUEST_TIMEOUT = 10;
+    public static final int SHELL_REQUEST_TIMEOUT = 10;
+    
+    public static final String WEBSOCKET_ENDPOINT_URL = "ws://127.0.0.1:8080/ws/main";
+
     /*===CACHE===*/
     public static final String CACHE_MAIN_MENUTREE = "CACHE_MAIN_MENUTREE";
     public static final String CACHE_MAIN_CONTAINER = "CACHE_MAIN_CONTAINER";
-    public static final String CACHE_MAIN_PAGINA = "CACHE_MAIN_PAGINA";
+    public static final String CACHE_MAIN_VALPAGJS = "CACHE_MAIN_VALPAGJS";
+    public static final String CACHE_MAIN_PROPAGJS = "CACHE_MAIN_PROPAGJS";
     public static final String CACHE_MAIN_FILEX = "CACHE_MAIN_FILEX";
 
 
@@ -75,8 +83,8 @@ public class Values {
     public static final String QUERY_MAINTREE = "wfsistem.ppmenugeneral_web(";
 
     /*====PDF====*/
-    public static final String PDF_ORIENTATION_PORTRAIT="portrait";
-    public static final String PDF_ORIENTATION_LANDSCAPE="landscape";
-    
-    public static final int UPLOAD_FILE_MAXSIZE= 1024 * 1024 * 8;
+    public static final String PDF_ORIENTATION_PORTRAIT = "portrait";
+    public static final String PDF_ORIENTATION_LANDSCAPE = "landscape";
+
+    public static final int UPLOAD_FILE_MAXSIZE = 1024 * 1024 * 8;
 }

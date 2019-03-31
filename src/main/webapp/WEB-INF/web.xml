@@ -98,6 +98,10 @@
         <servlet-name>DocumentServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.DocumentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TahrServlet</servlet-name>
+        <servlet-class>com.acceso.wfweb.servlets.OpenServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
@@ -133,6 +137,10 @@
         <servlet-name>DocumentServlet</servlet-name>
         <url-pattern>/vervet</url-pattern>
         <url-pattern>/doc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TahrServlet</servlet-name>
+        <url-pattern>/OPENAIO</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
