@@ -1,7 +1,6 @@
 package com.acceso.wfcore.utils;
 
 /**
- *
  * @author Rómulo Galindo<romulogalindo@gmail.com>
  * Created on 3 dic. 2018, 19:06:46
  */
@@ -58,6 +57,9 @@ public class Values {
     public static final String QUERYS_NATIVE_SELECT_CONTENEDOR = "wfcore.contenedor_select";
 
     public static final String QUERYS_NATIVE_SELECT_PAGINA = "wfcore.pagina_select";
+//    public static final String QUERYS_NATIVE_SELECT_NEW_PAGINA = "wfcore.pagina_new";
+//    public static final String QUERYS_NATIVE_SELECT_UPDATE_PAGINA = "wfcore.pagina_update";
+    public static final String QUERYS_NATIVE_SAVE_PAGINA = "wfcore.pbpagina_save";
 
     public static final String QUERYS_NATIVE_SELECT_PARAMETRO = "wfcore.parametro_select";
     public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
@@ -68,7 +70,7 @@ public class Values {
     public static final int QUERYS_USER_TIMEOUT = 10;
     public static final int HTTP_REQUEST_TIMEOUT = 10;
     public static final int SHELL_REQUEST_TIMEOUT = 10;
-    
+
     public static final String WEBSOCKET_ENDPOINT_URL = "ws://127.0.0.1:8080/ws/main";
 
     /*===CACHE===*/

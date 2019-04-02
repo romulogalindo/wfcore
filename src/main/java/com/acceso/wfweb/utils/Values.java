@@ -4,7 +4,10 @@ public class Values {
 
     public static final String QUERYS_WEB_SELECT_PFCONTEN = "frawor4.pfconten";
     public static final String QUERYS_WEB_SELECT_PFCONPAG = "frawor4.pfconpag";
-    public static final String QUERYS_WEB_SELECT_TCPAGINA = "frawor4.tcpagina";
+
+    public static final String QUERYS_WEB_SELECT_SCRIPT_VALPAG = "frawor4.script_valpag";
+    public static final String QUERYS_WEB_SELECT_SCRIPT_PROPAG = "frawor4.script_propag";
+
     public static final String QUERYS_WEB_SELECT_PFCONTAB = "frawor4.pfcontab";
     public static final String QUERYS_WEB_SELECT_PFPAGTIT = "frawor4.pfpagtit";
     public static final String QUERYS_WEB_SELECT_PFPAGREG = "frawor4.pfpagreg";

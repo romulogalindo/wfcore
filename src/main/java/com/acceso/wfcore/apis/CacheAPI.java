@@ -6,6 +6,10 @@ public class CacheAPI extends GenericAPI {
 //        return null;
     }
 
+    public void CREATEIF(String namespace, int timeout) {
+//        return null;
+    }
+
     public void PUT(String namespace, String key, Object value) {
 
     }

@@ -59,7 +59,7 @@ public class AsyncMessage extends AsyncProcessor {
                 String propag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).get(co_pagina);
                 if (propag_js == null) {
                     Frawor4DAO dao3 = new Frawor4DAO();
-                    propag_js = dao3.getPaginaDTO(co_pagina).getJs_valpag();
+//                    propag_js = dao3.getPaginaDTO(co_pagina).getJs_valpag();
                     dao3.close();
 
                     if (propag_js == null) {

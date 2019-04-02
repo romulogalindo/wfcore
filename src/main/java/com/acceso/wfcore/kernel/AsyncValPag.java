@@ -39,7 +39,7 @@ public class AsyncValPag extends AsyncProcessor {
 
             if (valpag_js == null) {
                 Frawor4DAO dao = new Frawor4DAO();
-                valpag_js = dao.getPaginaDTO(co_pagina).getJs_valpag();
+                valpag_js = dao.getJS_Valpag(co_pagina).getScript();
                 dao.close();
 
                 if (valpag_js == null) {

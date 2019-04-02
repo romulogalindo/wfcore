@@ -156,11 +156,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     @Override
     public void saveDto() {
-//      PaginaDAO dao = new PaginaDAO();
-//      this.pagina = dao.grabarPagina(pagina);
+      PaginaDAO dao = new PaginaDAO();
+      this.pagina = dao.save(pagina);
 //      this.paginas = dao.getPaginas();
 ////      Sistema.out.println("PaginaBean actualizarPagina = " + this.pagina);
-//      dao.close();
+      dao.close();
     }
 
     @Override

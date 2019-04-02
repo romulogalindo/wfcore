@@ -1,6 +1,7 @@
 package com.acceso.wfcore.kernel;
 
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.daos.Frawor4DAO;
@@ -48,10 +49,10 @@ public class AsyncProPag extends AsyncProcessor {
                 for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
                     dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
                     dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
-                    ls_regist = "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
+                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
                 }
                 ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
-
+                System.out.println("ls_regist = " + ls_regist);
                 dao.close();
                 dao2.close();
 
@@ -59,7 +60,7 @@ public class AsyncProPag extends AsyncProcessor {
                 String propag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).get(co_pagina);
                 if (propag_js == null) {
                     Frawor4DAO dao3 = new Frawor4DAO();
-                    propag_js = dao3.getPaginaDTO(co_pagina).getJs_valpag();
+                    propag_js = dao3.getJS_Propag(co_pagina).getScript();
                     dao3.close();
 
                     if (propag_js == null) {
@@ -76,7 +77,7 @@ public class AsyncProPag extends AsyncProcessor {
                 out.write(object.toString());
 
             } catch (Exception ep) {
-                out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep))));
+                out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, ep.getMessage()))));
             }
         }
         //complete the processing

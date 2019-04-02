@@ -47,6 +47,31 @@ public class PaginaDAO {
         return paginas;
     }
 
+    public PaginaDTO save(PaginaDTO paginaDTO) {
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_PAGINA));
+
+            nQuery.setInteger("p_co_pagina", paginaDTO.getCo_pagina());
+            nQuery.setString("p_no_pagtit", paginaDTO.getNo_pagtit());
+            nQuery.setString("p_de_pagina", paginaDTO.getDe_pagina());
+            nQuery.setString("p_js_valpag", paginaDTO.getJs_valpag());
+            nQuery.setString("p_js_propag", paginaDTO.getJs_propag());
+
+
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
+            paginaDTO = (PaginaDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return paginaDTO;
+    }
+
     public ScriptDTO getScript(int p_co_pagina) {
 
         ScriptDTO scriptDTO = null;
