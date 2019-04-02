@@ -85,7 +85,7 @@ public class ApplicationManager {
             //pagina nueva
             List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
             List<WRegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
-            List<BotonDTO> botonDTOS = dao.getButonDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
+            List<WBotonDTO> botonDTOS = dao.getButonDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
 
             LinkedHashMap<String, Fila> ultraFilas = new LinkedHashMap<>();
 
@@ -107,7 +107,7 @@ public class ApplicationManager {
             }
 
             if (!botonDTOS.isEmpty() || botonDTOS.size() > 0) {
-                for (BotonDTO botonDTO : botonDTOS) {
+                for (WBotonDTO botonDTO : botonDTOS) {
                     List<WParametroDTO> parametroDTOS = dao.getParams(contenedorDTO.getCo_conten(), paginaDTO.getCo_pagina(), (short) botonDTO.getCo_pagbot());
                     botonDTO.setParametros(parametroDTOS);
                 }

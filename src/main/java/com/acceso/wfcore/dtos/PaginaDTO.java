@@ -7,12 +7,10 @@ package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
@@ -41,6 +39,12 @@ public class PaginaDTO implements Serializable {
     String js_valpag;
     String js_propag;
     Date fe_regist;
+
+    @Transient
+    String ti_pagina = "F";
+
+    @Transient
+    List<BotonDTO> ls_botone;
 
     public Integer getCo_pagina() {
         return co_pagina;
@@ -96,6 +100,22 @@ public class PaginaDTO implements Serializable {
 
     public void setJs_propag(String js_propag) {
         this.js_propag = js_propag;
+    }
+
+    public String getTi_pagina() {
+        return ti_pagina;
+    }
+
+    public void setTi_pagina(String ti_pagina) {
+        this.ti_pagina = ti_pagina;
+    }
+
+    public List<BotonDTO> getLs_botone() {
+        return ls_botone;
+    }
+
+    public void setLs_botone(List<BotonDTO> ls_botone) {
+        this.ls_botone = ls_botone;
     }
 
     @Override

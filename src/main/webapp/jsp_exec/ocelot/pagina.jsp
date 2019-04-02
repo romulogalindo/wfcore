@@ -42,6 +42,10 @@
                 margin: 0px;
                 padding: .30rem 1.02rem;
             }
+
+            #mainpagina select{
+                display: unset !important;
+            }
         </style>
     </head>
     <body style="padding: 20px;" onload="pagina();">

@@ -1,6 +1,6 @@
 package com.acceso.wfweb.units;
 
-import com.acceso.wfweb.dtos.BotonDTO;
+import com.acceso.wfweb.dtos.WBotonDTO;
 import com.acceso.wfweb.dtos.WParametroDTO;
 import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.dtos.TituloDTO;
@@ -14,7 +14,7 @@ public class Fila extends HTMLRenderer implements Serializable {
 
     TituloDTO tituloDTO;
     WRegistroDTO registroDTO;
-    List<BotonDTO> botonDTOS;
+    List<WBotonDTO> botonDTOS;
     String id;
     //SOlo para tipo tabla
     int colspan;
@@ -29,7 +29,7 @@ public class Fila extends HTMLRenderer implements Serializable {
         this.id = id;
     }
 
-    public Fila(List<BotonDTO> botonDTOS, String id) {
+    public Fila(List<WBotonDTO> botonDTOS, String id) {
         this.botonDTOS = botonDTOS;
         this.id = id;
     }
@@ -97,7 +97,7 @@ public class Fila extends HTMLRenderer implements Serializable {
             html += "<td class=wf_f_valreg>";
             html += "<script> var cfila=1;</script>";
 
-            for (BotonDTO botonDTO : botonDTOS) {
+            for (WBotonDTO botonDTO : botonDTOS) {
 
                 html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[];";
                 for (WParametroDTO parametroDTO : botonDTO.getParametros()) {

@@ -65,6 +65,12 @@ function ls_hamoda() {
     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
 }
 
+function ifnull(val, def) {
+    if (val == null | val == undefined) {
+        return def
+    } else return val;
+}
+
 function size_of_pagina() {
 //    height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
     height_table = document.getElementById('mainpagina').offsetHeight + 60;
@@ -186,15 +192,13 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
 
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 eledom.value = valdom;
                 if (eledom.getAttribute("type") != "hidden")
                     domtr(eledom).removeAttribute('style');
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -243,9 +247,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                     eledom.getElementsByTagName("INPUT")[0].checked = reg.value;
                 } else if (ti_pagreg == '7') {
                     // eledom.setAttribute("va_pagreg", reg.value);
-                    document.getElementById(eledom.getAttribute('id') + '_dd').value = reg.value.substring(8, 10);
-                    document.getElementById(eledom.getAttribute('id') + '_mm').value = reg.value.substring(5, 7);
-                    document.getElementById(eledom.getAttribute('id') + '_yyyy').value = reg.value.substring(0, 4);
+                    document.getElementById(eledom.getAttribute('id') + '_dd').value = ifnull(reg.value, '').substring(8, 10);
+                    document.getElementById(eledom.getAttribute('id') + '_mm').value = ifnull(reg.value, '').substring(5, 7);
+                    document.getElementById(eledom.getAttribute('id') + '_yyyy').value = ifnull(reg.value, '').substring(0, 4);
                     document.getElementById(eledom.getAttribute('id') + '_date').value = reg.value;
                     document.getElementById(eledom.getAttribute('id') + '_date').onchange = function () {
                         var fecha = this.value;
@@ -311,9 +315,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                 break;
             }
             case
-                    "A"
-                    :
-            {
+            "A"
+            : {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -325,8 +328,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                 break;
             }
-            default:
-            {
+            default: {
                 eledom.innerHTML = valdom;
                 domtr(eledom).removeAttribute('style');
             }
@@ -388,13 +390,11 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 val = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -410,7 +410,12 @@ function propag(cycle, co_button, il_proces, co_condes) {
                 } else if (ti_pagreg == '5') {
                     val = eledom.getElementById(eledom.id + '_rb').value;
                 } else if (ti_pagreg == '7') {
-                    val = eledom.getElementById(eledom.id + '_date').value;
+                    // console.log('@@>>' + eledom);
+                    // console.log('@@>>' + eledom.id + '_date');
+                    // console.log('@@>>' + eledom.id + '_date');
+                    // console.log('@@>>' + eledom.getElementById(eledom.id + '_date'));
+                    // val = eledom.getElementById(eledom.id + '_date').value;
+                    val = document.getElementById(eledom.id + '_date').value;
                 } else if (ti_pagreg == '8') {
                     val = eledom.getElementById(eledom.id + '_ms').value;
                 } else if (ti_pagreg == '9') {
@@ -448,8 +453,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A":
-            {
+            case "A": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -536,13 +540,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -553,11 +555,14 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 } else if (ti_pagreg == '4') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     valdom = dom_select.options[dom_select.selectedIndex].value;
+                }else if (ti_pagreg == '7') {
+                    // val = document.getElementById(eledom.id + '_date').value;
+                    // var dom_select = eledom.getElementById("SELECT")[0];
+                    valdom = document.getElementById(eledom.id + '_date').value;
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }

@@ -41,7 +41,7 @@ public class Regist7 extends HTMLRenderer {
                 html += "<input type=text id=\"" + id + "V_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" />";
                 html += "<span>/</span>";
                 html += "<input type=text id=\"" + id + "V_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" />";
-                html += "<span id=\"" + id + "V_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fa fa-calendar\" aria-hidden=\"true\"></i></span>";
+                html += "<span id=\"" + id + "V_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"pi pi-calendar\"></i></span>";
                 html += "<input type=hidden id=\"" + id + "V_date\" class=\"w3-input w3-border\" />";
                 html += "</span>";
                 html += "</td>";

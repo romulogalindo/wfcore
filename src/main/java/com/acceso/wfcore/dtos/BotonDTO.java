@@ -1,20 +1,31 @@
-package com.acceso.wfweb.dtos;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.acceso.wfcore.dtos;
 
-import com.acceso.wfweb.utils.Values;
+import com.acceso.wfcore.utils.Values;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
- * @author Rómulo Galindo<romulogalindo@gmail.com>
- * Created on 13 dic. 2018, 19:06:46
+ * @author Mario Huillca <mario.huillca@acceso.com.pe>
+ * Created on 30 nov. 2018, 15:11:45
  */
+
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_PFPAGBOT,
-                query = "select * from frawor4.pfpagbot(:p_co_pagina, :p_id_frawor , :p_co_conten )",
+                name = Values.QUERYS_NATIVE_SELECT_BUTTONS,
+                query = "select * from frawor4.tcpagbot where co_pagina = :p_co_pagina order by or_pagbot;",
+                resultClass = BotonDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_SAVE_BUTTON,
+                query = "select * from wfsistem.pbboton_save(:p_co_pagina, :co_pagbot, :no_pagbot, :or_pagbot, :ti_pagbot, :il_proces, :il_confir, :no_confir, :il_autent, :il_peresc);",
                 resultClass = BotonDTO.class)
 })
 public class BotonDTO implements Serializable {
@@ -23,23 +34,13 @@ public class BotonDTO implements Serializable {
     int co_pagbot;
 
     String no_pagbot;
-
-    int or_pagbot;
-
+    String or_pagbot;
     String ti_pagbot;
-
     boolean il_proces;
-
     boolean il_confir;
-
     String no_confir;
-
     boolean il_autent;
-
-    int co_condes;
-
-    @Transient
-    List<WParametroDTO> parametros;
+    boolean il_peresc;
 
     public BotonDTO() {
     }
@@ -60,11 +61,11 @@ public class BotonDTO implements Serializable {
         this.no_pagbot = no_pagbot;
     }
 
-    public int getOr_pagbot() {
+    public String getOr_pagbot() {
         return or_pagbot;
     }
 
-    public void setOr_pagbot(int or_pagbot) {
+    public void setOr_pagbot(String or_pagbot) {
         this.or_pagbot = or_pagbot;
     }
 
@@ -108,19 +109,11 @@ public class BotonDTO implements Serializable {
         this.il_autent = il_autent;
     }
 
-    public int getCo_condes() {
-        return co_condes;
+    public boolean isIl_peresc() {
+        return il_peresc;
     }
 
-    public void setCo_condes(int co_condes) {
-        this.co_condes = co_condes;
-    }
-
-    public List<WParametroDTO> getParametros() {
-        return parametros;
-    }
-
-    public void setParametros(List<WParametroDTO> parametros) {
-        this.parametros = parametros;
+    public void setIl_peresc(boolean il_peresc) {
+        this.il_peresc = il_peresc;
     }
 }

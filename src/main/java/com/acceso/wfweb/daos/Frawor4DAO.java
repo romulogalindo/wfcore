@@ -167,8 +167,8 @@ public class Frawor4DAO extends DAO {
         return registroDTOS;
     }
 
-    public List<BotonDTO> getButonDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
-        List<BotonDTO> botonDTOS = null;
+    public List<WBotonDTO> getButonDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
+        List<WBotonDTO> botonDTOS = null;
         NQuery nQuery = new NQuery(TAG + ":BOTONE");
 
         try {

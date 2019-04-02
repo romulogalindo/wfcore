@@ -1,5 +1,6 @@
 package com.acceso.wfcore.daos;
 
+import com.acceso.wfcore.dtos.BotonDTO;
 import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.ScriptDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
@@ -70,6 +71,27 @@ public class PaginaDAO {
         }
 
         return paginaDTO;
+    }
+
+    public List<BotonDTO> getButtons(int p_co_pagina){
+        List<BotonDTO> buttons = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_BUTTONS));
+            nQuery.setInteger("p_co_pagina",p_co_pagina);
+
+            System.out.println("[PaginaDAO:getButtons] Q = " + nQuery.getQueryString());
+            buttons = nQuery.list();
+            System.out.println("[PaginaDAO:getButtons] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getButtons] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return buttons;
     }
 
     public ScriptDTO getScript(int p_co_pagina) {

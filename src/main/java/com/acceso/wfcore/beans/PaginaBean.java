@@ -2,6 +2,7 @@ package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
+import com.acceso.wfcore.dtos.BotonDTO;
 import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.RegistroDTO;
 import com.acceso.wfcore.dtos.ScriptDTO;
@@ -32,6 +33,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     private List<PaginaDTO> paginas;
     private PaginaDTO pagina;
+    private BotonDTO boton;
     private List<PaginaDTO> filtroPagina;
 
     private boolean isregEditable;
@@ -120,13 +122,15 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         //Setar botone
 
         //Cargar script1
-        ScriptDTO scriptDTO;
-        PaginaDAO dao = new PaginaDAO(WFCoreListener.APP.getDataSourceService().getManager("wfacr").getNativeSession());
-        scriptDTO = dao.getScript(pagina.getCo_pagina());
+//        ScriptDTO scriptDTO;
+//        PaginaDAO dao = new PaginaDAO(WFCoreListener.APP.getDataSourceService().getManager("wfacr").getNativeSession());
+        PaginaDAO dao = new PaginaDAO();
+        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+//        scriptDTO = dao.getScript(pagina.getCo_pagina());
         dao.close();
 
         //aplicar validacion
-        script = scriptDTO;
+//        script = scriptDTO;
 
         //Cargar script2
 
@@ -156,11 +160,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     @Override
     public void saveDto() {
-      PaginaDAO dao = new PaginaDAO();
-      this.pagina = dao.save(pagina);
+        PaginaDAO dao = new PaginaDAO();
+        this.pagina = dao.save(pagina);
 //      this.paginas = dao.getPaginas();
 ////      Sistema.out.println("PaginaBean actualizarPagina = " + this.pagina);
-      dao.close();
+        dao.close();
     }
 
     @Override
@@ -192,6 +196,14 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setPagina(PaginaDTO pagina) {
         this.pagina = pagina;
+    }
+
+    public BotonDTO getBoton() {
+        return boton;
+    }
+
+    public void setBoton(BotonDTO boton) {
+        this.boton = boton;
     }
 
     public List<PaginaDTO> getPaginas() {
