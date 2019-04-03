@@ -43,7 +43,7 @@ public class ContenedorBean implements Serializable {
         });
 
         ls_conpar = requestManager.getConpars().entrySet().stream()
-                .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getKey() + "\",")
+                .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getValue() + "\",")
                 .reduce(ls_conpar, String::concat);
 
         ls_conpar = ls_conpar.substring(0, ls_conpar.length() - 1) + "}";

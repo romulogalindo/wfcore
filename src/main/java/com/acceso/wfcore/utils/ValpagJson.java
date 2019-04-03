@@ -12,6 +12,10 @@ public class ValpagJson {
     public ValpagJson() {
     }
 
+    public ValpagJson(List<RowJson> rows) {
+        this.rows = rows;
+    }
+
     public List<RowJson> getRows() {
         return rows;
     }
@@ -22,8 +26,8 @@ public class ValpagJson {
 
     @Override
     public String toString() {
-        return "ValpagJson{" +
-                "rows=" + rows +
-                '}';
+        return "ValpagJson{"
+                + "rows=" + rows
+                + '}';
     }
 }

@@ -18,6 +18,12 @@ public class JsonResponse implements Serializable {
     public JsonResponse() {
     }
 
+    public JsonResponse(String status, Object result, Object aditional) {
+        this.status = status;
+        this.result = result;
+        this.aditional = aditional;
+    }
+
     public String getStatus() {
         return status;
     }

@@ -14,6 +14,10 @@ public class RowJson {
         regs = new ArrayList<>();
     }
 
+    public RowJson(List<RegJson> regs) {
+        this.regs = regs;
+    }
+
     public List<RegJson> getRegs() {
         return regs;
     }
