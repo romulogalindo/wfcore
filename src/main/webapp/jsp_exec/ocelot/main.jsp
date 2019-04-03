@@ -32,15 +32,15 @@
         <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/mdb.min.css" rel="stylesheet">-->
         <!-- Your custom styles (optional) -->
         <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/style.css" rel="stylesheet">-->
-        <link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">
-
+        <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=1">
 
         <!--link rel="icon" type="image/png" href="{pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png"-->
         <link rel='shortcut icon' type='image/x-icon'
               href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
         <!--CSS-->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7"/>
+        <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=7"/>
 
 
         <!-- SCRIPTS -->
@@ -387,7 +387,7 @@
             </div>
         </main>
 
-        <script type="text/javascript"
-        src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>
+        <%--<script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>--%>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js"></script>
     </body>
 </html>

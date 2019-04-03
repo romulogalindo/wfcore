@@ -17,7 +17,8 @@
         <!--CSS-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=7">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
-        <link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=1">
+        <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
 
         <!--JS -->
         <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=28"></script>
@@ -157,6 +158,7 @@
             </table>
         </div>
 
-        <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>
+        <%--<script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>--%>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js"></script>
     </body>
 </html>

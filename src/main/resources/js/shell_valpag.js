@@ -14,8 +14,27 @@ var HTTP = new main_api_acr_http_api();
 var SHELL = new main_api_acr_shell_api();
 var CACHE = new main_api_acr_cache_api();
 
+/*COALESCE(obj, def)*/
+function COALESCE(obj, def) {
+    if (obj) {
+        return obj
+    } else {
+        return def;
+    }
+}
+
+/*NULLIF(obj1, obj2)*/
+function NULLIF(obj1, obj2) {
+    if (obj1 == obj2) {
+        return null;
+    } else {
+        return obj1;
+    }
+}
+
 function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, ID_FRAANT) {
     var VALPAGJS = null;
+    print('CONPAR:' + CONPAR)
     var LS_CONPAR = JSON.parse(CONPAR);
 
     USUARI_DATA_JS_TEXT

@@ -26,4 +26,10 @@ public class RowJson {
         this.regs = regs;
     }
 
+    public void addReg(RegJson regJson) {
+        if (regs == null)
+            regs = new ArrayList<>();
+        regs.add(regJson);
+    }
+
 }

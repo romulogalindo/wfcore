@@ -1,11 +1,13 @@
 package com.acceso.wfcore.utils;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author rgalindo
  */
-public class ValpagJson {
+public class ValpagJson implements Serializable {
 
     List<RowJson> rows;
 
@@ -22,6 +24,13 @@ public class ValpagJson {
 
     public void setRows(List<RowJson> rows) {
         this.rows = rows;
+    }
+
+    public void addRow(RowJson rowJson) {
+        if (this.rows == null) {
+            this.rows = new ArrayList<>();
+        }
+        this.rows.add(rowJson);
     }
 
     @Override
