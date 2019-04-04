@@ -5,7 +5,7 @@
     height: 100%;
     display: block;
     border: none;
-    margin:auto;
+    margin: auto;
     max-width: 605px;
 }
 
@@ -86,9 +86,11 @@ TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
 }
 
 /*======*/
+
 table.table td, table.table th {
     padding-top: 0.5rem !important;
     padding-bottom: 0.4rem !important;
+    /*text-align: center;*/
 }
 
 .table td, .table th {
@@ -103,6 +105,15 @@ table td {
     font-size: .8rem;
     font-weight: 300;
 }
+
+table.wf-report thead tr th {
+    text-align: center;
+}
+
+table.wf-report td {
+    white-space: nowrap;
+}
+
 /*======*/
 
 .w3-modal #popup2_body {
@@ -120,7 +131,7 @@ table td {
     height: 25px;
 }
 
-.w3-modal #popup2_body table tr td label{
+.w3-modal #popup2_body table tr td label {
     padding-left: 6px;
 }
 

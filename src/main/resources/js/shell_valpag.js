@@ -32,11 +32,20 @@ function NULLIF(obj1, obj2) {
     }
 }
 
+var DO_POST_LOAD_DATA;
+
 function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, ID_FRAANT) {
     var VALPAGJS = null;
     var LS_CONPAR = JSON.parse(CONPAR);
 
+    /*CAN USE DO_POST_LOAD_DATA*/
+
+    /*MAIN LOGIC TO RUN*/
     USUARI_DATA_JS_TEXT
+
+    // DO_POST_LOAD_DATA = function () {
+    //     document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('TBODY')[0].getElementsByTagName('TR')[0].getElementsByTagName('TH')[0].style.display = 'none';
+    // };
 
     return VALPAGJS;
 }

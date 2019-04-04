@@ -357,7 +357,7 @@ function loadReporte64(row) {
         // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
-        var txtval = reg.front == undefined ? reg.value : reg.front;
+        var txtval = reg.text == undefined ? reg.value : reg.text;
         txtval = txtval == undefined ? '' : txtval;
         //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
         // console.log('>[' + 'regist' + reg.regist + 'val' + '] >por> ' + txtval);
@@ -370,7 +370,12 @@ function loadReporte64(row) {
     var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
     dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
 
-
+    //do-for
+    var alltd = document.getElementById('PAG' + co_pagina()).getElementsByClassName('ti_pag_Reg2');
+    for (var i = 0; i < alltd.length; i++) {
+        alltd[i].getElementsByTagName('SPAN')[0].innerHTML = '' + (i + 1);
+        // alltd[i].innerHTML = '<span>' + (i + 1) + '</span>span>';
+    }
 }
 
 function propag(cycle, co_button, il_proces, co_condes) {
