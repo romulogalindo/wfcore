@@ -303,6 +303,17 @@ function loadFormulario64(index, row, aditional, dom2) {
                     console.log('onclicktext = ' + onclicktext);
                     eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
                     eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                } else if (ti_pagreg == '35') {
+                    //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                    //eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+
+                    // .contentWindow.document.getElementById("form_data");
+
+                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                    // console.log('onclicktext = ' + onclicktext);
+                    eledom.getElementsByTagName("IFRAME")[0].contentWindow.setCode(valdom);
+                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                 } else if (ti_pagreg == '38') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -441,6 +452,14 @@ function propag(cycle, co_button, il_proces, co_condes) {
                     //
                     // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
                     // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                } else if (ti_pagreg == '35') {
+                    //PWNDIENTE MARIO!!!
+                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                    //
+                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
+                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                    val = eledom.getElementsByTagName("IFRAME")[0].contentWindow.getCode();
                 } else if (ti_pagreg == '36') {
                     var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
 
