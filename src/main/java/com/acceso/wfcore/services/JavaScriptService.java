@@ -33,7 +33,7 @@ public class JavaScriptService extends Service {
             Object fn = engine_nashornjs.eval(script_Base);
             Invocable inv = (Invocable) engine_nashornjs;
             Object result = inv.invokeMethod(fn, "call", fn);
-            System.out.println("(ENGINE2)result = " + result);
+//            System.out.println("(ENGINE2)result = " + result);
         } catch (Exception ep) {
             System.out.println("ENGINE 2 (error)");
             ep.printStackTrace();
@@ -53,7 +53,7 @@ public class JavaScriptService extends Service {
             Invocable inv = (Invocable) engine_nashornjs;
 
             result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, ls_conpar, co_usuari, id_fraant);
-            System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])result = " + result);
+//            System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])result = " + result);
         } catch (Exception ep) {
             System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
             ep.printStackTrace();

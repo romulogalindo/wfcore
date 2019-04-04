@@ -55,13 +55,7 @@ public class AsyncValPag extends AsyncProcessor {
 
             JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK(valpagJson);
 
-//            System.out.println("[" + co_pagina + "]valpagJson0 = " + valpagJson);
-//            System.out.println("[" + co_pagina + "]valpagJson1 = " + valpagJson.getRows());
-//            System.out.println("[" + co_pagina + "]ls_hamoda = " + ls_hamoda);
-//            System.out.println("[X]valpagJson2 = " + (valpagJson.getRows() != null || !valpagJson.getRows().isEmpty()));
             if ((valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
-//                if (!valpagJson.getRows().isEmpty()) {
-                System.out.println("[" + co_pagina + "]==>" + valpagJson);
                 HashMap<String, Object> map_hamodas = new HashMap<>();
 
                 String[] hamodas = ls_hamoda.split(",");
@@ -75,7 +69,6 @@ public class AsyncValPag extends AsyncProcessor {
                 }
 
                 jsonResponse.setAditional(map_hamodas);
-//                }
             }
 
             String urpta = Util.toJSON2(jsonResponse);

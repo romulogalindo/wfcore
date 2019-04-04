@@ -374,6 +374,10 @@ function loadReporte64(row) {
 }
 
 function propag(cycle, co_button, il_proces, co_condes) {
+    /*POPUP ON*/
+    window.parent.showloading(true);
+
+    /*LOGIC*/
     var data = new FormData();
     data.append('id_frawor', '' + id_frawor());
     data.append('co_pagina', '' + co_pagina());
@@ -555,7 +559,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 } else if (ti_pagreg == '4') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     valdom = dom_select.options[dom_select.selectedIndex].value;
-                }else if (ti_pagreg == '7') {
+                } else if (ti_pagreg == '7') {
                     // val = document.getElementById(eledom.id + '_date').value;
                     // var dom_select = eledom.getElementById("SELECT")[0];
                     valdom = document.getElementById(eledom.id + '_date').value;
