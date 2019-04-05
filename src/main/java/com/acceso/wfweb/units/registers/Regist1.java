@@ -35,7 +35,12 @@ public class Regist1 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<input type=text id='" + id + "V' name='" + id + "V' class=\"pagreg w3-input w3-border\" value=>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"1\" class=\"pagreg\" >" ;
+                html += "   <div class=\"md-form mt-0\">" ;
+//                html += "<input type=text id='" + id + "V' name='" + id + "V' class=\"pagreg w3-input w3-border form-control\" value=>";
+                html += "<input type=text class=\"w3-input w3-border form-control\" value=>";
+                html += "   </div>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

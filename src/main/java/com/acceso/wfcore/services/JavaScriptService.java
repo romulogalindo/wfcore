@@ -67,4 +67,24 @@ public class JavaScriptService extends Service {
         Invocable inv = (Invocable) engine_nashornjs;
         return inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, co_pagbot, ls_regist, co_usuari);
     }
+
+    public Object dopvpj(String JSFunction) {
+//        engine_nashornjs.eval(JSText);
+//        Invocable inv = (Invocable) engine_nashornjs;
+//        return inv.invokeFunction(JSFunction);
+
+        Object result = null;
+        try {
+//            engine_nashornjs.eval(JSText);
+            Invocable inv = (Invocable) engine_nashornjs;
+
+            result = inv.invokeFunction(JSFunction);
+//            System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])result = " + result);
+        } catch (Exception ep) {
+            System.out.println("(valpag[" + "])ep = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return result;
+    }
 }

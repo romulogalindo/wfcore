@@ -4,7 +4,7 @@
     Author     : romulogalindo
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,18 +12,31 @@
     <link rel="stylesheet" href="../css/codemirror/codemirror.css">
     <script src="${pageContext.request.contextPath}/jsp_exec/js/codemirror/codemirror.js"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/codemirror/sql.js"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/codemirror/docs.css">
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/codemirror/matchbrackets.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/codemirror/codemirror.css">
-    <style>.CodeMirror {border: 2px inset #dee;}</style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/codemirror/docs.css">
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/codemirror/eclipse.css">--%>
+    <style>.CodeMirror {
+        border: 2px inset #dee;
+    }</style>
     <script>
         var editor;
-        function plsql(){
+
+        function plsql() {
             editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                 lineNumbers: true,
                 matchBrackets: true,
                 indentUnit: 4,
                 mode: "text/x-plsql"
             });
+        }
+
+        function setCode(code) {
+            editor.setValue(code);
+        }
+
+        function getCode() {
+            return editor.getValue();
         }
     </script>
 </head>

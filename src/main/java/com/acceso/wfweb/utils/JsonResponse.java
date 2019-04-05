@@ -11,6 +11,7 @@ public class JsonResponse implements Serializable {
 
     String status;
     Object result;
+    Object fnpost;
     Object aditional;
     String message;
     ErrorMessage error;
@@ -54,6 +55,14 @@ public class JsonResponse implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Object getFnpost() {
+        return fnpost;
+    }
+
+    public void setFnpost(Object fnpost) {
+        this.fnpost = fnpost;
     }
 
     public ErrorMessage getError() {

@@ -53,8 +53,12 @@ public class AsyncValPag extends AsyncProcessor {
 
             ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US")).getCo_usuari(), 1);
 
-            JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK(valpagJson);
+            String textjson = (String) WFCoreListener.APP.getJavaScriptService().dopvpj("GET_DO_POST_LOAD_DATA");
+            System.out.println("textjson = " + textjson);
 
+            JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK(valpagJson);
+            jsonResponse.setFnpost(textjson);
+            
             if ((valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
                 HashMap<String, Object> map_hamodas = new HashMap<>();
 
