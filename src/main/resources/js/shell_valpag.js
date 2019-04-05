@@ -32,6 +32,7 @@ function NULLIF(obj1, obj2) {
     }
 }
 
+/*VAR:Function Ejecuta post*/
 var DO_POST_LOAD_DATA;
 
 function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, ID_FRAANT) {
@@ -43,9 +44,10 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, ID_FRAANT
     /*MAIN LOGIC TO RUN*/
     USUARI_DATA_JS_TEXT
 
-    // DO_POST_LOAD_DATA = function () {
-    //     document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('TBODY')[0].getElementsByTagName('TR')[0].getElementsByTagName('TH')[0].style.display = 'none';
-    // };
-
+    DO_POST_LOAD_DATA = '' + DO_POST_LOAD_DATA;
     return VALPAGJS;
+}
+
+function GET_DO_POST_LOAD_DATA() {
+    return DO_POST_LOAD_DATA;
 }

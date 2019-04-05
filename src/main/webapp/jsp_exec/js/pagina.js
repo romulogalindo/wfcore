@@ -1,5 +1,8 @@
 var $D = document;
 var $MAP = {};
+var CO_PAGINA;
+var CO_CONTEN;
+var ID_FRAWOR;
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -68,7 +71,8 @@ function ls_hamoda() {
 function ifnull(val, def) {
     if (val == null | val == undefined) {
         return def
-    } else return val;
+    } else
+        return val;
 }
 
 function size_of_pagina() {
@@ -82,6 +86,9 @@ function size_of_pagina() {
 function pagina() {
     //Seteamos el height para que lo absorva el iframe!<main.jsp
     size_of_pagina();
+    /*SET INI*/
+    CO_PAGINA = co_pagina();
+    CO_CONTEN = co_conten();
 
     doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
 
@@ -130,6 +137,11 @@ function pagina_onload(jsonData) {
             else
                 loadReporte64(rows[i]);
         }
+
+        /*BEFORE VIEW*/
+        var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
+        console.log('>>' + fnpost);
+        eval(fnpost);
 
         //devuevo actualizar el height;
         size_of_pagina();
@@ -192,18 +204,22 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 eledom.value = valdom;
                 if (eledom.getAttribute("type") != "hidden")
                     domtr(eledom).removeAttribute('style');
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
-                    eledom.setAttribute("va_pagreg", reg.value);
-                    eledom.innerHTML = valdom;
+//                    eledom.getElementsByTagName("INPUT")[0].value = reg.value;
+                    eledom.getElementsByTagName("INPUT")[0].value = valdom;
+//                    eledom.setAttribute("va_pagreg", reg.value);
+//                    eledom.innerHTML = valdom;
                 } else if (ti_pagreg == '3') {
                     //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
@@ -326,8 +342,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                 break;
             }
             case
-            "A"
-            : {
+                    "A"
+                    :
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -339,7 +356,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                 break;
             }
-            default: {
+            default:
+            {
                 eledom.innerHTML = valdom;
                 domtr(eledom).removeAttribute('style');
             }
@@ -353,6 +371,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
 // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
+
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
@@ -410,15 +429,17 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 val = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
-                    val = eledom.getAttribute("va_pagreg");
+                    val = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
                 } else if (ti_pagreg == '3') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
@@ -481,7 +502,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A": {
+            case "A":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -568,15 +590,18 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
-                    valdom = eledom.getAttribute("va_pagreg");
+//                    valdom = eledom.getAttribute("va_pagreg");
+                    valdom = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
                 } else if (ti_pagreg == '3') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     valdom = dom_select.options[dom_select.selectedIndex].value;
@@ -590,7 +615,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
