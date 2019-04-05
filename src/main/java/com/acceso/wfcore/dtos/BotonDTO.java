@@ -25,7 +25,7 @@ import java.util.List;
                 resultClass = BotonDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_BUTTON,
-                query = "select * from wfsistem.pbboton_save(:p_co_pagina, :co_pagbot, :no_pagbot, :or_pagbot, :ti_pagbot, :il_proces, :il_confir, :no_confir, :il_autent, :il_peresc);",
+                query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :co_pagbot, :no_pagbot, :or_pagbot, :ti_pagbot, :il_proces, :il_confir, :no_confir, :il_autent, :il_peresc);",
                 resultClass = BotonDTO.class)
 })
 public class BotonDTO implements Serializable {

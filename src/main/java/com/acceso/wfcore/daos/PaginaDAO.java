@@ -73,14 +73,14 @@ public class PaginaDAO {
         return paginaDTO;
     }
 
-    public List<BotonDTO> getButtons(int p_co_pagina){
+    public List<BotonDTO> getButtons(int p_co_pagina) {
         List<BotonDTO> buttons = new ArrayList<>();
         NQuery nQuery = new NQuery();
 
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_BUTTONS));
-            nQuery.setInteger("p_co_pagina",p_co_pagina);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
 
             System.out.println("[PaginaDAO:getButtons] Q = " + nQuery.getQueryString());
             buttons = nQuery.list();
@@ -116,6 +116,35 @@ public class PaginaDAO {
         return scriptDTO;
     }
 
+
+    public BotonDTO saveButton(int p_co_pagina, BotonDTO botonDTO) {
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_BUTTON));
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setInteger("co_pagbot", botonDTO.getCo_pagbot());
+            nQuery.setString("no_pagbot", botonDTO.getNo_pagbot());
+            nQuery.setString("or_pagbot", botonDTO.getOr_pagbot());
+            nQuery.setString("ti_pagbot", botonDTO.getTi_pagbot());
+            nQuery.setBoolean("il_proces", botonDTO.isIl_proces());
+            nQuery.setBoolean("il_confir", botonDTO.isIl_confir());
+            nQuery.setString("no_confir", botonDTO.getNo_confir());
+            nQuery.setBoolean("il_autent", botonDTO.isIl_autent());
+            nQuery.setBoolean("il_peresc", botonDTO.isIl_peresc());
+
+
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
+            botonDTO = (BotonDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return botonDTO;
+    }
 
     //    public PaginaDTO grabarPagina(PaginaDTO pagina) {
 //

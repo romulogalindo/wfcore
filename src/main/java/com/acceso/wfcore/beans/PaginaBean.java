@@ -184,6 +184,24 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //      dao.close();
     }
 
+    public BotonDTO emptyButton() {
+        BotonDTO botonDTO = new BotonDTO();
+        botonDTO.setCo_pagbot(-1);
+        return botonDTO;
+    }
+
+    public void mainControl_new() {
+        botonSeleccionado = new BotonDTO();
+        botonSeleccionado.setCo_pagbot(-1);
+        System.out.println("btn new---->");
+    }
+
+    public void mainControl_saveorupdate() {
+        PaginaDAO dao = new PaginaDAO();
+        dao.saveButton(pagina.getCo_pagina(), botonSeleccionado);
+        dao.close();
+    }
+
     public void cargarRegistros() {
         RegistroDAO dao = new RegistroDAO();
         registros = dao.getRegistros();
@@ -203,6 +221,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public void setBotonSeleccionado(BotonDTO botonSeleccionado) {
+        System.out.println("??>>botonSeleccionado = " + botonSeleccionado);
         this.botonSeleccionado = botonSeleccionado;
     }
 
