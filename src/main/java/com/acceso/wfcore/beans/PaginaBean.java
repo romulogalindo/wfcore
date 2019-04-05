@@ -33,7 +33,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     private List<PaginaDTO> paginas;
     private PaginaDTO pagina;
-    private BotonDTO boton;
+    private BotonDTO botonSeleccionado;
     private List<PaginaDTO> filtroPagina;
 
     private boolean isregEditable;
@@ -198,12 +198,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         this.pagina = pagina;
     }
 
-    public BotonDTO getBoton() {
-        return boton;
+    public BotonDTO getBotonSeleccionado() {
+        return botonSeleccionado;
     }
 
-    public void setBoton(BotonDTO boton) {
-        this.boton = boton;
+    public void setBotonSeleccionado(BotonDTO botonSeleccionado) {
+        this.botonSeleccionado = botonSeleccionado;
     }
 
     public List<PaginaDTO> getPaginas() {

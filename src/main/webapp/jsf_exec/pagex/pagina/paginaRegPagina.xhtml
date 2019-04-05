@@ -155,7 +155,7 @@
                                                      rows="100"
                                                      widgetVar="widTable2"
                                                      selectionMode="single"
-                                                     selection="#{paginaBean.boton}"
+                                                     selection="#{paginaBean.botonSeleccionado}"
                                                      rowKey="#{bot.co_pagbot}"
                                                      rowIndexVar="N"
                                                      style="width:100%; ">
@@ -197,10 +197,11 @@
 
 
                                             <p:column headerText="Acciones" style="text-align: center">
-                                                <p:commandButton action="#{paginaBean.updateRegist}"
+                                                <p:commandButton update="form:botonDetalle"
+                                                                 oncomplete="PF('botonDialog').show()"
                                                                  icon="fa fa-search" title="Ver">
                                                     <f:setPropertyActionListener value="#{bot}"
-                                                                                 target="#{paginaBean.boton}"/>
+                                                                                 target="#{paginaBean.botonSeleccionado}"/>
                                                     <f:setPropertyActionListener value="false"
                                                                                  target="#{paginaBean.isregEditable}"/>
                                                 </p:commandButton>
@@ -225,6 +226,7 @@
                                         </p:dataTable>
                                         <!--</h:form>-->
                                     </p:panel>
+
                                 </p:tab>
 
                                 <p:tab title="Script de Carga">
@@ -316,6 +318,35 @@
                     </p:row>
                 </p:panelGrid>
             </p:panel>
+
+            <p:dialog header="Información del Boton" widgetVar="botonDialog" modal="true" showEffect="fade"
+                      hideEffect="fade" resizable="false">
+                <p:outputPanel id="botonDetalle" style="text-align:center;">
+                    <p:panelGrid columns="2" rendered="#{not empty paginaBean.botonSeleccionado}"
+                                 columnClasses="label,value">
+                        <h:outputText value="Código:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.co_pagbot}"/>
+
+                        <h:outputText value="Nombre:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.no_pagbot}"/>
+
+                        <h:outputText value="Orden:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.or_pagbot}"/>
+
+                        <h:outputText value="Proceso:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.il_proces}"/>
+
+                        <h:outputText value="Confirmación:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.il_confir}"/>
+
+                        <h:outputText value="Texto de Confirmación:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.no_confir}"/>
+
+                        <h:outputText value="Autenticación:"/>
+                        <h:outputText value="#{paginaBean.botonSeleccionado.il_autent}"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
         </h:form>
 
     </ui:define>
