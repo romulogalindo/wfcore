@@ -24,6 +24,9 @@ public class Values {
     public static final String QUERYS_NATIVE_GRABAR_SISTEMA = "wfcore.sistema_update";
     public static final String QUERYS_NATIVE_DELETE_SISTEMA = "wfcore.sistema_delete";
 
+    public static final String QUERYS_NATIVE_SELECT_PAGTIT = "frawor4.tcpagtit";
+    public static final String QUERYS_NATIVE_SELECT_PAGREG = "frawor4.tcpagreg";
+
     public static final String QUERYS_NATIVE_SELECT_SUBSISTEMA = "wfcore.subsistema_select";
     public static final String QUERYS_NATIVE_GRABAR_SUBSISTEMA = "wfcore.subsistema_update";
     public static final String QUERYS_NATIVE_DELETE_SUBSISTEMA = "wfcore.subsistema_delete";

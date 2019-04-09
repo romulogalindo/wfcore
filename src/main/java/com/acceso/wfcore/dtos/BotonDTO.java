@@ -34,7 +34,7 @@ public class BotonDTO implements Serializable {
     int co_pagbot;
 
     String no_pagbot;
-    String or_pagbot;
+    short or_pagbot;
     String ti_pagbot;
     boolean il_proces;
     boolean il_confir;
@@ -61,11 +61,11 @@ public class BotonDTO implements Serializable {
         this.no_pagbot = no_pagbot;
     }
 
-    public String getOr_pagbot() {
+    public short getOr_pagbot() {
         return or_pagbot;
     }
 
-    public void setOr_pagbot(String or_pagbot) {
+    public void setOr_pagbot(short or_pagbot) {
         this.or_pagbot = or_pagbot;
     }
 

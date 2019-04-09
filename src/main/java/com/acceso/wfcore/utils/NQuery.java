@@ -80,7 +80,7 @@ public class NQuery {
 
     public void setBoolean(String param_name, Boolean param_value) {
         query.setBoolean(param_name, param_value);
-        queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value) + "::SMALLINT");
+        queryString = queryString.replaceFirst(":" + param_name, String.valueOf(param_value));
     }
 
     /**

@@ -1,8 +1,6 @@
 package com.acceso.wfcore.daos;
 
-import com.acceso.wfcore.dtos.BotonDTO;
-import com.acceso.wfcore.dtos.PaginaDTO;
-import com.acceso.wfcore.dtos.ScriptDTO;
+import com.acceso.wfcore.dtos.*;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
@@ -123,9 +121,9 @@ public class PaginaDAO {
         try {
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_BUTTON));
             nQuery.setInteger("p_co_pagina", p_co_pagina);
-            nQuery.setInteger("co_pagbot", botonDTO.getCo_pagbot());
+            nQuery.setShort("co_pagbot", (short) botonDTO.getCo_pagbot());
             nQuery.setString("no_pagbot", botonDTO.getNo_pagbot());
-            nQuery.setString("or_pagbot", botonDTO.getOr_pagbot());
+            nQuery.setShort("or_pagbot", botonDTO.getOr_pagbot());
             nQuery.setString("ti_pagbot", botonDTO.getTi_pagbot());
             nQuery.setBoolean("il_proces", botonDTO.isIl_proces());
             nQuery.setBoolean("il_confir", botonDTO.isIl_confir());
@@ -144,6 +142,61 @@ public class PaginaDAO {
         }
 
         return botonDTO;
+    }
+
+    public List<ElementoDTO> getElementos(int p_co_pagina) {
+        List<PagtitDTO> pagtits = new ArrayList<>();
+        List<PagregDTO> pagregs = new ArrayList<>();
+        List<ElementoDTO> elements = new ArrayList<>();
+
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGTIT));
+
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString());
+            pagtits = nQuery.list();
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+        //de registro
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGREG));
+
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString());
+            pagregs = nQuery.list();
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        for (PagtitDTO pagtitDTO : pagtits) {
+            ElementoDTO elementoDTO = new ElementoDTO();
+            elementoDTO.setCo_elemen(p_co_pagina * 1000 + pagtitDTO.getCo_pagtit());
+            elementoDTO.setTi_elemen(ElementoDTO.TYPE_TITLE);
+            elementoDTO.setNo_elemen(pagtitDTO.getNo_pagtit());
+
+            for (PagregDTO pagregDTO : pagregs) {
+                if (pagregDTO.getCo_pagtit() == pagtitDTO.getCo_pagtit()) {
+                    ElementoDTO elementoDTO2 = new ElementoDTO();
+                    elementoDTO2.setCo_elemen(p_co_pagina * 1000 + pagregDTO.getCo_pagreg());
+                    elementoDTO2.setTi_elemen(ElementoDTO.TYPE_REGIST);
+                    elementoDTO2.setNo_elemen(pagregDTO.getNo_pagreg());
+                    elements.add(elementoDTO2);
+                }
+            }
+
+            elements.add(elementoDTO);
+        }
+
+        return elements;
     }
 
     //    public PaginaDTO grabarPagina(PaginaDTO pagina) {

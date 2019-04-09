@@ -7,7 +7,10 @@ import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.RegistroDTO;
 import com.acceso.wfcore.dtos.ScriptDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.utils.Values;
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.DragDropEvent;
+import org.primefaces.event.TabChangeEvent;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,6 +31,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     private static final String URL_DETALLE = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
+    private static final String URL_BTN_EDITAR = "/admin/jsf_exec/pagex/pagina/paginaRegBoton.xhtml";
+    private static final String URL_BTN_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegBoton.xhtml";
 
     public static final String BEAN_NAME = "paginaBean";
 
@@ -37,6 +42,9 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     private List<PaginaDTO> filtroPagina;
 
     private boolean isregEditable;
+    private boolean isregbtnEditable;
+
+    public int defaultTabIndex;
 
     private List<RegistroDTO> registros;
     private List<RegistroDTO> registrosCargados;
@@ -119,20 +127,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
-        //Setar botone
-
-        //Cargar script1
-//        ScriptDTO scriptDTO;
-//        PaginaDAO dao = new PaginaDAO(WFCoreListener.APP.getDataSourceService().getManager("wfacr").getNativeSession());
         PaginaDAO dao = new PaginaDAO();
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
-//        scriptDTO = dao.getScript(pagina.getCo_pagina());
+        pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
         dao.close();
 
-        //aplicar validacion
-//        script = scriptDTO;
-
-        //Cargar script2
+        defaultTabIndex = 0;
 
         return URL_EDITAR;
     }
@@ -147,6 +147,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     @Override
     public String saveRegist() {
         saveDto();
+        return URL_LISTA;
+    }
+
+    public String saveRegistApply() {
+        saveDto();
+        apply();
         return URL_LISTA;
     }
 
@@ -184,22 +190,48 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //      dao.close();
     }
 
+    /*EVENTOS:VOID*/
+
+    public void apply() {
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+    }
+
     public BotonDTO emptyButton() {
         BotonDTO botonDTO = new BotonDTO();
         botonDTO.setCo_pagbot(-1);
         return botonDTO;
     }
 
-    public void mainControl_new() {
+    public String pagbot_new() {
         botonSeleccionado = new BotonDTO();
         botonSeleccionado.setCo_pagbot(-1);
-        System.out.println("btn new---->");
+
+        return URL_BTN_NEW;
     }
 
-    public void mainControl_saveorupdate() {
+    public String pagbot_view() {
+        botonSeleccionado = new BotonDTO();
+        botonSeleccionado.setCo_pagbot(-1);
+
+        return URL_BTN_NEW;
+    }
+
+    public String pagbot_edit() {
+        return URL_BTN_NEW;
+    }
+
+
+    public String pagbot_save() {
         PaginaDAO dao = new PaginaDAO();
         dao.saveButton(pagina.getCo_pagina(), botonSeleccionado);
         dao.close();
+
+        return URL_EDITAR;
+    }
+
+
+    public String pagbot_back() {
+        return URL_EDITAR;
     }
 
     public void cargarRegistros() {
@@ -263,6 +295,14 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setRegistrosCargados(List<RegistroDTO> registrosCargados) {
         this.registrosCargados = registrosCargados;
+    }
+
+    public int getDefaultTabIndex() {
+        return defaultTabIndex;
+    }
+
+    public void setDefaultTabIndex(int defaultTabIndex) {
+        this.defaultTabIndex = defaultTabIndex;
     }
 
     public ScriptDTO getScript() {

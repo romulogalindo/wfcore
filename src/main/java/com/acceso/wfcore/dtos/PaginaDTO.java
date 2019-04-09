@@ -46,6 +46,9 @@ public class PaginaDTO implements Serializable {
     @Transient
     List<BotonDTO> ls_botone;
 
+    @Transient
+    List<ElementoDTO> ls_elemen;
+
     public Integer getCo_pagina() {
         return co_pagina;
     }
@@ -116,6 +119,14 @@ public class PaginaDTO implements Serializable {
 
     public void setLs_botone(List<BotonDTO> ls_botone) {
         this.ls_botone = ls_botone;
+    }
+
+    public List<ElementoDTO> getLs_elemen() {
+        return ls_elemen;
+    }
+
+    public void setLs_elemen(List<ElementoDTO> ls_elemen) {
+        this.ls_elemen = ls_elemen;
     }
 
     @Override

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="panelListaBotone">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <span>
+                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{paginaBean.pagina.no_pagtit}</h3> |
+                        <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{paginaBean.pagina.co_pagina}]</h4>
+                            >
+                            <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Botón:#{paginaBean.botonSeleccionado.no_pagbot}</h4>
+                        </span>
+
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column colspan="3" style="text-align: center">
+                            <p:tabView>
+                                <p:tab title="Botón - #{paginaBean.botonSeleccionado.co_pagbot}">
+
+                                    <p:panelGrid id="botonDetalle" style="display: inline-block;">
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_co_boton" value="Código"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:outputLabel id="sb_co_boton"
+                                                               value="#{paginaBean.botonSeleccionado.co_pagbot}"
+                                                />
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_no_pagbot" value="Nombre"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputText id="sb_no_pagbot"
+                                                             value="#{paginaBean.botonSeleccionado.no_pagbot}"
+                                                             disabled="#{!paginaBean.isregEditable}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_or_pagbot" value="Orden:"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputText id="sb_or_pagbot"
+                                                             value="#{paginaBean.botonSeleccionado.or_pagbot}"
+                                                             disabled="#{!paginaBean.isregEditable}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_il_proces" value="Usa Propag?"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:selectBooleanCheckbox id="sb_il_proces"
+                                                                         value="#{paginaBean.botonSeleccionado.il_proces}"
+                                                                         disabled="#{!paginaBean.isregEditable}"></p:selectBooleanCheckbox>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_il_confir" value="Requiere confirmación?"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:selectBooleanCheckbox id="sb_il_confir"
+                                                                         value="#{paginaBean.botonSeleccionado.il_confir}"
+                                                                         disabled="#{!paginaBean.isregEditable}"></p:selectBooleanCheckbox>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_no_confir" value="Texto de confirmación:"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputText id="sb_no_confir"
+                                                             value="#{paginaBean.botonSeleccionado.no_confir}"
+                                                             disabled="#{!paginaBean.isregEditable}"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_il_autent" value="Requiere autenticación?"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:selectBooleanCheckbox id="sb_il_autent"
+                                                                         value="#{paginaBean.botonSeleccionado.il_autent}"
+                                                                         disabled="#{!paginaBean.isregEditable}"></p:selectBooleanCheckbox>
+                                            </p:column>
+                                        </p:row>
+
+                                    </p:panelGrid>
+                                </p:tab>
+                                <p:tab title="Botón - #{paginaBean.botonSeleccionado.co_pagbot}">
+
+                                    <p:panelGrid style="display: inline-block;">
+                                    </p:panelGrid>
+                                </p:tab>
+
+                            </p:tabView>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:separator/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:commandButton action="#{paginaBean.pagbot_back}"
+                                             value="Atrás"
+                                             title="Volver al reporte de usuarios"
+                                             immediate="true">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="text-align: center;">
+                            <p:commandButton value="Grabar"
+                                             action="#{paginaBean.pagbot_save}"
+                                             type="submit"
+                            >
+                            </p:commandButton>
+                        </p:column>
+                        <p:column> </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>

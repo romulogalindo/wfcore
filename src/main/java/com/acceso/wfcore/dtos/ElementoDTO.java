@@ -1,0 +1,67 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.acceso.wfcore.dtos;
+
+import com.acceso.wfcore.utils.Values;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import java.io.Serializable;
+
+/**
+ * @author Mario Huillca <mario.huillca@acceso.com.pe>
+ * Created on 30 nov. 2018, 15:11:45
+ */
+@Entity
+public class ElementoDTO implements Serializable {
+
+    public static final int TYPE_TITLE = 1;
+    public static final int TYPE_REGIST = 2;
+    @Id
+    Integer co_elemen;
+
+    Integer ti_elemen;
+    String no_elemen;
+
+    Object object;
+
+    public ElementoDTO() {
+    }
+
+    public Integer getCo_elemen() {
+        return co_elemen;
+    }
+
+    public void setCo_elemen(Integer co_elemen) {
+        this.co_elemen = co_elemen;
+    }
+
+    public Integer getTi_elemen() {
+        return ti_elemen;
+    }
+
+    public void setTi_elemen(Integer ti_elemen) {
+        this.ti_elemen = ti_elemen;
+    }
+
+    public String getNo_elemen() {
+        return no_elemen;
+    }
+
+    public void setNo_elemen(String no_elemen) {
+        this.no_elemen = no_elemen;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+}
