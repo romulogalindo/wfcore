@@ -17,21 +17,21 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_INSTBPAGREG_FRAWOR2,
                 query = "select pfins_tbpagreg as pagreg from frawor2.pfins_tbpagreg(:p_id_frawor,:p_co_pagina,:p_co_pagreg,:p_nu_pagfil,:p_va_pagreg)",
-                resultClass = PagregDTO.class),
+                resultClass = WPagregDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_INSTBPAGREG_FRAWOR4,
                 query = "select pfins_tbpagreg as pagreg from frawor4.pfins_tbpagreg(:p_id_frawor,:p_co_pagina,:p_co_pagreg,:p_nu_pagfil,:p_va_pagreg)",
-                resultClass = PagregDTO.class),
+                resultClass = WPagregDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR2,
                 query = "select pfdel_tbpagreg as pagreg from frawor2.pfdel_tbpagreg(:p_id_frawor,:p_co_pagina)",
-                resultClass = PagregDTO.class),
+                resultClass = WPagregDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_DELTBPAGREG_FRAWOR4,
                 query = "select pfdel_tbpagreg as pagreg from frawor4.pfdel_tbpagreg(:p_id_frawor,:p_co_pagina)",
-                resultClass = PagregDTO.class)
+                resultClass = WPagregDTO.class)
 })
-public class PagregDTO implements Serializable {
+public class WPagregDTO implements Serializable {
 
     @Id
     String pagreg;

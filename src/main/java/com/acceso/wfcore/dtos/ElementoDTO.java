@@ -7,10 +7,7 @@ package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -28,7 +25,11 @@ public class ElementoDTO implements Serializable {
     Integer ti_elemen;
     String no_elemen;
 
-    Object object;
+    @Transient
+    PagtitDTO pagtitDTO;
+
+    @Transient
+    PagregDTO pagregDTO;
 
     public ElementoDTO() {
     }
@@ -57,11 +58,19 @@ public class ElementoDTO implements Serializable {
         this.no_elemen = no_elemen;
     }
 
-    public Object getObject() {
-        return object;
+    public PagtitDTO getPagtitDTO() {
+        return pagtitDTO;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setPagtitDTO(PagtitDTO pagtitDTO) {
+        this.pagtitDTO = pagtitDTO;
+    }
+
+    public PagregDTO getPagregDTO() {
+        return pagregDTO;
+    }
+
+    public void setPagregDTO(PagregDTO pagregDTO) {
+        this.pagregDTO = pagregDTO;
     }
 }

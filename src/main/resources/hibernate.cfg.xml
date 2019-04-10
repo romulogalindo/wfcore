@@ -53,6 +53,9 @@
         <mapping class="com.acceso.wfcore.dtos.RegistroDTO"/>
         <mapping class="com.acceso.wfcore.dtos.ScriptDTO"/>
         <mapping class="com.acceso.wfcore.dtos.BotonDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.ElementoDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.PagregDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.PagtitDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>
@@ -71,7 +74,7 @@
         <mapping class="com.acceso.wfweb.dtos.ValpagDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ProcesoDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WParametroDTO"/>
-        <mapping class="com.acceso.wfweb.dtos.PagregDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WPagregDTO"/>
         <mapping class="com.acceso.wfweb.dtos.ComboDTO"/>
         <mapping class="com.acceso.wfweb.dtos.JoinDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WScriptDTO"/>

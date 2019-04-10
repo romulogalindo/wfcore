@@ -7,10 +7,7 @@ package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -20,8 +17,8 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_SISTEMA,
-                query = "select * from frawor4.tcpagtit where co_pagina = :p_co_pagina",
+                name = Values.QUERYS_NATIVE_SELECT_PAGREG,
+                query = "select * from frawor4.tcpagreg where co_pagina = :p_co_pagina order by or_pagreg",
                 resultClass = PagregDTO.class)
 })
 public class PagregDTO implements Serializable {
@@ -37,6 +34,8 @@ public class PagregDTO implements Serializable {
     String va_alireg;
     String no_desreg;
 
+    @Transient
+    String ti_pagreg_desc;
 
     public PagregDTO() {
     }
@@ -103,5 +102,34 @@ public class PagregDTO implements Serializable {
 
     public void setNo_desreg(String no_desreg) {
         this.no_desreg = no_desreg;
+    }
+
+    public String getTi_pagreg_desc() {
+        String des = "Tipo ";
+        switch (ti_pagreg) {
+            case 1: {
+                des += "Texto";
+                break;
+            }
+            case 3: {
+                des += "Combobox";
+                break;
+            }
+            case 4: {
+                des += "Combobox(1er item en blanco)";
+                break;
+            }
+            case 7: {
+                des += "Fecha";
+                break;
+            }
+            default:
+                des += "Sin especificar";
+        }
+        return des;
+    }
+
+    public void setTi_pagreg_desc(String ti_pagreg_desc) {
+        this.ti_pagreg_desc = ti_pagreg_desc;
     }
 }

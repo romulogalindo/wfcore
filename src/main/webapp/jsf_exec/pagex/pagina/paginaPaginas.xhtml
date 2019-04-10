@@ -60,7 +60,8 @@
                         <h:outputText value="#{pag.db_progra}"/>
                     </p:column>
 
-                    <p:column headerText="Registro" sortBy="#{pag.fe_regist}" width="80" styleClass="table_cell_center  ">
+                    <p:column headerText="Registro" sortBy="#{pag.fe_regist}" width="80"
+                              styleClass="table_cell_center  ">
                         <h:outputText value="#{pag.fe_regist}">
                             <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
                         </h:outputText>
@@ -69,11 +70,12 @@
                     <p:column headerText="Acciones" style="width:160px;text-align: center">
                         <p:commandButton action="#{paginaBean.updateRegist}" icon="fa fa-search" title="Ver">
                             <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
-                            <f:setPropertyActionListener value="false" target="#{paginaBean.isregEditable}"/>
+                            <f:setPropertyActionListener value="false" target="#{paginaBean.thisEditable}"/>
                         </p:commandButton>
 
                         <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{paginaBean.updateRegist}">
                             <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
+                            <f:setPropertyActionListener value="true" target="#{paginaBean.thisEditable}"/>
                         </p:commandButton>
 
                         <p:commandButton icon="fa fa-trash" action="#{paginaBean.deleteRegist}"

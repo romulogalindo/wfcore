@@ -20,8 +20,8 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_SISTEMA,
-                query = "select * from frawor4.tcpagtit where co_pagina = :p_co_pagina",
+                name = Values.QUERYS_NATIVE_SELECT_PAGTIT,
+                query = "select * from frawor4.tcpagtit where co_pagina = :p_co_pagina order by or_pagtit",
                 resultClass = PagtitDTO.class)
 })
 public class PagtitDTO implements Serializable {

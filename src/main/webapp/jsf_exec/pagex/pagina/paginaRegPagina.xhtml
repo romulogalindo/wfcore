@@ -42,7 +42,7 @@
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
                                                 <p:outputLabel id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
-                                                               rendered="#{paginaBean.isregEditable}"/>
+                                                               rendered="#{paginaBean.thisEditable}"/>
                                             </p:column>
                                         </p:row>
                                         <p:row>
@@ -57,7 +57,7 @@
                                                 <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
                                                              required="true"
                                                              requiredMessage="Debe ingresar un Nombre."
-                                                             rendered="#{paginaBean.isregEditable}"/>
+                                                             rendered="#{paginaBean.thisEditable}"/>
                                             </p:column>
                                         </p:row>
 
@@ -72,7 +72,7 @@
                                             <p:column styleClass="form_col_detail">
                                                 <p:selectOneRadio id="ti_pagina" value="#{paginaBean.pagina.ti_pagina}"
                                                                   unselectable="true"
-                                                                  rendered="#{paginaBean.isregEditable}">
+                                                                  rendered="#{paginaBean.thisEditable}">
                                                     <f:selectItem itemLabel="Formulario" itemValue="R"/>
                                                     <f:selectItem itemLabel="Reporte" itemValue="T"/>
                                                 </p:selectOneRadio>
@@ -91,7 +91,7 @@
                                                 <p:inputTextarea id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
                                                                  required="false"
                                                                  requiredMessage="Debe ingresar una Descripción."
-                                                                 rendered="#{paginaBean.isregEditable}"/>
+                                                                 rendered="#{paginaBean.thisEditable}"/>
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -105,12 +105,23 @@
                                         </f:facet>
 
                                         <f:facet name="right">
-                                            <p:commandButton icon="pi pi-file" value="Nuevo elemento" partialSubmit="true"
+                                            <p:commandButton icon="pi pi-file" value="Nuevo título"
+                                                             partialSubmit="true"
                                                              action="#{paginaBean.pagbot_new}">
                                                 <f:setPropertyActionListener value="#{paginaBean.emptyButton()}"
                                                                              target="#{paginaBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.isregEditable}"/>
+                                                                             target="#{paginaBean.regEditable}"/>
+                                            </p:commandButton>
+                                        </f:facet>
+                                        <f:facet name="right">
+                                            <p:commandButton icon="pi pi-file" value="Nuevo registro"
+                                                             partialSubmit="true"
+                                                             action="#{paginaBean.pagbot_new}">
+                                                <f:setPropertyActionListener value="#{paginaBean.emptyButton()}"
+                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{paginaBean.regEditable}"/>
                                             </p:commandButton>
                                         </f:facet>
 
@@ -119,16 +130,16 @@
                                     <p:spacer height="2"></p:spacer>
 
                                     <p:dataTable id="listax"
-                                                 var="bot"
+                                                 var="ele"
                                                  value="#{paginaBean.pagina.ls_elemen}"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                                  paginator="true"
                                                  paginatorPosition="bottom"
                                                  rows="100"
-                                                 widgetVar="widTable2"
+                                                 widgetVar="widTable3"
                                                  selectionMode="single"
-                                                 selection="#{paginaBean.botonSeleccionado}"
-                                                 rowKey="#{bot.co_elemen}"
+                                                 selection="#{paginaBean.elementoSeleccionado}"
+                                                 rowKey="#{ele.co_elemen}"
                                                  rowIndexVar="N"
                                                  style="width:100%; ">
 
@@ -141,51 +152,50 @@
                                             <h:outputText value="#{N + 1}"/>
                                         </p:column>
 
-                                        <p:column headerText="COD" width="30" styleClass="table_cell_right">
-                                            <h:outputText value="#{bot.co_pagbot}"/>
+                                        <p:column headerText="COD" width="50" styleClass="table_cell_right">
+                                            <h:outputText value="#{ele.co_elemen}"/>
                                         </p:column>
 
-                                        <p:column headerText="Nombre" width="200" styleClass="table_cell_left">
-                                            <h:outputText value="#{bot.no_pagbot}"/>
+                                        <p:column headerText="Tipo" width="70" styleClass="table_cell_left">
+                                            <h:outputText value="Título" rendered="#{ele.ti_elemen == 1}"/>
+                                            <h:outputText value="&nbsp;&nbsp;Registro"
+                                                          rendered="#{ele.ti_elemen == 2}"/>
                                         </p:column>
 
-                                        <p:column headerText="Orden" width="40" styleClass="table_cell_right">
-                                            <h:outputText value="#{bot.or_pagbot}"/>
-                                        </p:column>
+                                        <p:column headerText="Descripción" width="400" colspan="2"
+                                                  styleClass="table_cell_left">
 
-                                        <p:column headerText="Tipo" width="60" styleClass="table_cell_center">
-                                            <h:outputText value="Estandar" rendered="#{bot.ti_pagbot eq 'E'}"/>
-                                            <h:outputText value="Global" rendered="#{bot.ti_pagbot eq 'G'}"/>
+                                            <p:panelGrid rendered="#{ele.ti_elemen == 1}">
+                                                <h:outputText value="#{ele.pagtitDTO.no_pagtit}"/>
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="2" rendered="#{ele.ti_elemen == 2}">
+                                                <h:outputText value="#{ele.pagregDTO.no_pagreg}"/>
+                                                <h:outputText value="#{ele.pagregDTO.ti_pagreg_desc}"/>
+                                            </p:panelGrid>
                                         </p:column>
-
-                                        <p:column headerText="Propag" width="60" styleClass="table_cell_center">
-                                            <h:outputText value="Si" rendered="#{bot.il_proces}"/>
-                                            <h:outputText value="No" rendered="#{!bot.il_proces}"/>
-                                        </p:column>
-
 
                                         <p:column headerText="Acciones" style="text-align: center">
                                             <p:commandButton icon="fa fa-search" title="Ver"
-                                                             action="#{paginaBean.pagbot_view}">
-                                                <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                             action="#{paginaBean.pag_tr_edit}">
+                                                <f:setPropertyActionListener value="#{ele}"
+                                                                             target="#{paginaBean.elementoSeleccionado}"/>
                                                 <f:setPropertyActionListener value="false"
-                                                                             target="#{paginaBean.isregEditable}"/>
+                                                                             target="#{paginaBean.regEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                                             action="#{paginaBean.pagbot_edit}">
-                                                <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                             action="#{paginaBean.pag_tr_edit}">
+                                                <f:setPropertyActionListener value="#{ele}"
+                                                                             target="#{paginaBean.elementoSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.isregEditable}"/>
+                                                                             target="#{paginaBean.regEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-trash"
                                                              action="#{paginaBean.deleteRegist}"
                                                              update="@form">
-                                                <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.boton}"/>
+                                                <f:setPropertyActionListener value="#{ele}"
+                                                                             target="#{paginaBean.elementoSeleccionado}"/>
                                                 <p:confirm header="Confirmación" message="¿Desea continuar?"
                                                            icon="fa fa-exclamation-triangle"/>
                                             </p:commandButton>
@@ -208,7 +218,7 @@
                                                 <f:setPropertyActionListener value="#{paginaBean.emptyButton()}"
                                                                              target="#{paginaBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.isregEditable}"/>
+                                                                             target="#{paginaBean.btnEditable}"/>
                                             </p:commandButton>
                                         </f:facet>
 
@@ -268,7 +278,7 @@
                                                 <f:setPropertyActionListener value="#{bot}"
                                                                              target="#{paginaBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="false"
-                                                                             target="#{paginaBean.isregEditable}"/>
+                                                                             target="#{paginaBean.btnEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
@@ -276,14 +286,14 @@
                                                 <f:setPropertyActionListener value="#{bot}"
                                                                              target="#{paginaBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.isregEditable}"/>
+                                                                             target="#{paginaBean.btnEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-trash"
-                                                             action="#{paginaBean.deleteRegist}"
+                                                             action="#{paginaBean.pagbot_delete}"
                                                              update="@form">
                                                 <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.boton}"/>
+                                                                             target="#{paginaBean.botonSeleccionado}"/>
                                                 <p:confirm header="Confirmación" message="¿Desea continuar?"
                                                            icon="fa fa-exclamation-triangle"/>
                                             </p:commandButton>

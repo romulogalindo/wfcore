@@ -9,6 +9,7 @@ import org.hibernate.exception.DataException;
 import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.SQLGrammarException;
 
+import javax.faces.model.SelectItem;
 import javax.persistence.PersistenceException;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -191,7 +192,6 @@ public class Util {
 
     /**
      * Utiliza SDF => yyyy/MM/dd
-     *
      */
     public static String formatDate1(Date date) {
         return date != null ? sdf1.format(date) : null;
@@ -253,5 +253,57 @@ public class Util {
     /*Para uso con el valpag*/
     public static String toJSON2(Object object) {
         return gson_typeB.toJson(object);
+    }
+
+    public static SelectItem[] get_ls_ti_pagreg() {
+        SelectItem[] ls_pagreg = new SelectItem[50];
+        for (int i = 0; i < 50; i++) {
+            switch (i + 1) {
+                case 1: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "Caja de Texto");
+                    break;
+                }
+                case 3: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "ComboBox");
+                    break;
+                }
+                case 4: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "ComboBox(1er item en blanco)");
+                    break;
+                }
+                case 7: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "Fecha");
+                    break;
+                }
+                case 9: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "TextArea");
+                    break;
+                }
+                default: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "[TIPO:" + (i + 1) + "]Sin especificar");
+                    break;
+                }
+            }
+
+        }
+
+        return ls_pagreg;
+    }
+
+    public static SelectItem[] get_ls_ti_estreg() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+                new SelectItem("E", "Escritura"),
+                new SelectItem("L", "Lectura"),
+                new SelectItem("O", "Oculto")
+        };
+        return ls_estreg;
+    }
+
+    public static SelectItem[] get_ls_ti_boton() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+                new SelectItem("E", "Especifico"),
+                new SelectItem("G", "General")
+        };
+        return ls_estreg;
     }
 }

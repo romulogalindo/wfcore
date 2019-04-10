@@ -116,6 +116,21 @@ public class NQuery {
         return list;
     }
 
+    public int executeUpdate() {
+        int updateResult = -1;
+        if (this.show_info_log)
+            System.out.println(LOG + "Q = " + getQueryString());
+        execution_time = System.currentTimeMillis();
+
+        updateResult = query.executeUpdate();
+
+        execution_time = System.currentTimeMillis() - execution_time;
+        if (this.show_debug_log)
+            System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+
+        return updateResult;
+    }
+
     public long getExecutionTime() {
         return execution_time;
     }

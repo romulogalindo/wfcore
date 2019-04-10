@@ -5,6 +5,7 @@ import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +155,7 @@ public class PaginaDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGTIT));
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
 
             System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString());
             pagtits = nQuery.list();
@@ -167,6 +169,7 @@ public class PaginaDAO {
         try {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGREG));
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
 
             System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString());
             pagregs = nQuery.list();
@@ -182,6 +185,8 @@ public class PaginaDAO {
             elementoDTO.setCo_elemen(p_co_pagina * 1000 + pagtitDTO.getCo_pagtit());
             elementoDTO.setTi_elemen(ElementoDTO.TYPE_TITLE);
             elementoDTO.setNo_elemen(pagtitDTO.getNo_pagtit());
+            elementoDTO.setPagtitDTO(pagtitDTO);
+            elements.add(elementoDTO);
 
             for (PagregDTO pagregDTO : pagregs) {
                 if (pagregDTO.getCo_pagtit() == pagtitDTO.getCo_pagtit()) {
@@ -189,14 +194,42 @@ public class PaginaDAO {
                     elementoDTO2.setCo_elemen(p_co_pagina * 1000 + pagregDTO.getCo_pagreg());
                     elementoDTO2.setTi_elemen(ElementoDTO.TYPE_REGIST);
                     elementoDTO2.setNo_elemen(pagregDTO.getNo_pagreg());
+                    elementoDTO2.setPagregDTO(pagregDTO);
                     elements.add(elementoDTO2);
                 }
             }
 
-            elements.add(elementoDTO);
         }
 
         return elements;
+    }
+
+    public void deleteButton(int p_co_pagina, short p_co_pagbot) {
+        NQuery nQuery = new NQuery();
+        int result = -1;
+        Transaction transa = null;
+        try {
+            transa = session.beginTransaction();
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_BUTTON));
+
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setInteger("p_co_pagbot", p_co_pagbot);
+
+
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
+            result = nQuery.executeUpdate();
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            transa.commit();
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+            try {
+                if (transa != null) transa.rollback();
+            } catch (Exception ep2) {
+            }
+        }
+        System.out.println("[deleteButton]result = " + result);
+//        return paginaDTO;
     }
 
     //    public PaginaDTO grabarPagina(PaginaDTO pagina) {

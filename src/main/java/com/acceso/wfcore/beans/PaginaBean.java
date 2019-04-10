@@ -2,11 +2,9 @@ package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
-import com.acceso.wfcore.dtos.BotonDTO;
-import com.acceso.wfcore.dtos.PaginaDTO;
-import com.acceso.wfcore.dtos.RegistroDTO;
-import com.acceso.wfcore.dtos.ScriptDTO;
+import com.acceso.wfcore.dtos.*;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.DragDropEvent;
@@ -15,6 +13,7 @@ import org.primefaces.event.TabChangeEvent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +30,30 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     private static final String URL_DETALLE = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
+
     private static final String URL_BTN_EDITAR = "/admin/jsf_exec/pagex/pagina/paginaRegBoton.xhtml";
     private static final String URL_BTN_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegBoton.xhtml";
+
+    private static final String URL_REG_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegRegistro.xhtml";
+    private static final String URL_REG_EDIT = "/admin/jsf_exec/pagex/pagina/paginaRegRegistro.xhtml";
+
+    private static final String URL_TIT_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegTitulo.xhtml";
+    private static final String URL_TIT_EDIT = "/admin/jsf_exec/pagex/pagina/paginaRegTitulo.xhtml";
 
     public static final String BEAN_NAME = "paginaBean";
 
     private List<PaginaDTO> paginas;
     private PaginaDTO pagina;
     private BotonDTO botonSeleccionado;
+    private ElementoDTO elementoSeleccionado;
     private List<PaginaDTO> filtroPagina;
 
-    private boolean isregEditable;
-    private boolean isregbtnEditable;
+    //    private boolean isregEditable;
+//    private boolean isregbtnEditable;
+    private boolean thisEditable;
+    private boolean btnEditable;
+    private boolean regEditable;
+
 
     public int defaultTabIndex;
 
@@ -51,11 +62,16 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public ScriptDTO script;
 
+    /*UTIL*/
+    public SelectItem[] ls_ti_estreg = Util.get_ls_ti_estreg();
+    public SelectItem[] ls_ti_pagreg = Util.get_ls_ti_pagreg();
+    public SelectItem[] ls_ti_boton = Util.get_ls_ti_boton();
+
     public PaginaBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Paginas";
 //      this.pagina = new PaginaDTO();
-        this.isregEditable = true;
+        this.thisEditable = true;
         this.registrosCargados = new ArrayList<>();
     }
 
@@ -74,7 +90,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     @Override
     public String load() {
         System.out.println("load()");
-        this.isregEditable = true;
+        this.thisEditable = true;
         // LLENAR LOS BOTONES SECUNDARIOS
         //doListener();
         //CARGA INICIAL!!
@@ -234,10 +250,43 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         return URL_EDITAR;
     }
 
+    public void pagbot_delete() {
+        PaginaDAO dao = new PaginaDAO();
+        dao.deleteButton(pagina.getCo_pagina(), (short) botonSeleccionado.getCo_pagbot());
+        dao.close();
+        //recargar lista de botones!!!!
+    }
+
     public void cargarRegistros() {
         RegistroDAO dao = new RegistroDAO();
         registros = dao.getRegistros();
         dao.close();
+    }
+
+    public String pagreg_save() {
+        return URL_REG_EDIT;
+    }
+
+    public String pagreg_back() {
+        return URL_EDITAR;
+    }
+
+    public String pag_tr_edit() {
+        if (elementoSeleccionado.getTi_elemen() == 1)
+            return URL_TIT_EDIT;
+        else return URL_REG_EDIT;
+    }
+
+    public String pagtit_save() {
+        return URL_TIT_EDIT;
+    }
+
+    public String pagtit_back() {
+        return URL_EDITAR;
+    }
+
+    public String pagtit_edit() {
+        return URL_TIT_EDIT;
     }
 
     public PaginaDTO getPagina() {
@@ -257,6 +306,14 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         this.botonSeleccionado = botonSeleccionado;
     }
 
+    public ElementoDTO getElementoSeleccionado() {
+        return elementoSeleccionado;
+    }
+
+    public void setElementoSeleccionado(ElementoDTO elementoSeleccionado) {
+        this.elementoSeleccionado = elementoSeleccionado;
+    }
+
     public List<PaginaDTO> getPaginas() {
         return paginas;
     }
@@ -265,12 +322,28 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         this.paginas = paginas;
     }
 
-    public boolean isIsregEditable() {
-        return isregEditable;
+    public boolean isThisEditable() {
+        return thisEditable;
     }
 
-    public void setIsregEditable(boolean isregEditable) {
-        this.isregEditable = isregEditable;
+    public void setThisEditable(boolean thisEditable) {
+        this.thisEditable = thisEditable;
+    }
+
+    public boolean isBtnEditable() {
+        return btnEditable;
+    }
+
+    public void setBtnEditable(boolean btnEditable) {
+        this.btnEditable = btnEditable;
+    }
+
+    public boolean isRegEditable() {
+        return regEditable;
+    }
+
+    public void setRegEditable(boolean regEditable) {
+        this.regEditable = regEditable;
     }
 
     public List<PaginaDTO> getFiltroPagina() {
@@ -311,5 +384,29 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setScript(ScriptDTO script) {
         this.script = script;
+    }
+
+    public SelectItem[] getLs_ti_estreg() {
+        return ls_ti_estreg;
+    }
+
+    public void setLs_ti_estreg(SelectItem[] ls_ti_estreg) {
+        this.ls_ti_estreg = ls_ti_estreg;
+    }
+
+    public SelectItem[] getLs_ti_pagreg() {
+        return ls_ti_pagreg;
+    }
+
+    public void setLs_ti_pagreg(SelectItem[] ls_ti_pagreg) {
+        this.ls_ti_pagreg = ls_ti_pagreg;
+    }
+
+    public SelectItem[] getLs_ti_boton() {
+        return ls_ti_boton;
+    }
+
+    public void setLs_ti_boton(SelectItem[] ls_ti_boton) {
+        this.ls_ti_boton = ls_ti_boton;
     }
 }

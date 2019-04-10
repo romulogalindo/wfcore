@@ -66,6 +66,7 @@ public class Values {
 
     public static final String QUERYS_NATIVE_SELECT_BUTTONS = "wfcore.pbboton_select";
     public static final String QUERYS_NATIVE_SAVE_BUTTON = "wfcore.pbboton_save";
+    public static final String QUERYS_NATIVE_DELETE_BUTTON = "wfcore.pbboton_delete";
 
     public static final String QUERYS_NATIVE_SELECT_PARAMETRO = "wfcore.parametro_select";
     public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
