@@ -107,9 +107,7 @@
                                         <f:facet name="right">
                                             <p:commandButton icon="pi pi-file" value="Nuevo título"
                                                              partialSubmit="true"
-                                                             action="#{paginaBean.pagbot_new}">
-                                                <f:setPropertyActionListener value="#{paginaBean.emptyButton()}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                             action="#{paginaBean.pagtit_new}">
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{paginaBean.regEditable}"/>
                                             </p:commandButton>
@@ -117,9 +115,7 @@
                                         <f:facet name="right">
                                             <p:commandButton icon="pi pi-file" value="Nuevo registro"
                                                              partialSubmit="true"
-                                                             action="#{paginaBean.pagbot_new}">
-                                                <f:setPropertyActionListener value="#{paginaBean.emptyButton()}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                             action="#{paginaBean.pagreg_new}">
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{paginaBean.regEditable}"/>
                                             </p:commandButton>
@@ -176,7 +172,7 @@
 
                                         <p:column headerText="Acciones" style="text-align: center">
                                             <p:commandButton icon="fa fa-search" title="Ver"
-                                                             action="#{paginaBean.pag_tr_edit}">
+                                                             action="#{paginaBean.pagreg_edit}">
                                                 <f:setPropertyActionListener value="#{ele}"
                                                                              target="#{paginaBean.elementoSeleccionado}"/>
                                                 <f:setPropertyActionListener value="false"
@@ -184,7 +180,7 @@
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                                             action="#{paginaBean.pag_tr_edit}">
+                                                             action="#{paginaBean.pagreg_edit}">
                                                 <f:setPropertyActionListener value="#{ele}"
                                                                              target="#{paginaBean.elementoSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
@@ -192,7 +188,7 @@
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-trash"
-                                                             action="#{paginaBean.deleteRegist}"
+                                                             action="#{paginaBean.pagreg_delete}"
                                                              update="@form">
                                                 <f:setPropertyActionListener value="#{ele}"
                                                                              target="#{paginaBean.elementoSeleccionado}"/>
@@ -215,8 +211,6 @@
                                         <f:facet name="right">
                                             <p:commandButton icon="pi pi-file" value="Nuevo botón" partialSubmit="true"
                                                              action="#{paginaBean.pagbot_new}">
-                                                <f:setPropertyActionListener value="#{paginaBean.emptyButton()}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{paginaBean.btnEditable}"/>
                                             </p:commandButton>
@@ -365,29 +359,33 @@
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column>
+                        <p:column style="width: 20%;">
                             <p:commandButton action="#{paginaBean.load()}"
                                              actionListener="#{paginaBean.doListener()}"
                                              value="Atrás"
                                              title="Volver al reporte de usuarios"
+                                             icon="pi pi-arrow-left"
+                                             accesskey="a"
                                              immediate="true">
                             </p:commandButton>
                         </p:column>
-                        <p:column style="text-align: center;">
+                        <p:column style="text-align: center;width: 60%;">
                             <p:commandButton value="Grabar"
                                              action="#{paginaBean.saveRegist}"
                                              type="submit"
+                                             icon="pi pi-save"
                                              update="panelActualizarPagina">
                                 <p:ajax rendered="panelActualizarPagina"/>
                             </p:commandButton>
                             <p:commandButton value="Grabar y Aplicar"
                                              action="#{paginaBean.saveRegistApply}"
                                              type="submit"
+                                             icon="pi pi-refresh"
                                              update="panelActualizarPagina">
                                 <p:ajax rendered="panelActualizarPagina"/>
                             </p:commandButton>
                         </p:column>
-                        <p:column>
+                        <p:column style="width: 20%;">
 
                         </p:column>
                     </p:row>

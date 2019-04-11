@@ -306,4 +306,31 @@ public class Util {
         };
         return ls_estreg;
     }
+
+    public static SelectItem[] get_ls_ti_alireg() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+                new SelectItem("left", "Izquierda"),
+                new SelectItem("right", "Derecha"),
+                new SelectItem("center", "Centrado"),
+                new SelectItem("justify", "Justificado")
+        };
+        return ls_estreg;
+    }
+
+    public static SelectItem[] get_ls_ti_valign() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+                new SelectItem("top", "Arriba"),
+                new SelectItem("middle", "En medio"),
+                new SelectItem("bottom", "Abajo")
+        };
+        return ls_estreg;
+    }
+
+    public static SelectItem[] get_ls_ti_nowrap() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+                new SelectItem("normal", "Normal"),
+                new SelectItem("nowrap", "Nowrap")
+        };
+        return ls_estreg;
+    }
 }

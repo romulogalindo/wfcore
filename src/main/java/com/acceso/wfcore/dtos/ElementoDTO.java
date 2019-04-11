@@ -73,4 +73,15 @@ public class ElementoDTO implements Serializable {
     public void setPagregDTO(PagregDTO pagregDTO) {
         this.pagregDTO = pagregDTO;
     }
+
+    @Override
+    public String toString() {
+        return "ElementoDTO{" +
+                "co_elemen=" + co_elemen +
+                ", ti_elemen=" + ti_elemen +
+                ", no_elemen='" + no_elemen + '\'' +
+                ", pagtitDTO=" + pagtitDTO +
+                ", pagregDTO=" + pagregDTO +
+                '}';
+    }
 }

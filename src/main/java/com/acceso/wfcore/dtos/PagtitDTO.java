@@ -7,10 +7,7 @@ package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,11 +15,20 @@ import java.io.Serializable;
  * Created on 30 nov. 2018, 15:11:45
  */
 @Entity
+@SqlResultSetMapping(name = "deletetitulodto", columns = {@ColumnResult(name = "count")})
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SELECT_PAGTIT,
                 query = "select * from frawor4.tcpagtit where co_pagina = :p_co_pagina order by or_pagtit",
-                resultClass = PagtitDTO.class)
+                resultClass = PagtitDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_SAVE_PAGTIT,
+                query = "select * from wfsistem.pbpagtit_save(:p_co_pagina, :p_co_pagtit, :p_no_pagtit, :p_or_pagtit )",
+                resultClass = PagtitDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_DELETE_PAGTIT,
+                query = "delete from frawor4.tcpagtit where co_pagina = :p_co_pagina and co_pagtit = :p_co_pagtit",
+                resultSetMapping = "deletetitulodto")
 })
 public class PagtitDTO implements Serializable {
 

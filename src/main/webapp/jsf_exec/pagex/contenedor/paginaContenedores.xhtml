@@ -30,9 +30,11 @@
                              paginatorPosition="bottom"
                              rows="100"
                              widgetVar="widTable"
+                             selectionMode="single"
+                             selection="#{contenedorBean.contenedor}"
                              rowKey="#{conten.co_conten}"
                              rowIndexVar="N"
-                             style="width:1500px;height:800px"
+                             style="width:100%"
                              filteredValue="#{contenedorBean.filtroContenedor}">
 
                     <f:facet name="header">
@@ -51,28 +53,25 @@
                         <h:outputText value="#{N + 1}"/>
                     </p:column>
 
-                    <p:column sortBy="#{conten.no_contit}" width="450" filterBy="#{conten.no_contit}" filterMatchMode="contains">
+                    <p:column sortBy="#{conten.co_conten}" width="50" filterBy="#{conten.co_conten}" filterMatchMode="contains">
+                        <f:facet name="header">
+                            <h:outputText value="COD"/>
+                        </f:facet>
+                        <h:outputText value="#{conten.co_conten}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{conten.no_contit}" width="200" filterBy="#{conten.no_contit}" filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="Nombre"/>
                         </f:facet>
                         <h:outputText value="#{conten.no_contit}"/>
                     </p:column>
 
-                    <p:column headerText="Descripción" sortBy="#{conten.de_conten}" filterBy="#{conten.de_conten}" filterMatchMode="contains">
+                    <p:column headerText="Descripción" width="100"  sortBy="#{conten.de_conten}" filterBy="#{conten.de_conten}" filterMatchMode="contains">
                         <h:outputText value="#{conten.de_conten}"/>
                     </p:column>
 
-                    <p:column headerText="Programador" sortBy="#{conten.db_progra}" filterBy="#{conten.db_progra}" filterMatchMode="contains" width="160">
-                        <h:outputText value="#{conten.db_progra}" />
-                    </p:column>
-
-                    <p:column headerText="Registro" sortBy="#{conten.fe_regist}" width="160">
-                        <h:outputText value="#{conten.fe_regist}">
-                            <f:convertDateTime pattern="dd/MM/yy HH:mm"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column headerText="Acciones" style="width:160px;text-align: center">
+                    <p:column headerText="Acciones" width="150" style="text-align: center">
                         <p:commandButton action="#{contenedorBean.updateRegist}" icon="fa fa-search" title="Ver">
                             <f:setPropertyActionListener value="#{conten}" target="#{contenedorBean.contenedor}"/>
                             <f:setPropertyActionListener value="false" target="#{contenedorBean.isregEditable}"/>

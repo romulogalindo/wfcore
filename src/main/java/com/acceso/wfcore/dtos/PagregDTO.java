@@ -10,29 +10,50 @@ import com.acceso.wfcore.utils.Values;
 import javax.persistence.*;
 import java.io.Serializable;
 
+
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
 @Entity
+@SqlResultSetMapping(name = "deleteregistrodto", columns = {@ColumnResult(name = "count")})
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SELECT_PAGREG,
                 query = "select * from frawor4.tcpagreg where co_pagina = :p_co_pagina order by or_pagreg",
-                resultClass = PagregDTO.class)
+                resultClass = PagregDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_SAVE_PAGREG,
+                query = "select * from wfsistem.pbpagreg_save(:p_co_pagina, :p_co_pagreg, :pn_co_pagreg, :p_no_pagreg, :p_co_pagtit, :p_or_pagreg, :p_ti_pagreg, :p_ti_estreg, :p_va_alireg, :p_no_desreg, :p_ca_carcol, :p_ca_carrow, :p_ti_nowrap, :p_il_onchan, :p_va_valign, :p_il_guareg, :p_ca_caract)",
+                resultClass = PagregDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_DELETE_PAGREG,
+                query = "delete from frawor4.tcpagreg where co_pagina = :p_co_pagina and co_pagreg = :p_co_pagreg",
+                resultSetMapping = "deleteregistrodto")
 })
 public class PagregDTO implements Serializable {
 
     @Id
     int co_pagreg;
 
+    @Transient
+    int co_pagreg2;
+
+    int co_pagina;
     String no_pagreg;
     int co_pagtit;
-    short or_pagreg;
-    short ti_pagreg;
+    Short or_pagreg;
+    Short ti_pagreg;
     String ti_estreg;
     String va_alireg;
     String no_desreg;
+    Short ca_carcol;
+    Short ca_carrow;
+    String ti_nowrap;
+    Boolean il_onchan;
+    String va_valign;
+    Boolean il_guareg;
+    Short ca_caract;
 
     @Transient
     String ti_pagreg_desc;
@@ -46,6 +67,22 @@ public class PagregDTO implements Serializable {
 
     public void setCo_pagreg(int co_pagreg) {
         this.co_pagreg = co_pagreg;
+    }
+
+    public int getCo_pagreg2() {
+        return co_pagreg2;
+    }
+
+    public void setCo_pagreg2(int co_pagreg2) {
+        this.co_pagreg2 = co_pagreg2;
+    }
+
+    public int getCo_pagina() {
+        return co_pagina;
+    }
+
+    public void setCo_pagina(int co_pagina) {
+        this.co_pagina = co_pagina;
     }
 
     public String getNo_pagreg() {
@@ -62,22 +99,6 @@ public class PagregDTO implements Serializable {
 
     public void setCo_pagtit(int co_pagtit) {
         this.co_pagtit = co_pagtit;
-    }
-
-    public short getOr_pagreg() {
-        return or_pagreg;
-    }
-
-    public void setOr_pagreg(short or_pagreg) {
-        this.or_pagreg = or_pagreg;
-    }
-
-    public short getTi_pagreg() {
-        return ti_pagreg;
-    }
-
-    public void setTi_pagreg(short ti_pagreg) {
-        this.ti_pagreg = ti_pagreg;
     }
 
     public String getTi_estreg() {
@@ -127,6 +148,78 @@ public class PagregDTO implements Serializable {
                 des += "Sin especificar";
         }
         return des;
+    }
+
+    public void setOr_pagreg(Short or_pagreg) {
+        this.or_pagreg = or_pagreg;
+    }
+
+    public Short getOr_pagreg() {
+        return or_pagreg;
+    }
+
+    public void setTi_pagreg(Short ti_pagreg) {
+        this.ti_pagreg = ti_pagreg;
+    }
+
+    public Short getTi_pagreg() {
+        return ti_pagreg;
+    }
+
+    public Short getCa_carcol() {
+        return ca_carcol;
+    }
+
+    public void setCa_carcol(Short ca_carcol) {
+        this.ca_carcol = ca_carcol;
+    }
+
+    public Short getCa_carrow() {
+        return ca_carrow;
+    }
+
+    public void setCa_carrow(Short ca_carrow) {
+        this.ca_carrow = ca_carrow;
+    }
+
+    public String getTi_nowrap() {
+        return ti_nowrap;
+    }
+
+    public void setTi_nowrap(String ti_nowrap) {
+        this.ti_nowrap = ti_nowrap;
+    }
+
+    public Boolean getIl_onchan() {
+        return il_onchan;
+    }
+
+    public void setIl_onchan(Boolean il_onchan) {
+        this.il_onchan = il_onchan;
+    }
+
+    public String getVa_valign() {
+        return va_valign;
+    }
+
+    public void setVa_valign(String va_valign) {
+        this.va_valign = va_valign;
+    }
+
+    public Boolean getIl_guareg() {
+        return il_guareg==null?false:il_guareg;
+    }
+
+    public void setIl_guareg(Boolean il_guareg) {
+        this.il_guareg = il_guareg;
+    }
+
+    public Short getCa_caract() {
+        return ca_caract;
+    }
+
+    public void setCa_caract(Short ca_caract) {
+        this.ca_caract = ca_caract;
     }
 
     public void setTi_pagreg_desc(String ti_pagreg_desc) {

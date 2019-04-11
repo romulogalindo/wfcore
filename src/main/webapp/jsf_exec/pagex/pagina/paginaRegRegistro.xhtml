@@ -37,9 +37,9 @@
                                                       style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
                                         </p:column>
                                         <p:column styleClass="form_col_detail">
-                                            <p:outputLabel id="sb_co_boton"
-                                                           value="#{paginaBean.elementoSeleccionado.pagregDTO.co_pagreg}"
-                                            />
+                                            <p:inputText id="sb_co_boton"
+                                                         value="#{paginaBean.elementoSeleccionado.pagregDTO.co_pagreg}"
+                                                         disabled="#{!paginaBean.regEditable}"/>
                                         </p:column>
                                     </p:row>
                                     <p:row>
@@ -117,6 +117,111 @@
                                             </p:selectOneMenu>
                                         </p:column>
                                     </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_va_alireg" value="Aligenación horizontal"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_va_alireg"
+                                                             value="#{paginaBean.elementoSeleccionado.pagregDTO.va_alireg}"
+                                                             disabled="#{!paginaBean.regEditable}">
+                                                <f:selectItems value="#{paginaBean.ls_ti_alireg}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_va_valign">
+                                            <p:outputLabel for="sb_va_alireg" value="Aligenación vertical"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_va_valign"
+                                                             value="#{paginaBean.elementoSeleccionado.pagregDTO.va_valign}"
+                                                             disabled="#{!paginaBean.regEditable}">
+                                                <f:selectItems value="#{paginaBean.ls_ti_valign}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ca_carcol" value="Cantidad de columnas"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_ca_carcol"
+                                                         value="#{paginaBean.elementoSeleccionado.pagregDTO.ca_carcol}"
+                                                         disabled="#{!paginaBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ca_carrow" value="Cantidad de filas"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_ca_carrow"
+                                                         value="#{paginaBean.elementoSeleccionado.pagregDTO.ca_carrow}"
+                                                         disabled="#{!paginaBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ti_nowrap" value="Tipo de espaciado"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_ti_nowrap"
+                                                             value="#{paginaBean.elementoSeleccionado.pagregDTO.ti_nowrap}"
+                                                             disabled="#{!paginaBean.regEditable}">
+                                                <f:selectItems value="#{paginaBean.ls_ti_nowrap}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_il_onchan" value="¿Genera cambios?"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:toggleSwitch id="sb_il_onchan"
+                                                            value="#{paginaBean.elementoSeleccionado.pagregDTO.il_onchan}"
+                                                            offLabel="No" onLabel="Si"
+                                                            disabled="#{!paginaBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ca_caract" value="Cantidad de caracteres"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_ca_caract"
+                                                         value="#{paginaBean.elementoSeleccionado.pagregDTO.ca_caract}"
+                                                         disabled="#{!paginaBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
 
                                 </p:panelGrid>
                             </p:outputPanel>
@@ -129,16 +234,18 @@
                     </p:row>
                     <p:row>
                         <p:column style="width: 20%;">
-                            <p:commandButton action="#{paginaBean.pagbot_back}"
+                            <p:commandButton action="#{paginaBean.pagreg_back}"
                                              value="Atrás"
                                              title="Volver al reporte de usuarios"
+                                             icon="pi pi-arrow-left"
                                              immediate="true">
                             </p:commandButton>
                         </p:column>
                         <p:column style="text-align: center;width: 60%;">
                             <p:commandButton value="Grabar"
-                                             action="#{paginaBean.pagbot_save}"
+                                             action="#{paginaBean.pagreg_save}"
                                              type="submit"
+                                             icon="pi pi-save"
                             >
                             </p:commandButton>
                         </p:column>

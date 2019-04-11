@@ -66,6 +66,9 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public SelectItem[] ls_ti_estreg = Util.get_ls_ti_estreg();
     public SelectItem[] ls_ti_pagreg = Util.get_ls_ti_pagreg();
     public SelectItem[] ls_ti_boton = Util.get_ls_ti_boton();
+    public SelectItem[] ls_ti_alireg = Util.get_ls_ti_alireg();
+    public SelectItem[] ls_ti_valign = Util.get_ls_ti_valign();
+    public SelectItem[] ls_ti_nowrap = Util.get_ls_ti_nowrap();
 
     public PaginaBean() {
         this.beanName = BEAN_NAME;
@@ -212,11 +215,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
     }
 
-    public BotonDTO emptyButton() {
-        BotonDTO botonDTO = new BotonDTO();
-        botonDTO.setCo_pagbot(-1);
-        return botonDTO;
-    }
+//    public BotonDTO emptyButton() {
+//        BotonDTO botonDTO = new BotonDTO();
+//        botonDTO.setCo_pagbot(-1);
+//        return botonDTO;
+//    }
 
     public String pagbot_new() {
         botonSeleccionado = new BotonDTO();
@@ -239,7 +242,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public String pagbot_save() {
         PaginaDAO dao = new PaginaDAO();
+
         dao.saveButton(pagina.getCo_pagina(), botonSeleccionado);
+        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
+
         dao.close();
 
         return URL_EDITAR;
@@ -253,6 +260,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public void pagbot_delete() {
         PaginaDAO dao = new PaginaDAO();
         dao.deleteButton(pagina.getCo_pagina(), (short) botonSeleccionado.getCo_pagbot());
+        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
         dao.close();
         //recargar lista de botones!!!!
     }
@@ -264,7 +273,48 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagreg_save() {
+        System.out.println("elementoSeleccionado: = " + elementoSeleccionado);
+        PaginaDAO dao = new PaginaDAO();
+        dao.saveRegist(pagina.getCo_pagina(), elementoSeleccionado.getPagregDTO());
+
+        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
+
+        dao.close();
+
+        return URL_EDITAR;
+    }
+
+    public String pagreg_new() {
+        elementoSeleccionado = new ElementoDTO();
+        elementoSeleccionado.setTi_elemen(2);
+        PagregDTO pagregDTO = new PagregDTO();
+        pagregDTO.setCo_pagreg2(-1);
+        pagregDTO.setCo_pagina(pagina.getCo_pagina());
+
+        elementoSeleccionado.setPagregDTO(pagregDTO);
+
         return URL_REG_EDIT;
+    }
+
+
+    public String pagreg_edit() {
+        elementoSeleccionado.getPagregDTO().setCo_pagreg2(elementoSeleccionado.getPagregDTO().getCo_pagreg());
+
+        return URL_REG_EDIT;
+    }
+
+    public String pagreg_delete() {
+        PaginaDAO dao = new PaginaDAO();
+        if (elementoSeleccionado.getTi_elemen() == 1)
+            dao.deleteTitle(pagina.getCo_pagina(), (short) elementoSeleccionado.getPagtitDTO().getCo_pagtit());
+        else
+            dao.deleteRegist(pagina.getCo_pagina(), (short) elementoSeleccionado.getPagregDTO().getCo_pagreg());
+
+        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
+        dao.close();
+        return URL_EDITAR;
     }
 
     public String pagreg_back() {
@@ -278,14 +328,34 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagtit_save() {
-        return URL_TIT_EDIT;
+        System.out.println("elementoSeleccionado: = " + elementoSeleccionado);
+        PaginaDAO dao = new PaginaDAO();
+        if (elementoSeleccionado.getTi_elemen() == 1)
+            dao.saveTitle(pagina.getCo_pagina(), elementoSeleccionado.getPagtitDTO());
+        else
+            dao.saveRegist(pagina.getCo_pagina(), elementoSeleccionado.getPagregDTO());
+
+        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
+
+        dao.close();
+
+        return URL_EDITAR;
     }
 
     public String pagtit_back() {
         return URL_EDITAR;
     }
 
-    public String pagtit_edit() {
+
+    public String pagtit_new() {
+        elementoSeleccionado = new ElementoDTO();
+        elementoSeleccionado.setTi_elemen(1);
+        PagtitDTO pagtitDTO = new PagtitDTO();
+        pagtitDTO.setCo_pagina(pagina.getCo_pagina());
+        pagtitDTO.setCo_pagtit(-1);
+        elementoSeleccionado.setPagtitDTO(pagtitDTO);
+
         return URL_TIT_EDIT;
     }
 
@@ -408,5 +478,29 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setLs_ti_boton(SelectItem[] ls_ti_boton) {
         this.ls_ti_boton = ls_ti_boton;
+    }
+
+    public SelectItem[] getLs_ti_alireg() {
+        return ls_ti_alireg;
+    }
+
+    public void setLs_ti_alireg(SelectItem[] ls_ti_alireg) {
+        this.ls_ti_alireg = ls_ti_alireg;
+    }
+
+    public SelectItem[] getLs_ti_valign() {
+        return ls_ti_valign;
+    }
+
+    public void setLs_ti_valign(SelectItem[] ls_ti_valign) {
+        this.ls_ti_valign = ls_ti_valign;
+    }
+
+    public SelectItem[] getLs_ti_nowrap() {
+        return ls_ti_nowrap;
+    }
+
+    public void setLs_ti_nowrap(SelectItem[] ls_ti_nowrap) {
+        this.ls_ti_nowrap = ls_ti_nowrap;
     }
 }
