@@ -12,120 +12,297 @@
     <ui:define name="content">
 
         <h:form id="form">
-            <p:growl id="msgs" showDetail="true"/>
+            <p:panel id="panelActualizarPagina">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <span>
+                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{contenedorBean.contenedor.no_contit}</h3> |
+                        <h4 style="margin-top:0;margin-bottom: 0px;display: inline;"> - [#{contenedorBean.contenedor.co_conten}]</h4>
+                        </span>
+
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column colspan="3" style="text-align: center">
+                            <p:tabView>
+                                <p:tab title="Datos">
+
+                                    <p:panelGrid style="display: inline-block;">
+
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="co_conten" value="ID"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputText id="co_conten"
+                                                             value="#{contenedorBean.contenedor.co_conten}"
+                                                             readonly="#{contenedorBean.isregEditable}"/>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="no_contit" value="Nombre"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputText id="no_contit"
+                                                               value="#{contenedorBean.contenedor.no_contit}"
+                                                               readonly="#{contenedorBean.isregEditable}"/>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="de_conten" value="Descripción"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputTextarea id="de_conten"
+                                                               value="#{contenedorBean.contenedor.de_conten}"
+                                                               readonly="#{contenedorBean.isregEditable}"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+
+                                </p:tab>
+
+                                <p:tab title="Organización">
+                                    <p:toolbar>
+                                        <f:facet name="left">
+                                            <p:outputLabel value="Lista de Tabs"></p:outputLabel>
+                                        </f:facet>
+
+                                        <f:facet name="right">
+                                            <p:commandButton icon="pi pi-file" value="Nuevo registro"
+                                                             partialSubmit="true"
+                                                             action="#{contenedorBean.contab_new}">
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{contenedorBean.contabEditable}"/>
+                                            </p:commandButton>
+                                        </f:facet>
+
+                                    </p:toolbar>
+
+                                    <p:dataTable id="lista1"
+                                                 var="tab"
+                                                 value="#{contenedorBean.contenedor.ls_contab}"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                                 paginator="true"
+                                                 paginatorPosition="bottom"
+                                                 rows="100"
+                                                 widgetVar="widTable1"
+                                                 selectionMode="single"
+                                                 selection="#{contenedorBean.contabSeleccionado}"
+                                                 rowKey="#{tab.co_contab}"
+                                                 rowIndexVar="N"
+                                                 style="width:100%; ">
+
+                                        <p:ajax event="sort" skipChildren="false"/>
+
+                                        <p:column style="text-align: right" width="20">
+                                            <f:facet name="header">
+                                                <h:outputText value="#"/>
+                                            </f:facet>
+                                            <h:outputText value="#{N + 1}"/>
+                                        </p:column>
+
+                                        <p:column headerText="COD" width="30" styleClass="table_cell_right">
+                                            <h:outputText value="#{tab.co_contab}"/>
+                                        </p:column>
+
+                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_left">
+                                            <h:outputText value="#{tab.nu_rowspa}"/>
+                                        </p:column>
+
+                                        <p:column headerText="colspa" width="50" styleClass="table_cell_left">
+                                            <h:outputText value="#{tab.nu_colspa}"/>
+                                        </p:column>
+
+
+                                        <p:column headerText="numrow" width="50" styleClass="table_cell_left">
+                                            <h:outputText value="#{tab.or_numrow}"/>
+                                        </p:column>
+
+                                        <p:column headerText="numcol" width="50" styleClass="table_cell_left">
+                                            <h:outputText value="#{tab.or_numcol}"/>
+                                        </p:column>
+
+
+
+                                        <p:column headerText="Acciones" style="text-align: center">
+                                            <p:commandButton icon="fa fa-search" title="Ver"
+                                                             action="#{contenedorBean.contab_edit}">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.contabSeleccionado}"/>
+                                                <f:setPropertyActionListener value="false"
+                                                                             target="#{contenedorBean.contabEditable}"/>
+                                            </p:commandButton>
+
+                                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
+                                                             action="#{contenedorBean.contab_edit}">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.contabSeleccionado}"/>
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{contenedorBean.contabEditable}"/>
+                                            </p:commandButton>
+
+                                            <p:commandButton icon="fa fa-trash"
+                                                             action="#{contenedorBean.contab_delete}"
+                                                             update="@form">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.contabSeleccionado}"/>
+                                                <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                                           icon="fa fa-exclamation-triangle"/>
+                                            </p:commandButton>
+
+
+                                            <p:commandButton icon="pi pi-window-maximize" title="Editar Página"
+                                                             action="#{contenedorBean.contab_edit}">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.contabSeleccionado}"/>
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{contenedorBean.contabEditable}"/>
+                                            </p:commandButton>
+
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </p:tab>
+
+                                <p:tab title="Parametros">
+                                    <p:toolbar>
+                                        <f:facet name="left">
+                                            <p:outputLabel value="Lista de Parametros"></p:outputLabel>
+                                        </f:facet>
+
+                                        <f:facet name="right">
+                                            <p:commandButton icon="pi pi-file" value="Nuevo registro"
+                                                             partialSubmit="true"
+                                                             action="#{contenedorBean.conpar_new}">
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{contenedorBean.conparEditable}"/>
+                                            </p:commandButton>
+                                        </f:facet>
+
+                                    </p:toolbar>
+
+                                    <p:dataTable id="lista2"
+                                                 var="par"
+                                                 value="#{contenedorBean.contenedor.ls_conpar}"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                                 paginator="true"
+                                                 paginatorPosition="bottom"
+                                                 rows="100"
+                                                 widgetVar="widTable2"
+                                                 selectionMode="single"
+                                                 selection="#{contenedorBean.conparSeleccionado}"
+                                                 rowKey="#{par.co_contab}"
+                                                 rowIndexVar="N"
+                                                 style="width:100%; ">
+
+                                        <p:ajax event="sort" skipChildren="false"/>
+
+                                        <p:column style="text-align: right" width="20">
+                                            <f:facet name="header">
+                                                <h:outputText value="#"/>
+                                            </f:facet>
+                                            <h:outputText value="#{N + 1}"/>
+                                        </p:column>
+
+                                        <p:column headerText="COD" width="30" styleClass="table_cell_right">
+                                            <h:outputText value="#{par.co_conpar}"/>
+                                        </p:column>
+
+                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_left">
+                                            <h:outputText value="#{par.no_conpar}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" style="text-align: center">
+                                            <p:commandButton icon="fa fa-search" title="Ver"
+                                                             action="#{contenedorBean.conpar_edit}">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.conparSeleccionado}"/>
+                                                <f:setPropertyActionListener value="false"
+                                                                             target="#{contenedorBean.conparEditable}"/>
+                                            </p:commandButton>
+
+                                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
+                                                             action="#{contenedorBean.conpar_edit}">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.contabSeleccionado}"/>
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{contenedorBean.conparEditable}"/>
+                                            </p:commandButton>
+
+                                            <p:commandButton icon="fa fa-trash"
+                                                             action="#{contenedorBean.conpar_delete}"
+                                                             update="@form">
+                                                <f:setPropertyActionListener value="#{tab}"
+                                                                             target="#{contenedorBean.conparSeleccionado}"/>
+                                                <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                                           icon="fa fa-exclamation-triangle"/>
+                                            </p:commandButton>
+
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:tabView>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:separator/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 20%;">
+                            <p:commandButton action="#{contenedorBean.load()}"
+                                             actionListener="#{contenedorBean.doListener()}"
+                                             value="Atrás"
+                                             title="Volver al reporte de usuarios"
+                                             icon="pi pi-arrow-left"
+                                             accesskey="a"
+                                             immediate="true">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="text-align: center;width: 60%;">
+                            <p:commandButton value="Grabar"
+                                             action="#{contenedorBean.saveRegist}"
+                                             type="submit"
+                                             icon="pi pi-save"
+                                             update="panelActualizarPagina">
+                                <p:ajax rendered="panelActualizarPagina"/>
+                            </p:commandButton>
+                            <p:commandButton value="Grabar y Aplicar"
+                                             action="#{contenedorBean.saveRegistApply}"
+                                             type="submit"
+                                             icon="pi pi-refresh"
+                                             update="panelActualizarPagina">
+                                <p:ajax rendered="panelActualizarPagina"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 20%;">
+
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+
             <h3 style="margin-top:0">Contenedor</h3>
-            <p:tabView>
-                <p:tab title="Datos">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <p:outputLabel for="co_conten" value="ID:"/>
-                        <p:inputText id="co_conten" value="#{contenedorBean.contenedor.co_conten}"
-                                     rendered="#{contenedorBean.isregEditable}"/>
-
-                        <p:outputLabel for="no_contit" value="Nombre:"/>
-                        <p:inputText id="no_contit" value="#{contenedorBean.contenedor.no_contit}"
-                                     required="true" requiredMessage="Debe ingresar un Nombre."
-                                     rendered="#{contenedorBean.isregEditable}"/>
-
-                        <p:outputLabel for="de_conten" value="Descripción:"/>
-                        <p:inputTextarea id="de_conten" value="#{contenedorBean.contenedor.de_conten}"
-                                     required="true" requiredMessage="Debe ingresar una Descripción."
-                                     rendered="#{contenedorBean.isregEditable}"/>
-                    </h:panelGrid>
-                </p:tab>
-                <p:tab title="Organización">
-                    <h3>Filas</h3>
-                    <p:commandButton icon="fa fa-plus" action="#{contenedorBean.incrementFila}" update="outputFila"
-                                     styleClass="buttonnuevo" immediate="true"/>
-                    <p:commandButton icon="fa fa-minus" action="#{contenedorBean.decreaseFila}" update="outputFila"
-                                     styleClass="buttonnuevo" immediate="true"/>
-                    <p:separator/>
-                    <p:outputPanel id="outputFila">
-
-                        <ui:repeat var="fila" value="#{contenedorBean.getFilas()}">
-                            <p:panelGrid style="width: 95%">
-                                <p:row>
-                                    <p:column colspan="2" style="text-align: center; font-size: 140%">
-                                        <b>#{fila} </b>
-                                    </p:column>
-                                    <p:column rowspan="2">
-                                        <p:outputPanel id="output">
-
-                                            <div id="output#{fila}" class="p-grid">
-                                                <ui:repeat var="column" value="#{contenedorBean.getColumnas(fila)}">
-                                                    <div class="p-col">
-                                                        <div class="box">
-                                                            #{column}
-                                                        </div>
-                                                    </div>
-                                                </ui:repeat>
-                                            </div>
-                                        </p:outputPanel>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column style="width: 20px; padding: 1px 2px">
-
-                                        <p:commandButton icon="fa fa-plus"
-                                                         action="#{contenedorBean.incrementColumna(fila)}"
-                                                         update="output"
-                                                         styleClass="buttonnuevo"
-                                                         immediate="true"/>
-                                    </p:column>
-                                    <p:column style="width: 20px; padding: 1px 2px">
-                                        <p:commandButton icon="fa fa-minus"
-                                                         action="#{contenedorBean.decreaseColumna(fila)}"
-                                                         update="output"
-                                                         styleClass="buttonnuevo"
-                                                         immediate="true"/>
-                                    </p:column>
-                                </p:row>
-
-
-                            </p:panelGrid>
-                        </ui:repeat>
-
-                    </p:outputPanel>
-                </p:tab>
-                <p:tab title="Parametros">
-                    <p:dataTable id="listaParametros" widgetVar="param1" var="param" value="" editable="true"
-                                 style="margin-bottom:20px">
-                        <f:facet name="header">
-                            Parametros
-                        </f:facet>
-
-                        <p:ajax event="rowEdit" listener="#{contenedorBean.onRowEdit}" update=":form:msgs"/>
-                        <p:ajax event="rowEditCancel" listener="#{contenedorBean.onRowCancel}" update=":form:msgs"/>
-
-                        <p:column headerText="Id">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{param.co_conten}"/></f:facet>
-                                <f:facet name="input"><p:inputText id="modelInput" value="#{param.co_conten}"
-                                                                   style="width:100%"/></f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Nombre">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{param.no_parame}"/></f:facet>
-                                <f:facet name="input"><p:inputText value="#{param.no_parame}" style="width:100%" label="nombre"/></f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column style="width:32px">
-                            <p:rowEditor/>
-                        </p:column>
-                    </p:dataTable>
-
-                    <div class="ui-g">
-                        <div class="ui-g-12">
-                            <p:commandButton value="Add new row" styleClass="ui-priority-primary" process="@this"
-                                             update=":form:msgs"
-                                             action="#{contenedorBean.onAddNew()}" oncomplete="PF('listaParametros').addRow();"/>
-                        </div>
-                    </div>
-
-                </p:tab>
-            </p:tabView>
 
 
         </h:form>

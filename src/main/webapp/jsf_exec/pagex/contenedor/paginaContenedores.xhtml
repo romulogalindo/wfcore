@@ -26,7 +26,6 @@
                              value="#{contenedorBean.contenedores}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true"
-                             multiViewState="true"
                              paginatorPosition="bottom"
                              rows="100"
                              widgetVar="widTable"
@@ -39,12 +38,9 @@
 
                     <f:facet name="header">
                         Lista de Contenedores
-                        <p:commandButton id="toggler" type="button" value="Columnas" style="float:end"
-                                         icon="fa fa-align-justify"/>
-                        <p:columnToggler datasource="lista" trigger="toggler"/>
                     </f:facet>
 
-                    <p:ajax event="sort" skipChildren="false"/>
+                    <!--<p:ajax event="sort" skipChildren="false"/>-->
 
                     <p:column style="text-align: right" width="20">
                         <f:facet name="header">

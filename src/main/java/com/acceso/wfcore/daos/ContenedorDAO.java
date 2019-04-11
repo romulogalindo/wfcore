@@ -21,7 +21,7 @@ public class ContenedorDAO {
         session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
     }
 
-        public List<ContenedorDTO> getContenedores() {
+    public List<ContenedorDTO> getContenedores() {
 
         List<ContenedorDTO> contenedores = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -42,8 +42,8 @@ public class ContenedorDAO {
         return contenedores;
     }
 
-//    public ContenedorDTO grabarContenedor(ContenedorDTO usuario) {
-//
+    public ContenedorDTO saveContent(ContenedorDTO contenedorDTO) {
+
 //        NQuery nQuery = new NQuery();
 //
 //        try {
@@ -70,8 +70,10 @@ public class ContenedorDAO {
 //        }
 //
 //        return usuario;
-//    }
-//
+        return null;
+    }
+
+    //
 //    public String deleteContenedor(ContenedorDTO usuario) {
 //
 //        NQuery nQuery = new NQuery();

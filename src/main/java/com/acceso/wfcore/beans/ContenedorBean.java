@@ -1,12 +1,16 @@
 package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.ContenedorDAO;
+import com.acceso.wfcore.dtos.ConparDTO;
+import com.acceso.wfcore.dtos.ContabDTO;
 import com.acceso.wfcore.dtos.ContenedorDTO;
+import com.acceso.wfcore.utils.Util;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,15 +30,31 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/contenedor/paginaRegContenedor.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegContenedor.xhtml";
 
+    private static final String URL_CONTAB_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegContab.xhtml";
+    private static final String URL_CONTAB_EDIT = "/admin/jsf_exec/pagex/contenedor/paginaRegContab.xhtml";
+
+    private static final String URL_CONPAR_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegConpar.xhtml";
+    private static final String URL_CONPAR_EDIT = "/admin/jsf_exec/pagex/contenedor/paginaRegConpar.xhtml";
+
     public static final String BEAN_NAME = "contenedorBean";
 
+//    private ContenedorDAO contenedorDAO;
     private List<ContenedorDTO> contenedores;
     private ContenedorDTO contenedor;
     private List<ContenedorDTO> filtroContenedor;
 
     private boolean isregEditable;
+    private boolean contabEditable;
+    private boolean conparEditable;
 
+    /*ELEMENTOS TRANSACCIONALES*/
+    ContabDTO contabSeleccionado;
+    ConparDTO conparSeleccionado;
     private Map<Integer, Integer> hmap;
+
+    /*SI*/
+    public SelectItem[] ls_ti_alireg = Util.get_ls_ti_alireg();
+    public SelectItem[] ls_ti_valign = Util.get_ls_ti_valign();
 
     @PostConstruct
     public void init() {
@@ -162,6 +182,12 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         return URL_LISTA;
     }
 
+    public String saveRegistApply() {
+        saveDto();
+//        apply();
+        return URL_LISTA;
+    }
+
     @Override
     public void selectDto() {
         ContenedorDAO dao = new ContenedorDAO();
@@ -171,11 +197,11 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     @Override
     public void saveDto() {
-//      ContenedorDAO dao = new ContenedorDAO();
+      ContenedorDAO dao = new ContenedorDAO();
 //      this.contenedor = dao.grabarContenedor(contenedor);
-//      this.contenedores = dao.getContenedores();
-////      Sistema.out.println("ContenedorBean actualizarContenedor = " + this.contenedor);
-//      dao.close();
+      this.contenedores = dao.getContenedores();
+//      Sistema.out.println("ContenedorBean actualizarContenedor = " + this.contenedor);
+      dao.close();
     }
 
     @Override
@@ -193,6 +219,52 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 //      String resultado = dao.deleteContenedor(contenedor);
 //      this.contenedores = dao.getContenedores();
 //      dao.close();
+    }
+
+    public String contab_new() {
+        contabSeleccionado = new ContabDTO();
+        contabSeleccionado.setCo_conten(contenedor.getCo_conten());
+
+        return URL_CONTAB_NEW;
+    }
+
+    public String contab_edit() {
+        return URL_CONTAB_EDIT;
+    }
+
+    public String contab_save() {
+        return URL_EDITAR;
+    }
+
+    public String contab_delete() {
+        return URL_EDITAR;
+    }
+
+    public String contab_back() {
+        return URL_EDITAR;
+    }
+
+    public String conpar_new() {
+        conparSeleccionado = new ConparDTO();
+        conparSeleccionado.setCo_conten(contenedor.getCo_conten());
+
+        return URL_CONPAR_NEW;
+    }
+
+    public String conpar_edit() {
+        return URL_CONPAR_EDIT;
+    }
+
+    public String conpar_save() {
+        return URL_EDITAR;
+    }
+
+    public String conpar_delete() {
+        return URL_EDITAR;
+    }
+
+    public String conpar_back() {
+        return URL_EDITAR;
     }
 
     public ContenedorDTO getContenedor() {
@@ -219,6 +291,14 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         this.isregEditable = isregEditable;
     }
 
+    public boolean isContabEditable() {
+        return contabEditable;
+    }
+
+    public void setContabEditable(boolean contabEditable) {
+        this.contabEditable = contabEditable;
+    }
+
     public Map<Integer, Integer> getHmap() {
         return hmap;
     }
@@ -233,5 +313,45 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     public void setFiltroContenedor(List<ContenedorDTO> filtroContenedor) {
         this.filtroContenedor = filtroContenedor;
+    }
+
+    public ContabDTO getContabSeleccionado() {
+        return contabSeleccionado;
+    }
+
+    public void setContabSeleccionado(ContabDTO contabSeleccionado) {
+        this.contabSeleccionado = contabSeleccionado;
+    }
+
+    public SelectItem[] getLs_ti_alireg() {
+        return ls_ti_alireg;
+    }
+
+    public void setLs_ti_alireg(SelectItem[] ls_ti_alireg) {
+        this.ls_ti_alireg = ls_ti_alireg;
+    }
+
+    public SelectItem[] getLs_ti_valign() {
+        return ls_ti_valign;
+    }
+
+    public void setLs_ti_valign(SelectItem[] ls_ti_valign) {
+        this.ls_ti_valign = ls_ti_valign;
+    }
+
+    public boolean isConparEditable() {
+        return conparEditable;
+    }
+
+    public void setConparEditable(boolean conparEditable) {
+        this.conparEditable = conparEditable;
+    }
+
+    public ConparDTO getConparSeleccionado() {
+        return conparSeleccionado;
+    }
+
+    public void setConparSeleccionado(ConparDTO conparSeleccionado) {
+        this.conparSeleccionado = conparSeleccionado;
     }
 }

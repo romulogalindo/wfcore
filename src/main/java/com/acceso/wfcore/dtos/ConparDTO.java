@@ -25,14 +25,14 @@ import java.util.Date;
             name = Values.QUERYS_NATIVE_SELECT_PARAMETRO,
             query = "select co_conten, co_conpar, no_conpar "
                   + "from wfsistem.pbparametro_list()",
-            resultClass = ParametroDTO.class),
+            resultClass = ConparDTO.class),
       @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN,
             query = "select co_conten, co_conpar, no_conpar "
                   + "from wfsistem.pbparametro_list(:co_conten)",
-            resultClass = ParametroDTO.class)
+            resultClass = ConparDTO.class)
 })
-public class ParametroDTO implements Serializable {
+public class ConparDTO implements Serializable {
 
    @Id
    Integer co_conten;

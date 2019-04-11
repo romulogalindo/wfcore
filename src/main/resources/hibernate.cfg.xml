@@ -49,13 +49,14 @@
         <mapping class="com.acceso.wfcore.dtos.EstadoDTO"/>
         <mapping class="com.acceso.wfcore.dtos.ContenedorDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PaginaDTO"/>
-        <mapping class="com.acceso.wfcore.dtos.ParametroDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.ConparDTO"/>
         <mapping class="com.acceso.wfcore.dtos.RegistroDTO"/>
         <mapping class="com.acceso.wfcore.dtos.ScriptDTO"/>
         <mapping class="com.acceso.wfcore.dtos.BotonDTO"/>
         <mapping class="com.acceso.wfcore.dtos.ElementoDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PagregDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PagtitDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.ContabDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>

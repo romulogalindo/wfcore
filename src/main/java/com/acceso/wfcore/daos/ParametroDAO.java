@@ -1,6 +1,6 @@
 package com.acceso.wfcore.daos;
 
-import com.acceso.wfcore.dtos.ParametroDTO;
+import com.acceso.wfcore.dtos.ConparDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
@@ -21,9 +21,9 @@ public class ParametroDAO {
       session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
    }
 
-   public List<ParametroDTO> getParametros() {
+   public List<ConparDTO> getParametros() {
 
-      List<ParametroDTO> parametros = new ArrayList<>();
+      List<ConparDTO> parametros = new ArrayList<>();
       NQuery nQuery = new NQuery();
 
       try {
@@ -42,9 +42,9 @@ public class ParametroDAO {
       return parametros;
    }
 
-   public List<ParametroDTO> getParametrosByContenedor(Integer contenedor) {
+   public List<ConparDTO> getParametrosByContenedor(Integer contenedor) {
 
-      List<ParametroDTO> parametros = new ArrayList<>();
+      List<ConparDTO> parametros = new ArrayList<>();
       NQuery nQuery = new NQuery();
 
       try {
