@@ -17,9 +17,9 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_WEB_SELECT_PFCONTAB,
                 query = "select T.* from frawor4.pfpagtab(:p_co_conten) T ",
-                resultClass = ContabDTO.class)
+                resultClass = WContabDTO.class)
 })
-public class ContabDTO implements Serializable {
+public class WContabDTO implements Serializable {
 
     @Id
     int co_contab;
@@ -38,7 +38,7 @@ public class ContabDTO implements Serializable {
 
     int ca_tamcel;
 
-    public ContabDTO() {
+    public WContabDTO() {
     }
 
     public int getCo_contab() {

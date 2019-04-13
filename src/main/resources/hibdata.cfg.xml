@@ -56,7 +56,7 @@
         <!-- DTO's (Web) -->
         <mapping class="com.acceso.wfcore.dtos.SystemTreeDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WContenedorDTO" />
-        <mapping class="com.acceso.wfweb.dtos.ContabDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WContabDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WPaginaDTO"/>
         <mapping class="com.acceso.wfweb.dtos.TituloDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WRegistroDTO"/>

@@ -77,7 +77,14 @@ public class Values {
     public static final String QUERYS_NATIVE_DELETE_PAGTIT = "wfcore.pbpagtit_delete";
 
     public static final String QUERYS_NATIVE_SELECT_PARAMETRO = "wfcore.parametro_select";
-    public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
+
+    public static final String QUERYS_NATIVE_SELECT_CONPAR = "wfcore.select_tcconpar";
+    public static final String QUERYS_NATIVE_SAVE_CONPAR = "wfcore.save_tcconpar";
+    public static final String QUERYS_NATIVE_DELETE_CONPAR = "wfcore.delete_tcconpar";
+
+    public static final String QUERYS_NATIVE_SELECT_CONTAB = "wfcore.select_tccontab";
+    public static final String QUERYS_NATIVE_SAVE_CONTAB = "wfcore.save_tccontab";
+//    public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
 
     public static final String QUERYS_NATIVE_SELECT_REGISTRO = "wfcore.registro_select";
 

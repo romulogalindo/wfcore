@@ -48,12 +48,9 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     private ElementoDTO elementoSeleccionado;
     private List<PaginaDTO> filtroPagina;
 
-    //    private boolean isregEditable;
-//    private boolean isregbtnEditable;
     private boolean thisEditable;
     private boolean btnEditable;
     private boolean regEditable;
-
 
     public int defaultTabIndex;
 

@@ -42,27 +42,27 @@ public class ParametroDAO {
       return parametros;
    }
 
-   public List<ConparDTO> getParametrosByContenedor(Integer contenedor) {
-
-      List<ConparDTO> parametros = new ArrayList<>();
-      NQuery nQuery = new NQuery();
-
-      try {
-
-         nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN));
-         nQuery.setInteger("co_conten", contenedor == null ? -1 : contenedor);
-
-         System.out.println("[ParametroDAO:getParametrosByContenedor] Q = " + nQuery.getQueryString());
-         parametros = nQuery.list();
-         System.out.println("[ParametroDAO:get ParametrosByContenedor] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
-
-      } catch (Exception ep) {
-         System.out.println("[ParametroDAO:getParametrosByContenedor] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-         ep.printStackTrace();
-      }
-
-      return parametros;
-   }
+//   public List<ConparDTO> getParametrosByContenedor(Integer contenedor) {
+//
+//      List<ConparDTO> parametros = new ArrayList<>();
+//      NQuery nQuery = new NQuery();
+//
+//      try {
+//
+//         nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN));
+//         nQuery.setInteger("co_conten", contenedor == null ? -1 : contenedor);
+//
+//         System.out.println("[ParametroDAO:getParametrosByContenedor] Q = " + nQuery.getQueryString());
+//         parametros = nQuery.list();
+//         System.out.println("[ParametroDAO:get ParametrosByContenedor] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+//
+//      } catch (Exception ep) {
+//         System.out.println("[ParametroDAO:getParametrosByContenedor] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+//         ep.printStackTrace();
+//      }
+//
+//      return parametros;
+//   }
 
    //    public ParametroDTO grabarParametro(ParametroDTO pagina) {
 //

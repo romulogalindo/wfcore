@@ -38,7 +38,7 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     public static final String BEAN_NAME = "contenedorBean";
 
-//    private ContenedorDAO contenedorDAO;
+    //    private ContenedorDAO contenedorDAO;
     private List<ContenedorDTO> contenedores;
     private ContenedorDTO contenedor;
     private List<ContenedorDTO> filtroContenedor;
@@ -46,6 +46,8 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     private boolean isregEditable;
     private boolean contabEditable;
     private boolean conparEditable;
+
+    public int defaultTabIndex;
 
     /*ELEMENTOS TRANSACCIONALES*/
     ContabDTO contabSeleccionado;
@@ -166,6 +168,13 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
+        ContenedorDAO dao = new ContenedorDAO();
+        contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
+        contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
+        dao.close();
+
+        defaultTabIndex = 0;
+
         return URL_EDITAR;
     }
 
@@ -197,11 +206,11 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     @Override
     public void saveDto() {
-      ContenedorDAO dao = new ContenedorDAO();
+        ContenedorDAO dao = new ContenedorDAO();
 //      this.contenedor = dao.grabarContenedor(contenedor);
-      this.contenedores = dao.getContenedores();
+        this.contenedores = dao.getContenedores();
 //      Sistema.out.println("ContenedorBean actualizarContenedor = " + this.contenedor);
-      dao.close();
+        dao.close();
     }
 
     @Override
@@ -223,6 +232,7 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     public String contab_new() {
         contabSeleccionado = new ContabDTO();
+        contabSeleccionado.setCo_contab((short) -1);
         contabSeleccionado.setCo_conten(contenedor.getCo_conten());
 
         return URL_CONTAB_NEW;
@@ -233,6 +243,12 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     }
 
     public String contab_save() {
+        ContenedorDAO dao = new ContenedorDAO();
+        dao.saveContab(contabSeleccionado);
+        contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
+        contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
+        dao.close();
+
         return URL_EDITAR;
     }
 
@@ -246,6 +262,7 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     public String conpar_new() {
         conparSeleccionado = new ConparDTO();
+        conparSeleccionado.setCo_conpar((short) -1);
         conparSeleccionado.setCo_conten(contenedor.getCo_conten());
 
         return URL_CONPAR_NEW;
@@ -256,10 +273,22 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     }
 
     public String conpar_save() {
+        ContenedorDAO dao = new ContenedorDAO();
+        dao.saveConpar(conparSeleccionado);
+        contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
+        contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
+        dao.close();
+
         return URL_EDITAR;
     }
 
     public String conpar_delete() {
+        ContenedorDAO dao = new ContenedorDAO();
+        dao.deleteConpar(conparSeleccionado);
+        contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
+        contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
+        dao.close();
+
         return URL_EDITAR;
     }
 
@@ -353,5 +382,13 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     public void setConparSeleccionado(ConparDTO conparSeleccionado) {
         this.conparSeleccionado = conparSeleccionado;
+    }
+
+    public int getDefaultTabIndex() {
+        return defaultTabIndex;
+    }
+
+    public void setDefaultTabIndex(int defaultTabIndex) {
+        this.defaultTabIndex = defaultTabIndex;
     }
 }

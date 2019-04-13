@@ -48,9 +48,9 @@ public class Frawor4DAO extends DAO {
         return contenedorDTO;
     }
 
-    public List<ContabDTO> getContabDTO(int co_conten) {
+    public List<WContabDTO> getContabDTO(int co_conten) {
 
-        List<ContabDTO> contabDTOs = null;
+        List<WContabDTO> contabDTOs = null;
         NQuery nQuery = new NQuery(TAG + ":CONTEN");
 
         try {

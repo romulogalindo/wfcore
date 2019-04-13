@@ -27,7 +27,7 @@
                     <p:row>
                         <p:column colspan="3" style="text-align: center">
                             <p:tabView>
-                                <p:tab title="Datos">
+                                <p:tab title="Datos" activeIndex="#{contenedorBean.defaultTabIndex}">
 
                                     <p:panelGrid style="display: inline-block;">
 
@@ -79,7 +79,7 @@
 
                                 </p:tab>
 
-                                <p:tab title="Organización">
+                                <p:tab title="Tabs/Organización">
                                     <p:toolbar>
                                         <f:facet name="left">
                                             <p:outputLabel value="Lista de Tabs"></p:outputLabel>
@@ -123,21 +123,26 @@
                                             <h:outputText value="#{tab.co_contab}"/>
                                         </p:column>
 
-                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_left">
+                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_right">
                                             <h:outputText value="#{tab.nu_rowspa}"/>
                                         </p:column>
 
-                                        <p:column headerText="colspa" width="50" styleClass="table_cell_left">
+                                        <p:column headerText="colspa" width="50" styleClass="table_cell_right">
                                             <h:outputText value="#{tab.nu_colspa}"/>
                                         </p:column>
 
 
-                                        <p:column headerText="numrow" width="50" styleClass="table_cell_left">
+                                        <p:column headerText="Fila" width="70" styleClass="table_cell_right">
                                             <h:outputText value="#{tab.or_numrow}"/>
                                         </p:column>
 
-                                        <p:column headerText="numcol" width="50" styleClass="table_cell_left">
+                                        <p:column headerText="Columna" width="70" styleClass="table_cell_right">
                                             <h:outputText value="#{tab.or_numcol}"/>
+                                        </p:column>
+
+
+                                        <p:column headerText="Página" width="50" styleClass="table_cell_right">
+                                            <h:outputText value="#{tab.co_pagina}"/>
                                         </p:column>
 
 
@@ -209,7 +214,7 @@
                                                  widgetVar="widTable2"
                                                  selectionMode="single"
                                                  selection="#{contenedorBean.conparSeleccionado}"
-                                                 rowKey="#{par.co_contab}"
+                                                 rowKey="#{par.co_conpar}"
                                                  rowIndexVar="N"
                                                  style="width:100%; ">
 
@@ -226,14 +231,14 @@
                                             <h:outputText value="#{par.co_conpar}"/>
                                         </p:column>
 
-                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_left">
+                                        <p:column headerText="rowspa" width="150" styleClass="table_cell_left">
                                             <h:outputText value="#{par.no_conpar}"/>
                                         </p:column>
 
                                         <p:column headerText="Acciones" style="text-align: center">
                                             <p:commandButton icon="fa fa-search" title="Ver"
                                                              action="#{contenedorBean.conpar_edit}">
-                                                <f:setPropertyActionListener value="#{tab}"
+                                                <f:setPropertyActionListener value="#{par}"
                                                                              target="#{contenedorBean.conparSeleccionado}"/>
                                                 <f:setPropertyActionListener value="false"
                                                                              target="#{contenedorBean.conparEditable}"/>
@@ -241,7 +246,7 @@
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
                                                              action="#{contenedorBean.conpar_edit}">
-                                                <f:setPropertyActionListener value="#{tab}"
+                                                <f:setPropertyActionListener value="#{par}"
                                                                              target="#{contenedorBean.contabSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{contenedorBean.conparEditable}"/>
@@ -250,7 +255,7 @@
                                             <p:commandButton icon="fa fa-trash"
                                                              action="#{contenedorBean.conpar_delete}"
                                                              update="@form">
-                                                <f:setPropertyActionListener value="#{tab}"
+                                                <f:setPropertyActionListener value="#{par}"
                                                                              target="#{contenedorBean.conparSeleccionado}"/>
                                                 <p:confirm header="Confirmación" message="¿Desea continuar?"
                                                            icon="fa fa-exclamation-triangle"/>

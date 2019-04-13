@@ -57,6 +57,7 @@
         <mapping class="com.acceso.wfcore.dtos.PagregDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PagtitDTO"/>
         <mapping class="com.acceso.wfcore.dtos.ContabDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.EmptyDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>
@@ -66,7 +67,7 @@
         <!-- DTO's (Web) -->
         <mapping class="com.acceso.wfcore.dtos.SystemTreeDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WContenedorDTO"/>
-        <mapping class="com.acceso.wfweb.dtos.ContabDTO"/>
+        <mapping class="com.acceso.wfweb.dtos.WContabDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WPaginaDTO"/>
         <mapping class="com.acceso.wfweb.dtos.TituloDTO"/>
         <mapping class="com.acceso.wfweb.dtos.WRegistroDTO"/>

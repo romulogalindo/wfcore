@@ -61,7 +61,7 @@ public class ApplicationManager {
         WContenedorDTO contenedorDTO = null;
 
         List<WPaginaDTO> paginaDTOS;
-        List<ContabDTO> contabDTOS;
+        List<WContabDTO> contabDTOS;
 
         Frawor4DAO dao = new Frawor4DAO();
         contenedorDTO = dao.getContenedorDTO(co_conten);

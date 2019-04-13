@@ -316,6 +316,7 @@ public class PaginaDAO {
         }
         System.out.println("[deleteTitle]result = " + result);
     }
+
     public void deleteRegist(int p_co_pagina, short p_co_pagreg) {
         NQuery nQuery = new NQuery();
         int result = -1;

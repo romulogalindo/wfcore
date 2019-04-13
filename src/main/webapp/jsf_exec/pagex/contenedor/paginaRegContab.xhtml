@@ -38,9 +38,9 @@
                                                       style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
                                         </p:column>
                                         <p:column styleClass="form_col_detail">
-                                            <p:inputText id="co_contab"
+                                            <p:outputLabel id="co_contab"
                                                          value="#{contenedorBean.contabSeleccionado.co_contab}"
-                                                         readonly="#{contenedorBean.contabEditable}"/>
+                                                         readonly="#{!contenedorBean.contabEditable}"/>
                                         </p:column>
                                     </p:row>
 
@@ -55,7 +55,7 @@
                                         <p:column styleClass="form_col_detail">
                                             <p:inputText id="nu_rowspa"
                                                          value="#{contenedorBean.contabSeleccionado.nu_rowspa}"
-                                                         readonly="#{contenedorBean.contabEditable}"/>
+                                                         readonly="#{!contenedorBean.contabEditable}"/>
                                         </p:column>
                                     </p:row>
 
@@ -70,13 +70,13 @@
                                         <p:column styleClass="form_col_detail">
                                             <p:inputText id="nu_colspa"
                                                          value="#{contenedorBean.contabSeleccionado.nu_colspa}"
-                                                         readonly="#{contenedorBean.contabEditable}"/>
+                                                         readonly="#{!contenedorBean.contabEditable}"/>
                                         </p:column>
                                     </p:row>
 
                                     <p:row>
                                         <p:column styleClass="form_col_title">
-                                            <p:outputLabel for="or_numrow" value="Col SPAN"/>
+                                            <p:outputLabel for="or_numrow" value="Orden de Fila"/>
                                         </p:column>
                                         <p:column styleClass="form_col_empty">
                                             <p:spacer width="1" height="24"
@@ -85,13 +85,13 @@
                                         <p:column styleClass="form_col_detail">
                                             <p:inputText id="or_numrow"
                                                          value="#{contenedorBean.contabSeleccionado.or_numrow}"
-                                                         readonly="#{contenedorBean.contabEditable}"/>
+                                                         readonly="#{!contenedorBean.contabEditable}"/>
                                         </p:column>
                                     </p:row>
 
                                     <p:row>
                                         <p:column styleClass="form_col_title">
-                                            <p:outputLabel for="or_numcol" value="Col SPAN"/>
+                                            <p:outputLabel for="or_numcol" value="Orden de Columna"/>
                                         </p:column>
                                         <p:column styleClass="form_col_empty">
                                             <p:spacer width="1" height="24"
@@ -100,7 +100,7 @@
                                         <p:column styleClass="form_col_detail">
                                             <p:inputText id="or_numcol"
                                                          value="#{contenedorBean.contabSeleccionado.or_numcol}"
-                                                         readonly="#{contenedorBean.contabEditable}"/>
+                                                         readonly="#{!contenedorBean.contabEditable}" />
                                         </p:column>
                                     </p:row>
 
@@ -140,7 +140,7 @@
 
                                     <p:row>
                                         <p:column styleClass="form_col_title">
-                                            <p:outputLabel for="co_pagina" value="Col SPAN"/>
+                                            <p:outputLabel for="co_pagina" value="Código de Página"/>
                                         </p:column>
                                         <p:column styleClass="form_col_empty">
                                             <p:spacer width="1" height="24"
@@ -149,7 +149,7 @@
                                         <p:column styleClass="form_col_detail">
                                             <p:inputText id="co_pagina"
                                                          value="#{contenedorBean.contabSeleccionado.co_pagina}"
-                                                         readonly="#{contenedorBean.contabEditable}"/>
+                                                         readonly="#{!contenedorBean.contabEditable}"/>
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -163,7 +163,7 @@
                     </p:row>
                     <p:row>
                         <p:column style="width: 20%">
-                            <p:commandButton action="#{contenedorBean.conpar_back}"
+                            <p:commandButton action="#{contenedorBean.contab_back}"
                                              value="Atrás"
                                              title="Volver al reporte de usuarios"
                                              icon="pi pi-arrow-left"
@@ -172,7 +172,7 @@
                         </p:column>
                         <p:column style="text-align: center;width: 60%;">
                             <p:commandButton value="Grabar"
-                                             action="#{contenedorBean.conpar_save}"
+                                             action="#{contenedorBean.contab_save}"
                                              type="submit"
                                              icon="pi pi-save"
                             >

@@ -1,6 +1,6 @@
 package com.acceso.wfweb.units;
 
-import com.acceso.wfweb.dtos.ContabDTO;
+import com.acceso.wfweb.dtos.WContabDTO;
 
 import java.io.Serializable;
 import java.util.*;
@@ -10,7 +10,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     //objeto de distribucion(ahora solo vertical)
 
     LinkedHashMap<Integer, Pagina> paginas;
-    List<ContabDTO> contabs;
+    List<WContabDTO> contabs;
     int co_conten;
     long id_frawor;
     String co_contit;
@@ -18,7 +18,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     String ls_conpar;
 
     //    public Contenedor(int co_conten, long id_frawor, String co_contit) {
-    public Contenedor(int co_conten, long id_frawor, String co_contit, List<ContabDTO> contabs) {
+    public Contenedor(int co_conten, long id_frawor, String co_contit, List<WContabDTO> contabs) {
         this.co_conten = co_conten;
         this.id_frawor = id_frawor;
         this.co_contit = co_contit;
@@ -67,11 +67,11 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         this.il_header = il_header;
     }
 
-    public List<ContabDTO> getContabs() {
+    public List<WContabDTO> getContabs() {
         return contabs;
     }
 
-    public void setContabs(List<ContabDTO> contabs) {
+    public void setContabs(List<WContabDTO> contabs) {
         this.contabs = contabs;
     }
 
@@ -87,12 +87,12 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     public String toHTML() {
         String HTML = "";
 
-        HashMap<Integer, List<ContabDTO>> rows = new HashMap<>();
+        HashMap<Integer, List<WContabDTO>> rows = new HashMap<>();
 
-        List<ContabDTO> cols = new ArrayList<>();
+        List<WContabDTO> cols = new ArrayList<>();
 //        System.out.println("contabs.size()=" + contabs.size());
         for (int i = 0; i < contabs.size(); i++) {
-            ContabDTO contab = contabs.get(i);
+            WContabDTO contab = contabs.get(i);
 //            System.out.println("eval>>[contab =" + contab + ":" + i + "]");
 
             if (i == 0) {
@@ -115,12 +115,12 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 
         }
 
-        for (Map.Entry<Integer, List<ContabDTO>> rowx : rows.entrySet()) {
+        for (Map.Entry<Integer, List<WContabDTO>> rowx : rows.entrySet()) {
             HTML += "<div class=\"row\">";
             int filas = rowx.getValue().size();
             String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
 
-            for (ContabDTO contab : rowx.getValue()) {
+            for (WContabDTO contab : rowx.getValue()) {
                 HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";
 
 //                for (Pagina pagina : paginas.values()) {

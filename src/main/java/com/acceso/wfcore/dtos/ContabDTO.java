@@ -13,6 +13,7 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import java.io.Serializable;
 
+
 /**
  * @author Rómulo Galindo
  */
@@ -20,20 +21,19 @@ import java.io.Serializable;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_PARAMETRO,
-                query = "select co_conten, co_conpar, no_conpar "
-                        + "from wfsistem.pbparametro_list()",
+                name = Values.QUERYS_NATIVE_SELECT_CONTAB,
+                query = "select ct.co_conten, ct.co_contab, ct.nu_rowspa, ct.nu_colspa, ct.or_numrow, ct.or_numcol, ct.ti_haling, ct.ti_valing, ct.ca_tamcel, cp.co_pagina\n" +
+                        "from frawor4.tccontab ct left join frawor4.tcconpag cp on ct.co_conten = cp.co_conten and ct.co_contab=cp.co_contab  where ct.co_conten= :p_co_conten",
                 resultClass = ContabDTO.class),
         @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN,
-                query = "select co_conten, co_conpar, no_conpar "
-                        + "from wfsistem.pbparametro_list(:co_conten)",
-                resultClass = ContabDTO.class)
+                name = Values.QUERYS_NATIVE_SAVE_CONTAB,
+                query = "select pbcontab_save as empty from wfsistem.pbcontab_save(:p_co_conten, :p_co_contab, :p_nu_rowspa, :p_nu_colspa, :p_or_numrow, :p_or_numcol, :p_ti_haling, :p_ti_valing, :p_ca_tamcel, :p_co_pagina)",
+                resultClass = EmptyDTO.class)
 })
 public class ContabDTO implements Serializable {
 
     @Id
-    Integer co_contab;
+    Short co_contab;
 
     Integer co_conten;
     Short nu_rowspa;
@@ -50,11 +50,11 @@ public class ContabDTO implements Serializable {
     public ContabDTO() {
     }
 
-    public Integer getCo_contab() {
+    public Short getCo_contab() {
         return co_contab;
     }
 
-    public void setCo_contab(Integer co_contab) {
+    public void setCo_contab(Short co_contab) {
         this.co_contab = co_contab;
     }
 
