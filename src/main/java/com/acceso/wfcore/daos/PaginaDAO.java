@@ -72,6 +72,31 @@ public class PaginaDAO {
         return paginaDTO;
     }
 
+    public PaginaconDTO save(PaginaconDTO paginaconDTO) {
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_PAGINACON));
+
+            nQuery.setInteger("p_co_pagina", paginaconDTO.getCo_pagina());
+            nQuery.setInteger("p_co_conten", paginaconDTO.getCo_conten());
+            nQuery.setString("p_no_pagtit", paginaconDTO.getNo_pagtit());
+            nQuery.setString("p_ti_pagina", paginaconDTO.getTi_pagina());
+            nQuery.setString("p_no_pagdes", paginaconDTO.getNo_pagdes());
+
+
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
+            paginaconDTO = (PaginaconDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return paginaconDTO;
+    }
+
     public List<BotonDTO> getButtons(int p_co_pagina) {
         List<BotonDTO> buttons = new ArrayList<>();
         NQuery nQuery = new NQuery();
@@ -115,6 +140,51 @@ public class PaginaDAO {
         return scriptDTO;
     }
 
+
+    public PaginaDTO getPagina(int p_co_pagina) {
+        NQuery nQuery = new NQuery();
+        PaginaDTO paginaDTO = null;
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GET_PAGINA));
+
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+
+
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
+            paginaDTO = (PaginaDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return paginaDTO;
+    }
+
+    public PaginaconDTO getPaginacon(int p_co_conten, int p_co_pagina) {
+        NQuery nQuery = new NQuery();
+        PaginaconDTO paginaDTO = null;
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GET_PAGINACON));
+
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+
+
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
+            paginaDTO = (PaginaconDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return paginaDTO;
+    }
 
     public BotonDTO saveButton(int p_co_pagina, BotonDTO botonDTO) {
         NQuery nQuery = new NQuery();
@@ -204,6 +274,69 @@ public class PaginaDAO {
         return elements;
     }
 
+
+    public List<ElementoconDTO> getElementos(int p_co_conten, int p_co_pagina) {
+        List<PagtitconDTO> pagtitcons = new ArrayList<>();
+        List<PagregconDTO> pagregcons = new ArrayList<>();
+        List<ElementoconDTO> elements = new ArrayList<>();
+
+        NQuery nQuery = new NQuery();
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGTITCON));
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString());
+            pagtitcons = nQuery.list();
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        //de registro
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGREGCON));
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString());
+            pagregcons = nQuery.list();
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getElementos] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        for (PagtitconDTO pagtitDTO : pagtitcons) {
+            ElementoconDTO elementoDTO = new ElementoconDTO();
+            elementoDTO.setCo_elemen(p_co_pagina * 1000 + pagtitDTO.getCo_pagtit());
+            elementoDTO.setTi_elemen(ElementoDTO.TYPE_TITLE);
+            elementoDTO.setNo_elemen(pagtitDTO.getNo_pagtit());
+            elementoDTO.setPagtitDTO(pagtitDTO);
+            elements.add(elementoDTO);
+
+            for (PagregconDTO pagregDTO : pagregcons) {
+                if (pagregDTO.getCo_pagtit() == pagtitDTO.getCo_pagtit()) {
+                    ElementoconDTO elementoDTO2 = new ElementoconDTO();
+                    elementoDTO2.setCo_elemen(p_co_pagina * 1000 + pagregDTO.getCo_pagreg());
+                    elementoDTO2.setTi_elemen(ElementoDTO.TYPE_REGIST);
+                    elementoDTO2.setNo_elemen(pagregDTO.getNo_pagreg());
+                    elementoDTO2.setPagregDTO(pagregDTO);
+                    elements.add(elementoDTO2);
+                }
+            }
+
+        }
+
+        return elements;
+    }
+
     public void deleteButton(int p_co_pagina, short p_co_pagbot) {
         NQuery nQuery = new NQuery();
         int result = -1;
@@ -254,6 +387,30 @@ public class PaginaDAO {
         return tituloDTO;
     }
 
+
+    public PagtitconDTO saveTitle(int p_co_conten, int p_co_pagina, PagtitconDTO tituloDTO) {
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_PAGTITCON));
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setShort("p_co_pagtit", (short) tituloDTO.getCo_pagtit());
+            nQuery.setString("p_no_pagtit", tituloDTO.getNo_pagtit());
+            nQuery.setShort("p_or_pagtit", tituloDTO.getOr_pagtit());
+
+            System.out.println("[PaginaDAO:saveTitle] Q = " + nQuery.getQueryString());
+            tituloDTO = (PagtitconDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:saveTitle] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return tituloDTO;
+    }
+
     public PagregDTO saveRegist(int p_co_pagina, PagregDTO pagregDTO) {
         NQuery nQuery = new NQuery();
 
@@ -289,6 +446,42 @@ public class PaginaDAO {
         return pagregDTO;
     }
 
+
+    public PagregconDTO saveRegist(int p_co_conten, int p_co_pagina, PagregconDTO pagregDTO) {
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_PAGREGCON));
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setShort("p_co_pagreg", (short) pagregDTO.getCo_pagreg());
+            nQuery.setShort("pn_co_pagreg", (short) pagregDTO.getCo_pagreg2());
+            nQuery.setString("p_no_pagreg", pagregDTO.getNo_pagreg());
+            nQuery.setShort("p_co_pagtit", (short) pagregDTO.getCo_pagtit());
+            nQuery.setShort("p_or_pagreg", pagregDTO.getOr_pagreg());
+            nQuery.setShort("p_ti_pagreg", pagregDTO.getTi_pagreg());
+            nQuery.setString("p_ti_estreg", pagregDTO.getTi_estreg());
+            nQuery.setString("p_va_alireg", pagregDTO.getVa_alireg());
+            nQuery.setString("p_no_desreg", pagregDTO.getNo_desreg());
+            nQuery.setShort("p_ca_carcol", pagregDTO.getCa_carcol());
+            nQuery.setShort("p_ca_carrow", pagregDTO.getCa_carrow());
+            nQuery.setString("p_ti_nowrap", pagregDTO.getTi_nowrap());
+            nQuery.setBoolean("p_il_onchan", pagregDTO.getIl_onchan());
+            nQuery.setString("p_va_valign", pagregDTO.getVa_valign());
+            nQuery.setBoolean("p_il_guareg", pagregDTO.getIl_guareg());
+            nQuery.setShort("p_ca_caract", pagregDTO.getCa_caract());
+
+            System.out.println("[PaginaDAO:saveRegist] Q = " + nQuery.getQueryString());
+            pagregDTO = (PagregconDTO) nQuery.uniqueResult();
+            System.out.println("[PaginaDAO:saveRegist] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return pagregDTO;
+    }
 
     public void deleteTitle(int p_co_pagina, short p_co_pagtit) {
         NQuery nQuery = new NQuery();

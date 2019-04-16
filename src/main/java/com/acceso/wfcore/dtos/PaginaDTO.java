@@ -27,6 +27,10 @@ import java.util.List;
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_PAGINA,
                 query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag)",
+                resultClass = PaginaDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_GET_PAGINA,
+                query = "select * from frawor4.tcpagina where co_pagina = :p_co_pagina",
                 resultClass = PaginaDTO.class)
 })
 public class PaginaDTO implements Serializable {

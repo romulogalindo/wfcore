@@ -26,6 +26,9 @@ public class Values {
 
     public static final String QUERYS_NATIVE_SELECT_PAGTIT = "frawor4.tcpagtit";
 
+    public static final String QUERYS_NATIVE_SELECT_PAGTITCON = "frawor4.tcpagtitcon_select";
+    public static final String QUERYS_NATIVE_SAVE_PAGTITCON = "frawor4.tcpagtitcon_save";
+
     public static final String QUERYS_NATIVE_SELECT_PAGREG = "frawor4.tcpagreg";
 
     public static final String QUERYS_NATIVE_SELECT_SUBSISTEMA = "wfcore.subsistema_select";
@@ -61,14 +64,21 @@ public class Values {
     public static final String QUERYS_NATIVE_SELECT_CONTENEDOR = "wfcore.contenedor_select";
 
     public static final String QUERYS_NATIVE_SELECT_PAGINA = "wfcore.pagina_select";
-//    public static final String QUERYS_NATIVE_SELECT_NEW_PAGINA = "wfcore.pagina_new";
+    //    public static final String QUERYS_NATIVE_SELECT_NEW_PAGINA = "wfcore.pagina_new";
 //    public static final String QUERYS_NATIVE_SELECT_UPDATE_PAGINA = "wfcore.pagina_update";
     public static final String QUERYS_NATIVE_SAVE_PAGINA = "wfcore.pbpagina_save";
+    public static final String QUERYS_NATIVE_GET_PAGINA = "wfcore.pbpagina_g";
+
+    public static final String QUERYS_NATIVE_GET_PAGINACON = "wfcore.paginacon_get";
+    public static final String QUERYS_NATIVE_SAVE_PAGINACON = "wfcore.paginacon_save";
 
     public static final String QUERYS_NATIVE_SELECT_BUTTONS = "wfcore.pbboton_select";
     public static final String QUERYS_NATIVE_SAVE_BUTTON = "wfcore.pbboton_save";
     public static final String QUERYS_NATIVE_DELETE_BUTTON = "wfcore.pbboton_delete";
 
+
+    public static final String QUERYS_NATIVE_SELECT_PAGREGCON = "wfcore.pbpagregcon_select";
+    public static final String QUERYS_NATIVE_SAVE_PAGREGCON = "wfcore.pbpagregcon_save";
 
     public static final String QUERYS_NATIVE_SAVE_PAGREG = "wfcore.pbpagreg_save";
     public static final String QUERYS_NATIVE_DELETE_PAGREG = "wfcore.pbpagreg_delete";

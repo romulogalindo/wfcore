@@ -5,16 +5,16 @@
  */
 package com.acceso.wfcore.dtos;
 
-import com.acceso.wfcore.utils.Values;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
  * @author Romulo Galindo
  */
 @Entity
-public class ElementoDTO implements Serializable {
+public class ElementoconDTO implements Serializable {
 
     public static final int TYPE_TITLE = 1;
     public static final int TYPE_REGIST = 2;
@@ -25,12 +25,12 @@ public class ElementoDTO implements Serializable {
     String no_elemen;
 
     @Transient
-    PagtitDTO pagtitDTO;
+    PagtitconDTO pagtitDTO;
 
     @Transient
-    PagregDTO pagregDTO;
+    PagregconDTO pagregDTO;
 
-    public ElementoDTO() {
+    public ElementoconDTO() {
     }
 
     public Integer getCo_elemen() {
@@ -57,25 +57,25 @@ public class ElementoDTO implements Serializable {
         this.no_elemen = no_elemen;
     }
 
-    public PagtitDTO getPagtitDTO() {
+    public PagtitconDTO getPagtitDTO() {
         return pagtitDTO;
     }
 
-    public void setPagtitDTO(PagtitDTO pagtitDTO) {
+    public void setPagtitDTO(PagtitconDTO pagtitDTO) {
         this.pagtitDTO = pagtitDTO;
     }
 
-    public PagregDTO getPagregDTO() {
+    public PagregconDTO getPagregDTO() {
         return pagregDTO;
     }
 
-    public void setPagregDTO(PagregDTO pagregDTO) {
+    public void setPagregDTO(PagregconDTO pagregDTO) {
         this.pagregDTO = pagregDTO;
     }
 
     @Override
     public String toString() {
-        return "ElementoDTO{" +
+        return "ElementoconDTO{" +
                 "co_elemen=" + co_elemen +
                 ", ti_elemen=" + ti_elemen +
                 ", no_elemen='" + no_elemen + '\'' +

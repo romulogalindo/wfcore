@@ -36,6 +36,8 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     private static final String URL_CONPAR_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegConpar.xhtml";
     private static final String URL_CONPAR_EDIT = "/admin/jsf_exec/pagex/contenedor/paginaRegConpar.xhtml";
 
+    private static final String URL_MANAGER_PAGE = "/admin/jsf_exec/pagex/contenedor/paginaRegPagina.xhtml";
+
     public static final String BEAN_NAME = "contenedorBean";
 
     //    private ContenedorDAO contenedorDAO;
@@ -239,7 +241,7 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     }
 
     public String contab_edit() {
-        return URL_CONTAB_EDIT;
+        return URL_MANAGER_PAGE;
     }
 
     public String contab_save() {

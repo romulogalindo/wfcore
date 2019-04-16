@@ -26,11 +26,11 @@
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column colspan="3" style="text-align: center">
-                            <p:tabView>
-                                <p:tab title="Datos" activeIndex="#{contenedorBean.defaultTabIndex}">
+                            <p:tabView activeIndex="#{contenedorBean.defaultTabIndex}">
+
+                                <p:tab title="Datos">
 
                                     <p:panelGrid style="display: inline-block;">
-
                                         <p:row>
                                             <p:column styleClass="form_col_title">
                                                 <p:outputLabel for="co_conten" value="ID"/>
@@ -56,8 +56,8 @@
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
                                                 <p:inputText id="no_contit"
-                                                               value="#{contenedorBean.contenedor.no_contit}"
-                                                               readonly="#{contenedorBean.isregEditable}"/>
+                                                             value="#{contenedorBean.contenedor.no_contit}"
+                                                             readonly="#{contenedorBean.isregEditable}"/>
                                             </p:column>
                                         </p:row>
 
@@ -71,15 +71,16 @@
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
                                                 <p:inputTextarea id="de_conten"
-                                                               value="#{contenedorBean.contenedor.de_conten}"
-                                                               readonly="#{contenedorBean.isregEditable}"/>
+                                                                 value="#{contenedorBean.contenedor.de_conten}"
+                                                                 readonly="#{contenedorBean.isregEditable}"/>
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
 
                                 </p:tab>
 
-                                <p:tab title="Tabs/Organización">
+                                <p:tab title="Tabs y Organización">
+
                                     <p:toolbar>
                                         <f:facet name="left">
                                             <p:outputLabel value="Lista de Tabs"></p:outputLabel>
@@ -146,7 +147,6 @@
                                         </p:column>
 
 
-
                                         <p:column headerText="Acciones" style="text-align: center">
                                             <p:commandButton icon="fa fa-search" title="Ver"
                                                              action="#{contenedorBean.contab_edit}">
@@ -175,11 +175,14 @@
 
 
                                             <p:commandButton icon="pi pi-window-maximize" title="Editar Página"
-                                                             action="#{contenedorBean.contab_edit}">
+                                                             action="#{contenedorBean.contab_edit}"
+                                                             actionListener="#{conpagBean.load2(tab.co_conten, tab.co_pagina)}">
                                                 <f:setPropertyActionListener value="#{tab}"
                                                                              target="#{contenedorBean.contabSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{contenedorBean.contabEditable}"/>
+                                                <!--<f:setPropertyActionListener value="#{tab.co_pagina}"-->
+                                                <!--target="#{conpagBean.co_pagina}"/>-->
                                             </p:commandButton>
 
                                         </p:column>
@@ -247,7 +250,7 @@
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
                                                              action="#{contenedorBean.conpar_edit}">
                                                 <f:setPropertyActionListener value="#{par}"
-                                                                             target="#{contenedorBean.contabSeleccionado}"/>
+                                                                             target="#{contenedorBean.conparSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{contenedorBean.conparEditable}"/>
                                             </p:commandButton>

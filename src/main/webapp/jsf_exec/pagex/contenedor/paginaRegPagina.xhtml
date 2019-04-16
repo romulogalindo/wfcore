@@ -16,8 +16,8 @@
                 <p:toolbar>
                     <f:facet name="left">
                         <span>
-                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{paginaBean.pagina.no_pagtit}</h3> |
-                        <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{paginaBean.pagina.co_pagina}]</h4>
+                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{conpagBean.pagina.no_pagtit}</h3> |
+                        <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{conpagBean.pagina.co_pagina}]</h4>
                         </span>
 
                     </f:facet>
@@ -27,11 +27,11 @@
                     <p:row>
                         <p:column colspan="3" style="text-align: center">
 
-                            <p:tabView activeIndex="#{paginaBean.defaultTabIndex}">
+                            <p:tabView activeIndex="#{conpagBean.defaultTabIndex}">
+
                                 <p:tab title="Datos">
 
                                     <p:panelGrid style="display: inline-block;">
-
                                         <p:row>
                                             <p:column styleClass="form_col_title">
                                                 <p:outputLabel for="co_pagina" value="ID"/>
@@ -41,8 +41,8 @@
                                                           style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
-                                                <p:outputLabel id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
-                                                               rendered="#{paginaBean.thisEditable}"/>
+                                                <p:outputLabel id="co_pagina" value="#{conpagBean.pagina.co_pagina}"
+                                                               rendered="#{conpagBean.thisEditable}"/>
                                             </p:column>
                                         </p:row>
                                         <p:row>
@@ -54,10 +54,10 @@
                                                           style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
-                                                <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
+                                                <p:inputText id="no_pagtit" value="#{conpagBean.pagina.no_pagtit}"
                                                              required="true"
                                                              requiredMessage="Debe ingresar un Nombre."
-                                                             rendered="#{paginaBean.thisEditable}"/>
+                                                             rendered="#{conpagBean.thisEditable}"/>
                                             </p:column>
                                         </p:row>
 
@@ -70,9 +70,9 @@
                                                           style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
-                                                <p:selectOneRadio id="ti_pagina" value="#{paginaBean.pagina.ti_pagina}"
+                                                <p:selectOneRadio id="ti_pagina" value="#{conpagBean.pagina.ti_pagina}"
                                                                   unselectable="true"
-                                                                  rendered="#{paginaBean.thisEditable}">
+                                                                  rendered="#{conpagBean.thisEditable}">
                                                     <f:selectItem itemLabel="Formulario" itemValue="R"/>
                                                     <f:selectItem itemLabel="Reporte" itemValue="T"/>
                                                 </p:selectOneRadio>
@@ -81,17 +81,17 @@
 
                                         <p:row>
                                             <p:column styleClass="form_col_title">
-                                                <p:outputLabel for="de_pagina" value="Descripción"/>
+                                                <p:outputLabel for="no_pagdes" value="Descripción"/>
                                             </p:column>
                                             <p:column styleClass="form_col_empty">
                                                 <p:spacer width="1" height="24"
                                                           style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
                                             </p:column>
                                             <p:column styleClass="form_col_detail">
-                                                <p:inputTextarea id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
+                                                <p:inputTextarea id="no_pagdes" value="#{conpagBean.pagina.no_pagdes}"
                                                                  required="false"
                                                                  requiredMessage="Debe ingresar una Descripción."
-                                                                 rendered="#{paginaBean.thisEditable}"/>
+                                                                 rendered="#{conpagBean.thisEditable}"/>
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -99,42 +99,17 @@
                                 </p:tab>
 
                                 <p:tab title="Titulos y Registros">
-                                    <p:toolbar>
-                                        <f:facet name="left">
-                                            <p:outputLabel value="Lista de Titulos/Registros"></p:outputLabel>
-                                        </f:facet>
-
-                                        <f:facet name="right">
-                                            <p:commandButton icon="pi pi-file" value="Nuevo título"
-                                                             partialSubmit="true"
-                                                             action="#{paginaBean.pagtit_new}">
-                                                <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.regEditable}"/>
-                                            </p:commandButton>
-                                        </f:facet>
-                                        <f:facet name="right">
-                                            <p:commandButton icon="pi pi-file" value="Nuevo registro"
-                                                             partialSubmit="true"
-                                                             action="#{paginaBean.pagreg_new}">
-                                                <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.regEditable}"/>
-                                            </p:commandButton>
-                                        </f:facet>
-
-                                    </p:toolbar>
-
-                                    <p:spacer height="2"></p:spacer>
 
                                     <p:dataTable id="listax"
                                                  var="ele"
-                                                 value="#{paginaBean.pagina.ls_elemen}"
+                                                 value="#{conpagBean.pagina.ls_elemen}"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                                  paginator="true"
                                                  paginatorPosition="bottom"
                                                  rows="100"
                                                  widgetVar="widTable3"
                                                  selectionMode="single"
-                                                 selection="#{paginaBean.elementoSeleccionado}"
+                                                 selection="#{conpagBean.elementoSeleccionado}"
                                                  rowKey="#{ele.co_elemen}"
                                                  rowIndexVar="N"
                                                  style="width:100%; ">
@@ -148,8 +123,12 @@
                                             <h:outputText value="#{N + 1}"/>
                                         </p:column>
 
-                                        <p:column headerText="COD" width="50" styleClass="table_cell_right">
-                                            <h:outputText value="#{ele.co_elemen}"/>
+                                        <p:column headerText="TIT" width="40" styleClass="table_cell_right">
+                                            <h:outputText value="#{ele.pagtitDTO.co_pagtit}" rendered="#{ele.ti_elemen == 1}"/>
+                                        </p:column>
+
+                                        <p:column headerText="REG" width="40" styleClass="table_cell_right">
+                                            <h:outputText value="#{ele.pagregDTO.co_pagreg}" rendered="#{ele.ti_elemen == 2}"/>
                                         </p:column>
 
                                         <p:column headerText="Tipo" width="70" styleClass="table_cell_left">
@@ -162,38 +141,46 @@
                                                   styleClass="table_cell_left">
 
                                             <p:panelGrid rendered="#{ele.ti_elemen == 1}">
-                                                <h:outputText value="#{ele.pagtitDTO.no_pagtit}"/>
+                                                <p:inputText value="#{ele.pagtitDTO.no_pagtit}"
+                                                             placeholder="[Título vacio]" readonly="true"
+                                                             style="width: 100%;text-align: center;"/>
                                             </p:panelGrid>
-                                            <p:panelGrid columns="2" rendered="#{ele.ti_elemen == 2}">
-                                                <h:outputText value="#{ele.pagregDTO.no_pagreg}"/>
-                                                <h:outputText value="#{ele.pagregDTO.ti_pagreg_desc}"/>
-                                            </p:panelGrid>
+
+                                            <p:outputPanel>
+                                                <p:panelGrid rendered="#{ele.ti_elemen == 2}" style="border:1px solid #6c6c6c; border-radius: 6px;">
+                                                    <p:row>
+                                                        <p:column style="width: 40%;text-align: right">
+                                                            <h:outputText
+                                                                    value="#{ele.pagregDTO.no_pagreg}"/>
+                                                        </p:column>
+                                                        <p:column style="width: 10%">
+                                                            |
+                                                        </p:column>
+                                                        <p:column style="width: 50%;text-align: left">
+                                                            <h:outputText
+                                                                    value="#{ele.pagregDTO.ti_pagreg_desc}"/>
+                                                        </p:column>
+                                                    </p:row>
+                                                </p:panelGrid>
+                                            </p:outputPanel>
+
                                         </p:column>
 
                                         <p:column headerText="Acciones" style="text-align: center">
                                             <p:commandButton icon="fa fa-search" title="Ver"
-                                                             action="#{paginaBean.pagreg_edit}">
+                                                             action="#{conpagBean.pagreg_edit}">
                                                 <f:setPropertyActionListener value="#{ele}"
-                                                                             target="#{paginaBean.elementoSeleccionado}"/>
+                                                                             target="#{conpagBean.elementoSeleccionado}"/>
                                                 <f:setPropertyActionListener value="false"
-                                                                             target="#{paginaBean.regEditable}"/>
+                                                                             target="#{conpagBean.regEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                                             action="#{paginaBean.pagreg_edit}">
+                                                             action="#{conpagBean.pagreg_edit}">
                                                 <f:setPropertyActionListener value="#{ele}"
-                                                                             target="#{paginaBean.elementoSeleccionado}"/>
+                                                                             target="#{conpagBean.elementoSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.regEditable}"/>
-                                            </p:commandButton>
-
-                                            <p:commandButton icon="fa fa-trash"
-                                                             action="#{paginaBean.pagreg_delete}"
-                                                             update="@form">
-                                                <f:setPropertyActionListener value="#{ele}"
-                                                                             target="#{paginaBean.elementoSeleccionado}"/>
-                                                <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                                           icon="fa fa-exclamation-triangle"/>
+                                                                             target="#{conpagBean.regEditable}"/>
                                             </p:commandButton>
 
                                         </p:column>
@@ -210,9 +197,9 @@
 
                                         <f:facet name="right">
                                             <p:commandButton icon="pi pi-file" value="Nuevo botón" partialSubmit="true"
-                                                             action="#{paginaBean.pagbot_new}">
+                                                             action="#{conpagBean.pagbot_new}">
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.btnEditable}"/>
+                                                                             target="#{conpagBean.btnEditable}"/>
                                             </p:commandButton>
                                         </f:facet>
 
@@ -222,14 +209,14 @@
 
                                     <p:dataTable id="lista2"
                                                  var="bot"
-                                                 value="#{paginaBean.pagina.ls_botone}"
+                                                 value="#{conpagBean.pagina.ls_botone}"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                                  paginator="true"
                                                  paginatorPosition="bottom"
                                                  rows="100"
                                                  widgetVar="widTable2"
                                                  selectionMode="single"
-                                                 selection="#{paginaBean.botonSeleccionado}"
+                                                 selection="#{conpagBean.botonSeleccionado}"
                                                  rowKey="#{bot.co_pagbot}"
                                                  rowIndexVar="N"
                                                  style="width:100%; ">
@@ -268,26 +255,26 @@
 
                                         <p:column headerText="Acciones" style="text-align: center">
                                             <p:commandButton icon="fa fa-search" title="Ver"
-                                                             action="#{paginaBean.pagbot_view}">
+                                                             action="#{conpagBean.pagbot_view}">
                                                 <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                                             target="#{conpagBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="false"
-                                                                             target="#{paginaBean.btnEditable}"/>
+                                                                             target="#{conpagBean.btnEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                                             action="#{paginaBean.pagbot_edit}">
+                                                             action="#{conpagBean.pagbot_edit}">
                                                 <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                                             target="#{conpagBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.btnEditable}"/>
+                                                                             target="#{conpagBean.btnEditable}"/>
                                             </p:commandButton>
 
                                             <p:commandButton icon="fa fa-trash"
-                                                             action="#{paginaBean.pagbot_delete}"
+                                                             action="#{conpagBean.pagbot_delete}"
                                                              update="@form">
                                                 <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
+                                                                             target="#{conpagBean.botonSeleccionado}"/>
                                                 <p:confirm header="Confirmación" message="¿Desea continuar?"
                                                            icon="fa fa-exclamation-triangle"/>
                                             </p:commandButton>
@@ -298,57 +285,10 @@
 
                                 </p:tab>
 
-                                <p:tab title="Script de Carga">
-                                    <p:panelGrid style="width: 100%">
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputLabel value="Tipo de código"></p:outputLabel>
-                                                <p:selectOneRadio id="ti_script" value="1" unselectable="true">
-                                                    <f:selectItem itemLabel="Valpag JS" itemValue="1"/>
-                                                    <f:selectItem itemLabel="Vaqlpag SP" itemValue="2"/>
-                                                </p:selectOneRadio>
-                                                <p:outputLabel
-                                                        value="Si el codigo Valpag JS esta en blanco por default se llamara al Valpag SP."></p:outputLabel>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputPanel style="text-align: left;">
+                                <p:tab title="Parametros">
 
-
-                                                    <pe:codeMirror id="cadeJS" mode="javascript"
-                                                                   value="#{paginaBean.pagina.js_valpag}"
-                                                                   lineNumbers="true"
-                                                                   matchBrackets="true"/>
-                                                </p:outputPanel>
-                                            </p:column>
-                                        </p:row>
-                                    </p:panelGrid>
                                 </p:tab>
 
-                                <p:tab title="Script de Proceso">
-                                    <p:panelGrid style="width: 100%">
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputLabel value="Código Propag JS"></p:outputLabel>
-                                                <p:outputLabel
-                                                        value="Si el codigo Propag JS esta en blanco por default se llamara al Propag SP."></p:outputLabel>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputPanel style="text-align: left;">
-
-
-                                                    <pe:codeMirror id="cadeJS2" mode="javascript"
-                                                                   value="#{paginaBean.pagina.js_propag}"
-                                                                   lineNumbers="true"
-                                                                   matchBrackets="true"/>
-                                                </p:outputPanel>
-                                            </p:column>
-                                        </p:row>
-                                    </p:panelGrid>
-                                </p:tab>
                             </p:tabView>
 
                         </p:column>
@@ -360,8 +300,8 @@
                     </p:row>
                     <p:row>
                         <p:column style="width: 20%;">
-                            <p:commandButton action="#{paginaBean.load()}"
-                                             actionListener="#{paginaBean.doListener()}"
+                            <p:commandButton action="#{conpagBean.load()}"
+                                             actionListener="#{conpagBean.doListener()}"
                                              value="Atrás"
                                              title="Volver al reporte de usuarios"
                                              icon="pi pi-arrow-left"
@@ -371,14 +311,14 @@
                         </p:column>
                         <p:column style="text-align: center;width: 60%;">
                             <p:commandButton value="Grabar"
-                                             action="#{paginaBean.saveRegist}"
+                                             action="#{conpagBean.saveRegist}"
                                              type="submit"
                                              icon="pi pi-save"
                                              update="panelActualizarPagina">
                                 <p:ajax rendered="panelActualizarPagina"/>
                             </p:commandButton>
                             <p:commandButton value="Grabar y Aplicar"
-                                             action="#{paginaBean.saveRegistApply}"
+                                             action="#{conpagBean.saveRegistApply}"
                                              type="submit"
                                              icon="pi pi-refresh"
                                              update="panelActualizarPagina">

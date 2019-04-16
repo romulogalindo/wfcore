@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="panelListaBotone">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <span>
+                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{conpagBean.pagina.no_pagtit}</h3> |
+                        <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{conpagBean.pagina.co_pagina}]</h4>
+                            >
+                            <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Registro:#{conpagBean.elementoSeleccionado.pagregDTO.no_pagreg}</h4>
+                        </span>
+
+                    </f:facet>
+                </p:toolbar>
+
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column colspan="3" style="text-align: center">
+                            <p:outputPanel>
+                                <p:panelGrid id="botonDetalle" style="display: inline-block;">
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_co_boton" value="Código"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_co_boton"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.co_pagreg}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_no_pagreg" value="Texto"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_no_pagreg"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.no_pagreg}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_co_pagtit" value="¿A que título pertenece?"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_co_pagtit"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.co_pagtit}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_or_pagreg" value="Orden"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_or_pagreg"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.or_pagreg}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ti_pagreg" value="Tipo"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_ti_pagreg"
+                                                             value="#{conpagBean.elementoSeleccionado.pagregDTO.ti_pagreg}"
+                                                             disabled="#{!conpagBean.regEditable}">
+                                                <f:selectItems value="#{conpagBean.ls_ti_pagreg}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ti_estreg" value="Estado"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_ti_estreg"
+                                                             value="#{conpagBean.elementoSeleccionado.pagregDTO.ti_estreg}"
+                                                             disabled="#{!conpagBean.regEditable}">
+                                                <f:selectItems value="#{conpagBean.ls_ti_estreg}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_va_alireg" value="Aligenación horizontal"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_va_alireg"
+                                                             value="#{conpagBean.elementoSeleccionado.pagregDTO.va_alireg}"
+                                                             disabled="#{!conpagBean.regEditable}">
+                                                <f:selectItems value="#{conpagBean.ls_ti_alireg}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_va_valign">
+                                            <p:outputLabel for="sb_va_alireg" value="Aligenación vertical"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_va_valign"
+                                                             value="#{conpagBean.elementoSeleccionado.pagregDTO.va_valign}"
+                                                             disabled="#{!conpagBean.regEditable}">
+                                                <f:selectItems value="#{conpagBean.ls_ti_valign}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ca_carcol" value="Cantidad de columnas"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_ca_carcol"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.ca_carcol}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ca_carrow" value="Cantidad de filas"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_ca_carrow"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.ca_carrow}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ti_nowrap" value="Tipo de espaciado"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneMenu id="sb_ti_nowrap"
+                                                             value="#{conpagBean.elementoSeleccionado.pagregDTO.ti_nowrap}"
+                                                             disabled="#{!conpagBean.regEditable}">
+                                                <f:selectItems value="#{conpagBean.ls_ti_nowrap}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_il_onchan" value="¿Genera cambios?"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:toggleSwitch id="sb_il_onchan"
+                                                            value="#{conpagBean.elementoSeleccionado.pagregDTO.il_onchan}"
+                                                            offLabel="No" onLabel="Si"
+                                                            disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="sb_ca_caract" value="Cantidad de caracteres"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="sb_ca_caract"
+                                                         value="#{conpagBean.elementoSeleccionado.pagregDTO.ca_caract}"
+                                                         disabled="#{!conpagBean.regEditable}"/>
+                                        </p:column>
+                                    </p:row>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:separator/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 20%;">
+                            <p:commandButton action="#{conpagBean.pagreg_back}"
+                                             value="Atrás"
+                                             title="Volver al reporte de usuarios"
+                                             icon="pi pi-arrow-left"
+                                             immediate="true">
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="text-align: center;width: 60%;">
+                            <p:commandButton value="Grabar"
+                                             action="#{conpagBean.pagreg_save}"
+                                             type="submit"
+                                             icon="pi pi-save"
+                            >
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 20%;"></p:column>
+                    </p:row>
+                </p:panelGrid>
+
+            </p:panel>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+</html>
