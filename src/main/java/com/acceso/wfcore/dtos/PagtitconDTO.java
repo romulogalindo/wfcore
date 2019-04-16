@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
@@ -11,8 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * @author Mario Huillca <mario.huillca@acceso.com.pe>
- * Created on 30 nov. 2018, 15:11:45
+ * @author Romulo Galindo
  */
 @Entity
 @NamedNativeQueries({
@@ -22,7 +16,7 @@ import java.io.Serializable;
                 resultClass = PagtitconDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_PAGTITCON,
-                query = "select * from wfsistem.pbpagtitcon_save(:p_co_pagina, :p_co_conten, :p_co_pagtit, :p_no_pagtit, :p_or_pagtit )",
+                query = "select * from wfsistem.pbpagtitcon_save(:p_co_pagtit, :p_co_pagina, :p_co_conten, :p_no_pagtit, :p_or_pagtit )",
                 resultClass = PagtitconDTO.class)
 })
 public class PagtitconDTO implements Serializable {

@@ -20,6 +20,7 @@ public class Regist1 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
@@ -32,11 +33,12 @@ public class Regist1 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"1\" class=\"pagreg\" >" ;
-                html += "   <div class=\"md-form mt-0\">" ;
+                html += "   <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">" ;
 //                html += "<input type=text id='" + id + "V' name='" + id + "V' class=\"pagreg w3-input w3-border form-control\" value=>";
                 html += "<input type=text class=\"w3-input w3-border form-control\" value=>";
                 html += "   </div>";
@@ -49,6 +51,7 @@ public class Regist1 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";

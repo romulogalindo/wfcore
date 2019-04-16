@@ -20,6 +20,7 @@ public class Regist9 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
@@ -32,6 +33,7 @@ public class Regist9 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
@@ -46,6 +48,7 @@ public class Regist9 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
@@ -23,7 +18,7 @@ import java.io.Serializable;
                 resultClass = PagregconDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_PAGREGCON,
-                query = "select * from wfsistem.pbpagregcon_save(:p_co_pagreg, :p_co_conten, :p_co_pagina, :pn_co_pagreg, :p_no_pagreg, :p_co_pagtit, :p_or_pagreg, :p_ti_pagreg, :p_ti_estreg, :p_va_alireg, :p_no_desreg, :p_ca_carcol, :p_ca_carrow, :p_ti_nowrap, :p_il_onchan, :p_va_valign, :p_il_guareg, :p_ca_caract)",
+                query = "select * from wfsistem.pbpagregcon_save(:p_co_pagreg, :p_co_conten, :p_co_pagina, :p_no_pagreg, :p_co_pagtit, :p_or_pagreg, :p_ti_pagreg, :p_ti_estreg, :p_va_alireg, :p_no_desreg, :p_ca_carcol, :p_ca_carrow, :p_ti_nowrap, :p_il_onchan, :p_va_valign, :p_il_guareg, :p_ca_caract)",
                 resultClass = PagregconDTO.class)
 })
 public class PagregconDTO implements Serializable {

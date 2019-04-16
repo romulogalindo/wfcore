@@ -13,10 +13,11 @@
     width: 40%;
     color: #787878;
     /*font-weight: 600;*/
-    /*vertical-align: middle !important;*/
+    vertical-align: middle !important;
     min-height: 22px;
     /*padding: 4px 4px 4px 16px !important;*/
     /*border-right: 1px solid #c9c9c9;*/
+    text-align: right;
 }
 
 .wf_f_valreg {

@@ -36,7 +36,8 @@
                 border-top:unset !important;
             }
             table tbody td{
-                border-bottom: 1px solid #dee2e6 !important;
+                /*border-bottom: 1px solid #dee2e6 !important;*/
+                border-bottom: none !important;
             }
 
             .btn{

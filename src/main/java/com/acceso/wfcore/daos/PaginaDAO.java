@@ -418,7 +418,6 @@ public class PaginaDAO {
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_PAGREG));
             nQuery.setInteger("p_co_pagina", p_co_pagina);
             nQuery.setShort("p_co_pagreg", (short) pagregDTO.getCo_pagreg());
-            nQuery.setShort("pn_co_pagreg", (short) pagregDTO.getCo_pagreg2());
             nQuery.setString("p_no_pagreg", pagregDTO.getNo_pagreg());
             nQuery.setShort("p_co_pagtit", (short) pagregDTO.getCo_pagtit());
             nQuery.setShort("p_or_pagreg", pagregDTO.getOr_pagreg());
@@ -455,7 +454,6 @@ public class PaginaDAO {
             nQuery.setInteger("p_co_conten", p_co_conten);
             nQuery.setInteger("p_co_pagina", p_co_pagina);
             nQuery.setShort("p_co_pagreg", (short) pagregDTO.getCo_pagreg());
-            nQuery.setShort("pn_co_pagreg", (short) pagregDTO.getCo_pagreg2());
             nQuery.setString("p_no_pagreg", pagregDTO.getNo_pagreg());
             nQuery.setShort("p_co_pagtit", (short) pagregDTO.getCo_pagtit());
             nQuery.setShort("p_or_pagreg", pagregDTO.getOr_pagreg());
