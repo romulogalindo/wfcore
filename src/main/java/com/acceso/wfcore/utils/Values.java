@@ -76,6 +76,10 @@ public class Values {
     public static final String QUERYS_NATIVE_SAVE_BUTTON = "wfcore.pbboton_save";
     public static final String QUERYS_NATIVE_DELETE_BUTTON = "wfcore.pbboton_delete";
 
+    public static final String QUERYS_NATIVE_SELECT_PAGCON = "wfcore.pbpagcon_select";
+    public static final String QUERYS_NATIVE_SAVE_PAGCON = "wfcore.pbpagcon_save";
+    public static final String QUERYS_NATIVE_DELETE_PAGCON = "wfcore.pbpagcon_delete";
+
 
     public static final String QUERYS_NATIVE_SELECT_PAGREGCON = "wfcore.pbpagregcon_select";
     public static final String QUERYS_NATIVE_SAVE_PAGREGCON = "wfcore.pbpagregcon_save";

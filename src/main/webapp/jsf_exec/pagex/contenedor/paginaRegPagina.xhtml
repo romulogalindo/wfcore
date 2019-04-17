@@ -16,6 +16,7 @@
                 <p:toolbar>
                     <f:facet name="left">
                         <span>
+                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">[#{conpagBean.co_conten}]></h3> |
                         <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{conpagBean.pagina.no_pagtit}</h3> |
                         <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{conpagBean.pagina.co_pagina}]</h4>
                         </span>
@@ -190,22 +191,6 @@
                                 </p:tab>
 
                                 <p:tab title="Botones">
-                                    <p:toolbar>
-                                        <f:facet name="left">
-                                            <p:outputLabel value="Lista de botones"></p:outputLabel>
-                                        </f:facet>
-
-                                        <f:facet name="right">
-                                            <p:commandButton icon="pi pi-file" value="Nuevo botón" partialSubmit="true"
-                                                             action="#{conpagBean.pagbot_new}">
-                                                <f:setPropertyActionListener value="true"
-                                                                             target="#{conpagBean.btnEditable}"/>
-                                            </p:commandButton>
-                                        </f:facet>
-
-                                    </p:toolbar>
-
-                                    <p:spacer height="2"></p:spacer>
 
                                     <p:dataTable id="lista2"
                                                  var="bot"
@@ -252,31 +237,28 @@
                                             <h:outputText value="No" rendered="#{!bot.il_proces}"/>
                                         </p:column>
 
+                                        <p:column headerText="Destino" width="60" styleClass="table_cell_center">
+                                            <h:outputText value="#{bot.pagconDTO.co_condes}"
+                                                          rendered="#{bot.pagconDTO!=null}"/>
+                                        </p:column>
+
 
                                         <p:column headerText="Acciones" style="text-align: center">
-                                            <p:commandButton icon="fa fa-search" title="Ver"
-                                                             action="#{conpagBean.pagbot_view}">
-                                                <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{conpagBean.botonSeleccionado}"/>
-                                                <f:setPropertyActionListener value="false"
-                                                                             target="#{conpagBean.btnEditable}"/>
-                                            </p:commandButton>
 
                                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
-                                                             action="#{conpagBean.pagbot_edit}">
+                                                             action="#{conpagBean.pagbot_edit}" value="Editar Botòn">
                                                 <f:setPropertyActionListener value="#{bot}"
                                                                              target="#{conpagBean.botonSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{conpagBean.btnEditable}"/>
                                             </p:commandButton>
 
-                                            <p:commandButton icon="fa fa-trash"
-                                                             action="#{conpagBean.pagbot_delete}"
-                                                             update="@form">
+                                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
+                                                             action="#{conpagBean.pagbot_param_edit}" value="Editar parametros">
                                                 <f:setPropertyActionListener value="#{bot}"
                                                                              target="#{conpagBean.botonSeleccionado}"/>
-                                                <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                                           icon="fa fa-exclamation-triangle"/>
+                                                <f:setPropertyActionListener value="true"
+                                                                             target="#{conpagBean.btnEditable}"/>
                                             </p:commandButton>
 
                                         </p:column>
@@ -284,11 +266,6 @@
                                     </p:dataTable>
 
                                 </p:tab>
-
-                                <p:tab title="Parametros">
-
-                                </p:tab>
-
                             </p:tabView>
 
                         </p:column>

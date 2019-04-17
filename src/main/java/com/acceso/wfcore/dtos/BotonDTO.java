@@ -26,7 +26,7 @@ import java.util.List;
                 resultClass = BotonDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_BUTTON,
-                query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :co_pagbot, :no_pagbot, :or_pagbot, :ti_pagbot, :il_proces, :il_confir, :no_confir, :il_autent, :il_peresc);",
+                query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :p_co_pagbot, :p_no_pagbot, :p_or_pagbot, :p_ti_pagbot, :p_il_proces, :p_il_confir, :p_no_confir, :p_il_autent, :p_il_peresc);",
                 resultClass = BotonDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_DELETE_BUTTON,
@@ -46,6 +46,12 @@ public class BotonDTO implements Serializable {
     String no_confir;
     boolean il_autent;
     boolean il_peresc;
+
+    @Transient
+    PagconDTO pagconDTO;
+
+    @Transient
+    Integer co_condes;
 
     public BotonDTO() {
     }
@@ -120,5 +126,38 @@ public class BotonDTO implements Serializable {
 
     public void setIl_peresc(boolean il_peresc) {
         this.il_peresc = il_peresc;
+    }
+
+    public PagconDTO getPagconDTO() {
+        return pagconDTO;
+    }
+
+    public void setPagconDTO(PagconDTO pagconDTO) {
+        this.pagconDTO = pagconDTO;
+    }
+
+    public Integer getCo_condes() {
+        return co_condes;
+    }
+
+    public void setCo_condes(Integer co_condes) {
+        this.co_condes = co_condes;
+    }
+
+    @Override
+    public String toString() {
+        return "BotonDTO{" +
+                "co_pagbot=" + co_pagbot +
+                ", no_pagbot='" + no_pagbot + '\'' +
+                ", or_pagbot=" + or_pagbot +
+                ", ti_pagbot='" + ti_pagbot + '\'' +
+                ", il_proces=" + il_proces +
+                ", il_confir=" + il_confir +
+                ", no_confir='" + no_confir + '\'' +
+                ", il_autent=" + il_autent +
+                ", il_peresc=" + il_peresc +
+                ", pagconDTO=" + pagconDTO +
+                ", co_condes=" + co_condes +
+                '}';
     }
 }

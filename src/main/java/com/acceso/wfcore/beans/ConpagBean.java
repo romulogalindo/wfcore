@@ -235,15 +235,25 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagbot_edit() {
+        if (botonSeleccionado.getPagconDTO() != null)
+            botonSeleccionado.setCo_condes(botonSeleccionado.getPagconDTO().getCo_condes());
+        return URL_BTN_NEW;
+    }
+
+    public String pagbot_param_edit() {
+        if (botonSeleccionado.getPagconDTO() != null)
+            botonSeleccionado.setCo_condes(botonSeleccionado.getPagconDTO().getCo_condes());
+
         return URL_BTN_NEW;
     }
 
 
     public String pagbot_save() {
         PaginaDAO dao = new PaginaDAO();
+        System.out.println("b-->otonSeleccionado = " + botonSeleccionado);
+        dao.saveButton(co_conten, pagina.getCo_pagina(), botonSeleccionado);
 
-        dao.saveButton(pagina.getCo_pagina(), botonSeleccionado);
-        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_botone(dao.getButtons(co_conten, pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(co_conten, pagina.getCo_pagina()));
 
         dao.close();
@@ -500,7 +510,7 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
         /*procesando*/
         PaginaDAO dao = new PaginaDAO();
         pagina = dao.getPaginacon(p_co_conten, p_co_pagina);
-        pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+        pagina.setLs_botone(dao.getButtons(p_co_conten, pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(p_co_conten, pagina.getCo_pagina()));
         dao.close();
 
