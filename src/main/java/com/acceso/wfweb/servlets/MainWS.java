@@ -1,5 +1,6 @@
 package com.acceso.wfweb.servlets;
 
+import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -30,8 +31,10 @@ public class MainWS {
         System.out.println("onMessage::From=" + session.getId());
         if (message.startsWith("LOGIN")) {
             long co_usuari = Util.toLong(message.replace("LOGIN:", ""));
-            String id_session = session.getId();
+//            String id_session = session.getId();
+            WFCoreListener.APP.messageService.putBroadCast(co_usuari,session);
         }else{
+            
         }
 
 //        try {

@@ -1,8 +1,10 @@
 package com.acceso.wfcore.services;
 
-import javax.script.Invocable;
+import com.acceso.wfcore.utils.UserBroadcast;
+import java.util.HashMap;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.websocket.Session;
 
 public class MessageService extends Service {
 
@@ -10,6 +12,7 @@ public class MessageService extends Service {
     //    ScriptEngine engine_nativejs;
     ScriptEngine engine_nashornjs;
 //    ScriptEngine engine_graalvmjs;
+    HashMap<Long, UserBroadcast> users;
 
     public MessageService(String serviceName) {
         super(serviceName);
@@ -18,21 +21,26 @@ public class MessageService extends Service {
 
     @Override
     public void start() {
-        String script_Base = "(function() { return this; })";
-
-//        try {
-//            Object fn = engine_nashornjs.eval(script_Base);
-//            Invocable inv = (Invocable) engine_nashornjs;
-//            Object result = inv.invokeMethod(fn, "call", fn);
-//            System.out.println("(ENGINE2)result = " + result);
-//        } catch (Exception ep) {
-//            System.out.println("ENGINE 2 (error)");
-//            ep.printStackTrace();
-//        }
+        users = new HashMap<>();        
     }
 
     @Override
     public void stop() {
-        engine_nashornjs = null;
+        if (users != null) {
+            users.clear();
+        }
+//        engine_nashornjs = null;
     }
+    
+    public void putBroadCast(Long user, Session session){
+        UserBroadcast ub= users.get(user);
+        if(ub==null){
+            ub=new UserBroadcast(user);            
+        }
+        
+        ub.putSession(session);
+        users.put(user, ub);
+    }
+    
+    public void processBroadCast(){}
 }
