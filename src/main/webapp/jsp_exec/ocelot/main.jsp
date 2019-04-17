@@ -57,7 +57,7 @@
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=1"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=27"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=1"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=2"></script>
 
     <script>
         var WSURL = '<%=com.acceso.wfcore.utils.Values.WEBSOCKET_ENDPOINT_URL%>';
@@ -77,7 +77,7 @@
 
                 //P2
                 openWS(WSURL);
-                MSG_toWS("LOGIN:" + co_usuari);
+
             });
         }
 

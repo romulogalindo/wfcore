@@ -29,14 +29,14 @@ function openWS(websocketurl) {
     console.log("openWSConnection::Connecting to: " + websocketurl);
     try {
         webSocket = new WebSocket(websocketurl);
-        
+
         webSocket.onopen = function (openEvent) {
             console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
 //            document.getElementById("btnSend").disabled = false;
 //            document.getElementById("btnConnect").disabled = true;
 //            document.getElementById("btnDisconnect").disabled = false;
         };
-        
+
         webSocket.onclose = function (closeEvent) {
             console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
 //            document.getElementById("btnSend").disabled = true;
@@ -50,15 +50,28 @@ function openWS(websocketurl) {
 
         webSocket.onmessage = function (messageEvent) {
             var wsMsg = messageEvent.data;
-            console.log("WebSocket MESSAGE: " + wsMsg);
-            if (wsMsg.indexOf("error") > 0) {
-                document.getElementById("incomingMsgOutput").value += "error: " + wsMsg.error + "\r\n";
+            if (wsMsg == 'AIO_WS_READY') {
+                var loginjson = '{\n' +
+                    '\t"status": "OK",\n' +
+                    '\t"type": "login",\n' +
+                    '\t"user": "' + co_usuari() + '",\n' +
+                    '\t"xact": "",\n' +
+                    '\t"mact": ""\n' +
+                    '}';
+                MSG_toWS(loginjson);
             } else {
-                document.getElementById("incomingMsgOutput").value += "message: " + wsMsg + "\r\n";
+                console.log("WebSocket MESSAGE: " + wsMsg);
+                alert('MSG:' + wsMsg);
             }
+
+            // if (wsMsg.indexOf("error") > 0) {
+            //     document.getElementById("incomingMsgOutput").value += "error: " + wsMsg.error + "\r\n";
+            // } else {
+            //     document.getElementById("incomingMsgOutput").value += "message: " + wsMsg + "\r\n";
+            // }
         };
     } catch (exception) {
-        console.error(exception);
+        console.error('<Tenemos el erro>>' + exception);
     }
 }
 
@@ -66,6 +79,9 @@ function openWS(websocketurl) {
  * Send a message to the WebSocket server
  */
 function MSG_toWS(msg) {
+    console.log('webSocket:' + webSocket);
+    console.log('webSocket.readyState:' + webSocket.readyState);
+    console.log('WebSocket.OPEN:' + WebSocket.OPEN);
     if (webSocket.readyState != WebSocket.OPEN) {
         console.error("webSocket is not open: " + webSocket.readyState);
         return;

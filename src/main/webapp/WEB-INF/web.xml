@@ -140,7 +140,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TahrServlet</servlet-name>
-        <url-pattern>/OPENAIO</url-pattern>
+        <url-pattern>/tahr</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

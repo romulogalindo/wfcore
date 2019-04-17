@@ -2,6 +2,9 @@ package com.acceso.wfweb.servlets;
 
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
+import com.acceso.wfcore.utils.WSMessage;
+import com.google.gson.Gson;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -10,7 +13,6 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 /**
- *
  * @author Rómulo Galindo
  */
 @ServerEndpoint("/ws/main")
@@ -19,6 +21,13 @@ public class MainWS {
     @OnOpen
     public void onOpen(Session session) {
         System.out.println("onOpen::" + session.getId());
+        //put session without userid
+        try {
+            session.getBasicRemote().sendText("AIO_WS_READY");
+        } catch (Exception ep) {
+            System.out.println("ep = " + ep);
+        }
+        WFCoreListener.APP.messageService.login(session);
     }
 
     @OnClose
@@ -29,21 +38,19 @@ public class MainWS {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("onMessage::From=" + session.getId());
-        if (message.startsWith("LOGIN")) {
-            long co_usuari = Util.toLong(message.replace("LOGIN:", ""));
-//            String id_session = session.getId();
-            WFCoreListener.APP.messageService.putBroadCast(co_usuari,session);
-        }else{
-            
+        WSMessage wsMessage = new Gson().fromJson(message, WSMessage.class);
+        System.out.println("wsMessage = " + wsMessage);
+        switch (wsMessage.getType()) {
+            case "login": {
+                WFCoreListener.APP.messageService.putBroadCast(Long.parseLong(wsMessage.getUser()), session);
+                break;
+            }
+            case "send": {
+                break;
+            }
         }
-
-//        try {
-//            session.getBasicRemote().sendText(message.toUpperCase());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
-    
+
 
     @OnError
     public void onError(Throwable t) {

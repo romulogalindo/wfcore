@@ -5,16 +5,15 @@ import java.util.Map;
 import javax.websocket.Session;
 
 /**
- *
  * @author Rómulo Galindo
  */
 public class UserBroadcast {
     Long user;
-    Map<String,Session> sessions;
+    Map<String, Session> sessions;
 
     public UserBroadcast(Long user) {
         this.user = user;
-        sessions=new HashMap<>();
+        sessions = new HashMap<>();
     }
 
     public Long getUser() {
@@ -33,8 +32,8 @@ public class UserBroadcast {
         this.sessions = sessions;
     }
 
-    public void putSession(Session session){
+    public void putSession(Session session) {
         this.sessions.put(session.getId(), session);
     }
-        
+
 }
