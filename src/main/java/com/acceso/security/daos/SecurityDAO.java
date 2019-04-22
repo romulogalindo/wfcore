@@ -24,29 +24,30 @@ public class SecurityDAO extends DAO {
         this.session = session;
     }
 
-    public RegsesiniDTO regsesini(String p_username, String p_password, String p_remoteip) {
+    public RegsesiniDTO regsesini(String p_username, String p_password, String p_remoteip) throws Exception {
         RegsesiniDTO regsesiniDTO = null;
 
         NQuery nQuery = new NQuery(TAG + ":REGSES");
 
-        try {
-            nQuery.work(this.session.getNamedQuery(Values.QUERYS_SECURITY_REGSESINI_WEB), true, true);
+//        try {
+//            nQuery.work(MQ.q(Values.QUERYS_SECURITY_REGSESINI_WEB), true, true);
+        nQuery.work(this.session.getNamedQuery(Values.wfsistem_ppregsesiniweb_KEY), true, true);
+        nQuery.setString("p_username", p_username);
+        nQuery.setString("p_password", p_password);
+        nQuery.setString("p_remoteip", p_remoteip);
 
-            nQuery.setString("p_username", p_username);
-            nQuery.setString("p_password", p_password);
-            nQuery.setString("p_remoteip", p_remoteip);
-
-            regsesiniDTO = (RegsesiniDTO) nQuery.list().get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        regsesiniDTO = (RegsesiniDTO) nQuery.uniqueResult();
+//        } catch (Exception e) {
+//            System.out.println("=================e = " + e);
+//            e.printStackTrace();
+//        }
 
         return regsesiniDTO;
     }
 
     public RegsesinifDTO regsesinif(long p_id_sesion,
-                                    long p_co_usuari,
-                                    String p_ip_remoto) {
+            long p_co_usuari,
+            String p_ip_remoto) {
 
         RegsesinifDTO regsesinifDTO = null;
         NQuery nQuery = new NQuery(TAG + ":REGSES");
@@ -71,7 +72,6 @@ public class SecurityDAO extends DAO {
 
         return regsesinifDTO;
     }
-
 
     public List<PermisbloDTO> getListBloq(int p_co_usuari) {
         List<PermisbloDTO> regsesiniDTO = null;

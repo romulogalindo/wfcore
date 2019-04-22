@@ -2,18 +2,14 @@ package com.acceso.wfcore.managers;
 
 import com.acceso.wfcore.daos.SystemDAO;
 import com.acceso.wfcore.dtos.EstadoDTO;
-import com.acceso.wfcore.utils.Values;
 import com.acceso.wfcore.utils.WFProperties;
 
-import java.util.HashMap;
-import java.util.Properties;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 

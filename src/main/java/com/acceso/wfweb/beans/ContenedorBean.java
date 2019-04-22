@@ -36,7 +36,7 @@ public class ContenedorBean implements Serializable {
         dao.joinTF(requestManager.getUser().getId_sesion(), id_frawor, -1, co_conten, true);
         dao_fdb.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten, false);
 
-        //Grabando co_compar
+        //Grabando co_compar!
         requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
             ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), true);
             ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), false);

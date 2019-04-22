@@ -25,34 +25,22 @@ public class DoLogin {
     protected RegsesiniDTO regsesiniDTO;
     protected List<PermisbloDTO> permisbloDTO;
 
-    public boolean SecurityLogin(RequestManager requestManager) {
+    public boolean SecurityLogin(RequestManager requestManager) throws Exception {
 
-//        System.out.println("WFCoreListener.APP.getLoginCTRL().getLogin_param_username() = " + WFCoreListener.APP);
-//        System.out.println("WFCoreListener.APP.getLoginCTRL().getLogin_param_username() = " + WFCoreListener.APP.getLoginCTRL());
-//        System.out.println("WFCoreListener.APP.getLoginCTRL().getLogin_param_username() = " + WFCoreListener.APP.getLoginCTRL().getLogin_param_username());
         String username = requestManager.getParam(WFCoreListener.APP.getLoginCTRL().getLogin_param_username());
         String password = requestManager.getParam(WFCoreListener.APP.getLoginCTRL().getLogin_param_password());
         String remoteip = requestManager.getIp();
-
-        System.out.println("username = " + username);
-        System.out.println("password = " + password);
-        System.out.println("remoteip = " + remoteip);
 
         SecurityDAO securityDAO = new SecurityDAO();
         regsesiniDTO = securityDAO.regsesini(username, Security.toMD5(password), remoteip);
 //        permisbloDTO = securityDAO.getListBloq(regsesiniDTO.getCo_usuari());
         securityDAO.close();
 
+        //[FED]
         regsesiniDTO.setIp_remoto(remoteip);
-
+        System.out.println("regsesiniDTO = " + regsesiniDTO);
         //Logica de seguridad
-        if (regsesiniDTO.getCo_mensaj() == LOGIN_OK) {
-
-            return true;
-        } else {
-
-            return false;
-        }
+        return regsesiniDTO.getCo_mensaj() == LOGIN_OK;
     }
 
     public Usuario getUsuario() {
@@ -67,6 +55,7 @@ public class DoLogin {
         usuario.setCo_sistem(regsesiniDTO.getCo_sistem());
         usuario.setCo_subsis(regsesiniDTO.getCo_subsis());
         usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
+        usuario.setIl_schema(true);
 
         SecurityDAO securityDAO = new SecurityDAO();
         permisbloDTO = securityDAO.getListBloq((int) regsesiniDTO.getCo_usuari());
@@ -129,7 +118,7 @@ public class DoLogin {
 
                                         _mainMenu.getMenu().remove(d);
                                     } else {
-                                        if (menu.getSub() != null)
+                                        if (menu.getSub() != null) {
                                             for (int e = menu.getSub().size(); e > 0; e--) {
                                                 MenuItem menuItem = menu.getSub().get(e - 1);
                                                 renderer = true;
@@ -142,6 +131,7 @@ public class DoLogin {
                                                     //bis
                                                 }
                                             }
+                                        }
                                     }
                                 }
                             }
@@ -173,8 +163,9 @@ public class DoLogin {
     public List<PermisbloDTO> getPermisBy(String criteria) {
         List<PermisbloDTO> permisbloDTOS = new ArrayList<>();
         for (PermisbloDTO permisbloDTO : permisbloDTO) {
-            if (permisbloDTO.getCo_elemen().contentEquals(criteria))
+            if (permisbloDTO.getCo_elemen().contentEquals(criteria)) {
                 permisbloDTOS.add(permisbloDTO);
+            }
         }
         return permisbloDTOS;
     }

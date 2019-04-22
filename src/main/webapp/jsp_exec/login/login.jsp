@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsf/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   User: Ròmulo Galindo
   Date: 12/12/18
@@ -67,6 +67,13 @@
 
                     <!--Card content-->
                     <div class="card-body px-lg-5 pt-0">
+
+                        <c:if test="${not empty login_error}">                            
+                            <div class="alert alert-danger" role="alert" style="font-size: .7em;max-width: 300px;margin-top: 20px;text-align: justify;">
+                                ${login_error}
+                            </div>
+                        </c:if>
+                        <c:set value="" var="login_error" scope="session"/>
 
                         <!-- Form -->
                         <form class="text-center" style="color: #757575;" action="${APP.loginCTRL.login_action}" method="post">

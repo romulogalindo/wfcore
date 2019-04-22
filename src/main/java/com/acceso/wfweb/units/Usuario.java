@@ -19,6 +19,8 @@ public class Usuario implements Serializable {
     Integer co_paquet;
     Integer co_modulo;
 
+    boolean il_schema;
+
     Root root;
     MainMenu mainMenu;
 
@@ -111,6 +113,14 @@ public class Usuario implements Serializable {
 
     public void setCo_modulo(Integer co_modulo) {
         this.co_modulo = co_modulo;
+    }
+
+    public boolean isIl_schema() {
+        return il_schema;
+    }
+
+    public void setIl_schema(boolean il_schema) {
+        this.il_schema = il_schema;
     }
 
     @Override

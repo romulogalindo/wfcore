@@ -1,20 +1,33 @@
 package com.acceso.security.dtos;
 
 import com.acceso.security.utils.Values;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.Transient;
+//import org.hibernate.annotations.NamedNativeQueries;
+//import org.hibernate.annotations.NamedNativeQuery;
 
+/*
+"select * from wfsistem.ppregsesini(:p_username, :p_password, :p_remoteip,:p_sistema) as inises"
+
+    @NamedNativeQuery(
+            name = Values.QUERYS_SECURITY_REGSESINI_WEB,
+            query = "select * from wfsistem.ppregsesini_fwweb(:p_username, :p_password, :p_remoteip) as inises",
+            resultClass = RegsesiniDTO.class)
+ */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_SECURITY_REGSESINI,
-                query = "select * from wfsistem.ppregsesini(:p_username, :p_password, :p_remoteip,:p_sistema) as inises",
-                resultClass = RegsesiniDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_SECURITY_REGSESINI_WEB,
-                query = "select * from wfsistem.ppregsesini_fwweb(:p_username, :p_password, :p_remoteip) as inises",
-                resultClass = RegsesiniDTO.class)
+    @NamedNativeQuery(
+            name = Values.wfsistem_ppregsesini_KEY,
+            query = Values.wfsistem_ppregsesini_VALUE,
+            resultClass = RegsesiniDTO.class),
+    @NamedNativeQuery(
+            name = Values.wfsistem_ppregsesiniweb_KEY,
+            query = Values.wfsistem_ppregsesiniweb_VALUE,
+            resultClass = RegsesiniDTO.class)
 })
 public class RegsesiniDTO implements Serializable {
 
@@ -36,6 +49,9 @@ public class RegsesiniDTO implements Serializable {
 
     @Transient
     String ip_remoto;
+
+    @Transient
+    String il_prilog;
 
     public RegsesiniDTO() {
     }
@@ -135,4 +151,18 @@ public class RegsesiniDTO implements Serializable {
     public void setIp_remoto(String ip_remoto) {
         this.ip_remoto = ip_remoto;
     }
+
+    public String getIl_prilog() {
+        return il_prilog;
+    }
+
+    public void setIl_prilog(String il_prilog) {
+        this.il_prilog = il_prilog;
+    }
+
+    @Override
+    public String toString() {
+        return "RegsesiniDTO{" + "co_usuari=" + co_usuari + ", id_sesion=" + id_sesion + ", no_usulog=" + no_usulog + ", no_usuari=" + no_usuari + ", no_imgusu=" + no_imgusu + ", co_sistem=" + co_sistem + ", co_subsis=" + co_subsis + ", co_paquet=" + co_paquet + ", co_modulo=" + co_modulo + ", co_mensaj=" + co_mensaj + ", de_mensaj=" + de_mensaj + ", ip_remoto=" + ip_remoto + ", il_prilog=" + il_prilog + '}';
+    }
+
 }

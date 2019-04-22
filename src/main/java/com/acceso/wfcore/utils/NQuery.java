@@ -1,11 +1,11 @@
 package com.acceso.wfcore.utils;
 
 //import com.sun.mail.util.QDecoderStream;
-
 import org.hibernate.Query;
 
 import java.util.Date;
 import java.util.List;
+//import org.​hibernate
 
 /**
  * @author Rómulo Galindo<romulogalindo@gmail.com>
@@ -20,6 +20,11 @@ public class NQuery {
     private boolean show_debug_log;
 
     String LOG;
+
+    public static final boolean INFO_LOG_SHOW = true;
+    public static final boolean INFO_LOG_HIDE = false;
+    public static final boolean DEBUG_LOG_SHOW = true;
+    public static final boolean DEBUG_LOG_HIDE = true;
 
     public NQuery() {
         this(null);
@@ -43,7 +48,8 @@ public class NQuery {
     }
 
     public void setString(String param_name, String param_value) {
-        query.setString(param_name, param_value);
+//        query.setString(param_name, param_value);
+        query.setParameter(param_name, param_value, org.hibernate.type.StringType.INSTANCE);
         queryString = queryString.replaceFirst(":" + param_name, "\'" + String.valueOf(param_value) + "\'");
     }
 
@@ -87,15 +93,17 @@ public class NQuery {
      * @return
      */
     public Object uniqueResult() {
-        if (this.show_info_log)
+        if (this.show_info_log) {
             System.out.println(LOG + "Q = " + getQueryString());
+        }
         execution_time = System.currentTimeMillis();
 
         Object object = query.uniqueResult();
 
         execution_time = System.currentTimeMillis() - execution_time;
-        if (this.show_debug_log)
+        if (this.show_debug_log) {
             System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+        }
 
         return object;
     }
@@ -103,30 +111,34 @@ public class NQuery {
     /*
      * */
     public List list() {
-        if (this.show_info_log)
+        if (this.show_info_log) {
             System.out.println(LOG + "Q = " + getQueryString());
+        }
         execution_time = System.currentTimeMillis();
 
         List list = query.list();
 
         execution_time = System.currentTimeMillis() - execution_time;
-        if (this.show_debug_log)
+        if (this.show_debug_log) {
             System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+        }
 
         return list;
     }
 
     public int executeUpdate() {
         int updateResult = -1;
-        if (this.show_info_log)
+        if (this.show_info_log) {
             System.out.println(LOG + "Q = " + getQueryString());
+        }
         execution_time = System.currentTimeMillis();
 
         updateResult = query.executeUpdate();
 
         execution_time = System.currentTimeMillis() - execution_time;
-        if (this.show_debug_log)
+        if (this.show_debug_log) {
             System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+        }
 
         return updateResult;
     }
