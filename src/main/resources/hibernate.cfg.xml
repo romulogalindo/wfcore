@@ -62,6 +62,7 @@
         <mapping class="com.acceso.wfcore.dtos.PagtitconDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PagregconDTO"/>
         <mapping class="com.acceso.wfcore.dtos.PagconDTO"/>
+        <mapping class="com.acceso.wfcore.dtos.PagconparDTO"/>
 
         <!-- DTO's (security) -->
         <mapping class="com.acceso.security.dtos.RegsesiniDTO"/>

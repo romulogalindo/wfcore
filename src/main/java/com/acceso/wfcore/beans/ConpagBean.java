@@ -1,5 +1,6 @@
 package com.acceso.wfcore.beans;
 
+import com.acceso.wfcore.daos.ContenedorDAO;
 import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.*;
@@ -15,6 +16,10 @@ import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.primefaces.extensions.model.dynaform.DynaFormControl;
+import org.primefaces.extensions.model.dynaform.DynaFormLabel;
+import org.primefaces.extensions.model.dynaform.DynaFormModel;
+import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
@@ -39,6 +44,8 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     private static final String URL_TIT_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegTitulo.xhtml";
     private static final String URL_TIT_EDIT = "/admin/jsf_exec/pagex/contenedor/paginaRegTitulo.xhtml";
 
+    private static final String URL_CONPAR_NEW = "/admin/jsf_exec/pagex/contenedor/paginaRegConpar.xhtml";
+
     public static final String BEAN_NAME = "paginaBean";
 
     private int co_conten;
@@ -52,6 +59,8 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     private ElementoconDTO elementoSeleccionado;
 
     private List<PaginaconDTO> filtroPagina;
+
+    private DynaFormModel ls_conpar;
 
     private boolean thisEditable;
     private boolean btnEditable;
@@ -219,7 +228,6 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
 //        botonDTO.setCo_pagbot(-1);
 //        return botonDTO;
 //    }
-
     public String pagbot_new() {
         botonSeleccionado = new BotonDTO();
         botonSeleccionado.setCo_pagbot(-1);
@@ -235,18 +243,54 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagbot_edit() {
-        if (botonSeleccionado.getPagconDTO() != null)
+        if (botonSeleccionado.getPagconDTO() != null) {
             botonSeleccionado.setCo_condes(botonSeleccionado.getPagconDTO().getCo_condes());
+        }
         return URL_BTN_NEW;
     }
 
     public String pagbot_param_edit() {
-        if (botonSeleccionado.getPagconDTO() != null)
+        if (botonSeleccionado.getPagconDTO() != null) {
             botonSeleccionado.setCo_condes(botonSeleccionado.getPagconDTO().getCo_condes());
+//            PaginaDAO dao = new PaginaDAO();
+//            dao.getPaginacon(8, 8).
+//            System.out.println("b-->otonSeleccionado = " + botonSeleccionado);
+//            dao.saveButton(co_conten, pagina.getCo_pagina(), botonSeleccionado);
+//
+//            pagina.setLs_botone(dao.getButtons(co_conten, pagina.getCo_pagina()));
+//            pagina.setLs_elemen(dao.getElementos(co_conten, pagina.getCo_pagina()));
+//
+//            dao.close();
+            ls_conpar = new DynaFormModel();
 
-        return URL_BTN_NEW;
+            ContenedorDAO dao = new ContenedorDAO();
+            List<ConparDTO> xconpar = dao.getConpars(co_conten);
+            List<PagconparDTO> xpagconpar = dao.getPagconpars(co_pagina, (short) botonSeleccionado.getCo_pagbot(), co_conten);
+
+            for (ConparDTO conparDTO : xconpar) {
+                DynaFormRow row = ls_conpar.createRegularRow();
+
+//                controlx.setKey("" + conparDTO.getCo_conpar());
+                PagconparDTO pcps = null;
+                for (PagconparDTO pcp : xpagconpar) {
+                    if (pcp.getCo_conpar() == conparDTO.getCo_conpar()) {
+                        pcps = pcp;
+//                        controlx.setData("" + pcp.getCo_pagreg());
+                    }
+                }
+
+                DynaFormLabel labelx = row.addLabel(conparDTO.getNo_conpar());
+//                DynaFormControl controlx = row.addControl(new Subconpar("" + conparDTO.getCo_conpar(), pcps == null ? "" : pcps.getCo_pagreg()), "input");
+                DynaFormControl controlx = row.addControl(pcps == null ? new PagconparDTO(conparDTO.getCo_conpar()) : new PagconparDTO(conparDTO.getCo_conpar(), pcps.getCo_pagreg()), "input");
+
+                labelx.setForControl(controlx);
+            }
+//            contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
+//            contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
+            dao.close();
+        }
+        return URL_CONPAR_NEW;
     }
-
 
     public String pagbot_save() {
         PaginaDAO dao = new PaginaDAO();
@@ -261,7 +305,6 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
         return URL_EDITAR;
     }
 
-
     public String pagbot_back() {
         return URL_EDITAR;
     }
@@ -273,6 +316,23 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
         pagina.setLs_elemen(dao.getElementos(co_conten, pagina.getCo_pagina()));
         dao.close();
         //recargar lista de botones!!!!
+    }
+
+    public String conpar_save() {
+//        ContenedorDAO dao = new ContenedorDAO();
+//        dao.saveConpar(conparSeleccionado);
+//        contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
+//        contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
+//        dao.close();
+        List<DynaFormControl> dfcs = ls_conpar.getControls();
+        for (DynaFormControl dfc : dfcs) {
+            System.out.println("dfc.getKey() = " + dfc.getKey() + ", dfc.getData() = " + dfc.getData() + "?" + dfc.getData().getClass());
+        }
+        return URL_EDITAR;
+    }
+
+    public String conpar_back() {
+        return URL_EDITAR;
     }
 
     public void cargarRegistros() {
@@ -306,10 +366,11 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
 
     public String pagreg_delete() {
         PaginaDAO dao = new PaginaDAO();
-        if (elementoSeleccionado.getTi_elemen() == 1)
+        if (elementoSeleccionado.getTi_elemen() == 1) {
             dao.deleteTitle(pagina.getCo_pagina(), (short) elementoSeleccionado.getPagtitDTO().getCo_pagtit());
-        else
+        } else {
             dao.deleteRegist(pagina.getCo_pagina(), (short) elementoSeleccionado.getPagregDTO().getCo_pagreg());
+        }
 
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(co_conten, pagina.getCo_pagina()));
@@ -322,18 +383,21 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pag_tr_edit() {
-        if (elementoSeleccionado.getTi_elemen() == 1)
+        if (elementoSeleccionado.getTi_elemen() == 1) {
             return URL_TIT_EDIT;
-        else return URL_REG_EDIT;
+        } else {
+            return URL_REG_EDIT;
+        }
     }
 
     public String pagtit_save() {
         System.out.println("elementoSeleccionado: = " + elementoSeleccionado);
         PaginaDAO dao = new PaginaDAO();
-        if (elementoSeleccionado.getTi_elemen() == 1)
+        if (elementoSeleccionado.getTi_elemen() == 1) {
             dao.saveTitle(co_conten, pagina.getCo_pagina(), elementoSeleccionado.getPagtitDTO());
-        else
+        } else {
             dao.saveRegist(co_conten, pagina.getCo_pagina(), elementoSeleccionado.getPagregDTO());
+        }
 
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(co_conten, pagina.getCo_pagina()));
@@ -347,7 +411,6 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
         return URL_EDITAR;
     }
 
-
 //    public String pagtit_new() {
 //        elementoSeleccionado = new ElementoDTO();
 //        elementoSeleccionado.setTi_elemen(1);
@@ -358,7 +421,6 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
 //
 //        return URL_TIT_EDIT;
 //    }
-
     public PaginaconDTO getPagina() {
         return pagina;
     }
@@ -534,5 +596,41 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
 
     public void setCo_conten(int co_conten) {
         this.co_conten = co_conten;
+    }
+
+    public DynaFormModel getLs_conpar() {
+        return ls_conpar;
+    }
+
+    public void setLs_conpar(DynaFormModel ls_conpar) {
+        this.ls_conpar = ls_conpar;
+    }
+
+    class Subconpar {
+
+        String name;
+        Object value;
+
+        public Subconpar(String name, Object value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
     }
 }

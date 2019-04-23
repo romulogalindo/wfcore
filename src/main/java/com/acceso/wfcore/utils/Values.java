@@ -101,6 +101,8 @@ public class Values {
 //    public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
 
     public static final String QUERYS_NATIVE_SELECT_REGISTRO = "wfcore.registro_select";
+    
+    public static final String QUERYS_NATIVE_SELECT_PAGCONPAR = "wfcore.pagconpar_select";
 
     public static final int QUERYS_SYSTEM_TIMEOUT = 10;
     public static final int QUERYS_USER_TIMEOUT = 10;

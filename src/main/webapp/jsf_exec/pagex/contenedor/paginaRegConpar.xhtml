@@ -1,101 +1,77 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
 
-<ui:composition template="../../template/plantilla.xhtml">
-    <ui:define name="content">
+    <ui:composition template="../../template/plantilla.xhtml">
+        <ui:define name="content">
 
-        <h:form id="form">
-            <p:panel id="panelActualizarPagina">
-                <p:toolbar>
-                    <f:facet name="left">
-                        <span>
-                        <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{contenedorBean.contenedor.no_contit}</h3> |
-                        <h4 style="margin-top:0;margin-bottom: 0px;display: inline;"> - [#{contenedorBean.contabSeleccionado.co_contab}]</h4>
-                        </span>
+            <h:form id="form">
+                <p:panel id="panelActualizarPagina">
+                    <p:toolbar>
+                        <f:facet name="left">
+                            <span>
+                                <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">#{conpagBean.co_pagina}]</h4>
+                            </span>
 
-                    </f:facet>
-                </p:toolbar>
+                        </f:facet>
+                    </p:toolbar>
 
-                <p:panelGrid style="width: 100%">
-                    <p:row>
-                        <p:column colspan="3" style="text-align: center">
-                            <p:outputPanel>
-                                <!--<p:panelGrid id="botonDetalle" style="display: inline-block;">-->
-                                <p:panelGrid style="display: inline-block;">
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column colspan="3" style="text-align: center">
+                                <p:outputPanel>
+                                    <!--<p:panelGrid id="botonDetalle" style="display: inline-block;">-->
+                                    <p:panelGrid style="display: inline-block;">
 
-                                    <p:row>
-                                        <p:column styleClass="form_col_title">
-                                            <p:outputLabel for="co_contab" value="ID"/>
-                                        </p:column>
-                                        <p:column styleClass="form_col_empty">
-                                            <p:spacer width="1" height="24"
-                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                        </p:column>
-                                        <p:column styleClass="form_col_detail">
-                                            <p:inputText id="co_contab"
-                                                         value="#{contenedorBean.conparSeleccionado.co_conpar}"
-                                                         readonly="#{!contenedorBean.conparEditable}"/>
-                                        </p:column>
-                                    </p:row>
+                                        <pe:dynaForm id="dynaForm" value="#{conpagBean.ls_conpar}" var="data" columnClasses="label-container, field-container">
+                                            <pe:dynaFormControl type="input" for="txt">  
+                                                <p:inputText id="txt" value="#{data.co_pagreg}" />  
+                                            </pe:dynaFormControl>  
+                                        </pe:dynaForm>
 
-                                    <p:row>
-                                        <p:column styleClass="form_col_title">
-                                            <p:outputLabel for="nu_rowspa" value="Row SPAN"/>
-                                        </p:column>
-                                        <p:column styleClass="form_col_empty">
-                                            <p:spacer width="1" height="24"
-                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                        </p:column>
-                                        <p:column styleClass="form_col_detail">
-                                            <p:inputText id="nu_rowspa"
-                                                         value="#{contenedorBean.conparSeleccionado.no_conpar}"
-                                                         readonly="#{!contenedorBean.conparEditable}"/>
-                                        </p:column>
-                                    </p:row>
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:separator/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column style="width: 20%">
+                                <p:commandButton action="#{conpagBean.conpar_back}"
+                                                 value="Atrás"
+                                                 title="Volver al reporte de usuarios"
+                                                 icon="pi pi-arrow-left"
+                                                 immediate="true">
+                                </p:commandButton>
+                            </p:column>
+                            <p:column style="text-align: center;width: 60%;">
+                                <p:commandButton value="Grabar"
+                                                 action="#{conpagBean.conpar_save}"
+                                                 type="submit"
+                                                 icon="pi pi-save"
+                                                 >
+                                </p:commandButton>
+                            </p:column>
+                            <p:column style="width: 20%"> </p:column>
+                        </p:row>
+                    </p:panelGrid>
 
-                                </p:panelGrid>
-                            </p:outputPanel>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colspan="3">
-                            <p:separator/>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column style="width: 20%">
-                            <p:commandButton action="#{contenedorBean.conpar_back}"
-                                             value="Atrás"
-                                             title="Volver al reporte de usuarios"
-                                             icon="pi pi-arrow-left"
-                                             immediate="true">
-                            </p:commandButton>
-                        </p:column>
-                        <p:column style="text-align: center;width: 60%;">
-                            <p:commandButton value="Grabar"
-                                             action="#{contenedorBean.conpar_save}"
-                                             type="submit"
-                                             icon="pi pi-save"
-                            >
-                            </p:commandButton>
-                        </p:column>
-                        <p:column style="width: 20%"> </p:column>
-                    </p:row>
-                </p:panelGrid>
+                </p:panel>
 
-            </p:panel>
+            </h:form>
 
-        </h:form>
+        </ui:define>
 
-    </ui:define>
-
-</ui:composition>
+    </ui:composition>
 
 </html>

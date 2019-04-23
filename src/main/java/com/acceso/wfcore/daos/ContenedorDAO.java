@@ -4,6 +4,7 @@ import com.acceso.wfcore.dtos.ConparDTO;
 import com.acceso.wfcore.dtos.ContabDTO;
 import com.acceso.wfcore.dtos.ContenedorDTO;
 import com.acceso.wfcore.dtos.EmptyDTO;
+import com.acceso.wfcore.dtos.PagconparDTO;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
@@ -211,6 +212,27 @@ public class ContenedorDAO {
         return contabs;
     }
 
+    public List<PagconparDTO> getPagconpars(int p_co_pagina, short p_co_pagbot, int p_co_conori) {
+
+        List<PagconparDTO> pagconpars = new ArrayList<>();
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGCONPAR));
+            nQuery.setInteger("p_co_conori", p_co_conori);
+            nQuery.setInteger("p_co_pagina", p_co_pagina);
+            nQuery.setShort("p_co_pagbot", p_co_pagbot);
+            System.out.println("[ContenedorDAO:getPagconpars] Q = " + nQuery.getQueryString());
+            pagconpars = nQuery.list();
+            System.out.println("[ContenedorDAO:getPagconpars] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[ContenedorDAO:getPagconpars] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return pagconpars;
+    }
     //
 //    public String deleteContenedor(ContenedorDTO usuario) {
 //
