@@ -3,45 +3,23 @@ var ws_protocol = null;
 var ws_hostname = null;
 var ws_port = null;
 var ws_endpoint = null;
-/**
- * Event handler for clicking on button "Connect"
- */
-//function onConnectClick() {
-//    var ws_protocol = document.getElementById("protocol").value;
-//    var ws_hostname = document.getElementById("hostname").value;
-//    var ws_port = document.getElementById("port").value;
-//    var ws_endpoint = document.getElementById("endpoint").value;
-//    openWSConnection(ws_protocol, ws_hostname, ws_port, ws_endpoint);
-//}
-/**
- * Event handler for clicking on button "Disconnect"
- */
-function closeWS() {
-    webSocket.close();
-}
 
 /**
  * Open a new WebSocket connection using the given parameters
  */
-function openWS(websocketurl) {
-//    var webSocxketURL = null;
-//    webSockxetURL = protocol + "://" + hostname + ":" + port + endpoint;
-    console.log("openWSConnection::Connecting to: " + websocketurl);
+function openWS() {
+    var wsurl = (location.protocol == 'http:' ? 'ws://' : 'wss://') + location.hostname + (location.port ? ':' + location.port : '') + '/ws/main';
+
+    console.log("openWSConnection::Connecting to: " + wsurl);
     try {
-        webSocket = new WebSocket(websocketurl);
+        webSocket = new WebSocket(wsurl);
 
         webSocket.onopen = function (openEvent) {
             console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
-//            document.getElementById("btnSend").disabled = false;
-//            document.getElementById("btnConnect").disabled = true;
-//            document.getElementById("btnDisconnect").disabled = false;
         };
 
         webSocket.onclose = function (closeEvent) {
             console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
-//            document.getElementById("btnSend").disabled = true;
-//            document.getElementById("btnConnect").disabled = false;
-//            document.getElementById("btnDisconnect").disabled = true;
         };
 
         webSocket.onerror = function (errorEvent) {
@@ -61,18 +39,22 @@ function openWS(websocketurl) {
                 MSG_toWS(loginjson);
             } else {
                 console.log("WebSocket MESSAGE: " + wsMsg);
-                alert('MSG:' + wsMsg);
+                toascfg();
+                pushMessage('info', 'AIO2', wsMsg)
+                // alert('MSG:' + wsMsg);
             }
 
-            // if (wsMsg.indexOf("error") > 0) {
-            //     document.getElementById("incomingMsgOutput").value += "error: " + wsMsg.error + "\r\n";
-            // } else {
-            //     document.getElementById("incomingMsgOutput").value += "message: " + wsMsg + "\r\n";
-            // }
         };
     } catch (exception) {
         console.error('<Tenemos el erro>>' + exception);
     }
+}
+
+/**
+ * Event handler for clicking on button "Connect"
+ */
+function closeWS() {
+    webSocket.close();
 }
 
 /**
@@ -86,6 +68,29 @@ function MSG_toWS(msg) {
         console.error("webSocket is not open: " + webSocket.readyState);
         return;
     }
-//    var msg = document.getElementById("message").value;
+
     webSocket.send(msg);
+}
+
+function toascfg() {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "md-toast-top-right",
+        "preventDuplicates": false,
+        "showDuration": -1,
+        "hideDuration": 1000,
+        "timeOut": -1,
+        "extendedTimeOut": 1000,
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+}
+
+function pushMessage(type, title, message) {
+    toastr[type](message, title);
 }

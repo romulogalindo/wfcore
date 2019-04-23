@@ -37,9 +37,11 @@ public class AsyncValPag extends AsyncProcessor {
             //ejecutar valpag
             String valpag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_pagina);
 
-            if (valpag_js == null) {
+            if (valpag_js == null || valpag_js.contentEquals("null")) {
                 Frawor4DAO dao = new Frawor4DAO();
+
                 valpag_js = dao.getJS_Valpag(co_pagina).getScript();
+
                 dao.close();
 
                 if (valpag_js == null) {
@@ -54,11 +56,11 @@ public class AsyncValPag extends AsyncProcessor {
             ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US")).getCo_usuari(), 1);
 
             String textjson = (String) WFCoreListener.APP.getJavaScriptService().dopvpj("GET_DO_POST_LOAD_DATA");
-            System.out.println("textjson = " + textjson);
+//            System.out.println("textjson = " + textjson);
 
             JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK(valpagJson);
             jsonResponse.setFnpost(textjson);
-            
+
             if ((valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
                 HashMap<String, Object> map_hamodas = new HashMap<>();
 
@@ -77,7 +79,7 @@ public class AsyncValPag extends AsyncProcessor {
 
             String urpta = Util.toJSON2(jsonResponse);
 
-            System.out.println("[" + co_pagina + "]valpag? = " + urpta);
+//            System.out.println("[" + co_pagina + "]valpag? = " + urpta);
 
             out.write(urpta);
         } catch (IOException e) {

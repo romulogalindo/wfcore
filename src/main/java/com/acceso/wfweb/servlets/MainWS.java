@@ -20,7 +20,7 @@ public class MainWS {
 
     @OnOpen
     public void onOpen(Session session) {
-        System.out.println("onOpen::" + session.getId());
+//        System.out.println("onOpen::" + session.getId());
         //put session without userid
         try {
             session.getBasicRemote().sendText("AIO_WS_READY");
@@ -37,9 +37,9 @@ public class MainWS {
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("onMessage::From=" + session.getId());
+//        System.out.println("onMessage::From=" + session.getId());
         WSMessage wsMessage = new Gson().fromJson(message, WSMessage.class);
-        System.out.println("wsMessage = " + wsMessage);
+//        System.out.println("wsMessage = " + wsMessage);
         switch (wsMessage.getType()) {
             case "login": {
                 WFCoreListener.APP.messageService.putBroadCast(Long.parseLong(wsMessage.getUser()), session);

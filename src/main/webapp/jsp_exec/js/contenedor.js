@@ -70,9 +70,26 @@ function co_usuari() {
 }
 
 function workflow() {
+    /*FRONT*/
+    $(".button-collapse").sideNav();
+    Ps.initialize(document.querySelector('.custom-scrollbar'));
+
+
+
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
     }
+
+    //--FRONT AND MODALª!
+    $(document).ready(function () {
+        //P1
+        $('.mdb-select').material_select();
+
+        //P2
+        openWS();
+        //if
+        $('#slc_schema').modal('show');
+    });
 }
 
 function size_of_pagina() {
@@ -202,15 +219,13 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
 
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 eledom.value = valdom;
                 if (eledom.getAttribute("type") != "hidden")
                     domtr(eledom).removeAttribute('style');
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -327,9 +342,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                 break;
             }
             case
-                    "A"
-                    :
-            {
+            "A"
+            : {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -341,8 +355,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                 break;
             }
-            default:
-            {
+            default: {
                 eledom.innerHTML = valdom;
                 domtr(eledom).removeAttribute('style');
             }
@@ -404,13 +417,11 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 val = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -464,8 +475,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A":
-            {
+            case "A": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -552,13 +562,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -572,8 +580,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }
