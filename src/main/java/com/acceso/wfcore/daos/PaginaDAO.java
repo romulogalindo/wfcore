@@ -234,15 +234,15 @@ public class PaginaDAO {
         try {
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SAVE_BUTTON));
             nQuery.setInteger("p_co_pagina", p_co_pagina);
-            nQuery.setShort("co_pagbot", (short) botonDTO.getCo_pagbot());
-            nQuery.setString("no_pagbot", botonDTO.getNo_pagbot());
-            nQuery.setShort("or_pagbot", botonDTO.getOr_pagbot());
-            nQuery.setString("ti_pagbot", botonDTO.getTi_pagbot());
-            nQuery.setBoolean("il_proces", botonDTO.isIl_proces());
-            nQuery.setBoolean("il_confir", botonDTO.isIl_confir());
-            nQuery.setString("no_confir", botonDTO.getNo_confir());
-            nQuery.setBoolean("il_autent", botonDTO.isIl_autent());
-            nQuery.setBoolean("il_peresc", botonDTO.isIl_peresc());
+            nQuery.setShort("p_co_pagbot", (short) botonDTO.getCo_pagbot());
+            nQuery.setString("p_no_pagbot", botonDTO.getNo_pagbot());
+            nQuery.setShort("p_or_pagbot", botonDTO.getOr_pagbot());
+            nQuery.setString("p_ti_pagbot", botonDTO.getTi_pagbot());
+            nQuery.setBoolean("p_il_proces", botonDTO.isIl_proces());
+            nQuery.setBoolean("p_il_confir", botonDTO.isIl_confir());
+            nQuery.setString("p_no_confir", botonDTO.getNo_confir());
+            nQuery.setBoolean("p_il_autent", botonDTO.isIl_autent());
+            nQuery.setBoolean("p_il_peresc", botonDTO.isIl_peresc());
 
 
             System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());

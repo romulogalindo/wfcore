@@ -210,6 +210,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void apply() {
         WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
     }
 
 //    public BotonDTO emptyButton() {
