@@ -140,7 +140,7 @@ function pagina_onload(jsonData) {
 
         /*BEFORE VIEW*/
         var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
-        console.log('>>' + fnpost);
+        // console.log('>>' + fnpost);
         eval(fnpost);
 
         //devuevo actualizar el height;
@@ -383,7 +383,7 @@ function loadReporte64(row) {
 
     var n_itr = itr;
     // var all_tr = '';
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
+    console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
         // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
@@ -396,10 +396,11 @@ function loadReporte64(row) {
         n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
         // console.log('[loadReporte64:update!]>>>:' + n_itr);
     }
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
+    console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
 
     var dom_pag = document.getElementById('PAG' + co_pagina());
     var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
+    console.log('[loadReporte64]Cargando tipo Reporte->itr(3):' + new_tr);
     dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
 
     //do-for

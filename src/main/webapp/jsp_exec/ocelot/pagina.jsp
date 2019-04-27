@@ -21,8 +21,8 @@
         <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
 
         <!--JS -->
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=31"></script>
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=31"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=32"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=32"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
