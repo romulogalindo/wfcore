@@ -349,6 +349,30 @@
                                         </p:row>
                                     </p:panelGrid>
                                 </p:tab>
+
+                                <p:tab title="Script de Combos">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Código compag JS"></p:outputLabel>
+                                                <!--<p:outputLabel-->
+                                                        <!--value="Si el codigo Propag JS esta en blanco por default se llamara al Propag SP."></p:outputLabel>-->
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputPanel style="text-align: left;">
+
+
+                                                    <pe:codeMirror id="cadeJS3" mode="javascript"
+                                                                   value="#{paginaBean.pagina.js_compag}"
+                                                                   lineNumbers="true"
+                                                                   matchBrackets="true"/>
+                                                </p:outputPanel>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:tab>
                             </p:tabView>
 
                         </p:column>

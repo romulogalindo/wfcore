@@ -58,6 +58,7 @@ public class PaginaDAO {
             nQuery.setString("p_de_pagina", paginaDTO.getDe_pagina());
             nQuery.setString("p_js_valpag", paginaDTO.getJs_valpag());
             nQuery.setString("p_js_propag", paginaDTO.getJs_propag());
+            nQuery.setString("p_js_compag", paginaDTO.getJs_compag());
 
 
             System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());

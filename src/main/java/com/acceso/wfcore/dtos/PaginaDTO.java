@@ -21,12 +21,12 @@ import java.util.List;
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SELECT_PAGINA,
-                query = "select co_pagina, no_pagtit, de_pagina, db_progra, fe_regist, js_valpag, js_propag "
+                query = "select * "
                         + "from wfsistem.pbpagina_list()",
                 resultClass = PaginaDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_PAGINA,
-                query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag)",
+                query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag, :p_js_compag)",
                 resultClass = PaginaDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_GET_PAGINA,
@@ -42,6 +42,7 @@ public class PaginaDTO implements Serializable {
     String db_progra;
     String js_valpag;
     String js_propag;
+    String js_compag;
     Date fe_regist;
 
     @Transient
@@ -103,6 +104,14 @@ public class PaginaDTO implements Serializable {
 
     public String getJs_propag() {
         return js_propag;
+    }
+
+    public String getJs_compag() {
+        return js_compag;
+    }
+
+    public void setJs_compag(String js_compag) {
+        this.js_compag = js_compag;
     }
 
     public void setJs_propag(String js_propag) {

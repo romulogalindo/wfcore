@@ -31,6 +31,7 @@ public class Application {
 
     //Variables
     public String VALPAGJS = "";
+    public String COMPAGJS = "";
     public String PROPAGJS = "";
 
     //Executor!!!!
@@ -50,6 +51,7 @@ public class Application {
     public void run(ServletContextEvent sce) {
         /*Obtenemos variables del arranque!*/
         VALPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js";
+        COMPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_compag.js";
         PROPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_propag.js";
 
         /*SERVICES */
@@ -66,6 +68,9 @@ public class Application {
 
         //creamos la cache de script - LVL2 -->Posiblemente sea CNT:VALPAG
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_VALPAGJS, Integer.class, Object.class, -1);
+
+        //creamos la cache de script - LVL2 -->Posiblemente sea CNT:VALPAG>COMPAG
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_COMPAGJS, Integer.class, Object.class, -1);
 
         //creamos la cache de script - LVL2 -->Posiblemente sea CNT:PROPAG
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PROPAGJS, Integer.class, Object.class, -1);
