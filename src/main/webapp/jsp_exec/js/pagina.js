@@ -112,50 +112,54 @@ function pagina_onload(jsonData) {
     // console.log('[paginaload@' + co_pagina() + ']jsonData = ' + jsonData);
     // console.log('[paginaload@' + co_pagina() + ']jsonData.status = ' + jsonData.status);
     // console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result);
-    // try {
-    //     console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result.rows);
-    // } catch (e) {
-    //     console.log('[paginaload@' + co_pagina() + ']jsonData.result  rows no existen= ');
-    // }
 
-    if (jsonData.result.rows != undefined) {
-        var rows = [];
-        rows = jsonData.result.rows;
+    if (jsonData.status == 'OK') {
+        if (jsonData.result.rows != undefined) {
+            var rows = [];
+            rows = jsonData.result.rows;
 
-        // var dom2= document.getElementsByClassName("row1")[0].cloneNode(true);
-        // var dom2 = '<tbody>' + document.getElementById("row1").innerHTML + '</tbody>'
-        var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
+            // var dom2= document.getElementsByClassName("row1")[0].cloneNode(true);
+            // var dom2 = '<tbody>' + document.getElementById("row1").innerHTML + '</tbody>'
+            var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
 
-        for (var i = 0; i < rows.length; i++) {
-            // console.log('[paginaload@' + co_pagina() + ']rows= ' + rows[i]);
-            // console.log('[paginaload@' + co_pagina() + ']rows.regs = ' + rows[i].regs);
-            // console.log('[paginaload@' + co_pagina() + ']ti_pagina()  = ' + ti_pagina());
-            // console.log('[paginaload@' + co_pagina() + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
+            for (var i = 0; i < rows.length; i++) {
+                // console.log('[paginaload@' + co_pagina() + ']rows= ' + rows[i]);
+                // console.log('[paginaload@' + co_pagina() + ']rows.regs = ' + rows[i].regs);
+                // console.log('[paginaload@' + co_pagina() + ']ti_pagina()  = ' + ti_pagina());
+                // console.log('[paginaload@' + co_pagina() + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
 
-            if (ti_pagina() == 'F')
-                loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
-            else
-                loadReporte64(rows[i]);
+                if (ti_pagina() == 'F')
+                    loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
+                else
+                    loadReporte64(rows[i]);
+            }
+
+            /*BEFORE VIEW*/
+            var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
+            // console.log('>>' + fnpost);
+            eval(fnpost);
+
+            //devuevo actualizar el height;
+            size_of_pagina();
+            // var miframe = window;//.parent.document.getElementById('#target');
+            // window.parent.document.iframe2('PAG' + co_pagina(), height_table);
+            window.parent.iframe2('PAG' + co_pagina(), height_table);
+
+        } else {
+            document.getElementById('PAG' + co_pagina()).style.display = 'none';
+            window.parent.iframe2('PAG' + co_pagina(), -1);
+            console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
         }
-
-        /*BEFORE VIEW*/
-        var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
-        // console.log('>>' + fnpost);
-        eval(fnpost);
-
-        //devuevo actualizar el height;
-        size_of_pagina();
-        // var miframe = window;//.parent.document.getElementById('#target');
-        // window.parent.document.iframe2('PAG' + co_pagina(), height_table);
-        window.parent.iframe2('PAG' + co_pagina(), height_table);
-
+        document.getElementById('loader').style.display = 'none';
     } else {
-        document.getElementById('PAG' + co_pagina()).style.display = 'none';
-        window.parent.iframe2('PAG' + co_pagina(), -1);
-        console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
+        document.getElementById('content_table_loader').style.display = 'none';
+        //seteo de valores
+        document.getElementById('title_error').innerHTML = 'Error: P&aacute;gina ' + co_pagina();
+        document.getElementById('detail_error').innerHTML = jsonData.error.message;
+
+        document.getElementById('card_error').style.display = 'block';
     }
 
-    document.getElementById('loader').style.display = 'none';
 }
 
 //function iframe(iframe) {
@@ -203,7 +207,7 @@ function loadFormulario64(index, row, aditional, dom2) {
         var valdom = reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text;
         console.log('>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
-        if (eledom){
+        if (eledom) {
             switch (eledom.tagName) {
                 case "INPUT": {
                     eledom.value = valdom;
@@ -367,10 +371,10 @@ function loadFormulario64(index, row, aditional, dom2) {
             }
 
 //muestra al padre
-        console.log("DOMELE: " + "P" + co_pagina() + "C" + index + "T" + eledom.getAttribute("co_pagtit"));
-        var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
-        domtitle.setAttribute("style", "");
-    }
+            console.log("DOMELE: " + "P" + co_pagina() + "C" + index + "T" + eledom.getAttribute("co_pagtit"));
+            var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
+            domtitle.setAttribute("style", "");
+        }
 // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
 

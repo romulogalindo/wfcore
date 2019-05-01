@@ -31,7 +31,7 @@ public class RequestManager {
     }
 
     public RequestManager(HttpRewriteWrappedRequest httpRewriteWrappedRequest, HttpServletResponse response) {
-        System.out.println("me llamaron agui2!");
+//        System.out.println("me llamaron agui2!");
         this.request = (HttpServletRequest) httpRewriteWrappedRequest;
         this.response = response;
         this.parameters = request.getParameterMap();
@@ -39,7 +39,7 @@ public class RequestManager {
     }
 
     public RequestManager(ServletRequest request) {
-        System.out.println("me llamaron agui!");
+//        System.out.println("me llamaron agui!");
         this.parameters = request.getParameterMap();
         this.request = (HttpServletRequest) request;
         validMultiPart((HttpServletRequest) request);
@@ -100,7 +100,7 @@ public class RequestManager {
 
         if (this.ismultipart) {
             for (FileItem fileItem : this.fileItemList) {
-                System.out.println("><" + fileItem.getFieldName());
+//                System.out.println("><" + fileItem.getFieldName());
                 if (fileItem.getFieldName().contains("co_regist")) {
                     Integer id = Integer.parseInt(fileItem.getFieldName().replace("co_regist", ""));
                     String value = fileItem.getString();
@@ -131,7 +131,7 @@ public class RequestManager {
     }
 
     public void redirect(String url) throws Exception {
-        System.out.println("redirect to>" + url);
+//        System.out.println("redirect to>" + url);
         this.response.sendRedirect(url);
     }
 

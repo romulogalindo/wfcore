@@ -94,15 +94,16 @@ public class DataAPI extends GenericAPI {
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+            System.out.println("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery);
 
             NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
             valReturn = sql.getResultList();
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            System.out.println("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
 
             session.close();
 
+            return ApplicationManager.buildNValPag(valReturn);
         } catch (Exception ep) {
             valReturn = new ArrayList<>();
 
@@ -110,11 +111,11 @@ public class DataAPI extends GenericAPI {
                 session = null;
             }
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " E = " + ep.getMessage() + "");
+//            System.out.println("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery + " E = " + ep.getMessage() + "");
             throw ep;
         }
 
-        return ApplicationManager.buildNValPag(valReturn);
+
     }
 
 }

@@ -3,7 +3,6 @@ package com.acceso.wfweb.dtos;
 import com.acceso.wfweb.utils.Values;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;

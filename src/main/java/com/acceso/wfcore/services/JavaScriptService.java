@@ -51,29 +51,32 @@ public class JavaScriptService extends Service {
     }
 
     //    function exec valpag
-    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long co_usuari, int id_fraant) {
+    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long co_usuari, int id_fraant) throws Exception {
         Object result = null;
-        try {
+//        try {
             engine_nashornjs.eval(JSText);
             Invocable inv = (Invocable) engine_nashornjs;
 
             result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, ls_conpar, co_usuari, id_fraant);
 //            System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])result = " + result);
-        } catch (Exception ep) {
-            System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
-            ep.printStackTrace();
-        }
+            return result;
+//        } catch (Exception ep) {
+//            System.out.println("(doValpag64[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
+//            ep.printStackTrace();
+////            ep.printStackTrace();
+//            throw ep;
+//        }
 
-        return result;
+
     }
 
 
     //    function exec valpag
-    public Map<Short, Object> doCompag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long co_usuari, int id_fraant) {
+    public Map<Short, Object> doCompag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long co_usuari, int id_fraant) throws Exception{
 //        Object result = null;
         Map<Short, Object> result = new HashMap<>();
 
-        try {
+//        try {
             engine_nashornjs.eval(JSText);
             Invocable inv = (Invocable) engine_nashornjs;
             for (String co_pagreg : co_pagregs) {
@@ -84,10 +87,10 @@ public class JavaScriptService extends Service {
             }
 
             System.out.println("(compag[" + co_conten + ":" + co_pagina + ":" + co_pagregs + "])result = " + result);
-        } catch (Exception ep) {
-            System.out.println("(compag[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
-            ep.printStackTrace();
-        }
+//        } catch (Exception ep) {
+//            System.out.println("(compag[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
+//            ep.printStackTrace();
+//        }
 
         return result;
     }

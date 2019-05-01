@@ -47,9 +47,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
 
         int colspan = 0;
         for (Fila fila : ultraFilas.values()) {
-            //html += fila.toHTML();->thead->lvl1
             if (fila.getTituloDTO() != null) {
-//                System.out.println("Titulo>fila = " + fila);
                 //es un titulo
                 titlelvl1.add(fila);
                 colspan = 0;
@@ -64,11 +62,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
 
         html += "<table id=PAG" + co_pagina + " class=\"wf-report table table-hover mb-0 table-responsive\">";
         html += "<thead>";
-//        html += "<tr>";
-//        html += "<th colspan=" + ultraFilas.size() + " >";
-//        html += "<h3>" + no_pagtit + "</h3>";
-//        html += "</th>";
-//        html += "</tr>";
 
         html += "<tr>";
         for (Fila fila : titlelvl1) {
@@ -91,23 +84,23 @@ public class PaginaRerporte extends Pagina implements Serializable {
                     html += "</th>";
                 }
 
-                System.out.println("fila = " + fila.getRegistroDTO() + "?>" + fila.getRegistroDTO().getTi_pagreg() + "?>" + fila.getRegistroDTO().getTi_estreg());
+//                System.out.println("fila = " + fila.getRegistroDTO() + "?>" + fila.getRegistroDTO().getTi_pagreg() + "?>" + fila.getRegistroDTO().getTi_estreg());
 
                 switch (fila.getRegistroDTO().getTi_pagreg()) {
                     case 1: {
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
-                            System.out.println("fila = REDERER OK!");
+//                            System.out.println("fila = REDERER OK!");
                             itr += "<input type=hidden name=regist" + fila.getRegistroDTO().getCo_pagreg() + " value=regist" + fila.getRegistroDTO().getCo_pagreg() + "val />";
                         }
                         if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
-                            System.out.println("fila = REDERER OK!");
+//                            System.out.println("fila = REDERER OK!");
                             itr += "<td><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
                         }
                         break;
                     }
                     case 2: {
 //                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
-                        System.out.println("fila = REDERER OK!");
+//                        System.out.println("fila = REDERER OK!");
                         itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
 //                        }
                         break;

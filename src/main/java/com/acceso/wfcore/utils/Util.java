@@ -212,6 +212,12 @@ public class Util {
                 if (message.contains("Where:")) {
                     message = message.substring(0, message.indexOf("Where:")).trim();
                 }
+            } else if (ep.getCause() instanceof SQLGrammarException) {
+                message = ((SQLGrammarException) ep.getCause()).getSQLException().getLocalizedMessage();
+
+                if (message.contains("Where:")) {
+                    message = message.substring(0, message.indexOf("Where:")).trim();
+                }
             }
 
         } else if (ep instanceof HibernateException) {
@@ -223,8 +229,7 @@ public class Util {
         } else if (ep instanceof DataException) {
             message = ((DataException) ep).getSQLException().getMessage();
         } else if (ep instanceof SQLGrammarException) {
-            message = ((SQLGrammarException) ep).getSQLException().getMessage();
-        } else if (ep instanceof SQLGrammarException) {
+            System.out.println("message = " + message);
             message = ((SQLGrammarException) ep).getSQLException().getMessage();
         } else if (ep instanceof org.hibernate.exception.JDBCConnectionException) {
             message = ((org.hibernate.exception.JDBCConnectionException) ep).getSQLException().getMessage();
@@ -233,11 +238,18 @@ public class Util {
             }
         }
 
-        if (message.contentEquals("")) {
-            message = ep.getMessage();
-        }
+        System.out.println("ep = " + ep);
+        System.out.println("ep = " + ep.getMessage());
+        message = message == null ? (ep.getMessage() == null ? "Por favor revisar y validar los script de la página." : ep.getMessage()) : message;
 
-        message = message.replace("ERROR: ", "").replace("{", "").replace("}", "").replace("\n", " ").replace("\"", "\\'").replace("\'", "\\'");
+//        if (message.contentEquals("")) {
+//            message = ep.getMessage();
+//        }
+
+        System.out.println("message = " + (message == null));
+        if (message.length() > 0) {
+            message = message.replace("ERROR: ", "").replace("{", "").replace("}", "").replace("\n", " ").replace("\"", "\\'").replace("\'", "\\'");
+        }
 
         errorMessage.setType((message.contains("{") && message.contains("}")) ? ErrorMessage.ERROR_TYPE_USER : ErrorMessage.ERROR_TYPE_SYSTEM);
         errorMessage.setMessage(message);

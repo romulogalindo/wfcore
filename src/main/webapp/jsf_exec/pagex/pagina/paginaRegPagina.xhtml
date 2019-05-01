@@ -148,8 +148,16 @@
                                             <h:outputText value="#{N + 1}"/>
                                         </p:column>
 
-                                        <p:column headerText="COD" width="50" styleClass="table_cell_right">
-                                            <h:outputText value="#{ele.co_elemen}"/>
+                                        <!--<p:column headerText="COD" width="50" styleClass="table_cell_right">-->
+                                            <!--<h:outputText value="#{ele.co_elemen}"/>-->
+                                        <!--</p:column>-->
+
+                                        <p:column headerText="TIT" width="40" styleClass="table_cell_right">
+                                            <h:outputText value="#{ele.pagtitDTO.co_pagtit}" rendered="#{ele.ti_elemen == 1}"/>
+                                        </p:column>
+
+                                        <p:column headerText="REG" width="40" styleClass="table_cell_right">
+                                            <h:outputText value="#{ele.pagregDTO.co_pagreg}" rendered="#{ele.ti_elemen == 2}"/>
                                         </p:column>
 
                                         <p:column headerText="Tipo" width="70" styleClass="table_cell_left">
