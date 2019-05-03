@@ -241,6 +241,12 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     }
 
     public String contab_edit() {
+//        return URL_MANAGER_PAGE;
+        return URL_CONTAB_EDIT;
+    }
+
+    public String conpag_edit() {
+//        return URL_MANAGER_PAGE;
         return URL_MANAGER_PAGE;
     }
 

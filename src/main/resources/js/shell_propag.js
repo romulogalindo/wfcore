@@ -10,6 +10,29 @@ var CACHE = new main_api_acr_cache_api();
 
 var RETORNO_OK = "{}";
 
+
+/*COALESCE(obj, def)*/
+function COALESCE(obj, def) {
+    if (obj) {
+        return obj
+    } else {
+        return def;
+    }
+}
+
+/*NULLIF(obj1, obj2)*/
+function NULLIF(obj1, obj2) {
+    if (obj1 == obj2) {
+        return null;
+    } else {
+        return obj1;
+    }
+}
+
+function ERROR(msg){
+
+}
+
 function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, REGIST, CO_USUARI) {
     var PROPAGJS = null;
     var LS_REGIST = JSON.parse(REGIST);

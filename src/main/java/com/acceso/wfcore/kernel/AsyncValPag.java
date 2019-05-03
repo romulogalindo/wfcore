@@ -7,6 +7,7 @@ import com.acceso.wfweb.dtos.ComboDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
+import com.acceso.wfweb.utils.JsonResponseC;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -101,12 +102,8 @@ public class AsyncValPag extends AsyncProcessor {
 
                     List<ComboDTO> lstcbx = null;
                     if (entry.getValue() != null) {
-                        JsonResponse jsonResponsex = Util.gson_typeA.fromJson("" + entry.getValue(), JsonResponse.class);
-//                        System.out.println("jsonResponsex.getResult() = " + jsonResponsex.getResult());
-
-                        Type listType = new TypeToken<ArrayList<ComboDTO>>() {
-                        }.getType();
-                        lstcbx = Util.gson_typeA.fromJson("" + jsonResponsex.getResult(), listType);
+                        JsonResponseC jsonResponsex = Util.gson_typeA.fromJson("" + entry.getValue(), JsonResponseC.class);
+                        lstcbx = jsonResponsex.getResult();
                     } else {
                         lstcbx = new ArrayList<>();
                     }

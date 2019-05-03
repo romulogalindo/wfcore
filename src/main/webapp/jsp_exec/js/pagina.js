@@ -235,23 +235,25 @@ function loadFormulario64(index, row, aditional, dom2) {
                         var ls_compag = aditional[reg.regist];
                         var dom_compag = "<option value=\"\"></option>";
 
-                        for (var i = 0; i < ls_compag.length; i++) {
-                            compag = ls_compag[i];
+                        if (ls_compag) {
+                            for (var i = 0; i < ls_compag.length; i++) {
+                                compag = ls_compag[i];
 
-                            dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                                dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                            }
+                            eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
                         }
-                        eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
-
                     } else if (ti_pagreg == '4') {
                         var ls_compag = aditional[reg.regist];
                         var dom_compag = "";
+                        if (ls_compag) {
+                            for (var i = 0; i < ls_compag.length; i++) {
+                                compag = ls_compag[i];
 
-                        for (var i = 0; i < ls_compag.length; i++) {
-                            compag = ls_compag[i];
-
-                            dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                                dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                            }
+                            eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
                         }
-                        eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
                     } else if (ti_pagreg == '5') {
                         //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
@@ -444,7 +446,12 @@ function propag(cycle, co_button, il_proces, co_condes) {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
-                    val = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
+                    // val = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
+                    // var dom_select = eledom.getElementsByTagName("INPUT")[0];
+                    console.log('VLIS:' + eledom.innerHTML);
+                    if (eledom.innerHTML.length > 0) {
+                        val = eledom.getElementsByTagName("INPUT")[0].value;
+                    }
                 } else if (ti_pagreg == '3') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
@@ -603,7 +610,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
 //                    valdom = eledom.getAttribute("va_pagreg");
-                    valdom = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
+//                     valdom = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
+                    console.log('VLIS:' + eledom.innerHTML);
+                    if (eledom.innerHTML.length > 0) {
+                        valdom = eledom.getElementsByTagName("INPUT")[0].value;
+                    }
                 } else if (ti_pagreg == '3') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
                     valdom = dom_select.options[dom_select.selectedIndex].value;

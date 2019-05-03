@@ -73,11 +73,12 @@ public class AsyncProPag extends AsyncProcessor {
                 propag_js = Util.getText(WFCoreListener.APP.PROPAGJS).replace("USUARI_DATA_JS_TEXT", propag_js);
 
                 Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
-
+                System.out.println(">>object = " + object);
                 out.write(object.toString());
 
             } catch (Exception ep) {
-                out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, ep.getMessage()))));
+                out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep))));
+                ep.printStackTrace();
             }
         }
         //complete the processing

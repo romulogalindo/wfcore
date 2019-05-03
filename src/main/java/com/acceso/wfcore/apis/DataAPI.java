@@ -77,7 +77,7 @@ public class DataAPI extends GenericAPI {
                 jsonResponse.setError(Util.getError(ep));
             }
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getMessage() + ": E1 = " + ep.getMessage() + "");
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
             ep.printStackTrace();
         }

@@ -208,6 +208,8 @@ public class Util {
                 return null;
             } else if (ep.getCause() instanceof GenericJDBCException) {
                 message = ((GenericJDBCException) ep.getCause()).getSQLException().getLocalizedMessage();
+                message = ((GenericJDBCException) ep.getCause()).getSQLException().getMessage();
+                System.out.println("message = " + message);
 
                 if (message.contains("Where:")) {
                     message = message.substring(0, message.indexOf("Where:")).trim();
@@ -250,7 +252,7 @@ public class Util {
         if (message.length() > 0) {
             message = message.replace("ERROR: ", "").replace("{", "").replace("}", "").replace("\n", " ").replace("\"", "\\'").replace("\'", "\\'");
         }
-
+        System.out.println("message! = " + message);
         errorMessage.setType((message.contains("{") && message.contains("}")) ? ErrorMessage.ERROR_TYPE_USER : ErrorMessage.ERROR_TYPE_SYSTEM);
         errorMessage.setMessage(message);
 
