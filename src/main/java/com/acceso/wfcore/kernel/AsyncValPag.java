@@ -61,8 +61,8 @@ public class AsyncValPag extends AsyncProcessor {
 
             valpag_js = Util.getText(WFCoreListener.APP.VALPAGJS).replace("USUARI_DATA_JS_TEXT", valpag_js);
 
-
-            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US")).getCo_usuari(), 1);
+            Usuario usuario = ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US"));
+            ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
 
             jsonResponse.setResult(valpagJson);
             jsonResponse.setFnpost((String) WFCoreListener.APP.getJavaScriptService().dopvpj("GET_DO_POST_LOAD_DATA"));

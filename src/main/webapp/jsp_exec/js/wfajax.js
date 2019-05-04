@@ -52,8 +52,10 @@ $D.doLogoutJson = function () {
     net.send(null);
 }
 
-doPropag = function (url, data) {
-
+doPropag = function (url, regparams, data) {
+    console.log('url=' + url);
+    console.log('regparams=' + regparams);
+    console.log('data=' + data);
     var net = new Inet();
     net.open("POST", "/beaver", true); //false para que sea sincrono
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -62,9 +64,27 @@ doPropag = function (url, data) {
 
             var rpta = JSON.parse(net.responseText);
             if (rpta.error) {
+                window.parent.showloading(false);
                 alert('' + rpta.error.message + '');
             } else {
-                window.parent.location.href = url;
+                console.log("rpta.params===>" + rpta.params);
+                if (rpta.params) {
+                    for (var i = 0; i < rpta.params.length; i++) {
+                        console.log("rpta.params[i].no_param=" + rpta.params[i].no_param);
+                        for (var o = 0; o < regparams.length; o++) {
+                            console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + rpta.params[i].no_param);
+                            if (regparams[o].indexOf(rpta.params[i].no_param) > -1) {
+                                regparams[o] = rpta.params[i].no_param + "=" + rpta.params[i].va_param;
+                            }
+                        }
+                    }
+                }
+                var urlpart = "&";
+                for (var o = 0; o < regparams.length; o++) {
+                    urlpart += regparams;
+                }
+                // alert('URL>>>' + url + urlpart);
+                window.parent.location.href = url + urlpart;
             }
 
         }

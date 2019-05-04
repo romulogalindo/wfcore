@@ -591,7 +591,7 @@ function preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proi
 }
 
 function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data) {
-    var parametros = '';
+    var parametros = [];
 
     for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
         var param = eval('BTN' + co_button + 'P')[i];
@@ -633,10 +633,10 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
             }
         }
 
-        parametros = parametros + '&co_conpar_' + sconpar + '=' + valdom;
+        parametros[parametros.length] = 'co_conpar_' + sconpar + '=' + valdom;
     }
-
-    doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
+    console.log('//' + window.location.host + '/wf?co_conten=' + co_condes + "{}" - parametros + "{}" + data);
+    doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes, parametros, data);
 }
 
 

@@ -35,7 +35,7 @@ function NULLIF(obj1, obj2) {
 /*VAR:Function Ejecuta post*/
 var DO_POST_LOAD_DATA;
 
-function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, CO_USUARI, ID_FRAANT) {
+function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
     var VALPAGJS = null;
     var LS_CONPAR = JSON.parse(CONPAR);
 

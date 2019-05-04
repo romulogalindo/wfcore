@@ -6,6 +6,7 @@ import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.utils.JsonResponse;
+import com.acceso.wfweb.utils.JsonResponseP;
 import com.acceso.wfweb.utils.RequestManager;
 
 import javax.servlet.AsyncContext;
@@ -74,7 +75,28 @@ public class AsyncProPag extends AsyncProcessor {
 
                 Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
                 System.out.println(">>object = " + object);
-                out.write(object.toString());
+                System.out.println(">>object = " + object.getClass());
+//                jdk.nashorn.api.scripting.ScriptObjectMirror a; a.
+                if (object instanceof String) {
+                    object = object.toString().replace("X5964ERQ17", "");
+                    out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.gson_typeA.fromJson(object.toString(), ErrorMessage.class))));
+                } else if (object instanceof JsonResponseP) {
+                    out.write(Util.toJSON(object));
+                } else {
+                    out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
+                }
+
+//                if (object.toString().contains("X5964ERQ17")) {
+//                    object = object.toString().replace("X5964ERQ17", "");
+//                    out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.gson_typeA.fromJson(object.toString(), ErrorMessage.class))));
+//                } else if (object.toString().contains("X5964IUP17")) {
+//                    object = object.toString().replace("X5964IUP17", "");
+////                    object = Util.toJSON(JsonResponse.defultJsonResponseOK("X5964IUP17"));
+//                    object = Util.toJSON(JsonResponse.defultJsonResponseOK("X5964IUP17")).replace("X5964IUP17", object.toString().replace("\\", ""));
+//                    out.write(object + "");
+//                } else {
+//                    out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
+//                }
 
             } catch (Exception ep) {
                 out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep))));

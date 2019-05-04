@@ -51,15 +51,15 @@ public class JavaScriptService extends Service {
     }
 
     //    function exec valpag
-    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long co_usuari, int id_fraant) throws Exception {
+    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
         Object result = null;
 //        try {
-            engine_nashornjs.eval(JSText);
-            Invocable inv = (Invocable) engine_nashornjs;
+        engine_nashornjs.eval(JSText);
+        Invocable inv = (Invocable) engine_nashornjs;
 
-            result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, ls_conpar, co_usuari, id_fraant);
+        result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, ls_conpar, id_sesion, co_usuari, id_fraant);
 //            System.out.println("(valpag[" + co_conten + ":" + co_pagina + "])result = " + result);
-            return result;
+        return result;
 //        } catch (Exception ep) {
 //            System.out.println("(doValpag64[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
 //            ep.printStackTrace();
@@ -72,21 +72,21 @@ public class JavaScriptService extends Service {
 
 
     //    function exec valpag
-    public Map<Short, Object> doCompag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long co_usuari, int id_fraant) throws Exception{
+    public Map<Short, Object> doCompag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long co_usuari, int id_fraant) throws Exception {
 //        Object result = null;
         Map<Short, Object> result = new HashMap<>();
 
 //        try {
-            engine_nashornjs.eval(JSText);
-            Invocable inv = (Invocable) engine_nashornjs;
-            for (String co_pagreg : co_pagregs) {
-                System.out.println("JSFunction = " + JSFunction);
-                Object rslt = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, co_usuari, id_fraant);
-                System.out.println("[" + co_pagreg + "]rslt = " + rslt);
-                result.put(Util.toShort(co_pagreg, (short) -1), rslt);
-            }
+        engine_nashornjs.eval(JSText);
+        Invocable inv = (Invocable) engine_nashornjs;
+        for (String co_pagreg : co_pagregs) {
+            System.out.println("JSFunction = " + JSFunction);
+            Object rslt = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, co_usuari, id_fraant);
+            System.out.println("[" + co_pagreg + "]rslt = " + rslt);
+            result.put(Util.toShort(co_pagreg, (short) -1), rslt);
+        }
 
-            System.out.println("(compag[" + co_conten + ":" + co_pagina + ":" + co_pagregs + "])result = " + result);
+        System.out.println("(compag[" + co_conten + ":" + co_pagina + ":" + co_pagregs + "])result = " + result);
 //        } catch (Exception ep) {
 //            System.out.println("(compag[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
 //            ep.printStackTrace();
