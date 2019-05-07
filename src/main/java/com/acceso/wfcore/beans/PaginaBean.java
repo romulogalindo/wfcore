@@ -6,10 +6,9 @@ import com.acceso.wfcore.dtos.*;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
-import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.DragDropEvent;
-import org.primefaces.event.TabChangeEvent;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -91,9 +90,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public String load() {
         System.out.println("load()");
         this.thisEditable = true;
-        // LLENAR LOS BOTONES SECUNDARIOS
-        //doListener();
-        //CARGA INICIAL!!
+
         selectDto();
 
         //Carga de listado de registros
@@ -163,13 +160,17 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     @Override
     public String saveRegist() {
         saveDto();
-        return URL_LISTA;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Página " + this.pagina.getCo_pagina(), "Datos actualizados."));
+        return null;
+//        return URL_LISTA;
     }
 
     public String saveRegistApply() {
         saveDto();
         apply();
-        return URL_LISTA;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Página " + this.pagina.getCo_pagina(), "Datos actualizados y aplicacdos."));
+        return null;
+//        return URL_LISTA;
     }
 
     @Override
@@ -183,9 +184,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     @Override
     public void saveDto() {
         PaginaDAO dao = new PaginaDAO();
-        this.pagina = dao.save(pagina);
-//      this.paginas = dao.getPaginas();
-////      Sistema.out.println("PaginaBean actualizarPagina = " + this.pagina);
+        this.pagina = dao.save(this.pagina);
+        this.pagina.setLs_botone(dao.getButtons(this.pagina.getCo_pagina()));
+        this.pagina.setLs_elemen(dao.getElementos(this.pagina.getCo_pagina()));
+        System.out.println("this.pagina = " + this.pagina);
+        this.paginas = dao.getPaginas();
         dao.close();
     }
 

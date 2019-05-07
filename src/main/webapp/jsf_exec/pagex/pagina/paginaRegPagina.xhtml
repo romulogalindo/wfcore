@@ -10,7 +10,33 @@
 
 <ui:composition template="../../template/plantilla.xhtml">
     <ui:define name="content">
+        <style>
+            .CodeMirror {
+                font-size: 10px;
+                height: 560px;
+            }
 
+            #form\:tb\:valpagjs, #form\:tb\:propagjs, #form\:tb\:compagjs {
+                padding: 0px;
+            }
+
+            body .ui-panel .ui-panel-content{
+                border: none !important;
+                padding: 0px !important;
+            }
+
+            /*.ui-inputfield{*/
+            /*    padding: 5px !important;*/
+            /*}*/
+
+            /*.ui-button-text-icon-left .ui-button-text {*/
+            /*    padding: 5px !important;*/
+            /*}*/
+
+            /*.ui-button-text-only .ui-button-text {*/
+            /*    padding: 5px !important;*/
+            /*}*/
+        </style>
         <h:form id="form">
             <p:panel id="panelActualizarPagina">
                 <p:toolbar>
@@ -19,16 +45,15 @@
                         <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{paginaBean.pagina.no_pagtit}</h3> |
                         <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{paginaBean.pagina.co_pagina}]</h4>
                         </span>
-
                     </f:facet>
                 </p:toolbar>
 
-                <p:panelGrid style="width: 100%">
+                <p:panelGrid id="pg" style="width: 100%">
                     <p:row>
-                        <p:column colspan="3" style="text-align: center">
+                        <p:column colspan="3" style="text-align: center; padding: .571em 0px 0px;">
 
-                            <p:tabView activeIndex="#{paginaBean.defaultTabIndex}">
-                                <p:tab title="Datos">
+                            <p:tabView id="tb" activeIndex="#{paginaBean.defaultTabIndex}" style="height: 600px;">
+                                <p:tab title="Datos" >
 
                                     <p:panelGrid style="display: inline-block;">
 
@@ -123,7 +148,7 @@
 
                                     </p:toolbar>
 
-                                    <p:spacer height="2"></p:spacer>
+                                    <p:spacer height="1"></p:spacer>
 
                                     <p:dataTable id="listax"
                                                  var="ele"
@@ -137,6 +162,8 @@
                                                  selection="#{paginaBean.elementoSeleccionado}"
                                                  rowKey="#{ele.co_elemen}"
                                                  rowIndexVar="N"
+                                                 scrollable="true"
+                                                 scrollHeight="400"
                                                  style="width:100%; ">
 
                                         <p:ajax event="sort" skipChildren="false"/>
@@ -148,16 +175,14 @@
                                             <h:outputText value="#{N + 1}"/>
                                         </p:column>
 
-                                        <!--<p:column headerText="COD" width="50" styleClass="table_cell_right">-->
-                                            <!--<h:outputText value="#{ele.co_elemen}"/>-->
-                                        <!--</p:column>-->
-
                                         <p:column headerText="TIT" width="40" styleClass="table_cell_right">
-                                            <h:outputText value="#{ele.pagtitDTO.co_pagtit}" rendered="#{ele.ti_elemen == 1}"/>
+                                            <h:outputText value="#{ele.pagtitDTO.co_pagtit}"
+                                                          rendered="#{ele.ti_elemen == 1}"/>
                                         </p:column>
 
                                         <p:column headerText="REG" width="40" styleClass="table_cell_right">
-                                            <h:outputText value="#{ele.pagregDTO.co_pagreg}" rendered="#{ele.ti_elemen == 2}"/>
+                                            <h:outputText value="#{ele.pagregDTO.co_pagreg}"
+                                                          rendered="#{ele.ti_elemen == 2}"/>
                                         </p:column>
 
                                         <p:column headerText="Tipo" width="70" styleClass="table_cell_left">
@@ -240,6 +265,8 @@
                                                  selection="#{paginaBean.botonSeleccionado}"
                                                  rowKey="#{bot.co_pagbot}"
                                                  rowIndexVar="N"
+                                                 scrollable="true"
+                                                 scrollHeight="400"
                                                  style="width:100%; ">
 
                                         <p:ajax event="sort" skipChildren="false"/>
@@ -306,87 +333,44 @@
 
                                 </p:tab>
 
-                                <p:tab title="Script de Carga">
-                                    <p:panelGrid style="width: 100%">
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputLabel value="Tipo de código"></p:outputLabel>
-                                                <p:selectOneRadio id="ti_script" value="1" unselectable="true">
-                                                    <f:selectItem itemLabel="Valpag JS" itemValue="1"/>
-                                                    <f:selectItem itemLabel="Vaqlpag SP" itemValue="2"/>
-                                                </p:selectOneRadio>
-                                                <p:outputLabel
-                                                        value="Si el codigo Valpag JS esta en blanco por default se llamara al Valpag SP."></p:outputLabel>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputPanel style="text-align: left;">
-
-
-                                                    <pe:codeMirror id="cadeJS" mode="javascript"
-                                                                   value="#{paginaBean.pagina.js_valpag}"
-                                                                   lineNumbers="true"
-                                                                   matchBrackets="true"/>
-                                                </p:outputPanel>
-                                            </p:column>
-                                        </p:row>
-                                    </p:panelGrid>
+                                <p:tab id="valpagjs" title="Script de Carga">
+                                    <p:outputPanel style="text-align: left;padding: 0px;height: 100%">
+                                        <pe:codeMirror id="cadeJS" mode="javascript" theme="material" label="valpag.js"
+                                                       value="#{paginaBean.pagina.js_valpag}"
+                                                       lineNumbers="true"
+                                                       lineWrapping="true"
+                                                       matchBrackets="true"
+                                        />
+                                    </p:outputPanel>
                                 </p:tab>
 
-                                <p:tab title="Script de Proceso">
-                                    <p:panelGrid style="width: 100%">
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputLabel value="Código Propag JS"></p:outputLabel>
-                                                <p:outputLabel
-                                                        value="Si el codigo Propag JS esta en blanco por default se llamara al Propag SP."></p:outputLabel>
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputPanel style="text-align: left;">
-
-
-                                                    <pe:codeMirror id="cadeJS2" mode="javascript"
-                                                                   value="#{paginaBean.pagina.js_propag}"
-                                                                   lineNumbers="true"
-                                                                   matchBrackets="true"/>
-                                                </p:outputPanel>
-                                            </p:column>
-                                        </p:row>
-                                    </p:panelGrid>
+                                <p:tab id="propagjs" title="Script de Proceso">
+                                    <p:outputPanel style="text-align: left;">
+                                        <pe:codeMirror id="cadeJS2" mode="javascript" theme="material" label="valpag.js"
+                                                       value="#{paginaBean.pagina.js_propag}"
+                                                       lineNumbers="true"
+                                                       lineWrapping="true"
+                                                       matchBrackets="true"
+                                        />
+                                    </p:outputPanel>
                                 </p:tab>
 
-                                <p:tab title="Script de Combos">
-                                    <p:panelGrid style="width: 100%">
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputLabel value="Código compag JS"></p:outputLabel>
-                                                <!--<p:outputLabel-->
-                                                        <!--value="Si el codigo Propag JS esta en blanco por default se llamara al Propag SP."></p:outputLabel>-->
-                                            </p:column>
-                                        </p:row>
-                                        <p:row>
-                                            <p:column>
-                                                <p:outputPanel style="text-align: left;">
-
-
-                                                    <pe:codeMirror id="cadeJS3" mode="javascript"
-                                                                   value="#{paginaBean.pagina.js_compag}"
-                                                                   lineNumbers="true"
-                                                                   matchBrackets="true"/>
-                                                </p:outputPanel>
-                                            </p:column>
-                                        </p:row>
-                                    </p:panelGrid>
+                                <p:tab id="compagjs" title="Script de Combos">
+                                    <p:outputPanel style="text-align: left;">
+                                        <pe:codeMirror id="cadeJS3" mode="javascript" theme="material" label="valpag.js"
+                                                       value="#{paginaBean.pagina.js_compag}"
+                                                       lineNumbers="true"
+                                                       lineWrapping="true"
+                                                       matchBrackets="true"
+                                        />
+                                    </p:outputPanel>
                                 </p:tab>
                             </p:tabView>
 
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column colspan="3">
+                        <p:column colspan="3" style="padding: 0px;">
                             <p:separator/>
                         </p:column>
                     </p:row>

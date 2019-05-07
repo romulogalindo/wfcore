@@ -75,9 +75,9 @@ function workflow() {
     Ps.initialize(document.querySelector('.custom-scrollbar'));
 
 
-
     for (var iframe of document.getElementsByTagName('IFRAME')) {
-        iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
+        if (iframe.getAttribute('id').indexOf("PAG") == 0)
+            iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
     }
 
     //--FRONT AND MODALª!
@@ -182,9 +182,9 @@ function iframe(iframe) {
 }
 
 function iframe2(pagina, height_table) {
-    console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
+    //console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
     if (height_table == -1) {
-        console.log('Llego -14>->>' + height_table + ",>>>" + pagina);
+        //console.log('Llego -14>->>' + height_table + ",>>>" + pagina);
         document.getElementById(pagina).style.display = 'none';
 
 //        document.getElementById(pagina).parentNode.parentNode.style.display = 'none';

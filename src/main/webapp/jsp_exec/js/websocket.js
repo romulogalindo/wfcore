@@ -10,16 +10,16 @@ var ws_endpoint = null;
 function openWS() {
     var wsurl = (location.protocol == 'http:' ? 'ws://' : 'wss://') + location.hostname + (location.port ? ':' + location.port : '') + '/ws/main';
 
-    console.log("openWSConnection::Connecting to: " + wsurl);
+    // console.log("openWSConnection::Connecting to: " + wsurl);
     try {
         webSocket = new WebSocket(wsurl);
 
         webSocket.onopen = function (openEvent) {
-            console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
+            // console.log("WebSocket OPEN: " + JSON.stringify(openEvent, null, 4));
         };
 
         webSocket.onclose = function (closeEvent) {
-            console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
+            // console.log("WebSocket CLOSE: " + JSON.stringify(closeEvent, null, 4));
         };
 
         webSocket.onerror = function (errorEvent) {
@@ -38,7 +38,7 @@ function openWS() {
                     '}';
                 MSG_toWS(loginjson);
             } else {
-                console.log("WebSocket MESSAGE: " + wsMsg);
+                // console.log("WebSocket MESSAGE: " + wsMsg);
                 toascfg();
                 pushMessage('info', 'AIO2', wsMsg)
                 // alert('MSG:' + wsMsg);
@@ -61,9 +61,9 @@ function closeWS() {
  * Send a message to the WebSocket server
  */
 function MSG_toWS(msg) {
-    console.log('webSocket:' + webSocket);
-    console.log('webSocket.readyState:' + webSocket.readyState);
-    console.log('WebSocket.OPEN:' + WebSocket.OPEN);
+    // console.log('webSocket:' + webSocket);
+    // console.log('webSocket.readyState:' + webSocket.readyState);
+    // console.log('WebSocket.OPEN:' + WebSocket.OPEN);
     if (webSocket.readyState != WebSocket.OPEN) {
         console.error("webSocket is not open: " + webSocket.readyState);
         return;

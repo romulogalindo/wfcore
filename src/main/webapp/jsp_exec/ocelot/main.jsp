@@ -55,9 +55,9 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=3"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=4"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=28"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=3"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=4"></script>
 
     <script>
         <%--var WSURL = '<%=com.acceso.wfcore.utils.Values.WEBSOCKET_ENDPOINT_URL%>';--%>

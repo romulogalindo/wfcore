@@ -107,6 +107,11 @@ table td {
     font-weight: 300;
 }
 
+
+table tfoot td {
+    text-align: center;
+}
+
 table.wf-report thead tr th {
     text-align: center;
 }
