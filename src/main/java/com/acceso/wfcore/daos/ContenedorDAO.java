@@ -1,10 +1,6 @@
 package com.acceso.wfcore.daos;
 
-import com.acceso.wfcore.dtos.ConparDTO;
-import com.acceso.wfcore.dtos.ContabDTO;
-import com.acceso.wfcore.dtos.ContenedorDTO;
-import com.acceso.wfcore.dtos.EmptyDTO;
-import com.acceso.wfcore.dtos.PagconparDTO;
+import com.acceso.wfcore.dtos.*;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
@@ -105,14 +101,39 @@ public class ContenedorDAO {
 
             EmptyDTO rpta = (EmptyDTO) nQuery.uniqueResult();
 
-            System.out.println("rpta = " + rpta);
             System.out.println("[ContenedorDAO:contabDTO] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
         } catch (Exception ep) {
             System.out.println("[ContenedorDAO:contabDTO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
-//        return contabDTO;
+    }
+
+    public void deleteContab(ContabDTO contabDTO) {
+
+        NQuery nQuery = new NQuery();
+        Transaction transa = null;
+        try {
+            transa = session.beginTransaction();
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_DELETE_CONTAB));
+
+            nQuery.setInteger("p_co_conten", contabDTO.getCo_conten());
+            nQuery.setShort("p_co_contab", contabDTO.getCo_contab());
+
+            System.out.println("[ContenedorDAO:deleteContab] Q = " + nQuery.getQueryString());
+
+            EmptyDTO rpta = (EmptyDTO) nQuery.uniqueResult();
+
+            System.out.println("[ContenedorDAO:deleteContab] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            transa.commit();
+        } catch (Exception ep) {
+            System.out.println("[ContenedorDAO:deleteContab] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+            try {
+                if (transa != null) transa.rollback();
+            } catch (Exception ep2) {
+            }
+        }
     }
 
     public void saveConpar(ConparDTO conparDTO) {
@@ -137,7 +158,6 @@ public class ContenedorDAO {
             ep.printStackTrace();
         }
     }
-
 
     public void deleteConpar(ConparDTO conparDTO) {
 
@@ -169,7 +189,6 @@ public class ContenedorDAO {
             }
         }
     }
-
 
     public List<ConparDTO> getConpars(int p_co_conten) {
 

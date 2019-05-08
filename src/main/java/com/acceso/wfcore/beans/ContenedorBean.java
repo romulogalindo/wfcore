@@ -1,12 +1,17 @@
 package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.ContenedorDAO;
+import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.dtos.ConparDTO;
 import com.acceso.wfcore.dtos.ContabDTO;
 import com.acceso.wfcore.dtos.ContenedorDTO;
+import com.acceso.wfcore.dtos.PaginaconDTO;
+import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
+import com.acceso.wfcore.utils.Values;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -175,6 +180,21 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
         dao.close();
 
+        PaginaDAO dao2 = new PaginaDAO();
+        List<PaginaconDTO> pagscon = dao2.getPaginascon(contenedor.getCo_conten());
+        dao2.close();
+
+        for (ContabDTO contabDTO : contenedor.getLs_contab()) {
+            if (contabDTO.getCo_pagina() != null) {
+                for (PaginaconDTO paginaconDTO : pagscon) {
+                    if (contabDTO.getCo_pagina() == paginaconDTO.getCo_pagina()) {
+                        contabDTO.setNo_pagina(paginaconDTO.getNo_pagtit());
+                        break;
+                    }
+                }
+            }
+        }
+
         defaultTabIndex = 0;
 
         return URL_EDITAR;
@@ -190,13 +210,17 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     @Override
     public String saveRegist() {
         saveDto();
-        return URL_LISTA;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contenedor " + this.contenedor.getCo_conten(), "Datos actualizados."));
+        return null;
+//        return URL_LISTA;
     }
 
     public String saveRegistApply() {
         saveDto();
-//        apply();
-        return URL_LISTA;
+        apply();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Contenedor " + this.contenedor.getCo_conten(), "Datos actualizados y aplicacdos."));
+        return null;
+//        return URL_LISTA;
     }
 
     @Override
@@ -232,6 +256,13 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 //      dao.close();
     }
 
+    public void apply() {
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).clear();
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
+    }
+
     public String contab_new() {
         contabSeleccionado = new ContabDTO();
         contabSeleccionado.setCo_contab((short) -1);
@@ -245,23 +276,62 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         return URL_CONTAB_EDIT;
     }
 
-    public String conpag_edit() {
-//        return URL_MANAGER_PAGE;
-        return URL_MANAGER_PAGE;
-    }
 
     public String contab_save() {
         ContenedorDAO dao = new ContenedorDAO();
-        dao.saveContab(contabSeleccionado);
+        dao.saveContab(this.contabSeleccionado);
         contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
         contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
         dao.close();
+
+        PaginaDAO dao2 = new PaginaDAO();
+        List<PaginaconDTO> pagscon = dao2.getPaginascon(contenedor.getCo_conten());
+        dao2.close();
+
+        for (ContabDTO contabDTO : contenedor.getLs_contab()) {
+            if (contabDTO.getCo_pagina() != null) {
+                for (PaginaconDTO paginaconDTO : pagscon) {
+                    if (contabDTO.getCo_pagina() == paginaconDTO.getCo_pagina()) {
+                        contabDTO.setNo_pagina(paginaconDTO.getNo_pagtit());
+                        break;
+                    }
+                }
+            }
+        }
 
         return URL_EDITAR;
     }
 
     public String contab_delete() {
-        return URL_EDITAR;
+        ContenedorDAO dao = new ContenedorDAO();
+        dao.deleteContab(this.contabSeleccionado);
+        this.contenedor.setLs_conpar(dao.getConpars(this.contenedor.getCo_conten()));
+        this.contenedor.setLs_contab(dao.getContabs(this.contenedor.getCo_conten()));
+        dao.close();
+
+        PaginaDAO dao2 = new PaginaDAO();
+        List<PaginaconDTO> pagscon = dao2.getPaginascon(this.contenedor.getCo_conten());
+        dao2.close();
+
+        for (ContabDTO contabDTO : this.contenedor.getLs_contab()) {
+            if (contabDTO.getCo_pagina() != null) {
+                for (PaginaconDTO paginaconDTO : pagscon) {
+                    if (contabDTO.getCo_pagina() == paginaconDTO.getCo_pagina()) {
+                        contabDTO.setNo_pagina(paginaconDTO.getNo_pagtit());
+                        break;
+                    }
+                }
+            }
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Contenedor " + this.contenedor.getCo_conten(), "Datos eliminados."));
+        return null;
+//        return URL_EDITAR;
+    }
+
+    public String conpag_edit() {
+//        return URL_MANAGER_PAGE;
+        return URL_MANAGER_PAGE;
     }
 
     public String contab_back() {
@@ -287,6 +357,21 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
         dao.close();
 
+        PaginaDAO dao2 = new PaginaDAO();
+        List<PaginaconDTO> pagscon = dao2.getPaginascon(contenedor.getCo_conten());
+        dao2.close();
+
+        for (ContabDTO contabDTO : contenedor.getLs_contab()) {
+            if (contabDTO.getCo_pagina() != null) {
+                for (PaginaconDTO paginaconDTO : pagscon) {
+                    if (contabDTO.getCo_pagina() == paginaconDTO.getCo_pagina()) {
+                        contabDTO.setNo_pagina(paginaconDTO.getNo_pagtit());
+                        break;
+                    }
+                }
+            }
+        }
+
         return URL_EDITAR;
     }
 
@@ -296,6 +381,21 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         contenedor.setLs_conpar(dao.getConpars(contenedor.getCo_conten()));
         contenedor.setLs_contab(dao.getContabs(contenedor.getCo_conten()));
         dao.close();
+
+        PaginaDAO dao2 = new PaginaDAO();
+        List<PaginaconDTO> pagscon = dao2.getPaginascon(contenedor.getCo_conten());
+        dao2.close();
+
+        for (ContabDTO contabDTO : contenedor.getLs_contab()) {
+            if (contabDTO.getCo_pagina() != null) {
+                for (PaginaconDTO paginaconDTO : pagscon) {
+                    if (contabDTO.getCo_pagina() == paginaconDTO.getCo_pagina()) {
+                        contabDTO.setNo_pagina(paginaconDTO.getNo_pagtit());
+                        break;
+                    }
+                }
+            }
+        }
 
         return URL_EDITAR;
     }

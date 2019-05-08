@@ -97,6 +97,8 @@
 
                                     </p:toolbar>
 
+                                    <p:spacer height="2"></p:spacer>
+
                                     <p:dataTable id="lista1"
                                                  var="tab"
                                                  value="#{contenedorBean.contenedor.ls_contab}"
@@ -124,13 +126,13 @@
                                             <h:outputText value="#{tab.co_contab}"/>
                                         </p:column>
 
-                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_right">
-                                            <h:outputText value="#{tab.nu_rowspa}"/>
-                                        </p:column>
+                                        <!--                                        <p:column headerText="rowspa" width="50" styleClass="table_cell_right">-->
+                                        <!--                                            <h:outputText value="{tab.nu_rowspa}"/>-->
+                                        <!--                                        </p:column>-->
 
-                                        <p:column headerText="colspa" width="50" styleClass="table_cell_right">
-                                            <h:outputText value="#{tab.nu_colspa}"/>
-                                        </p:column>
+                                        <!--                                        <p:column headerText="colspa" width="50" styleClass="table_cell_right">-->
+                                        <!--                                            <h:outputText value="{tab.nu_colspa}"/>-->
+                                        <!--                                        </p:column>-->
 
 
                                         <p:column headerText="Fila" width="70" styleClass="table_cell_right">
@@ -141,22 +143,25 @@
                                             <h:outputText value="#{tab.or_numcol}"/>
                                         </p:column>
 
-
                                         <p:column headerText="Página" width="50" styleClass="table_cell_right">
                                             <h:outputText value="#{tab.co_pagina}"/>
                                         </p:column>
 
+                                        <p:column headerText="" width="200" styleClass="table_cell_left">
+                                            <h:outputText value="#{tab.no_pagina}"/>
+                                        </p:column>
+
 
                                         <p:column headerText="Acciones" style="text-align: center">
-                                            <p:commandButton icon="fa fa-search" title="Ver"
-                                                             action="#{contenedorBean.contab_edit}">
-                                                <f:setPropertyActionListener value="#{tab}"
-                                                                             target="#{contenedorBean.contabSeleccionado}"/>
-                                                <f:setPropertyActionListener value="false"
-                                                                             target="#{contenedorBean.contabEditable}"/>
-                                            </p:commandButton>
+                                            <!--                                            <p:commandButton icon="fa fa-search" title="Ver"-->
+                                            <!--                                                             action="{contenedorBean.contab_edit}">-->
+                                            <!--                                                <f:setPropertyActionListener value="{tab}"-->
+                                            <!--                                                                             target="{contenedorBean.contabSeleccionado}"/>-->
+                                            <!--                                                <f:setPropertyActionListener value="false"-->
+                                            <!--                                                                             target="{contenedorBean.contabEditable}"/>-->
+                                            <!--                                            </p:commandButton>-->
 
-                                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar"
+                                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
                                                              action="#{contenedorBean.contab_edit}">
                                                 <f:setPropertyActionListener value="#{tab}"
                                                                              target="#{contenedorBean.contabSeleccionado}"/>
@@ -164,7 +169,7 @@
                                                                              target="#{contenedorBean.contabEditable}"/>
                                             </p:commandButton>
 
-                                            <p:commandButton icon="fa fa-trash"
+                                            <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar"
                                                              action="#{contenedorBean.contab_delete}"
                                                              update="@form">
                                                 <f:setPropertyActionListener value="#{tab}"
@@ -173,16 +178,16 @@
                                                            icon="fa fa-exclamation-triangle"/>
                                             </p:commandButton>
 
+                                            <p:spacer width="20" height="20"/>
 
                                             <p:commandButton icon="pi pi-window-maximize" title="Editar Página"
+                                                             value="Página"
                                                              action="#{contenedorBean.conpag_edit}"
                                                              actionListener="#{conpagBean.load2(tab.co_conten, tab.co_pagina)}">
                                                 <f:setPropertyActionListener value="#{tab}"
                                                                              target="#{contenedorBean.contabSeleccionado}"/>
                                                 <f:setPropertyActionListener value="true"
                                                                              target="#{contenedorBean.contabEditable}"/>
-                                                <!--<f:setPropertyActionListener value="#{tab.co_pagina}"-->
-                                                <!--target="#{conpagBean.co_pagina}"/>-->
                                             </p:commandButton>
 
                                         </p:column>
@@ -206,6 +211,8 @@
                                         </f:facet>
 
                                     </p:toolbar>
+
+                                    <p:spacer height="2"></p:spacer>
 
                                     <p:dataTable id="lista2"
                                                  var="par"
@@ -287,6 +294,7 @@
                                              immediate="true">
                             </p:commandButton>
                         </p:column>
+
                         <p:column style="text-align: center;width: 60%;">
                             <p:commandButton value="Grabar"
                                              action="#{contenedorBean.saveRegist}"
@@ -309,9 +317,6 @@
                     </p:row>
                 </p:panelGrid>
             </p:panel>
-
-            <h3 style="margin-top:0">Contenedor</h3>
-
 
         </h:form>
 

@@ -23,6 +23,10 @@ import java.util.List;
                 query = "select * from frawor4.tcpaginacon where co_conten = :p_co_conten and co_pagina = :p_co_pagina",
                 resultClass = PaginaconDTO.class),
         @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_GET_PAGINASCON,
+                query = "select * from frawor4.tcpaginacon where co_conten = :p_co_conten",
+                resultClass = PaginaconDTO.class),
+        @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_PAGINACON,
                 query = "select * from wfsistem.pbpaginacon_save(:p_co_pagina,:p_co_conten, :p_no_pagtit,:p_ti_pagina, :p_no_pagdes)",
                 resultClass = PaginaconDTO.class)

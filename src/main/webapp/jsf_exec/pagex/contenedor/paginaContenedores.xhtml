@@ -42,42 +42,48 @@
 
                     <!--<p:ajax event="sort" skipChildren="false"/>-->
 
-                    <p:column style="text-align: right" width="20">
+                    <p:column style="text-align: right" width="16">
                         <f:facet name="header">
                             <h:outputText value="#"/>
                         </f:facet>
                         <h:outputText value="#{N + 1}"/>
                     </p:column>
 
-                    <p:column sortBy="#{conten.co_conten}" width="50" filterBy="#{conten.co_conten}" filterMatchMode="contains">
+                    <p:column sortBy="#{conten.co_conten}" width="50" filterBy="#{conten.co_conten}"
+                              filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="COD"/>
                         </f:facet>
                         <h:outputText value="#{conten.co_conten}"/>
                     </p:column>
 
-                    <p:column sortBy="#{conten.no_contit}" width="200" filterBy="#{conten.no_contit}" filterMatchMode="contains">
+                    <p:column sortBy="#{conten.no_contit}" width="200" filterBy="#{conten.no_contit}"
+                              filterMatchMode="contains">
                         <f:facet name="header">
                             <h:outputText value="Nombre"/>
                         </f:facet>
                         <h:outputText value="#{conten.no_contit}"/>
                     </p:column>
 
-                    <p:column headerText="Descripción" width="100"  sortBy="#{conten.de_conten}" filterBy="#{conten.de_conten}" filterMatchMode="contains">
+                    <p:column headerText="Descripción" width="100" sortBy="#{conten.de_conten}"
+                              filterBy="#{conten.de_conten}" filterMatchMode="contains">
                         <h:outputText value="#{conten.de_conten}"/>
                     </p:column>
 
                     <p:column headerText="Acciones" width="150" style="text-align: center">
-                        <p:commandButton action="#{contenedorBean.updateRegist}" icon="fa fa-search" title="Ver">
+                        <!--                        <p:commandButton action="{contenedorBean.updateRegist}" icon="fa fa-search" title="Ver">-->
+                        <!--                            <f:setPropertyActionListener value="{conten}" target="{contenedorBean.contenedor}"/>-->
+                        <!--                            <f:setPropertyActionListener value="false" target="{contenedorBean.isregEditable}"/>-->
+                        <!--                        </p:commandButton>-->
+
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
+                                         action="#{contenedorBean.updateRegist}">
                             <f:setPropertyActionListener value="#{conten}" target="#{contenedorBean.contenedor}"/>
-                            <f:setPropertyActionListener value="false" target="#{contenedorBean.isregEditable}"/>
                         </p:commandButton>
 
-                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{contenedorBean.updateRegist}">
-                            <f:setPropertyActionListener value="#{conten}" target="#{contenedorBean.contenedor}"/>
-                        </p:commandButton>
+                        <p:spacer width="10px"/>
 
-                        <p:commandButton icon="fa fa-trash" action="#{contenedorBean.deleteRegist}"
+                        <p:commandButton icon="fa fa-trash" value="Eliminar" action="#{contenedorBean.deleteRegist}"
                                          update=":form:lista">
                             <f:setPropertyActionListener value="#{conten}" target="#{contenedorBean.contenedor}"/>
                             <p:confirm header="Confirmación" message="¿Desea continuar?"

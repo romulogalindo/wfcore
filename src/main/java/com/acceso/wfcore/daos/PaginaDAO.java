@@ -228,6 +228,27 @@ public class PaginaDAO {
 
         return paginaDTO;
     }
+    public List<PaginaconDTO> getPaginascon(int p_co_conten) {
+        NQuery nQuery = new NQuery();
+        List<PaginaconDTO> paginasDTO = null;
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_GET_PAGINASCON));
+
+            nQuery.setInteger("p_co_conten", p_co_conten);
+
+
+            System.out.println("[PaginaDAO:getPaginascon] Q = " + nQuery.getQueryString());
+            paginasDTO = nQuery.list();
+            System.out.println("[PaginaDAO:getPaginascon] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+
+        } catch (Exception ep) {
+            System.out.println("[PaginaDAO:getPaginascon] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return paginasDTO;
+    }
 
     public BotonDTO saveButton(int p_co_pagina, BotonDTO botonDTO) {
         NQuery nQuery = new NQuery();

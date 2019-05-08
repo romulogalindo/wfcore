@@ -37,13 +37,16 @@
         }
 
         table tbody td {
-            /*border-bottom: 1px solid #dee2e6 !important;*/
             border-bottom: none !important;
         }
 
         .btn {
-            margin: 0px;
+            margin: 0px 4px 0px 0px;
             padding: .30rem 1.02rem;
+        }
+
+        .btn:first-child {
+            margin: 0px !important;
         }
 
         #mainpagina select {

@@ -70,6 +70,7 @@ public class Values {
     public static final String QUERYS_NATIVE_GET_PAGINA = "wfcore.pbpagina_g";
 
     public static final String QUERYS_NATIVE_GET_PAGINACON = "wfcore.paginacon_get";
+    public static final String QUERYS_NATIVE_GET_PAGINASCON = "wfcore.paginascon_get";
     public static final String QUERYS_NATIVE_SAVE_PAGINACON = "wfcore.paginacon_save";
 
     public static final String QUERYS_NATIVE_SELECT_BUTTONS = "wfcore.pbboton_select";
@@ -98,6 +99,7 @@ public class Values {
 
     public static final String QUERYS_NATIVE_SELECT_CONTAB = "wfcore.select_tccontab";
     public static final String QUERYS_NATIVE_SAVE_CONTAB = "wfcore.save_tccontab";
+    public static final String QUERYS_NATIVE_DELETE_CONTAB = "wfcore.delete_tccontab";
 //    public static final String QUERYS_NATIVE_SELECT_PARAMETRO_CONTEN = "wfcore.parametro_select_conten";
 
     public static final String QUERYS_NATIVE_SELECT_REGISTRO = "wfcore.registro_select";

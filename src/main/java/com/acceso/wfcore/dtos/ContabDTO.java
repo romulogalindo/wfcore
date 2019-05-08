@@ -7,10 +7,7 @@ package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -28,6 +25,10 @@ import java.io.Serializable;
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_SAVE_CONTAB,
                 query = "select pbcontab_save as empty from wfsistem.pbcontab_save(:p_co_conten, :p_co_contab, :p_nu_rowspa, :p_nu_colspa, :p_or_numrow, :p_or_numcol, :p_ti_haling, :p_ti_valing, :p_ca_tamcel, :p_co_pagina)",
+                resultClass = EmptyDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_DELETE_CONTAB,
+                query = "select pbcontab_delete as empty from wfsistem.pbcontab_delete(:p_co_conten, :p_co_contab)",
                 resultClass = EmptyDTO.class)
 })
 public class ContabDTO implements Serializable {
@@ -46,6 +47,9 @@ public class ContabDTO implements Serializable {
 
     /*De los tab-> con su pagina*/
     Integer co_pagina;
+
+    @Transient
+    String no_pagina;
 
     public ContabDTO() {
     }
@@ -128,6 +132,14 @@ public class ContabDTO implements Serializable {
 
     public void setCo_pagina(Integer co_pagina) {
         this.co_pagina = co_pagina;
+    }
+
+    public String getNo_pagina() {
+        return no_pagina;
+    }
+
+    public void setNo_pagina(String no_pagina) {
+        this.no_pagina = no_pagina;
     }
 
     @Override
