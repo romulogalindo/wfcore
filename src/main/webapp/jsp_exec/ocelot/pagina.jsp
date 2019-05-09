@@ -21,8 +21,8 @@
     <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=37" charset="ISO-8859-1"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=37" charset="ISO-8859-1"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=38" charset="ISO-8859-1"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=38" charset="ISO-8859-1"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
@@ -68,28 +68,34 @@
     <!--Card image-->
     <div class="view view-cascade gradient-card-header default-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
-        <!--                <div>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fas fa-th-large mt-0"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fas fa-columns mt-0"></i>
-                            </button>
-                        </div>-->
+        <div style="display: inherit;">
+            <button id="pagopt_info" type="button" title="Información de la página."
+                    class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden"
+                    onclick="alert('Página: '+CO_PAGINA);">
+                <i class="fas fa-info-circle mt-0"></i>
+            </button>
+            <button id="pagopt_print" type="button" title="Imprimir"
+                    class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden;"
+                    onclick="print()">
+                <i class="fas fa-print mt-0"></i>
+            </button>
+        </div>
 
         <span style="width: 100%;" class="white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
 
-        <!--                <div>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fas fa-pencil-alt mt-0"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="far fa-trash-alt mt-0"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-                                <i class="fas fa-info-circle mt-0"></i>
-                            </button>
-                        </div>-->
+        <div style="display: inherit;">
+            <%--            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">--%>
+            <%--                <i class="fas fa-pencil-alt mt-0"></i>--%>
+            <%--            </button>--%>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden;">
+                <i class="far fa-trash-alt mt-0"></i>
+            </button>
+            <button id="pagopt_plus" type="button" title="Nuevo registro"
+                    class="btn btn-outline-white btn-rounded btn-sm px-2"
+                    style="visibility: hidden;">
+                <i class="fas fa-plus-circle mt-0"></i>
+            </button>
+        </div>
 
     </div>
     <!--/Card image-->
@@ -168,7 +174,8 @@
     <div id="card_error" class="card" style="display: none;margin: 5% 10%;">
         <div class="card-body">
             <h5 id="title_error" class="card-title" style="color:red;">Error - </h5>
-            <p id="detail_error" class="card-text" style="font-size: 0.8em;">Some quick example text to build on the panel title and make up the
+            <p id="detail_error" class="card-text" style="font-size: 0.8em;">Some quick example text to build on the
+                panel title and make up the
                 bulk of the panel's content.</p>
             <%--<a id="linka_error" class="card-link">Card link</a>--%>
             <%--<a class="card-link">Another link</a>--%>

@@ -27,6 +27,11 @@
                              rowIndexVar="N"
                              style="width:100%; ">
 
+                    <p:ajax event="rowDblselect" listener="#{paginaBean.eventupdateRegist}"
+                            global="false">
+                        <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
+                    </p:ajax>
+
                     <f:facet name="header">
                         Lista de Paginas
                     </f:facet>
@@ -61,19 +66,17 @@
                     </p:column>
 
                     <p:column headerText="Acciones" style="width:160px;text-align: center">
-<!--                        <p:commandButton action="{paginaBean.updateRegist}" icon="fa fa-search" title="Ver">-->
-<!--                            <f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
-<!--                            <f:setPropertyActionListener value="false" target="{paginaBean.thisEditable}"/>-->
-<!--                        </p:commandButton>-->
 
-                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar" action="#{paginaBean.updateRegist}">
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
+                                         action="#{paginaBean.updateRegist}">
                             <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
                             <f:setPropertyActionListener value="true" target="#{paginaBean.thisEditable}"/>
                         </p:commandButton>
 
                         <p:spacer width="10px"/>
 
-                        <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar" action="#{paginaBean.deleteRegist}"
+                        <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar"
+                                         action="#{paginaBean.deleteRegist}"
                                          update=":form:lista">
                             <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
                             <p:confirm header="Confirmación" message="¿Desea continuar?"

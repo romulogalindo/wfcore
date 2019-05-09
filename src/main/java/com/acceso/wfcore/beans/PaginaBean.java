@@ -150,6 +150,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         return URL_EDITAR;
     }
 
+
+    public void eventupdateRegist() throws Exception {
+        updateRegist();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(URL_EDITAR);
+    }
+
     @Override
     public String deleteRegist() {
         deleteDto();

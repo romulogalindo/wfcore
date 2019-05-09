@@ -36,11 +36,14 @@
                              style="width:100%"
                              filteredValue="#{contenedorBean.filtroContenedor}">
 
+                    <p:ajax event="rowDblselect" listener="#{contenedorBean.eventupdateRegist}"
+                            global="false">
+                        <f:setPropertyActionListener value="#{conten}" target="#{contenedorBean.contenedor}"/>
+                    </p:ajax>
+
                     <f:facet name="header">
                         Lista de Contenedores
                     </f:facet>
-
-                    <!--<p:ajax event="sort" skipChildren="false"/>-->
 
                     <p:column style="text-align: right" width="16">
                         <f:facet name="header">

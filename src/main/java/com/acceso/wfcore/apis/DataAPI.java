@@ -85,6 +85,67 @@ public class DataAPI extends GenericAPI {
         return new Gson().toJson(jsonResponse);
     }
 
+    public JsonResponse SQLX(String conectionName, String sqlQuery, int timeoutseg) {
+        long execution_time;
+        JsonResponse jsonResponse = new JsonResponse();
+        List<Map<String, Object>> valReturn;
+        StatelessSession session = null;
+        Transaction transaction = null;
+        execution_time = System.currentTimeMillis();
+
+        try {
+            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+            transaction = session.beginTransaction();
+            transaction.setTimeout(timeoutseg);
+
+            Query sql = session.createNativeQuery(sqlQuery);
+            sql.setTimeout(timeoutseg);
+            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+
+            valReturn = sql.getResultList();
+
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            transaction.commit();
+            session.close();
+            jsonResponse.setStatus(JsonResponse.OK);
+            jsonResponse.setResult(valReturn);
+
+        } catch (Exception ep) {
+            System.out.println("[1]ep = " + ep);
+
+            try {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+            } catch (Exception ep2) {
+                transaction = null;
+            }
+
+            if (session != null) {
+                session = null;
+            }
+
+            ErrorMessage errormessage = Util.getError(ep);
+            if (errormessage == null) {
+                jsonResponse.setStatus(JsonResponse.OK);
+                jsonResponse.setResult("[]");
+                jsonResponse.setError(null);
+            } else {
+                jsonResponse.setStatus(JsonResponse.ERROR);
+                jsonResponse.setResult(null);
+                jsonResponse.setError(Util.getError(ep));
+            }
+
+            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
+
+            ep.printStackTrace();
+        }
+
+        return jsonResponse;
+    }
+
     public String SQLVOID(String conectionName, String sqlQuery, int timeoutseg) {
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();

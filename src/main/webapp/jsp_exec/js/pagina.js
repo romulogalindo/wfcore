@@ -868,3 +868,16 @@ function master_process_multiselect(pagid, refid) {
 function logout() {
     $D.doLogoutJson();
 }
+
+function PRINTABLE(opt) {
+    document.getElementById('pagopt_print').style.visibility = 'visible';
+
+}
+
+function SHOWINFO(opt) {
+    document.getElementById('pagopt_info').style.visibility = 'visible';
+}
+
+function AUTOINCREMENT(opt) {
+    document.getElementById('pagopt_plus').style.visibility = 'visible';
+}
