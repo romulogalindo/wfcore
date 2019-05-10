@@ -7,10 +7,6 @@ import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
-import org.ehcache.expiry.Expirations;
-import org.ehcache.xml.model.TimeUnit;
-
-//import java.time.Duration;
 import java.time.Duration;
 import java.util.HashMap;
 

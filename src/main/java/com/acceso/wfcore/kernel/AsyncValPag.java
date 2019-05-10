@@ -39,33 +39,38 @@ public class AsyncValPag extends AsyncProcessor {
             Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
             Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
+            Usuario usuario = ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US"));
             String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
             String valpag_js = "";
 
+            String LOG = "[U" + usuario.getCo_usuari() + "][S" + usuario.getId_sesion() + "][F" + id_frawor + "][C" + co_conten + "][P" + co_pagina + "]";
+
             //ejecutar valpag
 //            System.out.println("WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_pagina) = " + WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_pagina));
-
-            if (WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_pagina) == null) {
+            System.out.println(LOG + " INI-- ");
+            if (WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_conten + "" + co_pagina) == null) {
 
                 Frawor4DAO dao = new Frawor4DAO();
                 valpag_js = dao.getJS_Valpag(co_pagina).getScript();
                 dao.close();
 
                 valpag_js = valpag_js == null ? "VALPAGJS = DATA.VALPAG_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');" : valpag_js;
+                valpag_js = valpag_js.replace("P989115793P", "PAG" + co_pagina);
 
-                WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).put(co_pagina, valpag_js);
+                WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).put(co_conten + "" + co_pagina, valpag_js);
             } else {
-                valpag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_pagina);
+                valpag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_conten + "" + co_pagina);
             }
 
             valpag_js = Util.getText(WFCoreListener.APP.VALPAGJS).replace("USUARI_DATA_JS_TEXT", valpag_js);
+            System.out.println(LOG + " VPJS(" + valpag_js.length() + ")>:" + valpag_js);
 
-            Usuario usuario = ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US"));
+            /*EXE VALPAGJS*/
             ValpagJson valpagJson = (ValpagJson) WFCoreListener.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
 
             jsonResponse.setResult(valpagJson);
-            jsonResponse.setFnpost((String) WFCoreListener.APP.getJavaScriptService().dopvpj("GET_DO_POST_LOAD_DATA"));
+//            jsonResponse.setFnpost(WFCoreListener.APP.getJavaScriptService().dopvpj("GET_DO_POST_LOAD_DATA"));
 
 
             if (valpagJson != null && (valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
@@ -74,10 +79,9 @@ public class AsyncValPag extends AsyncProcessor {
                 /* COMPAGJS */
                 String compag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).get(co_pagina);
                 if (compag_js == null || compag_js.contentEquals("null")) {
+
                     Frawor4DAO dao = new Frawor4DAO();
-
                     compag_js = dao.getJS_Compag(co_pagina).getScript();
-
                     dao.close();
 
                     if (compag_js == null) {
@@ -89,34 +93,18 @@ public class AsyncValPag extends AsyncProcessor {
 
                 compag_js = Util.getText(WFCoreListener.APP.COMPAGJS).replace("USUARI_DATA_JS_TEXT", compag_js);
 
-//                System.out.println("compag_js = " + compag_js);
+                Map<Short, Object> compags = WFCoreListener.APP.getJavaScriptService().doCompag64(compag_js, "do_compag", id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
 
-                String[] hamodas = ls_hamoda.split(",");
+                compags.entrySet().forEach((entry) -> {
+                    map_hamodas.put("" + entry.getKey(), (entry.getValue() != null) ? Util.gson_typeA.fromJson("" + entry.getValue(), JsonResponseC.class).getResult() : new ArrayList<>());
+                });
 
-                Map<Short, Object> compags = (Map<Short, Object>) WFCoreListener.APP.getJavaScriptService().doCompag64(compag_js, "do_compag", id_frawor, co_conten, co_pagina, hamodas, ls_conpar, ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US")).getCo_usuari(), 1);
-
-                for (Map.Entry<Short, Object> entry : compags.entrySet()) {
-
-//                    System.out.println("entry = " + entry);
-//                    System.out.println("(((>>>entry = " + entry.getKey() + "," + entry.getValue());
-
-                    List<ComboDTO> lstcbx = null;
-                    if (entry.getValue() != null) {
-                        JsonResponseC jsonResponsex = Util.gson_typeA.fromJson("" + entry.getValue(), JsonResponseC.class);
-                        lstcbx = jsonResponsex.getResult();
-                    } else {
-                        lstcbx = new ArrayList<>();
-                    }
-
-//                    System.out.println("entry(K,V) = " + entry.getKey() + "," + entry.getValue() + "===>" + lstcbx);
-                    map_hamodas.put("" + entry.getKey(), lstcbx);
-                }
                 jsonResponse.setAditional(map_hamodas);
             }
 
             String urpta = Util.toJSON2(jsonResponse);
 
-//            System.out.println("[" + co_pagina + "]valpag? = " + urpta);
+            System.out.println(LOG + " VR? = " + urpta);
 
             out.write(urpta);
         } catch (Exception ep) {

@@ -865,9 +865,9 @@ function master_process_multiselect(pagid, refid) {
 }
 
 /*LOGOUT*/
-function logout() {
-    $D.doLogoutJson();
-}
+// function logout() {
+//     $D.doLogoutJson();
+// }
 
 function PRINTABLE(opt) {
     document.getElementById('pagopt_print').style.visibility = 'visible';

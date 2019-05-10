@@ -67,7 +67,7 @@ public class Application {
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_CONTAINER, Integer.class, Object.class, -1);
 
         //creamos la cache de script - LVL2 -->Posiblemente sea CNT:VALPAG
-        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_VALPAGJS, Integer.class, Object.class, -1);
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_VALPAGJS, String.class, Object.class, -1);
 
         //creamos la cache de script - LVL2 -->Posiblemente sea CNT:VALPAG>COMPAG
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_COMPAGJS, Integer.class, Object.class, -1);

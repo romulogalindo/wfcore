@@ -1,4 +1,4 @@
-/*MAIN JS FILE TO RUN! ALL!*/
+/*(P989115793P)MAIN JS FILE TO RUN! ALL!*/
 var ValpagJson = Java.type('com.acceso.wfcore.utils.ValpagJson');
 var Row = Java.type('com.acceso.wfcore.utils.RowJson');
 var Reg = Java.type('com.acceso.wfcore.utils.RegJson');
@@ -36,6 +36,14 @@ function NULLIF(obj1, obj2) {
 var DO_POST_LOAD_DATA;
 
 function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
+    /*SET*/
+    DATA.setCo_usuari(CO_USUARI);
+    DATA.setId_sesion(ID_SESION);
+    DATA.setId_frawor(ID_FRAWOR);
+    DATA.setCo_conten(CO_CONTEN);
+    DATA.setCo_pagina(CO_PAGINA);
+    DATA.setNo_escena('VALPAG');
+
     var VALPAGJS = null;
     var LS_CONPAR = JSON.parse(CONPAR);
 

@@ -20,6 +20,61 @@ import java.util.Map;
 
 public class DataAPI extends GenericAPI {
 
+    String co_usuari;
+    String id_sesion;
+    String id_frawor;
+    String co_conten;
+    String co_pagina;
+    String no_escena;
+
+    public String getId_frawor() {
+        return id_frawor;
+    }
+
+    public void setId_frawor(String id_frawor) {
+        this.id_frawor = id_frawor;
+    }
+
+    public String getCo_pagina() {
+        return co_pagina;
+    }
+
+    public void setCo_pagina(String co_pagina) {
+        this.co_pagina = co_pagina;
+    }
+
+    public String getCo_conten() {
+        return co_conten;
+    }
+
+    public void setCo_conten(String co_conten) {
+        this.co_conten = co_conten;
+    }
+
+    public String getCo_usuari() {
+        return co_usuari;
+    }
+
+    public void setCo_usuari(String co_usuari) {
+        this.co_usuari = co_usuari;
+    }
+
+    public String getId_sesion() {
+        return id_sesion;
+    }
+
+    public void setId_sesion(String id_sesion) {
+        this.id_sesion = id_sesion;
+    }
+
+    public String getNo_escena() {
+        return no_escena;
+    }
+
+    public void setNo_escena(String no_escena) {
+        this.no_escena = no_escena;
+    }
+
     public String SQL(String conectionName, String sqlQuery) {
         return SQL(conectionName, sqlQuery, 30);
     }
@@ -41,11 +96,11 @@ public class DataAPI extends GenericAPI {
             sql.setTimeout(timeoutseg);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
 
             valReturn = sql.getResultList();
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
             jsonResponse.setStatus(JsonResponse.OK);
@@ -102,18 +157,18 @@ public class DataAPI extends GenericAPI {
             sql.setTimeout(timeoutseg);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
 
             valReturn = sql.getResultList();
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
             jsonResponse.setStatus(JsonResponse.OK);
             jsonResponse.setResult(valReturn);
 
         } catch (Exception ep) {
-            System.out.println("[1]ep = " + ep);
+            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] E = " + ep);
 
             try {
                 if (transaction != null) {
