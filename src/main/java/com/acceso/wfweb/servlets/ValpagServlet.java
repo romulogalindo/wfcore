@@ -15,13 +15,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author Rómulo Galindo Tanta
  */
 public class ValpagServlet extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         request.setCharacterEncoding("ISO-8859-1");
-        response.setContentType("text/html;charset=ISO-8859-1");
+//        response.setContentType("text/html;charset=ISO-8859-1");
+        response.setContentType("aplication/json;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
         asyncCtx.setTimeout(100000);//1 Seg
@@ -34,7 +35,8 @@ public class ValpagServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("ISO-8859-1");
-        response.setContentType("text/html;charset=ISO-8859-1");
+//        response.setContentType("text/html;charset=ISO-8859-1");
+        response.setContentType("aplication/json;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
         asyncCtx.setTimeout(100000);//10 Seg

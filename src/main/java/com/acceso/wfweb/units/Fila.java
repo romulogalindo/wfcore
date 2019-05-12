@@ -94,7 +94,7 @@ public class Fila extends HTMLRenderer implements Serializable {
 //            html += "<tr name=" + id + ">";
 //            html += "   <td name=" + id + "K class=wf_f_titreg></td>";
 
-            html += "<td class=wf_f_valreg colspan=2>";
+            html += "<td id=footerbottons colspan=2>";
             html += "<script> var cfila=1;</script>";
 
             for (WBotonDTO botonDTO : botonDTOS) {

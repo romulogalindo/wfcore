@@ -6,6 +6,7 @@ import com.acceso.wfcore.services.CacheService;
 import com.acceso.wfcore.services.DataSourceService;
 import com.acceso.wfcore.services.JavaScriptService;
 import com.acceso.wfcore.services.MessageService;
+import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.controls.LoginCTRL;
 import com.acceso.wfweb.web.Root;
@@ -33,6 +34,10 @@ public class Application {
     public String VALPAGJS = "";
     public String COMPAGJS = "";
     public String PROPAGJS = "";
+    public String PAGEJS = "";
+
+    public boolean THROWS_EXCEPTION = false;
+    public boolean SHOW_PREQUERY = false;
 
     //Executor!!!!
     ThreadPoolExecutor executor;
@@ -49,10 +54,15 @@ public class Application {
     }
 
     public void run(ServletContextEvent sce) {
+        /*INIT PARAMS*/
+        THROWS_EXCEPTION = Util.toBoolean(sce.getServletContext().getInitParameter("THROWS_EXCEPTION"), false);
+        SHOW_PREQUERY = Util.toBoolean(sce.getServletContext().getInitParameter("SHOW_PREQUERY"), false);
+
         /*Obtenemos variables del arranque!*/
         VALPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_valpag.js";
         COMPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_compag.js";
         PROPAGJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_propag.js";
+        PAGEJS = sce.getServletContext().getRealPath("/") + "WEB-INF/classes/js/shell_page.js";
 
         /*SERVICES */
         cacheService.start();
@@ -74,6 +84,9 @@ public class Application {
 
         //creamos la cache de script - LVL2 -->Posiblemente sea CNT:PROPAG
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PROPAGJS, Integer.class, Object.class, -1);
+
+        //creamos la cache de script - LVL2 -->Posiblemente sea CNT:VALPAG!
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PAGEJS, String.class, Object.class, -1);
 
         //creamos la cache de archivos - LVL2
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 1200);

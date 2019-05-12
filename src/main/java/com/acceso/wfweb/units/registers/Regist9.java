@@ -38,7 +38,8 @@ public class Regist9 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"9\" >";
-                html += "<textarea class=\"w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\" cols=\"" + registroDTO.getCa_carcol() + "\"></textarea>";
+//                html += "<textarea class=\"w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\" cols=\"" + registroDTO.getCa_carcol() + "\"></textarea>";
+                html += "<textarea class=\"w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\"></textarea>";
                 html += "</span>";
                 html += "</td>";
                 html += "</tr>";
@@ -53,7 +54,8 @@ public class Regist9 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"9\" >";
-                html += "<textarea class=\"pagreg w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\" cols=\"" + registroDTO.getCa_carcol() + "\"></texarea>";
+//                html += "<textarea class=\"pagreg w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\" cols=\"" + registroDTO.getCa_carcol() + "\"></texarea>";
+                html += "<textarea class=\"pagreg w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\"></texarea>";
                 html += "</span>";
                 html += "</td>";
                 html += "</tr>";

@@ -96,7 +96,9 @@ public class DataAPI extends GenericAPI {
             sql.setTimeout(timeoutseg);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
-            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
+            if (WFCoreListener.APP.SHOW_PREQUERY) {
+                System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
+            }
 
             valReturn = sql.getResultList();
 
@@ -134,7 +136,9 @@ public class DataAPI extends GenericAPI {
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
-            ep.printStackTrace();
+            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+                ep.printStackTrace();
+            }
         }
 
         return new Gson().toJson(jsonResponse);
@@ -157,7 +161,9 @@ public class DataAPI extends GenericAPI {
             sql.setTimeout(timeoutseg);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
-            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
+            if (WFCoreListener.APP.SHOW_PREQUERY) {
+                System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
+            }
 
             valReturn = sql.getResultList();
 
@@ -195,7 +201,9 @@ public class DataAPI extends GenericAPI {
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
-            ep.printStackTrace();
+            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+                ep.printStackTrace();
+            }
         }
 
         return jsonResponse;
@@ -257,7 +265,9 @@ public class DataAPI extends GenericAPI {
 
             System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
-            ep.printStackTrace();
+            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+                ep.printStackTrace();
+            }
         }
 
         return new Gson().toJson(jsonResponse);
@@ -292,7 +302,6 @@ public class DataAPI extends GenericAPI {
 //            System.out.println("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery + " E = " + ep.getMessage() + "");
             throw ep;
         }
-
 
     }
 

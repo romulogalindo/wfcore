@@ -49,8 +49,8 @@ public class JavaScriptService extends Service {
         engine_nashornjs = null;
     }
 
-    public ScriptContextExecutor newContext() {
-        ScriptContextExecutor scriptContextExecutor = new ScriptContextExecutor(manager);
+    public ScriptContextExecutor newContext(String JSTEXT) {
+        ScriptContextExecutor scriptContextExecutor = new ScriptContextExecutor(manager, JSTEXT);
         return scriptContextExecutor;
     }
 

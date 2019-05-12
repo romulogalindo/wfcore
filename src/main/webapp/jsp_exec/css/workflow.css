@@ -18,6 +18,7 @@
     /*padding: 4px 4px 4px 16px !important;*/
     /*border-right: 1px solid #c9c9c9;*/
     text-align: right;
+    cursor: default;
 }
 
 .wf_f_valreg {
@@ -89,8 +90,8 @@ TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
 /*======*/
 
 table.table td, table.table th {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.4rem !important;
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.1rem !important;
     /*text-align: center;*/
 }
 
@@ -108,8 +109,9 @@ table td {
 }
 
 
-table tfoot td {
+table tfoot td#footerbottons {
     text-align: center;
+    padding: 15px !important;
 }
 
 table.wf-report thead tr th {
@@ -170,6 +172,14 @@ table.wf-report td {
     display: inline;
 }
 
+span.pagreg[ti_pagreg='1'] div>input{
+    margin: 0 0 0.2rem 0;
+}
+
+span.pagreg[ti_pagreg='9'] textarea{
+    width: 100%;
+}
+
 span.pagreg[ti_pagreg='7'] {
     display: inline-block;
     border: 1px solid #616161;
@@ -212,3 +222,7 @@ span.pagreg[ti_pagreg='8'] span.item span.close {
     padding: 0px 2px 0px 4px !important;
 }
 
+/*MDB*/
+.card.card-cascade .view.view-cascade.gradient-card-header {
+    padding: 0.3rem .4rem !important;
+}

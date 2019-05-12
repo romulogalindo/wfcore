@@ -7,21 +7,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ScriptContextExecutor {
+
     ScriptEngine engine_nashornjs;
 
     public ScriptContextExecutor(ScriptEngineManager manager) {
         this.engine_nashornjs = manager.getEngineByName("nashorn");
     }
 
+    public ScriptContextExecutor(ScriptEngineManager manager, String JSText) {
+        this.engine_nashornjs = manager.getEngineByName("nashorn");
+        try {
+            engine_nashornjs.eval(JSText);
+        } catch (Exception ep) {
+        }
+    }
+
     //    function exec valpag
-    public Object doValpag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    public Object doValpag64(String JSFunction, long id_frawor, int co_conten, int co_pagina, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
 
         Object result = null;
 //        try {
 //        ScriptEngine me_engine_nashornjs = manager.getEngineByName("nashorn");
 //        me_engine_nashornjs.eval(JSText, new SimpleScriptContext());
 //        me_engine_nashornjs.eval(JSText, new SimpleBindings());
-        engine_nashornjs.eval(JSText);
+//        engine_nashornjs.eval(JSText);
         Invocable inv = (Invocable) engine_nashornjs;
 
         result = inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, ls_conpar, id_sesion, co_usuari, id_fraant);
@@ -47,14 +56,13 @@ public class ScriptContextExecutor {
 //        return result2;
     }
 
-
     //    function exec valpag
-    public Map<Short, Object> doCompag64(String JSText, String JSFunction, long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    public Map<Short, Object> doCompag64(String JSFunction, long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
 //        Object result = null;
         Map<Short, Object> result = new HashMap<>();
 
 //        try {
-        engine_nashornjs.eval(JSText);
+//        engine_nashornjs.eval(JSText);
         Invocable inv = (Invocable) engine_nashornjs;
         for (String co_pagreg : co_pagregs) {
 //            System.out.println("JSFunction = " + JSFunction);
@@ -68,12 +76,11 @@ public class ScriptContextExecutor {
 //            System.out.println("(compag[" + co_conten + ":" + co_pagina + "])ep = " + ep.getMessage());
 //            ep.printStackTrace();
 //        }
-
         return result;
     }
 
     public Object doPropag64(String JSText, String JSFunction, int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_regist, long co_usuari) throws Exception {
-        engine_nashornjs.eval(JSText);
+//        engine_nashornjs.eval(JSText);
         Invocable inv = (Invocable) engine_nashornjs;
         return inv.invokeFunction(JSFunction, id_frawor, co_conten, co_pagina, co_pagbot, ls_regist, co_usuari);
     }
@@ -96,7 +103,6 @@ public class ScriptContextExecutor {
         }
 
 //        System.out.println("[JavaScriptService:dopvpj] ====>" + result);
-
         return result;
     }
 }

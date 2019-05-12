@@ -1,6 +1,7 @@
 package com.acceso.wfcore.utils;
 
 //import com.sun.mail.util.QDecoderStream;
+import com.acceso.wfcore.listerners.WFCoreListener;
 import org.hibernate.Query;
 
 import java.util.Date;
@@ -93,7 +94,10 @@ public class NQuery {
      * @return
      */
     public Object uniqueResult() {
-        if (this.show_info_log) {
+//        if (this.show_info_log) {
+//            System.out.println(LOG + "Q = " + getQueryString());
+//        }
+        if (WFCoreListener.APP.SHOW_PREQUERY) {
             System.out.println(LOG + "Q = " + getQueryString());
         }
         execution_time = System.currentTimeMillis();
@@ -111,9 +115,13 @@ public class NQuery {
     /*
      * */
     public List list() {
-        if (this.show_info_log) {
+//        if (this.show_info_log) {
+//            System.out.println(LOG + "Q = " + getQueryString());
+//        }
+        if (WFCoreListener.APP.SHOW_PREQUERY) {
             System.out.println(LOG + "Q = " + getQueryString());
         }
+        
         execution_time = System.currentTimeMillis();
 
         List list = query.list();
