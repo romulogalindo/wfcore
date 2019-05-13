@@ -2,9 +2,9 @@ package com.acceso.wfcore.managers;
 
 import com.acceso.wfcore.daos.SystemDAO;
 import com.acceso.wfcore.dtos.EstadoDTO;
+import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.utils.WFProperties;
-
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
@@ -20,6 +20,7 @@ import org.hibernate.service.ServiceRegistry;
 public class DataManager extends Manager implements DataBasePowerfull {
 
     SessionFactory sessionFactory;
+    StatelessSession testSession;
     int status = DataBasePowerfull.INACTIVE;
 
     public DataManager(String name, String hibcfgfile, WFProperties properties) {
@@ -28,45 +29,47 @@ public class DataManager extends Manager implements DataBasePowerfull {
 
     @Override
     public void init() {
-        //conectarme a la DB y tener todos los objetos listos
         try {
-            //get xml!
-            System.out.println("configurando @hib = " + this.hibcfgfile);
+            Log.info("CONFIG [**" + this.getName() + "**]@" + this.hibcfgfile);
             StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder()
                     .configure(this.hibcfgfile);
 
             //recorremos todos los key y obtenemos el value!
             properties.getKeys().stream().forEach(k -> standardServiceRegistryBuilder.applySetting(k, properties.get(k)));
 
-            //Se genera el registro
-//            StandardServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
             ServiceRegistry standardRegistry = standardServiceRegistryBuilder.build();
-            //se registra el meta
             Metadata metadata = new MetadataSources(standardRegistry).getMetadataBuilder().build();
-
-            //objeto creado
             sessionFactory = metadata.getSessionFactoryBuilder().build();
-
+//            Log.info(sessionFactory.isOpen());
             //CHECK!
-            SystemDAO dao = new SystemDAO(sessionFactory.openStatelessSession());
+            testSession = sessionFactory.openStatelessSession();
+            SystemDAO dao = new SystemDAO(testSession);
             EstadoDTO estadoDTO = dao.check();
             dao.close();
 
-            System.out.println("@sessionFactory = [" + name + "]" + sessionFactory + ", estado:" + estadoDTO.getNo_estado());
+            if (estadoDTO.getNo_estado().contentEquals("OK")) {
+                status = DataBasePowerfull.ACTIVE;
+            }
+            Log.info("@sessionFactory = [" + name + "]" + sessionFactory + ", estado:" + estadoDTO.getNo_estado());
 
-            //en este punto se supono todo esta bien
-//            Object result = sessionFactory.openStatelessSession().createSQLQuery("select 1").getSingleResult();
-//            Sistema.out.println("update = " + update);
-        } catch (Throwable ex) {
+//        } catch (Throwable ex) {
+        } catch (Exception ex) {
+            try {
+                if (testSession != null) {
+                    testSession.close();
+                }
+            } catch (Exception ep2) {
+            }
             sessionFactory = null;
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            ex.printStackTrace();
-            //throw new ExceptionInInitializerError(ex);
+            Log.error("Initial SessionFactory creation failed." + ex);
+            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+                ex.printStackTrace();
+            }
         }
 
-        if (sessionFactory != null) {
-            status = DataBasePowerfull.ACTIVE;
-        }
+//        if (sessionFactory != null) {
+//            status = DataBasePowerfull.ACTIVE;
+//        }
     }
 
     @Override
@@ -94,7 +97,6 @@ public class DataManager extends Manager implements DataBasePowerfull {
     public SessionFactory getFactory() {
         return sessionFactory;
     }
-
 
     @Override
     public int getStatus() {

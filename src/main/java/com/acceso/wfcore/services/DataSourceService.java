@@ -1,6 +1,7 @@
 package com.acceso.wfcore.services;
 
 import com.acceso.wfcore.kernel.ApplicationManager;
+import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.managers.DataManager;
 import com.acceso.wfcore.utils.Querys;
 import com.acceso.wfcore.utils.Values;
@@ -41,11 +42,11 @@ public class DataSourceService extends Service {
 
     @Override
     public void start() {
-        System.out.println("Iniciando Servicio:" + this.getClass().getCanonicalName().toUpperCase());
+        Log.info("Iniciando Servicio:" + this.getClass().getCanonicalName().toUpperCase());
 
         //levantar la database princiapl de donde se cogeran los datos!!!
         mainManager.init();
-        System.out.println("Se inicializo la DB-Nativa");
+//        System.out.println("Se inicializo la DB-Nativa");
 
         //se generan los manager y se agregan al hashmap
         Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> managers.put(dto.getNo_conexi(), new DataManager(dto.getNo_conexi(), "hibdata.cfg.xml", ApplicationManager.buildDefaultProperties(dto))));

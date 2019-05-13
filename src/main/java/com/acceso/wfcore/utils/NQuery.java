@@ -2,6 +2,7 @@ package com.acceso.wfcore.utils;
 
 //import com.sun.mail.util.QDecoderStream;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.log.Log;
 import org.hibernate.Query;
 
 import java.util.Date;
@@ -98,7 +99,7 @@ public class NQuery {
 //            System.out.println(LOG + "Q = " + getQueryString());
 //        }
         if (WFCoreListener.APP.SHOW_PREQUERY) {
-            System.out.println(LOG + "Q = " + getQueryString());
+            Log.info(LOG + "Q = " + getQueryString());
         }
         execution_time = System.currentTimeMillis();
 
@@ -106,7 +107,7 @@ public class NQuery {
 
         execution_time = System.currentTimeMillis() - execution_time;
         if (this.show_debug_log) {
-            System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+            Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
         }
 
         return object;
@@ -119,16 +120,16 @@ public class NQuery {
 //            System.out.println(LOG + "Q = " + getQueryString());
 //        }
         if (WFCoreListener.APP.SHOW_PREQUERY) {
-            System.out.println(LOG + "Q = " + getQueryString());
+            Log.info(LOG + "Q = " + getQueryString());
         }
-        
+
         execution_time = System.currentTimeMillis();
 
         List list = query.list();
 
         execution_time = System.currentTimeMillis() - execution_time;
         if (this.show_debug_log) {
-            System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+            Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
         }
 
         return list;
@@ -137,7 +138,7 @@ public class NQuery {
     public int executeUpdate() {
         int updateResult = -1;
         if (this.show_info_log) {
-            System.out.println(LOG + "Q = " + getQueryString());
+            Log.info(LOG + "Q = " + getQueryString());
         }
         execution_time = System.currentTimeMillis();
 
@@ -145,7 +146,7 @@ public class NQuery {
 
         execution_time = System.currentTimeMillis() - execution_time;
         if (this.show_debug_log) {
-            System.out.println(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+            Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
         }
 
         return updateResult;
