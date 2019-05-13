@@ -29,6 +29,11 @@ public class ComboDTO implements Serializable {
     public ComboDTO() {
     }
 
+    public ComboDTO(String co_compag, String no_compag) {
+        this.co_compag = co_compag;
+        this.no_compag = no_compag;
+    }
+
     public String getCo_compag() {
         return co_compag;
     }

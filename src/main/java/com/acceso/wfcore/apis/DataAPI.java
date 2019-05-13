@@ -2,6 +2,7 @@ package com.acceso.wfcore.apis;
 
 import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.ValpagJson;
@@ -75,11 +76,11 @@ public class DataAPI extends GenericAPI {
         this.no_escena = no_escena;
     }
 
-    public String SQL(String conectionName, String sqlQuery) {
+    public JsonResponse SQL(String conectionName, String sqlQuery) {
         return SQL(conectionName, sqlQuery, 30);
     }
 
-    public String SQL(String conectionName, String sqlQuery, int timeoutseg) {
+    public String SQLX(String conectionName, String sqlQuery, int timeoutseg) {
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();
         List<Map<String, Object>> valReturn;
@@ -97,12 +98,12 @@ public class DataAPI extends GenericAPI {
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
             if (WFCoreListener.APP.SHOW_PREQUERY) {
-                System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
+                Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
             }
 
             valReturn = sql.getResultList();
 
-            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
             jsonResponse.setStatus(JsonResponse.OK);
@@ -144,7 +145,7 @@ public class DataAPI extends GenericAPI {
         return new Gson().toJson(jsonResponse);
     }
 
-    public JsonResponse SQLX(String conectionName, String sqlQuery, int timeoutseg) {
+    public JsonResponse SQL(String conectionName, String sqlQuery, int timeoutseg) {
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();
         List<Map<String, Object>> valReturn;
@@ -162,19 +163,19 @@ public class DataAPI extends GenericAPI {
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
             if (WFCoreListener.APP.SHOW_PREQUERY) {
-                System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
+                Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
             }
 
             valReturn = sql.getResultList();
 
-            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
             jsonResponse.setStatus(JsonResponse.OK);
             jsonResponse.setResult(valReturn);
 
         } catch (Exception ep) {
-            System.out.println("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] E = " + ep);
+            Log.error("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] E = " + ep);
 
             try {
                 if (transaction != null) {
@@ -199,7 +200,7 @@ public class DataAPI extends GenericAPI {
                 jsonResponse.setError(Util.getError(ep));
             }
 
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
+            Log.error("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
             if (WFCoreListener.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
@@ -209,69 +210,68 @@ public class DataAPI extends GenericAPI {
         return jsonResponse;
     }
 
-    public String SQLVOID(String conectionName, String sqlQuery, int timeoutseg) {
-        long execution_time;
-        JsonResponse jsonResponse = new JsonResponse();
-//        List<Map<String, Object>> valReturn;
-        String valReturn;
-        StatelessSession session = null;
-        Transaction transaction = null;
-        execution_time = System.currentTimeMillis();
-
-        try {
-            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
-            transaction = session.beginTransaction();
-            transaction.setTimeout(timeoutseg);
-
-            Query sql = session.createNativeQuery(sqlQuery);
-            sql.setTimeout(timeoutseg);
-            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
-
-            valReturn = "" + sql.executeUpdate();
-
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
-            transaction.commit();
-            session.close();
-            jsonResponse.setStatus(JsonResponse.OK);
-            jsonResponse.setResult(valReturn);
-
-        } catch (Exception ep) {
-            System.out.println("[1]ep = " + ep);
-
-            try {
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-            } catch (Exception ep2) {
-                transaction = null;
-            }
-
-            if (session != null) {
-                session = null;
-            }
-
-            ErrorMessage errormessage = Util.getError(ep);
-            if (errormessage == null) {
-                jsonResponse.setStatus(JsonResponse.OK);
-                jsonResponse.setResult("[]");
-                jsonResponse.setError(null);
-            } else {
-                jsonResponse.setStatus(JsonResponse.ERROR);
-                jsonResponse.setResult(null);
-                jsonResponse.setError(Util.getError(ep));
-            }
-
-            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
-
-            if (WFCoreListener.APP.THROWS_EXCEPTION) {
-                ep.printStackTrace();
-            }
-        }
-
-        return new Gson().toJson(jsonResponse);
-    }
+//    public String SQLVOID(String conectionName, String sqlQuery, int timeoutseg) {
+//        long execution_time;
+//        JsonResponse jsonResponse = new JsonResponse();
+//        String valReturn;
+//        StatelessSession session = null;
+//        Transaction transaction = null;
+//        execution_time = System.currentTimeMillis();
+//
+//        try {
+//            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+//            transaction = session.beginTransaction();
+//            transaction.setTimeout(timeoutseg);
+//
+//            Query sql = session.createNativeQuery(sqlQuery);
+//            sql.setTimeout(timeoutseg);
+//            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+//
+//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
+//
+//            valReturn = "" + sql.executeUpdate();
+//
+//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+//            transaction.commit();
+//            session.close();
+//            jsonResponse.setStatus(JsonResponse.OK);
+//            jsonResponse.setResult(valReturn);
+//
+//        } catch (Exception ep) {
+//            System.out.println("[1]ep = " + ep);
+//
+//            try {
+//                if (transaction != null) {
+//                    transaction.rollback();
+//                }
+//            } catch (Exception ep2) {
+//                transaction = null;
+//            }
+//
+//            if (session != null) {
+//                session = null;
+//            }
+//
+//            ErrorMessage errormessage = Util.getError(ep);
+//            if (errormessage == null) {
+//                jsonResponse.setStatus(JsonResponse.OK);
+//                jsonResponse.setResult("[]");
+//                jsonResponse.setError(null);
+//            } else {
+//                jsonResponse.setStatus(JsonResponse.ERROR);
+//                jsonResponse.setResult(null);
+//                jsonResponse.setError(Util.getError(ep));
+//            }
+//
+//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
+//
+//            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+//                ep.printStackTrace();
+//            }
+//        }
+//
+//        return new Gson().toJson(jsonResponse);
+//    }
 
     public ValpagJson VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {
 
@@ -282,12 +282,12 @@ public class DataAPI extends GenericAPI {
         try {
             session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 
-            System.out.println("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery);
+            Log.info("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery);
 
             NativeQuery sql = session.createNativeQuery(sqlQuery).addEntity(ValpagDTO.class);
             valReturn = sql.getResultList();
 
-            System.out.println("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            Log.info("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
 
             session.close();
 

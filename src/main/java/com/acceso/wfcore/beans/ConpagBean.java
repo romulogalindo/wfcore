@@ -221,6 +221,7 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     /*EVENTOS:VOID*/
     public void apply() {
         WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
     }
 
 //    public BotonDTO emptyButton() {

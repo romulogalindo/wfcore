@@ -3,13 +3,16 @@ package com.acceso.wfcore.kernel;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.dtos.ComboDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.acceso.wfweb.utils.JsonResponseC;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.AsyncContext;
@@ -59,16 +62,29 @@ public class AsyncValPag extends AsyncProcessor {
             }
 
             /*EXE VALPAGJS*/
-            ValpagJson valpagJson = (ValpagJson) script.doValpag64("do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+            ValpagJson valpagJson = (ValpagJson) script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
             jsonResponse.setResult(valpagJson);
             jsonResponse.setFnpost(script.dopvpj("GET_DO_POST_LOAD_DATA"));
 
             if (valpagJson != null && (valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
                 HashMap<String, Object> map_hamodas = new HashMap<>();
-                Map<Short, Object> compags = script.doCompag64("do_compag", id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                Map<Short, Object> compags = script.doCompag64(id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
 
                 compags.entrySet().forEach((entry) -> {
-                    map_hamodas.put("" + entry.getKey(), (entry.getValue() != null) ? Util.gson_typeA.fromJson("" + entry.getValue(), JsonResponseC.class).getResult() : new ArrayList<>());
+                    List<ComboDTO> combo = new ArrayList<>();
+                    if (entry.getValue() != null && ((JsonResponse) entry.getValue()).getStatus().contentEquals("OK")) {
+                        JsonResponse jsonResponse1 = (JsonResponse) entry.getValue();
+//                        System.out.println("jsonResponse1.getResult().getClass() = " + jsonResponse1);
+//                        System.out.println("jsonResponse1.getResult().getClass() = " + jsonResponse1.getStatus());
+//                        System.out.println("jsonResponse1.getResult().getClass() = " + jsonResponse1.getResult().getClass());
+                        for (Object rss : (List) jsonResponse1.getResult()) {
+                            if (rss != null) {
+                                java.util.HashMap hashMap = (HashMap) rss;
+                                combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
+                            }
+                        }
+                        map_hamodas.put("" + entry.getKey(), combo);
+                    }
                 });
 
                 jsonResponse.setAditional(map_hamodas);
@@ -81,12 +97,12 @@ public class AsyncValPag extends AsyncProcessor {
             jsonResponse.setError(em);
             jsonResponse.setStatus(JsonResponse.ERROR);
             out.write(Util.toJSON2(jsonResponse));
-            
+
             if (WFCoreListener.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
             }
         }
-        
+
         out.flush();
         out.close();
         asyncContext.complete();
