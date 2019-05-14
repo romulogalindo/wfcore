@@ -15,7 +15,11 @@ function Parameter(co_pagreg, co_conpar) {
 }
 
 function overlay(show) {
-    document.getElementById("myOverlay").style.display = show == true ? "block" : "none";
+    try {
+        document.getElementById("myOverlay").style.display = show == true ? "block" : "none";
+    } catch (e) {
+        console.log('overlay:' + e)
+    }
 }
 
 function w3_open() {
@@ -69,18 +73,19 @@ function co_usuari() {
     return document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
 }
 
-function workflow() {
+function workflow(il_header) {
     /*FRONT*/
-    $(".button-collapse").sideNav();
-    Ps.initialize(document.querySelector('.custom-scrollbar'));
-
+    if (il_header) {
+        $(".button-collapse").sideNav();
+        Ps.initialize(document.querySelector('.custom-scrollbar'));
+    }
 
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
             iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
     }
 
-    //--FRONT AND MODALª!
+//--FRONT AND MODALª!
     $(document).ready(function () {
         //P1
         $('.mdb-select').material_select();
@@ -646,39 +651,39 @@ function load_multiselect(valid, valdom) {
     }
 }
 
-function child_popup(u, eleid, c, tit1, tit2) {
-    var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
-
-    var eledom = document.getElementsByName(eleid)[0];
-
-    if (eledom.tagName == "LABEL") {
-//        console.log("co_conpar_1:" + escape(l.getAttribute('valpag')));
-        //console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
-        //console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
-        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
-    } else {
-        //console.log("co_conpar_1:" + encodeURIComponent(l.value));
-        //console.log("co_conpar_2:" + encodeURIComponent(l.value));
-        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
-    }
-
-    urlpopup = urlpopup + "&il_header=false";
-    console.log("vp:" + urlpopup);
-
-    // $D.g_ID("popup_head").innerHTML = tit1 + "  >  <b>" + tit2 + "</b>";
-    // // $D.g_ID("popup_body").onload = popup_resize;
-    // $D.g_ID("popup_body").setAttribute("ele", ele);
-    // $D.g_ID("popup_body").src = urlpopup;
-    // $D.lock();
-    // $D.g_ID('popup').style.display = "block";
-
-    window.parent.master_popup(urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
-}
+// function child_popup(u, eleid, c, tit1, tit2) {
+//     var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
+//
+//     var eledom = document.getElementsByName(eleid)[0];
+//
+//     if (eledom.tagName == "LABEL") {
+// //        console.log("co_conpar_1:" + escape(l.getAttribute('valpag')));
+//         //console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
+//         //console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
+//         urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
+//     } else {
+//         //console.log("co_conpar_1:" + encodeURIComponent(l.value));
+//         //console.log("co_conpar_2:" + encodeURIComponent(l.value));
+//         urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
+//     }
+//
+//     urlpopup = urlpopup + "&il_header=false";
+//     console.log("vp:" + urlpopup);
+//
+//     // $D.g_ID("popup_head").innerHTML = tit1 + "  >  <b>" + tit2 + "</b>";
+//     // // $D.g_ID("popup_body").onload = popup_resize;
+//     // $D.g_ID("popup_body").setAttribute("ele", ele);
+//     // $D.g_ID("popup_body").src = urlpopup;
+//     // $D.lock();
+//     // $D.g_ID('popup').style.display = "block";
+//
+//     window.parent.master_popup(urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
+// }
 
 function master_popup(urlpopup, ele, titulo) {
-    overlay(true);
-    document.getElementById("popup").style.display = "block";
-    document.getElementById("popup_body").src = urlpopup;
+    // $('#popup').modal({backdrop: 'static', show: true});
+    $('#popup').modal({show: true});
+    $('#popup_body').attr('src', urlpopup);
 }
 
 function master_popup_close() {

@@ -70,22 +70,34 @@ public class AsyncValPag extends AsyncProcessor {
                 HashMap<String, Object> map_hamodas = new HashMap<>();
                 Map<Short, Object> compags = script.doCompag64(id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
 
-                compags.entrySet().forEach((entry) -> {
-                    List<ComboDTO> combo = new ArrayList<>();
-                    if (entry.getValue() != null && ((JsonResponse) entry.getValue()).getStatus().contentEquals("OK")) {
-                        JsonResponse jsonResponse1 = (JsonResponse) entry.getValue();
-//                        System.out.println("jsonResponse1.getResult().getClass() = " + jsonResponse1);
-//                        System.out.println("jsonResponse1.getResult().getClass() = " + jsonResponse1.getStatus());
-//                        System.out.println("jsonResponse1.getResult().getClass() = " + jsonResponse1.getResult().getClass());
-                        for (Object rss : (List) jsonResponse1.getResult()) {
-                            if (rss != null) {
-                                java.util.HashMap hashMap = (HashMap) rss;
-                                combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
-                            }
-                        }
-                        map_hamodas.put("" + entry.getKey(), combo);
-                    }
-                });
+                compags
+                        .entrySet()
+                        .stream()
+                        .filter(o -> o.getValue() != null && ((JsonResponse) o.getValue()).getStatus().contentEquals("OK"))
+                        .forEach(
+                                entry -> {
+                                    List<ComboDTO> combo = new ArrayList<>();
+                                    for (Object rss : (List) ((JsonResponse) entry.getValue()).getResult()) {
+                                        if (rss != null) {
+                                            java.util.HashMap hashMap = (HashMap) rss;
+                                            combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
+                                        }
+                                    }
+                                    map_hamodas.put("" + entry.getKey(), combo);
+                                }
+                        );
+//                compags.entrySet().forEach((entry) -> {
+//                    List<ComboDTO> combo = new ArrayList<>();
+//                    if (entry.getValue() != null && ((JsonResponse) entry.getValue()).getStatus().contentEquals("OK")) {
+//                        for (Object rss : (List) ((JsonResponse) entry.getValue()).getResult()) {
+//                            if (rss != null) {
+//                                java.util.HashMap hashMap = (HashMap) rss;
+//                                combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
+//                            }
+//                        }
+//                        map_hamodas.put("" + entry.getKey(), combo);
+//                    }
+//                });
 
                 jsonResponse.setAditional(map_hamodas);
             }

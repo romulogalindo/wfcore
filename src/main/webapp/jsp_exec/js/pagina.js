@@ -696,18 +696,23 @@ function load_multiselect(valid, valdom) {
 
 function child_popup(u, eleid, c, tit1, tit2) {
     var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
+    console.log('child_popup->urlpopup:' + urlpopup);
 
     var eledom = document.getElementsByName(eleid)[0];
+    eledom = "";
+    console.log('child_popup->eledom:' + eledom);
 
     if (eledom.tagName == "LABEL") {
 //        console.log("co_conpar_1:" + escape(l.getAttribute('valpag')));
         //console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
         //console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
-        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
+        // urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
+        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + "" + "&co_conpad=" + c + "&popup=1";
     } else {
         //console.log("co_conpar_1:" + encodeURIComponent(l.value));
         //console.log("co_conpar_2:" + encodeURIComponent(l.value));
-        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
+        // urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
+        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + "" + "&co_conpad=" + c + "&popup=1";
     }
 
     urlpopup = urlpopup + "&il_header=false";
@@ -723,11 +728,11 @@ function child_popup(u, eleid, c, tit1, tit2) {
     window.parent.master_popup(urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
 }
 
-function master_popup(urlpopup, ele, titulo) {
-    overlay(true);
-    document.getElementById("popup").style.display = "block";
-    document.getElementById("popup_body").src = urlpopup;
-}
+// function master_popup(urlpopup, ele, titulo) {
+//     overlay(true);
+//     document.getElementById("popup").style.display = "block";
+//     document.getElementById("popup_body").src = urlpopup;
+// }
 
 function master_popup_close() {
     document.getElementById("popup").style.display = "none";

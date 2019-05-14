@@ -55,9 +55,9 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=4"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=6"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=28"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=4"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=6"></script>
 
     <script>
         <%--var WSURL = '<%=com.acceso.wfcore.utils.Values.WEBSOCKET_ENDPOINT_URL%>';--%>
@@ -107,7 +107,7 @@
 
     </style>
 </head>
-<body onload="workflow()" class="fixed-sn light-blue-skin">
+<body onload="workflow(${contenedorBean.contenedor.il_header})" class="fixed-sn light-blue-skin ${contenedorBean.contenedor.il_header}">
 <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor"/>
 <input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten"/>
 <input type="hidden" value="${US.co_usuari}" id="co_usuari"/>
