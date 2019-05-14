@@ -52,6 +52,7 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     private int co_pagina;
 
     private PaginaconDTO pagina;
+    private PaginaDTO page;
 
     private List<PaginaconDTO> paginas;
 
@@ -198,6 +199,7 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     public void saveDto() {
         PaginaDAO dao = new PaginaDAO();
         this.pagina = dao.save(pagina);
+        this.page = dao.save(page);
         dao.close();
     }
 
@@ -412,22 +414,20 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
         return URL_EDITAR;
     }
 
-//    public String pagtit_new() {
-//        elementoSeleccionado = new ElementoDTO();
-//        elementoSeleccionado.setTi_elemen(1);
-//        PagtitDTO pagtitDTO = new PagtitDTO();
-//        pagtitDTO.setCo_pagina(pagina.getCo_pagina());
-//        pagtitDTO.setCo_pagtit(-1);
-//        elementoSeleccionado.setPagtitDTO(pagtitDTO);
-//
-//        return URL_TIT_EDIT;
-//    }
     public PaginaconDTO getPagina() {
         return pagina;
     }
 
     public void setPagina(PaginaconDTO pagina) {
         this.pagina = pagina;
+    }
+
+    public PaginaDTO getPage() {
+        return page;
+    }
+
+    public void setPage(PaginaDTO page) {
+        this.page = page;
     }
 
     public BotonDTO getBotonSeleccionado() {
@@ -575,6 +575,7 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
         pagina = dao.getPaginacon(p_co_conten, p_co_pagina);
         pagina.setLs_botone(dao.getButtons(p_co_conten, pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(p_co_conten, pagina.getCo_pagina()));
+        page = dao.getPagina(p_co_pagina);
         dao.close();
 
         defaultTabIndex = 0;

@@ -203,12 +203,7 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 
     public void eventupdateRegist() throws Exception {
         updateRegist();
-
-//        try {
         FacesContext.getCurrentInstance().getExternalContext().redirect(URL_EDITAR);
-//        } catch (Exception ep) {
-//            ep.printStackTrace();
-//        }
     }
 
     @Override

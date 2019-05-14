@@ -266,6 +266,39 @@
                                     </p:dataTable>
 
                                 </p:tab>
+                                
+                                <p:tab id="valpagjs" title="Script de Carga">
+                                    <p:outputPanel style="text-align: left;padding: 0px;height: 100%">
+                                        <pe:codeMirror id="cadeJS" mode="javascript" theme="material" label="valpag.js"
+                                                       value="#{conpagBean.page.js_valpag}"
+                                                       lineNumbers="true"
+                                                       lineWrapping="true"
+                                                       matchBrackets="true"
+                                        />
+                                    </p:outputPanel>
+                                </p:tab>
+
+                                <p:tab id="propagjs" title="Script de Proceso">
+                                    <p:outputPanel style="text-align: left;">
+                                        <pe:codeMirror id="cadeJS2" mode="javascript" theme="material" label="valpag.js"
+                                                       value="#{conpagBean.page.js_propag}"
+                                                       lineNumbers="true"
+                                                       lineWrapping="true"
+                                                       matchBrackets="true"
+                                        />
+                                    </p:outputPanel>
+                                </p:tab>
+
+                                <p:tab id="compagjs" title="Script de Combos">
+                                    <p:outputPanel style="text-align: left;">
+                                        <pe:codeMirror id="cadeJS3" mode="javascript" theme="material" label="valpag.js"
+                                                       value="#{conpagBean.page.js_compag}"
+                                                       lineNumbers="true"
+                                                       lineWrapping="true"
+                                                       matchBrackets="true"
+                                        />
+                                    </p:outputPanel>
+                                </p:tab>
                             </p:tabView>
 
                         </p:column>
