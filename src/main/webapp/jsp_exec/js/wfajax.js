@@ -68,7 +68,7 @@ doPropag = function (url, regparams, data) {
                 alert('' + rpta.error.message + '');
             } else {
                 console.log("rpta.params===>" + rpta.params);
-                if (rpta.params) {
+                if (rpta.params != undefined) {
                     for (var i = 0; i < rpta.params.length; i++) {
                         console.log("rpta.params[i].no_param=" + rpta.params[i].no_param);
                         for (var o = 0; o < regparams.length; o++) {
@@ -79,9 +79,10 @@ doPropag = function (url, regparams, data) {
                         }
                     }
                 }
-                var urlpart = "&";
+
+                var urlpart = '';
                 for (var o = 0; o < regparams.length; o++) {
-                    urlpart += regparams;
+                    urlpart += '&' + regparams[o];
                 }
                 // alert('URL>>>' + url + urlpart);
                 window.parent.location.href = url + urlpart;

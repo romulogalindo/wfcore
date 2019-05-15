@@ -184,7 +184,8 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
     public String saveRegistApply() {
         saveDto();
         apply();
-        return URL_LISTA;
+//        return URL_LISTA;
+        return null;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.acceso.wfcore.utils.ScriptContextExecutor;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.acceso.wfweb.utils.JsonResponseP;
 import com.acceso.wfweb.utils.RequestManager;
@@ -41,6 +42,7 @@ public class AsyncProPag extends AsyncProcessor {
             long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
             short co_botone = Util.toShort(requestManager.getParam("co_botone"), (short) -1);
             boolean il_proces = Util.toBoolean(requestManager.getParam("il_proces"), false);
+            Usuario usuario = requestManager.getUser();
             String ls_regist = "{ ";
 
             Frawor4DAO dao = new Frawor4DAO();
@@ -99,13 +101,18 @@ public class AsyncProPag extends AsyncProcessor {
 //
 //                Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
 
-            Object object = il_proces ? script.doPropag64(co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
+            Object object = il_proces ? script.doPropag64(co_pagina, id_frawor, co_conten, co_botone, ls_regist, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
             System.out.println(">>object = " + object);
             System.out.println(">>object = " + object.getClass());
 //                jdk.nashorn.api.scripting.ScriptObjectMirror a; a.
             if (object instanceof String) {
-                object = object.toString().replace("X5964ERQ17", "");
-                out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.gson_typeA.fromJson(object.toString(), ErrorMessage.class))));
+                if (object.toString().contains("X5964ERQ17")) {
+                    object = object.toString().replace("X5964ERQ17", "");
+                    out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.gson_typeA.fromJson(object.toString(), ErrorMessage.class))));
+                } else {
+                    out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
+                }
+
             } else if (object instanceof JsonResponseP) {
                 out.write(Util.toJSON(object));
             } else {

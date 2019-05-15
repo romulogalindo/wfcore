@@ -450,7 +450,15 @@ function propag(cycle, co_button, il_proces, co_condes) {
                     // var dom_select = eledom.getElementsByTagName("INPUT")[0];
                     console.log('VLIS:' + eledom.innerHTML);
                     if (eledom.innerHTML.length > 0) {
-                        val = eledom.getElementsByTagName("INPUT")[0].value;
+                        try {
+                            if (eledom.getElementsByTagName("INPUT").length > 0) {
+                                val = eledom.getElementsByTagName("INPUT")[0].value;
+                            } else {
+                                val = eledom.innerHTML;
+                            }
+                        } catch (e) {
+                            val = eledom.innerHTML;
+                        }
                     }
                 } else if (ti_pagreg == '3') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -612,8 +620,14 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
 //                    valdom = eledom.getAttribute("va_pagreg");
 //                     valdom = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
                     console.log('VLIS:' + eledom.innerHTML);
-                    if (eledom.innerHTML.length > 0) {
-                        valdom = eledom.getElementsByTagName("INPUT")[0].value;
+                    try {
+                        if (eledom.getElementsByTagName("INPUT").length > 0) {
+                            valdom = eledom.getElementsByTagName("INPUT")[0].value;
+                        } else {
+                            valdom = eledom.innerHTML;
+                        }
+                    } catch (e) {
+                        valdom = eledom.innerHTML;
                     }
                 } else if (ti_pagreg == '3') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
@@ -633,6 +647,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
             }
         }
 
+        valdom = ('' + valdom).replace('undefined', '');
         parametros[parametros.length] = 'co_conpar_' + sconpar + '=' + valdom;
     }
     console.log('//' + window.location.host + '/wf?co_conten=' + co_condes + "{}" - parametros + "{}" + data);

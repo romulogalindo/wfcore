@@ -238,6 +238,8 @@ public class Util {
             if (message.indexOf("backend") > -1) {
                 message = "{El sistema esta tardando mucho en responder, por favor intentalo en unos segundos. Si este inconveniente persiste avísanos haciendo clic <a href=\"wf?co_conten=22\">aquí</a>.}";
             }
+        } else {
+            message = ep.getMessage();
         }
 
         System.out.println("ep = " + ep);
@@ -249,7 +251,8 @@ public class Util {
 //        }
 
         System.out.println("message = " + (message == null));
-        if (message.length() > 0) {
+        System.out.println("ep = " + message);
+        if (message.length() > 0 & message.contains("{")) {
             message = message.replace("ERROR: ", "").replace("{", "").replace("}", "").replace("\n", " ").replace("\"", "\\'").replace("\'", "\\'");
         }
         System.out.println("message! = " + message);
