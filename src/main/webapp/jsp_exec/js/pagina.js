@@ -740,7 +740,11 @@ function child_popup(u, eleid, c, tit1, tit2) {
     // $D.lock();
     // $D.g_ID('popup').style.display = "block";
 
-    window.parent.master_popup(urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
+    window.parent.master_popup(CO_PAGINA, urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
+}
+
+function child_popup_update(ls_params) {
+    console.log('Hemos recibido los parametros desde el poup! por fin!!!' + ls_params);
 }
 
 // function master_popup(urlpopup, ele, titulo) {

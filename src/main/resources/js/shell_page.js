@@ -3,7 +3,7 @@ var ValpagJson = Java.type('com.acceso.wfcore.utils.ValpagJson');
 var Row = Java.type('com.acceso.wfcore.utils.RowJson');
 var Reg = Java.type('com.acceso.wfcore.utils.RegJson');
 var JsonResponse = Java.type('com.acceso.wfweb.utils.JsonResponse');
-var JsonResponseP = Java.type('com.acceso.wfweb.utils.JsonResponseP');
+var PROPAG = Java.type('com.acceso.wfweb.utils.JsonResponseP');
 var List = Java.type('java.util.ArrayList');
 //APIs
 var main_api_acr_data_api = Java.type('com.acceso.wfcore.apis.DataAPI');
@@ -70,8 +70,9 @@ function ERROR(msg) {
     return "X5964ERQ17{\"type\":\"USER\", \"message\":\"" + msg + "\"}";
 }
 
-function OK(nparams) {
-    var nj = new JsonResponseP('OK', 'REDIRECT', nparams);
+function OK(no_accion,co_condes,ls_params, ls_pagina) {
+    //PROPAG
+    var nj = new PROPAG(no_accion, co_condes, ls_params, ls_pagina);
     return nj;
 }
 

@@ -55,9 +55,9 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=6"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=28"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=6"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=13"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=32"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=13"></script>
 
     <script>
         <%--var WSURL = '<%=com.acceso.wfcore.utils.Values.WEBSOCKET_ENDPOINT_URL%>';--%>
@@ -105,9 +105,16 @@
             border-top: 1px solid #eee;
         }
 
+        <c:if test="${!contenedorBean.contenedor.il_header}">
+        body {
+            background-color: rgba(255, 255, 255, .0);
+        }
+
+        </c:if>
     </style>
 </head>
-<body onload="workflow(${contenedorBean.contenedor.il_header})" class="fixed-sn light-blue-skin ${contenedorBean.contenedor.il_header}">
+<body onload="workflow(${contenedorBean.contenedor.il_header})"
+      class="fixed-sn light-blue-skin ${contenedorBean.contenedor.il_header}">
 <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor"/>
 <input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten"/>
 <input type="hidden" value="${US.co_usuari}" id="co_usuari"/>
@@ -395,14 +402,15 @@
     <div class="modal-dialog cascading-modal modal-xl" role="document">
 
         <!--Content-->
-        <div class="modal-content">
+        <div class="modal-content"
+             style="height: 90%; background-color: rgba(255,255,255,.0); box-shadow: none; bottom: 10%;">
 
             <!--Header-->
-            <div class="modal-header darken-3 white-text" style="background-color: #2bbbad;border-radius: 0.5rem;">
-                <h4 class="title">
-                    Sistemas
-                </h4>
-            </div>
+            <%--            <div class="modal-header darken-3 white-text" style="background-color: #2bbbad;border-radius: 0.5rem;">--%>
+            <%--                <h4 class="title">--%>
+            <%--                    Sistemas--%>
+            <%--                </h4>--%>
+            <%--            </div>--%>
 
             <!--Body-->
             <div class="modal-body">

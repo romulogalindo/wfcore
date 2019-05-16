@@ -84,8 +84,19 @@ doPropag = function (url, regparams, data) {
                 for (var o = 0; o < regparams.length; o++) {
                     urlpart += '&' + regparams[o];
                 }
+
+                if (rpta.no_action == 'REDIRECT') {
+                    window.parent.location.href = url + urlpart;
+                } else if (rpta.no_action == 'POPUP') {
+                    window.parent.page_to_master(regparams);
+                } else if (rpta.no_action == 'REFRESH') {
+                    for (var i = 0; i < ls_pagina.length; i++) {
+                        //para todos los iframes que coincidan reload
+                    }
+                }
+
                 // alert('URL>>>' + url + urlpart);
-                window.parent.location.href = url + urlpart;
+                // window.parent.location.href = url + urlpart;
             }
 
         }

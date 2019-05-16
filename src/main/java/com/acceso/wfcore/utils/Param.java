@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Param implements Serializable {
     String no_param;
-    String va_param;
+    Object va_param;
 
-    public Param(String no_param, String va_param) {
+    public Param(String no_param, Object va_param) {
         this.no_param = no_param;
         this.va_param = va_param;
     }
@@ -19,11 +19,11 @@ public class Param implements Serializable {
         this.no_param = no_param;
     }
 
-    public String getVa_param() {
+    public Object getVa_param() {
         return va_param;
     }
 
-    public void setVa_param(String va_param) {
+    public void setVa_param(Object va_param) {
         this.va_param = va_param;
     }
 }

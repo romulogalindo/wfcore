@@ -1,5 +1,6 @@
 var $D = document;
 var $MAP = {};
+var current_pagina = -1;
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -57,13 +58,13 @@ function co_conten() {
     return document.getElementById('co_conten').value;
 }
 
-function co_pagina() {
-    return document.getElementById('co_pagina').value;
-}
+// function co_pagina() {
+//     return document.getElementById('co_pagina').value;
+// }
 
-function ti_pagina() {
-    return document.getElementById('ti_pagina').value;
-}
+// function ti_pagina() {
+//     return document.getElementById('ti_pagina').value;
+// }
 
 function ls_hamoda() {
     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
@@ -91,9 +92,16 @@ function workflow(il_header) {
         $('.mdb-select').material_select();
 
         //P2
-        openWS();
+        if (il_header) {
+            openWS();
+        }
         //if
         $('#slc_schema').modal('show');
+    });
+
+    $("#modal").on('hide.bs.modal', function () {
+        document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
+        document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
     });
 }
 
@@ -680,7 +688,16 @@ function load_multiselect(valid, valdom) {
 //     window.parent.master_popup(urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
 // }
 
-function master_popup(urlpopup, ele, titulo) {
+function master_popup(co_pagina, urlpopup, ele, titulo) {
+    current_pagina = co_pagina;
+    console.log('current_pagina =' + current_pagina);
+    console.log('urlpopup =' + urlpopup);
+    console.log('ele =' + ele);
+    console.log('titulo =' + titulo);
+
+    document.getElementsByTagName('MAIN')[0].setAttribute('style', 'filter:blur(5px)');
+    document.getElementsByTagName('HEADER')[0].setAttribute('style', 'filter:blur(5px)');
+
     // $('#popup').modal({backdrop: 'static', show: true});
     $('#popup').modal({show: true});
     $('#popup_body').attr('src', urlpopup);
@@ -826,6 +843,30 @@ function master_process_multiselect(pagid, refid) {
 
     document.getElementById("popup2").style.display = "none";
     overlay(false);
+}
+
+function page_to_master(ls_params) {
+    console.log('Recibimos ls_params desde la pagina:' + ls_params);
+    window.parent.popup_to_master(ls_params);
+}
+
+function popup_to_master(ls_params) {
+    console.log('Recibimos ls_params modo->:' + ls_params);
+    console.log('Recibimos== y a ??>>' + current_pagina);
+    //ahora hacia el hijo
+    var mframe = document.getElementById('PAG' + current_pagina);
+    console.log('conseguimos la pagina1:' + mframe);
+    console.log('conseguimos la pagina2:' + mframe.contentDocument);
+    console.log('conseguimos la pagina3:' + mframe.contentWindow);
+    console.log('conseguimos la pagina4:' + mframe.contentWindow.document);
+    // (mframe.contentDocument || mframe.contentWindow.document).child_popup_update(ls_params);
+    // (mframe.contentDocument || mframe.contentWindow).child_popup_update(ls_params);
+    mframe.contentWindow.child_popup_update(ls_params);
+    console.log('listo!>');
+    $('#popup').modal('hide');
+    document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
+    document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
+
 }
 
 /*LOGOUT*/
