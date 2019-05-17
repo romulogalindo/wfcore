@@ -67,14 +67,14 @@ doPropag = function (url, regparams, data) {
                 window.parent.showloading(false);
                 alert('' + rpta.error.message + '');
             } else {
-                console.log("rpta.params===>" + rpta.params);
-                if (rpta.params != undefined) {
-                    for (var i = 0; i < rpta.params.length; i++) {
-                        console.log("rpta.params[i].no_param=" + rpta.params[i].no_param);
+                console.log("rpta.params===>" + rpta.ls_params);
+                if (rpta.ls_params != undefined) {
+                    for (var i = 0; i < rpta.ls_params.length; i++) {
+                        console.log("rpta.params[i].no_param=" + rpta.ls_params[i].no_param);
                         for (var o = 0; o < regparams.length; o++) {
-                            console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + rpta.params[i].no_param);
-                            if (regparams[o].indexOf(rpta.params[i].no_param) > -1) {
-                                regparams[o] = rpta.params[i].no_param + "=" + rpta.params[i].va_param;
+                            console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + rpta.ls_params[i].no_param);
+                            if (regparams[o].indexOf(rpta.ls_params[i].no_param) > -1) {
+                                regparams[o] = rpta.ls_params[i].no_param + "=" + rpta.ls_params[i].va_param;
                             }
                         }
                     }
@@ -88,7 +88,8 @@ doPropag = function (url, regparams, data) {
                 if (rpta.no_action == 'REDIRECT') {
                     window.parent.location.href = url + urlpart;
                 } else if (rpta.no_action == 'POPUP') {
-                    window.parent.page_to_master(regparams);
+                    // window.parent.page_to_master(regparams);
+                    window.parent.page_to_master(rpta.ls_params);
                 } else if (rpta.no_action == 'REFRESH') {
                     for (var i = 0; i < ls_pagina.length; i++) {
                         //para todos los iframes que coincidan reload

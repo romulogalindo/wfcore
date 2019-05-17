@@ -112,6 +112,7 @@ function pagina_onload(jsonData) {
     // console.log('[paginaload@' + co_pagina() + ']jsonData = ' + jsonData);
     // console.log('[paginaload@' + co_pagina() + ']jsonData.status = ' + jsonData.status);
     // console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result);
+    //PAGINA SIEMPRE LISTA
 
     if (jsonData.status == 'OK') {
         if (jsonData.result.rows != undefined) {
@@ -122,6 +123,12 @@ function pagina_onload(jsonData) {
             // var dom2 = '<tbody>' + document.getElementById("row1").innerHTML + '</tbody>'
             var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
 
+            var tbody64;
+            if (ti_pagina() == 'R') {
+                tbody64 = document.getElementById('PAG' + co_pagina()).getElementsByTagName('TBODY')[0];
+                itr = itr.replace('<tr>', '').replace('</tr>', '');
+            }
+
             for (var i = 0; i < rows.length; i++) {
                 // console.log('[paginaload@' + co_pagina() + ']rows= ' + rows[i]);
                 // console.log('[paginaload@' + co_pagina() + ']rows.regs = ' + rows[i].regs);
@@ -131,7 +138,7 @@ function pagina_onload(jsonData) {
                 if (ti_pagina() == 'F')
                     loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
                 else
-                    loadReporte64(rows[i]);
+                    loadReporte64(tbody64, rows[i]);
             }
 
             /*BEFORE VIEW*/
@@ -383,13 +390,14 @@ function loadFormulario64(index, row, aditional, dom2) {
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
-function loadReporte64(row) {
+function loadReporte64(tbody64, row) {
     // console.log('[loadReporte64]Cargando tipo Reporte->ex tabla:' + row);
     // console.log('[loadReporte64]Cargando tipo Reporte->regs:' + row.regs);
+    // var newRow = tbody64.insertRow(tbody64.rows.length);
 
     var n_itr = itr;
     // var all_tr = '';
-    console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
+    // console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
         // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
@@ -400,21 +408,25 @@ function loadReporte64(row) {
         //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
         // console.log('>[' + 'regist' + reg.regist + 'val' + '] >por> ' + txtval);
         n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
+        // n_itr.replace('<tr>','').replace('</tr>','')
         // console.log('[loadReporte64:update!]>>>:' + n_itr);
+        var nr = document.createElement('tr')
+        nr.innerHTML = n_itr;
+        tbody64.appendChild(nr);
     }
-    console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
+    // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
 
-    var dom_pag = document.getElementById('PAG' + co_pagina());
-    var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
-    console.log('[loadReporte64]Cargando tipo Reporte->itr(3):' + new_tr);
-    dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
-
-    //do-for
-    var alltd = document.getElementById('PAG' + co_pagina()).getElementsByClassName('ti_pag_Reg2');
-    for (var i = 0; i < alltd.length; i++) {
-        alltd[i].getElementsByTagName('SPAN')[0].innerHTML = '' + (i + 1);
-        // alltd[i].innerHTML = '<span>' + (i + 1) + '</span>span>';
-    }
+    // var dom_pag = document.getElementById('PAG' + co_pagina());
+    // var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
+    // console.log('[loadReporte64]Cargando tipo Reporte->itr(3):' + new_tr);
+    // dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
+    //
+    // //do-for
+    // var alltd = document.getElementById('PAG' + co_pagina()).getElementsByClassName('ti_pag_Reg2');
+    // for (var i = 0; i < alltd.length; i++) {
+    //     alltd[i].getElementsByTagName('SPAN')[0].innerHTML = '' + (i + 1);
+    //     // alltd[i].innerHTML = '<span>' + (i + 1) + '</span>span>';
+    // }
 }
 
 function propag(cycle, co_button, il_proces, co_condes) {
@@ -711,47 +723,30 @@ function load_multiselect(valid, valdom) {
 
 function child_popup(u, eleid, c, tit1, tit2) {
     var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
-    console.log('child_popup->urlpopup:' + urlpopup);
+    // console.log('child_popup->urlpopup:' + urlpopup);
 
-    var eledom = document.getElementsByName(eleid)[0];
-    eledom = "";
-    console.log('child_popup->eledom:' + eledom);
+    var co_conpar_1 = document.getElementById(eleid + 'V').getElementsByTagName('SPAN')[0].getAttribute('valpag');
+    var co_conpar_2 = document.getElementById(eleid + 'V').getElementsByTagName('SPAN')[0].innerHTML;
 
-    if (eledom.tagName == "LABEL") {
-//        console.log("co_conpar_1:" + escape(l.getAttribute('valpag')));
-        //console.log("co_conpar_1:" + encodeURIComponent(l.getAttribute('valpag')));
-        //console.log("co_conpar_2:" + encodeURIComponent(l.innerHTML));
-        // urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
-        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.getAttribute('valpag')) + "&co_conpar_2=" + encodeURIComponent(eledom.innerHTML) + "&co_conpar_3=" + "" + "&co_conpad=" + c + "&popup=1";
-    } else {
-        //console.log("co_conpar_1:" + encodeURIComponent(l.value));
-        //console.log("co_conpar_2:" + encodeURIComponent(l.value));
-        // urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + u + "&co_conpad=" + c + "&popup=1";
-        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(eledom.value) + "&co_conpar_2=" + encodeURIComponent(eledom.value) + "&co_conpar_3=" + "" + "&co_conpad=" + c + "&popup=1";
-    }
+    urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(co_conpar_1) + "&co_conpar_2=" + encodeURIComponent(co_conpar_2) + "&co_conpad=" + c;
 
     urlpopup = urlpopup + "&il_header=false";
-    console.log("vp:" + urlpopup);
-
-    // $D.g_ID("popup_head").innerHTML = tit1 + "  >  <b>" + tit2 + "</b>";
-    // // $D.g_ID("popup_body").onload = popup_resize;
-    // $D.g_ID("popup_body").setAttribute("ele", ele);
-    // $D.g_ID("popup_body").src = urlpopup;
-    // $D.lock();
-    // $D.g_ID('popup').style.display = "block";
+    // console.log("vp:" + urlpopup);
 
     window.parent.master_popup(CO_PAGINA, urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
 }
 
-function child_popup_update(ls_params) {
-    console.log('Hemos recibido los parametros desde el poup! por fin!!!' + ls_params);
-}
+function child_popup_update(regist, ls_params) {
+    regist = regist + 'V';
 
-// function master_popup(urlpopup, ele, titulo) {
-//     overlay(true);
-//     document.getElementById("popup").style.display = "block";
-//     document.getElementById("popup_body").src = urlpopup;
-// }
+    for (var i = 0; i < ls_params.length; i++) {
+        if (ls_params[i].no_param == 'co_conpar_1') {
+            document.getElementById(regist).getElementsByTagName('SPAN')[0].setAttribute('valpag', ls_params[i].va_param);
+        } else {
+            document.getElementById(regist).getElementsByTagName('SPAN')[0].innerHTML = ls_params[i].va_param;
+        }
+    }
+}
 
 function master_popup_close() {
     document.getElementById("popup").style.display = "none";

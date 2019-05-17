@@ -1,6 +1,7 @@
 var $D = document;
 var $MAP = {};
 var current_pagina = -1;
+var current_regist = -1;
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -100,6 +101,11 @@ function workflow(il_header) {
     });
 
     $("#modal").on('hide.bs.modal', function () {
+        document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
+        document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
+    });
+
+    $("#popup").on('hide.bs.modal', function () {
         document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
         document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
     });
@@ -385,224 +391,224 @@ function loadFormulario64(index, row, aditional, dom2) {
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
-function loadReporte64(row) {
-    // console.log('[loadReporte64]Cargando tipo Reporte->ex tabla:' + row);
-    // console.log('[loadReporte64]Cargando tipo Reporte->regs:' + row.regs);
+// function loadReporte64(row) {
+//     // console.log('[loadReporte64]Cargando tipo Reporte->ex tabla:' + row);
+//     // console.log('[loadReporte64]Cargando tipo Reporte->regs:' + row.regs);
+//
+//     var n_itr = itr;
+//     // var all_tr = '';
+//     // console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
+//     for (var x = 0; x < row.regs.length; x++) {
+//         var reg = row.regs[x];
+//         // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
+//         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+//         // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+//         var txtval = reg.front == undefined ? reg.value : reg.front;
+//         txtval = txtval == undefined ? '' : txtval;
+//         //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
+//         // console.log('>[' + 'regist' + reg.regist + 'val' + '] >por> ' + txtval);
+//         n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
+//         // console.log('[loadReporte64:update!]>>>:' + n_itr);
+//     }
+//     // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
+//
+//     var dom_pag = document.getElementById('PAG' + co_pagina());
+//     var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
+//     dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
+//
+//
+// }
 
-    var n_itr = itr;
-    // var all_tr = '';
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
-    for (var x = 0; x < row.regs.length; x++) {
-        var reg = row.regs[x];
-        // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
-        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
-        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
-        var txtval = reg.front == undefined ? reg.value : reg.front;
-        txtval = txtval == undefined ? '' : txtval;
-        //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
-        // console.log('>[' + 'regist' + reg.regist + 'val' + '] >por> ' + txtval);
-        n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
-        // console.log('[loadReporte64:update!]>>>:' + n_itr);
-    }
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
-
-    var dom_pag = document.getElementById('PAG' + co_pagina());
-    var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
-    dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
-
-
-}
-
-function propag(cycle, co_button, il_proces, co_condes) {
-    var data = new FormData();
-    data.append('id_frawor', '' + id_frawor());
-    data.append('co_pagina', '' + co_pagina());
-    data.append('co_conten', '' + co_conten());
-    data.append('co_botone', '' + co_button);
-    data.append('il_proces', '' + il_proces);
-
-    var preimg = [];
-
-    for (var eledom of document.getElementsByClassName('pagreg')) {
-
-        // var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-        var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-        var val = null;
-
-        switch (eledom.tagName) {
-            case "INPUT": {
-                val = eledom.value;
-                break;
-            }
-            case "SPAN": {
-                var ti_pagreg = eledom.getAttribute('ti_pagreg');
-                //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
-                if (ti_pagreg == '1') {
-                    val = eledom.getAttribute("va_pagreg");
-                } else if (ti_pagreg == '3') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    val = dom_select.options[dom_select.selectedIndex].value;
-                } else if (ti_pagreg == '4') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    val = dom_select.options[dom_select.selectedIndex].value;
-                } else if (ti_pagreg == '5') {
-                    val = eledom.getElementById(eledom.id + '_rb').value;
-                } else if (ti_pagreg == '7') {
-                    val = eledom.getElementById(eledom.id + '_date').value;
-                } else if (ti_pagreg == '8') {
-                    val = eledom.getElementById(eledom.id + '_ms').value;
-                } else if (ti_pagreg == '9') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var dom_select = eledom.getElementsByTagName("TEXTAREA")[0];
-                    val = dom_select.value;
-                } else if (ti_pagreg == '13') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
-                } else if (ti_pagreg == '34') {
-                    //PWNDIENTE MARIO!!!
-                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
-                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
-                    //
-                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
-                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
-                } else if (ti_pagreg == '36') {
-                    var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
-
-                    if (vaform != undefined) {
-                        var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                        if (vafile.files.length > 0) {
-                            preimg[preimg.length] = eledom.getAttribute('id');
-                        }
-                        val = null;
-                    }
-                } else if (ti_pagreg == '38') {
-
-                    // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
-
-                } else {
-                    //hacer algo diferente para el tipo 38
-                    // eledom.innerHTML = valdom;
-                }
-
-                break;
-            }
-            case "A": {
-                var ti_pagreg = eledom.getAttribute('ti_pagreg');
-                if (ti_pagreg == '13') {
-                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    eledom.setAttribute('href', valdom);
-                    domtr(eledom).removeAttribute('style');
-                } else if (ti_pagreg) {
-                    //hacer algo diferente para el tipo 38
-                }
-
-                break;
-            }
-        }
-
-        data.append('co_regist' + id, val);
-    }
-
-    if (preimg.length == 0) {
-        prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data);
-    } else {
-        document.getElementById(preimg[0]).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0].submit();
-        setTimeout(function () {
-            preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, preimg[0], data)
-        }, 10);
-    }
-}
-
-function preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proimg, data) {
-    // console.log('[' + new Date() + '][co_button=' + co_button + '][il_proces=' + il_proces + '][co_condes=' + co_condes + '][preimg=' + preimg + '][proimg=' + proimg + '][data=' + data + ']');
-
-    if (preimg.length == 0 & proimg.length == 0) {
-        prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data);
-    } else if (proimg.length > 0) {
-        var vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0];
-        var futureJson;
-        var waitfor = false;
-
-        try {
-            futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
-            futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
-            console.log('futureJson=' + futureJson)
-            futureJson = JSON.parse(futureJson);
-
-            if (futureJson.status = 'OK') {
-                var eledom = document.getElementById(proimg);
-                id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-
-                data.set('co_regist' + id, '' + futureJson.result[0].co_archiv);
-            }
-
-            proimg = '';
-            preimg.shift();
-
-            if (preimg.length > 0) {
-                proimg = preimg[0];
-                vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0];
-                vaframe.submit();
-                waitfor = true;
-            }
-            //si es un json
-        } catch (e) {
-            console.log('error subtimi::::::' + e);
-            //no hacer nada y seguir esperando
-            waitfor = true;
-        }
-
-        if (waitfor)
-            setTimeout(function () {
-                preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proimg, data)
-            }, 1000);
-        else
-            preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proimg, data);
-    }
-
-}
-
-function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data) {
-    var parametros = '';
-
-    for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
-        var param = eval('BTN' + co_button + 'P')[i];
-        var spagreg = param.getPagreg();
-        var sconpar = param.getConpar();
-
-        var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
-        var valdom = '';
-        switch (eledom.tagName) {
-            case "INPUT": {
-                valdom = eledom.value;
-                break;
-            }
-            case "SPAN": {
-                var ti_pagreg = eledom.getAttribute('ti_pagreg');
-                //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
-                if (ti_pagreg == '1') {
-                    valdom = eledom.getAttribute("va_pagreg");
-                } else if (ti_pagreg == '3') {
-                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    valdom = dom_select.options[dom_select.selectedIndex].value;
-                } else if (ti_pagreg == '4') {
-                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    valdom = dom_select.options[dom_select.selectedIndex].value;
-                }
-                break;
-            }
-            default: {
-                valdom = eledom.innerHTML;
-            }
-        }
-
-        parametros = parametros + '&co_conpar_' + sconpar + '=' + valdom;
-    }
-
-    doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
-}
+// function propag(cycle, co_button, il_proces, co_condes) {
+//     var data = new FormData();
+//     data.append('id_frawor', '' + id_frawor());
+//     data.append('co_pagina', '' + co_pagina());
+//     data.append('co_conten', '' + co_conten());
+//     data.append('co_botone', '' + co_button);
+//     data.append('il_proces', '' + il_proces);
+//
+//     var preimg = [];
+//
+//     for (var eledom of document.getElementsByClassName('pagreg')) {
+//
+//         // var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+//         var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+//         var val = null;
+//
+//         switch (eledom.tagName) {
+//             case "INPUT": {
+//                 val = eledom.value;
+//                 break;
+//             }
+//             case "SPAN": {
+//                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
+//                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
+//                 if (ti_pagreg == '1') {
+//                     val = eledom.getAttribute("va_pagreg");
+//                 } else if (ti_pagreg == '3') {
+//                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+//                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
+//                     val = dom_select.options[dom_select.selectedIndex].value;
+//                 } else if (ti_pagreg == '4') {
+//                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+//                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
+//                     val = dom_select.options[dom_select.selectedIndex].value;
+//                 } else if (ti_pagreg == '5') {
+//                     val = eledom.getElementById(eledom.id + '_rb').value;
+//                 } else if (ti_pagreg == '7') {
+//                     val = eledom.getElementById(eledom.id + '_date').value;
+//                 } else if (ti_pagreg == '8') {
+//                     val = eledom.getElementById(eledom.id + '_ms').value;
+//                 } else if (ti_pagreg == '9') {
+//                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+//                     var dom_select = eledom.getElementsByTagName("TEXTAREA")[0];
+//                     val = dom_select.value;
+//                 } else if (ti_pagreg == '13') {
+//                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+//                     // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+//                 } else if (ti_pagreg == '34') {
+//                     //PWNDIENTE MARIO!!!
+//                     // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+//                     // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+//                     //
+//                     // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
+//                     // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+//                 } else if (ti_pagreg == '36') {
+//                     var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
+//
+//                     if (vaform != undefined) {
+//                         var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+//                         if (vafile.files.length > 0) {
+//                             preimg[preimg.length] = eledom.getAttribute('id');
+//                         }
+//                         val = null;
+//                     }
+//                 } else if (ti_pagreg == '38') {
+//
+//                     // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+//
+//                 } else {
+//                     //hacer algo diferente para el tipo 38
+//                     // eledom.innerHTML = valdom;
+//                 }
+//
+//                 break;
+//             }
+//             case "A": {
+//                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
+//                 if (ti_pagreg == '13') {
+//                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+//                     eledom.setAttribute('href', valdom);
+//                     domtr(eledom).removeAttribute('style');
+//                 } else if (ti_pagreg) {
+//                     //hacer algo diferente para el tipo 38
+//                 }
+//
+//                 break;
+//             }
+//         }
+//
+//         data.append('co_regist' + id, val);
+//     }
+//
+//     if (preimg.length == 0) {
+//         prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data);
+//     } else {
+//         document.getElementById(preimg[0]).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0].submit();
+//         setTimeout(function () {
+//             preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, preimg[0], data)
+//         }, 10);
+//     }
+// }
+//
+// function preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proimg, data) {
+//     // console.log('[' + new Date() + '][co_button=' + co_button + '][il_proces=' + il_proces + '][co_condes=' + co_condes + '][preimg=' + preimg + '][proimg=' + proimg + '][data=' + data + ']');
+//
+//     if (preimg.length == 0 & proimg.length == 0) {
+//         prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data);
+//     } else if (proimg.length > 0) {
+//         var vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0];
+//         var futureJson;
+//         var waitfor = false;
+//
+//         try {
+//             futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+//             futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+//             console.log('futureJson=' + futureJson)
+//             futureJson = JSON.parse(futureJson);
+//
+//             if (futureJson.status = 'OK') {
+//                 var eledom = document.getElementById(proimg);
+//                 id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+//
+//                 data.set('co_regist' + id, '' + futureJson.result[0].co_archiv);
+//             }
+//
+//             proimg = '';
+//             preimg.shift();
+//
+//             if (preimg.length > 0) {
+//                 proimg = preimg[0];
+//                 vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("FORM")[0];
+//                 vaframe.submit();
+//                 waitfor = true;
+//             }
+//             //si es un json
+//         } catch (e) {
+//             console.log('error subtimi::::::' + e);
+//             //no hacer nada y seguir esperando
+//             waitfor = true;
+//         }
+//
+//         if (waitfor)
+//             setTimeout(function () {
+//                 preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proimg, data)
+//             }, 1000);
+//         else
+//             preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proimg, data);
+//     }
+//
+// }
+//
+// function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data) {
+//     var parametros = '';
+//
+//     for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
+//         var param = eval('BTN' + co_button + 'P')[i];
+//         var spagreg = param.getPagreg();
+//         var sconpar = param.getConpar();
+//
+//         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
+//         var valdom = '';
+//         switch (eledom.tagName) {
+//             case "INPUT": {
+//                 valdom = eledom.value;
+//                 break;
+//             }
+//             case "SPAN": {
+//                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
+//                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
+//                 if (ti_pagreg == '1') {
+//                     valdom = eledom.getAttribute("va_pagreg");
+//                 } else if (ti_pagreg == '3') {
+//                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
+//                     valdom = dom_select.options[dom_select.selectedIndex].value;
+//                 } else if (ti_pagreg == '4') {
+//                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
+//                     valdom = dom_select.options[dom_select.selectedIndex].value;
+//                 }
+//                 break;
+//             }
+//             default: {
+//                 valdom = eledom.innerHTML;
+//             }
+//         }
+//
+//         parametros = parametros + '&co_conpar_' + sconpar + '=' + valdom;
+//     }
+//
+//     doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes + parametros, data);
+// }
 
 
 function domtr(eledom) {
@@ -690,6 +696,7 @@ function load_multiselect(valid, valdom) {
 
 function master_popup(co_pagina, urlpopup, ele, titulo) {
     current_pagina = co_pagina;
+    current_regist = ele;
     console.log('current_pagina =' + current_pagina);
     console.log('urlpopup =' + urlpopup);
     console.log('ele =' + ele);
@@ -700,6 +707,11 @@ function master_popup(co_pagina, urlpopup, ele, titulo) {
 
     // $('#popup').modal({backdrop: 'static', show: true});
     $('#popup').modal({show: true});
+    // $("#popup").on('hide.bs.modal', function () {
+    //     alert('modal is closed');
+    //     document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
+    //     document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
+    // });
     $('#popup_body').attr('src', urlpopup);
 }
 
@@ -861,7 +873,7 @@ function popup_to_master(ls_params) {
     console.log('conseguimos la pagina4:' + mframe.contentWindow.document);
     // (mframe.contentDocument || mframe.contentWindow.document).child_popup_update(ls_params);
     // (mframe.contentDocument || mframe.contentWindow).child_popup_update(ls_params);
-    mframe.contentWindow.child_popup_update(ls_params);
+    mframe.contentWindow.child_popup_update(current_regist, ls_params);
     console.log('listo!>');
     $('#popup').modal('hide');
     document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
