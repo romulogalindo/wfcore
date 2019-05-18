@@ -105,6 +105,34 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        }
                         break;
                     }
+                    case 3: {
+//                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+//                        System.out.println("fila = REDERER OK!");
+                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
+//                        }
+                        break;
+                    }
+                    case 4: {
+//                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+//                        System.out.println("fila = REDERER OK!");
+                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
+//                        }
+                        break;
+                    }
+                    case 5: {
+//                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+//                        System.out.println("fila = REDERER OK!");
+                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
+//                        }
+                        break;
+                    }
+                    case 6: {
+//                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+//                        System.out.println("fila = REDERER OK!");
+                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
+//                        }
+                        break;
+                    }
                 }
             }
         }

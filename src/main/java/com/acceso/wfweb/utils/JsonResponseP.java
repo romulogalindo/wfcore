@@ -69,4 +69,17 @@ public class JsonResponseP implements Serializable {
     public void setLs_pagina(List<String> ls_pagina) {
         this.ls_pagina = ls_pagina;
     }
+    public static JsonResponseP defultJsonResponseOK(Object result) {
+        JsonResponseP jsonResponse = new JsonResponseP(JsonResponseP.REDIRECT,null,null,null);
+//        jsonResponse.setStatus(JsonResponse.OK);
+//        jsonResponse.setNo_action(JsonResponseP.REDIRECT);
+        return jsonResponse;
+    }
+
+//    public static JsonResponseP defultJsonResponseERROR(ErrorMessage error) {
+//        JsonResponse jsonResponse = new JsonResponse();
+//        jsonResponse.setStatus(JsonResponse.ERROR);
+//        jsonResponse.setError(error);
+//        return jsonResponse;
+//    }
 }

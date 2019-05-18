@@ -110,13 +110,14 @@ public class AsyncProPag extends AsyncProcessor {
                     object = object.toString().replace("X5964ERQ17", "");
                     out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.gson_typeA.fromJson(object.toString(), ErrorMessage.class))));
                 } else {
-                    out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
+                    out.write(Util.toJSON(JsonResponseP.defultJsonResponseOK("OK")));
                 }
 
             } else if (object instanceof JsonResponseP) {
                 out.write(Util.toJSON(object));
             } else {
-                out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
+//                out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
+                out.write(Util.toJSON(JsonResponseP.defultJsonResponseOK("OK")));
             }
 
 //                if (object.toString().contains("X5964ERQ17")) {
