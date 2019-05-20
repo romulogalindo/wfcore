@@ -249,7 +249,6 @@ public class Util {
 //        if (message.contentEquals("")) {
 //            message = ep.getMessage();
 //        }
-
         System.out.println("message = " + (message == null));
         System.out.println("ep = " + message);
         if (message.length() > 0 & message.contains("{")) {
@@ -277,23 +276,47 @@ public class Util {
         for (int i = 0; i < 50; i++) {
             switch (i + 1) {
                 case 1: {
-                    ls_pagreg[i] = new SelectItem("" + (i + 1), "Caja de Texto");
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "1 - Caja de Texto");
                     break;
                 }
                 case 3: {
-                    ls_pagreg[i] = new SelectItem("" + (i + 1), "ComboBox");
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "3 - ComboBox");
                     break;
                 }
                 case 4: {
-                    ls_pagreg[i] = new SelectItem("" + (i + 1), "ComboBox(1er item en blanco)");
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "4 - ComboBox(1er item en blanco)");
+                    break;
+                }
+                case 5: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "[TIPO:" + (i + 1) + "]Sin especificar");
+                    break;
+                }
+                case 6: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "6 - True/False Switch");
                     break;
                 }
                 case 7: {
-                    ls_pagreg[i] = new SelectItem("" + (i + 1), "Fecha");
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "7 - Fecha");
                     break;
                 }
                 case 9: {
-                    ls_pagreg[i] = new SelectItem("" + (i + 1), "TextArea");
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "8 - TextArea");
+                    break;
+                }
+                case 13: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "13 - Archivos");
+                    break;
+                }
+                case 34: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "34 - Selector multiple");
+                    break;
+                }
+                case 35: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "35 - Editor SQL");
+                    break;
+                }
+                case 36: {
+                    ls_pagreg[i] = new SelectItem("" + (i + 1), "36 - File Upload/Download");
                     break;
                 }
                 default: {
@@ -309,44 +332,44 @@ public class Util {
 
     public static SelectItem[] get_ls_ti_estreg() {
         SelectItem[] ls_estreg = new SelectItem[]{
-                new SelectItem("E", "Escritura"),
-                new SelectItem("L", "Lectura"),
-                new SelectItem("O", "Oculto")
+            new SelectItem("E", "Escritura"),
+            new SelectItem("L", "Lectura"),
+            new SelectItem("O", "Oculto")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_boton() {
         SelectItem[] ls_estreg = new SelectItem[]{
-                new SelectItem("E", "Especifico"),
-                new SelectItem("G", "General")
+            new SelectItem("E", "Especifico"),
+            new SelectItem("G", "General")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_alireg() {
         SelectItem[] ls_estreg = new SelectItem[]{
-                new SelectItem("left", "Izquierda"),
-                new SelectItem("right", "Derecha"),
-                new SelectItem("center", "Centrado"),
-                new SelectItem("justify", "Justificado")
+            new SelectItem("left", "Izquierda"),
+            new SelectItem("right", "Derecha"),
+            new SelectItem("center", "Centrado"),
+            new SelectItem("justify", "Justificado")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_valign() {
         SelectItem[] ls_estreg = new SelectItem[]{
-                new SelectItem("top", "Arriba"),
-                new SelectItem("middle", "En medio"),
-                new SelectItem("bottom", "Abajo")
+            new SelectItem("top", "Arriba"),
+            new SelectItem("middle", "En medio"),
+            new SelectItem("bottom", "Abajo")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_nowrap() {
         SelectItem[] ls_estreg = new SelectItem[]{
-                new SelectItem("normal", "Normal"),
-                new SelectItem("nowrap", "Nowrap")
+            new SelectItem("normal", "Normal"),
+            new SelectItem("nowrap", "Nowrap")
         };
         return ls_estreg;
     }

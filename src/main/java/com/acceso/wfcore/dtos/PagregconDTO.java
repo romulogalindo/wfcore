@@ -5,21 +5,20 @@ import com.acceso.wfcore.utils.Values;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_PAGREGCON,
-                query = "select * from frawor4.tcpagregcon where co_conten = :p_co_conten and co_pagina = :p_co_pagina order by or_pagreg",
-                resultClass = PagregconDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SAVE_PAGREGCON,
-                query = "select * from wfsistem.pbpagregcon_save(:p_co_pagreg, :p_co_conten, :p_co_pagina, :p_no_pagreg, :p_co_pagtit, :p_or_pagreg, :p_ti_pagreg, :p_ti_estreg, :p_va_alireg, :p_no_desreg, :p_ca_carcol, :p_ca_carrow, :p_ti_nowrap, :p_il_onchan, :p_va_valign, :p_il_guareg, :p_ca_caract)",
-                resultClass = PagregconDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_PAGREGCON,
+            query = "select * from frawor4.tcpagregcon where co_conten = :p_co_conten and co_pagina = :p_co_pagina order by or_pagreg",
+            resultClass = PagregconDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SAVE_PAGREGCON,
+            query = "select * from wfsistem.pbpagregcon_save(:p_co_pagreg, :p_co_conten, :p_co_pagina, :p_no_pagreg, :p_co_pagtit, :p_or_pagreg, :p_ti_pagreg, :p_ti_estreg, :p_va_alireg, :p_no_desreg, :p_ca_carcol, :p_ca_carrow, :p_ti_nowrap, :p_il_onchan, :p_va_valign, :p_il_guareg, :p_ca_caract)",
+            resultClass = PagregconDTO.class)
 })
 public class PagregconDTO implements Serializable {
 
@@ -130,8 +129,32 @@ public class PagregconDTO implements Serializable {
                 des += "Combobox(1er item en blanco)";
                 break;
             }
+            case 6: {
+                des += "True/False Switch";
+                break;
+            }
             case 7: {
                 des += "Fecha";
+                break;
+            }
+            case 9: {
+                des += "TextArea";
+                break;
+            }
+            case 13: {
+                des += "Documentos";
+                break;
+            }
+            case 34: {
+                des += "Selector multiple";
+                break;
+            }
+            case 35: {
+                des += "Editor SQL";
+                break;
+            }
+            case 36: {
+                des += "File Upload/Download";
                 break;
             }
             default:
@@ -197,7 +220,7 @@ public class PagregconDTO implements Serializable {
     }
 
     public Boolean getIl_guareg() {
-        return il_guareg==null?false:il_guareg;
+        return il_guareg == null ? false : il_guareg;
     }
 
     public void setIl_guareg(Boolean il_guareg) {

@@ -6,6 +6,7 @@ import com.acceso.wfcore.dtos.*;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
+import com.acceso.wfweb.dtos.TituloDTO;
 import org.primefaces.event.DragDropEvent;
 
 import javax.faces.application.FacesMessage;
@@ -47,9 +48,9 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     private ElementoDTO elementoSeleccionado;
     private List<PaginaDTO> filtroPagina;
 
-    private boolean thisEditable;
-    private boolean btnEditable;
-    private boolean regEditable;
+    private boolean thisEditable = true;
+    private boolean btnEditable = true;
+    private boolean regEditable = true;
 
     public int defaultTabIndex;
 
@@ -65,6 +66,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public SelectItem[] ls_ti_alireg = Util.get_ls_ti_alireg();
     public SelectItem[] ls_ti_valign = Util.get_ls_ti_valign();
     public SelectItem[] ls_ti_nowrap = Util.get_ls_ti_nowrap();
+    public SelectItem[] ls_dt_pagina;
 
     public PaginaBean() {
         this.beanName = BEAN_NAME;
@@ -150,10 +152,14 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         return URL_EDITAR;
     }
 
-
     public void eventupdateRegist() throws Exception {
         updateRegist();
         FacesContext.getCurrentInstance().getExternalContext().redirect(URL_EDITAR);
+    }
+
+    public void eventupdateRegistorTitle() throws Exception {
+        pagreg_edit();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(pag_tr_edit());
     }
 
     @Override
@@ -216,7 +222,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     /*EVENTOS:VOID*/
-
     public void apply() {
         WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
 //        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
@@ -230,7 +235,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //        botonDTO.setCo_pagbot(-1);
 //        return botonDTO;
 //    }
-
     public String pagbot_new() {
         botonSeleccionado = new BotonDTO();
         botonSeleccionado.setCo_pagbot(-1);
@@ -249,7 +253,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         return URL_BTN_NEW;
     }
 
-
     public String pagbot_save() {
         PaginaDAO dao = new PaginaDAO();
 
@@ -261,7 +264,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
         return URL_EDITAR;
     }
-
 
     public String pagbot_back() {
         return URL_EDITAR;
@@ -307,19 +309,29 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         return URL_REG_EDIT;
     }
 
-
     public String pagreg_edit() {
         elementoSeleccionado.getPagregDTO().setCo_pagreg2(elementoSeleccionado.getPagregDTO().getCo_pagreg());
+        List<PagtitDTO> titulos;
+        PaginaDAO dao = new PaginaDAO();
+        titulos = dao.getTitulos(pagina.getCo_pagina());
+        dao.close();
+
+        ls_dt_pagina = new SelectItem[titulos.size()];
+        for (int i = 0; i < titulos.size(); i++) {
+            PagtitDTO pagtitDTO = titulos.get(i);
+            ls_dt_pagina[i] = new SelectItem(pagtitDTO.getCo_pagtit(), "[" + pagtitDTO.getCo_pagtit() + " - " + (pagtitDTO.getNo_pagtit() == null ? "Vacio!" : pagtitDTO.getNo_pagtit()) + "]");
+        }
 
         return URL_REG_EDIT;
     }
 
     public String pagreg_delete() {
         PaginaDAO dao = new PaginaDAO();
-        if (elementoSeleccionado.getTi_elemen() == 1)
+        if (elementoSeleccionado.getTi_elemen() == 1) {
             dao.deleteTitle(pagina.getCo_pagina(), (short) elementoSeleccionado.getPagtitDTO().getCo_pagtit());
-        else
+        } else {
             dao.deleteRegist(pagina.getCo_pagina(), (short) elementoSeleccionado.getPagregDTO().getCo_pagreg());
+        }
 
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
@@ -332,18 +344,21 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pag_tr_edit() {
-        if (elementoSeleccionado.getTi_elemen() == 1)
+        if (elementoSeleccionado.getTi_elemen() == 1) {
             return URL_TIT_EDIT;
-        else return URL_REG_EDIT;
+        } else {
+            return URL_REG_EDIT;
+        }
     }
 
     public String pagtit_save() {
         System.out.println("elementoSeleccionado: = " + elementoSeleccionado);
         PaginaDAO dao = new PaginaDAO();
-        if (elementoSeleccionado.getTi_elemen() == 1)
+        if (elementoSeleccionado.getTi_elemen() == 1) {
             dao.saveTitle(pagina.getCo_pagina(), elementoSeleccionado.getPagtitDTO());
-        else
+        } else {
             dao.saveRegist(pagina.getCo_pagina(), elementoSeleccionado.getPagregDTO());
+        }
 
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
@@ -356,7 +371,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public String pagtit_back() {
         return URL_EDITAR;
     }
-
 
     public String pagtit_new() {
         elementoSeleccionado = new ElementoDTO();
@@ -513,4 +527,13 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public void setLs_ti_nowrap(SelectItem[] ls_ti_nowrap) {
         this.ls_ti_nowrap = ls_ti_nowrap;
     }
+
+    public SelectItem[] getLs_dt_pagina() {
+        return ls_dt_pagina;
+    }
+
+    public void setLs_dt_pagina(SelectItem[] ls_dt_pagina) {
+        this.ls_dt_pagina = ls_dt_pagina;
+    }
+
 }

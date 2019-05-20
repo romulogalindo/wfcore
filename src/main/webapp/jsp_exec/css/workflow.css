@@ -9,6 +9,13 @@
     max-width: 605px;
 }
 
+.wf4_iframe[type='T']{
+    max-width: unset;
+}
+.wf4_iframe[type='R']{
+    max-width: 605px;
+}
+
 .wf_f_titreg {
     width: 40%;
     color: #787878;
@@ -114,6 +121,10 @@ table tfoot td#footerbottons {
     padding: 15px !important;
 }
 
+table.wf-report{
+    padding-bottom: 10px;
+}
+
 table.wf-report thead tr th {
     text-align: center;
 }
@@ -122,6 +133,10 @@ table.wf-report td {
     white-space: nowrap;
 }
 
+table.wf-report tfoot tr td {
+    text-align: center;
+    padding-top: 10px !important;
+}
 /*======*/
 
 .w3-modal #popup2_body {
@@ -224,5 +239,6 @@ span.pagreg[ti_pagreg='8'] span.item span.close {
 
 /*MDB*/
 .card.card-cascade .view.view-cascade.gradient-card-header {
-    padding: 0.3rem .4rem !important;
+    padding: 0.2rem .4rem !important;
+    margin-bottom: 0.7rem !important;
 }

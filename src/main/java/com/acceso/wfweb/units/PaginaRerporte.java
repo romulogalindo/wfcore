@@ -1,5 +1,7 @@
 package com.acceso.wfweb.units;
 
+import com.acceso.wfweb.dtos.WBotonDTO;
+import com.acceso.wfweb.dtos.WParametroDTO;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -9,7 +11,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //    int co_pagina;
 //    String no_pagtit;
 //    LinkedHashMap<String, Fila> ultraFilas;
-
     public PaginaRerporte(int co_pagina, String no_pagtit, String ti_pagina, int nu_rowspa, int nu_colspa, int or_numrow, int or_numcol, int co_contab, LinkedHashMap<String, Fila> ultraFilas) {
         this.co_pagina = co_pagina;
         this.no_pagtit = no_pagtit;
@@ -44,7 +45,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
         String itr = "";
 
         LinkedList<Fila> titlelvl1 = new LinkedList<>();
-
         int colspan = 0;
         for (Fila fila : ultraFilas.values()) {
             if (fila.getTituloDTO() != null) {
@@ -85,7 +85,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
                 }
 
 //                System.out.println("fila = " + fila.getRegistroDTO() + "?>" + fila.getRegistroDTO().getTi_pagreg() + "?>" + fila.getRegistroDTO().getTi_estreg());
-
                 switch (fila.getRegistroDTO().getTi_pagreg()) {
                     case 1: {
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
@@ -143,6 +142,44 @@ public class PaginaRerporte extends Pagina implements Serializable {
         html += "<tbody>";
 
         html += "</tbody>";
+
+        boolean hvg = false;
+
+        for (Fila fila : ultraFilas.values()) {
+            if (fila.getBotonDTOS() != null && fila.getBotonDTOS().size() > 0) {
+                hvg = true;
+                break;
+            }
+        }
+
+        if (hvg) {
+            html += "<tfoot>";
+            html += "<tr>";
+            html += "<td colspan='" + colspan + "'>";
+            String id = "BTXG";
+            for (Fila fila : ultraFilas.values()) {
+                if (fila.getBotonDTOS() != null && fila.getBotonDTOS().size() > 0) {
+                    for (WBotonDTO botonDTO : fila.getBotonDTOS()) {
+                        if (botonDTO.getTi_pagbot().contentEquals("G")) {
+                            html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[];";
+                            for (WParametroDTO parametroDTO : botonDTO.getParametros()) {
+                                html += "" + id + botonDTO.getCo_pagbot() + "P[" + id + botonDTO.getCo_pagbot() + "P.length] = new Parameter(" + parametroDTO.getCo_pagreg() + "," + parametroDTO.getCo_conpar() + ");";
+                            }
+                            html += "</script>";
+
+                            html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"btn btn-default\" onclick=\"propag(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
+                                    + "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n"
+                                    + botonDTO.getNo_pagbot()
+                                    + "</button>";
+                        }
+                    }
+                }
+            }
+            html += "</td>";
+            html += "</tr>";
+            html += "</tfoot>";
+        }
+
         html += "</table>";
 
         html += "<script>var itr='" + itr + "';</script>";

@@ -50,6 +50,14 @@ public class Fila extends HTMLRenderer implements Serializable {
         this.registroDTO = registroDTO;
     }
 
+    public List<WBotonDTO> getBotonDTOS() {
+        return botonDTOS;
+    }
+
+    public void setBotonDTOS(List<WBotonDTO> botonDTOS) {
+        this.botonDTOS = botonDTOS;
+    }
+
     public String getId() {
         return id;
     }

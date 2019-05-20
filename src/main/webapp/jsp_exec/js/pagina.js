@@ -216,13 +216,15 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -359,8 +361,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                "A"
-                : {
+                        "A"
+                        :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -372,7 +375,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -410,10 +414,11 @@ function loadReporte64(tbody64, row) {
         n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
         // n_itr.replace('<tr>','').replace('</tr>','')
         // console.log('[loadReporte64:update!]>>>:' + n_itr);
-        var nr = document.createElement('tr')
-        nr.innerHTML = n_itr;
-        tbody64.appendChild(nr);
+
     }
+    var nr = document.createElement('tr')
+    nr.innerHTML = n_itr;
+    tbody64.appendChild(nr);
     // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
 
     // var dom_pag = document.getElementById('PAG' + co_pagina());
@@ -450,11 +455,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 val = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -475,13 +482,23 @@ function propag(cycle, co_button, il_proces, co_condes) {
                 } else if (ti_pagreg == '3') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    val = dom_select.options[dom_select.selectedIndex].value;
+                    try {
+                        val = dom_select.options[dom_select.selectedIndex].value;
+                    } catch (e) {
+                        val = '';
+                    }
                 } else if (ti_pagreg == '4') {
                     // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    val = dom_select.options[dom_select.selectedIndex].value;
+                    try {
+                        val = dom_select.options[dom_select.selectedIndex].value;
+                    } catch (e) {
+                        val = '';
+                    }
                 } else if (ti_pagreg == '5') {
                     val = eledom.getElementById(eledom.id + '_rb').value;
+                } else if (ti_pagreg == '6') {
+                    val = eledom.getElementById(eledom.id + 'VD').value;
                 } else if (ti_pagreg == '7') {
                     // console.log('@@>>' + eledom);
                     // console.log('@@>>' + eledom.id + '_date');
@@ -534,7 +551,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A": {
+            case "A":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -621,11 +639,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -643,10 +663,18 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                     }
                 } else if (ti_pagreg == '3') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    valdom = dom_select.options[dom_select.selectedIndex].value;
+                    try {
+                        valdom = dom_select.options[dom_select.selectedIndex].value;
+                    } catch (e) {
+                        valdom = '';
+                    }
                 } else if (ti_pagreg == '4') {
                     var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    valdom = dom_select.options[dom_select.selectedIndex].value;
+                    try {
+                        valdom = dom_select.options[dom_select.selectedIndex].value;
+                    } catch (e) {
+                        valdom = '';
+                    }
                 } else if (ti_pagreg == '7') {
                     // val = document.getElementById(eledom.id + '_date').value;
                     // var dom_select = eledom.getElementById("SELECT")[0];
@@ -654,7 +682,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }

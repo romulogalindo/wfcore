@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist6 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -35,8 +36,11 @@ public class Regist6 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"6\" >";
-                html += "<input type=checkbox class=\"w3-input w3-border\" />";
+                html += "<span id='" + id + "V' name='" + id + "V' class='pagreg' ti_pagreg='6' >";
+                html += "<div class='custom-control custom-switch'>";
+                html += "<input id='" + id + "VD' type=checkbox class='w3-input  custom-control-input' checked/>";
+                html += "<label class='custom-control-label' for='" + id + "VD'></label>";
+                html += "</div>";
                 html += "</span>";
                 html += "</td>";
                 html += "</tr>";
@@ -49,8 +53,11 @@ public class Regist6 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"6\" >";
-                html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
+                html += "<span id='" + id + "V' name='" + id + "V' class='pagreg' ti_pagreg='6' >";
+                html += "<div class='custom-control custom-switch'>";
+                html += "<input id='" + id + "VD' type=checkbox class='w3-input  custom-control-input' checked disabled/>";
+                html += "<label class='custom-control-label' for='" + id + "VD'></label>";
+                html += "</div>";
                 html += "</span>";
                 html += "</td>";
                 html += "</tr>";

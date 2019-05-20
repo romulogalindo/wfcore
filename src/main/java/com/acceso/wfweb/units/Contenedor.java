@@ -8,7 +8,6 @@ import java.util.*;
 public class Contenedor extends HTMLRenderer implements Serializable {
 
     //objeto de distribucion(ahora solo vertical)
-
     LinkedHashMap<Integer, Pagina> paginas;
     List<WContabDTO> contabs;
     int co_conten;
@@ -107,7 +106,6 @@ public class Contenedor extends HTMLRenderer implements Serializable {
                 cols.add(contab);
             }
 
-
             if ((contabs.size() - 1) == (i)) {
 //                System.out.println("ultimo elemento>" + i);
                 rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
@@ -129,10 +127,9 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 //                        HTML += "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
 //                    }
 //                }
-
                 HTML = paginas.values().stream()
                         .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
-                        .map((pagina) -> "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
+                        .map((pagina) -> "<iframe class=\"wf4_iframe\" type=\"" + pagina.getTi_pagina() + "\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
                         .reduce(HTML, String::concat);
 
                 HTML += "</div>";

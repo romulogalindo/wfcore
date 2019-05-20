@@ -22,8 +22,8 @@
         <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
 
         <!--JS -->
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=45" charset="ISO-8859-1"></script>
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=45" charset="ISO-8859-1"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=46" charset="ISO-8859-1"></script>
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=46" charset="ISO-8859-1"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar.js"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-setup.js"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/lang/calendar-es.js"></script>
@@ -48,6 +48,12 @@
                 font-size: 0.71rem;
                 max-width: 180px;
                 width: 100%;
+
+                padding-top: 0.18rem !important;
+                padding-bottom: 0.18rem !important;
+                padding-right: 0.24rem !important;
+                padding-left: 0.25rem !important;
+                border: 1px solid #fff !important;
             }
 
             .btn:first-child {

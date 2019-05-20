@@ -16,22 +16,21 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
-
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_PAGINA,
-                query = "select * "
-                        + "from wfsistem.pbpagina_list()",
-                resultClass = PaginaDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SAVE_PAGINA,
-                query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag, :p_js_compag)",
-                resultClass = PaginaDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_GET_PAGINA,
-                query = "select * from frawor4.tcpagina where co_pagina = :p_co_pagina",
-                resultClass = PaginaDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_PAGINA,
+            query = "select * "
+            + "from wfsistem.pbpagina_list()",
+            resultClass = PaginaDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SAVE_PAGINA,
+            query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag, :p_js_compag)",
+            resultClass = PaginaDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_GET_PAGINA,
+            query = "select * from frawor4.tcpagina where co_pagina = :p_co_pagina",
+            resultClass = PaginaDTO.class)
 })
 public class PaginaDTO implements Serializable {
 
@@ -43,6 +42,8 @@ public class PaginaDTO implements Serializable {
     String js_valpag;
     String js_propag;
     String js_compag;
+    @Transient
+    String js_dinpag;
     Date fe_regist;
 
     @Transient
@@ -142,14 +143,22 @@ public class PaginaDTO implements Serializable {
         this.ls_elemen = ls_elemen;
     }
 
+    public String getJs_dinpag() {
+        return js_dinpag;
+    }
+
+    public void setJs_dinpag(String js_dinpag) {
+        this.js_dinpag = js_dinpag;
+    }
+
     @Override
     public String toString() {
-        return "PaginaDTO{" +
-                "co_pagina=" + co_pagina +
-                ", no_pagtit='" + no_pagtit + '\'' +
-                ", de_pagina='" + de_pagina + '\'' +
-                ", db_progra='" + db_progra + '\'' +
-                ", fe_regist=" + fe_regist +
-                '}';
+        return "PaginaDTO{"
+                + "co_pagina=" + co_pagina
+                + ", no_pagtit='" + no_pagtit + '\''
+                + ", de_pagina='" + de_pagina + '\''
+                + ", db_progra='" + db_progra + '\''
+                + ", fe_regist=" + fe_regist
+                + '}';
     }
 }
