@@ -44,9 +44,11 @@ public class PaginaRerporte extends Pagina implements Serializable {
     public String toHTML() {
         String html = "";
         String itr = "";
+        String css = "<style>";
 
         LinkedList<Fila> titlelvl1 = new LinkedList<>();
         int colspan = 0;
+        int colcount = 1;
         for (Fila fila : ultraFilas.values()) {
             if (fila.getTituloDTO() != null) {
                 //es un titulo
@@ -60,7 +62,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
 
         html += "<input type=hidden id=ti_pagina value=R />";
         html += "<input type=hidden id=ls_hamoda value=\"" + getLs_hamoda() + "\" />";
-
         html += "<table id=PAG" + co_pagina + " class=\"wf-report table table-hover mb-0 table-responsive\">";
         html += "<thead>";
 
@@ -81,28 +82,53 @@ public class PaginaRerporte extends Pagina implements Serializable {
             if (fila.getRegistroDTO() != null) {
                 if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
                     html += "<th>";
-                    html += "<span>" + fila.getRegistroDTO().getNo_pagreg() + "</span>";
+                    if (fila.getRegistroDTO().getTi_pagreg() == 6) {
+                        html += "<span>" + fila.getRegistroDTO().getNo_pagreg();
+                        html += "<div class=\"custom-control custom-checkbox\">\n"
+                                + "    <input type=\"checkbox\" class=\"custom-control-input\" id=\"reg" + fila.getRegistroDTO().getCo_pagreg() + "\" onchange=\"docheckall(this," + fila.getRegistroDTO().getCo_pagreg() + ")\">\n"
+                                + "    <label class=\"custom-control-label\" for=\"reg" + fila.getRegistroDTO().getCo_pagreg() + "\"></label>\n"
+                                + "</div>";
+                        html += "</span>";
+                    } else {
+                        html += "<span>" + fila.getRegistroDTO().getNo_pagreg() + "</span>";
+                    }
                     html += "</th>";
+
                 }
+
+                //OVER CSS
+                css += "table#PAG" + co_pagina + " tbody tr td:nth-child(" + colcount + "){\ntext-align:" + fila.getRegistroDTO().getVa_alireg() + ";\nvertical-align:" + fila.getRegistroDTO().getVa_valign() + ";\n}\n";
+                colcount++;
 
 //                System.out.println("fila = " + fila.getRegistroDTO() + "?>" + fila.getRegistroDTO().getTi_pagreg() + "?>" + fila.getRegistroDTO().getTi_estreg());
                 switch (fila.getRegistroDTO().getTi_pagreg()) {
                     case 1: {
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<input type=hidden name=regist" + fila.getRegistroDTO().getCo_pagreg() + " value=regist" + fila.getRegistroDTO().getCo_pagreg() + "val />";
-                        }
-                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+                            itr += "<input type=hidden id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" value=\"\" />";
+                        } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
+                            itr += "<td>";
+                            itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
+                            itr += "</span>";
+                            itr += "</td>";
+                        } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
+//                            System.out.println("fila = REDERER OK!");
+                            itr += "<td>";
+                            itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
+                            itr += "<input id=\"\" type=\"text\" value=\"\">";
+                            itr += "</span>";
+                            itr += "</td>";
                         }
                         break;
                     }
                     case 2: {
 //                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                        System.out.println("fila = REDERER OK!");
-                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "val</span></td>";
-//                        }
+                        itr += "<td>";
+                        itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" ti_pagreg=2  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
+                        itr += "</span>";
+                        itr += "</td>";
                         break;
                     }
                     case 3: {
@@ -130,14 +156,14 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                        System.out.println("fila = REDERER OK!");
 //                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
-                        itr += "<td class=\"ti_pag_reg2 text-center\">" +
-                                "<span id=\"X64UIR"+fila.getRegistroDTO().getCo_pagreg()+"\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=6  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">" +
-                                "<div class=\"custom-control custom-switch\">" +
-                                "<input id=\"" + fila.getRegistroDTO().getCo_pagreg() + "iu\" type=checkbox class=\"w3-input  custom-control-input\" regist" + fila.getRegistroDTO().getCo_pagreg() + "val/>" +
-                                "<label class=\"custom-control-label\" for=\"" + fila.getRegistroDTO().getCo_pagreg() + "iu\"></label>" +
-                                "</div>" +
-                                "</span>" +
-                                "</td>";
+                        itr += "<td class=\"ti_pag_reg2 text-center\">"
+                                + "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=6  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">"
+                                + "<div class=\"custom-control custom-checkbox\">"
+                                + "<input id=\"" + fila.getRegistroDTO().getCo_pagreg() + "_check\" type=checkbox class=\"w3-input  custom-control-input\" />"
+                                + "<label class=\"custom-control-label\" for=\"" + fila.getRegistroDTO().getCo_pagreg() + "_check\"></label>"
+                                + "</div>"
+                                + "</span>"
+                                + "</td>";
 //                        }
                         break;
                     }
@@ -190,8 +216,9 @@ public class PaginaRerporte extends Pagina implements Serializable {
         }
 
         html += "</table>";
-
+        css += "</style>";
         html += "<script>var itr='" + itr + "';</script>";
+        html = css + html;
 
         return html;
     }

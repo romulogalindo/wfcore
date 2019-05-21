@@ -216,13 +216,15 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -359,8 +361,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                "A"
-                : {
+                        "A"
+                        :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -372,7 +375,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -401,7 +405,11 @@ function loadReporte64(rowid, tbody64, row) {
 
     var nr = document.createElement('tr');
     // nr.innerHTML = n_itr;
-    nr.innerHTML = n_itr.replace('X64UI', 'C' + rowid);
+    var nrc = 'C' + rowid;
+    console.log('====>' + n_itr.replace(/X64UI/g, nrc));
+//    console.log('====>' + n_itr.indexOf('X64UI'));
+//    console.log('====>' + n_itr.indexOf("X64UI"));
+    nr.innerHTML = n_itr.replace(/X64UI/g, nrc);
     nr.setAttribute('id', 'row' + rowid);
     tbody64.appendChild(nr);
     //on post tr create and add!
@@ -424,17 +432,34 @@ function loadReporte64(rowid, tbody64, row) {
         console.log('ELE:' + 'C' + rowid + 'R' + reg.regist);
         // alert('XCD');
         var ereg = document.getElementById('C' + rowid + 'R' + reg.regist);
+        console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
         if (ereg != null) {
             // for (var i = 0; i < eregs.length; i++) {
             //     var ereg = eregs[i];
-            if (ereg.getAttribute('ti_pagreg') == '6') {
-                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'vxreg' + reg.regist);
-                ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'vxreg' + reg.regist);
+            if (ereg.getAttribute('ti_pagreg') == null) {
+                ereg.value = txtval;
+            } else if (ereg.getAttribute('ti_pagreg') == '1') {
+                if (ereg.getElementsByTagName('INPUT').length > 0) {
+                    ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                    ereg.getElementsByTagName('INPUT')[0].value = txtval;
+                } else {
+                    ereg.innerHTML = txtval;
+                }
+
+            } else if (ereg.getAttribute('ti_pagreg') == '2') {
+//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                ereg.innerHTML = rowid;
+
+            } else if (ereg.getAttribute('ti_pagreg') == '6') {
+                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
+                ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'R' + reg.regist + '_check');
                 if (reg.value == 't' | reg.value == 'T' | reg.value == 'true' | reg.value == 'TRUE' | reg.value == 'verdadero') {
                     ereg.getElementsByTagName('INPUT')[0].setAttribute('checked', 'checked');
                 } else {
                     ereg.getElementsByTagName('INPUT')[0].removeAttribute('checked');
                 }
+                ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
+            } else {
             }
         }
     }
@@ -480,11 +505,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 val = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -574,7 +601,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A": {
+            case "A":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -661,11 +689,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -702,7 +732,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -931,6 +962,23 @@ function master_process_multiselect(pagid, refid) {
     overlay(false);
 }
 
+function docheckall(chk, reg) {
+    console.log('this:' + chk);
+    console.log('this:' + chk.checked);
+    console.log('reg:' + reg);
+    var ls_checks = document.getElementsByClassName('check' + reg);
+    if (chk.checked) {
+        for (var i = 0; i < ls_checks.length; i++) {
+            console.log("r:" + ls_checks[i]);
+            ls_checks[i].setAttribute('checked', 'checked');
+        }
+    } else {
+        for (var i = 0; i < ls_checks.length; i++) {
+            console.log("r:" + ls_checks[i]);
+            ls_checks[i].removeAttribute('checked');
+        }
+    }
+}
 /*LOGOUT*/
 // function logout() {
 //     $D.doLogoutJson();
