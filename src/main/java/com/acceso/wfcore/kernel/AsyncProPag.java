@@ -101,7 +101,7 @@ public class AsyncProPag extends AsyncProcessor {
 //
 //                Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
 
-            Object object = il_proces ? script.doPropag64(co_pagina, id_frawor, co_conten, co_botone, ls_regist, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
+            Object object = il_proces ? script.doPropag64(co_pagina, id_frawor, co_conten, co_botone, null, ls_regist, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
             System.out.println(">>object = " + object);
             System.out.println(">>object = " + object.getClass());
 //                jdk.nashorn.api.scripting.ScriptObjectMirror a; a.

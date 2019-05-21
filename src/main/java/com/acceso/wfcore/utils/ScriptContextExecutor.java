@@ -40,9 +40,9 @@ public class ScriptContextExecutor {
         return result;
     }
 
-    public Object doPropag64(int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_regist, long id_sesion, long co_usuari) throws Exception {
+    public Object doPropag64(int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_conpar, String ls_regist, long id_sesion, long co_usuari) throws Exception {
         Invocable inv = (Invocable) engine_nashornjs;
-        return inv.invokeFunction("do_propag", id_frawor, co_conten, co_pagina, co_pagbot, ls_regist, id_sesion, co_usuari);
+        return inv.invokeFunction("do_propag", id_frawor, co_conten, co_pagina, co_pagbot, ls_conpar, ls_regist, id_sesion, co_usuari);
     }
 
     public String dopvpj(String JSFunction) {

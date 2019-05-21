@@ -76,7 +76,7 @@ function OK(no_accion,co_condes,ls_params, ls_pagina) {
     return nj;
 }
 
-function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, REGIST, ID_SESION, CO_USUARI) {
+function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, CO_USUARI) {
     /*SET*/
     DATA.setCo_usuari(CO_USUARI);
     DATA.setId_sesion(ID_SESION);

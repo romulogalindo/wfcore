@@ -2,13 +2,14 @@ package com.acceso.wfweb.units;
 
 import com.acceso.wfweb.dtos.WBotonDTO;
 import com.acceso.wfweb.dtos.WParametroDTO;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class PaginaRerporte extends Pagina implements Serializable {
 
-//    int co_pagina;
+    //    int co_pagina;
 //    String no_pagtit;
 //    LinkedHashMap<String, Fila> ultraFilas;
     public PaginaRerporte(int co_pagina, String no_pagtit, String ti_pagina, int nu_rowspa, int nu_colspa, int or_numrow, int or_numcol, int co_contab, LinkedHashMap<String, Fila> ultraFilas) {
@@ -128,7 +129,15 @@ public class PaginaRerporte extends Pagina implements Serializable {
                     case 6: {
 //                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                        System.out.println("fila = REDERER OK!");
-                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
+//                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
+                        itr += "<td class=\"ti_pag_reg2 text-center\">" +
+                                "<span id=\"X64UIR"+fila.getRegistroDTO().getCo_pagreg()+"\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=6  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">" +
+                                "<div class=\"custom-control custom-switch\">" +
+                                "<input id=\"" + fila.getRegistroDTO().getCo_pagreg() + "iu\" type=checkbox class=\"w3-input  custom-control-input\" regist" + fila.getRegistroDTO().getCo_pagreg() + "val/>" +
+                                "<label class=\"custom-control-label\" for=\"" + fila.getRegistroDTO().getCo_pagreg() + "iu\"></label>" +
+                                "</div>" +
+                                "</span>" +
+                                "</td>";
 //                        }
                         break;
                     }

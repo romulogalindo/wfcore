@@ -138,7 +138,7 @@ function pagina_onload(jsonData) {
                 if (ti_pagina() == 'F')
                     loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
                 else
-                    loadReporte64(tbody64, rows[i]);
+                    loadReporte64((i + 1), tbody64, rows[i]);
             }
 
             /*BEFORE VIEW*/
@@ -216,15 +216,13 @@ function loadFormulario64(index, row, aditional, dom2) {
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "INPUT": {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -361,9 +359,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                        "A"
-                        :
-                {
+                "A"
+                : {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -375,8 +372,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default:
-                {
+                default: {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -394,7 +390,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
-function loadReporte64(tbody64, row) {
+function loadReporte64(rowid, tbody64, row) {
     // console.log('[loadReporte64]Cargando tipo Reporte->ex tabla:' + row);
     // console.log('[loadReporte64]Cargando tipo Reporte->regs:' + row.regs);
     // var newRow = tbody64.insertRow(tbody64.rows.length);
@@ -402,6 +398,16 @@ function loadReporte64(tbody64, row) {
     var n_itr = itr;
     // var all_tr = '';
     // console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
+
+    var nr = document.createElement('tr');
+    // nr.innerHTML = n_itr;
+    nr.innerHTML = n_itr.replace('X64UI', 'C' + rowid);
+    nr.setAttribute('id', 'row' + rowid);
+    tbody64.appendChild(nr);
+    //on post tr create and add!
+    // nr = document.getElementById('row' + rowid);
+    // console.log('?>?nr:' + nr);
+
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
         // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
@@ -415,10 +421,29 @@ function loadReporte64(tbody64, row) {
         // n_itr.replace('<tr>','').replace('</tr>','')
         // console.log('[loadReporte64:update!]>>>:' + n_itr);
 
+        console.log('ELE:' + 'C' + rowid + 'R' + reg.regist);
+        // alert('XCD');
+        var ereg = document.getElementById('C' + rowid + 'R' + reg.regist);
+        if (ereg != null) {
+            // for (var i = 0; i < eregs.length; i++) {
+            //     var ereg = eregs[i];
+            if (ereg.getAttribute('ti_pagreg') == '6') {
+                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'vxreg' + reg.regist);
+                ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'vxreg' + reg.regist);
+                if (reg.value == 't' | reg.value == 'T' | reg.value == 'true' | reg.value == 'TRUE' | reg.value == 'verdadero') {
+                    ereg.getElementsByTagName('INPUT')[0].setAttribute('checked', 'checked');
+                } else {
+                    ereg.getElementsByTagName('INPUT')[0].removeAttribute('checked');
+                }
+            }
+        }
     }
-    var nr = document.createElement('tr')
-    nr.innerHTML = n_itr;
-    tbody64.appendChild(nr);
+
+
+    // var nr = document.createElement('tr');
+    // nr.innerHTML = n_itr;
+
+    //tbody64.appendChild(nr); //ADDRECIENTE
     // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
 
     // var dom_pag = document.getElementById('PAG' + co_pagina());
@@ -455,13 +480,11 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 val = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -551,8 +574,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A":
-            {
+            case "A": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -639,13 +661,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -682,8 +702,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }
