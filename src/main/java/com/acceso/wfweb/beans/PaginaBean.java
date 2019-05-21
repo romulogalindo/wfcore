@@ -14,6 +14,7 @@ import java.util.Enumeration;
 
 public class PaginaBean implements Serializable {
     Pagina pagina;
+    long uuid = System.currentTimeMillis();
 
     public PaginaBean() {
     }
@@ -38,5 +39,9 @@ public class PaginaBean implements Serializable {
 
     public void setPagina(Pagina pagina) {
         this.pagina = pagina;
+    }
+
+    public long sys() {
+        return uuid;
     }
 }

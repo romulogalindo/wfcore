@@ -105,17 +105,17 @@ public class PaginaRerporte extends Pagina implements Serializable {
                     case 1: {
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<input type=hidden id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" value=\"\" />";
+                            itr += "<input type=hidden id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64\"" : "") + " value=\"\" />";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
 //                            System.out.println("fila = REDERER OK!");
                             itr += "<td>";
-                            itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
+                            itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64\"" : "") + " name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
                             itr += "</span>";
                             itr += "</td>";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
 //                            System.out.println("fila = REDERER OK!");
                             itr += "<td>";
-                            itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
+                            itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64\"" : "") + " name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
                             itr += "<input id=\"\" type=\"text\" value=\"\">";
                             itr += "</span>";
                             itr += "</td>";
@@ -126,7 +126,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                        System.out.println("fila = REDERER OK!");
                         itr += "<td>";
-                        itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" ti_pagreg=2  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
+                        itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" ti_pagreg=2  " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64\"" : "") + " co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
                         itr += "</span>";
                         itr += "</td>";
                         break;
@@ -159,8 +159,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
                         itr += "<td class=\"ti_pag_reg2 text-center\">"
                                 + "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=6  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">"
                                 + "<div class=\"custom-control custom-checkbox\">"
-                                + "<input id=\"" + fila.getRegistroDTO().getCo_pagreg() + "_check\" type=checkbox class=\"w3-input  custom-control-input\" />"
-                                + "<label class=\"custom-control-label\" for=\"" + fila.getRegistroDTO().getCo_pagreg() + "_check\"></label>"
+                                + "<input id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "_check\" type=checkbox class=\"w3-input custom-control-input check " + (fila.getRegistroDTO().isIl_guareg() ? "x64" : "") + "\" />"
+                                + "<label class=\"custom-control-label\" for=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "_check\"></label>"
                                 + "</div>"
                                 + "</span>"
                                 + "</td>";
@@ -202,7 +202,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
                             }
                             html += "</script>";
 
-                            html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"btn btn-default\" onclick=\"propag(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
+                            html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"btn btn-default\" onclick=\"propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
                                     + "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n"
                                     + botonDTO.getNo_pagbot()
                                     + "</button>";
