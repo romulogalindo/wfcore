@@ -27,7 +27,7 @@ public class ValpagServlet extends HttpServlet {
         AsyncContext asyncCtx = request.startAsync();
         asyncCtx.setTimeout(100000);//1 Seg
 
-        WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000));
+        WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 1));
     }
 
     @Override
@@ -44,12 +44,17 @@ public class ValpagServlet extends HttpServlet {
         switch (request.getServletPath()) {
             case "/pangolin": {
                 //valpag
-                WFCoreListener.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000));
+                WFCoreListener.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000, 1));
                 break;
             }
             case "/beaver": {
                 //propag
-                WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000));
+                WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 1));
+                break;
+            }
+            case "/dingo": {
+                //propag
+                WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 2));
                 break;
             }
         }

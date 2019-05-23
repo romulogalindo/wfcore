@@ -108,6 +108,64 @@ doPropag = function (url, regparams, data) {
 
 }
 
+doPropagg = function (url, regparams, data) {
+    console.log('url=' + url);
+    console.log('regparams=' + regparams);
+    console.log('data=' + data);
+    var net = new Inet();
+    net.open("POST", "/dingo", true); //false para que sea sincrono
+    // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+
+            var rpta = JSON.parse(net.responseText);
+            if (rpta.error) {
+                window.parent.showloading(false);
+                alert('' + rpta.error.message + '');
+            } else {
+                // console.log("rpta.params===>" + rpta.ls_params);
+                if (rpta.ls_params != undefined) {
+                    for (var i = 0; i < rpta.ls_params.length; i++) {
+                        console.log("rpta.params[i].no_param=" + rpta.ls_params[i].no_param);
+                        for (var o = 0; o < regparams.length; o++) {
+                            console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + rpta.ls_params[i].no_param);
+                            if (regparams[o].indexOf(rpta.ls_params[i].no_param) > -1) {
+                                regparams[o] = rpta.ls_params[i].no_param + "=" + rpta.ls_params[i].va_param;
+                            }
+                        }
+                    }
+                }
+
+                var urlpart = '';
+                if (regparams != null) {
+                    for (var o = 0; o < regparams.length; o++) {
+                        urlpart += '&' + regparams[o];
+                    }
+                }
+
+                if (rpta.no_action == 'REDIRECT') {
+                    window.parent.location.href = url + urlpart;
+                } else if (rpta.no_action == 'POPUP') {
+                    // window.parent.page_to_master(regparams);
+                    window.parent.page_to_master(rpta.ls_params);
+                } else if (rpta.no_action == 'REFRESH') {
+                    for (var i = 0; i < ls_pagina.length; i++) {
+                        //para todos los iframes que coincidan reload
+                    }
+                }
+
+                // alert('URL>>>' + url + urlpart);
+                // window.parent.location.href = url + urlpart;
+            }
+
+        }
+    }
+
+    net.send(data);
+
+
+}
+
 $D.getJSONE = function (url) {
     var net = new inet();
     net.open("POST", url, false); //false para que sea sincrono

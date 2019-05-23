@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class AsyncMessage extends AsyncProcessor {
 
-    public AsyncMessage(AsyncContext asyncCtx, int secs) {
-        super(asyncCtx, secs);
+    public AsyncMessage(AsyncContext asyncCtx, int secs, int type) {
+        super(asyncCtx, secs, type);
     }
 
     @Override

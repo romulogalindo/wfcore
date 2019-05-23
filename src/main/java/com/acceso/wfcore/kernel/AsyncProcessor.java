@@ -6,10 +6,12 @@ public abstract class AsyncProcessor implements Runnable {
 
     AsyncContext asyncContext;
     int secs;
+    int type;
 
-    public AsyncProcessor(AsyncContext asyncCtx, int secs) {
+    public AsyncProcessor(AsyncContext asyncCtx, int secs, int type) {
         this.asyncContext = asyncCtx;
         this.secs = secs;
+        this.type = type;
     }
 
 }

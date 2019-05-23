@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class AsyncValPag extends AsyncProcessor {
 
-    public AsyncValPag(AsyncContext asyncCtx, int secs) {
-        super(asyncCtx, secs);
+    public AsyncValPag(AsyncContext asyncCtx, int secs, int type) {
+        super(asyncCtx, secs, type);
     }
 
     @Override

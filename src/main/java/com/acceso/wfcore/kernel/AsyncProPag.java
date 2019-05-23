@@ -19,8 +19,8 @@ import java.util.Map;
 
 public class AsyncProPag extends AsyncProcessor {
 
-    public AsyncProPag(AsyncContext asyncCtx, int secs) {
-        super(asyncCtx, secs);
+    public AsyncProPag(AsyncContext asyncCtx, int secs, int type) {
+        super(asyncCtx, secs, type);
     }
 
     @Override
@@ -42,24 +42,30 @@ public class AsyncProPag extends AsyncProcessor {
             long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
             short co_botone = Util.toShort(requestManager.getParam("co_botone"), (short) -1);
             boolean il_proces = Util.toBoolean(requestManager.getParam("il_proces"), false);
+            String ls_allreg = requestManager.getParam("ls_allreg");
+            String ls_conpar = requestManager.getParam("ls_conpar");
+            System.out.println("ls_conpar = " + ls_conpar);
             Usuario usuario = requestManager.getUser();
-            String ls_regist = "{ ";
+            String ls_regist = "";
+            Frawor4DAO dao;
 
-            Frawor4DAO dao = new Frawor4DAO();
-            Frawor4DAO dao2 = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+            if (type == 1) {
+                dao = new Frawor4DAO();
+                Frawor4DAO dao2 = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
 
-            dao.deletePagreg(id_frawor, co_pagina, true);
-            dao2.deletePagreg(id_frawor, co_pagina, false);
-
-            for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
-                dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
-                dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
-                ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
+                dao.deletePagreg(id_frawor, co_pagina, true);
+                dao2.deletePagreg(id_frawor, co_pagina, false);
+                ls_regist = "{ ";
+                for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
+                    dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
+                    dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
+                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
+                }
+                ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
+                System.out.println("ls_regist = " + ls_regist);
+                dao.close();
+                dao2.close();
             }
-            ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
-            System.out.println("ls_regist = " + ls_regist);
-            dao.close();
-            dao2.close();
 
             //new PROPAG
             ScriptContextExecutor script;
@@ -101,7 +107,7 @@ public class AsyncProPag extends AsyncProcessor {
 //
 //                Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
 
-            Object object = il_proces ? script.doPropag64(co_pagina, id_frawor, co_conten, co_botone, null, ls_regist, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
+            Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, ls_conpar, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
             System.out.println(">>object = " + object);
             System.out.println(">>object = " + object.getClass());
 //                jdk.nashorn.api.scripting.ScriptObjectMirror a; a.

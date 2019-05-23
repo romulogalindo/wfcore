@@ -36,7 +36,7 @@ public class Regist34 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" >" +
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"pagreg\">" +
                         "           <span valpag=\"\"></span>+" +
                         "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
 //                html += "       &nbsp;&nbsp;";
@@ -54,7 +54,7 @@ public class Regist34 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" >" +
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"pagreg\" >" +
                         "           <span valpag=\"\"></span>+" +
                         "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
 //                html += "       &nbsp;&nbsp;";

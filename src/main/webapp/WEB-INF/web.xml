@@ -139,6 +139,7 @@
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/beaver</url-pattern>
+        <url-pattern>/dingo</url-pattern>
         <url-pattern>/pangolin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
