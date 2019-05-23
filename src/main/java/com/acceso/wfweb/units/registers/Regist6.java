@@ -37,7 +37,7 @@ public class Regist6 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "<span id='" + id + "V' name='" + id + "V' class='pagreg' ti_pagreg='6' >";
-                html += "<div class='custom-control custom-switch'>";
+                html += "<div class='custom-control custom-checkbox'>";
                 html += "<input id='" + id + "VD' type=checkbox class='w3-input  custom-control-input' checked/>";
                 html += "<label class='custom-control-label' for='" + id + "VD'></label>";
                 html += "</div>";
@@ -54,7 +54,7 @@ public class Regist6 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "<span id='" + id + "V' name='" + id + "V' class='pagreg' ti_pagreg='6' >";
-                html += "<div class='custom-control custom-switch'>";
+                html += "<div class='custom-control custom-checkbox'>";
                 html += "<input id='" + id + "VD' type=checkbox class='w3-input  custom-control-input' checked disabled/>";
                 html += "<label class='custom-control-label' for='" + id + "VD'></label>";
                 html += "</div>";

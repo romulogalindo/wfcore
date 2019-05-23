@@ -10,12 +10,15 @@ import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.acceso.wfweb.utils.JsonResponseP;
 import com.acceso.wfweb.utils.RequestManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.Map;
-
+import org.apache.logging.log4j.core.util.JsonUtils;
 
 public class AsyncProPag extends AsyncProcessor {
 
@@ -27,12 +30,6 @@ public class AsyncProPag extends AsyncProcessor {
     public void run() {
         PrintWriter out = null;
 
-//        try {
-//            out = this.asyncContext.getResponse().getWriter();
-//        } catch (Exception ep) {
-//        }
-
-//        if (out != null) {
         try {
             out = this.asyncContext.getResponse().getWriter();
             RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
@@ -55,16 +52,24 @@ public class AsyncProPag extends AsyncProcessor {
 
                 dao.deletePagreg(id_frawor, co_pagina, true);
                 dao2.deletePagreg(id_frawor, co_pagina, false);
-                ls_regist = "{ ";
+                Gson g = new Gson();
+                JsonObject gson = new JsonObject();
+//                ls_regist = "{ ";
                 for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
                     dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
                     dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
-                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
+//                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
+//                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
+
+                    gson.addProperty("co_regist_" + pagreg.getKey(), pagreg.getValue());
                 }
-                ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
-                System.out.println("ls_regist = " + ls_regist);
+//                ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
+//                System.out.println("ls_regist = " + ls_regist);
+//                System.out.println("> = " + gson);
+                ls_regist = "" + gson;
                 dao.close();
                 dao2.close();
+
             }
 
             //new PROPAG
@@ -106,8 +111,8 @@ public class AsyncProPag extends AsyncProcessor {
 //                propag_js = Util.getText(WFCoreListener.APP.PROPAGJS).replace("USUARI_DATA_JS_TEXT", propag_js);
 //
 //                Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
-
             Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, ls_conpar, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
+//            Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, null, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
             System.out.println(">>object = " + object);
             System.out.println(">>object = " + object.getClass());
 //                jdk.nashorn.api.scripting.ScriptObjectMirror a; a.
@@ -137,7 +142,6 @@ public class AsyncProPag extends AsyncProcessor {
 //                } else {
 //                    out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
 //                }
-
         } catch (Exception ep) {
             out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep))));
             ep.printStackTrace();
