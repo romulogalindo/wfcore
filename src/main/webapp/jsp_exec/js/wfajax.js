@@ -52,12 +52,12 @@ $D.doLogoutJson = function () {
     net.send(null);
 }
 
-doPropag = function (url, regparams, data) {
+doDinpag = function (url, regparams, data) {
     console.log('url=' + url);
-    console.log('regparams=' + regparams);
-    console.log('data=' + data);
+//    console.log('regparams=' + regparams);
+//    console.log('data=' + data);
     var net = new Inet();
-    net.open("POST", "/beaver", true); //false para que sea sincrono
+    net.open("POST", "/ocelot", true); //false para que sea sincrono
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
@@ -164,6 +164,22 @@ doPropagg = function (url, regparams, data) {
     net.send(data);
 
 
+}
+
+doDinJson = function (url, data) {
+    var net = new Inet();
+    net.open("POST", url, true); //false para que sea sincrono
+
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+            console.log('{NET(' + url + ')} ::::' + net.responseText)
+            var json = JSON.parse(net.responseText);
+            pagina_onload(json);
+        }
+
+    }
+    // net.send(null);
+    net.send(data);
 }
 
 $D.getJSONE = function (url) {

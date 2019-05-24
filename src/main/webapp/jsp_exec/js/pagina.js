@@ -1128,6 +1128,38 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
 }
 
+function dinpag(obj, co_pagreg) {
+    //preguntar al core que hacer?
+    var data = new FormData();
+    data.append('id_frawor', '' + id_frawor());
+    data.append('co_pagina', '' + co_pagina());
+    data.append('co_conten', '' + co_conten());
+//    data.append('co_botone', '' + co_button);
+//    data.append('il_proces', '' + il_proces);
+    var ls_conpar = "{";
+
+
+    // alert(("" + window.location) + "|" + (parent.location));
+
+
+    var urls = ("" + parent.location).split('&');
+    for (var i = 0; i < urls.length; i++) {
+        var url = urls[i];
+        console.log('url=' + url + "--->" + (url.indexOf('co_conpar') > -1));
+        if (url.indexOf('co_conpar') > -1) {
+            if (url.split('=').length = 2) {
+                ls_conpar += "\"" + url.split('=')[0] + "\":\"" + url.split('=')[1] + "\",";
+                // ls_conpar[ls_conpar.length] = new PARAM(url.split('=')[0], url.split('=')[1]);
+            }
+        }
+    }
+    ls_conpar = ls_conpar.substring(0, ls_conpar.length - 1);
+    ls_conpar += "}";
+    console.log("ls_conpar:" + ls_conpar);
+    data.append('ls_conpar', ls_conpar);
+
+    doDinJson('/ocelot?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&co_pagreg=' + co_pagreg + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda(), data);
+}
 /*LOGOUT*/
 // function logout() {
 //     $D.doLogoutJson();

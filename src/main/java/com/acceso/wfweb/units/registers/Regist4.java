@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist4 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -38,8 +39,8 @@ public class Regist4 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" class=\"pagreg\" >";
-                html += "       <select class=\"mdb-select md-formx\"></select>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"4\" class=\"pagreg\" >";
+                html += "       <select class=\"mdb-select md-formx\" " + (registroDTO.isIl_onchan() ? "onchange=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "></select>";
                 html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
@@ -54,8 +55,8 @@ public class Regist4 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"3\" class=\"pagreg\" >";
-                html += "       <select class=\"mdb-select md-formx\" disabled></select>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"4\" class=\"pagreg\" >";
+                html += "       <select class=\"mdb-select md-formx\" " + (registroDTO.isIl_onchan() ? "onchange=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " disabled></select>";
                 html += "   </span>";
                 html += "</td>";
                 html += "</tr>";

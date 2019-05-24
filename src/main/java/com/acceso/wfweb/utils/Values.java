@@ -8,6 +8,7 @@ public class Values {
     public static final String QUERYS_WEB_SELECT_SCRIPT_VALPAG = "frawor4.script_valpag";
     public static final String QUERYS_WEB_SELECT_SCRIPT_COMPAG = "frawor4.script_compag";
     public static final String QUERYS_WEB_SELECT_SCRIPT_PROPAG = "frawor4.script_propag";
+    public static final String QUERYS_WEB_SELECT_SCRIPT_DINPAG = "frawor4.script_dinpag";
 
     public static final String QUERYS_WEB_SELECT_PFCONTAB = "frawor4.pfcontab";
     public static final String QUERYS_WEB_SELECT_PFPAGTIT = "frawor4.pfpagtit";

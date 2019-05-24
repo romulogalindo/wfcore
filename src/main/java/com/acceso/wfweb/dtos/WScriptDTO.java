@@ -14,18 +14,22 @@ import java.io.Serializable;
  */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_SCRIPT_VALPAG,
-                query = "select co_pagina, js_valpag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
-                resultClass = WScriptDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_SCRIPT_PROPAG,
-                query = "select co_pagina, js_propag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
-                resultClass = WScriptDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_SCRIPT_COMPAG,
-                query = "select co_pagina, js_compag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
-                resultClass = WScriptDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_SCRIPT_VALPAG,
+            query = "select co_pagina, js_valpag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
+            resultClass = WScriptDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_SCRIPT_PROPAG,
+            query = "select co_pagina, js_propag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
+            resultClass = WScriptDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_SCRIPT_COMPAG,
+            query = "select co_pagina, js_compag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
+            resultClass = WScriptDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_SCRIPT_DINPAG,
+            query = "select co_pagina, js_dinpag as script from frawor4.tcpagina where co_pagina = :p_co_pagina",
+            resultClass = WScriptDTO.class)
 })
 public class WScriptDTO implements Serializable {
 

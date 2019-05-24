@@ -12,11 +12,22 @@ public class RegJson {
     Integer ti_pagreg;
     String ti_estreg;
     String ur_pagreg;
+    //parametro extra para valpagpos
+    Object ob_dindat;
 
-    public RegJson() {
+    public RegJson(int co_pagreg, String va_pagreg) {
+        this(co_pagreg, va_pagreg, null, null, null, null, null, null);
+    }
+
+    public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg) {
+        this(co_pagreg, va_pagreg, tx_pagreg, null, null, null, null, null);
     }
 
     public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg) {
+        this(co_pagreg, va_pagreg, tx_pagreg, no_pagreg, ti_pagreg, ti_estreg, ur_pagreg, null);
+    }
+
+    public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg, Object ob_dindat) {
         this.co_pagreg = co_pagreg;
         this.va_pagreg = va_pagreg;
         this.tx_pagreg = tx_pagreg;
@@ -24,6 +35,7 @@ public class RegJson {
         this.ti_pagreg = ti_pagreg;
         this.ti_estreg = ti_estreg;
         this.ur_pagreg = ur_pagreg;
+        this.ob_dindat = ob_dindat;
     }
 
     public int getCo_pagreg() {
@@ -81,4 +93,13 @@ public class RegJson {
     public void setUr_pagreg(String ur_pagreg) {
         this.ur_pagreg = ur_pagreg;
     }
+
+    public Object getOb_dindat() {
+        return ob_dindat;
+    }
+
+    public void setOb_dindat(Object ob_dindat) {
+        this.ob_dindat = ob_dindat;
+    }
+
 }

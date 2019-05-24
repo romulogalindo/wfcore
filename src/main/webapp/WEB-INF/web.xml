@@ -141,6 +141,7 @@
         <url-pattern>/beaver</url-pattern>
         <url-pattern>/dingo</url-pattern>
         <url-pattern>/pangolin</url-pattern>
+        <url-pattern>/ocelot</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DocumentServlet</servlet-name>

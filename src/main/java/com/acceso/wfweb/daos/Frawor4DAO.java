@@ -15,7 +15,6 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class Frawor4DAO extends DAO {
 
     public static String TAG = "FRAWOR";
@@ -144,6 +143,25 @@ public class Frawor4DAO extends DAO {
         return paginaDTO;
     }
 
+    public WScriptDTO getJS_Dinpag(int p_co_pagina) {
+
+        WScriptDTO paginaDTO = null;
+        NQuery nQuery = new NQuery(TAG + ":PAGINA");
+
+        try {
+
+            nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_SCRIPT_DINPAG), true, true);
+            nQuery.setLong("p_co_pagina", p_co_pagina);
+            paginaDTO = (WScriptDTO) nQuery.uniqueResult();
+
+        } catch (Exception ep) {
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return paginaDTO;
+    }
+
     public List<TituloDTO> getTituloDTO(int p_co_pagina, int p_co_conten, long p_id_frawor) {
 
         List<TituloDTO> tituloDTOS = new ArrayList<>();
@@ -225,7 +243,6 @@ public class Frawor4DAO extends DAO {
 //
 //        return valpagDTOS;
 //    }
-
     public String getVPJS(int p_co_pagina) {
         String valpagJS = "";
 

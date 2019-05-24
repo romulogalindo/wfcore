@@ -135,6 +135,20 @@ function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION
     return COMPAGJS;
 }
 
-function do_dinpag(){
-    
+function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, REGIST, ID_SESION, CO_USUARI, ID_FRAANT) {
+    /*SET*/
+    DATA.setCo_usuari(CO_USUARI);
+    DATA.setId_sesion(ID_SESION);
+    DATA.setId_frawor(ID_FRAWOR);
+    DATA.setCo_conten(CO_CONTEN);
+    DATA.setCo_pagina(CO_PAGINA);
+    DATA.setNo_escena('DINPAG');
+
+    var PROPAGJS = null;
+    var LS_REGIST = JSON.parse(REGIST);
+    var LS_CONPAR = JSON.parse(CONPAR);
+
+    USUARI_DATA_DINPAG
+
+    return PROPAGJS;
 }
