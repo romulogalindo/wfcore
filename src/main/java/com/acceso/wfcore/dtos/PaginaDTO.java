@@ -25,7 +25,7 @@ import java.util.List;
             resultClass = PaginaDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SAVE_PAGINA,
-            query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag, :p_js_compag)",
+            query = "select * from wfsistem.pbpagina_save(:p_co_pagina, :p_no_pagtit, :p_de_pagina, :p_js_valpag, :p_js_propag, :p_js_compag, :p_js_dinpag)",
             resultClass = PaginaDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_GET_PAGINA,
@@ -42,7 +42,7 @@ public class PaginaDTO implements Serializable {
     String js_valpag;
     String js_propag;
     String js_compag;
-    @Transient
+//    @Transient
     String js_dinpag;
     Date fe_regist;
 

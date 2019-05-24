@@ -96,7 +96,6 @@ function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, I
     return PROPAGJS;
 }
 
-
 function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, ID_SESION, CO_USUARI) {
     /*SET*/
     DATA.setCo_usuari(CO_USUARI);
@@ -134,4 +133,8 @@ function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION
     USUARI_DATA_COMPAG
 
     return COMPAGJS;
+}
+
+function do_dinpag(){
+    
 }
