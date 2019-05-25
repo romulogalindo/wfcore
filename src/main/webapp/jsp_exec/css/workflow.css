@@ -9,23 +9,27 @@
     max-width: 605px;
 }
 
-.wf4_iframe[type='T']{
+.wf4_iframe[type='T'] {
     max-width: unset;
 }
-.wf4_iframe[type='R']{
+
+.wf4_iframe[type='R'] {
     max-width: 605px;
 }
 
 .wf_f_titreg {
     width: 40%;
     color: #787878;
-    /*font-weight: 600;*/
     vertical-align: middle !important;
     min-height: 22px;
-    /*padding: 4px 4px 4px 16px !important;*/
-    /*border-right: 1px solid #c9c9c9;*/
     text-align: right;
     cursor: default;
+    font-size: 0.8rem;
+
+    padding-top: 0.2rem !important;
+    padding-right: 0.25rem !important;
+    padding-bottom: 0.1rem !important;
+    padding-left: 0.25rem !important;
 }
 
 .wf_f_valreg {
@@ -33,11 +37,15 @@
     vertical-align: middle;
     height: 22px;
     padding: 2px 16px 2px 4px !important;
+    font-size: 0.85rem;
+    color: #000000;
 }
 
 .wf_f_stitle {
     text-align: right !important;
     padding: 5px 2px;
+    cursor: default;
+    font-size: 0.8rem !important;
 }
 
 .wf_t_stitle {
@@ -47,7 +55,8 @@
 
 .w3-highway-blue {
     color: #fff;
-    background-color: #00477e;
+    /*background-color: #00477e;*/
+    background-color: #4d728f;
 }
 
 .w3-bordered tr, .w3-table-all tr {
@@ -95,11 +104,27 @@ TABLE thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) > h3 {
 }
 
 /*======*/
+table {
+    transition-property: width, height;
+    /*-webkit-transition: all 2s;*/
+    /*-moz-transition: all 2s;*/
+    /*-o-transition: all 2s;*/
+    /*transition: all 2s;*/
+    /*transition-timing-function: ease-in-out;*/
+    /*-moz-transition-timing-function: ease-in-out;*/
+    /*-webkit-transition-timing-function: ease-in-out;*/
+    /*-o-transition-timing-function: ease-in-out;*/
+    transition: max-height 0.3s ease-out;
+}
+
+table tr {
+    /*transition: visibility 0s, opacity 0.5s linear;*/
+    transition: opacity 5s ease-out;
+}
 
 table.table td, table.table th {
-    padding-top: 0.2rem !important;
-    padding-bottom: 0.1rem !important;
-    /*text-align: center;*/
+    padding-top: 0.1rem !important;
+    padding-bottom: 0.0rem !important;
 }
 
 .table td, .table th {
@@ -118,10 +143,10 @@ table td {
 
 table tfoot td#footerbottons {
     text-align: center;
-    padding: 15px !important;
+    padding: 12px 0px 0px !important;
 }
 
-table.wf-report{
+table.wf-report {
     padding-bottom: 10px;
 }
 
@@ -138,7 +163,7 @@ table.wf-report tfoot tr td {
     padding-top: 10px !important;
 }
 
-table tbody td a{
+table tbody td a {
     color: #007bff !important;
     text-decoration: underline !important;
 }
@@ -193,11 +218,11 @@ table tbody td a{
     display: inline;
 }
 
-span.pagreg[ti_pagreg='1'] div>input{
+span.pagreg[ti_pagreg='1'] div > input {
     margin: 0 0 0.2rem 0;
 }
 
-span.pagreg[ti_pagreg='9'] textarea{
+span.pagreg[ti_pagreg='9'] textarea {
     width: 100%;
 }
 

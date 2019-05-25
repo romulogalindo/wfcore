@@ -4,6 +4,9 @@ var CO_PAGINA;
 var CO_CONTEN;
 var ID_FRAWOR;
 
+/*variables  de funcionalidad*/
+var DYNAMIC = false;
+
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
@@ -215,16 +218,28 @@ function loadFormulario64(index, row, aditional, dom2) {
         console.log('>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
+            console.log("==========EVAL DATA TYPE");
+            //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "SPAN": {
+                    var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                    console.log('EVALUACION!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + ']');
+                    if (reg.type != undefined && ti_pagreg != reg.type) {
+                        console.log('Es un cambio de tipo');
+                    }
+                }
+            }
+
+            console.log("==========ASIGN DATA");
+            //ASIGNACION DE DATA
+            switch (eledom.tagName) {
+                case "INPUT": {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -238,10 +253,17 @@ function loadFormulario64(index, row, aditional, dom2) {
 //                    eledom.setAttribute("va_pagreg", reg.value);
 //                    eledom.innerHTML = valdom;
                     } else if (ti_pagreg == '3') {
-                        //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                        // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);
-                        //reg.regist
-                        var ls_compag = aditional[reg.regist];
+
+                        //TEMPORAL=============================
+                        var ls_compag;
+                        try {
+                            ls_compag = aditional[reg.regist];
+                        } catch (e) {
+                            console.log('el combo value!:' + reg.data);
+                            ls_compag = JSON.parse(reg.data);
+                            console.log('el combo value!:' + ls_compag);
+                        }
+                        //=====================================
                         var dom_compag = "<option value=\"\"></option>";
 
                         if (ls_compag) {
@@ -361,9 +383,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                        "A"
-                        :
-                {
+                "A"
+                : {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -375,18 +396,33 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default:
-                {
+                default: {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
 
             }
 
-//muestra al padre
-            console.log("DOMELE: " + "P" + co_pagina() + "C" + index + "T" + eledom.getAttribute("co_pagtit"));
-            var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
-            domtitle.setAttribute("style", "");
+
+            console.log("==========UPDATE STATE");
+            //EVALUACION DE TIPO DE ESTADO
+            console.log('EVALUACION!> [state!:' + reg.state + ']');
+            if (reg.state != undefined) {
+                if (reg.state == 'O') {
+                    domtr(eledom).setAttribute('style', 'display:none;');
+                } else if (reg.state == 'E') {
+                    domtr(eledom).removeAttribute('style');
+                    //validar el editable faltse
+                } else if (reg.state == 'L') {
+                    domtr(eledom).getAttribute("co_pagtit").removeAttribute('style');
+                }
+            } else {
+                //muestra al padre
+                console.log("(*)DOMELE: " + "P" + co_pagina() + "C" + index + "T" + eledom.getAttribute("co_pagtit"));
+                var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
+                domtitle.setAttribute("style", "");
+            }
+
         }
 // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
@@ -537,13 +573,11 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 val = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 console.log("ti_pagreg=" + ti_pagreg);
                 if (ti_pagreg == '1') {
@@ -634,8 +668,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A":
-            {
+            case "A": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -722,13 +755,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -767,8 +798,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1134,7 +1164,13 @@ function dinpag(obj, co_pagreg) {
     data.append('id_frawor', '' + id_frawor());
     data.append('co_pagina', '' + co_pagina());
     data.append('co_conten', '' + co_conten());
-//    data.append('co_botone', '' + co_button);
+
+    //VA_PAGREG
+    var va_pagreg = obj.options[obj.selectedIndex].value;
+
+    data.append('va_pagreg', '' + va_pagreg);
+
+    //    data.append('co_botone', '' + co_button);
 //    data.append('il_proces', '' + il_proces);
     var ls_conpar = "{";
 
@@ -1158,8 +1194,9 @@ function dinpag(obj, co_pagreg) {
     console.log("ls_conpar:" + ls_conpar);
     data.append('ls_conpar', ls_conpar);
 
-    doDinJson('/ocelot?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&co_pagreg=' + co_pagreg + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda(), data);
+    doDinJson('/ocelot?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda(), data);
 }
+
 /*LOGOUT*/
 // function logout() {
 //     $D.doLogoutJson();
@@ -1176,4 +1213,8 @@ function SHOWINFO(opt) {
 
 function AUTOINCREMENT(opt) {
     document.getElementById('pagopt_plus').style.visibility = 'visible';
+}
+
+function AUTODYNAMIC(opt){
+
 }

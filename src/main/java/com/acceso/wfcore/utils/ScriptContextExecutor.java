@@ -28,9 +28,9 @@ public class ScriptContextExecutor {
         return inv.invokeFunction("do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, id_sesion, co_usuari, id_fraant);
     }
 
-    public Object doDinpag64(long id_frawor, int co_conten, int co_pagina, int co_pagreg, String ls_conpar, String ls_regist, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    public Object doDinpag64(long id_frawor, int co_conten, int co_pagina, int co_pagreg, String va_pagreg,String ls_conpar, String ls_regist, long id_sesion, long co_usuari, int id_fraant) throws Exception {
         Invocable inv = (Invocable) engine_nashornjs;
-        return inv.invokeFunction("do_dinpag", id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, ls_regist, id_sesion, co_usuari, id_fraant);
+        return inv.invokeFunction("do_dinpag", id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_regist, id_sesion, co_usuari, id_fraant);
     }
 
     //    function exec valpag

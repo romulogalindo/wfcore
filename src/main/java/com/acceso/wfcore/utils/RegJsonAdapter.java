@@ -1,9 +1,6 @@
 package com.acceso.wfcore.utils;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
@@ -24,6 +21,7 @@ public class RegJsonAdapter implements JsonSerializer<RegJson> {
         obj.addProperty("type", src.ti_pagreg);
         obj.addProperty("state", src.ti_estreg);
         obj.addProperty("link", src.ur_pagreg);
+        obj.addProperty("data", new Gson().toJson(src.ob_dindat));
 
         return obj;
     }

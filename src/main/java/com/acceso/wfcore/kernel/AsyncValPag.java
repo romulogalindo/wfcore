@@ -28,7 +28,7 @@ public class AsyncValPag extends AsyncProcessor {
     public void run() {
         JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK("");
         PrintWriter out = null;
-
+        System.out.println("Esto es del servlet! type=" + type);
         try {
             out = this.asyncContext.getResponse().getWriter();
 
@@ -36,6 +36,7 @@ public class AsyncValPag extends AsyncProcessor {
             Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
             //
             Integer co_pagreg = Util.toInt(asyncContext.getRequest().getParameter("co_pagreg"), -1);
+            String va_pagreg = asyncContext.getRequest().getParameter("va_pagreg");
             String ls_allreg = asyncContext.getRequest().getParameter("ls_allreg");
 //            String ls_conpar = requestManager.getParam("ls_conpar");
 
@@ -52,14 +53,16 @@ public class AsyncValPag extends AsyncProcessor {
                 String valpag2_js = dao.getJS_Valpag(co_pagina).getScript();
                 String propag2_js = dao.getJS_Propag(co_pagina).getScript();
                 String compag2_js = dao.getJS_Compag(co_pagina).getScript();
+                System.out.println("compag2_js = " + compag2_js);
                 String dinpag2_js = dao.getJS_Dinpag(co_pagina).getScript();
+                System.out.println("dinpag2_js = " + dinpag2_js);
                 dao.close();
 
                 String scriptpage = Util.getText(WFCoreListener.APP.PAGEJS)
                         .replace("USUARI_DATA_VALPAG", valpag2_js == null ? "" : valpag2_js)
                         .replace("USUARI_DATA_PROPAG", propag2_js == null ? "" : propag2_js)
                         .replace("USUARI_DATA_COMPAG", compag2_js == null ? "" : compag2_js)
-                        .replace("USUARI_DATA_DINPAG", compag2_js == null ? "" : dinpag2_js);
+                        .replace("USUARI_DATA_DINPAG", dinpag2_js == null ? "" : dinpag2_js);
 
                 script = WFCoreListener.APP.getJavaScriptService().newContext(scriptpage);
 
@@ -111,7 +114,9 @@ public class AsyncValPag extends AsyncProcessor {
                     jsonResponse.setAditional(map_hamodas);
                 }
             } else {
-                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                System.out.println(" listo apra ejecutar!= ");
+                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                System.out.println(" listo apra ejecutar!= valpagJson>" + valpagJson);
                 jsonResponse.setResult(valpagJson);
 //                jsonResponse.setFnpost(script.dopvpj("GET_DO_POST_LOAD_DATA"));
 //
@@ -139,7 +144,7 @@ public class AsyncValPag extends AsyncProcessor {
 //                    jsonResponse.setAditional(map_hamodas);
 //                }
             }
-
+            System.out.println("Util.toJSON2(jsonResponse) = " + Util.toJSON2(jsonResponse));
             out.write(Util.toJSON2(jsonResponse));
         } catch (Exception ep) {
 //            System.out.println("[[ERROR!--------------------------------------------//////?????]]?>>" + ep.getMessage());

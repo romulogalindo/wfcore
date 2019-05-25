@@ -15,10 +15,10 @@
             <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">-->
 
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=9">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=10">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=1">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables.css?a=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables.css?a=2">
     <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
 
     <!--JS -->
@@ -68,7 +68,7 @@
         }
     </style>
 </head>
-<body style="padding: 20px;" onload="pagina();">
+<body style="padding: 16px 5px;" onload="pagina();">
 <script>
     var height_table = 0;
 </script>
@@ -115,7 +115,7 @@
 
     <div class="px-4">
 
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="margin-bottom: 12px;">
             ${paginaBean.pagina.toHTML()}
         </div>
 

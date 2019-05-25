@@ -135,8 +135,9 @@ function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION
     return COMPAGJS;
 }
 
-function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, REGIST, ID_SESION, CO_USUARI, ID_FRAANT) {
+function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ID_SESION, CO_USUARI, ID_FRAANT) {
     /*SET*/
+    print('here');
     DATA.setCo_usuari(CO_USUARI);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);

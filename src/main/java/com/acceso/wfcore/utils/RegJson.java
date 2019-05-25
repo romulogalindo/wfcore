@@ -1,5 +1,7 @@
 package com.acceso.wfcore.utils;
 
+import com.acceso.wfweb.utils.JsonResponse;
+
 /**
  * @author rgalindo
  */
@@ -36,6 +38,7 @@ public class RegJson {
         this.ti_estreg = ti_estreg;
         this.ur_pagreg = ur_pagreg;
         this.ob_dindat = ob_dindat;
+        System.out.println("recibido! ->  this.ob_dindat = " + this.ob_dindat);
     }
 
     public int getCo_pagreg() {
