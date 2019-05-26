@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.acceso.wfcore.dtos;
 
 import com.acceso.wfcore.utils.Values;
@@ -16,22 +11,22 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
-
 @Entity
-@SqlResultSetMapping(name = "deletebotondto", columns = {@ColumnResult(name = "count")})
+@SqlResultSetMapping(name = "deletebotondto", columns = {
+    @ColumnResult(name = "count")})
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_BUTTONS,
-                query = "select * from frawor4.tcpagbot where co_pagina = :p_co_pagina order by or_pagbot;",
-                resultClass = BotonDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SAVE_BUTTON,
-                query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :p_co_pagbot, :p_no_pagbot, :p_or_pagbot, :p_ti_pagbot, :p_il_proces, :p_il_confir, :p_no_confir, :p_il_autent, :p_il_peresc);",
-                resultClass = BotonDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_DELETE_BUTTON,
-                query = "delete from frawor4.tcpagbot where co_pagina = :p_co_pagina and co_pagbot = :p_co_pagbot",
-                resultSetMapping = "deletebotondto")
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_BUTTONS,
+            query = "select * from frawor4.tcpagbot where co_pagina = :p_co_pagina order by or_pagbot;",
+            resultClass = BotonDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SAVE_BUTTON,
+            query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :p_co_pagbot, :p_no_pagbot, :p_or_pagbot, :p_ti_pagbot, :p_il_proces, :p_il_confir, :p_no_confir, :p_il_autent, :p_il_peresc, :p_no_icobot, :p_no_icopos);",
+            resultClass = BotonDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_DELETE_BUTTON,
+            query = "delete from frawor4.tcpagbot where co_pagina = :p_co_pagina and co_pagbot = :p_co_pagbot",
+            resultSetMapping = "deletebotondto")
 })
 public class BotonDTO implements Serializable {
 
@@ -46,6 +41,8 @@ public class BotonDTO implements Serializable {
     String no_confir;
     boolean il_autent;
     boolean il_peresc;
+    String no_icobot;
+    String no_icopos;
 
     @Transient
     PagconDTO pagconDTO;
@@ -144,20 +141,36 @@ public class BotonDTO implements Serializable {
         this.co_condes = co_condes;
     }
 
+    public String getNo_icobot() {
+        return no_icobot;
+    }
+
+    public void setNo_icobot(String no_icobot) {
+        this.no_icobot = no_icobot;
+    }
+
+    public String getNo_icopos() {
+        return no_icopos;
+    }
+
+    public void setNo_icopos(String no_icopos) {
+        this.no_icopos = no_icopos;
+    }
+
     @Override
     public String toString() {
-        return "BotonDTO{" +
-                "co_pagbot=" + co_pagbot +
-                ", no_pagbot='" + no_pagbot + '\'' +
-                ", or_pagbot=" + or_pagbot +
-                ", ti_pagbot='" + ti_pagbot + '\'' +
-                ", il_proces=" + il_proces +
-                ", il_confir=" + il_confir +
-                ", no_confir='" + no_confir + '\'' +
-                ", il_autent=" + il_autent +
-                ", il_peresc=" + il_peresc +
-                ", pagconDTO=" + pagconDTO +
-                ", co_condes=" + co_condes +
-                '}';
+        return "BotonDTO{"
+                + "co_pagbot=" + co_pagbot
+                + ", no_pagbot='" + no_pagbot + '\''
+                + ", or_pagbot=" + or_pagbot
+                + ", ti_pagbot='" + ti_pagbot + '\''
+                + ", il_proces=" + il_proces
+                + ", il_confir=" + il_confir
+                + ", no_confir='" + no_confir + '\''
+                + ", il_autent=" + il_autent
+                + ", il_peresc=" + il_peresc
+                + ", pagconDTO=" + pagconDTO
+                + ", co_condes=" + co_condes
+                + '}';
     }
 }

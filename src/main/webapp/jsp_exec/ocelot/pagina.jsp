@@ -44,24 +44,6 @@
             border-bottom: none !important;
         }
 
-        .btn {
-            margin: 0px 4px 0px 0px;
-            padding: .30rem 1.02rem;
-            font-size: 0.71rem;
-            max-width: 180px;
-            width: 100%;
-
-            padding-top: 0.18rem !important;
-            padding-bottom: 0.18rem !important;
-            padding-right: 0.24rem !important;
-            padding-left: 0.25rem !important;
-            border: 1px solid #fff !important;
-        }
-
-        .btn:first-child {
-            margin: 0px !important;
-        }
-
         #mainpagina select {
             display: unset !important;
             width: 100%;
@@ -78,7 +60,6 @@
 <input type="hidden" id="co_pagina" value="${param.co_pagina}">
 
 <div id="mainpagina" class="card card-cascade narrower">
-    <!--Card image-->
     <div class="view view-cascade gradient-card-header default-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
 
         <div style="display: inherit;">
@@ -94,7 +75,7 @@
             </button>
         </div>
 
-        <span style="width: 100%;" class="white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
+        <span style="width: 100%;padding: 0px !important;" class="maintitle white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
 
         <div style="display: inherit;">
             <%--            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">--%>
@@ -111,9 +92,8 @@
         </div>
 
     </div>
-    <!--/Card image-->
 
-    <div class="px-4">
+    <div id="mainconten" class="px-4">
 
         <div class="table-wrapper" style="margin-bottom: 12px;">
             ${paginaBean.pagina.toHTML()}

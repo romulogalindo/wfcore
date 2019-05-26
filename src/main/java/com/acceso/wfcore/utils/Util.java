@@ -373,4 +373,18 @@ public class Util {
         };
         return ls_estreg;
     }
+
+    public static SelectItem[] get_ls_ti_icobot() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+            new SelectItem("left", "Izquierda"),};
+        return ls_estreg;
+    }
+
+    public static SelectItem[] get_ls_ti_icopos() {
+        SelectItem[] ls_estreg = new SelectItem[]{
+            new SelectItem("left", "Izquierda"),
+            new SelectItem("right", "Derecha")
+        };
+        return ls_estreg;
+    }
 }

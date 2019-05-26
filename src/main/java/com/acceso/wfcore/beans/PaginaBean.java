@@ -66,6 +66,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public SelectItem[] ls_ti_alireg = Util.get_ls_ti_alireg();
     public SelectItem[] ls_ti_valign = Util.get_ls_ti_valign();
     public SelectItem[] ls_ti_nowrap = Util.get_ls_ti_nowrap();
+    public SelectItem[] ls_no_icobot = Util.get_ls_ti_icobot();
+    public SelectItem[] ls_no_icopos = Util.get_ls_ti_icopos();
     public SelectItem[] ls_dt_pagina;
 
     public PaginaBean() {
@@ -534,6 +536,22 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setLs_dt_pagina(SelectItem[] ls_dt_pagina) {
         this.ls_dt_pagina = ls_dt_pagina;
+    }
+
+    public SelectItem[] getLs_no_icobot() {
+        return ls_no_icobot;
+    }
+
+    public void setLs_no_icobot(SelectItem[] ls_no_icobot) {
+        this.ls_no_icobot = ls_no_icobot;
+    }
+
+    public SelectItem[] getLs_no_icopos() {
+        return ls_no_icopos;
+    }
+
+    public void setLs_no_icopos(SelectItem[] ls_no_icopos) {
+        this.ls_no_icopos = ls_no_icopos;
     }
 
 }

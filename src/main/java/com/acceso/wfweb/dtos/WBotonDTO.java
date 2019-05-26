@@ -12,31 +12,25 @@ import java.util.List;
  */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_PFPAGBOT,
-                query = "select * from frawor4.pfpagbot(:p_co_pagina, :p_id_frawor , :p_co_conten )",
-                resultClass = WBotonDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_PFPAGBOT,
+            query = "select * from frawor4.pfpagbot(:p_co_pagina, :p_id_frawor , :p_co_conten )",
+            resultClass = WBotonDTO.class)
 })
 public class WBotonDTO implements Serializable {
 
     @Id
     int co_pagbot;
-
     String no_pagbot;
-
     int or_pagbot;
-
     String ti_pagbot;
-
     boolean il_proces;
-
     boolean il_confir;
-
     String no_confir;
-
     boolean il_autent;
-
     int co_condes;
+    String no_icobot;
+    String no_icopos;
 
     @Transient
     List<WParametroDTO> parametros;
@@ -123,4 +117,21 @@ public class WBotonDTO implements Serializable {
     public void setParametros(List<WParametroDTO> parametros) {
         this.parametros = parametros;
     }
+
+    public String getNo_icobot() {
+        return no_icobot;
+    }
+
+    public void setNo_icobot(String no_icobot) {
+        this.no_icobot = no_icobot;
+    }
+
+    public String getNo_icopos() {
+        return no_icopos;
+    }
+
+    public void setNo_icopos(String no_icopos) {
+        this.no_icopos = no_icopos;
+    }
+
 }

@@ -261,6 +261,9 @@ public class PaginaDAO {
             nQuery.setBoolean("p_il_autent", botonDTO.isIl_autent());
             nQuery.setBoolean("p_il_peresc", botonDTO.isIl_peresc());
 
+            nQuery.setString("p_no_icobot", botonDTO.getNo_icobot());
+            nQuery.setString("p_no_icopos", botonDTO.getNo_icopos());
+
             System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
             botonDTO = (BotonDTO) nQuery.uniqueResult();
             System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");

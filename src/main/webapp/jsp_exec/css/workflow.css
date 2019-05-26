@@ -17,6 +17,18 @@
     max-width: 605px;
 }
 
+.maintitle{
+    font-size: 0.92rem;
+    padding: 0.1rem .2rem !important;
+    margin-left: 1.0rem !important;
+    margin-right: 1.0rem !important;
+}
+
+#mainconten{
+    padding-left: 1.0rem !important;
+    padding-right: 1.0rem !important;
+}
+
 .wf_f_titreg {
     width: 40%;
     color: #787878;
@@ -35,8 +47,7 @@
 .wf_f_valreg {
     width: 60%;
     vertical-align: middle;
-    height: 22px;
-    padding: 2px 16px 2px 4px !important;
+    padding: 2px 0.25rem 2px 0.25rem !important;
     font-size: 0.85rem;
     color: #000000;
 }
@@ -124,7 +135,7 @@ table tr {
 
 table.table td, table.table th {
     padding-top: 0.1rem !important;
-    padding-bottom: 0.0rem !important;
+    padding-bottom: 0.1rem !important;
 }
 
 .table td, .table th {
@@ -168,6 +179,24 @@ table tbody td a {
     text-decoration: underline !important;
 }
 
+.btn {
+    margin: 0.15rem 0.2rem !important;
+    padding: .30rem 1.02rem;
+    font-size: 0.65rem !important;
+    max-width: 160px;
+    width: 100%;
+
+    padding-top: 0.18rem !important;
+    padding-bottom: 0.18rem !important;
+    padding-right: 0.24rem !important;
+    padding-left: 0.25rem !important;
+    /*border: 1px solid #fff !important;*/
+    
+}
+
+.btn:first-child {
+    margin: 0px !important;
+}
 /*======*/
 
 .w3-modal #popup2_body {
@@ -270,6 +299,9 @@ span.pagreg[ti_pagreg='8'] span.item span.close {
 
 /*MDB*/
 .card.card-cascade .view.view-cascade.gradient-card-header {
-    padding: 0.2rem .4rem !important;
+    padding: 0.1rem .2rem !important;
     margin-bottom: 0.7rem !important;
+
+    margin-left: 1.0rem !important;
+    margin-right: 1.0rem !important;
 }

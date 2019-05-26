@@ -6,6 +6,7 @@ var ID_FRAWOR;
 
 /*variables  de funcionalidad*/
 var DYNAMIC = false;
+var DYNAMIC_LS_REGIST = [];
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -148,11 +149,9 @@ function pagina_onload(jsonData) {
             var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
             // console.log('>>' + fnpost);
             eval(fnpost);
-
             //devuevo actualizar el height;
             size_of_pagina();
-            // var miframe = window;//.parent.document.getElementById('#target');
-            // window.parent.document.iframe2('PAG' + co_pagina(), height_table);
+
             window.parent.iframe2('PAG' + co_pagina(), height_table);
 
         } else {
@@ -171,17 +170,6 @@ function pagina_onload(jsonData) {
     }
 
 }
-
-//function iframe(iframe) {
-//
-//    var input_height_table = (iframe.contentDocument || iframe.contentWindow.document).getElementById("height_table");
-//
-//    if (input_height_table != undefined) {
-//        var height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0) + 20;
-//        iframe.style.height = height_table + 'px';
-//    }
-//
-//}
 
 function iframe2(pagina, height_table) {
     console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
@@ -221,7 +209,8 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("==========EVAL DATA TYPE");
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log('EVALUACION!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + ']');
                     if (reg.type != undefined && ti_pagreg != reg.type) {
@@ -233,13 +222,15 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("==========ASIGN DATA");
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -258,6 +249,13 @@ function loadFormulario64(index, row, aditional, dom2) {
                         var ls_compag;
                         try {
                             ls_compag = aditional[reg.regist];
+                            console.log('ls_compag?:' + ls_compag);
+                            if (ls_compag == undefined) {
+                                try {
+                                    ls_compag = JSON.parse(reg.data);
+                                } catch (e) {
+                                }
+                            }
                         } catch (e) {
                             console.log('el combo value!:' + reg.data);
                             ls_compag = JSON.parse(reg.data);
@@ -383,8 +381,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                "A"
-                : {
+                        "A"
+                        :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -396,7 +395,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -573,11 +573,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 val = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 console.log("ti_pagreg=" + ti_pagreg);
                 if (ti_pagreg == '1') {
@@ -668,7 +670,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A": {
+            case "A":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -755,11 +758,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -798,7 +803,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -806,7 +812,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         valdom = ('' + valdom).replace('undefined', '');
         parametros[parametros.length] = 'co_conpar_' + sconpar + '=' + valdom;
     }
-    console.log('//' + window.location.host + '/wf?co_conten=' + co_condes + "{}" - parametros + "{}" + data);
+//    console.log('//' + window.location.host + '/wf?co_conten=' + co_condes + "{}" - parametros + "{}" + data);
+    console.log('//' + window.location.host);
+    console.log('//' + co_condes);
+    console.log('//' + parametros);
+    console.log('//' + data);
     doPropag('//' + window.location.host + '/wf?co_conten=' + co_condes, parametros, data);
 }
 
@@ -918,7 +928,6 @@ function rb_change(rb, id) {
     document.getElementById(id + '_rb').value = rb.value;
 }
 
-// function onchange_vafile(vafile, lbfile) {
 function onchange_vafile(vafile) {
     // console.log("vafile=" + vafile + " && lbfile=" + lbfile + " && ");
     console.log("vafile=" + vafile.innerHTML);
@@ -1197,11 +1206,6 @@ function dinpag(obj, co_pagreg) {
     doDinJson('/ocelot?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda(), data);
 }
 
-/*LOGOUT*/
-// function logout() {
-//     $D.doLogoutJson();
-// }
-
 function PRINTABLE(opt) {
     document.getElementById('pagopt_print').style.visibility = 'visible';
 
@@ -1215,6 +1219,30 @@ function AUTOINCREMENT(opt) {
     document.getElementById('pagopt_plus').style.visibility = 'visible';
 }
 
-function AUTODYNAMIC(opt){
+/*
+ TRUE: se ejecuta automaticamente el valpagpos
+ * @param {type} opt
+ * @returns {undefined} */
+function AUTODYNAMIC(opt, ls_regist) {
+    console.log('?function AUTODYNAMIC:[opt:' + opt + '],[ls_regist:' + ls_regist + ']');
+    DYNAMIC = opt;
+    DYNAMIC_LS_REGIST = ls_regist;
+    //--------------------------------
+    //ultimo ver si se debe ejecutar el dinpage;
+    console.log('DYNAMIC:' + DYNAMIC);
+    if (DYNAMIC) {
+        var dynpags = document.getElementsByClassName('dynpag');
+        console.log('DYNAMIC->dynpags:' + dynpags + ',(*):' + dynpags.length);
+        for (var i = 0; i < dynpags.length; i++) {
+            var dynpag = dynpags[i];
+            console.log('DYNAMIC->dynpags->dynpag:' + dynpag);
+            console.log('DYNAMIC->dynpags->dynpag->dynpag.tagName:' + dynpag.tagName);
+            if (dynpag.tagName == 'INPUT') {
 
+            } else if (dynpag.tagName == 'SELECT') {
+                console.log('DYNAMIC->dynpags->dynpag->dynpag.tagName?onchange');
+                dynpag.onchange();
+            }
+        }
+    }
 }

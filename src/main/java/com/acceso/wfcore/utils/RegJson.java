@@ -1,6 +1,6 @@
 package com.acceso.wfcore.utils;
 
-import com.acceso.wfweb.utils.JsonResponse;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 /**
  * @author rgalindo
@@ -16,6 +16,22 @@ public class RegJson {
     String ur_pagreg;
     //parametro extra para valpagpos
     Object ob_dindat;
+
+    public RegJson(Object obj) {
+        ScriptObjectMirror opts = (ScriptObjectMirror) obj;
+        co_pagreg = opts.get("co_pagreg") == null ? -1 : (int) opts.get("co_pagreg");
+        va_pagreg = (String) opts.get("va_pagreg");
+        tx_pagreg = (String) opts.get("tx_pagreg");
+        no_pagreg = (String) opts.get("no_pagreg");
+        ti_pagreg = opts.get("ti_pagreg") == null ? -1 : (int) opts.get("co_pagrti_pagregeg");
+        ti_estreg = (String) opts.get("ti_estreg");
+        ur_pagreg = (String) opts.get("ur_pagreg");
+        ob_dindat = opts.get("ob_dindat");
+    }
+
+    public RegJson(int co_pagreg) {
+        this(co_pagreg, null, null, null, null, null, null, null);
+    }
 
     public RegJson(int co_pagreg, String va_pagreg) {
         this(co_pagreg, va_pagreg, null, null, null, null, null, null);
@@ -38,7 +54,6 @@ public class RegJson {
         this.ti_estreg = ti_estreg;
         this.ur_pagreg = ur_pagreg;
         this.ob_dindat = ob_dindat;
-        System.out.println("recibido! ->  this.ob_dindat = " + this.ob_dindat);
     }
 
     public int getCo_pagreg() {
