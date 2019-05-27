@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist7 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -37,7 +38,7 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"7\" >";
+                html += "<span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
                 html += "<input type=text id=\"" + id + "V_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"dd\"/>";
                 html += "<span>/</span>";
                 html += "<input type=text id=\"" + id + "V_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"mm\"/>";
@@ -58,7 +59,7 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"6\" >";
+                html += "<span id='" + id + "V' name='" + id + "V' class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
                 html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
                 html += "</span>";
                 html += "</td>";

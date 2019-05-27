@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist35 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -36,9 +37,9 @@ public class Regist35 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"35\" >" +
-//                        "           <textarea ></textarea>+" +
-                            "           <iframe class=\"q f\" src=\"/jsp_exec/ocelot/code.jsp\" style=\"display: block; height: 305px; width: 100%;\" marginheight=\"0\" marginwidth=\"0\" scrolling=\"none\"  ></iframe>";
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"35\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\">"
+                        + //                        "           <textarea ></textarea>+" +
+                        "           <iframe class=\"q f\" src=\"/jsp_exec/ocelot/code.jsp\" style=\"display: block; height: 305px; width: 100%;\" marginheight=\"0\" marginwidth=\"0\" scrolling=\"none\"  ></iframe>";
 //                html += "       &nbsp;&nbsp;";
 //                html += "[      <a id='" + id + "V' target=\"_blank\" href=\"#\" class=\"pagreg\" name='" + id + "V' ti_pagreg=\"38\"><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]";
                 html += "       </span>";

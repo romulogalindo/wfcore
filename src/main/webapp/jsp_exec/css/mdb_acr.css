@@ -2023,7 +2023,7 @@ pre code {
     width: 100%;
     height: calc(1.5em + 0.75rem + 2px);
     padding: 0.375rem 0.75rem;
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
@@ -16738,7 +16738,8 @@ a.waves-effect, a.waves-light {
 
 .btn .fas, .btn .fab, .btn .far {
     position: relative;
-    font-size: 0.9rem;
+    /*font-size: 0.9rem;*/
+    font-size: 0.7rem;
 }
 
 .btn .fas.right, .btn .fab.right, .btn .far.right {

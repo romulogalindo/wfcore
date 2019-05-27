@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist8 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -36,7 +37,7 @@ public class Regist8 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"8\" class=\"pagreg\" >";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"8\" class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" >";
                 html += "       <button id='" + id + "V_btn' name='" + id + "V' ti_pagreg=\"8\" class=\"wf-button-transparent\"><i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>Agregar</buttton>";
                 html += "       <input type=hidden id=\"" + id + "V_ms\" value=\"PAGREG5\"/>";
                 html += "   </span>";
@@ -52,7 +53,7 @@ public class Regist8 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"8\" class=\"pagreg\" >";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"8\" class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" >";
                 html += "       <button id='" + id + "V_btn' name='" + id + "V' ti_pagreg=\"8\" class=\"wf-button-transparent\"><i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i>Agregar</buttton>";
                 html += "       <input type=hidden id=\"" + id + "V_ms\" value=\"PAGREG5\"/>";
                 html += "   </span>";

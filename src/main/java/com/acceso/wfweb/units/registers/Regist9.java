@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist9 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -37,7 +38,7 @@ public class Regist9 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"9\" >";
+                html += "<span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"9\" >";
 //                html += "<textarea class=\"w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\" cols=\"" + registroDTO.getCa_carcol() + "\"></textarea>";
                 html += "<textarea class=\"w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\"></textarea>";
                 html += "</span>";
@@ -53,7 +54,7 @@ public class Regist9 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"9\" >";
+                html += "<span id='" + id + "V' name='" + id + "V' class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"9\" >";
 //                html += "<textarea class=\"pagreg w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\" cols=\"" + registroDTO.getCa_carcol() + "\"></texarea>";
                 html += "<textarea class=\"pagreg w3-input w3-border\" rows=\"" + registroDTO.getCa_carrow() + "\"></texarea>";
                 html += "</span>";

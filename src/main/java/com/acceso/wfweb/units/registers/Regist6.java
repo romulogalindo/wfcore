@@ -36,12 +36,12 @@ public class Regist6 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class='pagreg' ti_pagreg='6' >";
-                html += "<div class='custom-control custom-checkbox'>";
-                html += "<input id='" + id + "VD' type=checkbox class='w3-input  custom-control-input' checked/>";
-                html += "<label class='custom-control-label' for='" + id + "VD'></label>";
-                html += "</div>";
-                html += "</span>";
+                html += "   <span id='" + id + "V' name='" + id + "V' class='writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg' ti_pagreg='6' >";
+                html += "       <div class='custom-control custom-checkbox'>";
+                html += "           <input id='" + id + "VD' type=checkbox class='w3-input " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " custom-control-input' " + (registroDTO.isIl_onchan() ? "onchange=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " checked disabled/>";
+                html += "           <label class='custom-control-label' for='" + id + "VD'></label>";
+                html += "       </div>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;
@@ -53,12 +53,12 @@ public class Regist6 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class='pagreg' ti_pagreg='6' >";
-                html += "<div class='custom-control custom-checkbox'>";
-                html += "<input id='" + id + "VD' type=checkbox class='w3-input  custom-control-input' checked disabled/>";
-                html += "<label class='custom-control-label' for='" + id + "VD'></label>";
-                html += "</div>";
-                html += "</span>";
+                html += "   <span id='" + id + "V' name='" + id + "V' class='reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg' ti_pagreg='6' >";
+                html += "       <div class='custom-control custom-checkbox'>";
+                html += "           <input id='" + id + "VD' type=checkbox class='w3-input " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " custom-control-input' " + (registroDTO.isIl_onchan() ? "onchange=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " checked disabled/>";
+                html += "           <label class='custom-control-label' for='" + id + "VD'></label>";
+                html += "       </div>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

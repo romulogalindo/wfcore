@@ -14,18 +14,39 @@ public class RegJson {
     Integer ti_pagreg;
     String ti_estreg;
     String ur_pagreg;
-    //parametro extra para valpagpos
     Object ob_dindat;
 
     public RegJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
         co_pagreg = opts.get("co_pagreg") == null ? -1 : (int) opts.get("co_pagreg");
-        va_pagreg = (String) opts.get("va_pagreg");
-        tx_pagreg = (String) opts.get("tx_pagreg");
-        no_pagreg = (String) opts.get("no_pagreg");
-        ti_pagreg = opts.get("ti_pagreg") == null ? -1 : (int) opts.get("co_pagrti_pagregeg");
-        ti_estreg = (String) opts.get("ti_estreg");
-        ur_pagreg = (String) opts.get("ur_pagreg");
+        if (opts.get("va_pagreg") != null) {
+            va_pagreg = "" + opts.get("va_pagreg");
+        }
+
+        if (opts.get("tx_pagreg") != null) {
+            tx_pagreg = "" + opts.get("tx_pagreg");
+        }
+
+        if (opts.get("no_pagreg") != null) {
+            no_pagreg = "" + opts.get("no_pagreg");
+        }
+
+//        if (opts.get("ti_pagreg") != null) {
+//            ti_pagreg = (int) opts.get("ti_pagreg");
+//        }
+//        tx_pagreg = "" + (opts.get("tx_pagreg") == null ? "" : opts.get("tx_pagreg"));
+//        no_pagreg = "" + (opts.get("no_pagreg") == null ? "" : opts.get("no_pagreg"));
+        ti_pagreg = opts.get("ti_pagreg") == null ? -1 : (int) opts.get("ti_pagreg");
+
+        if (opts.get("ti_estreg") != null) {
+            ti_estreg = "" + opts.get("ti_estreg");
+        }
+//        ti_estreg = "" + (opts.get("ti_estreg") == null ? "" : opts.get("ti_estreg"));
+
+        if (opts.get("ur_pagreg") != null) {
+            ur_pagreg = "" + opts.get("ur_pagreg");
+        }
+//        ur_pagreg = "" + (opts.get("ur_pagreg") == null ? "" : opts.get("ur_pagreg"));
         ob_dindat = opts.get("ob_dindat");
     }
 

@@ -116,7 +116,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                            System.out.println("fila = REDERER OK!");
                             itr += "<td>";
                             itr += "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64\"" : "") + " name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=1  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">";
-                            itr += "<input id=\"\" type=\"text\" value=\"\">";
+                            itr += "<input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\">";
                             itr += "</span>";
                             itr += "</td>";
                         }

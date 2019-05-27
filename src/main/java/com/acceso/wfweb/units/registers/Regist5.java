@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist5 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -36,7 +37,7 @@ public class Regist5 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"5\" class=\"pagreg\" >";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"5\" class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" >";
                 html += "       <input type=hidden id=\"" + id + "V_rb\" value=\"PAGREG5\"/>";
                 html += "   </span>";
                 html += "</td>";
@@ -51,7 +52,7 @@ public class Regist5 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"5\" class=\"pagreg\" >";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"5\" class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" >";
                 html += "       <input type=hidden id=\"" + id + "V_rb\" value=\"PAGREG5\"/>";
                 html += "   </span>";
                 html += "</td>";

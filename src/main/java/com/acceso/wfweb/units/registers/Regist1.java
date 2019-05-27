@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist1 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -24,7 +25,7 @@ public class Regist1 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<input type=hidden id='" + id + "V' class=\"pagreg\" name='" + id + "V' value=>";
+                html += "<input type=hidden id='" + id + "V' class=\"hidden pagreg\" name='" + id + "V' value=>";
                 html += "</td>";
                 html += "</tr>";
                 break;
@@ -37,11 +38,10 @@ public class Regist1 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"1\" class=\"pagreg\" >" ;
-                html += "   <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">" ;
-//                html += "<input type=text id='" + id + "V' name='" + id + "V' class=\"pagreg w3-input w3-border form-control\" value=>";
-                html += "<input type=text class=\"w3-input w3-border form-control\" value=>";
-                html += "   </div>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"1\" class=\"writer xaction pagreg\" >";
+                html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " value=>";
+                html += "       </div>";
                 html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
@@ -55,7 +55,7 @@ public class Regist1 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' class=\"pagreg\" name='" + id + "V' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
+                html += "<span id='" + id + "V' class=\"reader pagreg\" name='" + id + "V' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

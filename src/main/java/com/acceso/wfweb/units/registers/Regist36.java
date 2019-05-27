@@ -4,6 +4,7 @@ import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
 public class Regist36 extends HTMLRenderer {
+
     WRegistroDTO registroDTO;
     String id;
 
@@ -35,11 +36,11 @@ public class Regist36 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' class=\"pagreg\" ti_pagreg=\"36\" >" +
-                        "   <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">" +
-                        "<i class=\"fa fa-upload\" aria-hidden=\"true\"></i> <span>Subir archivo<span></a>" +
-                        "   <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "\" style=\"display:none;\"></iframe>" +
-                        "</span>";
+                html += "       <span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" ti_pagreg=\"36\" >"
+                        + "   <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">"
+                        + "<i class=\"fa fa-upload\" aria-hidden=\"true\"></i> <span>Subir archivo<span></a>"
+                        + "   <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "\" style=\"display:none;\"></iframe>"
+                        + "</span>";
                 html += "   </td>";
                 html += "</tr>";
                 break;
@@ -51,9 +52,9 @@ public class Regist36 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"13\" >" +
-                        "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]" +
-                        "</span>";
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"13\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\">"
+                        + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]"
+                        + "</span>";
                 html += "   </td>";
                 html += "</tr>";
                 break;
