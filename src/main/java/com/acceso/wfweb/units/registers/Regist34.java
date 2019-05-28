@@ -21,10 +21,14 @@ public class Regist34 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
+                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<input type=hidden id='" + id + "V' class=\"pagreg\" name='" + id + "V' value=>";
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" >"
+                        + "           <span valpag=\"\"></span>+"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                html += "       </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;
@@ -36,16 +40,12 @@ public class Regist34 extends HTMLRenderer {
                 html += registroDTO.getNo_pagreg();
                 html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "   </td>";
-
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\">"
                         + "           <span valpag=\"\"></span>+"
                         + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
-//                html += "       &nbsp;&nbsp;";
-//                html += "[      <a id='" + id + "V' target=\"_blank\" href=\"#\" class=\"pagreg\" name='" + id + "V' ti_pagreg=\"38\"><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]";
                 html += "       </span>";
                 html += "   </td>";
-
                 html += "</tr>";
                 break;
             }
@@ -55,16 +55,12 @@ public class Regist34 extends HTMLRenderer {
                 html += registroDTO.getNo_pagreg();
                 html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
                 html += "   </td>";
-
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" >"
                         + "           <span valpag=\"\"></span>+"
                         + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
-//                html += "       &nbsp;&nbsp;";
-//                html += "[      <a id='" + id + "V' target=\"_blank\" href=\"#\" class=\"pagreg\" name='" + id + "V' ti_pagreg=\"38\"><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]";
                 html += "       </span>";
                 html += "   </td>";
-
                 html += "</tr>";
                 break;
             }
