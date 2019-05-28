@@ -205,29 +205,54 @@ function loadFormulario64(index, row, aditional, dom2) {
 //    var reg;
     for (const reg of row.regs) {
 //        console.log('?' + reg);
-        var eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
+        var ultraid = 'P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V';
+        var eledom = document.getElementsByName(ultraid)[0];
         var valdom = reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text;
         console.log('(' + co_pagina() + ')>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
-            console.log("(" + co_pagina() + ")==========EVAL DATA TYPE");
+            console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom);
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                    var td = eledom.parentNode;
+                    var eleid = eledom.getAttribute('id');
+//                    var co_regist = eleid.substring(eleid.indexOf('R') + 1, eleid.length - 1);
+                    var co_regist = reg.regist;
+                    var ti_estreg = '';
+                    if (eledom.getAttribute('class').indexOf('writer') > -1) {
+                        ti_estreg = 'E';
+                    } else if (eledom.getAttribute('class').indexOf('reader') > -1) {
+                        ti_estreg = 'L';
+                    } else {
+                        ti_estreg = 'O';
+                    }
+
+                    var il_onchag = eledom.getAttribute('class').indexOf('xaction') > -1 ? true : false;
+                    var ur_pagreg = reg.link == undefined ? '' : reg.link;
+
                     console.log('(' + co_pagina() + ')EVALUACION!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + ']');
                     if (reg.type != undefined && ti_pagreg != reg.type && reg.type > 0) {
                         console.log('(' + co_pagina() + ')[' + reg.regist + ']Es un cambio de tipo:[de:' + ti_pagreg + '][a:' + reg.type + ']');
                         //de cualquier tipo(en span) a!
-                        var td = eledom.parentNode;
-                        var eleid = eledom.getAttribute('id');
-                        var co_regist = eleid.substring(eleid.indexOf('R') + 1, eleid.length - 1);
+
                         console.log('[' + reg.regist + ']eledom.getAttribute(\'class\')=' + eledom.getAttribute('class'));
                         console.log('[' + reg.regist + ']eledom.getAttribute(\'class\').indexof=' + eledom.getAttribute('class').indexOf('writer'));
-                        var ti_estreg = eledom.getAttribute('class').indexOf('writer') > -1 ? 'E' : 'L';
+
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
-                        var il_onchag = eledom.getAttribute('class').indexOf('xaction') > -1 ? true : false;
-                        var ur_pagreg = reg.link == undefined ? '' : reg.link;
+
+                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
+                        console.log("[" + reg.regist + "](" + co_pagina() + ") es el td:" + td);
+                        //?
+                        eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
+                    }
+
+                    //Si el elemento es lo mismo solo que con diferente estado para saltar la limitante del tipo de dato
+                    if (reg.state != undefined && reg.state != ti_estreg) {
+                        ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
+
                         td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
                         console.log("[" + reg.regist + "](" + co_pagina() + ") es el td:" + td);
                         //?
@@ -236,16 +261,19 @@ function loadFormulario64(index, row, aditional, dom2) {
                 }
             }
 
-            console.log("==========ASIGN DATA");
+            eledom = document.getElementsByName(ultraid)[0];
+            console.log("==========ASIGN DATA=>" + ultraid + ",=>?" + eledom);
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -415,8 +443,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                "A"
-                : {
+                        "A"
+                        :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -428,7 +457,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -605,11 +635,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
         var val = null;
 
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 val = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 console.log("ti_pagreg=" + ti_pagreg);
                 if (ti_pagreg == '1') {
@@ -700,7 +732,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                 break;
             }
-            case "A": {
+            case "A":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 if (ti_pagreg == '13') {
                     valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -787,11 +820,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -830,7 +865,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1291,6 +1327,8 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "   </span>";
         } else if (ti_estreg == 'L') {
             html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
+        } else if (ti_estreg == 'O') {
+            html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
         }
     } else if (type == 3) {
         if (ti_estreg == 'E') {
@@ -1301,6 +1339,10 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader pagreg\" >";
             html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
             html += "   </span>";
+        } else if (ti_estreg == 'O') {
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader pagreg\" >";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
+            html += "   </span>";
         }
     } else if (type == 4) {
         if (ti_estreg == 'E') {
@@ -1308,6 +1350,10 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "><option value=\"\"></option></select>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader pagreg\" >";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
+            html += "   </span>";
+        } else if (ti_estreg == 'O') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader pagreg\" >";
             html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
             html += "   </span>";
@@ -1327,10 +1373,17 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
             html += "       </div>";
             html += "   </span>";
+        } else if (ti_estreg == 'O') {
+            html += "   <span id='" + id + "V' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            html += "       <div class='custom-control custom-checkbox'>";
+            html += "           <input id='" + id + "D' type=checkbox class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " checked disabled/>";
+            html += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            html += "       </div>";
+            html += "   </span>";
         }
     } else if (type == 7) {
         if (ti_estreg == 'E') {
-            html += "<span id='" + id + "V' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
+            html += "<span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
             html += "<input type=text id=\"" + id + "_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"dd\"/>";
             html += "<span>/</span>";
             html += "<input type=text id=\"" + id + "_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"mm\"/>";
@@ -1343,17 +1396,26 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "<span id='" + id + "V' name='" + id + "' class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
             html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
             html += "</span>";
+        } else if (ti_estreg == 'O') {
+            html += "<span id='" + id + "V' name='" + id + "' class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
+            html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
+            html += "</span>";
         }
     } else if (type == 34) {
         if (ti_estreg == 'E') {
-            html += "       <span id='" + id + "V' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                + "           <span valpag=\"\"></span>+"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+            html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
+                    + "           <span valpag=\"\"></span>+"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
-            html += "       <span id='" + id + "V' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>+"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+            html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
+                    + "           <span valpag=\"\"></span>+"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+            html += "       </span>";
+        } else if (ti_estreg == 'O') {
+            html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
+                    + "           <span valpag=\"\"></span>+"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         }
     }
