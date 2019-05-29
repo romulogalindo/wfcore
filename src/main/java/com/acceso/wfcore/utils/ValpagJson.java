@@ -32,11 +32,4 @@ public class ValpagJson implements Serializable {
         }
         this.rows.add(rowJson);
     }
-
-    @Override
-    public String toString() {
-        return "ValpagJson{"
-                + "rows=" + rows
-                + '}';
-    }
 }

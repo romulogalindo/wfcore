@@ -867,10 +867,10 @@ function popup_to_master(ls_params) {
     console.log('Recibimos== y a ??>>' + current_pagina);
     //ahora hacia el hijo
     var mframe = document.getElementById('PAG' + current_pagina);
-    console.log('conseguimos la pagina1:' + mframe);
-    console.log('conseguimos la pagina2:' + mframe.contentDocument);
-    console.log('conseguimos la pagina3:' + mframe.contentWindow);
-    console.log('conseguimos la pagina4:' + mframe.contentWindow.document);
+    // console.log('conseguimos la pagina1:' + mframe);
+    // console.log('conseguimos la pagina2:' + mframe.contentDocument);
+    // console.log('conseguimos la pagina3:' + mframe.contentWindow);
+    // console.log('conseguimos la pagina4:' + mframe.contentWindow.document);
     // (mframe.contentDocument || mframe.contentWindow.document).child_popup_update(ls_params);
     // (mframe.contentDocument || mframe.contentWindow).child_popup_update(ls_params);
     mframe.contentWindow.child_popup_update(current_regist, ls_params);
