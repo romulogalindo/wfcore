@@ -26,7 +26,7 @@ public class HttpAPI extends GenericAPI {
         String response = null;
 
         try {
-            _url = new URL("http://example.com");
+            _url = new URL(url);
             if (_url.getProtocol().contentEquals("http")) {
                 conHTTP = (HttpURLConnection) _url.openConnection();
                 conHTTP.setConnectTimeout(timeout);
@@ -79,18 +79,18 @@ public class HttpAPI extends GenericAPI {
     }
 
     public String POST(String url) {
-        return POST(url, Values.HTTP_REQUEST_TIMEOUT, new HashMap<>());
+        return POST(url, new HashMap<>(), Values.HTTP_REQUEST_TIMEOUT);
     }
 
     public String POST(String url, int timeout) {
-        return POST(url, timeout, new HashMap<>());
+        return POST(url, new HashMap<>(), timeout);
     }
 
     public String POST(String url, Map<String, String> params) {
-        return POST(url, Values.HTTP_REQUEST_TIMEOUT, params);
+        return POST(url, params, Values.HTTP_REQUEST_TIMEOUT);
     }
 
-    public String POST(String url, int timeout, Map<String, String> params) {
+    public String POST(String url, Map<String, String> params, int timeout) {
         URL _url;
         HttpURLConnection conHTTP;
         HttpsURLConnection conHTTPS;
