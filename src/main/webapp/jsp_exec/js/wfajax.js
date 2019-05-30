@@ -198,7 +198,7 @@ doPropagg = function (url, regparams, data) {
                         urlpart += '&' + regparams[o];
                     }
                 }
-
+                console.log('regparams:' + regparams);
                 if (rpta.no_action == 'REDIRECT') {
                     window.parent.location.href = url + urlpart;
                 } else if (rpta.no_action == 'POPUP') {

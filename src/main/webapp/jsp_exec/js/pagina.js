@@ -214,8 +214,7 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom);
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?===>" + (reg.type != undefined & reg.type > -1));
 
@@ -271,15 +270,13 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("==========ASIGN DATA=>" + ultraid + ",=>?" + eledom);
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "INPUT": {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -449,9 +446,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                        "A"
-                        :
-                {
+                "A"
+                : {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -463,8 +459,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default:
-                {
+                default: {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -492,13 +487,11 @@ function loadFormulario64(index, row, aditional, dom2) {
             // }
 
             switch (ti_estreg) {
-                case 'O':
-                {
+                case 'O': {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E':
-                {
+                case 'E': {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -516,8 +509,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L':
-                {
+                case 'L': {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -566,7 +558,15 @@ function loadReporte64(rowid, tbody64, row) {
     console.log('====>' + n_itr.replace(/X64UI/g, nrc));
 //    console.log('====>' + n_itr.indexOf('X64UI'));
 //    console.log('====>' + n_itr.indexOf("X64UI"));
-    nr.innerHTML = n_itr.replace(/X64UI/g, nrc).replace(/%3C/g, '<').replace(/%3E/g, '>');
+    n_itr = n_itr.replace(/X64UI/g, 'P' + co_pagina() + nrc);
+    n_itr = n_itr.replace(/%3C/g, '<');
+    n_itr = n_itr.replace(/%3E/g, '>');
+    n_itr = n_itr.replace(/X32UIR/g, '\'' + nrc + '\'');
+    console.log("_________________________________________________________-");
+    console.log(n_itr);
+    console.log("_________________________________________________________-");
+
+    nr.innerHTML = n_itr;
     nr.setAttribute('id', 'row' + rowid);
     tbody64.appendChild(nr);
     //on post tr create and add!
@@ -588,7 +588,8 @@ function loadReporte64(rowid, tbody64, row) {
 
         // console.log('ELE:' + 'C' + rowid + 'R' + reg.regist);
         // alert('XCD');
-        var ereg = document.getElementById('C' + rowid + 'R' + reg.regist);
+        console.log('====>C' + rowid + 'R' + reg.regist + 'V');
+        var ereg = document.getElementById('P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V');
         // console.log('ereg:' + ereg);
         // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
         if (ereg != null) {
@@ -688,125 +689,125 @@ function propag(cycle, co_button, il_proces, co_condes) {
     var preimg = [];
 
     for (var eledom of document.getElementsByClassName('pagreg')) {
+        console.log('[' + eledom.id + ']=?[' + 'P' + co_pagina() + cycle + 'R' + ']??>??' + eledom.id.indexOf('P' + co_pagina() + cycle + 'R'));
+        if (eledom.id.indexOf('P' + co_pagina() + cycle + 'R') > -1) {
+// var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+            var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+            var val = null;
 
-        // var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-        var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-        var val = null;
-
-        switch (eledom.tagName) {
-            case "INPUT":
-            {
-                val = eledom.value;
-                break;
-            }
-            case "SPAN":
-            {
-                var ti_pagreg = eledom.getAttribute('ti_pagreg');
-                console.log("ti_pagreg=" + ti_pagreg);
-                if (ti_pagreg == '1') {
-                    // val = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
-                    // var dom_select = eledom.getElementsByTagName("INPUT")[0];
-                    console.log('VLIS:' + eledom.innerHTML);
-                    if (eledom.innerHTML.length > 0) {
-                        try {
-                            if (eledom.getElementsByTagName("INPUT").length > 0) {
-                                val = eledom.getElementsByTagName("INPUT")[0].value;
-                            } else {
+            switch (eledom.tagName) {
+                case "INPUT": {
+                    val = eledom.value;
+                    break;
+                }
+                case "SPAN": {
+                    var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                    console.log("ti_pagreg=" + ti_pagreg);
+                    if (ti_pagreg == '1') {
+                        // val = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
+                        // var dom_select = eledom.getElementsByTagName("INPUT")[0];
+                        console.log('VLIS:' + eledom.innerHTML);
+                        if (eledom.innerHTML.length > 0) {
+                            try {
+                                if (eledom.getElementsByTagName("INPUT").length > 0) {
+                                    val = eledom.getElementsByTagName("INPUT")[0].value;
+                                } else {
+                                    val = eledom.innerHTML;
+                                }
+                            } catch (e) {
                                 val = eledom.innerHTML;
                             }
+                        }
+                    } else if (ti_pagreg == '3') {
+                        // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                        var dom_select = eledom.getElementsByTagName("SELECT")[0];
+                        try {
+                            val = dom_select.options[dom_select.selectedIndex].value;
                         } catch (e) {
-                            val = eledom.innerHTML;
+                            val = '';
                         }
-                    }
-                } else if (ti_pagreg == '3') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    try {
-                        val = dom_select.options[dom_select.selectedIndex].value;
-                    } catch (e) {
-                        val = '';
-                    }
-                } else if (ti_pagreg == '4') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var dom_select = eledom.getElementsByTagName("SELECT")[0];
-                    try {
-                        val = dom_select.options[dom_select.selectedIndex].value;
-                    } catch (e) {
-                        val = '';
-                    }
-                } else if (ti_pagreg == '5') {
-                    val = eledom.getElementById(eledom.id + '_rb').value;
-                } else if (ti_pagreg == '6') {
-                    val = document.getElementById(eledom.id + 'D').checked;
-                } else if (ti_pagreg == '7') {
-                    // console.log('@@>>' + eledom);
-                    // console.log('@@>>' + eledom.id + '_date');
-                    // console.log('@@>>' + eledom.id + '_date');
-                    // console.log('@@>>' + eledom.getElementById(eledom.id + '_date'));
-                    // val = eledom.getElementById(eledom.id + '_date').value;
-                    val = document.getElementById(eledom.id + '_date').value;
-                } else if (ti_pagreg == '8') {
-                    val = eledom.getElementById(eledom.id + '_ms').value;
-                } else if (ti_pagreg == '9') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    var dom_select = eledom.getElementsByTagName("TEXTAREA")[0];
-                    val = dom_select.value;
-                } else if (ti_pagreg == '13') {
-                    // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
-                } else if (ti_pagreg == '34') {
-                    //PWNDIENTE MARIO!!!
-                    val = eledom.getElementsByTagName("SPAN")[0].getAttribute("valpag");
-                    console.log('ti_pagreg=>' + val);
-                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
-                    //
-                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
-                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
-                } else if (ti_pagreg == '35') {
-                    //PWNDIENTE MARIO!!!
-                    // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
-                    // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
-                    //
-                    // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
-                    // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
-                    val = eledom.getElementsByTagName("IFRAME")[0].contentWindow.getCode();
-                } else if (ti_pagreg == '36') {
-                    var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
-
-                    if (vaform != undefined) {
-                        var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                        if (vafile.files.length > 0) {
-                            preimg[preimg.length] = eledom.getAttribute('id');
+                    } else if (ti_pagreg == '4') {
+                        // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                        var dom_select = eledom.getElementsByTagName("SELECT")[0];
+                        try {
+                            val = dom_select.options[dom_select.selectedIndex].value;
+                        } catch (e) {
+                            val = '';
                         }
-                        val = null;
+                    } else if (ti_pagreg == '5') {
+                        val = eledom.getElementById(eledom.id + '_rb').value;
+                    } else if (ti_pagreg == '6') {
+                        val = document.getElementById(eledom.id + 'D').checked;
+                    } else if (ti_pagreg == '7') {
+                        // console.log('@@>>' + eledom);
+                        // console.log('@@>>' + eledom.id + '_date');
+                        // console.log('@@>>' + eledom.id + '_date');
+                        // console.log('@@>>' + eledom.getElementById(eledom.id + '_date'));
+                        // val = eledom.getElementById(eledom.id + '_date').value;
+                        val = document.getElementById(eledom.id + '_date').value;
+                    } else if (ti_pagreg == '8') {
+                        val = eledom.getElementById(eledom.id + '_ms').value;
+                    } else if (ti_pagreg == '9') {
+                        // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                        var dom_select = eledom.getElementsByTagName("TEXTAREA")[0];
+                        val = dom_select.value;
+                    } else if (ti_pagreg == '13') {
+                        // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                        // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+                    } else if (ti_pagreg == '34') {
+                        //PWNDIENTE MARIO!!!
+                        val = eledom.getElementsByTagName("SPAN")[0].getAttribute("valpag");
+                        console.log('ti_pagreg=>' + val);
+                        // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                        //
+                        // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
+                        // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                    } else if (ti_pagreg == '35') {
+                        //PWNDIENTE MARIO!!!
+                        // eledom.getElementsByTagName("SPAN")[0].setAttribute("valpag", (reg.value == undefined ? '' : reg.value));
+                        // var onclicktext = eledom.getElementsByTagName("BUTTON")[0].getAttribute("onclick").replace("ur_pagreg", "'" + (reg.link == undefined ? '' : (reg.link)) + "'");
+                        //
+                        // eledom.getElementsByTagName("BUTTON")[0].setAttribute("onclick", onclicktext);
+                        // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                        val = eledom.getElementsByTagName("IFRAME")[0].contentWindow.getCode();
+                    } else if (ti_pagreg == '36') {
+                        var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
+
+                        if (vaform != undefined) {
+                            var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+                            if (vafile.files.length > 0) {
+                                preimg[preimg.length] = eledom.getAttribute('id');
+                            }
+                            val = null;
+                        }
+                    } else if (ti_pagreg == '38') {
+
+                        // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
+
+                    } else {
+                        //hacer algo diferente para el tipo 38
+                        // eledom.innerHTML = valdom;
                     }
-                } else if (ti_pagreg == '38') {
 
-                    // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
-
-                } else {
-                    //hacer algo diferente para el tipo 38
-                    // eledom.innerHTML = valdom;
+                    break;
                 }
+                case "A": {
+                    var ti_pagreg = eledom.getAttribute('ti_pagreg');
+                    if (ti_pagreg == '13') {
+                        valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                        eledom.setAttribute('href', valdom);
+                        domtr(eledom).removeAttribute('style');
+                    } else if (ti_pagreg) {
+                        //hacer algo diferente para el tipo 38
+                    }
 
-                break;
-            }
-            case "A":
-            {
-                var ti_pagreg = eledom.getAttribute('ti_pagreg');
-                if (ti_pagreg == '13') {
-                    valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
-                    eledom.setAttribute('href', valdom);
-                    domtr(eledom).removeAttribute('style');
-                } else if (ti_pagreg) {
-                    //hacer algo diferente para el tipo 38
+                    break;
                 }
-
-                break;
             }
+
+            data.append('co_regist' + id, val);
         }
 
-        data.append('co_regist' + id, val);
     }
 
     if (preimg.length == 0) {
@@ -870,22 +871,40 @@ function preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proi
 
 function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data) {
     var parametros = [];
+    var btnpar = [];
 
-    for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
-        var param = eval('BTN' + co_button + 'P')[i];
+    try {
+        btnpar = eval('BTN' + co_button + 'P');
+    } catch (e) {
+        console.error('[prepair_parameters_propag64]e:' + e)
+        //P9213C1R1P
+        try {
+            console.log('----------------->' + 'P' + co_pagina() + cycle + 'BTN' + co_button + 'P');
+            //btnpar = eval('P' + co_pagina() + cycle + 'BTN' + co_button + 'P');
+            eval(document.getElementById('P' + co_pagina() + cycle + 'BTN' + co_button + 'PS').innerHTML);
+            btnpar = eval('P' + co_pagina() + cycle + 'BTN' + co_button + 'P');
+        } catch (e2) {
+            console.error('[prepair_parameters_propag64]e2:' + e2);
+            btnpar = [];
+        }
+        //
+    }
+
+    // for (var i = 0; i < eval('BTN' + co_button + 'P').length; i++) {
+    for (var i = 0; i < btnpar.length; i++) {
+        // var param = eval('BTN' + co_button + 'P')[i];
+        var param = btnpar[i];
         var spagreg = param.getPagreg();
         var sconpar = param.getConpar();
 
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -924,8 +943,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1471,18 +1489,18 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
     } else if (type == 34) {
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                    + "           <span valpag=\"\"></span>+"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                + "           <span valpag=\"\"></span>+"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                    + "           <span valpag=\"\"></span>+"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                + "           <span valpag=\"\"></span>+"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                    + "           <span valpag=\"\"></span>+"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                + "           <span valpag=\"\"></span>+"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         }
     }

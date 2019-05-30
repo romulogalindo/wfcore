@@ -48,13 +48,13 @@ public class MessageService extends Service {
 
     public void sendMessageToUser(Long user, String message) {
         UserBroadcast userBroadcast = users.get(user);
-        System.out.println("userBroadcast = " + userBroadcast);
+        System.out.println("[MessageService:sendMessageToUser] m = " + userBroadcast);
         for (Session session : userBroadcast.getSessions().values()) {
             try {
                 session.getBasicRemote().sendText(message);
             } catch (Exception ep) {
-                System.out.println("ep = " + ep);
-                ep.printStackTrace();
+                System.out.println("[MessageService:sendMessageToUser]e = " + ep);
+//                ep.printStackTrace();
             }
         }
     }
