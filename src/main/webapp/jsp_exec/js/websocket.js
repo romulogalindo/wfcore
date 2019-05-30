@@ -39,11 +39,12 @@ function openWS() {
                 MSG_toWS(loginjson);
             } else {
                 // console.log("WebSocket MESSAGE: " + wsMsg);
-                toascfg();
+
                 console.log('retorno:' + wsMsg);
                 var xmsg = JSON.parse(wsMsg);
+                toascfg(xmsg.position);
 //                pushMessage('info', 'AIO2', wsMsg)
-                pushMessage(xmsg.type, xmsg.title, xmsg.body)
+                pushMessage(xmsg.type, xmsg.title, xmsg.body);
                 // alert('MSG:' + wsMsg);
             }
 
@@ -75,13 +76,13 @@ function MSG_toWS(msg) {
     webSocket.send(msg);
 }
 
-function toascfg() {
+function toascfg(position) {
     toastr.options = {
         "closeButton": true,
         "debug": false,
         "newestOnTop": false,
         "progressBar": true,
-        "positionClass": "md-toast-top-right",
+        "positionClass": "md-" + position,
         "preventDuplicates": false,
         "showDuration": -1,
         "hideDuration": 1000,

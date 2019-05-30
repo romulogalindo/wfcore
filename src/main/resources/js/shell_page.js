@@ -22,6 +22,16 @@ var PARAM = Java.type('com.acceso.wfcore.utils.Param');
 
 var RETORNO_OK = "{}";
 
+/***/
+var MSG_TYPE_INFO = "info";
+var MSG_TYPE_SUCCESS = "success";
+var MSG_TYPE_ERROR = "error";
+var MSG_TYPE_WARNING = "warning";
+
+var MSG_POSITION_TOPRIGHT = "toast-top-right";
+var MSG_POSITION_TOPLEFT = "toast-top-left";
+var MSG_POSITION_BOTTOMRIGHT = "toast-bottom-right";
+var MSG_POSITION_BOTTOMLEFT = "toast-bottom-left";
 /*COALESCE(obj, def)*/
 function COALESCE(obj, def) {
     if (obj) {

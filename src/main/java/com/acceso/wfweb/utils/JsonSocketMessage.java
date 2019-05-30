@@ -1,19 +1,23 @@
 package com.acceso.wfweb.utils;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Rómulo Galindo
  */
-public class JsonSocketMessage {
+public class JsonSocketMessage implements Serializable {
 
     String type;
     String title;
     String body;
+    String position;
 
-    public JsonSocketMessage(String type, String title, String body) {
+    public JsonSocketMessage(String type, String title, String body, String position) {
         this.type = type;
         this.title = title;
         this.body = body;
+        this.position = position;
     }
 
     public String getType() {
@@ -38,6 +42,14 @@ public class JsonSocketMessage {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
 }
