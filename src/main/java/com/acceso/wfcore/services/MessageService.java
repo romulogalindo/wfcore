@@ -1,6 +1,8 @@
 package com.acceso.wfcore.services;
 
 import com.acceso.wfcore.utils.UserBroadcast;
+import com.acceso.wfweb.utils.JsonSocketMessage;
+import com.google.gson.Gson;
 import java.util.HashMap;
 import javax.websocket.Session;
 
@@ -48,10 +50,23 @@ public class MessageService extends Service {
 
     public void sendMessageToUser(Long user, String message) {
         UserBroadcast userBroadcast = users.get(user);
-        System.out.println("[MessageService:sendMessageToUser] m = " + userBroadcast);
+//        System.out.println("[MessageService:sendMessageToUser] m = " + userBroadcast);
         for (Session session : userBroadcast.getSessions().values()) {
             try {
                 session.getBasicRemote().sendText(message);
+            } catch (Exception ep) {
+                System.out.println("[MessageService:sendMessageToUser]e = " + ep);
+//                ep.printStackTrace();
+            }
+        }
+    }
+
+    public void sendMessageToUser(Long user, JsonSocketMessage message) {
+        UserBroadcast userBroadcast = users.get(user);
+        System.out.println("[MessageService:sendMessageToUser] m* = " + userBroadcast + ",JsonSocketMessage=" + message);
+        for (Session session : userBroadcast.getSessions().values()) {
+            try {
+                session.getBasicRemote().sendText(new Gson().toJson(message));
             } catch (Exception ep) {
                 System.out.println("[MessageService:sendMessageToUser]e = " + ep);
 //                ep.printStackTrace();

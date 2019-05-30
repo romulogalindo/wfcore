@@ -30,17 +30,20 @@ function openWS() {
             var wsMsg = messageEvent.data;
             if (wsMsg == 'AIO_WS_READY') {
                 var loginjson = '{\n' +
-                    '\t"status": "OK",\n' +
-                    '\t"type": "login",\n' +
-                    '\t"user": "' + co_usuari() + '",\n' +
-                    '\t"xact": "",\n' +
-                    '\t"mact": ""\n' +
-                    '}';
+                        '\t"status": "OK",\n' +
+                        '\t"type": "login",\n' +
+                        '\t"user": "' + co_usuari() + '",\n' +
+                        '\t"xact": "",\n' +
+                        '\t"mact": ""\n' +
+                        '}';
                 MSG_toWS(loginjson);
             } else {
                 // console.log("WebSocket MESSAGE: " + wsMsg);
                 toascfg();
-                pushMessage('info', 'AIO2', wsMsg)
+                console.log('retorno:' + wsMsg);
+                var xmsg = JSON.parse(wsMsg);
+//                pushMessage('info', 'AIO2', wsMsg)
+                pushMessage(xmsg.type, xmsg.title, xmsg.body)
                 // alert('MSG:' + wsMsg);
             }
 

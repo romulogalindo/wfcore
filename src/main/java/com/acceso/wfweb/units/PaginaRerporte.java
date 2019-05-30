@@ -244,7 +244,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
                 itr += "%3C/script%3E";
 
                 itr += "<button name=\"X64UIR" + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"propag(X32UIR," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
-                        + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + "\" aria-hidden=\"true\"></i>" : "")
+                        + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pr-1\" aria-hidden=\"true\"></i>" : "")
                         + botonDTO.getNo_pagbot()
                         + (botonDTO.getNo_icopos().toUpperCase().contentEquals("RIGHT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pl-1\" aria-hidden=\"true\"></i>" : "")
                         + "</button>";
@@ -284,7 +284,9 @@ public class PaginaRerporte extends Pagina implements Serializable {
 
                             html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"btn btn-default\" onclick=\"propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
                                     + "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n"
+                                    + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pr-1\" aria-hidden=\"true\"></i>" : "")
                                     + botonDTO.getNo_pagbot()
+                                    + (botonDTO.getNo_icopos().toUpperCase().contentEquals("RIGHT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pl-1\" aria-hidden=\"true\"></i>" : "")
                                     + "</button>";
                         }
                     }
