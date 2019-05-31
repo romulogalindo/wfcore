@@ -183,11 +183,14 @@ doPropagg = function (url, regparams, data) {
                 if (rpta.ls_params != undefined) {
                     for (var i = 0; i < rpta.ls_params.length; i++) {
                         console.log("rpta.params[i].no_param=" + rpta.ls_params[i].no_param);
-                        for (var o = 0; o < regparams.length; o++) {
-                            console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + rpta.ls_params[i].no_param);
-                            if (regparams[o].indexOf(rpta.ls_params[i].no_param) > -1) {
-                                regparams[o] = rpta.ls_params[i].no_param + "=" + rpta.ls_params[i].va_param;
+                        if (regparams != null) {
+                            for (var o = 0; o < regparams.length; o++) {
+                                console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + rpta.ls_params[i].no_param);
+                                if (regparams[o].indexOf(rpta.ls_params[i].no_param) > -1) {
+                                    regparams[o] = rpta.ls_params[i].no_param + "=" + rpta.ls_params[i].va_param;
+                                }
                             }
+
                         }
                     }
                 }

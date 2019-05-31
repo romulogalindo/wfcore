@@ -267,6 +267,7 @@ function loadFormulario64(index, row, aditional, dom2) {
             }
 
             eledom = document.getElementsByName(ultraid)[0];
+
             console.log("==========ASIGN DATA=>" + ultraid + ",=>?" + eledom);
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
@@ -609,6 +610,71 @@ function loadReporte64(rowid, tbody64, row) {
             } else if (ereg.getAttribute('ti_pagreg') == '2') {
 //                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
                 ereg.innerHTML = rowid;
+
+            } else if (ereg.getAttribute('ti_pagreg') == '3') {
+//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                //*ereg.innerHTML = rowid;
+                //TEMPORAL=============================
+                var ls_compag;
+                try {
+                    ls_compag = aditional[reg.regist];
+                    console.log('(COMBO)ls_compag?:' + ls_compag);
+                    if (ls_compag == undefined) {
+                        try {
+                            ls_compag = JSON.parse(reg.data);
+                        } catch (e) {
+                            console.log('(COMBO)el combo value!:' + ls_compag);
+                        }
+                    }
+                } catch (e) {
+                    console.log('(COMBO)el combo value!:' + reg.data);
+                    ls_compag = JSON.parse(reg.data);
+                    console.log('(COMBO)el combo value!:' + ls_compag);
+                }
+                //=====================================
+                var dom_compag = "";
+
+                if (ls_compag) {
+                    for (var i = 0; i < ls_compag.length; i++) {
+                        compag = ls_compag[i];
+
+                        dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                    }
+                    ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                }
+
+            } else if (ereg.getAttribute('ti_pagreg') == '4') {
+//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                //*ereg.innerHTML = rowid;
+                //TEMPORAL=============================
+                var ls_compag;
+                try {
+                    ls_compag = aditional[reg.regist];
+                    console.log('(COMBO)ls_compag?:' + ls_compag);
+                    if (ls_compag == undefined) {
+                        try {
+                            ls_compag = JSON.parse(reg.data);
+                        } catch (e) {
+                            console.log('(COMBO)el combo value!:' + ls_compag);
+                        }
+                    }
+                } catch (e) {
+                    console.log('(COMBO)el combo value!:' + reg.data);
+                    ls_compag = JSON.parse(reg.data);
+                    console.log('(COMBO)el combo value!:' + ls_compag);
+                }
+                //=====================================
+                var dom_compag = "<option value=\"\"></option>";
+
+                if (ls_compag) {
+                    for (var i = 0; i < ls_compag.length; i++) {
+                        compag = ls_compag[i];
+
+                        dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                    }
+
+                    ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                }
 
             } else if (ereg.getAttribute('ti_pagreg') == '6') {
                 console.log('tip:' + ereg.getAttribute('ti_pagreg'));
@@ -1206,13 +1272,14 @@ function Row() {
     this.getLs_regist = function () {
         return this.ls_regist;
     }
+
     this.setLs_regist = function (r) {
         this.ls_regist = r;
     }
+
     this.add = function (e) {
         this.ls_regist[this.ls_regist.length] = e;
     }
-
 }
 
 function Reg(key, value) {
@@ -1262,7 +1329,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
     // console.log("'PAG' + co_pagina().length!:" + document.getElementById('PAG' + co_pagina()).tBodies[0].rows);
 
     for (var i = 0; i < document.getElementById('PAG' + co_pagina()).tBodies[0].rows.length; i++) {
-        var x64s = document.getElementById('PAG' + co_pagina()).tBodies[0].rows[i].getElementsByClassName('x64');
+        var x64s = document.getElementById('PAG' + co_pagina()).tBodies[0].rows[i].getElementsByClassName('pagreg');
         if (x64s.length > 0) {
 
             all_regs += "{";
@@ -1272,6 +1339,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                 var x64id = x64.getAttribute('id');
                 var rowuid = x64id.substring(x64id.indexOf('C') + 1, x64id.indexOf('R'));
                 var reguid = x64id.substring(x64id.indexOf('R') + 1, x64id.indexOf('_') == -1 ? x64id.length : x64id.indexOf('_'));
+                reguid = reguid.replace('V', '');
                 var regval = '';
 
                 // var rows_row = ls_rows[parseInt(rowuid) - 1];
@@ -1290,6 +1358,42 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                         regval = x64.checked;
                         all_regs += regval + ",";
                     }
+                }
+                if (x64.tagName == 'SELECT') {
+                    console.log('is select');
+                }
+                if (x64.tagName == 'SPAN') {
+                    var ti_pagreg = x64.getAttribute('ti_pagreg');
+                    switch (ti_pagreg) {
+                        case 1: {
+                            var iinput = x64.getElementsByTagName('INPUT')[0];
+                            if (iinput.getAttribute('TYPE') == 'text') {
+                                regval = iinput.value;
+                                all_regs += "\"" + regval + "\",";
+                            } else if (x64.getAttribute('TYPE') == 'checkbox') {
+                                regval = iinput.checked;
+                                all_regs += regval + ",";
+                            }
+                            break;
+                        }
+                        case 2: {
+                            all_regs += '' + ",";
+                            break;
+                        }
+                        case "3": {
+                            var iselect = x64.getElementsByTagName('SELECT')[0];
+                            console.log("iselect:" + iselect);
+                            regval = iselect.options[iselect.selectedIndex].value;
+                            console.log("regval:" + regval);
+                            all_regs += "\"" + regval + "\",";
+                            break;
+                        }
+                        default: {
+                            all_regs += '\"\"' + ",";
+                        }
+
+                    }
+                    console.log('?is select:' + ti_pagreg);
                 } else {
                     all_regs += "\"\",";
                 }
@@ -1361,7 +1465,6 @@ function dinpag(obj, co_pagreg) {
 
 function PRINTABLE(opt) {
     document.getElementById('pagopt_print').style.visibility = 'visible';
-
 }
 
 function SHOWINFO(opt) {

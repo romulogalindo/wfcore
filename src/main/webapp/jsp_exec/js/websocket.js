@@ -82,7 +82,7 @@ function toascfg(position) {
         "debug": false,
         "newestOnTop": false,
         "progressBar": true,
-        "positionClass": "md-" + position,
+        "positionClass": position,
         "preventDuplicates": false,
         "showDuration": -1,
         "hideDuration": 1000,
