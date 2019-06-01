@@ -117,26 +117,26 @@ function size_of_pagina() {
     document.getElementById('loader').style.height = '' + height_table + 'px';
 }
 
-function pagina() {
-    //Seteamos el height para que lo absorva el iframe!<main.jsp
-    size_of_pagina();
-
-    // console.log('[pagina@' + co_pagina() + ']inut#height_table = ' + document.getElementById('height_table'));
-    // console.log('[pagina@' + co_pagina() + ']inut#height_table.value = ' + document.getElementById('height_table').value);
-    //pedimos que ejecute el valpag y que nos de solo el contenido
-
-    // ASYNBC
-    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
-
-    var input_cansubmit = document.getElementsByTagName('INPUT');
-
-    for (var i = 0; i < input_cansubmit.length; i++) {
-        var input_submit = input_cansubmit[i];
-        if (input_submit.getAttribute('type').toUpperCase() == 'TEXT') {
-            input_submit.addEventListener('keyup', doformulariosubmit);
-        }
-    }
-}
+// function pagina() {
+//     //Seteamos el height para que lo absorva el iframe!<main.jsp
+//     size_of_pagina();
+//
+//     // console.log('[pagina@' + co_pagina() + ']inut#height_table = ' + document.getElementById('height_table'));
+//     // console.log('[pagina@' + co_pagina() + ']inut#height_table.value = ' + document.getElementById('height_table').value);
+//     //pedimos que ejecute el valpag y que nos de solo el contenido
+//
+//     // ASYNBC
+//     doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
+//
+//     var input_cansubmit = document.getElementsByTagName('INPUT');
+//
+//     for (var i = 0; i < input_cansubmit.length; i++) {
+//         var input_submit = input_cansubmit[i];
+//         if (input_submit.getAttribute('type').toUpperCase() == 'TEXT') {
+//             input_submit.addEventListener('keyup', doformulariosubmit);
+//         }
+//     }
+// }
 
 function doformulariosubmit(keyEvent) {
     if (keyEvent.which == 10 || keyEvent.which == 13) {
@@ -879,6 +879,11 @@ function popup_to_master(ls_params) {
     document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
     document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
 
+}
+
+function dynamic_change_page(pag) {
+    var mframe = document.getElementById(pag);
+    mframe.contentWindow.pagina();
 }
 
 /*LOGOUT*/

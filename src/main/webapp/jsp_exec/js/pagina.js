@@ -130,6 +130,7 @@ function pagina_onload(jsonData) {
             var tbody64;
             if (ti_pagina() == 'R') {
                 tbody64 = document.getElementById('PAG' + co_pagina()).getElementsByTagName('TBODY')[0];
+                tbody64.innerHTML = '';
                 itr = itr.replace('<tr>', '').replace('</tr>', '');
             }
 
@@ -211,7 +212,7 @@ function loadFormulario64(index, row, aditional, dom2) {
         console.log('(' + co_pagina() + ')>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
-            console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom);
+            console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName);
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
                 case "SPAN": {
@@ -1588,6 +1589,18 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "<span id='" + id + "' name='" + id + "' class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
             html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
             html += "</span>";
+        }
+    } else if (type == 9) {
+        if (ti_estreg == 'E') {
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"9\" class=\"writer pagreg\" >";
+            html += "       <textarea class=\"w3-input w3-border\" rows=\"5\"></textarea>";
+            html += "   </span>";
+        } else if (ti_estreg == 'L') {
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"9\" class=\"writer pagreg\" >";
+            html += "       <textarea class=\"w3-input w3-border\" rows=\"5\"></textarea>";
+            html += "   </span>";
+        } else if (ti_estreg == 'O') {
+            html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
         }
     } else if (type == 34) {
         if (ti_estreg == 'E') {

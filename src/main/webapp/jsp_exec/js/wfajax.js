@@ -147,9 +147,16 @@ doPropag = function (url, regparams, data) {
                     // window.parent.page_to_master(regparams);
                     window.parent.page_to_master(rpta.ls_params);
                 } else if (rpta.no_action == 'REFRESH') {
-                    for (var i = 0; i < ls_pagina.length; i++) {
+                    for (var i = 0; i < rpta.ls_pagina.length; i++) {
                         //para todos los iframes que coincidan reload
+                        var irpta = rpta.ls_pagina[i];
+                        //decirle al iframe padre que lo refresque
+                        window.parent.dynamic_change_page('PAG' + irpta);
                     }
+                    window.parent.showloading(false);
+                }else{
+                    //se asume que es none
+                    window.parent.showloading(false);
                 }
 
                 // alert('URL>>>' + url + urlpart);
