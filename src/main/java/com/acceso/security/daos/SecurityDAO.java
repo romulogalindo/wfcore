@@ -4,9 +4,9 @@ import com.acceso.security.dtos.PermisbloDTO;
 import com.acceso.security.dtos.RegsesiniDTO;
 import com.acceso.security.dtos.RegsesinifDTO;
 import com.acceso.wfcore.daos.DAO;
-import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.security.utils.Values;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
@@ -17,7 +17,7 @@ public class SecurityDAO extends DAO {
     public static String TAG = "SECURE";
 
     public SecurityDAO() {
-        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public SecurityDAO(StatelessSession session) {
@@ -29,19 +29,12 @@ public class SecurityDAO extends DAO {
 
         NQuery nQuery = new NQuery(TAG + ":REGSES");
 
-//        try {
-//            nQuery.work(MQ.q(Values.QUERYS_SECURITY_REGSESINI_WEB), true, true);
         nQuery.work(this.session.getNamedQuery(Values.wfsistem_ppregsesiniweb_KEY), true, true);
         nQuery.setString("p_username", p_username);
         nQuery.setString("p_password", p_password);
         nQuery.setString("p_remoteip", p_remoteip);
 
         regsesiniDTO = (RegsesiniDTO) nQuery.uniqueResult();
-//        } catch (Exception e) {
-//            System.out.println("=================e = " + e);
-//            e.printStackTrace();
-//        }
-
         return regsesiniDTO;
     }
 

@@ -1,7 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.*;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -14,12 +14,12 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class ContenedorDAO {
+
     StatelessSession session;
 
     public ContenedorDAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<ContenedorDTO> getContenedores() {
@@ -96,7 +96,6 @@ public class ContenedorDAO {
 
             nQuery.setInteger("p_co_pagina", contabDTO.getCo_pagina() == null ? -1 : contabDTO.getCo_pagina());
 
-
             System.out.println("[ContenedorDAO:grabarContenedor] Q = " + nQuery.getQueryString());
 
             EmptyDTO rpta = (EmptyDTO) nQuery.uniqueResult();
@@ -130,7 +129,9 @@ public class ContenedorDAO {
             System.out.println("[ContenedorDAO:deleteContab] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
             try {
-                if (transa != null) transa.rollback();
+                if (transa != null) {
+                    transa.rollback();
+                }
             } catch (Exception ep2) {
             }
         }
@@ -184,7 +185,9 @@ public class ContenedorDAO {
             System.out.println("[ContenedorDAO:deleteConpar] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
             try {
-                if (transa != null) transa.rollback();
+                if (transa != null) {
+                    transa.rollback();
+                }
             } catch (Exception ep2) {
             }
         }
@@ -252,6 +255,7 @@ public class ContenedorDAO {
 
         return pagconpars;
     }
+
     //
 //    public String deleteContenedor(ContenedorDTO usuario) {
 //

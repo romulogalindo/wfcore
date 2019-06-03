@@ -4,7 +4,7 @@ import com.acceso.wfcore.daos.ContenedorDAO;
 import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.*;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import org.primefaces.event.DragDropEvent;
@@ -223,8 +223,8 @@ public class ConpagBean extends MainBean implements Serializable, DefaultMainten
 
     /*EVENTOS:VOID*/
     public void apply() {
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
     }
 
 //    public BotonDTO emptyButton() {

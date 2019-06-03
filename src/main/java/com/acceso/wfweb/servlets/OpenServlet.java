@@ -1,10 +1,8 @@
 package com.acceso.wfweb.servlets;
 
-import com.acceso.wfcore.kernel.AsyncMessage;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfweb.utils.RequestManager;
 
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +25,10 @@ public class OpenServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +58,7 @@ public class OpenServlet extends HttpServlet {
                 System.out.println("api_mact = " + api_mact);
 
                 if (api_type.contains("send")) {
-                    WFCoreListener.APP.messageService.sendMessageToUser(Long.parseLong(api_toid), api_mact);
+                    WFIOAPP.APP.messageService.sendMessageToUser(Long.parseLong(api_toid), api_mact);
                 }
                 OutputStream out = response.getOutputStream();
                 ((ServletOutputStream) out).println("OK");

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../../template/plantilla.xhtml">
+        <ui:define name="content">
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+            </p:confirmDialog>
+
+            <p:panel id="panelListaSis">
+
+                <h:form id="form">
+                    <p:dataTable id="lista"
+                                 var="transa"
+                                 value="#{transactionBean.transax}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 rows="100"
+                                 widgetVar="widTable"
+                                 selectionMode="single"
+                                 selection="#{transactionBean.transa}"
+                                 rowKey="#{transa.id}"
+                                 rowIndexVar="N">
+
+                        <f:facet name="header">
+                            Lista de Sistemas
+                        </f:facet>
+
+                        <p:ajax event="sort" skipChildren="false"/>
+
+                        <p:column style="text-align: right" width="20">
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{N + 1}"/>
+                        </p:column>
+
+                        <p:column sortBy="#{transa.id}" width="50" style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="ID"/>
+                            </f:facet>
+                            <h:outputText value="#{transa.id}"/>
+                        </p:column>
+
+                        <p:column headerText="Usuari" width="50" style="text-align: center;" >
+                            <h:outputText value="#{transa.usuari}"/>
+                        </p:column>
+
+                        <p:column headerText="Query" width="300" style="text-align: left;">
+                            <h:outputText value="#{transa.query}"/>
+                        </p:column>
+
+                        <p:column headerText="Start" width="50">
+                            <p:outputLabel id="fe_start" value="#{transa.start}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </p:outputLabel>
+                        </p:column>
+
+                        <p:column headerText="Finish" width="50">
+                            <p:outputLabel id="fe_finish" value="#{transa.finish}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                            </p:outputLabel>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:panel>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

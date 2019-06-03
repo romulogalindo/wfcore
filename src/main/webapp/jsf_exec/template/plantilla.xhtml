@@ -1,305 +1,312 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <script type="text/javascript">
-        function handleDrop(event, ui) {
-            var droppedCar = ui.draggable;
+    <h:head>
+        <script type="text/javascript">
+            function handleDrop(event, ui) {
+                var droppedCar = ui.draggable;
 
-            droppedCar.fadeOut('fast');
-        }
-    </script>
+                droppedCar.fadeOut('fast');
+            }
+        </script>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <title>WFCORE</title>
+        <title>WFCORE</title>
 
-    <!--<h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>-->
-    <style type="text/css">
-        .p-grid {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex !important;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            margin-right: -0.5em;
-            margin-left: -0.5em;
-            margin-top: 0.5em;
-        }
+        <!--<h:outputStylesheet library="webjars" name="font-awesome/4.7.0/css/font-awesome-jsf.css"/>-->
+        <style type="text/css">
+            .p-grid {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex !important;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                margin-right: -0.5em;
+                margin-left: -0.5em;
+                margin-top: 0.5em;
+            }
 
-        .box {
-            background-color: #cce4f7;
-            text-align: center;
-            padding-top: 1em;
-            padding-bottom: 1em;
-            border-radius: 4px;
-            color: #30383c;
-        }
+            .box {
+                background-color: #cce4f7;
+                text-align: center;
+                padding-top: 1em;
+                padding-bottom: 1em;
+                border-radius: 4px;
+                color: #30383c;
+            }
 
-        .p-col {
-            -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-            -ms-flex-preferred-size: 0;
-            flex-basis: 0;
-            padding: 0.5em;
-        }
+            .p-col {
+                -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                -ms-flex-preferred-size: 0;
+                flex-basis: 0;
+                padding: 0.5em;
+            }
 
-        .buttonnuevo {
-            background: transparent !important;
-            background-color: rgb(17, 111, 191) !important;
-            border-bottom-color: rgb(0, 122, 217) !important;
-            border-bottom-left-radius: 3px !important;
-            border-bottom-right-radius: 3px !important;
-            border-bottom-style: solid !important;
-            border-bottom-width: 1.43333px !important;
-            border-image-outset: 0 !important;
-            border-image-repeat: stretch stretch !important;
-            border-image-slice: 100% !important;
-            border-image-source: none !important;
-            border-image-width: 1 !important;
-            border-left-color: rgb(0, 122, 217) !important;
-            border-left-style: solid !important;
-            border-left-width: 1.43333px !important;
-            border-right-color: rgb(0, 122, 217) !important;
-            border-right-style: solid !important;
-            border-right-width: 1.43333px !important;
-            border-top-color: rgb(0, 122, 217) !important;
-            border-top-left-radius: 3px !important;
-            border-top-right-radius: 3px !important;
-            border-top-style: solid !important;
-            border-top-width: 1.43333px !important;
-            box-sizing: border-box !important;
-            color: rgb(255, 255, 255) !important;
-            cursor: pointer !important;
-            display: inline-block !important;
-            font-family: "Open Sans", "Helvetica Neue", sans-serif !important;
-            font-size: 14px !important;
+            .buttonnuevo {
+                background: transparent !important;
+                background-color: rgb(17, 111, 191) !important;
+                border-bottom-color: rgb(0, 122, 217) !important;
+                border-bottom-left-radius: 3px !important;
+                border-bottom-right-radius: 3px !important;
+                border-bottom-style: solid !important;
+                border-bottom-width: 1.43333px !important;
+                border-image-outset: 0 !important;
+                border-image-repeat: stretch stretch !important;
+                border-image-slice: 100% !important;
+                border-image-source: none !important;
+                border-image-width: 1 !important;
+                border-left-color: rgb(0, 122, 217) !important;
+                border-left-style: solid !important;
+                border-left-width: 1.43333px !important;
+                border-right-color: rgb(0, 122, 217) !important;
+                border-right-style: solid !important;
+                border-right-width: 1.43333px !important;
+                border-top-color: rgb(0, 122, 217) !important;
+                border-top-left-radius: 3px !important;
+                border-top-right-radius: 3px !important;
+                border-top-style: solid !important;
+                border-top-width: 1.43333px !important;
+                box-sizing: border-box !important;
+                color: rgb(255, 255, 255) !important;
+                cursor: pointer !important;
+                display: inline-block !important;
+                font-family: "Open Sans", "Helvetica Neue", sans-serif !important;
+                font-size: 14px !important;
 
-        }
+            }
 
-        /*===RG=====DEL*/
-        .ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
-            border: none;
-        }
+            /*===RG=====DEL*/
+            .ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
+                border: none;
+            }
 
-        .ui-layout-resizer {
-            width: 0px !important;
-        }
+            .ui-layout-resizer {
+                width: 0px !important;
+            }
 
-        .main_breadcrumb {
-            border: none !important;
-            padding: .0em !important;
-        }
+            .main_breadcrumb {
+                border: none !important;
+                padding: .0em !important;
+            }
 
-        .main_opt_buttons td {
-            padding: 0px !important;
-            border: none !important;
-        }
+            .main_opt_buttons td {
+                padding: 0px !important;
+                border: none !important;
+            }
 
-        #mainPanel > div.ui-panel > div.ui-panel-content {
-            border: none !important;
-            padding: 0px !important;
-        }
+            #mainPanel > div.ui-panel > div.ui-panel-content {
+                border: none !important;
+                padding: 0px !important;
+            }
 
-        div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid {
-            /*display: inline-block;*/
-        }
+            div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid {
+                /*display: inline-block;*/
+            }
 
-        div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid td.ui-panelgrid-cell {
-            border: unset;
-        }
+            div#mainPanel div.ui-panel div.ui-panel-content table.ui-panelgrid td.ui-panelgrid-cell {
+                border: unset;
+            }
 
-        #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid .ui-panelgrid-cell {
-            border: none !important;
-        }
+            #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid .ui-panelgrid-cell {
+                border: none !important;
+            }
 
-        #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid {
-            display: block;
-        }
+            #mainPanel > div.ui-panel > div.ui-panel-content table.ui-panelgrid {
+                display: block;
+            }
 
-        .form_col_title {
-            text-align: right;
-            padding-right: 7px !important;
-            /*border-right: 1px solid #cdcdcd !important;*/
-        }
+            .form_col_title {
+                text-align: right;
+                padding-right: 7px !important;
+                /*border-right: 1px solid #cdcdcd !important;*/
+            }
 
-        .form_col_empty {
-            padding: 0px !important;
-        }
+            .form_col_empty {
+                padding: 0px !important;
+            }
 
-        .form_col_detail {
-            text-align: left;
-            font-weight: bold;
-            padding-left: 5px !important;
-        }
+            .form_col_detail {
+                text-align: left;
+                font-weight: bold;
+                padding-left: 5px !important;
+            }
 
-        .table_cell_right {
-            text-align: right;
-        }
+            .table_cell_right {
+                text-align: right;
+            }
 
-        .table_cell_left {
-            text-align: left;
-        }
+            .table_cell_left {
+                text-align: left;
+            }
 
-        .table_cell_center {
-            text-align: center;
-        }
+            .table_cell_center {
+                text-align: center;
+            }
 
-        .table_cell_justify {
-            text-align: justify;
-        }
+            .table_cell_justify {
+                text-align: justify;
+            }
 
-        body .ui-widget:not(.pi), body .ui-widget .ui-widget:not(.pi) {
-            font-size: 11px;
-        }
+            body .ui-widget:not(.pi), body .ui-widget .ui-widget:not(.pi) {
+                font-size: 11px;
+            }
 
-        body .ui-button.ui-button-icon-only .ui-icon {
-            font-size: 11px;
-        }
+            body .ui-button.ui-button-icon-only .ui-icon {
+                font-size: 11px;
+            }
 
-        body .ui-datatable .ui-datatable-data > tr > td {
-            padding: .2em .4em;
-        }
+            body .ui-datatable .ui-datatable-data > tr > td {
+                padding: .2em .4em;
+            }
 
-        body .ui-datatable thead th {
-            padding: .1em .7em;
-        }
+            body .ui-datatable thead th {
+                padding: .1em .7em;
+            }
 
-    </style>
-</h:head>
+        </style>
+    </h:head>
 
-<h:body>
+    <h:body>
 
-    <p:layout fullPage="true">
+        <p:layout fullPage="true">
 
-        <p:layoutUnit position="west" size="230" resizable="false" closable="false" collapsible="true" collapsed="false"
-                      style="text-align:left;border: none;" gutter="0">
+            <p:layoutUnit position="west" size="230" resizable="false" closable="false" collapsible="true" collapsed="false"
+                          style="text-align:left;border: none;" gutter="0">
 
-            <p:growl id="messages" showDetail="true">
-                <p:autoUpdate/>
-            </p:growl>
+                <p:growl id="messages" showDetail="true">
+                    <p:autoUpdate/>
+                </p:growl>
 
-            <p:outputPanel style="text-align: center;">
-                <p:graphicImage style="height: 70px; width: 180px"
-                                value="#{FacesContext.getCurrentInstance().getExternalContext()}/jsf_exec/resources/img/logo2.png"/>
-            </p:outputPanel>
+                <p:outputPanel style="text-align: center;">
+                    <p:graphicImage style="height: 70px; width: 180px"
+                                    value="#{FacesContext.getCurrentInstance().getExternalContext()}/jsf_exec/resources/img/logo2.png"/>
+                </p:outputPanel>
 
-            <p:outputPanel style="border: none; text-align: center;">
-                <p:outputLabel value="#{loginBean.nombre}"/>
-                <br/>
-                <p:outputLabel value="user@acceso.com.pe"/>
-            </p:outputPanel>
-
-            <p:separator/>
-
-            <h:form id="menuForm">
-                <p:menu style="width:220px">
-                    <p:submenu label="Maestros" expanded="true">
-                        <p:menuitem value="#{conexionBean.titleName}" action="#{conexionBean.load}"
-                                    actionListener="#{conexionBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{conexionBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{sistemaBean.titleName}" action="#{sistemaBean.load}"
-                                    actionListener="#{sistemaBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{sistemaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{subSistemaBean.titleName}" action="#{subSistemaBean.load}"
-                                    actionListener="#{subSistemaBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel"
-                                    icon="#{subSistemaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{paqueteBean.titleName}" action="#{paqueteBean.load}"
-                                    actionListener="#{paqueteBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{paqueteBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{moduloBean.titleName}" action="#{moduloBean.load}"
-                                    actionListener="#{moduloBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{moduloBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{menuBean.titleName}" action="#{menuBean.load}"
-                                    actionListener="#{menuBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{menuBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{usuarioBean.titleName}" action="#{usuarioBean.load}"
-                                    actionListener="#{usuarioBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{usuarioBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{contenedorBean.titleName}" action="#{contenedorBean.load}"
-                                    actionListener="#{contenedorBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel"
-                                    icon="#{contenedorBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                        <p:menuitem value="#{paginaBean.titleName}" action="#{paginaBean.load}"
-                                    actionListener="#{paginaBean.doListener}" ajax="true" async="false"
-                                    update="mainPanel" icon="#{paginaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
-
-                    </p:submenu>
-
-                    <p:separator/>
-
-                    <p:submenu label="Sistema" expanded="true">
-                        <p:menuitem value="Configuración" action="#{menuView.exit}" icon="fa fa-gear"/>
-                        <p:menuitem value="Log Out" action="#{menuView.exit}" icon="fa fa-sign-out"/>
-                    </p:submenu>
-                </p:menu>
-            </h:form>
-        </p:layoutUnit>
-
-        <p:layoutUnit position="center" resizable="false">
-            <p:outputPanel id="mainPanel">
-
-                <p:breadCrumb styleClass="main_breadcrumb" model="#{managerBean.model}">
-                    <f:facet name="options">
-                        <h:form>
-                            <p:panelGrid styleClass="main_opt_buttons">
-                                <p:row>
-                                    <p:column>
-                                        <p:spacer width="1" height="24"
-                                                  style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                    </p:column>
-
-                                    <p:column>
-                                        <p:commandButton id="defaultActionButton"
-                                                         value="#{managerBean.defaultActionNameButton}"
-                                                         action="#{managerBean.defaultAction}"
-                                                         rendered="#{managerBean.renderedCommandButton}"
-                                                         icon="#{managerBean.defaultActionIcoButton}"/>
-                                    </p:column>
-
-                                    <p:column>
-                                        <p:menuButton id="optionalActionsMenuButton"
-                                                      model="#{managerBean.menuButton}"
-                                                      rendered="#{managerBean.renderedMenuButton}"
-                                                      icon="fa fa-bars">
-                                        </p:menuButton>
-                                    </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                        </h:form>
-
-                    </f:facet>
-                </p:breadCrumb>
+                <p:outputPanel style="border: none; text-align: center;">
+                    <p:outputLabel value="#{loginBean.nombre}"/>
+                    <br/>
+                    <p:outputLabel value="user@acceso.com.pe"/>
+                </p:outputPanel>
 
                 <p:separator/>
 
-                <!--GLOBAL! confirmacion!!-->
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
-                </p:confirmDialog>
-                <ui:insert name="content">Content</ui:insert>
-            </p:outputPanel>
-        </p:layoutUnit>
+                <h:form id="menuForm">
+                    <p:menu style="width:220px">
+                        <p:submenu label="Maestros" expanded="true">
+                            <p:menuitem value="#{conexionBean.titleName}" action="#{conexionBean.load}"
+                                        actionListener="#{conexionBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{conexionBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
 
-    </p:layout>
+                            <p:menuitem value="#{sistemaBean.titleName}" action="#{sistemaBean.load}"
+                                        actionListener="#{sistemaBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{sistemaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
 
-</h:body>
+                            <p:menuitem value="#{subSistemaBean.titleName}" action="#{subSistemaBean.load}"
+                                        actionListener="#{subSistemaBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel"
+                                        icon="#{subSistemaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                            <p:menuitem value="#{paqueteBean.titleName}" action="#{paqueteBean.load}"
+                                        actionListener="#{paqueteBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{paqueteBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                            <p:menuitem value="#{moduloBean.titleName}" action="#{moduloBean.load}"
+                                        actionListener="#{moduloBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{moduloBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                            <p:menuitem value="#{menuBean.titleName}" action="#{menuBean.load}"
+                                        actionListener="#{menuBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{menuBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                            <p:menuitem value="#{usuarioBean.titleName}" action="#{usuarioBean.load}"
+                                        actionListener="#{usuarioBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{usuarioBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                            <p:menuitem value="#{contenedorBean.titleName}" action="#{contenedorBean.load}"
+                                        actionListener="#{contenedorBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel"
+                                        icon="#{contenedorBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                            <p:menuitem value="#{paginaBean.titleName}" action="#{paginaBean.load}"
+                                        actionListener="#{paginaBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{paginaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+
+                        </p:submenu>
+                        <p:separator/>
+
+                        <p:submenu label="Unicron" expanded="true">
+                            <p:menuitem value="#{transactionBean.titleName}" action="#{transactionBean.load}"
+                                        actionListener="#{transactionBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{transactionBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+                        </p:submenu>
+
+                        <p:separator/>
+
+                        <p:submenu label="Sistema" expanded="true">
+                            <p:menuitem value="Configuración" action="#{menuView.exit}" icon="fa fa-gear"/>
+                            <p:menuitem value="Log Out" action="#{menuView.exit}" icon="fa fa-sign-out"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center" resizable="false">
+                <p:outputPanel id="mainPanel">
+
+                    <p:breadCrumb styleClass="main_breadcrumb" model="#{managerBean.model}">
+                        <f:facet name="options">
+                            <h:form>
+                                <p:panelGrid styleClass="main_opt_buttons">
+                                    <p:row>
+                                        <p:column>
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <p:commandButton id="defaultActionButton"
+                                                             value="#{managerBean.defaultActionNameButton}"
+                                                             action="#{managerBean.defaultAction}"
+                                                             rendered="#{managerBean.renderedCommandButton}"
+                                                             icon="#{managerBean.defaultActionIcoButton}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <p:menuButton id="optionalActionsMenuButton"
+                                                          model="#{managerBean.menuButton}"
+                                                          rendered="#{managerBean.renderedMenuButton}"
+                                                          icon="fa fa-bars">
+                                            </p:menuButton>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </h:form>
+
+                        </f:facet>
+                    </p:breadCrumb>
+
+                    <p:separator/>
+
+                    <!--GLOBAL! confirmacion!!-->
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+                    </p:confirmDialog>
+                    <ui:insert name="content">Content</ui:insert>
+                </p:outputPanel>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
 
 </html>

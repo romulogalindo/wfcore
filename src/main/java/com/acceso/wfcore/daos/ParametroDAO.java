@@ -1,7 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.ConparDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -13,34 +13,34 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class ParametroDAO {
-   StatelessSession session;
 
-   public ParametroDAO() {
-      session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
-   }
+    StatelessSession session;
 
-   public List<ConparDTO> getParametros() {
+    public ParametroDAO() {
+        session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
+    }
 
-      List<ConparDTO> parametros = new ArrayList<>();
-      NQuery nQuery = new NQuery();
+    public List<ConparDTO> getParametros() {
 
-      try {
+        List<ConparDTO> parametros = new ArrayList<>();
+        NQuery nQuery = new NQuery();
 
-         nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PARAMETRO));
+        try {
 
-         System.out.println("[ParametroDAO:getParametros] Q = " + nQuery.getQueryString());
-         parametros = nQuery.list();
-         System.out.println("[ParametroDAO:getParametros] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PARAMETRO));
 
-      } catch (Exception ep) {
-         System.out.println("[ParametroDAO:getParametros] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-         ep.printStackTrace();
-      }
+            System.out.println("[ParametroDAO:getParametros] Q = " + nQuery.getQueryString());
+            parametros = nQuery.list();
+            System.out.println("[ParametroDAO:getParametros] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
-      return parametros;
-   }
+        } catch (Exception ep) {
+            System.out.println("[ParametroDAO:getParametros] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return parametros;
+    }
 
 //   public List<ConparDTO> getParametrosByContenedor(Integer contenedor) {
 //
@@ -63,8 +63,7 @@ public class ParametroDAO {
 //
 //      return parametros;
 //   }
-
-   //    public ParametroDTO grabarParametro(ParametroDTO pagina) {
+    //    public ParametroDTO grabarParametro(ParametroDTO pagina) {
 //
 //        NQuery nQuery = new NQuery();
 //
@@ -119,12 +118,12 @@ public class ParametroDAO {
 //        return resultado;
 //    }
 //
-   public void close() {
-      try {
-         session.close();
-      } catch (Exception ep) {
-         session = null;
-      }
-   }
+    public void close() {
+        try {
+            session.close();
+        } catch (Exception ep) {
+            session = null;
+        }
+    }
 
 }

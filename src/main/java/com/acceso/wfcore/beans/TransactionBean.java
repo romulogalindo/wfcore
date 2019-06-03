@@ -2,9 +2,11 @@ package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.ConexionDAO;
 import com.acceso.wfcore.dtos.ConexionDTO;
+import com.acceso.wfcore.dtos.TransaDTO;
 import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.managers.DataManager;
+import com.acceso.wfcore.transa.Transactional;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -16,29 +18,28 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 /**
- * @author Mario Huillca <mario.huillca@acceso.com.pe>
- * Created on 30 nov. 2018, 15:54:46
+ * @author Mario Huillca <romulo.galindo@gmail.com>
  */
 @ManagedBean
 @SessionScoped
-public class ConexionBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
+public class TransactionBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
-    private static final String URL_LISTA = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
+    private static final String URL_LISTA = "/admin/jsf_exec/pagex/unicron/paginaTransax.xhtml";
     private static final String URL_DETALLE = "/admin/jsf_exec/pagex/conexion/paginaConexiones.xhtml";
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/conexion/paginaRegConexion.xhtml";
 
     public static final String BEAN_NAME = "conexionBean";
 
-    private List<ConexionDTO> conexiones;
-    private ConexionDTO conexion;
+    private List<TransaDTO> transax;
+    private TransaDTO transa;
 
     private boolean isregEditable;
 
-    public ConexionBean() {
+    public TransactionBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Conexiones";
-        this.conexion = new ConexionDTO();
+        this.transa = new TransaDTO();
         this.isregEditable = true;
     }
 
@@ -74,7 +75,7 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
     @Override
     public String defaultAction() {
         // Para el nuevo registro
-        this.conexion = new ConexionDTO();
+        this.transa = new TransaDTO();
         FacesContext context = FacesContext.getCurrentInstance();
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Registro", URL_EDITAR);
@@ -113,101 +114,39 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
     @Override
     public void selectDto() {
         ConexionDAO dao = new ConexionDAO();
-        this.conexiones = dao.getConexiones();
+        this.transax = Transactional.get();
         dao.close();
     }
 
     @Override
     public void saveDto() {
-        ConexionDAO dao = new ConexionDAO();
-        this.conexion = dao.grabarConexion(conexion);
-        this.conexiones = dao.getConexiones();
-        dao.close();
+        //NO IMPLEMENTADO
     }
 
     @Override
     public void updateDto() {
-        ConexionDAO dao = new ConexionDAO();
-        this.conexion = dao.grabarConexion(conexion);
-        this.conexiones = dao.getConexiones();
-        dao.close();
+        //NO IMPLEMENTADO
     }
 
     @Override
     public void deleteDto() {
-        ConexionDAO dao = new ConexionDAO();
-        String resultado = dao.deleteConexion(conexion);
-        this.conexiones = dao.getConexiones();
-        dao.close();
+        //NO IMPLEMENTADO
     }
 
-    /*Prueba la conexión a la base de datos*/
-    public void testConexion() {
-        boolean valid = false;
-        String message = "TEST OK";
-
-        try {
-
-            Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://" + conexion.getUr_domini() + ":" + conexion.getNu_puerto() + "/" + conexion.getNo_datbas(), conexion.getNo_usuari(), conexion.getPw_usuari());
-
-            valid = connection.isValid(1000 * 10);
-
-        } catch (Exception ep) {
-            if (ep instanceof java.sql.SQLException) {
-                message = "TEST FALLÓ: [" + ((java.sql.SQLException) ep).getErrorCode() + "] " + ((java.sql.SQLException) ep).getMessage();
-            } else {
-                message = "TEST FALLÓ: " + ep.getMessage();
-            }
-        }
-
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (valid) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "OK!", message));
-        } else {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "FALLO!", message));
-        }
-
+    public TransaDTO getTransa() {
+        return transa;
     }
 
-    public void aplicarCambios() {
-        /*con todo el input*/
-        System.out.println("Creando datamanager!");
-        DataManager dataManager = new DataManager(conexion.getNo_conexi(), "hibdata.cfg.xml", ApplicationManager.buildDefaultProperties(conexion));
-
-        System.out.println("empieza el cambio");
-        WFIOAPP.APP.getDataSourceService().getManager(conexion.getNo_conexi()).terminate();
-        System.out.println("cerrando antigua conexion");
-        WFIOAPP.APP.getDataSourceService().setManager(conexion.getNo_conexi(), dataManager);
-        System.out.println("poniendo nueva conexion");
-        dataManager.init();
-        System.out.println("conexion inicializada");
+    public void setTransa(TransaDTO transa) {
+        this.transa = transa;
     }
 
-    public ConexionDTO getConexion() {
-        return conexion;
+    public List<TransaDTO> getTransax() {
+        return transax;
     }
 
-    public void setConexion(ConexionDTO conexion) {
-        this.conexion = conexion;
-    }
-
-    public List<ConexionDTO> getConexiones() {
-        for (ConexionDTO conexionDTO : conexiones) {
-//            Statistics statistics = WFIOAPP.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()).getFactory().getStatistics();
-//            System.out.println("statistics.isStatisticsEnabled() = " + statistics.isStatisticsEnabled());
-//            System.out.println("statistics.getSessionOpenCount() = " + statistics.getSessionOpenCount());
-//            System.out.println("statistics.getSessionCloseCount() = " + statistics.getSessionCloseCount());
-//            System.out.println("statistics.getQueries() = " + statistics.getQueries());
-//            System.out.println("statistics.getConnectCount() = " + statistics.getConnectCount());
-            conexionDTO.setIl_conexi(WFIOAPP.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()).getStatus() == DataManager.ACTIVE);
-        }
-
-        return conexiones;
-    }
-
-    public void setConexiones(List<ConexionDTO> conexiones) {
-        this.conexiones = conexiones;
+    public void setTransax(List<TransaDTO> transax) {
+        this.transax = transax;
     }
 
     public boolean isIsregEditable() {

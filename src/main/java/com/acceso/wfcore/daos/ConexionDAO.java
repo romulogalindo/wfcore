@@ -1,13 +1,12 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.ConexionDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
@@ -16,7 +15,7 @@ import java.util.List;
 public class ConexionDAO extends DAO {
 
     public ConexionDAO() {
-        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<ConexionDTO> getConexiones() {

@@ -1,8 +1,9 @@
 package com.acceso.wfcore.utils;
 
 //import com.sun.mail.util.QDecoderStream;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
+import com.acceso.wfcore.transa.Transactional;
 import org.hibernate.Query;
 
 import java.util.Date;
@@ -34,8 +35,6 @@ public class NQuery {
 
     public NQuery(Object object) {
         this.LOG = (object == null ? "" : "[" + object + "] ");
-//        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + "] ";
-//        this.LOG = "[" + (object == null ? "" : object.getClass().getCanonicalName()) + ":" + (object == null ? "" : object.getClass().getEnclosingMethod().getName()) + "] ";
     }
 
     public void work(Query query) {
@@ -50,7 +49,6 @@ public class NQuery {
     }
 
     public void setString(String param_name, String param_value) {
-//        query.setString(param_name, param_value);
         query.setParameter(param_name, param_value, org.hibernate.type.StringType.INSTANCE);
         queryString = queryString.replaceFirst(":" + param_name, "\'" + String.valueOf(param_value) + "\'");
     }
@@ -95,17 +93,16 @@ public class NQuery {
      * @return
      */
     public Object uniqueResult() {
-//        if (this.show_info_log) {
-//            System.out.println(LOG + "Q = " + getQueryString());
-//        }
-        if (WFCoreListener.APP.SHOW_PREQUERY) {
+        if (WFIOAPP.APP.SHOW_PREQUERY) {
             Log.info(LOG + "Q = " + getQueryString());
         }
+
         execution_time = System.currentTimeMillis();
-
+        Long idt = Transactional.insert(0, -1, getQueryString());
         Object object = query.uniqueResult();
-
         execution_time = System.currentTimeMillis() - execution_time;
+        Transactional.update(idt);
+
         if (this.show_debug_log) {
             Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
         }
@@ -116,20 +113,18 @@ public class NQuery {
     /*
      * */
     public List list() {
-//        if (this.show_info_log) {
-//            System.out.println(LOG + "Q = " + getQueryString());
-//        }
-        if (WFCoreListener.APP.SHOW_PREQUERY) {
+        if (WFIOAPP.APP.SHOW_PREQUERY) {
             Log.info(LOG + "Q = " + getQueryString());
         }
 
         execution_time = System.currentTimeMillis();
-
+        Long idt = Transactional.insert(0, -1, getQueryString());
         List list = query.list();
-
         execution_time = System.currentTimeMillis() - execution_time;
+        Transactional.update(idt);
+
         if (this.show_debug_log) {
-            Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+            Log.info(LOG + "Q = " + getQueryString() + " T = " + execution_time + "ms");
         }
 
         return list;
@@ -146,7 +141,7 @@ public class NQuery {
 
         execution_time = System.currentTimeMillis() - execution_time;
         if (this.show_debug_log) {
-            Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+            Log.info(LOG + "Q = " + getQueryString() + " T = " + execution_time + "ms");
         }
 
         return updateResult;

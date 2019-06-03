@@ -2,7 +2,7 @@ package com.acceso.wfweb.servlets;
 
 import com.acceso.wfcore.kernel.AsyncProPag;
 import com.acceso.wfcore.kernel.AsyncValPag;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 
 import java.io.IOException;
 import javax.servlet.AsyncContext;
@@ -27,7 +27,7 @@ public class ValpagServlet extends HttpServlet {
         AsyncContext asyncCtx = request.startAsync();
         asyncCtx.setTimeout(100000);//1 Seg
 
-        WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 1));
+        WFIOAPP.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 1));
     }
 
     @Override
@@ -44,22 +44,22 @@ public class ValpagServlet extends HttpServlet {
         switch (request.getServletPath()) {
             case "/pangolin": {
                 //valpag
-                WFCoreListener.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000, 1));
+                WFIOAPP.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000, 1));
                 break;
             }
             case "/ocelot": {
                 //valpag
-                WFCoreListener.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000, 2));
+                WFIOAPP.APP.getExecutor().execute(new AsyncValPag(asyncCtx, 10000, 2));
                 break;
             }
             case "/beaver": {
                 //propag
-                WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 1));
+                WFIOAPP.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 1));
                 break;
             }
             case "/dingo": {
                 //propag
-                WFCoreListener.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 2));
+                WFIOAPP.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 2));
                 break;
             }
         }

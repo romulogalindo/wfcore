@@ -1,8 +1,8 @@
 package com.acceso.wfweb.daos;
 
 import com.acceso.wfcore.daos.DAO;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfweb.dtos.legacy.*;
-import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfweb.utils.Values;
 import org.hibernate.StatelessSession;
@@ -11,7 +11,6 @@ import org.hibernate.StatelessSession;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class FraworLegacyDAO extends DAO {
 
     public static String TAG = "FRAWOR";
@@ -19,7 +18,7 @@ public class FraworLegacyDAO extends DAO {
 
     public FraworLegacyDAO() {
 //        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
-        this.session = WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession();
+        this.session = WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession();
     }
 
     public FraworLegacyDAO(StatelessSession session) {

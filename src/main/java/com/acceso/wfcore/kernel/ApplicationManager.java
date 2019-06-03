@@ -76,7 +76,6 @@ public class ApplicationManager {
         paginaDTOS = dao.getPaginaDTO(contenedorDTO.getCo_conten(), id_frawor);
         contabDTOS = dao.getContabDTO(contenedorDTO.getCo_conten());
 
-
         //work!
 //        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit(), contabDTOS);
@@ -151,7 +150,7 @@ public class ApplicationManager {
 //                    File pdfFile = createPdf(pdfJson, valpagDTO);
 //                    System.out.println("-->" + pdfFile);
 //
-//                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
+//                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put(codigounico, pdfFile);
 //
 //                    valpagDTO.setVa_pagreg("/doc?ti_docume=J&co_arctem=" + codigounico);
                 }
@@ -200,7 +199,7 @@ public class ApplicationManager {
             if (Util.toInt(valpagDTO.getNo_pagreg(), -1) > 0) {
                 ArchivDTO archivDTO = null;
 
-                Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfaio").getNativeSession());
+                Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
                 archivDTO = dao.getArchiv(Util.toInt(valpagDTO.getNo_pagreg(), -1));
                 dao.close();
 
@@ -220,7 +219,6 @@ public class ApplicationManager {
 
                 }
             }
-
 
             for (PdfRegistJson pdfRegistJson : pdfJson.getRegists()) {
                 if (pdfRegistJson.getPage() != null) {
@@ -264,7 +262,7 @@ public class ApplicationManager {
                         if (pdfRegistJson.getCadena() == null && (pdfRegistJson.getImg() != null & pdfRegistJson.getImg().length() > 0)) {
 
                             ArcadjDTO arcadjDTO = null;
-                            Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+                            Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
                             arcadjDTO = dao.getArcadj(Util.toInt(valpagDTO.getNo_pagreg(), -1));
                             dao.close();
 
@@ -330,7 +328,6 @@ public class ApplicationManager {
 
                 }
             }
-
 
             doc.close();
 

@@ -3,7 +3,7 @@ package com.acceso.wfcore.daos;
 import com.acceso.wfcore.dtos.EstadoDTO;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfcore.dtos.SystemTreeDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.utils.NQuery;
 import org.hibernate.StatelessSession;
@@ -11,7 +11,7 @@ import org.hibernate.StatelessSession;
 public class SystemDAO extends DAO {
 
     public SystemDAO() {
-        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public SystemDAO(StatelessSession session) {
@@ -29,7 +29,7 @@ public class SystemDAO extends DAO {
             systemTreeDTO = (SystemTreeDTO) nQuery.list().get(0);
         } catch (Exception ep) {
             Log.error("**" + ep.getMessage());
-            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+            if (WFIOAPP.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
             }
         }
@@ -48,7 +48,7 @@ public class SystemDAO extends DAO {
         } catch (Exception ep) {
             estadoDTO = new EstadoDTO();
             estadoDTO.setNo_estado("FAIL:" + ep.getMessage());
-            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+            if (WFIOAPP.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
             }
         }

@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.util.HashMap;
 
 public class ZeroDawnCache extends MainCache {
+
     CacheManagerBuilder cacheManagerBuilder;
     CacheManager cacheManager;
     String alias;
@@ -37,7 +38,7 @@ public class ZeroDawnCache extends MainCache {
     }
 
     @Override
-    public void createSpace(String name, Class objectKeyType, Class objectValueType, int timeExpire) {
+    public Cache createSpace(String name, Class objectKeyType, Class objectValueType, int timeExpire) {
         //Se genera la configuracion
         CacheConfiguration cacheConfiguration = null;
         if (timeExpire == -1) {
@@ -53,6 +54,8 @@ public class ZeroDawnCache extends MainCache {
 
         //se agrega al map para una busqueda ràpida
         caches.put(name, cache);
+
+        return cache;
     }
 
     @Override

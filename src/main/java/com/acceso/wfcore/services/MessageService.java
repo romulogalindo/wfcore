@@ -66,6 +66,7 @@ public class MessageService extends Service {
         System.out.println("[MessageService:sendMessageToUser] m* = " + userBroadcast + ",JsonSocketMessage=" + message);
         for (Session session : userBroadcast.getSessions().values()) {
             try {
+                System.out.println("session.isOpen() = " + session.isOpen());
                 session.getBasicRemote().sendText(new Gson().toJson(message));
             } catch (Exception ep) {
                 System.out.println("[MessageService:sendMessageToUser]e = " + ep);

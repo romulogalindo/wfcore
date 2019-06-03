@@ -1,15 +1,14 @@
 package com.acceso.wfcore.apis;
 
 import com.acceso.wfcore.kernel.ApplicationManager;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
+import com.acceso.wfcore.transa.Transactional;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.ValpagJson;
 import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.utils.JsonResponse;
-import com.google.gson.Gson;
-import com.itextpdf.text.pdf.PdfName;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
@@ -98,7 +97,7 @@ public class DataAPI extends GenericAPI {
         execution_time = System.currentTimeMillis();
 
         try {
-            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+            session = WFIOAPP.APP.getDataSourceService().getManager(conectionName).getNativeSession();
             transaction = session.beginTransaction();
             transaction.setTimeout(timeoutseg);
 
@@ -106,15 +105,18 @@ public class DataAPI extends GenericAPI {
             sql.setTimeout(timeoutseg);
             sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 
-            if (WFCoreListener.APP.SHOW_PREQUERY) {
+            if (WFIOAPP.APP.SHOW_PREQUERY) {
                 Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
             }
 
+            Long midt = Transactional.insert(1, Long.parseLong(getCo_usuari()), sqlQuery);
             valReturn = sql.getResultList();
 
             Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
+
+            Transactional.update(midt);
             jsonResponse.setStatus(JsonResponse.OK);
             jsonResponse.setResult(valReturn);
 
@@ -146,7 +148,7 @@ public class DataAPI extends GenericAPI {
 
             Log.error("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
-            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+            if (WFIOAPP.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
             }
         }
@@ -161,7 +163,7 @@ public class DataAPI extends GenericAPI {
         StatelessSession session = null;
 
         try {
-            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+            session = WFIOAPP.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 
             Log.info("[VALPAG_LEGACY@" + conectionName + "] Q = " + sqlQuery);
 
@@ -219,8 +221,6 @@ public class DataAPI extends GenericAPI {
 
 }
 
-
-
 //    public String SQLX(String conectionName, String sqlQuery, int timeoutseg) {
 //        long execution_time;
 //        JsonResponse jsonResponse = new JsonResponse();
@@ -230,7 +230,7 @@ public class DataAPI extends GenericAPI {
 //        execution_time = System.currentTimeMillis();
 //
 //        try {
-//            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+//            session = WFIOAPP.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 //            transaction = session.beginTransaction();
 //            transaction.setTimeout(timeoutseg);
 //
@@ -238,7 +238,7 @@ public class DataAPI extends GenericAPI {
 //            sql.setTimeout(timeoutseg);
 //            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 //
-//            if (WFCoreListener.APP.SHOW_PREQUERY) {
+//            if (WFIOAPP.APP.SHOW_PREQUERY) {
 //                Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
 //            }
 //
@@ -278,14 +278,13 @@ public class DataAPI extends GenericAPI {
 //
 //            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 //
-//            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+//            if (WFIOAPP.APP.THROWS_EXCEPTION) {
 //                ep.printStackTrace();
 //            }
 //        }
 //
 //        return new Gson().toJson(jsonResponse);
 //    }
-
 //    public String SQLVOID(String conectionName, String sqlQuery, int timeoutseg) {
 //        long execution_time;
 //        JsonResponse jsonResponse = new JsonResponse();
@@ -295,7 +294,7 @@ public class DataAPI extends GenericAPI {
 //        execution_time = System.currentTimeMillis();
 //
 //        try {
-//            session = WFCoreListener.APP.getDataSourceService().getManager(conectionName).getNativeSession();
+//            session = WFIOAPP.APP.getDataSourceService().getManager(conectionName).getNativeSession();
 //            transaction = session.beginTransaction();
 //            transaction.setTimeout(timeoutseg);
 //
@@ -341,7 +340,7 @@ public class DataAPI extends GenericAPI {
 //
 //            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 //
-//            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+//            if (WFIOAPP.APP.THROWS_EXCEPTION) {
 //                ep.printStackTrace();
 //            }
 //        }

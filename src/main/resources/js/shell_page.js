@@ -32,6 +32,7 @@ var MSG_POSITION_TOPRIGHT = "md-toast-top-right";
 var MSG_POSITION_TOPLEFT = "md-toast-top-left";
 var MSG_POSITION_BOTTOMRIGHT = "md-toast-bottom-right";
 var MSG_POSITION_BOTTOMLEFT = "md-toast-bottom-left";
+
 /*COALESCE(obj, def)*/
 function COALESCE(obj, def) {
     if (obj) {
@@ -58,14 +59,11 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI
     DATA.setCo_usuari(CO_USUARI);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
-    DATA.setCo_conten(CO_CONTEN);
     DATA.setCo_pagina(CO_PAGINA);
     DATA.setNo_escena('VALPAG');
 
     var VALPAGJS = null;
     var LS_CONPAR = JSON.parse(CONPAR);
-
-    /*CAN USE DO_POST_LOAD_DATA*/
 
     /*MAIN LOGIC TO RUN*/
     USUARI_DATA_VALPAG
@@ -76,6 +74,7 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI
 
 function GET_DO_POST_LOAD_DATA() {
     return DO_POST_LOAD_DATA;
+    DATA.setCo_conten(CO_CONTEN);
 }
 
 function ERROR(msg) {

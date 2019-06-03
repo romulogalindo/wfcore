@@ -1,6 +1,5 @@
 package com.acceso.wfcore.kernel;
 
-import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.daos.Frawor4DAO;
@@ -11,7 +10,6 @@ import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.Map;
-
 
 public class AsyncMessage extends AsyncProcessor {
 
@@ -40,38 +38,38 @@ public class AsyncMessage extends AsyncProcessor {
                 String ls_regist = "{ ";
 
                 Frawor4DAO dao = new Frawor4DAO();
-                Frawor4DAO dao2 = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+//                Frawor4DAO dao2 = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
 
                 dao.deletePagreg(id_frawor, co_pagina, true);
-                dao2.deletePagreg(id_frawor, co_pagina, false);
+//                dao2.deletePagreg(id_frawor, co_pagina, false);
 
                 for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
                     dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
-                    dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
+//                    dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
                     ls_regist = "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
                 }
                 ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
 
                 dao.close();
-                dao2.close();
+//                dao2.close();
 
                 //ejecutar propag
-                String propag_js = (String) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).get(co_pagina);
+                String propag_js = (String) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).get(co_pagina);
                 if (propag_js == null) {
-                    Frawor4DAO dao3 = new Frawor4DAO();
+//                    Frawor4DAO dao3 = new Frawor4DAO();
 //                    propag_js = dao3.getPaginaDTO(co_pagina).getJs_valpag();
-                    dao3.close();
+//                    dao3.close();
 
                     if (propag_js == null) {
                         propag_js = "PROPAGJS = DATA.SQL('wfacr', 'select true as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
                     }
 
-                    WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).put(co_pagina, propag_js);
+                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).put(co_pagina, propag_js);
                 }
 
-                propag_js = Util.getText(WFCoreListener.APP.PROPAGJS).replace("USUARI_DATA_JS_TEXT", propag_js);
+                propag_js = Util.getText(WFIOAPP.APP.PROPAGJS).replace("USUARI_DATA_JS_TEXT", propag_js);
 
-                Object object = il_proces ? WFCoreListener.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
+                Object object = il_proces ? WFIOAPP.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
 
                 out.write(object.toString());
 

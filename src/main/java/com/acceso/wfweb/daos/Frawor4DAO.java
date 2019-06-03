@@ -1,7 +1,7 @@
 package com.acceso.wfweb.daos;
 
 import com.acceso.wfcore.daos.DAO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfweb.dtos.*;
 import com.acceso.wfweb.utils.Values;
@@ -21,7 +21,7 @@ public class Frawor4DAO extends DAO {
     public StatelessSession session;
 
     public Frawor4DAO() {
-        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public Frawor4DAO(StatelessSession session) {

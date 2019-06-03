@@ -1,7 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.SubSistemaDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -13,12 +13,12 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class SubSistemaDAO {
+
     StatelessSession session;
 
     public SubSistemaDAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<SubSistemaDTO> getSubSistemas() {

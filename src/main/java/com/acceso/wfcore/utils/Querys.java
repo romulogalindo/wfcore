@@ -1,6 +1,7 @@
 package com.acceso.wfcore.utils;
 
 import com.acceso.wfcore.dtos.ConexionDTO;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.log.Log;
 import java.util.ArrayList;
@@ -21,8 +22,7 @@ public class Querys {
 
         try {
             nQuery.work(statelessSession.getNamedQuery(Values.SYSQUERYS_NATIVE_GET_ALLCNX));
-//            System.out.println("Q:" + nQuery.getQueryString());
-            if (WFCoreListener.APP.SHOW_PREQUERY) {
+            if (WFIOAPP.APP.SHOW_PREQUERY) {
                 Log.info("Q = " + nQuery.getQueryString());
             }
             execution_time = System.currentTimeMillis();
@@ -32,7 +32,7 @@ public class Querys {
             Log.info("Q = " + nQuery.getQueryString() + " T = " + execution_time + "ms");
         } catch (Exception ep) {
             Log.error("getManagers@Querys :" + ep.getMessage());
-            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+            if (WFIOAPP.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
             }
         } finally {

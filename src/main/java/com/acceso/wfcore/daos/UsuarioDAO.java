@@ -1,8 +1,7 @@
 package com.acceso.wfcore.daos;
 
-import com.acceso.wfcore.dtos.SistemaDTO;
 import com.acceso.wfcore.dtos.UsuarioDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -14,12 +13,12 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class UsuarioDAO {
+
     StatelessSession session;
 
     public UsuarioDAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<UsuarioDTO> getUsuarios() {
@@ -58,7 +57,6 @@ public class UsuarioDAO {
             nQuery.setInteger("co_person", usuario.getCo_person() == null ? -1 : usuario.getCo_person());
             nQuery.setInteger("co_sistem", usuario.getCo_sistem());
             nQuery.setInteger("co_subsis", usuario.getCo_subsis());
-
 
             System.out.println("[UsuarioDAO:grabarUsuario] Q = " + nQuery.getQueryString());
 

@@ -6,7 +6,7 @@ import com.acceso.wfcore.dtos.ConparDTO;
 import com.acceso.wfcore.dtos.ContabDTO;
 import com.acceso.wfcore.dtos.ContenedorDTO;
 import com.acceso.wfcore.dtos.PaginaconDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 
@@ -200,7 +200,6 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
         return URL_EDITAR;
     }
 
-
     public void eventupdateRegist() throws Exception {
         updateRegist();
         FacesContext.getCurrentInstance().getExternalContext().redirect(URL_EDITAR);
@@ -263,10 +262,10 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
     }
 
     public void apply() {
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).clear();
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
     }
 
     public String contab_new() {
@@ -281,7 +280,6 @@ public class ContenedorBean extends MainBean implements Serializable, DefaultMai
 //        return URL_MANAGER_PAGE;
         return URL_CONTAB_EDIT;
     }
-
 
     public String contab_save() {
         ContenedorDAO dao = new ContenedorDAO();

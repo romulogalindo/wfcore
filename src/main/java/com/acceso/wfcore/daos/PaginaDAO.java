@@ -1,7 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.*;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -19,7 +19,7 @@ public class PaginaDAO {
     StatelessSession session;
 
     public PaginaDAO() {
-        this.session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        this.session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public PaginaDAO(StatelessSession session) {

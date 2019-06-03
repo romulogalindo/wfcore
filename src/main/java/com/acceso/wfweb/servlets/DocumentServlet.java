@@ -1,6 +1,6 @@
 package com.acceso.wfweb.servlets;
 
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.beans.legacy.*;
@@ -14,14 +14,12 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.CharacterRun;
 import org.apache.poi.hwpf.usermodel.Range;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -53,10 +51,10 @@ public class DocumentServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -70,7 +68,6 @@ public class DocumentServlet extends HttpServlet {
 //            } else {
 //                co_conexi = Integer.parseInt(request.getAttribute("co_conexi").toString());
 //            }
-
             switch (tipo_doc) {
                 case "1": {
                     // <editor-fold defaultstate="collapsed" desc="CASE 1">
@@ -902,7 +899,6 @@ public class DocumentServlet extends HttpServlet {
                                 p.add(mp);
                             }
 
-
                             PagEspBean pag = new PagEspBean();
                             paginaEspecialDto = pag.docume(Util.toInt(request.getParameter("co_docume")), p, co_conexi);
                             no_docume = paginaEspecialDto.getNo_docume();
@@ -910,7 +906,6 @@ public class DocumentServlet extends HttpServlet {
                     } catch (Exception ep) {
                         ep.printStackTrace();
                     }
-
 
                     no_docume = no_docume.replaceAll("<BR>", "<BR></BR>");
                     no_docume = no_docume.replaceAll("<br>", "<br></br>");
@@ -930,7 +925,6 @@ public class DocumentServlet extends HttpServlet {
                         InputStream stream = new ByteArrayInputStream(no_docume.getBytes(StandardCharsets.ISO_8859_1));
                         XMLWorkerHelper.getInstance().parseXHtml(writer, document, stream);
                         document.close();
-
 
                     } catch (Exception ep) {
                         pdfTempFile = null;
@@ -966,13 +960,13 @@ public class DocumentServlet extends HttpServlet {
                     // <editor-fold defaultstate="collapsed" desc="CASE J:: PAGINA ESPECIAL">
                     boolean showpdf = true;
 
-                    if (request.getParameter("co_arctem") == null || WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem")) == null) {
+                    if (request.getParameter("co_arctem") == null || WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem")) == null) {
                         showpdf = false;
                     }
 
                     out = response.getOutputStream();
                     if (showpdf) {
-                        File pdfFile = (File) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem"));
+                        File pdfFile = (File) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(request.getParameter("co_arctem"));
 
                         response.setContentType("application/pdf");
                         response.addHeader("Content-Disposition", "inline; filename=" + pdfFile.getName());
@@ -1025,7 +1019,7 @@ public class DocumentServlet extends HttpServlet {
                                 String fileName = Util.formatName(item.getName());
                                 ArchivDTO arcadj;
 
-                                Frawor4DAO dao = new Frawor4DAO(WFCoreListener.dataSourceService.getManager("wfaio").getNativeSession());
+                                Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
                                 arcadj = dao.setArchiv(item.getName());
                                 dao.close();
 
@@ -1407,14 +1401,13 @@ public class DocumentServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -1425,10 +1418,10 @@ public class DocumentServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

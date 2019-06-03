@@ -3,10 +3,9 @@ package com.acceso.wfcore.beans;
 import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.*;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
-import com.acceso.wfweb.dtos.TituloDTO;
 import org.primefaces.event.DragDropEvent;
 
 import javax.faces.application.FacesMessage;
@@ -225,11 +224,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     /*EVENTOS:VOID*/
     public void apply() {
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
-//        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
-//        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).clear();
-//        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
-        WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
+//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).clear();
+//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
     }
 
 //    public BotonDTO emptyButton() {

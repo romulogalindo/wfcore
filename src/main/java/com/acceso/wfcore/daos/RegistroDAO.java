@@ -1,7 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.RegistroDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -13,36 +13,36 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class RegistroDAO {
-   StatelessSession session;
 
-   public RegistroDAO() {
-      session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
-   }
+    StatelessSession session;
 
-   public List<RegistroDTO> getRegistros() {
+    public RegistroDAO() {
+        session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
+    }
 
-      List<RegistroDTO> registros = new ArrayList<>();
-      NQuery nQuery = new NQuery();
+    public List<RegistroDTO> getRegistros() {
 
-      try {
+        List<RegistroDTO> registros = new ArrayList<>();
+        NQuery nQuery = new NQuery();
 
-         nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_REGISTRO));
+        try {
 
-         System.out.println("[RegistroDAO:getRegistros] Q = " + nQuery.getQueryString());
-         registros = nQuery.list();
-         System.out.println("[RegistroDAO:getRegistros] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_REGISTRO));
 
-      } catch (Exception ep) {
-         System.out.println("[RegistroDAO:getRegistros] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-         ep.printStackTrace();
-      }
+            System.out.println("[RegistroDAO:getRegistros] Q = " + nQuery.getQueryString());
+            registros = nQuery.list();
+            System.out.println("[RegistroDAO:getRegistros] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
-      return registros;
-   }
+        } catch (Exception ep) {
+            System.out.println("[RegistroDAO:getRegistros] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
 
-   //    public RegistroDTO grabarRegistro(RegistroDTO pagina) {
+        return registros;
+    }
+
+    //    public RegistroDTO grabarRegistro(RegistroDTO pagina) {
 //
 //        NQuery nQuery = new NQuery();
 //
@@ -97,12 +97,12 @@ public class RegistroDAO {
 //        return resultado;
 //    }
 //
-   public void close() {
-      try {
-         session.close();
-      } catch (Exception ep) {
-         session = null;
-      }
-   }
+    public void close() {
+        try {
+            session.close();
+        } catch (Exception ep) {
+            session = null;
+        }
+    }
 
 }

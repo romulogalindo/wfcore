@@ -3,7 +3,7 @@ package com.acceso.security;
 import com.acceso.security.daos.SecurityDAO;
 import com.acceso.security.dtos.PermisbloDTO;
 import com.acceso.security.dtos.RegsesiniDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Security;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Usuario;
@@ -27,8 +27,8 @@ public class DoLogin {
 
     public boolean SecurityLogin(RequestManager requestManager) throws Exception {
 
-        String username = requestManager.getParam(WFCoreListener.APP.getLoginCTRL().getLogin_param_username());
-        String password = requestManager.getParam(WFCoreListener.APP.getLoginCTRL().getLogin_param_password());
+        String username = requestManager.getParam(WFIOAPP.APP.getLoginCTRL().getLogin_param_username());
+        String password = requestManager.getParam(WFIOAPP.APP.getLoginCTRL().getLogin_param_password());
         String remoteip = requestManager.getIp();
 
         SecurityDAO securityDAO = new SecurityDAO();
@@ -61,14 +61,14 @@ public class DoLogin {
         permisbloDTO = securityDAO.getListBloq((int) regsesiniDTO.getCo_usuari());
         securityDAO.close();
 
-        SecurityDAO securityfDAO = new SecurityDAO(WFCoreListener.dataSourceService.getManager("wfacr").getNativeSession());
+        SecurityDAO securityfDAO = new SecurityDAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
         securityfDAO.regsesinif(regsesiniDTO.getId_sesion(), regsesiniDTO.getCo_usuari(), regsesiniDTO.getIp_remoto());
         securityfDAO.close();
 
         //elementos que han sido capados por la capa de securidad ->>> desde la cache
-        Root root = (Root) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE");
+        Root root = (Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE");
         System.out.println("root = " + root);
-        MainMenu mainMenu;// = ((Root) WFCoreListener.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE")).getSistemas().get(0).getSubsistemas().get(0).getPaquetes().get(0).getMmenu();
+        MainMenu mainMenu;// = ((Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE")).getSistemas().get(0).getSubsistemas().get(0).getPaquetes().get(0).getMmenu();
 
         List<PermisbloDTO> permisSistema = getPermisBy("SISTEMA");
         List<PermisbloDTO> permisSubSistema = getPermisBy("SUBSISTEMA");

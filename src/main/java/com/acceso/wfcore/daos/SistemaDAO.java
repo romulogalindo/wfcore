@@ -1,7 +1,7 @@
 package com.acceso.wfcore.daos;
 
 import com.acceso.wfcore.dtos.SistemaDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.NQuery;
 import com.acceso.wfcore.utils.Values;
 import org.hibernate.StatelessSession;
@@ -13,12 +13,12 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:14:24
  */
-
 public class SistemaDAO {
+
     StatelessSession session;
 
     public SistemaDAO() {
-        session = WFCoreListener.dataSourceService.getMainManager().getNativeSession();
+        session = WFIOAPP.APP.dataSourceService.getMainManager().getNativeSession();
     }
 
     public List<SistemaDTO> getSistemas() {
@@ -54,7 +54,6 @@ public class SistemaDAO {
             nQuery.setString("de_sistem", sistema.getDe_sistem());
             nQuery.setString("ur_logsis", sistema.getUr_logsis());
             nQuery.setString("no_temdef", sistema.getNo_temdef());
-
 
             System.out.println("[SistemaDAO:grabarSistema] Q = " + nQuery.getQueryString());
 

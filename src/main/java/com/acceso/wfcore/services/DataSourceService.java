@@ -3,11 +3,13 @@ package com.acceso.wfcore.services;
 import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.managers.DataManager;
+import com.acceso.wfcore.transa.Transactional;
 import com.acceso.wfcore.utils.Querys;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfcore.utils.WFProperties;
 
 import java.util.HashMap;
+import org.h2.tools.Server;
 
 /**
  * @author Rómulo Galindo<romulogalindo@gmail.com>
@@ -17,6 +19,7 @@ public class DataSourceService extends Service {
 
     DataManager mainManager;
     HashMap<String, DataManager> managers;
+    Server AIO_DB_SERVER;
 
     public DataSourceService(String serviceName) {
         super(serviceName);
@@ -50,10 +53,33 @@ public class DataSourceService extends Service {
 
         //se generan los manager y se agregan al hashmap
         Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> managers.put(dto.getNo_conexi(), new DataManager(dto.getNo_conexi(), "hibdata.cfg.xml", ApplicationManager.buildDefaultProperties(dto))));
-//        Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> System.out.println("dto::" + dto));
 
         //luego levantar la lista de manager que manejaran las otras DB's
         managers.forEach((k, v) -> v.init());
+
+        //Crear DB in memory para grabar data
+        try {
+            AIO_DB_SERVER = Server.createTcpServer("-tcp", "-tcpPort", "9092", "-tcpAllowOthers").start();
+            System.out.println("[h2]getStatus = " + AIO_DB_SERVER.getStatus());
+            System.out.println("[h2]getURL = " + AIO_DB_SERVER.getURL());
+            System.out.println("[h2]getService.getType = " + AIO_DB_SERVER.getService().getType());
+            System.out.println("[h2]getService.isDaemon = " + AIO_DB_SERVER.getService().isDaemon());
+
+            Class.forName("org.h2.Driver");
+            java.sql.Connection conn = java.sql.DriverManager.
+                    getConnection("jdbc:h2:mem:testdb", "sa", "");
+            if (!conn.isClosed()) {
+                //crear cllass/hilo de transacciones
+//                Transactional.create();
+                //close
+                conn.close();
+            }
+
+//            System.out.println("Connection Established: "
+//                    + conn.getMetaData().getDatabaseProductName() + "/" + conn.getCatalog());
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
     }
 
     public DataManager getManager(String managerName) {
@@ -66,7 +92,12 @@ public class DataSourceService extends Service {
 
     @Override
     public void stop() {
-
+        try {
+            AIO_DB_SERVER.stop();
+            AIO_DB_SERVER.shutdown();
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
     }
 
     public DataManager getMainManager() {

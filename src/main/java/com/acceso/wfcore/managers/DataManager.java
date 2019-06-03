@@ -2,7 +2,7 @@ package com.acceso.wfcore.managers;
 
 import com.acceso.wfcore.daos.SystemDAO;
 import com.acceso.wfcore.dtos.EstadoDTO;
-import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.utils.WFProperties;
 import org.hibernate.Session;
@@ -62,7 +62,7 @@ public class DataManager extends Manager implements DataBasePowerfull {
             }
             sessionFactory = null;
             Log.error("Initial SessionFactory creation failed." + ex);
-            if (WFCoreListener.APP.THROWS_EXCEPTION) {
+            if (WFIOAPP.APP.THROWS_EXCEPTION) {
                 ex.printStackTrace();
             }
         }

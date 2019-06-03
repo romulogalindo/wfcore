@@ -43,9 +43,7 @@ function openWS() {
                 console.log('retorno:' + wsMsg);
                 var xmsg = JSON.parse(wsMsg);
                 toascfg(xmsg.position);
-//                pushMessage('info', 'AIO2', wsMsg)
-                pushMessage(xmsg.type, xmsg.title, xmsg.body);
-                // alert('MSG:' + wsMsg);
+                pushMessage(xmsg.type, xmsg.title, xmsg.body, xmsg.conten, xmsg.clear);
             }
 
         };
@@ -95,6 +93,18 @@ function toascfg(position) {
     };
 }
 
-function pushMessage(type, title, message) {
-    toastr[type](message, title);
+function pushMessage(type, title, message, conten, clear) {
+    if (clear != undefined) {
+        if (clear == 'true')
+            toastr.remove()
+    }
+
+    if (conten != undefined) {
+        if (conten == co_conten()) {
+            toastr[type](message, title);
+        }
+    } else {
+        toastr[type](message, title);
+    }
+
 }

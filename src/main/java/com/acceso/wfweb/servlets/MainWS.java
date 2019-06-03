@@ -1,7 +1,6 @@
 package com.acceso.wfweb.servlets;
 
-import com.acceso.wfcore.listerners.WFCoreListener;
-import com.acceso.wfcore.utils.Util;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.WSMessage;
 import com.google.gson.Gson;
 
@@ -27,7 +26,7 @@ public class MainWS {
         } catch (Exception ep) {
             System.out.println("ep = " + ep);
         }
-        WFCoreListener.APP.messageService.login(session);
+        WFIOAPP.APP.messageService.login(session);
     }
 
     @OnClose
@@ -42,7 +41,7 @@ public class MainWS {
 //        System.out.println("wsMessage = " + wsMessage);
         switch (wsMessage.getType()) {
             case "login": {
-                WFCoreListener.APP.messageService.putBroadCast(Long.parseLong(wsMessage.getUser()), session);
+                WFIOAPP.APP.messageService.putBroadCast(Long.parseLong(wsMessage.getUser()), session);
                 break;
             }
             case "send": {
@@ -50,7 +49,6 @@ public class MainWS {
             }
         }
     }
-
 
     @OnError
     public void onError(Throwable t) {
