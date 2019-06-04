@@ -11,6 +11,8 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -21,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.json.Json;
+import org.apache.tools.ant.taskdefs.compilers.Sj;
 
 public class Converter {
 
@@ -80,7 +83,6 @@ public class Converter {
             }
 
             //jsonSheets.add(jsonRows);
-
             sheetjson.add("rows", jsonRows);
 
             jsonSheets.add(sheetjson);
@@ -91,32 +93,33 @@ public class Converter {
         return xlsjson;
     }
 
-    public JsonObject XLSX_TO_JSON()
+    public ExcelJson XLSX_TO_JSON()
             throws Exception {
 
-        JsonObject xlsjson = new JsonObject();
-        xlsjson.addProperty("filename", file.getName());
+        ExcelJson excelJson = new ExcelJson();
+        excelJson.setFilename(file.getName());
+        List<SheetJson> sheets = new ArrayList<>();
 
         XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
-        JsonArray jsonSheets = new JsonArray();
-
         for (int i = 0; i < wb.getNumberOfSheets(); i++) {
             XSSFSheet sheet = wb.getSheetAt(i);
             XSSFRow row;
             XSSFCell cell;
 
-            JsonObject sheetjson = new JsonObject();
-            sheetjson.addProperty("name", sheet.getSheetName());
+            SheetJson sheetJsonx = new SheetJson();
+            sheetJsonx.setName(sheet.getSheetName());
 
-            JsonArray jsonRows = new JsonArray();
+//            JsonArray rowsJson = new JsonArray();
+            List<RowSheetJson> rowsx = new ArrayList<>();
 
             Iterator rows = sheet.rowIterator();
             while (rows.hasNext()) {
                 row = (XSSFRow) rows.next();
                 Iterator cells = row.cellIterator();
 
-                JsonArray jsonCells = new JsonArray();
-                JsonObject json_row = new JsonObject();
+                RowSheetJson rowSheetJson = new RowSheetJson();
+//                JsonArray cellsJson = new JsonArray();
+                Map<String, Object> cellsx = new HashMap<>();
 
                 while (cells.hasNext()) {
                     cell = (XSSFCell) cells.next();
@@ -125,31 +128,24 @@ public class Converter {
 
                     if (cellType.getCode() == CellType.NUMERIC.getCode()) {
                         System.out.print("->" + cell.getNumericCellValue() + " ");
-                        json_row.addProperty(cr.formatAsString(), cell.getNumericCellValue());
+                        cellsx.put("" + (cr.getCol() + 1), cell.getNumericCellValue());
                     } else if (cellType.getCode() == CellType.BOOLEAN.getCode()) {
                         System.out.print("->" + cell.getBooleanCellValue() + " ");
-                        json_row.addProperty(cr.formatAsString(), cell.getBooleanCellValue());
+                        cellsx.put("" + (cr.getCol() + 1), cell.getBooleanCellValue());
                     } else {
                         System.out.print("->" + cell.getStringCellValue() + " ");
-                        json_row.addProperty(cr.formatAsString(), cell.getStringCellValue());
+                        cellsx.put("" + (cr.getCol() + 1), cell.getStringCellValue());
                     }
-
-                    jsonCells.add(json_row);
                 }
-
-                jsonRows.add(jsonCells);
+                rowSheetJson.setCells(cellsx);
+                rowsx.add(rowSheetJson);
             }
-
-            //jsonSheets.add(jsonRows);
-
-            sheetjson.add("rows", jsonRows);
-
-            jsonSheets.add(sheetjson);
+            sheetJsonx.setRows(rowsx);
+            sheets.add(sheetJsonx);
         }
 
-        xlsjson.add("sheets", jsonSheets);
-
-        return xlsjson;
+        excelJson.setSheets(sheets);
+        return excelJson;
     }
 
 }

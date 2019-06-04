@@ -1023,9 +1023,10 @@ public class DocumentServlet extends HttpServlet {
                                 arcadj = dao.setArchiv(item.getName());
                                 dao.close();
 
-                                String pre_url = "/home/rgalindo/wfacr_files";
+//                                String pre_url = "/home/rgalindo/wfacr_files";
+                                String pre_url = "C:\\data";
 
-                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()));
+                                File archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()));
 //                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
                                 System.out.println("archivo(1) = " + archivo);
 
@@ -1036,10 +1037,13 @@ public class DocumentServlet extends HttpServlet {
                                         archivo.mkdirs();
                                     }
 
-                                    archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
-
+                                    archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+                                    System.out.println("archivo(3) = " + archivo);
+                                    System.out.println("archivo(3?) = " + archivo.exists());
+                                    
                                     item.write(archivo);
                                     items2.add(arcadj);
+                                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("" + arcadj.getCo_archiv(), archivo);
                                 } catch (Exception ep) {
                                     ep.printStackTrace();
                                 }

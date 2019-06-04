@@ -5,7 +5,9 @@ var Reg = Java.type('com.acceso.wfcore.utils.RegJson');
 var JsonResponse = Java.type('com.acceso.wfweb.utils.JsonResponse');
 var PROPAG = Java.type('com.acceso.wfweb.utils.JsonResponseP');
 var List = Java.type('java.util.ArrayList');
+var Map = Java.type('java.util.HashMap');
 var StringUtils = Java.type('org.apache.commons.lang3.StringUtils');
+var gson_api = Java.type('com.google.gson.Gson');
 
 //APIs
 var main_api_acr_data_api = Java.type('com.acceso.wfcore.apis.DataAPI');
@@ -19,6 +21,7 @@ var SHELL = new main_api_acr_shell_api();
 var CACHE = new main_api_acr_cache_api();
 var MSG = new main_api_acr_messa_api();
 var PARAM = Java.type('com.acceso.wfcore.utils.Param');
+var GSON = new gson_api();
 
 var RETORNO_OK = "{}";
 

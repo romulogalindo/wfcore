@@ -55,7 +55,7 @@ public class MessageService extends Service {
             try {
                 session.getBasicRemote().sendText(message);
             } catch (Exception ep) {
-                System.out.println("[MessageService:sendMessageToUser]e = " + ep);
+//                System.out.println("[MessageService:sendMessageToUser]e = " + ep);
 //                ep.printStackTrace();
             }
         }
@@ -63,11 +63,13 @@ public class MessageService extends Service {
 
     public void sendMessageToUser(Long user, JsonSocketMessage message) {
         UserBroadcast userBroadcast = users.get(user);
-        System.out.println("[MessageService:sendMessageToUser] m* = " + userBroadcast + ",JsonSocketMessage=" + message);
+//        System.out.println("[MessageService:sendMessageToUser] m* = " + userBroadcast + ",JsonSocketMessage=" + message);
         for (Session session : userBroadcast.getSessions().values()) {
             try {
-                System.out.println("session.isOpen() = " + session.isOpen());
-                session.getBasicRemote().sendText(new Gson().toJson(message));
+//                System.out.println("session.isOpen() = " + session.isOpen());
+                if (session.isOpen()) {
+                    session.getBasicRemote().sendText(new Gson().toJson(message));
+                }
             } catch (Exception ep) {
                 System.out.println("[MessageService:sendMessageToUser]e = " + ep);
 //                ep.printStackTrace();

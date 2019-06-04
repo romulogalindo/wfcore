@@ -54,7 +54,7 @@ public class AsyncMessage extends AsyncProcessor {
 //                dao2.close();
 
                 //ejecutar propag
-                String propag_js = (String) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).get(co_pagina);
+                String propag_js = (String) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_pagina);
                 if (propag_js == null) {
 //                    Frawor4DAO dao3 = new Frawor4DAO();
 //                    propag_js = dao3.getPaginaDTO(co_pagina).getJs_valpag();
@@ -64,7 +64,7 @@ public class AsyncMessage extends AsyncProcessor {
                         propag_js = "PROPAGJS = DATA.SQL('wfacr', 'select true as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
                     }
 
-                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).put(co_pagina, propag_js);
+                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_pagina, propag_js);
                 }
 
                 propag_js = Util.getText(WFIOAPP.APP.PROPAGJS).replace("USUARI_DATA_JS_TEXT", propag_js);

@@ -37,6 +37,13 @@ public class ZeroDawnCache extends MainCache {
         cacheManager.close();
     }
 
+    /**
+     * @param name
+     * @param objectKeyType
+     * @param objectValueType
+     * @param timeExpire
+     * @return
+     */
     @Override
     public Cache createSpace(String name, Class objectKeyType, Class objectValueType, int timeExpire) {
         //Se genera la configuracion
@@ -45,7 +52,8 @@ public class ZeroDawnCache extends MainCache {
             cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100)).build();
         } else {
             cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(objectKeyType, objectValueType, ResourcePoolsBuilder.heap(100))
-                    .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeExpire)))
+                    .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(timeExpire)))
+                    //                    .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeExpire)))
                     .build();
         }
 

@@ -6,7 +6,7 @@
     </context-param>
     <context-param>
         <param-name>SHOW_PREQUERY</param-name>
-        <param-value>false</param-value>
+        <param-value>true</param-value>
     </context-param>
     <filter>
         <filter-name>LoginFilter</filter-name>

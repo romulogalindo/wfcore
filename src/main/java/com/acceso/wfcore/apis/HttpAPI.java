@@ -79,34 +79,48 @@ public class HttpAPI extends GenericAPI {
     }
 
     public String POST(String url) {
-        return POST(url, new HashMap<>(), Values.HTTP_REQUEST_TIMEOUT);
+        return POST(url, new HashMap<>(), new HashMap<>(), Values.HTTP_REQUEST_TIMEOUT);
     }
 
     public String POST(String url, int timeout) {
-        return POST(url, new HashMap<>(), timeout);
+        return POST(url, new HashMap<>(), new HashMap<>(), timeout);
     }
 
     public String POST(String url, Map<String, String> params) {
-        return POST(url, params, Values.HTTP_REQUEST_TIMEOUT);
+        return POST(url, new HashMap<>(), params, Values.HTTP_REQUEST_TIMEOUT);
     }
 
-    public String POST(String url, Map<String, String> params, int timeout) {
+    public String POST(String url, Map<String, String> props, Map<String, String> params, int timeout) {
         URL _url;
         HttpURLConnection conHTTP;
         HttpsURLConnection conHTTPS;
         String response = null;
 
         try {
-            _url = new URL("http://example.com");
+            _url = new URL(url);
             if (_url.getProtocol().contentEquals("http")) {
                 conHTTP = (HttpURLConnection) _url.openConnection();
+                conHTTP.setDoOutput(true);
                 conHTTP.setConnectTimeout(timeout);
                 conHTTP.setReadTimeout(timeout);
                 conHTTP.setRequestMethod("POST");
-                conHTTP.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                if (props != null) {
+                    for (HashMap.Entry param : props.entrySet()) {
+                        conHTTP.setRequestProperty("" + param.getKey(), "" + param.getValue());
+                    }
+                } else {
+                    conHTTP.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                }
+
                 String cparams = "";
-                for (HashMap.Entry param : params.entrySet()) {
-                    cparams += param.getKey() + "=" + param.getValue() + "&";
+                if (conHTTP.getRequestProperty("Content-Type").toLowerCase().startsWith("application/json")) {
+                    for (HashMap.Entry param : params.entrySet()) {
+                        cparams += param.getValue();
+                    }
+                } else {
+                    for (HashMap.Entry param : params.entrySet()) {
+                        cparams += param.getKey() + "=" + param.getValue() + "&";
+                    }
                 }
 
                 OutputStreamWriter writer = new OutputStreamWriter(
@@ -132,13 +146,27 @@ public class HttpAPI extends GenericAPI {
                 conHTTP.disconnect();
             } else {
                 conHTTPS = (HttpsURLConnection) _url.openConnection();
+                conHTTPS.setDoOutput(true);
                 conHTTPS.setConnectTimeout(timeout);
                 conHTTPS.setReadTimeout(timeout);
                 conHTTPS.setRequestMethod("POST");
-                conHTTPS.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                if (props != null) {
+                    for (HashMap.Entry param : props.entrySet()) {
+                        conHTTPS.setRequestProperty("" + param.getKey(), "" + param.getValue());
+                    }
+                } else {
+                    conHTTPS.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                }
+
                 String cparams = "";
-                for (HashMap.Entry param : params.entrySet()) {
-                    cparams += param.getKey() + "=" + param.getValue() + "&";
+                if (conHTTPS.getRequestProperty("Content-Type").toLowerCase().startsWith("application/json")) {
+                    for (HashMap.Entry param : params.entrySet()) {
+                        cparams += param.getValue();
+                    }
+                } else {
+                    for (HashMap.Entry param : params.entrySet()) {
+                        cparams += param.getKey() + "=" + param.getValue() + "&";
+                    }
                 }
 
                 OutputStreamWriter writer = new OutputStreamWriter(
@@ -166,8 +194,9 @@ public class HttpAPI extends GenericAPI {
 
         } catch (Exception ep) {
             Util.toJSON(JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, ep.getMessage())));
+            ep.printStackTrace();
         }
-
+        System.out.println("response = " + response);
         return Util.toJSON(JsonResponse.defultJsonResponseOK(response));
     }
 

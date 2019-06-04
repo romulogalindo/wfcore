@@ -108,7 +108,7 @@ public class WFIOAPP {
 //        Log.info("╟-----------------------------------------------╢");
 
         Log.info("╚===============================================╝");
-        
+
         //creamos la cache del menu - LVL1
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_MENUTREE, String.class, Object.class, -1);
 
@@ -119,7 +119,7 @@ public class WFIOAPP {
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_PAGEJS, String.class, Object.class, -1);
 
         //creamos la cache de archivos - LVL2
-        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 1200);
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_FILEX, String.class, Object.class, 60 * 6);
 
         //construiremos el objeto cache(no es renderer)
         SystemTreeDTO systemTreeDTO;

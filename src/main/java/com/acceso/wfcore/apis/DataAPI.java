@@ -6,8 +6,10 @@ import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.transa.Transactional;
 import com.acceso.wfcore.utils.Converter;
 import com.acceso.wfcore.utils.ErrorMessage;
+import com.acceso.wfcore.utils.ExcelJson;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.ValpagJson;
+import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.utils.JsonResponse;
 import org.apache.commons.io.FilenameUtils;
@@ -16,7 +18,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
-import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -193,34 +194,35 @@ public class DataAPI extends GenericAPI {
     /**
      *
      */
-    public JsonObject READ_FROM_FILE(long co_archiv) {
-        //LEER EL CO_ARCHIV y obtener el file
-
-        return READ_FROM_FILE("/home/rgalindo/" + co_archiv);
-    }
-
-    public JsonObject READ_FROM_FILE(String path) {
-        File file;
-        JsonObject jsonObject = null;
+//    public JsonObject READ_FROM_FILE(long co_archiv) {
+//        //LEER EL CO_ARCHIV y obtener el file
+//
+//        return READ_FROM_FILE("/home/rgalindo/" + co_archiv);
+//    }
+    public ExcelJson READ_FROM_FILE(long co_archiv) {
+        System.out.println("co_archiv = " + co_archiv);
+        File file = (File) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get("" + co_archiv);
+        System.out.println("file = " + file);
+        ExcelJson excelJson = null;
 
         try {
-            file = new File(path);
+//            file = new File(path);
             String extension = FilenameUtils.getExtension(file.getName()).toUpperCase();
             switch (extension) {
-                case "XLS": {
-                    jsonObject = new Converter(file).XLS_TO_JSON();
-                    break;
-                }
+//                case "XLS": {
+//                    jsonObject = new Converter(file).XLS_TO_JSON();
+//                    break;
+//                }
                 case "XLSX": {
-                    jsonObject = new Converter(file).XLSX_TO_JSON();
+                    excelJson = new Converter(file).XLSX_TO_JSON();
                     break;
                 }
             }
         } catch (Exception ep) {
             return null;
         }
-
-        return jsonObject;
+        
+        return excelJson;
     }
 
 }
