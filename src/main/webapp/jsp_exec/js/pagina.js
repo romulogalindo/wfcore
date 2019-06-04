@@ -215,8 +215,7 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName);
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?===>" + (reg.type != undefined & reg.type > -1));
 
@@ -273,15 +272,13 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("==========ASIGN DATA=>" + ultraid + ",=>?" + eledom);
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "INPUT": {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -451,9 +448,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                        "A"
-                        :
-                {
+                "A"
+                : {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -465,8 +461,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default:
-                {
+                default: {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -494,13 +489,11 @@ function loadFormulario64(index, row, aditional, dom2) {
             // }
 
             switch (ti_estreg) {
-                case 'O':
-                {
+                case 'O': {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E':
-                {
+                case 'E': {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -522,8 +515,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L':
-                {
+                case 'L': {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -759,7 +751,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
             }
         }
     }
-    ls_conpar = ls_conpar.substring(0, ls_conpar.length - 1);
+    ls_conpar = ls_conpar.length > 1 ? ls_conpar.substring(0, ls_conpar.length - 1) : ls_conpar;
     ls_conpar += "}";
     console.log("ls_conpar:" + ls_conpar);
     data.append('ls_conpar', ls_conpar);
@@ -775,13 +767,11 @@ function propag(cycle, co_button, il_proces, co_condes) {
             var val = null;
 
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "INPUT": {
                     val = eledom.value;
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("ti_pagreg=" + ti_pagreg);
                     if (ti_pagreg == '1') {
@@ -872,8 +862,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                     break;
                 }
-                case "A":
-                {
+                case "A": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -982,13 +971,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -1027,8 +1014,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1384,8 +1370,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                 if (x64.tagName == 'SPAN') {
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case 1:
-                        {
+                        case 1: {
                             var iinput = x64.getElementsByTagName('INPUT')[0];
                             if (iinput.getAttribute('TYPE') == 'text') {
                                 regval = iinput.value;
@@ -1396,13 +1381,11 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             }
                             break;
                         }
-                        case 2:
-                        {
+                        case 2: {
                             all_regs += '' + ",";
                             break;
                         }
-                        case "3":
-                        {
+                        case "3": {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;
@@ -1410,8 +1393,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + regval + "\",";
                             break;
                         }
-                        default:
-                        {
+                        default: {
                             all_regs += '\"\"' + ",";
                         }
 
@@ -1627,18 +1609,18 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
     } else if (type == 34) {
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                    + "           <span valpag=\"\"></span>+"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                + "           <span valpag=\"\"></span>+"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                    + "           <span valpag=\"\"></span>+"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                + "           <span valpag=\"\"></span>+"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                    + "           <span valpag=\"\"></span>+"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                + "           <span valpag=\"\"></span>+"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         }
     }

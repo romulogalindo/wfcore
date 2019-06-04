@@ -4,6 +4,7 @@ import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.transa.Transactional;
+import com.acceso.wfcore.utils.Converter;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.ValpagJson;
@@ -15,6 +16,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -191,32 +193,34 @@ public class DataAPI extends GenericAPI {
     /**
      *
      */
-    public JsonResponse READ_FROM_FILE(long co_archiv) {
+    public JsonObject READ_FROM_FILE(long co_archiv) {
         //LEER EL CO_ARCHIV y obtener el file
-        return null;
+
+        return READ_FROM_FILE("/home/rgalindo/" + co_archiv);
     }
 
-    public JsonResponse READ_FROM_FILE(String path) {
+    public JsonObject READ_FROM_FILE(String path) {
         File file;
+        JsonObject jsonObject = null;
 
         try {
             file = new File(path);
+            String extension = FilenameUtils.getExtension(file.getName()).toUpperCase();
+            switch (extension) {
+                case "XLS": {
+                    jsonObject = new Converter(file).XLS_TO_JSON();
+                    break;
+                }
+                case "XLSX": {
+                    jsonObject = new Converter(file).XLSX_TO_JSON();
+                    break;
+                }
+            }
         } catch (Exception ep) {
             return null;
         }
 
-        String extension = FilenameUtils.getExtension(file.getName()).toUpperCase();
-        switch (extension) {
-            case "XLS": {
-                //---->
-                break;
-            }
-            case "XLSX": {
-                //---->
-                break;
-            }
-        }
-        return null;
+        return jsonObject;
     }
 
 }

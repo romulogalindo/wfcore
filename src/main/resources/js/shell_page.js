@@ -94,7 +94,7 @@ function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, I
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_conten(CO_CONTEN);
     DATA.setCo_pagina(CO_PAGINA);
-    DATA.setNo_escena('COMPAG');
+    DATA.setNo_escena('PROPAG');
 
     var PROPAGJS = null;
     var LS_REGIST = JSON.parse(REGIST);
@@ -112,7 +112,7 @@ function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, 
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_conten(CO_CONTEN);
     DATA.setCo_pagina(CO_PAGINA);
-    DATA.setNo_escena('COMPAG');
+    DATA.setNo_escena('PROPAG');
 
     var PROPAGJS = null;
     // var LS_REGIST = JSON.parse(REGIST);
