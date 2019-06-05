@@ -32,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * @author rgalindo
@@ -49,10 +50,10 @@ public class DocumentServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -1059,6 +1060,38 @@ public class DocumentServlet extends HttpServlet {
 
 //                System.out.println("valpagDTO = " + valpagDTO);
                 }
+                case "DOWNLOAD": {
+                    String fileitem = request.getParameter("fileitem");
+                    File file = (File) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(fileitem);
+
+                    response.setHeader("Content-disposition", "attachment; filename=" + file.getName());
+                    String ext = FilenameUtils.getExtension(file.getName()).toUpperCase();
+
+                    if (ext.contentEquals("TXT")) {
+                        response.setContentType("text/plain");
+                    } else if (ext.contentEquals("XLS")) {
+                        response.setContentType("application/vnd.ms-excel");
+                    } else if (ext.contentEquals("XLSX")) {
+                        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    }
+
+                    try {
+                        InputStream in = new FileInputStream(file);
+                        out = response.getOutputStream();
+                        byte[] buffer = new byte[1048];
+
+                        int numBytesRead;
+                        while ((numBytesRead = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, numBytesRead);
+                        }
+
+                        out.flush();
+                        out.close();
+                    } catch (Exception ep) {
+                        ep.printStackTrace();
+                    }
+                    break;
+                }
 
 //                System.out.println("valpagDTO = " + valpagDTO);
             }
@@ -1398,14 +1431,13 @@ public class DocumentServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -1416,10 +1448,10 @@ public class DocumentServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

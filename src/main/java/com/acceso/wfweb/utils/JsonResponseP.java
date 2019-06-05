@@ -21,13 +21,19 @@ public class JsonResponseP implements Serializable {
     String co_condes;
     List<Param> ls_params;
     List<String> ls_pagina;
+    String ur_file;
 
     public JsonResponseP(String no_action, String co_condes, List<Param> ls_params, List<String> ls_pagina) {
+        this(no_action, co_condes, ls_params, ls_pagina, null);
+    }
+
+    public JsonResponseP(String no_action, String co_condes, List<Param> ls_params, List<String> ls_pagina, String ur_file) {
         this.status = OK;
         this.no_action = no_action;
         this.co_condes = co_condes;
         this.ls_params = ls_params;
         this.ls_pagina = ls_pagina;
+        this.ur_file = ur_file;
     }
 
     public String getStatus() {
@@ -69,8 +75,17 @@ public class JsonResponseP implements Serializable {
     public void setLs_pagina(List<String> ls_pagina) {
         this.ls_pagina = ls_pagina;
     }
+
+    public String getUr_file() {
+        return ur_file;
+    }
+
+    public void setUr_file(String ur_file) {
+        this.ur_file = ur_file;
+    }
+
     public static JsonResponseP defultJsonResponseOK(Object result) {
-        JsonResponseP jsonResponse = new JsonResponseP(JsonResponseP.REDIRECT,null,null,null);
+        JsonResponseP jsonResponse = new JsonResponseP(JsonResponseP.REDIRECT, null, null, null);
 //        jsonResponse.setStatus(JsonResponse.OK);
 //        jsonResponse.setNo_action(JsonResponseP.REDIRECT);
         return jsonResponse;

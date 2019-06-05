@@ -154,7 +154,11 @@ doPropag = function (url, regparams, data) {
                         window.parent.dynamic_change_page('PAG' + irpta);
                     }
                     window.parent.showloading(false);
-                }else{
+                } else if (rpta.no_action == 'DOWNLOAD') {
+                    var ff = rpta.ur_file;
+                    document.getElementById("downloader").src = "/doc?ti_docume=DOWNLOAD&fileitem=" + ff;
+                    window.parent.showloading(false);
+                } else {
                     //se asume que es none
                     window.parent.showloading(false);
                 }
@@ -222,7 +226,7 @@ doPropagg = function (url, regparams, data) {
                         window.parent.dynamic_change_page('PAG' + irpta);
                     }
                     window.parent.showloading(false);
-                }else{
+                } else {
                     //se asume que es none
                     window.parent.showloading(false);
                 }

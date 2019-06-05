@@ -1,10 +1,12 @@
 package com.acceso.wfcore.apis;
 
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.utils.JsonResponse;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -200,4 +202,11 @@ public class HttpAPI extends GenericAPI {
         return Util.toJSON(JsonResponse.defultJsonResponseOK(response));
     }
 
+    public String URL(File file) {
+        System.out.println("file = " + file);
+        Long l = System.currentTimeMillis();
+        System.out.println("l = FILE" + l);
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("FILE" + l, file);
+        return "FILE" + l;
+    }
 }

@@ -4,6 +4,7 @@ import com.acceso.wfcore.kernel.ApplicationManager;
 import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.transa.Transactional;
+import com.acceso.wfcore.utils.AliasToEntityOrderedMapResultTransformer;
 import com.acceso.wfcore.utils.Converter;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.ExcelJson;
@@ -21,6 +22,7 @@ import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +96,8 @@ public class DataAPI extends GenericAPI {
     public JsonResponse SQL(String conectionName, String sqlQuery, int timeoutseg) {
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();
-        List<Map<String, Object>> valReturn;
+//        List<Map<String, Object>> valReturn;
+        List<LinkedHashMap<String, Object>> valReturn;
         StatelessSession session = null;
         Transaction transaction = null;
         execution_time = System.currentTimeMillis();
@@ -106,7 +109,8 @@ public class DataAPI extends GenericAPI {
 
             Query sql = session.createNativeQuery(sqlQuery);
             sql.setTimeout(timeoutseg);
-            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+//            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+            sql.setResultTransformer(AliasToEntityOrderedMapResultTransformer.INSTANCE);
 
             if (WFIOAPP.APP.SHOW_PREQUERY) {
                 Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
@@ -193,6 +197,8 @@ public class DataAPI extends GenericAPI {
 
     /**
      *
+     * @param co_archiv
+     * @return
      */
     public ExcelJson READ_FROM_FILE(long co_archiv) {
         System.out.println("co_archiv = " + co_archiv);
@@ -204,10 +210,10 @@ public class DataAPI extends GenericAPI {
 //            file = new File(path);
             String extension = FilenameUtils.getExtension(file.getName()).toUpperCase();
             switch (extension) {
-//                case "XLS": {
-//                    jsonObject = new Converter(file).XLS_TO_JSON();
-//                    break;
-//                }
+                case "XLS": {
+                    excelJson = new Converter(file).XLS_TO_JSON();
+                    break;
+                }
                 case "XLSX": {
                     excelJson = new Converter(file).XLSX_TO_JSON();
                     break;
@@ -220,136 +226,25 @@ public class DataAPI extends GenericAPI {
         return excelJson;
     }
 
-    public File CREATE_FILE(String filename, Object result) {
+    public File CREATE_FILE(String filename, String extension, Object result) {
         File file = null;
+        try {
+//            file = File.createTempFile(filename, "." + extension);
+            file = new File(System.getProperty("java.io.tmpdir") + File.separator + filename + "." + extension);
+        } catch (Exception ep) {
+            file = null;
+        }
+
+        System.out.println("file = " + file);
+        if (extension.toUpperCase().contains("XLS")) {
+            file = new Converter(file).OBJECT_TO_XLS(result);
+        } else if (extension.toUpperCase().contains("XLSX")) {
+            file = new Converter(file).OBJECT_TO_XLS(result);
+        } else if (extension.toUpperCase().contains("TXT")) {
+            file = new Converter(file).OBJECT_TO_TXT(result);
+        }
+
         return file;
     }
 
 }
-
-//    public String SQLX(String conectionName, String sqlQuery, int timeoutseg) {
-//        long execution_time;
-//        JsonResponse jsonResponse = new JsonResponse();
-//        List<Map<String, Object>> valReturn;
-//        StatelessSession session = null;
-//        Transaction transaction = null;
-//        execution_time = System.currentTimeMillis();
-//
-//        try {
-//            session = WFIOAPP.APP.getDataSourceService().getManager(conectionName).getNativeSession();
-//            transaction = session.beginTransaction();
-//            transaction.setTimeout(timeoutseg);
-//
-//            Query sql = session.createNativeQuery(sqlQuery);
-//            sql.setTimeout(timeoutseg);
-//            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-//
-//            if (WFIOAPP.APP.SHOW_PREQUERY) {
-//                Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery);
-//            }
-//
-//            valReturn = sql.getResultList();
-//
-//            Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
-//            transaction.commit();
-//            session.close();
-//            jsonResponse.setStatus(JsonResponse.OK);
-//            jsonResponse.setResult(valReturn);
-//
-//        } catch (Exception ep) {
-//            System.out.println("[1]ep = " + ep);
-//
-//            try {
-//                if (transaction != null) {
-//                    transaction.rollback();
-//                }
-//            } catch (Exception ep2) {
-//                transaction = null;
-//            }
-//
-//            if (session != null) {
-//                session = null;
-//            }
-//
-//            ErrorMessage errormessage = Util.getError(ep);
-//            if (errormessage == null) {
-//                jsonResponse.setStatus(JsonResponse.OK);
-//                jsonResponse.setResult("[]");
-//                jsonResponse.setError(null);
-//            } else {
-//                jsonResponse.setStatus(JsonResponse.ERROR);
-//                jsonResponse.setResult(null);
-//                jsonResponse.setError(Util.getError(ep));
-//            }
-//
-//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
-//
-//            if (WFIOAPP.APP.THROWS_EXCEPTION) {
-//                ep.printStackTrace();
-//            }
-//        }
-//
-//        return new Gson().toJson(jsonResponse);
-//    }
-//    public String SQLVOID(String conectionName, String sqlQuery, int timeoutseg) {
-//        long execution_time;
-//        JsonResponse jsonResponse = new JsonResponse();
-//        String valReturn;
-//        StatelessSession session = null;
-//        Transaction transaction = null;
-//        execution_time = System.currentTimeMillis();
-//
-//        try {
-//            session = WFIOAPP.APP.getDataSourceService().getManager(conectionName).getNativeSession();
-//            transaction = session.beginTransaction();
-//            transaction.setTimeout(timeoutseg);
-//
-//            Query sql = session.createNativeQuery(sqlQuery);
-//            sql.setTimeout(timeoutseg);
-//            sql.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-//
-//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery);
-//
-//            valReturn = "" + sql.executeUpdate();
-//
-//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
-//            transaction.commit();
-//            session.close();
-//            jsonResponse.setStatus(JsonResponse.OK);
-//            jsonResponse.setResult(valReturn);
-//
-//        } catch (Exception ep) {
-//            System.out.println("[1]ep = " + ep);
-//
-//            try {
-//                if (transaction != null) {
-//                    transaction.rollback();
-//                }
-//            } catch (Exception ep2) {
-//                transaction = null;
-//            }
-//
-//            if (session != null) {
-//                session = null;
-//            }
-//
-//            ErrorMessage errormessage = Util.getError(ep);
-//            if (errormessage == null) {
-//                jsonResponse.setStatus(JsonResponse.OK);
-//                jsonResponse.setResult("[]");
-//                jsonResponse.setError(null);
-//            } else {
-//                jsonResponse.setStatus(JsonResponse.ERROR);
-//                jsonResponse.setResult(null);
-//                jsonResponse.setError(Util.getError(ep));
-//            }
-//
-//            System.out.println("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
-//
-//            if (WFIOAPP.APP.THROWS_EXCEPTION) {
-//                ep.printStackTrace();
-//            }
-//        }
-//
-//        return new Gson().toJson(jsonResponse);
-//    }

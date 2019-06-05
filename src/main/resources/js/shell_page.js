@@ -84,9 +84,9 @@ function ERROR(msg) {
     return "X5964ERQ17{\"type\":\"USER\", \"message\":\"" + msg + "\"}";
 }
 
-function OK(no_accion, co_condes, ls_params, ls_pagina) {
+function OK(no_accion, co_condes, ls_params, ls_pagina, ur_file) {
     //PROPAG
-    var nj = new PROPAG(no_accion, co_condes, ls_params, ls_pagina);
+    var nj = new PROPAG(no_accion, co_condes, ls_params, ls_pagina, ur_file);
     return nj;
 }
 

@@ -11,7 +11,12 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -23,6 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.json.Json;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tools.ant.taskdefs.compilers.Sj;
 
 public class Converter {
@@ -34,63 +40,58 @@ public class Converter {
         this.file = file;
     }
 
-    public JsonObject XLS_TO_JSON()
+    public ExcelJson XLS_TO_JSON()
             throws Exception {
-        JsonObject xlsjson = new JsonObject();
-        xlsjson.addProperty("filename", file.getName());
+        ExcelJson excelJson = new ExcelJson();
+        excelJson.setFilename(file.getName());
+        List<SheetJson> sheets = new ArrayList<>();
 
         HSSFWorkbook wb = new HSSFWorkbook(new FileInputStream(file));
-        JsonArray jsonSheets = new JsonArray();
-
         for (int i = 0; i < wb.getNumberOfSheets(); i++) {
             HSSFSheet sheet = wb.getSheetAt(i);
             HSSFRow row;
             HSSFCell cell;
 
-            JsonObject sheetjson = new JsonObject();
-            sheetjson.addProperty("name", sheet.getSheetName());
+            SheetJson sheetJsonx = new SheetJson();
+            sheetJsonx.setName(sheet.getSheetName());
 
-            JsonArray jsonRows = new JsonArray();
+            List<RowSheetJson> rowsx = new ArrayList<>();
 
             Iterator rows = sheet.rowIterator();
             while (rows.hasNext()) {
                 row = (HSSFRow) rows.next();
                 Iterator cells = row.cellIterator();
 
-                JsonArray jsonCells = new JsonArray();
-                JsonObject json_row = new JsonObject();
+                RowSheetJson rowSheetJson = new RowSheetJson();
+                Map<String, Object> cellsx = new HashMap<>();
 
                 while (cells.hasNext()) {
                     cell = (HSSFCell) cells.next();
-                    CellType cellType = cell.getCellType();
+                    CellType cellType = cell.getCellTypeEnum();
                     CellReference cr = new CellReference(cell);
 
                     if (cellType.getCode() == CellType.NUMERIC.getCode()) {
                         System.out.print("->" + cell.getNumericCellValue() + " ");
-                        json_row.addProperty(cr.formatAsString(), cell.getNumericCellValue());
+                        cellsx.put("" + (cr.getCol() + 1), cell.getNumericCellValue());
                     } else if (cellType.getCode() == CellType.BOOLEAN.getCode()) {
                         System.out.print("->" + cell.getBooleanCellValue() + " ");
-                        json_row.addProperty(cr.formatAsString(), cell.getBooleanCellValue());
+                        cellsx.put("" + (cr.getCol() + 1), cell.getBooleanCellValue());
                     } else {
                         System.out.print("->" + cell.getStringCellValue() + " ");
-                        json_row.addProperty(cr.formatAsString(), cell.getStringCellValue());
+                        cellsx.put("" + (cr.getCol() + 1), cell.getStringCellValue());
                     }
-
-                    jsonCells.add(json_row);
                 }
 
-                jsonRows.add(jsonCells);
+                rowSheetJson.setCells(cellsx);
+                rowsx.add(rowSheetJson);
             }
 
-            //jsonSheets.add(jsonRows);
-            sheetjson.add("rows", jsonRows);
-
-            jsonSheets.add(sheetjson);
+            sheetJsonx.setRows(rowsx);
+            sheets.add(sheetJsonx);
         }
 
-        xlsjson.add("sheets", jsonSheets);
-
-        return xlsjson;
+        excelJson.setSheets(sheets);
+        return excelJson;
     }
 
     public ExcelJson XLSX_TO_JSON()
@@ -109,7 +110,6 @@ public class Converter {
             SheetJson sheetJsonx = new SheetJson();
             sheetJsonx.setName(sheet.getSheetName());
 
-//            JsonArray rowsJson = new JsonArray();
             List<RowSheetJson> rowsx = new ArrayList<>();
 
             Iterator rows = sheet.rowIterator();
@@ -118,7 +118,6 @@ public class Converter {
                 Iterator cells = row.cellIterator();
 
                 RowSheetJson rowSheetJson = new RowSheetJson();
-//                JsonArray cellsJson = new JsonArray();
                 Map<String, Object> cellsx = new HashMap<>();
 
                 while (cells.hasNext()) {
@@ -137,9 +136,11 @@ public class Converter {
                         cellsx.put("" + (cr.getCol() + 1), cell.getStringCellValue());
                     }
                 }
+
                 rowSheetJson.setCells(cellsx);
                 rowsx.add(rowSheetJson);
             }
+
             sheetJsonx.setRows(rowsx);
             sheets.add(sheetJsonx);
         }
@@ -148,4 +149,136 @@ public class Converter {
         return excelJson;
     }
 
+    public File OBJECT_TO_XLS(Object data) {
+        System.out.println("data = " + data);
+        System.out.println("data = " + data.getClass());
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Sheet1");
+        if (data instanceof ArrayList) {
+            int rowexp = 0;
+            boolean header = true;
+            for (Object d1 : (ArrayList) data) {
+//                Row rowheader = sheet.createRow(rowexp);
+                Row _row;
+                System.out.println("d1 = " + d1);
+                System.out.println("d1 = " + d1.getClass());
+                if (d1 instanceof HashMap) {
+                    int _cell = 0;
+                    if (header) {
+                        _row = sheet.createRow(rowexp);
+                        Font df = workbook.createFont();
+                        df.setBold(true);
+                        CellStyle style = workbook.createCellStyle();
+                        style.setAlignment(HorizontalAlignment.CENTER);
+                        style.setFont(df);
+
+                        for (Object d2 : ((HashMap) d1).entrySet()) {
+//                            System.out.println("d2 = " + d2);
+//                            System.out.println("d2 = " + d2.getClass());
+                            HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
+//                            System.out.println("d3 = " + d3);
+//                            System.out.println("d3 = " + d3.getKey() + "<=>" + d3.getValue());
+
+                            Cell cell = _row.createCell(_cell);
+                            cell.setCellStyle(style);
+                            cell.setCellValue("" + d3.getKey());
+                            _cell++;
+                        }
+                        header = false;
+                        rowexp++;
+                    }
+
+                    _row = sheet.createRow(rowexp);
+                    _cell = 0;
+                    for (Object d2 : ((HashMap) d1).entrySet()) {
+                        System.out.println("d2 = " + d2);
+                        System.out.println("d2 = " + d2.getClass());
+                        HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
+                        System.out.println("d3 = " + d3);
+                        System.out.println("d3 = " + d3.getKey() + "<=>" + d3.getValue());
+
+                        CellType ct = null;
+                        try {
+                            Double d = Double.parseDouble("" + d3.getValue());
+                            ct = CellType.NUMERIC;
+                        } catch (Exception ep) {
+                            ct = CellType.STRING;
+                        }
+
+                        Cell cell = _row.createCell(_cell);
+                        cell.setCellValue("" + d3.getValue());
+                        cell.setCellType(ct);
+
+                        _cell++;
+                    }
+                    rowexp++;
+                }
+            }
+        }
+        try {
+            FileOutputStream fileOut = new FileOutputStream(file);
+            workbook.write(fileOut);
+            fileOut.close();
+
+            // Closing the workbook
+            workbook.close();
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
+
+        return file;
+    }
+
+    public File OBJECT_TO_TXT(Object data) {
+        System.out.println("data = " + data);
+        System.out.println("data = " + data.getClass());
+
+//        Workbook workbook = new XSSFWorkbook();
+//        Sheet sheet = workbook.createSheet("Sheet1");
+        try {
+//            FileWriter writer = new FileWriter(file);
+
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
+            if (data instanceof ArrayList) {
+                ArrayList l = (ArrayList) data;
+                for (int i = 0; i < l.size(); i++) {
+                    String file = "";
+                    if (l.get(i) instanceof LinkedHashMap) {
+                        LinkedHashMap hx = (LinkedHashMap) l.get(i);
+                        System.out.println("hx = " + hx);
+
+                        Iterator it = hx.values().iterator();
+                        while (it.hasNext()) {
+                            Object ii = it.next();
+                            System.out.println("ii = " + ii);
+                        }
+
+                        file = StringUtils.join(hx.values(), "\t");
+
+//                        for (Object d2 : ((HashMap) l.get(i)).entrySet()) {
+//                            HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
+//                            file += d3.getValue() + "\t";
+//                        }
+                        if (i + 1 == l.size()) {
+                            System.out.println("Linea final ");
+                            writer.write(file);
+                        } else {
+                            writer.write(file);
+                            writer.newLine();
+//                            writer.
+                            System.out.println("Linea abajo ");
+                        }
+                    }
+                }
+            }
+
+            writer.close();
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
+
+        return file;
+    }
 }
