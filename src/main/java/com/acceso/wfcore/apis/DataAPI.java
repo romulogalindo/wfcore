@@ -229,13 +229,11 @@ public class DataAPI extends GenericAPI {
     public File CREATE_FILE(String filename, String extension, Object result) {
         File file = null;
         try {
-//            file = File.createTempFile(filename, "." + extension);
             file = new File(System.getProperty("java.io.tmpdir") + File.separator + filename + "." + extension);
         } catch (Exception ep) {
             file = null;
         }
 
-        System.out.println("file = " + file);
         if (extension.toUpperCase().contains("XLS")) {
             file = new Converter(file).OBJECT_TO_XLS(result);
         } else if (extension.toUpperCase().contains("XLSX")) {

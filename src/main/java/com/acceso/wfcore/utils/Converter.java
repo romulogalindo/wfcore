@@ -150,19 +150,13 @@ public class Converter {
     }
 
     public File OBJECT_TO_XLS(Object data) {
-        System.out.println("data = " + data);
-        System.out.println("data = " + data.getClass());
-
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Sheet1");
         if (data instanceof ArrayList) {
             int rowexp = 0;
             boolean header = true;
             for (Object d1 : (ArrayList) data) {
-//                Row rowheader = sheet.createRow(rowexp);
                 Row _row;
-                System.out.println("d1 = " + d1);
-                System.out.println("d1 = " + d1.getClass());
                 if (d1 instanceof HashMap) {
                     int _cell = 0;
                     if (header) {
@@ -174,11 +168,7 @@ public class Converter {
                         style.setFont(df);
 
                         for (Object d2 : ((HashMap) d1).entrySet()) {
-//                            System.out.println("d2 = " + d2);
-//                            System.out.println("d2 = " + d2.getClass());
                             HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
-//                            System.out.println("d3 = " + d3);
-//                            System.out.println("d3 = " + d3.getKey() + "<=>" + d3.getValue());
 
                             Cell cell = _row.createCell(_cell);
                             cell.setCellStyle(style);
@@ -192,11 +182,7 @@ public class Converter {
                     _row = sheet.createRow(rowexp);
                     _cell = 0;
                     for (Object d2 : ((HashMap) d1).entrySet()) {
-                        System.out.println("d2 = " + d2);
-                        System.out.println("d2 = " + d2.getClass());
                         HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
-                        System.out.println("d3 = " + d3);
-                        System.out.println("d3 = " + d3.getKey() + "<=>" + d3.getValue());
 
                         CellType ct = null;
                         try {
@@ -231,14 +217,7 @@ public class Converter {
     }
 
     public File OBJECT_TO_TXT(Object data) {
-        System.out.println("data = " + data);
-        System.out.println("data = " + data.getClass());
-
-//        Workbook workbook = new XSSFWorkbook();
-//        Sheet sheet = workbook.createSheet("Sheet1");
         try {
-//            FileWriter writer = new FileWriter(file);
-
             FileOutputStream fos = new FileOutputStream(file);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(fos));
             if (data instanceof ArrayList) {
@@ -247,28 +226,19 @@ public class Converter {
                     String file = "";
                     if (l.get(i) instanceof LinkedHashMap) {
                         LinkedHashMap hx = (LinkedHashMap) l.get(i);
-                        System.out.println("hx = " + hx);
 
                         Iterator it = hx.values().iterator();
                         while (it.hasNext()) {
                             Object ii = it.next();
-                            System.out.println("ii = " + ii);
                         }
 
                         file = StringUtils.join(hx.values(), "\t");
 
-//                        for (Object d2 : ((HashMap) l.get(i)).entrySet()) {
-//                            HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
-//                            file += d3.getValue() + "\t";
-//                        }
                         if (i + 1 == l.size()) {
-                            System.out.println("Linea final ");
                             writer.write(file);
                         } else {
                             writer.write(file);
                             writer.newLine();
-//                            writer.
-                            System.out.println("Linea abajo ");
                         }
                     }
                 }
