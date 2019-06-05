@@ -85,9 +85,11 @@ function ERROR(msg) {
 }
 
 function OK(no_accion, co_condes, ls_params, ls_pagina, ur_file) {
-    //PROPAG
-    var nj = new PROPAG(no_accion, co_condes, ls_params, ls_pagina, ur_file);
-    return nj;
+    return new PROPAG(no_accion, co_condes, ls_params, ls_pagina, ur_file);
+}
+
+function OK(no_accion, co_condes, ls_params, ls_pagina) {
+    return new PROPAG(no_accion, co_condes, ls_params, ls_pagina);
 }
 
 function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, CO_USUARI) {
