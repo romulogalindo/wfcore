@@ -52,7 +52,7 @@ public class Regist36 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"13\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\">"
+                html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"36\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\">"
                         + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]"
                         + "</span>";
                 html += "   </td>";

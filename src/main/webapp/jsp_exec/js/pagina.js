@@ -1353,6 +1353,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                 all_regs += "\"co_regist_" + reguid + "\":";
 
                 if (x64.tagName == 'INPUT') {
+                    console.log('?INPUT?=>' + x64.getAttribute('TYPE'));
                     if (x64.getAttribute('TYPE') == 'text') {
                         regval = x64.value;
                         all_regs += "\"" + regval + "\",";
@@ -1363,11 +1364,10 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                         regval = x64.checked;
                         all_regs += regval + ",";
                     }
-                }
-                if (x64.tagName == 'SELECT') {
+                } else if (x64.tagName == 'SELECT') {
                     console.log('is select');
-                }
-                if (x64.tagName == 'SPAN') {
+                } else if (x64.tagName == 'SPAN') {
+                    console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
                         case 1: {

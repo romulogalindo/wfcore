@@ -73,6 +73,8 @@ public class Values {
     public static final String QUERYS_NATIVE_GET_PAGINASCON = "wfcore.paginascon_get";
     public static final String QUERYS_NATIVE_SAVE_PAGINACON = "wfcore.paginacon_save";
 
+    public static final String QUERYS_NATIVE_SELECT_PROPERTIES = "wfcore.pbproper_select";
+
     public static final String QUERYS_NATIVE_SELECT_BUTTONS = "wfcore.pbboton_select";
     public static final String QUERYS_NATIVE_SAVE_BUTTON = "wfcore.pbboton_save";
     public static final String QUERYS_NATIVE_DELETE_BUTTON = "wfcore.pbboton_delete";

@@ -45,23 +45,18 @@ public class AsyncProPag extends AsyncProcessor {
 
             if (type == 1) {
                 dao = new Frawor4DAO();
-//                Frawor4DAO dao2 = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
 
                 dao.deletePagreg(id_frawor, co_pagina, true);
-//                dao2.deletePagreg(id_frawor, co_pagina, false);
 
                 JsonObject gson = new JsonObject();
 
                 for (Map.Entry<Integer, String> pagreg : requestManager.getPagregs().entrySet()) {
                     dao.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), true);
-//                    dao2.insertPagreg(id_frawor, co_pagina, pagreg.getKey().shortValue(), (short) 1, pagreg.getValue(), false);
-
-                    gson.addProperty("co_regist_" + pagreg.getKey(), pagreg.getValue());
+                    gson.addProperty("co_regist_" + pagreg.getKey(), pagreg.getValue() == null ? "" : new String(pagreg.getValue().getBytes("ISO-8859-1"), "UTF-8"));
                 }
 
                 ls_regist = "" + gson;
                 dao.close();
-//                dao2.close();
 
             }
 

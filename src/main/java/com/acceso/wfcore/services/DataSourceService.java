@@ -9,6 +9,8 @@ import com.acceso.wfcore.utils.Values;
 import com.acceso.wfcore.utils.WFProperties;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import org.h2.tools.Server;
 
 /**
@@ -20,6 +22,7 @@ public class DataSourceService extends Service {
     DataManager mainManager;
     HashMap<String, DataManager> managers;
     Server AIO_DB_SERVER;
+    Map<String, String> PROPS;
 
     public DataSourceService(String serviceName) {
         super(serviceName);
@@ -53,6 +56,9 @@ public class DataSourceService extends Service {
 
         //se generan los manager y se agregan al hashmap
         Querys.getManagers(mainManager.getNativeSession()).stream().forEach(dto -> managers.put(dto.getNo_conexi(), new DataManager(dto.getNo_conexi(), "hibdata.cfg.xml", ApplicationManager.buildDefaultProperties(dto))));
+
+        //Cargar los properties del SYS
+        PROPS = Querys.getProperties(mainManager.getNativeSession());
 
         //luego levantar la lista de manager que manejaran las otras DB's
         managers.forEach((k, v) -> v.init());
@@ -108,4 +114,15 @@ public class DataSourceService extends Service {
         this.mainManager = mainManager;
     }
 
+    public String getValueOfKey(String key) {
+        key = "" + key.toUpperCase();
+        switch (key) {
+            case "AIO_DATA_FILE": {
+                key = PROPS.get(key) == null ? "/" : PROPS.get(key);
+                break;
+            }
+        }
+
+        return key;
+    }
 }

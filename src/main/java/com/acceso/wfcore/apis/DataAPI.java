@@ -194,11 +194,6 @@ public class DataAPI extends GenericAPI {
     /**
      *
      */
-//    public JsonObject READ_FROM_FILE(long co_archiv) {
-//        //LEER EL CO_ARCHIV y obtener el file
-//
-//        return READ_FROM_FILE("/home/rgalindo/" + co_archiv);
-//    }
     public ExcelJson READ_FROM_FILE(long co_archiv) {
         System.out.println("co_archiv = " + co_archiv);
         File file = (File) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get("" + co_archiv);
@@ -221,8 +216,13 @@ public class DataAPI extends GenericAPI {
         } catch (Exception ep) {
             return null;
         }
-        
+
         return excelJson;
+    }
+
+    public File CREATE_FILE(String filename, Object result) {
+        File file = null;
+        return file;
     }
 
 }

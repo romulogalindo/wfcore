@@ -32,8 +32,6 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.*;
-//import wf.dto.pagesp.Solicitud_credito_datos_soliciDto;
-//import pe.wf3.util.FrameworkUtil;
 
 /**
  * @author rgalindo
@@ -51,10 +49,10 @@ public class DocumentServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,11 +61,6 @@ public class DocumentServlet extends HttpServlet {
         try {
             String tipo_doc = request.getParameter("ti_docume");
 
-//            if (request.getAttribute("co_conexi") == null) {
-//                co_conexi = FrameworkUtil.searchPackage(request).getCo_conexi();
-//            } else {
-//                co_conexi = Integer.parseInt(request.getAttribute("co_conexi").toString());
-//            }
             switch (tipo_doc) {
                 case "1": {
                     // <editor-fold defaultstate="collapsed" desc="CASE 1">
@@ -1024,7 +1017,7 @@ public class DocumentServlet extends HttpServlet {
                                 dao.close();
 
 //                                String pre_url = "/home/rgalindo/wfacr_files";
-                                String pre_url = "C:\\data";
+                                String pre_url = WFIOAPP.APP.getDataSourceService().getValueOfKey("AIO_DATA_FILE");
 
                                 File archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()));
 //                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
@@ -1040,7 +1033,7 @@ public class DocumentServlet extends HttpServlet {
                                     archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
                                     System.out.println("archivo(3) = " + archivo);
                                     System.out.println("archivo(3?) = " + archivo.exists());
-                                    
+
                                     item.write(archivo);
                                     items2.add(arcadj);
                                     WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("" + arcadj.getCo_archiv(), archivo);
@@ -1405,13 +1398,14 @@ public class DocumentServlet extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -1422,10 +1416,10 @@ public class DocumentServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
