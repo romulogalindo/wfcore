@@ -3,6 +3,7 @@ package com.acceso.wfweb.utils;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Param;
 import com.acceso.wfweb.dtos.ComboDTO;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,24 +17,43 @@ public class JsonResponseP implements Serializable {
     public static final String POPUP = "POPUP";
     public static final String REFRESH = "REFRESH";
 
-    String status;
-    String no_action;
+    String status = "OK";
+    String no_action = "REDIRECT";
     String co_condes;
     List<Param> ls_params;
     List<String> ls_pagina;
-    String ur_file;
+    String ur_archiv;
 
     public JsonResponseP(String no_action, String co_condes, List<Param> ls_params, List<String> ls_pagina) {
         this(no_action, co_condes, ls_params, ls_pagina, null);
     }
 
-    public JsonResponseP(String no_action, String co_condes, List<Param> ls_params, List<String> ls_pagina, String ur_file) {
+    public JsonResponseP(String no_action, String co_condes, List<Param> ls_params, List<String> ls_pagina, String ur_archiv) {
         this.status = OK;
         this.no_action = no_action;
         this.co_condes = co_condes;
         this.ls_params = ls_params;
         this.ls_pagina = ls_pagina;
-        this.ur_file = ur_file;
+        this.ur_archiv = ur_archiv;
+    }
+
+    public JsonResponseP(Object obj) {
+        System.out.println("obj = " + obj);
+        ScriptObjectMirror opts = (ScriptObjectMirror) obj;
+        no_action = opts.get("no_action") == null ? "REDIRECT" : opts.get("no_action").toString();
+        co_condes = opts.get("co_condes") == null ? null : opts.get("co_condes").toString();
+
+        if (opts.get("ls_params") != null) {
+            ls_params = (List<Param>) opts.get("ls_params");
+        }
+
+        if (opts.get("ls_pagina") != null) {
+            ls_pagina = (List<String>) opts.get("ls_pagina");
+        }
+
+        if (opts.get("ur_archiv") != null) {
+            ur_archiv = opts.get("ur_archiv").toString();
+        }
     }
 
     public String getStatus() {
@@ -76,12 +96,12 @@ public class JsonResponseP implements Serializable {
         this.ls_pagina = ls_pagina;
     }
 
-    public String getUr_file() {
-        return ur_file;
+    public String getUr_archiv() {
+        return ur_archiv;
     }
 
-    public void setUr_file(String ur_file) {
-        this.ur_file = ur_file;
+    public void setUr_archiv(String ur_archiv) {
+        this.ur_archiv = ur_archiv;
     }
 
     public static JsonResponseP defultJsonResponseOK(Object result) {

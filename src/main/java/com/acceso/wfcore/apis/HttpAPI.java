@@ -203,9 +203,9 @@ public class HttpAPI extends GenericAPI {
     }
 
     public String URL(File file) {
-        System.out.println("file = " + file);
+        System.out.println("[HttpAPI]file = " + file);
         Long l = System.currentTimeMillis();
-        System.out.println("l = FILE" + l);
+        System.out.println("[HttpAPI]l = FILE" + l);
         WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("FILE" + l, file);
         return "FILE" + l;
     }

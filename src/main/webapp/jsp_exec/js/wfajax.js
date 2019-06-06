@@ -155,7 +155,7 @@ doPropag = function (url, regparams, data) {
                     }
                     window.parent.showloading(false);
                 } else if (rpta.no_action == 'DOWNLOAD') {
-                    var ff = rpta.ur_file;
+                    var ff = rpta.ur_archiv;
                     document.getElementById("downloader").src = "/doc?ti_docume=DOWNLOAD&fileitem=" + ff;
                     window.parent.showloading(false);
                 } else {

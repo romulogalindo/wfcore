@@ -577,7 +577,7 @@ function loadReporte64(rowid, tbody64, row) {
     tbody64.appendChild(nr);
     //on post tr create and add!
     // nr = document.getElementById('row' + rowid);
-    // console.log('?>?nr:' + nr);
+    console.log('?>?nr:' + nr);
 
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
@@ -596,7 +596,7 @@ function loadReporte64(rowid, tbody64, row) {
         // alert('XCD');
 //        console.log('====>C' +S rowid + 'R' + reg.regist + 'V');
         var ereg = document.getElementById('P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V');
-        // console.log('ereg:' + ereg);
+        console.log('ereg:' + ereg);
         // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
         if (ereg != null) {
             // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
@@ -610,6 +610,7 @@ function loadReporte64(rowid, tbody64, row) {
                     ereg.getElementsByTagName('INPUT')[0].value = txtval;
                 } else {
                     ereg.innerHTML = txtval;
+                    ereg.setAttribute('va_pagreg', reg.value);
                 }
 
             } else if (ereg.getAttribute('ti_pagreg') == '2') {
@@ -695,6 +696,16 @@ function loadReporte64(rowid, tbody64, row) {
                     ereg.getElementsByTagName('INPUT')[0].removeAttribute('checked');
                     ereg.getElementsByTagName('INPUT')[0].checked = false;
                 }
+
+                // console.log('to add?:' + ' check' + reg.regist);
+                // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
+            } else if (ereg.getAttribute('ti_pagreg') == '36') {
+                console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                // ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
+                // ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'R' + reg.regist + '_check');
+
+                console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
+                ereg.getElementsByTagName('A')[0].setAttribute('href', '/jsp_exec/ocelot/viewer.jsp?file=' + txtval);
 
                 // console.log('to add?:' + ' check' + reg.regist);
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
@@ -1103,7 +1114,7 @@ function child_popup_update(regist, ls_params) {
         if (ls_params[i].no_param == 'co_conpar_1') {
             document.getElementById(regist).getElementsByTagName('SPAN')[0].setAttribute('valpag', ls_params[i].va_param);
         } else {
-            document.getElementById(regist).getElementsByTagName('SPAN')[0].innerHTML = ls_params[i].va_param;
+            document.getElementById(regist).getElementsByTagName('SPAN')[0].innerHTML = decodeURIComponent(ls_params[i].va_param);
         }
     }
     //resize pagian
@@ -1370,22 +1381,33 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case 1: {
-                            var iinput = x64.getElementsByTagName('INPUT')[0];
-                            if (iinput.getAttribute('TYPE') == 'text') {
-                                regval = iinput.value;
+                        case '1': {
+                            console.log('FSP:' + x64.getElementsByTagName('INPUT'));
+                            console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
+                            if (x64.getElementsByTagName('INPUT').length == 0) {
+                                //es de tipo lectura
+                                regval = x64.getAttribute('va_pagreg');
                                 all_regs += "\"" + regval + "\",";
-                            } else if (x64.getAttribute('TYPE') == 'checkbox') {
-                                regval = iinput.checked;
-                                all_regs += regval + ",";
+                            } else {
+                                var iinput = x64.getElementsByTagName('INPUT')[0];
+                                console.log('iinput====>' + iinput);
+                                console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
+                                if (iinput.getAttribute('TYPE') == 'checkbox') {
+                                    regval = iinput.checked;
+                                    all_regs += regval + ",";
+                                } else if (iinput.getAttribute('TYPE') == 'text') {
+                                    regval = iinput.value;
+                                    all_regs += "\"" + regval + "\",";
+                                }
                             }
+
                             break;
                         }
-                        case 2: {
-                            all_regs += '' + ",";
+                        case '2': {
+                            all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case "3": {
+                        case '3': {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;

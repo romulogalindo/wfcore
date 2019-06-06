@@ -1063,7 +1063,7 @@ public class DocumentServlet extends HttpServlet {
                 case "DOWNLOAD": {
                     String fileitem = request.getParameter("fileitem");
                     File file = (File) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).get(fileitem);
-
+                    System.out.println("?{file} = " + file);
                     response.setHeader("Content-disposition", "attachment; filename=" + file.getName());
                     String ext = FilenameUtils.getExtension(file.getName()).toUpperCase();
 

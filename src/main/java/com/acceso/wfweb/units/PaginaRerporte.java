@@ -223,6 +223,27 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        }
                         break;
                     }
+                    case 36: {
+//                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+//                        System.out.println("fila = REDERER OK!");
+//                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
+                        if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
+                            itr += "<td class=\"ti_pag_reg2 text-center\">"
+                                    + "       <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=\"36\" class=\"reader " + " pagreg\">"
+                                    + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fas fa-download\" aria-hidden=\"true\"></i> Descargar</a>]"
+                                    + "</span>"
+                                    + "</td>";
+                        } else {
+                            itr += "<td class=\"ti_pag_reg2 text-center\">"
+                                    + "       <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=\"36\" class=\"reader " + " pagreg\">"
+                                    + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fas fa-download\" aria-hidden=\"true\"></i> Descargar</a>]"
+                                    + "</span>"
+                                    + "</td>";
+                        }
+
+//                        }
+                        break;
+                    }
                 }
             }
         }

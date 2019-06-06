@@ -31,22 +31,16 @@ public class RegJson {
             no_pagreg = "" + opts.get("no_pagreg");
         }
 
-//        if (opts.get("ti_pagreg") != null) {
-//            ti_pagreg = (int) opts.get("ti_pagreg");
-//        }
-//        tx_pagreg = "" + (opts.get("tx_pagreg") == null ? "" : opts.get("tx_pagreg"));
-//        no_pagreg = "" + (opts.get("no_pagreg") == null ? "" : opts.get("no_pagreg"));
         ti_pagreg = opts.get("ti_pagreg") == null ? -1 : (int) opts.get("ti_pagreg");
 
         if (opts.get("ti_estreg") != null) {
             ti_estreg = "" + opts.get("ti_estreg");
         }
-//        ti_estreg = "" + (opts.get("ti_estreg") == null ? "" : opts.get("ti_estreg"));
 
         if (opts.get("ur_pagreg") != null) {
             ur_pagreg = "" + opts.get("ur_pagreg");
         }
-//        ur_pagreg = "" + (opts.get("ur_pagreg") == null ? "" : opts.get("ur_pagreg"));
+
         ob_dindat = opts.get("ob_dindat");
     }
 

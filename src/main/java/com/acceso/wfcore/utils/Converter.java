@@ -11,6 +11,7 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -18,6 +19,7 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -28,6 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.json.Json;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tools.ant.taskdefs.compilers.Sj;
 
@@ -184,17 +187,19 @@ public class Converter {
                     for (Object d2 : ((HashMap) d1).entrySet()) {
                         HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
 
+                        Cell cell;
                         CellType ct = null;
                         try {
                             Double d = Double.parseDouble("" + d3.getValue());
-                            ct = CellType.NUMERIC;
+                            cell = _row.createCell(_cell, CellType.NUMERIC);
+                            System.out.println("ct = " + d3.getValue());
+                            System.out.println("d = " + d);
+                            cell.setCellValue(d);
                         } catch (Exception ep) {
-                            ct = CellType.STRING;
+                            cell = _row.createCell(_cell, CellType.STRING);
+                            System.out.println("ct = " + d3.getValue());
+                            cell.setCellValue("" + d3.getValue());
                         }
-
-                        Cell cell = _row.createCell(_cell);
-                        cell.setCellValue("" + d3.getValue());
-                        cell.setCellType(ct);
 
                         _cell++;
                     }
