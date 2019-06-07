@@ -3,7 +3,7 @@ var ValpagJson = Java.type('com.acceso.wfcore.utils.ValpagJson');
 var Row = Java.type('com.acceso.wfcore.utils.RowJson');
 var Reg = Java.type('com.acceso.wfcore.utils.RegJson');
 var JsonResponse = Java.type('com.acceso.wfweb.utils.JsonResponse');
-var OK2 = Java.type('com.acceso.wfweb.utils.JsonResponseP');
+var OK64 = Java.type('com.acceso.wfweb.utils.JsonResponseP');
 var PROPAG = Java.type('com.acceso.wfweb.utils.JsonResponseP');
 var List = Java.type('java.util.ArrayList');
 var Map = Java.type('java.util.HashMap');
@@ -93,7 +93,7 @@ function OK(no_accion, co_condes, ls_params, ls_pagina, ur_file) {
 
 function OK2(opts) {
     print('OK de 1 parametros');
-    return new OK2(opts);
+    return new OK64(opts);
 }
 
 function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, CO_USUARI) {

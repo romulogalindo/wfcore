@@ -170,6 +170,8 @@ function pagina_onload(jsonData) {
         document.getElementById('card_error').style.display = 'block';
     }
 
+    console.log('Esto es tooltip!');
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function iframe2(pagina, height_table) {
@@ -1112,7 +1114,7 @@ function child_popup_update(regist, ls_params) {
     console.log('child_popup_update!::' + regist);
     for (var i = 0; i < ls_params.length; i++) {
         if (ls_params[i].no_param == 'co_conpar_1') {
-            document.getElementById(regist).getElementsByTagName('SPAN')[0].setAttribute('valpag', ls_params[i].va_param);
+            document.getElementById(regist).getElementsByTagName('SPAN')[0].setAttribute('valpag', decodeURIComponent(ls_params[i].va_param));
         } else {
             document.getElementById(regist).getElementsByTagName('SPAN')[0].innerHTML = decodeURIComponent(ls_params[i].va_param);
         }
@@ -1608,12 +1610,24 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
             html += "<input type=hidden id=\"" + id + "_date\" class=\"w3-input w3-border\" />";
             html += "</span>";
         } else if (ti_estreg == 'L') {
-            html += "<span id='" + id + "' name='" + id + "' class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
-            html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
+            html += "<span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
+            html += "<input type=text id=\"" + id + "_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" disabled placeholder=\"dd\"/>";
+            html += "<span>/</span>";
+            html += "<input type=text id=\"" + id + "_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" disabled placeholder=\"mm\"/>";
+            html += "<span>/</span>";
+            html += "<input type=text id=\"" + id + "_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" disabled placeholder=\"yyyy\"/>";
+            html += "<span id=\"" + id + "_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fas fa-calendar-alt\"></i></span>";
+            html += "<input type=hidden id=\"" + id + "_date\" class=\"w3-input w3-border\" />";
             html += "</span>";
         } else if (ti_estreg == 'O') {
-            html += "<span id='" + id + "' name='" + id + "' class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
-            html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
+            html += "<span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
+            html += "<input type=text id=\"" + id + "_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"dd\"/>";
+            html += "<span>/</span>";
+            html += "<input type=text id=\"" + id + "_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"mm\"/>";
+            html += "<span>/</span>";
+            html += "<input type=text id=\"" + id + "_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" placeholder=\"yyyy\"/>";
+            html += "<span id=\"" + id + "_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fas fa-calendar-alt\"></i></span>";
+            html += "<input type=hidden id=\"" + id + "_date\" class=\"w3-input w3-border\" />";
             html += "</span>";
         }
     } else if (type == 9) {

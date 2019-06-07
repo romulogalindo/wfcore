@@ -18,10 +18,7 @@ import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -350,7 +347,24 @@ public class DataAPI extends GenericAPI {
     public File CREATE_ZIP(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
         String no_archiv = opts.get("no_archiv") == null ? "aiofile" : opts.get("no_archiv").toString();
-        List<File> ls_archiv = opts.get("ls_archiv") == null ? new ArrayList<>() : (List<File>) opts.get("ls_archiv");
+        Object ls_archiv = opts.get("ls_archiv");
+        System.out.println("ls_archiv = " + ls_archiv);
+        System.out.println("ls_archiv = " + ls_archiv.getClass());
+        jdk.nashorn.api.scripting.ScriptObjectMirror obh = (jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv;
+        System.out.println("obh = " + obh.isArray());
+//        Collection cls = obh.values();
+//        Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror)ls_archiv).values().iterator();
+//        while (it.hasNext()) {
+//            Object oit = it.next();
+//            if(oit instanceof File){
+//
+//            }
+//            System.out.println("oit = " + oit);
+//            System.out.println("oit = " + oit.getClass());
+//        }
+//        System.out.println("cls = " + cls);
+//        List<Object> asl = Arrays.asList(ls_archiv);
+//        System.out.println("asl = " + asl);
         //-------------------
         File file = null;
         try {
@@ -363,19 +377,25 @@ public class DataAPI extends GenericAPI {
             FileOutputStream fos = new FileOutputStream(file);
             ZipOutputStream zipOS = new ZipOutputStream(fos);
 
-            for (File file1 : ls_archiv) {
-                FileInputStream fis = new FileInputStream(file1);
-                ZipEntry zipEntry = new ZipEntry(file1.getName());
-                zipOS.putNextEntry(zipEntry);
+            Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv).values().iterator();
+            while (it.hasNext()) {
+                Object oit = it.next();
+                if (oit instanceof File) {
+                    File file1 = (File) oit;
 
-                byte[] bytes = new byte[1024];
-                int length;
-                while ((length = fis.read(bytes)) >= 0) {
-                    zipOS.write(bytes, 0, length);
+                    FileInputStream fis = new FileInputStream(file1);
+                    ZipEntry zipEntry = new ZipEntry(file1.getName());
+                    zipOS.putNextEntry(zipEntry);
+
+                    byte[] bytes = new byte[1024];
+                    int length;
+                    while ((length = fis.read(bytes)) >= 0) {
+                        zipOS.write(bytes, 0, length);
+                    }
+
+                    zipOS.closeEntry();
+                    fis.close();
                 }
-
-                zipOS.closeEntry();
-                fis.close();
             }
             zipOS.close();
             fos.close();

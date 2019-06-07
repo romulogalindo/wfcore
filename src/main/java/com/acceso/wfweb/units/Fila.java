@@ -113,10 +113,10 @@ public class Fila extends HTMLRenderer implements Serializable {
                 }
                 html += "</script>";
 
-                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"btn btn-default\" onclick=\"propag(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
-                        + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + "\" aria-hidden=\"true\"></i>\n" : "")
+                html += "<button name=" + id + botonDTO.getCo_pagbot() + " class=\"btn btn-default\" onclick=\"propag(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"top\" style=\"background-color: " + botonDTO.getVa_colbot() + " !important;\" title=\"" + (botonDTO.getVa_toltip() == null ? "" : botonDTO.getVa_toltip()) + "\">"
+                        + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pr-" + (botonDTO.getNo_pagbot().length() > 0 ? "1" : "0") + "\" aria-hidden=\"true\"></i>\n" : "")
                         + botonDTO.getNo_pagbot()
-                        + (botonDTO.getNo_icopos().toUpperCase().contentEquals("RIGHT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pl-1\" aria-hidden=\"true\"></i>\n" : "")
+                        + (botonDTO.getNo_icopos().toUpperCase().contentEquals("RIGHT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pl-" + (botonDTO.getNo_pagbot().length() > 0 ? "1" : "0") + "\" aria-hidden=\"true\"></i>\n" : "")
                         + "</button>";
             }
 

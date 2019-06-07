@@ -192,13 +192,13 @@ table tbody td a {
     padding: .30rem 1.02rem;
     font-size: 0.65rem !important;
     max-width: 160px;
+    min-height: 21px;
     width: 100%;
 
     padding-top: 0.18rem !important;
     padding-bottom: 0.18rem !important;
     padding-right: 0.24rem !important;
     padding-left: 0.25rem !important;
-    /*border: 1px solid #fff !important;*/
 
 }
 

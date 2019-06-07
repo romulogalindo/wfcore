@@ -12,10 +12,10 @@ import java.util.List;
  */
 @Entity
 @NamedNativeQueries({
-    @NamedNativeQuery(
-            name = Values.QUERYS_WEB_SELECT_PFPAGBOT,
-            query = "select * from frawor4.pfpagbot(:p_co_pagina, :p_id_frawor , :p_co_conten )",
-            resultClass = WBotonDTO.class)
+        @NamedNativeQuery(
+                name = Values.QUERYS_WEB_SELECT_PFPAGBOT,
+                query = "select * from frawor4.pfpagbot(:p_co_pagina, :p_id_frawor , :p_co_conten )",
+                resultClass = WBotonDTO.class)
 })
 public class WBotonDTO implements Serializable {
 
@@ -31,9 +31,12 @@ public class WBotonDTO implements Serializable {
     int co_condes;
     String no_icobot;
     String no_icopos;
+    String va_colbot;
+    String va_toltip;
 
     @Transient
     List<WParametroDTO> parametros;
+
 
     public WBotonDTO() {
     }
@@ -134,4 +137,19 @@ public class WBotonDTO implements Serializable {
         this.no_icopos = no_icopos;
     }
 
+    public String getVa_colbot() {
+        return va_colbot;
+    }
+
+    public void setVa_colbot(String va_colbot) {
+        this.va_colbot = va_colbot;
+    }
+
+    public String getVa_toltip() {
+        return va_toltip;
+    }
+
+    public void setVa_toltip(String va_toltip) {
+        this.va_toltip = va_toltip;
+    }
 }
