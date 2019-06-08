@@ -75,16 +75,19 @@ function co_usuari() {
     return document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
 }
 
-function workflow(il_header) {
+function workflow(il_popup) {
     /*FRONT*/
-    if (il_header) {
+    if (!il_popup) {
         $(".button-collapse").sideNav();
         Ps.initialize(document.querySelector('.custom-scrollbar'));
     }
 
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
-            iframe.src = '/karmic?co_conten=' + co_conten() + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '') + '&id_frawor=' + id_frawor();
+            iframe.src = '/karmic?co_conten=' + co_conten()
+                + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+                + '&id_frawor=' + id_frawor()
+                + '&il_popup=' + il_popup;
     }
 
 //--FRONT AND MODALª!
@@ -93,7 +96,7 @@ function workflow(il_header) {
         $('.mdb-select').material_select();
 
         //P2
-        if (il_header) {
+        if (!il_popup) {
             openWS();
         }
         //if

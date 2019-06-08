@@ -142,7 +142,7 @@ doPropag = function (url, regparams, data) {
                 }
 
                 if (rpta.no_action == 'REDIRECT') {
-                    window.parent.location.href = url + urlpart;
+                    window.parent.location.href = url + urlpart + (IL_POPUP ? '&il_popup=true' : '')
                 } else if (rpta.no_action == 'POPUP') {
                     // window.parent.page_to_master(regparams);
                     window.parent.page_to_master(rpta.ls_params);
@@ -171,8 +171,6 @@ doPropag = function (url, regparams, data) {
     }
 
     net.send(data);
-
-
 }
 
 doPropagg = function (url, regparams, data) {

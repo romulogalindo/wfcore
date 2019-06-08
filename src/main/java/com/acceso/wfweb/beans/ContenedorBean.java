@@ -28,18 +28,15 @@ public class ContenedorBean implements Serializable {
 
         //construir el conenedor!!
         Frawor4DAO dao = new Frawor4DAO();
-//        Frawor4DAO dao_fdb = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
 
         id_frawor = dao.getIdfraworDTO().getId_frawor();
 
         //unir la session con el idfrawor
         dao.joinTF(requestManager.getUser().getId_sesion(), id_frawor, -1, co_conten, true);
-//        dao_fdb.joinTF(requestManager.getUser().getId_sesion(), id_frawor, id_frawor, co_conten, false);
 
         //Grabando co_compar!
         requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
             ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), true);
-//            ProcesoDTO procesoDTO2 = dao_fdb.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), false);
         });
 
         ls_conpar = requestManager.getConpars().entrySet().stream()
@@ -63,7 +60,7 @@ public class ContenedorBean implements Serializable {
             contenedor.setId_frawor(id_frawor);
         }
 
-        contenedor.setIl_header(Util.toBoolean(requestManager.getParam("il_header"), true));
+        contenedor.setIl_popup(Util.toBoolean(requestManager.getParam("il_popup"), false));
         contenedor.setLs_conpar(ls_conpar);
 
         requestManager.save_over_session("CNT" + contenedor.getCo_conten() + ":" + id_frawor, contenedor);

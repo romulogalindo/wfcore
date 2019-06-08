@@ -105,7 +105,7 @@
             border-top: 1px solid #eee;
         }
 
-        <c:if test="${!contenedorBean.contenedor.il_header}">
+        <c:if test="${contenedorBean.contenedor.il_popup}">
         body {
             background-color: rgba(255, 255, 255, .0);
         }
@@ -113,15 +113,15 @@
         </c:if>
     </style>
 </head>
-<body onload="workflow(${contenedorBean.contenedor.il_header})"
-      class="fixed-sn light-blue-skin ${contenedorBean.contenedor.il_header}">
+<body onload="workflow(${contenedorBean.contenedor.il_popup})"
+      class="fixed-sn light-blue-skin ${!contenedorBean.contenedor.il_popup}">
 <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor"/>
 <input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten"/>
 <input type="hidden" value="${US.co_usuari}" id="co_usuari"/>
 
 <textarea style="display:none;" id="ls_conpar">${contenedorBean.contenedor.ls_conpar}</textarea>
 
-<c:if test="${contenedorBean.contenedor.il_header}">
+<c:if test="${!contenedorBean.contenedor.il_popup}">
     <!--Main Navigation-->
     <header>
 
@@ -498,7 +498,7 @@
     <div class="container-fluid">
         <section card card-cascade narrower mb-5>
             <!--<div class="w3-row" style="height: 65px;"></div>-->
-
+            <input type="hidden" id="il_popup" name="il_popup" value="${contenedorBean.contenedor.il_popup}">
             <%--<div>Aqui va todo el contenido</div>--%>
             ${contenedorBean.contenedor.toHTML()}
         </section>

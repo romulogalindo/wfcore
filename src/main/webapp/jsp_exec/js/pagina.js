@@ -87,12 +87,17 @@ function size_of_pagina() {
     document.getElementById('height_table').value = '' + height_table;
 }
 
+function il_popup() {
+    return document.getElementById('il_popup').value;
+}
+
 function pagina() {
     //Seteamos el height para que lo absorva el iframe!<main.jsp
     size_of_pagina();
     /*SET INI*/
     CO_PAGINA = co_pagina();
     CO_CONTEN = co_conten();
+    IL_POPUP = il_popup();
 
     doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
 
@@ -170,7 +175,7 @@ function pagina_onload(jsonData) {
         document.getElementById('card_error').style.display = 'block';
     }
 
-    console.log('Esto es tooltip!');
+    /*TOOLTIP*/
     $('[data-toggle="tooltip"]').tooltip();
 }
 
@@ -1103,7 +1108,8 @@ function child_popup(u, eleid, c, tit1, tit2) {
 
     urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(co_conpar_1) + "&co_conpar_2=" + encodeURIComponent(co_conpar_2) + "&co_conpad=" + c;
 
-    urlpopup = urlpopup + "&il_header=false";
+    // urlpopup = urlpopup + "&il_header=false";
+    urlpopup = urlpopup + "&il_popup=true";
     // console.log("vp:" + urlpopup);
 
     window.parent.master_popup(CO_PAGINA, urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
@@ -1112,6 +1118,7 @@ function child_popup(u, eleid, c, tit1, tit2) {
 function child_popup_update(regist, ls_params) {
     regist = regist + 'V';
     console.log('child_popup_update!::' + regist);
+    console.log('child_popup_update!::' + ls_params);
     for (var i = 0; i < ls_params.length; i++) {
         if (ls_params[i].no_param == 'co_conpar_1') {
             document.getElementById(regist).getElementsByTagName('SPAN')[0].setAttribute('valpag', decodeURIComponent(ls_params[i].va_param));

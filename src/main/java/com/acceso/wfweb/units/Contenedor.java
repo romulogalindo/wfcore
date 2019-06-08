@@ -13,7 +13,8 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     int co_conten;
     long id_frawor;
     String co_contit;
-    boolean il_header;
+    //    boolean il_header;
+    boolean il_popup;
     String ls_conpar;
 
     //    public Contenedor(int co_conten, long id_frawor, String co_contit) {
@@ -58,12 +59,12 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         this.co_contit = co_contit;
     }
 
-    public boolean isIl_header() {
-        return il_header;
+    public boolean isIl_popup() {
+        return il_popup;
     }
 
-    public void setIl_header(boolean il_header) {
-        this.il_header = il_header;
+    public void setIl_popup(boolean il_popup) {
+        this.il_popup = il_popup;
     }
 
     public List<WContabDTO> getContabs() {
