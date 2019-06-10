@@ -3,6 +3,7 @@ var $MAP = {};
 var CO_PAGINA;
 var CO_CONTEN;
 var ID_FRAWOR;
+var IL_POPUP;
 
 /*variables  de funcionalidad*/
 var DYNAMIC = false;
@@ -796,17 +797,19 @@ function propag(cycle, co_button, il_proces, co_condes) {
                         // val = eledom.getElementsByTagName("INPUT")[0].value; //eledom.getAttribute("va_pagreg");
                         // var dom_select = eledom.getElementsByTagName("INPUT")[0];
                         console.log('VLIS:' + eledom.innerHTML);
-                        if (eledom.innerHTML.length > 0) {
-                            try {
-                                if (eledom.getElementsByTagName("INPUT").length > 0) {
-                                    val = eledom.getElementsByTagName("INPUT")[0].value;
-                                } else {
+                        // if (eledom.innerHTML.length > 0) {
+                        try {
+                            if (eledom.getElementsByTagName("INPUT").length > 0) {
+                                val = eledom.getElementsByTagName("INPUT")[0].value;
+                            } else {
+                                val = eledom.getAttribute("va_pagreg");
+                                if (val.length == 0)
                                     val = eledom.innerHTML;
-                                }
-                            } catch (e) {
-                                val = eledom.innerHTML;
                             }
+                        } catch (e) {
+                            val = eledom.innerHTML;
                         }
+                        // }
                     } else if (ti_pagreg == '3') {
                         // valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         var dom_select = eledom.getElementsByTagName("SELECT")[0];

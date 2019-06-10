@@ -30,7 +30,7 @@ import javax.faces.bean.ViewScoped;
 public class PaginaLSBean extends MainBean implements Serializable, DefaultMaintenceWeb {
 
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
-//    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
+    //    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
 
@@ -105,7 +105,7 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
     ACCION DE APERTURA DE MODULO ==>NO TOCAR
      */
     public String openModule() {
-//        this.thisEditable = true;
+        this.thisEditable = true;
         return URL_LISTA;
     }
 
@@ -114,19 +114,9 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
      */
     @PostConstruct
     public void loadModule() {
-//        Log.info("[PaginaLSBean]->PostConstruct:" + getWindowID());
-        Log.info("[PaginaLSBean]->PostConstruct:");
-        /*EXP-->TRANSFER*/
-//        String idPagTransa = "X64PAG" + getWindowID().getId();
-        String idPagTransa = "X64PAG";
-        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idPagTransa);
-        Log.info("[PaginaLSBean]obj = " + obj);
-
         PaginaDAO dao = new PaginaDAO();
         this.paginas = dao.getPaginas();
         dao.close();
-
-        Log.info("[PaginaLSBean]obj = " + this.paginas == null ? 0 : this.paginas.size());
     }
 
     @Override
@@ -177,10 +167,9 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
         pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
         dao.close();
 
-        defaultTabIndex = 0;
+//        defaultTabIndex = 0;
 
         /*EXP-->TRANSFER*/
-//        String idPagTransa = "X64PAG" + getWindowID().getId();
         String idPagTransa = "X64PAG";
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(idPagTransa, pagina);
         return URL_EDITAR;
@@ -191,10 +180,6 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
         FacesContext.getCurrentInstance().getExternalContext().redirect(URL_EDITAR);
     }
 
-//    public void eventupdateRegistorTitle() throws Exception {
-//        pagreg_edit();
-//        FacesContext.getCurrentInstance().getExternalContext().redirect(pag_tr_edit());
-//    }
     @Override
     public String deleteRegist() {
 //        deleteDto();
@@ -209,7 +194,6 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
         return null;
     }
 
-//    @Override
     public PaginaDTO getPagina() {
         return pagina;
     }

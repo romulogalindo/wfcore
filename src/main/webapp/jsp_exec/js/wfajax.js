@@ -142,7 +142,7 @@ doPropag = function (url, regparams, data) {
                 }
 
                 if (rpta.no_action == 'REDIRECT') {
-                    window.parent.location.href = url + urlpart + (IL_POPUP ? '&il_popup=true' : '')
+                    window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
                 } else if (rpta.no_action == 'POPUP') {
                     // window.parent.page_to_master(regparams);
                     window.parent.page_to_master(rpta.ls_params);
@@ -153,10 +153,12 @@ doPropag = function (url, regparams, data) {
                         //decirle al iframe padre que lo refresque
                         window.parent.dynamic_change_page('PAG' + irpta);
                     }
+
                     window.parent.showloading(false);
                 } else if (rpta.no_action == 'DOWNLOAD') {
                     var ff = rpta.ur_archiv;
                     document.getElementById("downloader").src = "/doc?ti_docume=DOWNLOAD&fileitem=" + ff;
+
                     window.parent.showloading(false);
                 } else {
                     //se asume que es none

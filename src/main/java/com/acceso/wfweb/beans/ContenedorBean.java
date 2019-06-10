@@ -59,7 +59,7 @@ public class ContenedorBean implements Serializable {
 
             contenedor.setId_frawor(id_frawor);
         }
-
+        System.out.println("|||@@@|||requestManager.getParam(\"il_popup\") = " + requestManager.getParam("il_popup"));
         contenedor.setIl_popup(Util.toBoolean(requestManager.getParam("il_popup"), false));
         contenedor.setLs_conpar(ls_conpar);
 

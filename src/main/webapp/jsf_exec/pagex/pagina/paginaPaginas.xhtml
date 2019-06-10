@@ -26,10 +26,9 @@
                                  rowIndexVar="N"
                                  style="width:100%; ">
 
-                        <p:ajax event="rowDblselect" listener="#{paginaLSBean.eventupdateRegist}"
-                                global="false">
-                            <f:setPropertyActionListener value="#{pag}" target="#{paginaLSBean.pagina}"/>
-                        </p:ajax>
+<!--                        <p:ajax event="rowDblselect"  listener="#{paginaLSBean.eventupdateRegist}"-->
+<!--                                global="false" ajax="true" async="false">-->
+<!--                        </p:ajax>-->
 
                         <f:facet name="header">
                             Lista de Paginas
@@ -68,8 +67,6 @@
 
                             <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar" 
                                              action="#{paginaLSBean.updateRegist}" update="mainPanel"  ajax="true" async="false">
-                                <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
-                                <!--<f:setPropertyActionListener value="true" target="{paginaBean.thisEditable}"/>-->
                             </p:commandButton>
 
                             <p:spacer width="10px"/>

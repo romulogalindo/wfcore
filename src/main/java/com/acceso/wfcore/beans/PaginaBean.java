@@ -228,7 +228,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //        return URL_LISTA;
     }
 
-//    @PostConstruct
+    //    @PostConstruct
     @Override
     public void selectDto() {
         Log.info("->PostConstruct:" + getWindowID().getId());
@@ -278,14 +278,14 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         contenedores = dao.getContenedores(pagina.getCo_pagina());
         dao.close();
 
-        for (ContenedorDTO contenedorDTO : contenedores) {
-            WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).remove(contenedorDTO.getCo_conten());
-            WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(contenedorDTO.getCo_conten() + "" + pagina.getCo_pagina());
-        }
+        //Pendiente de resolver
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
+
 
     }
 
-//    public BotonDTO emptyButton() {
+    //    public BotonDTO emptyButton() {
 //        BotonDTO botonDTO = new BotonDTO();
 //        botonDTO.setCo_pagbot(-1);
 //        return botonDTO;
