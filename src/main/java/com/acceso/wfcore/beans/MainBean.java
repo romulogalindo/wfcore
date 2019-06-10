@@ -1,5 +1,9 @@
 package com.acceso.wfcore.beans;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.lifecycle.ClientWindow;
+
 public abstract class MainBean {
 
     protected String beanName = "MainBean";
@@ -31,4 +35,17 @@ public abstract class MainBean {
 
     public abstract String defaultAction();
 
+    public ClientWindow getWindowID() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        ClientWindow clientWindow = externalContext.getClientWindow();
+
+        if (clientWindow != null) {
+            System.out.println("client window id: " + clientWindow.getId());
+        } else {
+            System.out.println("client window cannot be determined!");
+        }
+
+        return clientWindow;
+    }
 }

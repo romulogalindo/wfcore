@@ -103,9 +103,9 @@ public class NQuery {
         execution_time = System.currentTimeMillis() - execution_time;
         Transactional.update(idt);
 
-        if (this.show_debug_log) {
-            Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
-        }
+//        if (this.show_debug_log) {
+        Log.info(LOG + "Q = " + getQueryString() + " T = " + getExecutionTime() + "ms");
+//        }
 
         return object;
     }
@@ -123,9 +123,9 @@ public class NQuery {
         execution_time = System.currentTimeMillis() - execution_time;
         Transactional.update(idt);
 
-        if (this.show_debug_log) {
-            Log.info(LOG + "Q = " + getQueryString() + " T = " + execution_time + "ms");
-        }
+//        if (this.show_debug_log) {
+        Log.info(LOG + "Q = " + getQueryString() + " T = " + execution_time + "ms");
+//        }
 
         return list;
     }
@@ -140,9 +140,9 @@ public class NQuery {
         updateResult = query.executeUpdate();
 
         execution_time = System.currentTimeMillis() - execution_time;
-        if (this.show_debug_log) {
-            Log.info(LOG + "Q = " + getQueryString() + " T = " + execution_time + "ms");
-        }
+//        if (this.show_debug_log) {
+        Log.info(LOG + "Q = " + getQueryString() + " T = " + execution_time + "ms");
+//        }
 
         return updateResult;
     }

@@ -8,6 +8,14 @@
         <param-name>SHOW_PREQUERY</param-name>
         <param-value>true</param-value>
     </context-param>
+    <context-param>
+        <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+        <param-value>none</param-value>
+    </context-param>
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.acceso.wfweb.filters.LoginFilter</filter-class>

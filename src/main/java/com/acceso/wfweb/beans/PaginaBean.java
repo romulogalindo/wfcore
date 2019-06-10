@@ -1,16 +1,12 @@
 package com.acceso.wfweb.beans;
 
-import com.acceso.wfcore.kernel.ApplicationManager;
-import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
-import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Pagina;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.Enumeration;
 
 public class PaginaBean implements Serializable {
     Pagina pagina;

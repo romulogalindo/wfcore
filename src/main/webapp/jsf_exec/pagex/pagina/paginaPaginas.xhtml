@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,90 +7,88 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="../../template/plantilla.xhtml">
-    <ui:define name="content">
+    <ui:composition template="../../template/plantilla.xhtml">
+        <ui:define name="content">
+            <p:panel id="panelListaPagina">
 
-        <p:panel id="panelListaPagina">
+                <h:form id="form">
+                    <p:dataTable id="lista"
+                                 var="pag"
+                                 value="#{paginaLSBean.paginas}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 rows="100"
+                                 widgetVar="widTable"
+                                 selectionMode="single"
+                                 selection="#{paginaLSBean.pagina}"
+                                 rowKey="#{pag.co_pagina}"
+                                 rowIndexVar="N"
+                                 style="width:100%; ">
 
-            <h:form id="form">
-                <p:dataTable id="lista"
-                             var="pag"
-                             value="#{paginaBean.paginas}"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                             paginator="true"
-                             paginatorPosition="bottom"
-                             rows="100"
-                             widgetVar="widTable"
-                             selectionMode="single"
-                             selection="#{paginaBean.pagina}"
-                             rowKey="#{pag.co_pagina}"
-                             rowIndexVar="N"
-                             style="width:100%; ">
+                        <p:ajax event="rowDblselect" listener="#{paginaLSBean.eventupdateRegist}"
+                                global="false">
+                            <f:setPropertyActionListener value="#{pag}" target="#{paginaLSBean.pagina}"/>
+                        </p:ajax>
 
-                    <p:ajax event="rowDblselect" listener="#{paginaBean.eventupdateRegist}"
-                            global="false">
-                        <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
-                    </p:ajax>
-
-                    <f:facet name="header">
-                        Lista de Paginas
-                    </f:facet>
-
-                    <p:ajax event="sort" skipChildren="false"/>
-
-                    <p:column style="text-align: right" width="20">
                         <f:facet name="header">
-                            <h:outputText value="#"/>
+                            Lista de Paginas
                         </f:facet>
-                        <h:outputText value="#{N + 1}"/>
-                    </p:column>
 
-                    <p:column headerText="COD" sortBy="#{pag.co_pagina}" width="50" filterBy="#{pag.co_pagina}"
-                              filterMatchMode="contains" styleClass="table_cell_left">
-                        <h:outputText value="#{pag.co_pagina}"/>
-                    </p:column>
+                        <p:ajax event="sort" skipChildren="false"/>
 
-                    <p:column headerText="Nombre" sortBy="#{pag.no_pagtit}" width="200" filterBy="#{pag.no_pagtit}"
-                              filterMatchMode="contains" styleClass="table_cell_left">
-                        <h:outputText value="#{pag.no_pagtit}"/>
-                    </p:column>
+                        <p:column style="text-align: right" width="20">
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputText value="#{N + 1}"/>
+                        </p:column>
 
-                    <p:column headerText="Descripción" sortBy="#{pag.de_pagina}" width="250" filterBy="#{pag.de_pagina}"
-                              filterMatchMode="contains">
-                        <h:outputText value="#{pag.de_pagina}"/>
-                    </p:column>
+                        <p:column headerText="COD" sortBy="#{pag.co_pagina}" width="50" filterBy="#{pag.co_pagina}"
+                                  filterMatchMode="contains" styleClass="table_cell_left">
+                            <h:outputText value="#{pag.co_pagina}"/>
+                        </p:column>
 
-                    <p:column headerText="Programador" sortBy="#{pag.db_progra}" filterBy="#{pag.db_progra}"
-                              filterMatchMode="contains" width="120">
-                        <h:outputText value="#{pag.db_progra}"/>
-                    </p:column>
+                        <p:column headerText="Nombre" sortBy="#{pag.no_pagtit}" width="200" filterBy="#{pag.no_pagtit}"
+                                  filterMatchMode="contains" styleClass="table_cell_left">
+                            <h:outputText value="#{pag.no_pagtit}"/>
+                        </p:column>
 
-                    <p:column headerText="Acciones" style="width:160px;text-align: center">
+                        <p:column headerText="Descripción" sortBy="#{pag.de_pagina}" width="250" filterBy="#{pag.de_pagina}"
+                                  filterMatchMode="contains">
+                            <h:outputText value="#{pag.de_pagina}"/>
+                        </p:column>
 
-                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
-                                         action="#{paginaBean.updateRegist}">
-                            <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
-                            <f:setPropertyActionListener value="true" target="#{paginaBean.thisEditable}"/>
-                        </p:commandButton>
+                        <p:column headerText="Programador" sortBy="#{pag.db_progra}" filterBy="#{pag.db_progra}"
+                                  filterMatchMode="contains" width="120">
+                            <h:outputText value="#{pag.db_progra}"/>
+                        </p:column>
 
-                        <p:spacer width="10px"/>
+                        <p:column headerText="Acciones" style="width:160px;text-align: center">
 
-                        <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar"
-                                         action="#{paginaBean.deleteRegist}"
-                                         update=":form:lista">
-                            <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
-                            <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                       icon="fa fa-exclamation-triangle"/>
-                        </p:commandButton>
+                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar" 
+                                             action="#{paginaLSBean.updateRegist}" update="mainPanel"  ajax="true" async="false">
+                                <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
+                                <!--<f:setPropertyActionListener value="true" target="{paginaBean.thisEditable}"/>-->
+                            </p:commandButton>
 
-                    </p:column>
+                            <p:spacer width="10px"/>
 
-                </p:dataTable>
-            </h:form>
-        </p:panel>
+                            <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar"
+                                             action="#{paginaBean.deleteRegist}"
+                                             update=":form:lista">
+                                <f:setPropertyActionListener value="#{pag}" target="#{paginaBean.pagina}"/>
+                                <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                           icon="fa fa-exclamation-triangle"/>
+                            </p:commandButton>
 
+                        </p:column>
 
-    </ui:define>
-</ui:composition>
+                    </p:dataTable>
+                </h:form>
+            </p:panel>
+
+        </ui:define>
+    </ui:composition>
 
 </html>

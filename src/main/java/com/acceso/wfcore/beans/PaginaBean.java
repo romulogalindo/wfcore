@@ -4,6 +4,7 @@ import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.RegistroDAO;
 import com.acceso.wfcore.dtos.*;
 import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import org.primefaces.event.DragDropEvent;
@@ -16,13 +17,17 @@ import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:54:46
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
+//@SessionScoped
 public class PaginaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
@@ -72,7 +77,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public PaginaBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Paginas";
-//      this.pagina = new PaginaDTO();
         this.thisEditable = true;
         this.registrosCargados = new ArrayList<>();
     }
@@ -143,6 +147,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
+        Log.info("[PaginaBean]pagina:" + pagina);
         PaginaDAO dao = new PaginaDAO();
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
@@ -150,6 +155,10 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
         defaultTabIndex = 0;
 
+        /*EXP-->TRANSFER*/
+        String idPagTransa = "X64PAG" + getWindowID().getId();
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(idPagTransa, pagina);
+        Log.info("[PaginaBean] idPagTransa:" + idPagTransa);
         return URL_EDITAR;
     }
 
@@ -161,6 +170,39 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public void eventupdateRegistorTitle() throws Exception {
         pagreg_edit();
         FacesContext.getCurrentInstance().getExternalContext().redirect(pag_tr_edit());
+    }
+
+    public String openModule() {
+        this.thisEditable = true;
+        return URL_EDITAR;
+    }
+
+    @PostConstruct
+    public void loadModule() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
+        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
+
+//        Log.info("[PaginaBean]->PostConstruct:" + getWindowID().getId());
+        Log.info("[PaginaBean]->PostConstruct:");
+        /*EXP-->TRANSFER*/
+        String idPagTransa = "X64PAG";
+        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idPagTransa);
+        Log.info("[PaginaBean]obj = " + obj);
+
+        if (obj != null) {
+            //        PaginaDAO dao = new PaginaDAO();
+//        this.paginas = dao.getPaginas();
+//        dao.close();
+            this.pagina = (PaginaDTO) obj;
+
+            Log.info("[PaginaBean]pagina:" + pagina);
+            PaginaDAO dao = new PaginaDAO();
+            pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
+            pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
+            dao.close();
+        }
+
     }
 
     @Override
@@ -178,20 +220,26 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //        return URL_LISTA;
     }
 
-    public String saveRegistApply() {
+    public void saveRegistApply() {
         saveDto();
         apply();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Página " + this.pagina.getCo_pagina(), "Datos actualizados y aplicacdos."));
-        return null;
+//        return null;
 //        return URL_LISTA;
     }
 
+//    @PostConstruct
     @Override
     public void selectDto() {
+        Log.info("->PostConstruct:" + getWindowID().getId());
+        /*EXP-->TRANSFER*/
+        String idPagTransa = "X64PAG" + getWindowID().getId();
+        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idPagTransa);
+        System.out.println("obj = " + obj);
+
         PaginaDAO dao = new PaginaDAO();
         this.paginas = dao.getPaginas();
         dao.close();
-
     }
 
     @Override
@@ -224,11 +272,17 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     /*EVENTOS:VOID*/
     public void apply() {
-        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
-//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).clear();
-//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).clear();
-//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).clear();
-        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
+        //GET ALL CONTENT BY CO_PAGINA
+        List<ContenedorDTO> contenedores;
+        PaginaDAO dao = new PaginaDAO();
+        contenedores = dao.getContenedores(pagina.getCo_pagina());
+        dao.close();
+
+        for (ContenedorDTO contenedorDTO : contenedores) {
+            WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).remove(contenedorDTO.getCo_conten());
+            WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(contenedorDTO.getCo_conten() + "" + pagina.getCo_pagina());
+        }
+
     }
 
 //    public BotonDTO emptyButton() {
@@ -389,6 +443,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public void setPagina(PaginaDTO pagina) {
+        Log.info("Seteando pagina>>" + pagina);
         this.pagina = pagina;
     }
 

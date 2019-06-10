@@ -16,14 +16,20 @@ import java.util.List;
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
-
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_CONTENEDOR,
-                query = "select co_conten, no_contit, de_conten, il_sesion, db_progra, fe_regist "
-                        + "from wfsistem.pbcontenedor_list()",
-                resultClass = ContenedorDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_CONTENEDOR,
+            query = "select co_conten, no_contit, de_conten, il_sesion, db_progra, fe_regist "
+            + "from wfsistem.pbcontenedor_list()",
+            resultClass = ContenedorDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_CONTENEDOR_BY_PAGINA,
+            query = "select distinct  co_conten, no_contit, de_conten, il_sesion, db_progra, fe_regist\n"
+            + "from frawor4.tcconten where co_conten in(\n"
+            + "    select tcconpag.co_conten from frawor4.tcconpag where co_pagina = 18431\n"
+            + "    )",
+            resultClass = ContenedorDTO.class)
 })
 public class ContenedorDTO implements Serializable {
 
@@ -108,13 +114,13 @@ public class ContenedorDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "ContenedorDTO{" +
-                "co_conten=" + co_conten +
-                ", no_contit='" + no_contit + '\'' +
-                ", de_conten='" + de_conten + '\'' +
-                ", il_sesion=" + il_sesion +
-                ", db_progra='" + db_progra + '\'' +
-                ", fe_regist=" + fe_regist +
-                '}';
+        return "ContenedorDTO{"
+                + "co_conten=" + co_conten
+                + ", no_contit='" + no_contit + '\''
+                + ", de_conten='" + de_conten + '\''
+                + ", il_sesion=" + il_sesion
+                + ", db_progra='" + db_progra + '\''
+                + ", fe_regist=" + fe_regist
+                + '}';
     }
 }

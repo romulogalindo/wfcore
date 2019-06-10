@@ -143,10 +143,11 @@ public class ManagerBean extends MainBean implements Serializable {
         ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, MenuBean.BEAN_NAME)).setOpen(false);
         ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, UsuarioBean.BEAN_NAME)).setOpen(false);
         ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, ContenedorBean.BEAN_NAME)).setOpen(false);
-        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, PaginaBean.BEAN_NAME)).setOpen(false);
+//        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, PaginaBean.BEAN_NAME)).setOpen(false);
+        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, PaginaLSBean.BEAN_NAME)).setOpen(false);
 
         //set module open!
-        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, module)).setOpen(true);
+//        ((MainBean) context.getApplication().getVariableResolver().resolveVariable(context, module)).setOpen(true);
 
     }
 }

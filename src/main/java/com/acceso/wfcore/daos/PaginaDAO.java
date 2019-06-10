@@ -27,24 +27,35 @@ public class PaginaDAO {
     }
 
     public List<PaginaDTO> getPaginas() {
-
-        List<PaginaDTO> paginas = new ArrayList<>();
+        List<PaginaDTO> paginas;
         NQuery nQuery = new NQuery();
 
         try {
-
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_PAGINA));
-
-            System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString());
             paginas = nQuery.list();
-            System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
-
         } catch (Exception ep) {
+            paginas = new ArrayList<>();
             System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
 
         return paginas;
+    }
+
+    public List<ContenedorDTO> getContenedores(int p_co_pagina) {
+        List<ContenedorDTO> contenedores;
+        NQuery nQuery = new NQuery();
+
+        try {
+            nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_CONTENEDOR_BY_PAGINA));
+            contenedores = nQuery.list();
+        } catch (Exception ep) {
+            contenedores = new ArrayList<>();
+            System.out.println("[PaginaDAO:getPaginas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return contenedores;
     }
 
     public PaginaDTO save(PaginaDTO paginaDTO) {

@@ -236,9 +236,9 @@
                                         update="mainPanel"
                                         icon="#{contenedorBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
 
-                            <p:menuitem value="#{paginaBean.titleName}" action="#{paginaBean.load}"
-                                        actionListener="#{paginaBean.doListener}" ajax="true" async="false"
-                                        update="mainPanel" icon="#{paginaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+                            <p:menuitem value="#{paginaLSBean.titleName}" actionListener="#{paginaLSBean.doListener}"
+                                        action="#{paginaLSBean.openModule}" ajax="true" async="false" update="mainPanel"
+                                        icon="#{paginaLSBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
 
                         </p:submenu>
                         <p:separator/>
@@ -301,6 +301,7 @@
                         <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
                     </p:confirmDialog>
+
                     <ui:insert name="content">Content</ui:insert>
                 </p:outputPanel>
             </p:layoutUnit>
