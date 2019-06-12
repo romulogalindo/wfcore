@@ -55,7 +55,7 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=15"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=16"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=34"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=16"></script>
 

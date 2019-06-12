@@ -1105,7 +1105,12 @@ function load_multiselect(valid, valdom) {
 function child_popup(u, eleid, c, tit1, tit2) {
     var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
     // console.log('child_popup->urlpopup:' + urlpopup);
-
+    console.log("eleid=" + eleid);
+    console.log("eleid=" + (eleid.indexOf('V') > 0));
+    eleid = eleid.indexOf('V') > 0 ? eleid : eleid.substring(0, eleid.length - 1);
+    console.log("eleid=" + eleid);
+    eleid = eleid.replace('V','');
+    console.log("eleid=" + eleid);
     var co_conpar_1 = document.getElementById(eleid + 'V').getElementsByTagName('SPAN')[0].getAttribute('valpag');
     var co_conpar_2 = document.getElementById(eleid + 'V').getElementsByTagName('SPAN')[0].innerHTML;
 

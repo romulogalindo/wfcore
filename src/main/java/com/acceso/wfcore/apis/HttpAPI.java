@@ -5,6 +5,7 @@ import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.utils.JsonResponse;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -17,11 +18,11 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class HttpAPI extends GenericAPI {
 
-    public String GET(String url) {
+    public JsonResponse GET(String url) {
         return GET(url, 10);
     }
 
-    public String GET(String url, int timeout) {
+    public JsonResponse GET(String url, int timeout) {
         URL _url;
         HttpURLConnection conHTTP;
         HttpsURLConnection conHTTPS;
@@ -36,7 +37,7 @@ public class HttpAPI extends GenericAPI {
                 conHTTP.setRequestMethod("GET");
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTP.getInputStream()))) {
 
                     String line;
@@ -57,7 +58,7 @@ public class HttpAPI extends GenericAPI {
                 conHTTPS.setRequestMethod("GET");
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTPS.getInputStream()))) {
 
                     String line;
@@ -73,26 +74,27 @@ public class HttpAPI extends GenericAPI {
                 conHTTPS.disconnect();
             }
 
+            return JsonResponse.defultJsonResponseOK(response);
         } catch (Exception ep) {
             Util.toJSON(JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, ep.getMessage())));
+            return JsonResponse.defultJsonResponseERROR(Util.getError(ep));
         }
 
-        return Util.toJSON(JsonResponse.defultJsonResponseOK(response));
     }
 
-    public String POST(String url) {
+    public JsonResponse POST(String url) {
         return POST(url, new HashMap<>(), new HashMap<>(), Values.HTTP_REQUEST_TIMEOUT);
     }
 
-    public String POST(String url, int timeout) {
+    public JsonResponse POST(String url, int timeout) {
         return POST(url, new HashMap<>(), new HashMap<>(), timeout);
     }
 
-    public String POST(String url, Map<String, String> params) {
+    public JsonResponse POST(String url, Map<String, String> params) {
         return POST(url, new HashMap<>(), params, Values.HTTP_REQUEST_TIMEOUT);
     }
 
-    public String POST(String url, Map<String, String> props, Map<String, String> params, int timeout) {
+    public JsonResponse POST(String url, Map<String, String> props, Map<String, String> params, int timeout) {
         URL _url;
         HttpURLConnection conHTTP;
         HttpsURLConnection conHTTPS;
@@ -132,7 +134,7 @@ public class HttpAPI extends GenericAPI {
 
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTP.getInputStream()))) {
 
                     String line;
@@ -178,7 +180,7 @@ public class HttpAPI extends GenericAPI {
 
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTPS.getInputStream()))) {
 
                     String line;
@@ -193,13 +195,14 @@ public class HttpAPI extends GenericAPI {
                 response = content.toString();
                 conHTTPS.disconnect();
             }
-
+            return JsonResponse.defultJsonResponseOK(response);
         } catch (Exception ep) {
             Util.toJSON(JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, ep.getMessage())));
             ep.printStackTrace();
+            return JsonResponse.defultJsonResponseERROR(Util.getError(ep));
         }
-        System.out.println("response = " + response);
-        return Util.toJSON(JsonResponse.defultJsonResponseOK(response));
+//        System.out.println("response = " + response);
+
     }
 
     public String URL(File file) {

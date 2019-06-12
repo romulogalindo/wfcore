@@ -70,7 +70,10 @@ public class PaginaRerporte extends Pagina implements Serializable {
                         }
                     }
                 } else {
-                    colspan++;
+                    if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
+                        colspan++;
+                    }
+
                     titlelvl1.get(titlelvl1.size() - 1).setColspan(colspan);
                 }
             }
@@ -264,7 +267,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                itr += "</script>";
                 itr += "%3C/script%3E";
 
-                itr += "<button name=\"X64UIR" + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"propag(X32UIR," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"top\" style=\"background-color: " + botonDTO.getVa_colbot() + " !important;\" title=\"" + (botonDTO.getVa_toltip()== null ? "" : botonDTO.getVa_toltip()) + "\">"
+                itr += "<button name=\"X64UIR" + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"propag(X32UIR," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"top\" style=\"background-color: " + botonDTO.getVa_colbot() + " !important;\" title=\"" + (botonDTO.getVa_toltip() == null ? "" : botonDTO.getVa_toltip()) + "\">"
                         + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pr-" + (botonDTO.getNo_pagbot().length() > 0 ? "1" : "0") + "\" aria-hidden=\"true\"></i>" : "")
                         + botonDTO.getNo_pagbot()
                         + (botonDTO.getNo_icopos().toUpperCase().contentEquals("RIGHT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pl-" + (botonDTO.getNo_pagbot().length() > 0 ? "1" : "0") + "\" aria-hidden=\"true\"></i>" : "")

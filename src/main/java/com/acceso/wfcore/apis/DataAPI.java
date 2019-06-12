@@ -189,8 +189,16 @@ public class DataAPI extends GenericAPI {
             }
 
             Long midt = Transactional.insert(1, Long.parseLong(getCo_usuari()), no_consul);
-            valReturn = sql.getResultList();
-
+            if (no_consul.trim().toLowerCase().startsWith("insert") | no_consul.trim().toLowerCase().startsWith("update")) {
+                int rowsaf = sql.executeUpdate();
+                List<LinkedHashMap<String, Object>> lsh = new ArrayList<>();
+                LinkedHashMap<String, Object> lh = new LinkedHashMap<>();
+                lh.put("ca_rowafe", rowsaf);
+                lsh.add(lh);
+                valReturn = lsh;
+            } else {
+                valReturn = sql.getResultList();
+            }
             Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + no_consul + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
