@@ -46,8 +46,8 @@
         }
 
         #mainpagina select {
-            display: unset !important;
-            width: 100%;
+/*            display: unset !important;
+            width: 100%;*/
         }
     </style>
 </head>

@@ -20675,8 +20675,10 @@ body.scrollable {
 
 .md-form {
     position: relative;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    /*margin-top: 1.5rem;*/
+    margin-top: 0rem;
+    /*margin-bottom: 1.5rem;*/
+    margin-bottom: 0rem;
 }
 
 .md-form input[type=text],
@@ -21081,10 +21083,12 @@ body.scrollable {
 }
 
 .md-form .form-control {
-    margin: 0 0 0.5rem 0;
+    /*margin: 0 0 0.5rem 0;*/
+    margin: 0 0 0rem 0;
     -webkit-border-radius: 0;
     border-radius: 0;
-    padding: 0.3rem 0 0.55rem 0;
+    /*padding: 0.3rem 0 0.55rem 0;*/
+    padding: 0.1rem 0.55rem 0.1rem 0;
     background-image: none;
     background-color: transparent;
     height: auto;
@@ -21097,7 +21101,7 @@ body.scrollable {
 }
 
 .md-form .form-control:disabled, .md-form .form-control[readonly] {
-    border-bottom: 1px solid #bdbdbd;
+    border-bottom: 1px solid #bdbdbd !important;
     background-color: transparent;
 }
 
@@ -26232,11 +26236,14 @@ label.btn input[type="checkbox"]:disabled:checked + label:after {
     border: none;
     border-bottom: 1px solid #ced4da;
     outline: none;
-    height: 38px;
-    line-height: 2.9rem;
+    /*height: 38px;*/
+    height: 20px;
+    /*line-height: 2.9rem;*/
+    line-height: 1.5rem;
     width: 100%;
-    font-size: 1rem;
-    margin: 0 0 0.94rem 0;
+    font-size: .85rem;
+    /*margin: 0 0 0.94rem 0;*/
+    margin: 0 0 0rem 0;
     padding: 0;
     display: block;
     -o-text-overflow: ellipsis;
@@ -26281,7 +26288,8 @@ label.btn input[type="checkbox"]:disabled:checked + label:after {
     color: initial;
     position: absolute;
     right: 0;
-    top: .8rem;
+    /*top: .8rem;*/
+    top: .3rem;
     font-size: 0.63rem;
 }
 
@@ -26342,9 +26350,9 @@ select:disabled {
 }
 
 .select-dropdown li img {
-    height: 30px;
-    width: 30px;
-    margin: 0.3rem 0.75rem;
+    height: 22px;
+    width: 22px;
+    margin: 0.1rem 0.75rem;
     float: right;
 }
 
@@ -26401,10 +26409,13 @@ select:disabled {
 
 .dropdown-content li > a,
 .dropdown-content li > span {
-    font-size: 0.9rem;
+    /*font-size: 0.9rem;*/
+    font-size: 0.8rem;
     color: #212529;
     display: block;
-    padding: 0.5rem;
+    /*padding: 0.5rem;*/
+    padding: 0.1rem 0.75rem;
+    min-height: 26px;
 }
 
 .dropdown-content li > a > i {

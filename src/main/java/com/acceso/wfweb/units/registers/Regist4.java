@@ -42,7 +42,7 @@ public class Regist4 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"4\" class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" >";
-                html += "       <select class=\"mdb-select md-formx " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onchange=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "></select>";
+                html += "       <select class=\"mdb-select md-formx " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onchange=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " ></select>";
                 html += "   </span>";
                 html += "</td>";
                 html += "</tr>";

@@ -266,11 +266,11 @@ span.pagreg[ti_pagreg='9'] textarea {
     width: 100%;
 }
 
-span.pagreg[ti_pagreg='7'] {
+/*span.pagreg[ti_pagreg='7'] {
     display: inline-block;
     border: 1px solid #616161;
     border-radius: 2px;
-}
+}*/
 
 span.pagreg[ti_pagreg='7'] input {
     border: none !important;
