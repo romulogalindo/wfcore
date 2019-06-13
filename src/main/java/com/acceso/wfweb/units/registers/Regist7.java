@@ -46,8 +46,8 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
-                html += "<div class=\"md-form\">";
+//                html += "<span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
+//                html += "<div class=\"md-form\">";
 //                html += "<input type=text id=\"" + id + "V_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"dd\"/>";
 //                html += "<span>/</span>";
 //                html += "<input type=text id=\"" + id + "V_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"mm\"/>";
@@ -55,9 +55,14 @@ public class Regist7 extends HTMLRenderer {
 //                html += "<input type=text id=\"" + id + "V_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" placeholder=\"yyyy\"/>";
 //                html += "<span id=\"" + id + "V_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fas fa-calendar-alt\"></i></span>";
 //                html += "<input type=hidden id=\"" + id + "V_date\" class=\"w3-input w3-border\" />";
-                html += "<input placeholder=\"Seleccione la fecha\" type=\"text\" onfocus=\"return null\" class=\"form-control datepicker\">";
-                html += "</div>";
-                html += "</span>";
+//                html += "<input placeholder=\"Seleccione la fecha\" type=\"text\" onfocus=\"return null\" class=\"form-control datepicker\">";
+//                html += "</div>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"7\" class=\"writer xaction pagreg\" >";
+                html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " onclick=\"open_popup_date(this);\" onchange=\"\" readonly value=>";
+                html += "       </div>";
+                html += "   </span>";
+//                html += "</span>";
                 html += "</td>";
                 html += "</tr>";
                 break;
@@ -70,9 +75,15 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' name='" + id + "V' class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
-                html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
-                html += "</span>";
+//                html += "<span id='" + id + "V' name='" + id + "V' class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
+//                html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
+//                html += "</span>";
+                
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"7\" class=\"writer xaction pagreg\" >";
+                html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " onclick=\"open_popup_date(this);\" readonly disabled value=>";
+                html += "       </div>";
+                html += "   </span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

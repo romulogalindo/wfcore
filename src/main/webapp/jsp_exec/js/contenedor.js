@@ -2,7 +2,7 @@ var $D = document;
 var $MAP = {};
 var current_pagina = -1;
 var current_regist = -1;
-
+var mutable_date_picker;
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
@@ -85,9 +85,9 @@ function workflow(il_popup) {
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
             iframe.src = '/karmic?co_conten=' + co_conten()
-                + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
-                + '&id_frawor=' + id_frawor()
-                + '&il_popup=' + il_popup;
+                    + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+                    + '&id_frawor=' + id_frawor()
+                    + '&il_popup=' + il_popup;
     }
 
 //--FRONT AND MODALª!
@@ -101,6 +101,12 @@ function workflow(il_popup) {
         }
         //if
         $('#slc_schema').modal('show');
+        //LISTO
+        console.log('Esto se cargara');
+        console.log('Esto se cargara:' + $('#rankanadate'));
+//        $('#rankanadate').pickadate();
+//        $("#rankanadate").unbind("focus");
+//        $("#rankanadate").off("focus");
     });
 
     $("#modal").on('hide.bs.modal', function () {
@@ -112,6 +118,8 @@ function workflow(il_popup) {
         document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
         document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
     });
+
+
 }
 
 function size_of_pagina() {
@@ -405,6 +413,27 @@ function dynamic_change_page(pag) {
 
 function container(co_pagina) {
     return $(document.getElementById('PAG' + co_pagina));
+}
+
+
+function master_open_popup_date(val, co_pagina) {
+    mutable_date_picker = $('#rankanadate').pickadate();
+    $("#rankanadate").unbind("focus");
+    $("#rankanadate").off("focus");
+
+//    $("#rankanadate").datepicker("destroy");
+    $('#rankanadate').val(val);
+    $('#rankanadate').attr('onchange', 'master_close_popup_date(this,' + co_pagina + ')');
+    $('#rankanadate').click();
+}
+
+function master_close_popup_date(objinp, co_pagina) {
+    //PENDIENTE!
+    var iframe = document.getElementById('PAG' + co_pagina);
+    iframe.contentWindow.close_popup_date(objinp.value);
+    
+    $("#rankanadate").pickadate("destroy");
+    mutable_date_picker.close();
 }
 
 /*LOGOUT*/

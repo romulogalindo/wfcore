@@ -273,7 +273,7 @@ span.pagreg[ti_pagreg='9'] textarea {
 }*/
 
 span.pagreg[ti_pagreg='7'] input {
-    border: none !important;
+    /*border: none !important;*/
     text-align: center;
 }
 

@@ -24468,27 +24468,27 @@ var _this = void 0;
             $labelAndIcon.addClass('active');
         }
     });
-    $(document).on('focus', inputSelector, function (e) {
-        $(e.target).siblings('label, i').addClass('active');
-    });
-    $(document).on('blur', inputSelector, function (e) {
-        var $this = $(e.target);
-        var noValue = !$this.val();
-        var invalid = !e.target.validity.badInput;
-        var noPlaceholder = $this.attr('placeholder') === undefined;
-
-        if (noValue && invalid && noPlaceholder) {
-            $this.siblings('label, i').removeClass('active');
-        }
-
-        validateField($this);
-    });
+//    $(document).on('focus', inputSelector, function (e) {
+//        $(e.target).siblings('label, i').addClass('active');
+//    });
+//    $(document).on('blur', inputSelector, function (e) {
+//        var $this = $(e.target);
+//        var noValue = !$this.val();
+//        var invalid = !e.target.validity.badInput;
+//        var noPlaceholder = $this.attr('placeholder') === undefined;
+//
+//        if (noValue && invalid && noPlaceholder) {
+//            $this.siblings('label, i').removeClass('active');
+//        }
+//
+//        validateField($this);
+//    });
     $(document).on('change', inputSelector, function (e) {
         var $this = $(e.target);
         updateTextFields($this);
         validateField($this);
     });
-    $('input[autofocus]').siblings('label, i').addClass('active');
+//    $('input[autofocus]').siblings('label, i').addClass('active');
     $(document).on('reset', function (e) {
         var $formReset = $(e.target);
 
@@ -28718,14 +28718,14 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
                 var value = this.value
                 if (value) {
                     picker.set('highlight', [picker.get('view').year, value, picker.get('highlight').date])
-                    picker.$root.find('.' + settings.klass.selectMonth).trigger('focus')
+//                    picker.$root.find('.' + settings.klass.selectMonth).trigger('focus')
                 }
             })
             picker.$root.find('.' + settings.klass.selectYear).on('change', function () {
                 var value = this.value
                 if (value) {
                     picker.set('highlight', [value, picker.get('view').month, picker.get('highlight').date])
-                    picker.$root.find('.' + settings.klass.selectYear).trigger('focus')
+//                    picker.$root.find('.' + settings.klass.selectYear).trigger('focus')
                 }
             })
         }, 1).on('open', function () {
@@ -29873,30 +29873,41 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
         return {
 
             // The title label to use for the month nav buttons
-            labelMonthNext: 'Next month',
-            labelMonthPrev: 'Previous month',
+            labelMonthNext: 'Mes siguiente',
+            labelMonthPrev: 'Mes anterior',
+//            labelMonthNext: 'Next month',
+//            labelMonthPrev: 'Previous month',
 
             // The title label to use for the dropdown selectors
-            labelMonthSelect: 'Select a month',
-            labelYearSelect: 'Select a year',
+            labelMonthSelect: 'Selecciona un mes',
+            labelYearSelect: 'Selecciona un a\u0144o',
+//            labelMonthSelect: 'Select a month',
+//            labelYearSelect: 'Select a year',
 
             // Months and weekdays
-            monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-            weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Mi\u00E9rcoles', 'Jueves', 'Viernes', 'S\u00E1bado'],
+            weekdaysShort: ['Dom','Lun','Mar','Mi\u00E9','Juv','Vie','S\u00E1b'],
+//            monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+//            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+//            weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+//            weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
             // Today and clear
-            today: 'Today',
-            clear: 'Clear',
-            close: 'Close',
+            today: 'Hoy',
+            clear: 'Limpiar',
+            close: 'Cerrar',
+//            today: 'Today',
+//            clear: 'Clear',
+//            close: 'Close',
 
             // Picker close behavior
             closeOnSelect: true,
             closeOnClear: true,
 
             // The format to show on the `input` element
-            format: 'd mmmm, yyyy',
+            format: 'dd/mm/yyyy',
 
             // Classes
             klass: {
