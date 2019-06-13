@@ -10,6 +10,8 @@ var TMP_INPUT_DATE;
 var DYNAMIC = false;
 var DYNAMIC_LS_REGIST = [];
 
+//Google chart
+var GDATA;
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
@@ -162,10 +164,19 @@ function pagina_onload(jsonData) {
 
             window.parent.iframe2('PAG' + co_pagina(), height_table);
 
-//            if (ti_pagina() == 'F') {
-//                $('.mdb-select').materialSelect();
-//            }
+        } else if (ti_pagina() == 'C') {
+            //validar el objeto de retorno llamado gdata
+            //poner esto en el objeto gdata
+            GDATA = jsonData.result;
+            
+            /*BEFORE VIEW*/
+            var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
+            console.log('>>' + fnpost);
+            eval(fnpost);
+            //devuevo actualizar el height;
+            size_of_pagina();
 
+            window.parent.iframe2('PAG' + co_pagina(), height_table);
         } else {
             document.getElementById('PAG' + co_pagina()).style.display = 'none';
             window.parent.iframe2('PAG' + co_pagina(), -1);
@@ -1218,25 +1229,15 @@ function load_multiselect(valid, valdom) {
 
 function child_popup(u, eleid, c, tit1, tit2) {
     var urlpopup = window.location.origin + "/" + u.replace("../wfl", "wf"); //[*]Esto debe de cambiar
-    // console.log('child_popup->urlpopup:' + urlpopup);
-    console.log("eleid=" + eleid);
-    console.log("eleid=" + (eleid.indexOf('V') > 0));
-    // eleid = eleid.indexOf('V') > 0 ? eleid : eleid.substring(0, eleid.length - 1);
-    console.log("eleid=" + eleid);
-    eleid = eleid.replace('V', '');
-    eleid = eleid + 'V';
-    console.log("eleid=" + eleid);
-    console.log("eleid=" + document.getElementById(eleid));
-    console.log("eleid=" + document.getElementById(eleid).getElementsByTagName('SPAN'));
-    var co_conpar_1 = document.getElementById(eleid).getElementsByTagName('SPAN')[0].getAttribute('valpag');
-    var co_conpar_2 = document.getElementById(eleid).getElementsByTagName('SPAN')[0].innerHTML;
+    if (eleid != null & eleid != undefined) {
+        eleid = eleid.replace('V', '') + 'V';
+        var co_conpar_1 = document.getElementById(eleid).getElementsByTagName('SPAN')[0].getAttribute('valpag');
+        var co_conpar_2 = document.getElementById(eleid).getElementsByTagName('SPAN')[0].innerHTML;
 
-    urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(co_conpar_1) + "&co_conpar_2=" + encodeURIComponent(co_conpar_2) + "&co_conpad=" + c;
+        urlpopup = urlpopup + "" + "&co_conpar_1=" + encodeURIComponent(co_conpar_1) + "&co_conpar_2=" + encodeURIComponent(co_conpar_2);
+    }
 
-    // urlpopup = urlpopup + "&il_header=false";
-    urlpopup = urlpopup + "&il_popup=true";
-    // console.log("vp:" + urlpopup);
-
+    urlpopup = urlpopup + "&co_conpad=" + c + "&il_popup=true";
     window.parent.master_popup(CO_PAGINA, urlpopup, eleid, tit1 + "  >  <b>" + tit2 + "</b>");
 }
 
@@ -1647,8 +1648,10 @@ function SHOWINFO(opt) {
     document.getElementById('pagopt_info').style.visibility = 'visible';
 }
 
-function AUTOINCREMENT(opt) {
+//function AUTOINCREMENT(opt) {
+function OPTION_ADD(opt) {
     document.getElementById('pagopt_plus').style.visibility = 'visible';
+    child_popup(opt, null, co_conten(), null, null);
 }
 
 /*

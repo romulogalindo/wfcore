@@ -6,13 +6,9 @@ import com.acceso.wfweb.dtos.WParametroDTO;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 public class PaginaRerporte extends Pagina implements Serializable {
 
-    //    int co_pagina;
-//    String no_pagtit;
-//    LinkedHashMap<String, Fila> ultraFilas;
     public PaginaRerporte(int co_pagina, String no_pagtit, String ti_pagina, int nu_rowspa, int nu_colspa, int or_numrow, int or_numcol, int co_contab, LinkedHashMap<String, Fila> ultraFilas) {
         this.co_pagina = co_pagina;
         this.no_pagtit = no_pagtit;
@@ -23,22 +19,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
         this.or_numcol = or_numcol;
         this.co_contab = co_contab;
         this.ultraFilas = ultraFilas;
-    }
-
-    public int getCo_pagina() {
-        return this.co_pagina;
-    }
-
-    public void setCo_pagina(int co_pagina) {
-        this.co_pagina = co_pagina;
-    }
-
-    public String getNo_pagtit() {
-        return no_pagtit;
-    }
-
-    public void setNo_pagtit(String no_pagtit) {
-        this.no_pagtit = no_pagtit;
     }
 
     @Override

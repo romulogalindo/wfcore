@@ -3,9 +3,9 @@ package com.acceso.wfweb.units;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-public class PaginaFormulario extends Pagina implements Serializable {
+public class PaginaChart extends Pagina implements Serializable {
 
-    public PaginaFormulario(int co_pagina, String no_pagtit, String ti_pagina, int nu_rowspa, int nu_colspa, int or_numrow, int or_numcol, int co_contab, LinkedHashMap<String, Fila> ultraFilas) {
+    public PaginaChart(int co_pagina, String no_pagtit, String ti_pagina, int nu_rowspa, int nu_colspa, int or_numrow, int or_numcol, int co_contab, LinkedHashMap<String, Fila> ultraFilas) {
         this.co_pagina = co_pagina;
         this.no_pagtit = no_pagtit;
         this.ti_pagina = ti_pagina;
@@ -24,12 +24,13 @@ public class PaginaFormulario extends Pagina implements Serializable {
         html += "<input type=hidden id=ti_pagina value=F />";
         html += "<input type=hidden id=ls_hamoda value=\"" + getLs_hamoda() + "\" />";
 
-        html += "<table id=PAG" + this.co_pagina + " class=\"table table-hover mb-0\">";
-        html += "<tbody id=\"row1\">";
-
-        html = this.ultraFilas.values().stream().map((fila) -> fila.toHTML()).reduce(html, String::concat);
-
-        html += "</table>";
+//        html += "<table id=PAG" + this.co_pagina + " class=\"table table-hover mb-0\">";
+//        html += "<tbody id=\"row1\">";
+//
+//        html = this.ultraFilas.values().stream().map((fila) -> fila.toHTML()).reduce(html, String::concat);
+//
+//        html += "</table>";
+        html += "<div id=\"wfchart\" style=\"width: 900px; height: 300px;\"></div>";
 
         return html;
     }
