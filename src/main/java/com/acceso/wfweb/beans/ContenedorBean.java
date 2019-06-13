@@ -46,7 +46,6 @@ public class ContenedorBean implements Serializable {
         ls_conpar = ls_conpar.substring(0, ls_conpar.length() - 1) + "}";
 
         dao.close();
-//        dao_fdb.close();
 
         //preguntar a la cache si tienen este contenedor
         contenedor = (Contenedor) WFIOAPP.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
@@ -59,7 +58,7 @@ public class ContenedorBean implements Serializable {
 
             contenedor.setId_frawor(id_frawor);
         }
-        System.out.println("|||@@@|||requestManager.getParam(\"il_popup\") = " + requestManager.getParam("il_popup"));
+//        System.out.println("|||@@@|||requestManager.getParam(\"il_popup\") = " + requestManager.getParam("il_popup"));
         contenedor.setIl_popup(Util.toBoolean(requestManager.getParam("il_popup"), false));
         contenedor.setLs_conpar(ls_conpar);
 

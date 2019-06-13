@@ -141,6 +141,15 @@ doPropag = function (url, regparams, data) {
                     urlpart += '&' + regparams[o];
                 }
 
+                if (rpta.ls_params != undefined) {
+                    for (var i = 0; i < rpta.ls_params.length; i++) {
+                        console.log("rpta.params[i].no_param=" + rpta.ls_params[i].no_param);
+                        if(urlpart.indexOf(rpta.ls_params[i].no_param) == -1){
+                            urlpart+="&"+rpta.ls_params[i].no_param+"="+ rpta.ls_params[i].va_param
+                        }
+                    }
+                }
+
                 if (rpta.no_action == 'REDIRECT') {
                     window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
                 } else if (rpta.no_action == 'POPUP') {

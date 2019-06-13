@@ -53,9 +53,7 @@ public class AsyncValPag extends AsyncProcessor {
                 String valpag2_js = dao.getJS_Valpag(co_pagina).getScript();
                 String propag2_js = dao.getJS_Propag(co_pagina).getScript();
                 String compag2_js = dao.getJS_Compag(co_pagina).getScript();
-                System.out.println("compag2_js = " + compag2_js);
                 String dinpag2_js = dao.getJS_Dinpag(co_pagina).getScript();
-                System.out.println("dinpag2_js = " + dinpag2_js);
                 dao.close();
 
                 String scriptpage = Util.getText(WFIOAPP.APP.PAGEJS)
@@ -73,33 +71,41 @@ public class AsyncValPag extends AsyncProcessor {
 
             /*EXE VALPAGJS*/
             ValpagJson valpagJson = null;
+            Object valpagx = null;
             if (type == 1) {
-                valpagJson = (ValpagJson) script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
-                jsonResponse.setResult(valpagJson);
+                valpagx = script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+//                valpagJson = (ValpagJson) script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+//                jsonResponse.setResult(valpagJson);
+                jsonResponse.setResult(valpagx);
                 jsonResponse.setFnpost(script.dopvpj("GET_DO_POST_LOAD_DATA"));
 
-                if (valpagJson != null && (valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
-                    HashMap<String, Object> map_hamodas = new HashMap<>();
-                    Map<Short, Object> compags = script.doCompag64(id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                if (valpagx instanceof ValpagJson) {
+                    valpagJson = (ValpagJson) valpagx;
+                    if (valpagJson != null && (valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
+                        HashMap<String, Object> map_hamodas = new HashMap<>();
+                        Map<Short, Object> compags = script.doCompag64(id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
 
-                    compags
-                            .entrySet()
-                            .stream()
-                            .filter(o -> o.getValue() != null && ((JsonResponse) o.getValue()).getStatus().contentEquals("OK"))
-                            .forEach(
-                                    entry -> {
-                                        List<ComboDTO> combo = new ArrayList<>();
-                                        for (Object rss : (List) ((JsonResponse) entry.getValue()).getResult()) {
-                                            if (rss != null) {
-                                                java.util.HashMap hashMap = (HashMap) rss;
-                                                combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
+                        compags
+                                .entrySet()
+                                .stream()
+                                .filter(o -> o.getValue() != null && ((JsonResponse) o.getValue()).getStatus().contentEquals("OK"))
+                                .forEach(
+                                        entry -> {
+                                            List<ComboDTO> combo = new ArrayList<>();
+                                            for (Object rss : (List) ((JsonResponse) entry.getValue()).getResult()) {
+                                                if (rss != null) {
+                                                    java.util.HashMap hashMap = (HashMap) rss;
+                                                    combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
+                                                }
                                             }
+                                            map_hamodas.put("" + entry.getKey(), combo);
                                         }
-                                        map_hamodas.put("" + entry.getKey(), combo);
-                                    }
-                            );
+                                );
 
-                    jsonResponse.setAditional(map_hamodas);
+                        jsonResponse.setAditional(map_hamodas);
+                    }
+                } else {
+
                 }
             } else {
                 System.out.println(" listo apra ejecutar!= ");
@@ -107,7 +113,7 @@ public class AsyncValPag extends AsyncProcessor {
                 System.out.println(" listo apra ejecutar!= valpagJson>" + valpagJson);
                 jsonResponse.setResult(valpagJson);
             }
-            System.out.println("Util.toJSON2(jsonResponse) = " + Util.toJSON2(jsonResponse));
+//            System.out.println("Util.toJSON2(jsonResponse) = " + Util.toJSON2(jsonResponse));
             out.write(Util.toJSON2(jsonResponse));
         } catch (Exception ep) {
 //            System.out.println("[[ERROR!--------------------------------------------//////?????]]?>>" + ep.getMessage());

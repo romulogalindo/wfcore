@@ -120,6 +120,8 @@ public class ApplicationManager {
                 contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
             } else if (paginaDTO.getTi_pagina().contentEquals("T")) {
                 contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+            } else if (paginaDTO.getTi_pagina().contentEquals("C")) {
+                contenedor.addPagina(new PaginaChart(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
             }
         }
 
