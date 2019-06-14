@@ -55,7 +55,7 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=17"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=18"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=34"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=16"></script>
 
@@ -595,6 +595,6 @@
 
 <%--<c:set scope="session" var="US" property="il_schema" value="false"/>--%>
 <%--<script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>--%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js?a=2"></script>
 </body>
 </html>

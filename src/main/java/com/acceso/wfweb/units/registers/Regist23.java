@@ -24,7 +24,6 @@ public class Regist23 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-//                html += "<input type=hidden id='" + id + "V' class=\"hidden pagreg\" name='" + id + "V' value=>";
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"23\" class=\"hidden xaction pagreg\" >";
                 html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
                 html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " value=>";
@@ -45,7 +44,7 @@ public class Regist23 extends HTMLRenderer {
                 html += "<td class=wf_f_valreg>";
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"23\" class=\"writer xaction pagreg\" >";
                 html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=\"extractNumber(this, -1, true);dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "\" onkeyup=\"extractNumber(this, -1, true);\" onkeypress=\"return blockNonNumbers(this, event, false, true);\" value=>";
+                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=\"extractNumber(this, -1, true);dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "\" onkeyup=\"extractNumber(this, -1, true);\" onkeypress=\"return blockNonNumbers(this, event, true, true);\" style=\"text-align:center;\" value=>";
                 html += "       </div>";
                 html += "   </span>";
                 html += "</td>";
