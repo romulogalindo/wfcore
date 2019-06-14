@@ -3,11 +3,11 @@ package com.acceso.wfweb.units.registers;
 import com.acceso.wfweb.dtos.WRegistroDTO;
 import com.acceso.wfweb.units.HTMLRenderer;
 
-public class Regist22 extends HTMLRenderer {
+public class Regist23 extends HTMLRenderer {
     WRegistroDTO registroDTO;
     String id;
 
-    public Regist22(String id, WRegistroDTO registroDTO) {
+    public Regist23(String id, WRegistroDTO registroDTO) {
         this.id = id;
         this.registroDTO = registroDTO;
     }
@@ -25,7 +25,7 @@ public class Regist22 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
 //                html += "<input type=hidden id='" + id + "V' class=\"hidden pagreg\" name='" + id + "V' value=>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"22\" class=\"hidden xaction pagreg\" >";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"23\" class=\"hidden xaction pagreg\" >";
                 html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
                 html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " value=>";
                 html += "       </div>";
@@ -43,9 +43,9 @@ public class Regist22 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"22\" class=\"writer xaction pagreg\" >";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"23\" class=\"writer xaction pagreg\" >";
                 html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=\"extractNumber(this, 0, true);dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "\" onkeyup=\"extractNumber(this, 0, true);\" onkeypress=\"return blockNonNumbers(this, event, false, true);\" value=>";
+                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=\"extractNumber(this, -1, true);dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "\" onkeyup=\"extractNumber(this, -1, true);\" onkeypress=\"return blockNonNumbers(this, event, false, true);\" value=>";
                 html += "       </div>";
                 html += "   </span>";
                 html += "</td>";

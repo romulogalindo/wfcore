@@ -168,7 +168,7 @@ function pagina_onload(jsonData) {
         } else if (ti_pagina() == 'C') {
             //validar el objeto de retorno llamado gdata
             //poner esto en el objeto gdata
-            var GDATAX =[]
+            var GDATAX = []
             GDATA = jsonData.result;
             for (var x = 0; x < GDATA.length; x++) {
                 console.log('GDATA[' + x + ']=' + GDATA[x]);
@@ -179,7 +179,7 @@ function pagina_onload(jsonData) {
                 }
                 GDATAX[GDATAX.length] = MDATA;
             }
-            GDATA =GDATAX;
+            GDATA = GDATAX;
 
             /*BEFORE VIEW*/
             var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
@@ -265,7 +265,8 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName);
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?===>" + (reg.type != undefined & reg.type > -1));
 
@@ -333,13 +334,15 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("==========ASIGN DATA=>" + ultraid + ",=>?" + eledom);
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") != "hidden")
                         domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1') {
@@ -569,8 +572,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                     break;
                 }
                 case
-                "A"
-                : {
+                        "A"
+                        :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -582,7 +586,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -610,11 +615,13 @@ function loadFormulario64(index, row, aditional, dom2) {
             // }
 
             switch (ti_estreg) {
-                case 'O': {
+                case 'O':
+                {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E': {
+                case 'E':
+                {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -636,7 +643,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L': {
+                case 'L':
+                {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -919,11 +927,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
             var val = null;
 
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     val = eledom.value;
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("ti_pagreg=" + ti_pagreg);
                     if (ti_pagreg == '1') {
@@ -1017,7 +1027,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                     break;
                 }
-                case "A": {
+                case "A":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -1126,11 +1137,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                 if (ti_pagreg == '1') {
@@ -1169,7 +1182,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1536,7 +1550,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case '1': {
+                        case '1':
+                        {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -1558,11 +1573,13 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                             break;
                         }
-                        case '2': {
+                        case '2':
+                        {
                             all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case '3': {
+                        case '3':
+                        {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;
@@ -1570,7 +1587,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + regval + "\",";
                             break;
                         }
-                        default: {
+                        default:
+                        {
                             all_regs += '\"\"' + ",";
                         }
 
@@ -1756,40 +1774,18 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
     } else if (type == 7) {
         if (ti_estreg == 'E') {
             html += "<span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
-//            html += "<input type=text id=\"" + id + "_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"dd\"/>";
-//            html += "<span>/</span>";
-//            html += "<input type=text id=\"" + id + "_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"mm\"/>";
-//            html += "<span>/</span>";
-//            html += "<input type=text id=\"" + id + "_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" placeholder=\"yyyy\"/>";
-//            html += "<span id=\"" + id + "_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fas fa-calendar-alt\"></i></span>";
-//            html += "<input type=hidden id=\"" + id + "_date\" class=\"w3-input w3-border\" />";
-
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
             html += "           <input type=text class=\"w3-input w3-border form-control " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onblur=dinpag(this," + co_regist + ")" : "") + " onclick=\"open_popup_date(this);\" readonly disabled value=>";
             html += "       </div>";
             html += "</span>";
         } else if (ti_estreg == 'L') {
             html += "<span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
-//            html += "<input type=text id=\"" + id + "_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" disabled placeholder=\"dd\"/>";
-//            html += "<span>/</span>";
-//            html += "<input type=text id=\"" + id + "_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" disabled placeholder=\"mm\"/>";
-//            html += "<span>/</span>";
-//            html += "<input type=text id=\"" + id + "_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" disabled placeholder=\"yyyy\"/>";
-//            html += "<span id=\"" + id + "_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fas fa-calendar-alt\"></i></span>";
-//            html += "<input type=hidden id=\"" + id + "_date\" class=\"w3-input w3-border\" />";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
             html += "           <input type=text class=\"w3-input w3-border form-control " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onblur=dinpag(this," + co_regist + ")" : "") + " onclick=\"open_popup_date(this);\" readonly disabled value=>";
             html += "       </div>";
             html += "</span>";
         } else if (ti_estreg == 'O') {
             html += "<span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" ti_pagreg=\"7\" >";
-//            html += "<input type=text id=\"" + id + "_dd\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"dd\"/>";
-//            html += "<span>/</span>";
-//            html += "<input type=text id=\"" + id + "_mm\" class=\"wf_box_length2 wf_inline w3-input w3-border\" placeholder=\"mm\"/>";
-//            html += "<span>/</span>";
-//            html += "<input type=text id=\"" + id + "_yyyy\" class=\"wf_box_length4 wf_inline w3-input w3-border\" placeholder=\"yyyy\"/>";
-//            html += "<span id=\"" + id + "_btn\" class=\"wf-cal wf_inline\" title=\"Cambiar fecha\"><i class=\"fas fa-calendar-alt\"></i></span>";
-//            html += "<input type=hidden id=\"" + id + "_date\" class=\"w3-input w3-border\" />";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
             html += "           <input type=text class=\"w3-input w3-border form-control " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onblur=dinpag(this," + co_regist + ")" : "") + " onclick=\"open_popup_date(this);\" readonly disabled value=>";
             html += "       </div>";
@@ -1807,25 +1803,125 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         } else if (ti_estreg == 'O') {
             html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"1\"></span>";
         }
-    } else if (type == 34) {
+    } else if (type == 22) {
+        if (ti_estreg == 'E') {
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"22\" class=\"writer pagreg\" >";
+            html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+            html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=\"extractNumber(this, 0, true);dinpag(this," + co_regist + ")" : "") + "\" onkeyup=\"extractNumber(this, 0, true);\" onkeypress=\"return blockNonNumbers(this, event, false, true);\">";
+            html += "       </div>";
+            html += "   </span>";
+        } else if (ti_estreg == 'L') {
+            html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"22\"></span>";
+        } else if (ti_estreg == 'O') {
+            html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"22\"></span>";
+        }
+    } else if (type == 23) {
+        if (ti_estreg == 'E') {
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"22\" class=\"writer pagreg\" >";
+            html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+            html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=\"extractNumber(this, -1, true);dinpag(this," + co_regist + ")" : "") + "\" onkeyup=\"extractNumber(this, -1, true);\" onkeypress=\"return blockNonNumbers(this, event, false, true);\">";
+            html += "       </div>";
+            html += "   </span>";
+        } else if (ti_estreg == 'L') {
+            html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"23\"></span>";
+        } else if (ti_estreg == 'O') {
+            html += "<span id='" + id + "' class=\"reader pagreg\" name='" + id + "' va_pagreg=\"\" ti_pagreg=\"23\"></span>";
+        }
+    }else if (type == 34) {
         console.log('inside type=>ur_pagreg:' + ur_pagreg);
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                + "           <span valpag=\"\"></span>+"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                    + "           <span valpag=\"\"></span>+"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>+"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                    + "           <span valpag=\"\"></span>+"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>+"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                    + "           <span valpag=\"\"></span>+"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
             html += "       </span>";
         }
     }
 
     return html;
+}
+
+/*EVENTS*/
+function extractNumber(obj, decimalPlaces, allowNegative) {
+    var temp = obj.value;
+    // avoid changing things if already formatted correctly
+    var reg0Str = '[0-9]*';
+    if (decimalPlaces > 0) {
+        reg0Str += '\\.?[0-9]{0,' + decimalPlaces + '}';
+    } else if (decimalPlaces < 0) {
+        reg0Str += '\\.?[0-9]*';
+    }
+    reg0Str = allowNegative ? '^-?' + reg0Str : '^' + reg0Str;
+    reg0Str = reg0Str + '$';
+    var reg0 = new RegExp(reg0Str);
+    if (reg0.test(temp))
+        return true;
+    // first replace all non numbers
+    var reg1Str = '[^0-9' + (decimalPlaces != 0 ? '.' : '') + (allowNegative ? '-' : '') + ']';
+    var reg1 = new RegExp(reg1Str, 'g');
+    temp = temp.replace(reg1, '');
+    if (allowNegative) {
+// replace extra negative
+        var hasNegative = temp.length > 0 && temp.charAt(0) == '-';
+        var reg2 = /-/g;
+        temp = temp.replace(reg2, '');
+        if (hasNegative)
+            temp = '-' + temp;
+    }
+    if (decimalPlaces != 0) {
+        var reg3 = /\./g;
+        var reg3Array = reg3.exec(temp);
+        if (reg3Array != null) {
+// keep only first occurrence of .
+// and the number of places specified by decimalPlaces or the entire string if decimalPlaces < 0
+            var reg3Right = temp.substring(reg3Array.index + reg3Array[0].length);
+            reg3Right = reg3Right.replace(reg3, '');
+            reg3Right = decimalPlaces > 0 ? reg3Right.substring(0, decimalPlaces) : reg3Right;
+            temp = temp.substring(0, reg3Array.index) + '.' + reg3Right;
+        }
+    }
+    obj.value = temp;
+}
+
+function blockNonNumbers(obj, e, allowDecimal, allowNegative) {
+    var key;
+    var isCtrl = false;
+    var keychar;
+    var reg;
+    if (window.event) {
+        key = e.keyCode;
+        isCtrl = window.event.ctrlKey
+    } else if (e.which) {
+        key = e.which;
+        isCtrl = e.ctrlKey;
+    }
+    if (isNaN(key))
+        return true;
+    keychar = String.fromCharCode(key);
+    // check for backspace or delete, or if Ctrl was pressed
+    if (key == 8 || isCtrl)
+    {
+        return true;
+    }
+    reg = /\d/;
+    var isFirstN = allowNegative ? keychar == '-' && obj.value.indexOf('-') == -1 : false;
+    var isFirstD = allowDecimal ? keychar == '.' && obj.value.indexOf('.') == -1 : false;
+    return isFirstN || isFirstD || reg.test(keychar);
+}
+
+function checkEmail(I, L) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($D.g_ID(I).value)) {
+        $D.g_ID(L).innerHTML = "";
+    } else {
+        $D.g_ID(L).innerHTML = "<font color=red>E-mail no v&#225;lido</font>";
+    }
 }
