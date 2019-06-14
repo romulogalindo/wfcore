@@ -29691,17 +29691,17 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
                 if (numberYears) {
 
                     var
-                        minYear = minLimitObject.year,
-                        maxYear = maxLimitObject.year,
+                        minYear = 1900,//--minLimitObject.year,
+                        maxYear = 2050,//maxLimitObject.year,
                         lowestYear = focusedYear - numberYears,
                         highestYear = focusedYear + numberYears
 
                     // If the min year is greater than the lowest year, increase the highest year
                     // by the difference and set the lowest year to the min year.
-                    if (minYear > lowestYear) {
-                        highestYear += minYear - lowestYear
-                        lowestYear = minYear
-                    }
+                    // if (minYear > lowestYear) {
+                    //     highestYear += minYear - lowestYear
+                    //     lowestYear = minYear
+                    // }
 
                     // If the max year is less than the highest year, decrease the lowest year
                     // by the lower of the two: available and needed years. Then set the
@@ -29956,7 +29956,7 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
 
 $.extend($.fn.pickadate.defaults, {
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    selectYears: 100, // Creates a dropdown of 15 years to control year,
 
     onRender: function () {
         var $pickerInstance = this.$root;
