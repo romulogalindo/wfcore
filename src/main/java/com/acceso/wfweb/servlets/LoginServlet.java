@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
                 ep.printStackTrace();
             }
         } else {
-            
+
             /*
             <div class="row">
                                     <ul style="width: 100%;">
@@ -102,7 +102,7 @@ public class LoginServlet extends HttpServlet {
                                         <!--/. Side navigation links -->
                                     </ul>
                                 </div>
-            */
+             */
         }
     }
 
@@ -115,13 +115,17 @@ public class LoginServlet extends HttpServlet {
 
         if (requestManager.getPath().contains(LOGINSERVLET_LOGIN64) || requestManager.getPath().contentEquals("/")) {
             try {
+                System.out.println("1* => " + 1);
                 if (doLogin.SecurityLogin(requestManager)) {
-                    System.out.println("goToUrl = " + goToUrl);
+                    System.out.println("(*)goToUrl = " + goToUrl);
                     requestManager.save_over_request("goto", "go!");
                     requestManager.save_over_session("US", doLogin.getUsuario());
                     //deberia darme una linea por default>>>>ejeurl-->444
-                    goToUrl = "/main?co_conten=444";
+                    goToUrl = "/wf?co_conten=444";
+                    System.out.println("goToUrl = " + goToUrl);
+                    System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
                 } else {
+                    System.out.println("1** => " + 1);
                     throw new Exception(doLogin.getMessage());
                 }
 

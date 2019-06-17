@@ -3,6 +3,7 @@ package com.acceso.wfweb.servlets;
 import com.acceso.wfcore.kernel.AsyncProPag;
 import com.acceso.wfcore.kernel.AsyncValPag;
 import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfweb.units.Usuario;
 
 import java.io.IOException;
 import javax.servlet.AsyncContext;
@@ -60,6 +61,13 @@ public class ValpagServlet extends HttpServlet {
             case "/dingo": {
                 //propag
                 WFIOAPP.APP.getExecutor().execute(new AsyncProPag(asyncCtx, 10000, 2));
+                break;
+            }
+            case "/uxtion": {
+                //propag
+                Usuario usuario = ((Usuario) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("US"));
+                usuario.setMainMenu(usuario.getMainMenus().get(request.getParameter("comenu")));
+                asyncCtx.complete();
                 break;
             }
         }

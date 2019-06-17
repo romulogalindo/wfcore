@@ -4,6 +4,8 @@ import com.acceso.wfweb.web.MainMenu;
 import com.acceso.wfweb.web.Root;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 public class Usuario implements Serializable {
 
@@ -16,13 +18,14 @@ public class Usuario implements Serializable {
 
     Integer co_sistem;
     Integer co_subsis;
-    Integer co_paquet;
+//    Integer co_paquet;
     Integer co_modulo;
 
     boolean il_schema;
 
     Root root;
     MainMenu mainMenu;
+    Map<String, MainMenu> mainMenus;
 
     public Usuario() {
     }
@@ -99,14 +102,13 @@ public class Usuario implements Serializable {
         this.co_subsis = co_subsis;
     }
 
-    public Integer getCo_paquet() {
-        return co_paquet;
-    }
-
-    public void setCo_paquet(Integer co_paquet) {
-        this.co_paquet = co_paquet;
-    }
-
+//    public Integer getCo_paquet() {
+//        return co_paquet;
+//    }
+//
+//    public void setCo_paquet(Integer co_paquet) {
+//        this.co_paquet = co_paquet;
+//    }
     public Integer getCo_modulo() {
         return co_modulo;
     }
@@ -123,9 +125,17 @@ public class Usuario implements Serializable {
         this.il_schema = il_schema;
     }
 
+    public Map<String, MainMenu> getMainMenus() {
+        return mainMenus;
+    }
+
+    public void setMainMenus(Map<String, MainMenu> mainMenus) {
+        this.mainMenus = mainMenus;
+    }
+
     @Override
     public String toString() {
-        return "Usuario{" + "co_usuari=" + co_usuari + ", id_sesion=" + id_sesion + ", no_usulog=" + no_usulog + ", no_usuari=" + no_usuari + ", no_imgusu=" + no_imgusu + ", co_sistem=" + co_sistem + ", co_subsis=" + co_subsis + ", co_paquet=" + co_paquet + ", co_modulo=" + co_modulo + ", root=" + root + ", mainMenu=" + mainMenu + '}';
+        return "Usuario{" + "co_usuari=" + co_usuari + ", id_sesion=" + id_sesion + ", no_usulog=" + no_usulog + ", no_usuari=" + no_usuari + ", no_imgusu=" + no_imgusu + ", co_sistem=" + co_sistem + ", co_subsis=" + co_subsis + ", co_modulo=" + co_modulo + ", root=" + root + ", mainMenu=" + mainMenu + '}';
     }
 
 }

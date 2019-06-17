@@ -10,7 +10,7 @@ public class Paquete implements Serializable {
     String no_prefij;
     //String ur_default;
     String ur_arcadj;
-    MainMenu mmenu;
+//    MainMenu mmenu;
     boolean renderer;
 
     public Paquete() {
@@ -56,14 +56,13 @@ public class Paquete implements Serializable {
         this.ur_arcadj = ur_arcadj;
     }
 
-    public MainMenu getMmenu() {
-        return mmenu;
-    }
-
-    public void setMmenu(MainMenu mmenu) {
-        this.mmenu = mmenu;
-    }
-
+//    public MainMenu getMmenu() {
+//        return mmenu;
+//    }
+//
+//    public void setMmenu(MainMenu mmenu) {
+//        this.mmenu = mmenu;
+//    }
     public boolean isRenderer() {
         return renderer;
     }
@@ -74,8 +73,7 @@ public class Paquete implements Serializable {
 
     @Override
     public String toString() {
-        return "Paquete{" + "co_paquet=" + co_paquet + ", no_paquet=" + no_paquet + ", no_prefij=" + no_prefij + ", ur_arcadj=" + ur_arcadj + ", mmenu=" + mmenu + '}';
+        return "Paquete{" + "co_paquet=" + co_paquet + ", no_paquet=" + no_paquet + ", no_prefij=" + no_prefij + ", ur_arcadj=" + ur_arcadj + '}';
     }
-
 
 }

@@ -37,11 +37,11 @@ public class RegsesiniDTO implements Serializable {
 
     String no_usulog;
     String no_usuari;
-    String no_imgusu;
+    String ar_imgusu;
 
     Integer co_sistem;
     Integer co_subsis;
-    Integer co_paquet;
+//    Integer co_paquet;
     Integer co_modulo;
 
     int co_mensaj;
@@ -88,12 +88,12 @@ public class RegsesiniDTO implements Serializable {
         this.no_usuari = no_usuari;
     }
 
-    public String getNo_imgusu() {
-        return no_imgusu;
+    public String getAr_imgusu() {
+        return ar_imgusu;
     }
 
-    public void setNo_imgusu(String no_imgusu) {
-        this.no_imgusu = no_imgusu;
+    public void setAr_imgusu(String ar_imgusu) {
+        this.ar_imgusu = ar_imgusu;
     }
 
     public int getCo_sistem() {
@@ -112,13 +112,13 @@ public class RegsesiniDTO implements Serializable {
         this.co_subsis = co_subsis;
     }
 
-    public int getCo_paquet() {
-        return co_paquet;
-    }
-
-    public void setCo_paquet(int co_paquet) {
-        this.co_paquet = co_paquet;
-    }
+//    public int getCo_paquet() {
+//        return co_paquet;
+//    }
+//
+//    public void setCo_paquet(int co_paquet) {
+//        this.co_paquet = co_paquet;
+//    }
 
     public int getCo_modulo() {
         return co_modulo;
@@ -162,7 +162,7 @@ public class RegsesiniDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "RegsesiniDTO{" + "co_usuari=" + co_usuari + ", id_sesion=" + id_sesion + ", no_usulog=" + no_usulog + ", no_usuari=" + no_usuari + ", no_imgusu=" + no_imgusu + ", co_sistem=" + co_sistem + ", co_subsis=" + co_subsis + ", co_paquet=" + co_paquet + ", co_modulo=" + co_modulo + ", co_mensaj=" + co_mensaj + ", de_mensaj=" + de_mensaj + ", ip_remoto=" + ip_remoto + ", il_prilog=" + il_prilog + '}';
+        return "RegsesiniDTO{" + "co_usuari=" + co_usuari + ", id_sesion=" + id_sesion + ", no_usulog=" + no_usulog + ", no_usuari=" + no_usuari + ", ar_imgusu=" + ar_imgusu + ", co_sistem=" + co_sistem + ", co_subsis=" + co_subsis + ", co_modulo=" + co_modulo + ", co_mensaj=" + co_mensaj + ", de_mensaj=" + de_mensaj + ", ip_remoto=" + ip_remoto + ", il_prilog=" + il_prilog + '}';
     }
 
 }

@@ -11,7 +11,9 @@ import com.acceso.wfweb.utils.RequestManager;
 import com.acceso.wfweb.web.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
 
@@ -39,6 +41,7 @@ public class DoLogin {
         //[FED]
         regsesiniDTO.setIp_remoto(remoteip);
         System.out.println("regsesiniDTO = " + regsesiniDTO);
+
         //Logica de seguridad
         return regsesiniDTO.getCo_mensaj() == LOGIN_OK;
     }
@@ -50,11 +53,11 @@ public class DoLogin {
         usuario.setCo_usuari(regsesiniDTO.getCo_usuari());
         usuario.setNo_usulog(regsesiniDTO.getNo_usulog());
         usuario.setNo_usuari(regsesiniDTO.getNo_usuari());
-        usuario.setNo_imgusu(regsesiniDTO.getNo_imgusu());
+        usuario.setNo_imgusu(regsesiniDTO.getAr_imgusu());
 
         usuario.setCo_sistem(regsesiniDTO.getCo_sistem());
         usuario.setCo_subsis(regsesiniDTO.getCo_subsis());
-        usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
+//        usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
         usuario.setIl_schema(true);
 
         SecurityDAO securityDAO = new SecurityDAO();
@@ -72,7 +75,7 @@ public class DoLogin {
 
         List<PermisbloDTO> permisSistema = getPermisBy("SISTEMA");
         List<PermisbloDTO> permisSubSistema = getPermisBy("SUBSISTEMA");
-        List<PermisbloDTO> permisPaquete = getPermisBy("PAQUETE");
+//        List<PermisbloDTO> permisPaquete = getPermisBy("PAQUETE");
 
         List<PermisbloDTO> permisRoot = getPermisBy("MOD-PADRE");
         List<PermisbloDTO> permisMenu1 = getPermisBy("MOD-NVL1");
@@ -80,56 +83,51 @@ public class DoLogin {
         List<PermisbloDTO> permisMenu3 = getPermisBy("MOD-NVL3");
         List<PermisbloDTO> permisMenu4 = getPermisBy("MOD-NVL4");
         List<PermisbloDTO> permisMenu5 = getPermisBy("MOD-NVL5");
+        Map<String, MainMenu> mainMenus = new HashMap<>();
 
         for (int a = root.getSistemas().size(); a > 0; a--) {
             Sistema sistema = root.getSistemas().get(a - 1);
             boolean renderer = evaluar(sistema.getCo_sistem(), permisSistema);
-            System.out.println("sistema = " + sistema.getCo_sistem() + "({" + renderer + "})");
+            System.out.println("(1)sistema = " + sistema.getCo_sistem() + "({" + renderer + "})");
+            System.out.println("(1)sistema:sistema.getIl_sisfor() =>({" + sistema.getIl_sisfor() + "})");
 
             if (!renderer) {
 
                 root.getSistemas().remove(a - 1);
             } else {
+                if (!sistema.getIl_sisfor()) {
+                    System.out.println("sistema.getSubsistemas().size() = " + sistema.getSubsistemas().size());
+                    for (int b = sistema.getSubsistemas().size(); b > 0; b--) {
+                        Subsistema subsistema = sistema.getSubsistemas().get(b - 1);
+                        renderer = evaluar(subsistema.getCo_subsis(), permisSubSistema);
 
-                for (int b = sistema.getSubsistemas().size(); b > 0; b--) {
-                    Subsistema subsistema = sistema.getSubsistemas().get(b - 1);
-                    renderer = evaluar(subsistema.getCo_subsis(), permisSubSistema);
+                        System.out.println("subsistema = " + subsistema.getCo_subsis() + "({" + renderer + "})");
+                        if (!renderer) {
 
-                    if (!renderer) {
+                            subsistema.getPaquetes().remove(b - 1);
+                        } else {
+                            MainMenu _mainMenu = subsistema.getMmenu();
+                            mainMenus.put(sistema.getCo_sistem() + "" + subsistema.getCo_subsis(), _mainMenu);
 
-                        sistema.getSubsistemas().remove(b - 1);
-                    } else {
+                            for (int d = _mainMenu.getMenu().size(); d > 0; d--) {
+                                Menu menu = _mainMenu.getMenu().get(d - 1);
+                                renderer = true;
 
-                        for (int c = subsistema.getPaquetes().size(); c > 0; c--) {
-                            Paquete paquete = subsistema.getPaquetes().get(c - 1);
-                            renderer = evaluar(paquete.getCo_paquet(), permisPaquete);
+                                if (!renderer) {
 
-                            if (!renderer) {
+                                    _mainMenu.getMenu().remove(d);
+                                } else {
+                                    if (menu.getSub() != null) {
+                                        for (int e = menu.getSub().size(); e > 0; e--) {
+                                            MenuItem menuItem = menu.getSub().get(e - 1);
+                                            renderer = true;
 
-                                subsistema.getPaquetes().remove(c - 1);
-                            } else {
+                                            if (!renderer) {
 
-                                MainMenu _mainMenu = paquete.getMmenu();
-                                for (int d = _mainMenu.getMenu().size(); d > 0; d--) {
-                                    Menu menu = _mainMenu.getMenu().get(d - 1);
-                                    renderer = true;
+                                                menu.getSub().remove(e - 1);
+                                            } else {
 
-                                    if (!renderer) {
-
-                                        _mainMenu.getMenu().remove(d);
-                                    } else {
-                                        if (menu.getSub() != null) {
-                                            for (int e = menu.getSub().size(); e > 0; e--) {
-                                                MenuItem menuItem = menu.getSub().get(e - 1);
-                                                renderer = true;
-
-                                                if (!renderer) {
-
-                                                    menu.getSub().remove(e - 1);
-                                                } else {
-
-                                                    //bis
-                                                }
+                                                //bis
                                             }
                                         }
                                     }
@@ -142,17 +140,19 @@ public class DoLogin {
         }
 
         usuario.setRoot(root);
+        usuario.setMainMenus(mainMenus);
+        System.out.println("mainMenus = " + mainMenus.size());
 
         /*GET MAIN MENU*/
         Object obj = root.getSistemas().stream().filter(s -> s.getCo_sistem() == usuario.getCo_sistem()).findAny().orElse(null);
         if (obj != null) {
             obj = ((Sistema) obj).getSubsistemas().stream().filter(s -> s.getCo_subsis() == usuario.getCo_subsis()).findAny().orElse(null);
+//            if (obj != null) {
+//                obj = ((Subsistema) obj).getPaquetes().stream().filter(s -> s.getCo_paquet() == usuario.getCo_paquet()).findAny().orElse(null);
             if (obj != null) {
-                obj = ((Subsistema) obj).getPaquetes().stream().filter(s -> s.getCo_paquet() == usuario.getCo_paquet()).findAny().orElse(null);
-                if (obj != null) {
-                    usuario.setMainMenu(((Paquete) obj).getMmenu());
-                }
+                usuario.setMainMenu(((Subsistema) obj).getMmenu());
             }
+//            }
         }
 
         System.out.println("usuario = " + usuario);

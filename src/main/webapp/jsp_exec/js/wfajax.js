@@ -144,8 +144,8 @@ doPropag = function (url, regparams, data) {
                 if (rpta.ls_params != undefined) {
                     for (var i = 0; i < rpta.ls_params.length; i++) {
                         console.log("rpta.params[i].no_param=" + rpta.ls_params[i].no_param);
-                        if(urlpart.indexOf(rpta.ls_params[i].no_param) == -1){
-                            urlpart+="&"+rpta.ls_params[i].no_param+"="+ rpta.ls_params[i].va_param
+                        if (urlpart.indexOf(rpta.ls_params[i].no_param) == -1) {
+                            urlpart += "&" + rpta.ls_params[i].no_param + "=" + rpta.ls_params[i].va_param
                         }
                     }
                 }
@@ -291,8 +291,8 @@ $D.getJSONE = function (url) {
     return json;
 };
 
-$D.getHTML = function (url) {
-    var net = new inet();
+getHTML = function (url) {
+    var net = new Inet();
     net.open("POST", url, false); //false para que sea sincrono
 
     var html;

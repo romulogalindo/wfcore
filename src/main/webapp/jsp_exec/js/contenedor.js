@@ -86,9 +86,9 @@ function workflow(il_popup) {
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
             iframe.src = '/karmic?co_conten=' + co_conten()
-                + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
-                + '&id_frawor=' + id_frawor()
-                + '&il_popup=' + il_popup;
+                    + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+                    + '&id_frawor=' + id_frawor()
+                    + '&il_popup=' + il_popup;
     }
 
 //--FRONT AND MODALª!
@@ -101,7 +101,10 @@ function workflow(il_popup) {
             openWS();
         }
         //if
-        $('#slc_schema').modal('show');
+        if ($('#slc_schema').attr('style').indeOf('firsttime') > -1) {
+            $('#slc_schema').modal('show');
+        }
+        
         //LISTO
         console.log('Esto se cargara');
         console.log('Esto se cargara:' + $('#rankanadate'));
@@ -426,7 +429,7 @@ function master_open_popup_date(val, co_pagina) {
 
     console.log('[open_popup_date]la date:' + val);
     $('#rankanadate').val(val);
-    $('#rankanadate').attr('data-value',val);
+    $('#rankanadate').attr('data-value', val);
 
     mutable_date_picker = $('#rankanadate').pickadate({
         // min: new Date(1960, 1, 1)
@@ -450,6 +453,16 @@ function master_close_popup_date(objinp, co_pagina) {
 
     $("#rankanadate").pickadate("destroy");
     // mutable_date_picker.close();
+}
+
+function view_all_system() {
+    $('#slc_schema').modal('show');
+    return false;
+}
+
+function changemodulo(co_sistem, co_subsis, valid){
+    getHTML("/uxtion?comenu="+co_sistem+""+co_subsis);
+    location.reload(); 
 }
 
 /*LOGOUT*/

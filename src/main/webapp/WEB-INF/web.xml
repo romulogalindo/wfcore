@@ -145,13 +145,6 @@
         <url-pattern>/wf</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProcessServlet</servlet-name>
-        <url-pattern>/beaver</url-pattern>
-        <url-pattern>/dingo</url-pattern>
-        <url-pattern>/pangolin</url-pattern>
-        <url-pattern>/ocelot</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DocumentServlet</servlet-name>
         <url-pattern>/vervet</url-pattern>
         <url-pattern>/doc</url-pattern>
@@ -159,6 +152,14 @@
     <servlet-mapping>
         <servlet-name>TahrServlet</servlet-name>
         <url-pattern>/tahr</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcessServlet</servlet-name>
+        <url-pattern>/dingo</url-pattern>
+        <url-pattern>/beaver</url-pattern>
+        <url-pattern>/uxtion</url-pattern>
+        <url-pattern>/pangolin</url-pattern>
+        <url-pattern>/ocelot</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>1500</session-timeout>
