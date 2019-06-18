@@ -206,9 +206,9 @@
                                         actionListener="#{conexionBean.doListener}" ajax="true" async="false"
                                         update="mainPanel" icon="#{conexionBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
 
-                            <p:menuitem value="#{sistemaBean.titleName}" action="#{sistemaBean.load}"
-                                        actionListener="#{sistemaBean.doListener}" ajax="true" async="false"
-                                        update="mainPanel" icon="#{sistemaBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
+                            <p:menuitem value="#{sistemaLSBean.titleName}" action="#{sistemaLSBean.load}"
+                                        actionListener="#{sistemaLSBean.doListener}" ajax="true" async="false"
+                                        update="mainPanel" icon="#{sistemaLSBean.open?'pi pi-folder-open':'pi pi-folder'}"/>
 
                             <p:menuitem value="#{subSistemaBean.titleName}" action="#{subSistemaBean.load}"
                                         actionListener="#{subSistemaBean.doListener}" ajax="true" async="false"

@@ -52,7 +52,7 @@ public class SistemaDAO {
             nQuery.setInteger("co_sistem", sistema.getCo_sistem() == null ? -1 : sistema.getCo_sistem());
             nQuery.setString("no_sistem", sistema.getNo_sistem());
             nQuery.setString("de_sistem", sistema.getDe_sistem());
-            nQuery.setString("ur_logsis", sistema.getUr_logsis());
+            nQuery.setString("ur_logsis", sistema.getAr_logsis());
             nQuery.setString("no_temdef", sistema.getNo_temdef());
 
             System.out.println("[SistemaDAO:grabarSistema] Q = " + nQuery.getQueryString());

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,82 +7,81 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="../../template/plantilla.xhtml">
-        <ui:define name="content">
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
-            </p:confirmDialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+        </p:confirmDialog>
 
-            <p:panel id="panelListaSubSis">
+        <p:panel id="panelListaSubSis">
 
-                <!--<p:growl id="msgs" showDetail="true"/>-->
-                <h:form id="form">
-                    <p:dataTable id="lista"
-                                 var="subsis"
-                                 value="#{subSistemaBean.subsistemas}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 rows="100"
-                                 widgetVar="widTable"
-                                 selectionMode="single"
-                                 selection="#{subSistemaBean.subsistema}"
-                                 rowKey="#{subsis.co_subsis}"
-                                 rowIndexVar="N">
+            <!--<p:growl id="msgs" showDetail="true"/>-->
+            <h:form id="form">
+                <p:dataTable id="lista"
+                             var="subsis"
+                             value="#{subSistemaLSBean.subsistemas}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rows="100"
+                             widgetVar="widTable"
+                             selectionMode="single"
+                             selection="#{subSistemaLSBean.subsistema}"
+                             rowKey="#{subsis.co_subsis}"
+                             rowIndexVar="N">
 
+                    <f:facet name="header">
+                        Lista de Sub Sistemas
+                    </f:facet>
+
+                    <p:ajax event="sort" skipChildren="false"/>
+
+                    <p:column style="text-align: right" width="20">
                         <f:facet name="header">
-                            Lista de Sub Sistemas
+                            <h:outputText value="#"/>
                         </f:facet>
+                        <h:outputText value="#{N + 1}"/>
+                    </p:column>
 
-                        <p:ajax event="sort" skipChildren="false"/>
+                    <p:column sortBy="#{subsis.no_subsis}">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{subsis.no_subsis}"/>
+                    </p:column>
 
-                        <p:column style="text-align: right" width="20">
-                            <f:facet name="header">
-                                <h:outputText value="#"/>
-                            </f:facet>
-                            <h:outputText value="#{N + 1}"/>
-                        </p:column>
+                    <p:column headerText="Sistema" sortBy="#{subsis.no_sistem}">
+                        <h:outputText value="#{subsis.no_sistem}"/>
+                    </p:column>
 
-                        <p:column sortBy="#{subsis.no_subsis}">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{subsis.no_subsis}"/>
-                        </p:column>
+                    <p:column headerText="Logo" sortBy="#{subsis.ar_logsub}">
+                        <h:outputText value="#{subsis.ar_logsub}"/>
+                    </p:column>
 
-                        <p:column headerText="Sistema" sortBy="#{subsis.no_sistem}">
-                            <h:outputText value="#{subsis.no_sistem}"/>
-                        </p:column>
+                    <p:column style="width:160px;text-align: center">
 
-                        <p:column headerText="Logo" sortBy="#{subsis.ur_logsub}">
-                            <h:outputText value="#{subsis.ur_logsub}"/>
-                        </p:column>
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
+                                         action="#{subSistemaLSBean.updateRegist}" update="mainPanel" ajax="true"
+                                         async="false">
+                            <f:setPropertyActionListener value="#{subsis}" target="#{subSistemaLSBean.subsistema}"/>
+                        </p:commandButton>
 
-                        <p:column style="width:160px;text-align: center">
-                            <p:commandButton action="#{subSistemaBean.updateRegist}" icon="fa fa-search" title="Ver">
-                                <f:setPropertyActionListener value="#{subsis}" target="#{subSistemaBean.subsistema}"/>
-                                <f:setPropertyActionListener value="false" target="#{subSistemaBean.isregEditable}"/>
-                            </p:commandButton>
+                        <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar"
+                                         action="#{subSistemaLSBean.deleteRegist}"
+                                         update=":form:lista">
+                            <f:setPropertyActionListener value="#{subsis}" target="#{subSistemaLSBean.subsistema}"/>
+                            <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                       icon="fa fa-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
 
-                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar" action="#{subSistemaBean.updateRegist}">
-                                <f:setPropertyActionListener value="#{subsis}" target="#{subSistemaBean.subsistema}"/>
-                            </p:commandButton>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
 
-                            <p:commandButton icon="fa fa-trash" action="#{subSistemaBean.deleteRegist}"
-                                             update=":form:lista">
-                                <f:setPropertyActionListener value="#{subsis}" target="#{subSistemaBean.subsistema}"/>
-                                <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                           icon="fa fa-exclamation-triangle"/>
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </h:form>
-            </p:panel>
-
-        </ui:define>
-    </ui:composition>
+    </ui:define>
+</ui:composition>
 
 </html>

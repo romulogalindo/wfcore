@@ -1,15 +1,14 @@
 package com.acceso.wfcore.beans;
 
+import com.acceso.wfcore.daos.SistemaDAO;
 import com.acceso.wfcore.daos.SubSistemaDAO;
-import com.acceso.wfcore.dtos.SistemaDTO;
 import com.acceso.wfcore.dtos.SubSistemaDTO;
-import com.acceso.wfcore.log.Log;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  */
 @ManagedBean
 @ViewScoped
-public class SubSistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
+public class SubSistemaLSBean extends MainBean implements Serializable, DefaultMaintenceWeb {
 
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
     private static final String URL_DETALLE = "/admin/jsf_exec/pagex/subsistema/paginaSubSistemas.xhtml";
@@ -33,40 +32,21 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
 
     private boolean isregEditable;
 
-    public SubSistemaBean() {
+    public SubSistemaLSBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Sub Sistema";
         this.subsistema = new SubSistemaDTO();
         this.isregEditable = true;
     }
-//X64SUB
 
+    /*
+   ACCION DE CARGA==>NO TOCAR
+    */
     @PostConstruct
     public void loadModule() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
-
-//        Log.info("[PaginaBean]->PostConstruct:" + getWindowID().getId());
-        Log.info("[SubSistemaBean]->PostConstruct:");
-        /*EXP-->TRANSFER*/
-        String idSubTransa = "X64SUB";
-        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idSubTransa);
-        Log.info("[SubSistemaBean]obj = " + obj);
-
-        if (obj != null) {
-            //        PaginaDAO dao = new PaginaDAO();
-//        this.paginas = dao.getPaginas();
-//        dao.close();
-            this.subsistema = (SubSistemaDTO) obj;
-
-//            Log.info("[SistemaBean]pagina:" + sistema);
-//            PaginaDAO dao = new PaginaDAO();
-//            sistema.setLs_botone(dao.getButtons(sistema.getCo_pagina()));
-//            sistema.setLs_elemen(dao.getElementos(sistema.getCo_pagina()));
-//            dao.close();
-        }
-
+        SubSistemaDAO dao = new SubSistemaDAO();
+        this.subsistemas = dao.getSubSistemas();
+        dao.close();
     }
 
     @Override
@@ -76,7 +56,7 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
         // LLENAR LOS BOTONES SECUNDARIOS
         //doListener();
         //CARGA INICIAL!!
-        selectDto();
+//        selectDto();
 
         return URL_LISTA;
     }
@@ -121,54 +101,59 @@ public class SubSistemaBean extends MainBean implements Serializable, DefaultMai
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
+
+        /*EXP-->TRANSFER*/
+        String idSubTransa = "X64SUB";
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(idSubTransa, subsistema);
+
         return URL_EDITAR;
     }
 
     @Override
     public String deleteRegist() {
-        deleteDto();
+//        deleteDto();
 
         return URL_LISTA;
     }
 
     @Override
     public String saveRegist() {
-        saveDto();
+//        saveDto();
         return URL_LISTA;
     }
 
-    @Override
-    public void selectDto() {
-        SubSistemaDAO dao = new SubSistemaDAO();
-        this.subsistemas = dao.getSubSistemas();
-        dao.close();
-    }
-
-    @Override
-    public void saveDto() {
-        SubSistemaDAO dao = new SubSistemaDAO();
-        this.subsistema = dao.grabarSubSistema(subsistema);
-        this.subsistemas = dao.getSubSistemas();
-//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
-        dao.close();
-    }
-
-    @Override
-    public void updateDto() {
-        SubSistemaDAO dao = new SubSistemaDAO();
-        this.subsistema = dao.grabarSubSistema(subsistema);
-        this.subsistemas = dao.getSubSistemas();
-//      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
-        dao.close();
-    }
-
-    @Override
-    public void deleteDto() {
-        SubSistemaDAO dao = new SubSistemaDAO();
-        String resultado = dao.deleteSubSistema(subsistema);
-        this.subsistemas = dao.getSubSistemas();
-        dao.close();
-    }
+//    @Override
+//    public void selectDto() {
+//        SubSistemaDAO dao = new SubSistemaDAO();
+//        this.subsistemas = dao.getSubSistemas();
+//        dao.close();
+//    }
+//
+//    @Override
+//    public void saveDto() {
+//        SubSistemaDAO dao = new SubSistemaDAO();
+//        this.subsistema = dao.grabarSubSistema(subsistema);
+//        this.subsistemas = dao.getSubSistemas();
+////      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
+//        dao.close();
+//    }
+//
+//    @Override
+//    public void updateDto() {
+//        SubSistemaDAO dao = new SubSistemaDAO();
+//        this.subsistema = dao.grabarSubSistema(subsistema);
+//        this.subsistemas = dao.getSubSistemas();
+////      System.out.println("SubSistemaBean actualizarSubSistema = " + this.subsistema);
+//        dao.close();
+//    }
+//
+//    @Override
+//    public void deleteDto() {
+//        SubSistemaDAO dao = new SubSistemaDAO();
+//        String resultado = dao.deleteSubSistema(subsistema);
+//        this.subsistemas = dao.getSubSistemas();
+//        dao.close();
+//    }
 
     public List<SubSistemaDTO> getSubsistemas() {
         return subsistemas;

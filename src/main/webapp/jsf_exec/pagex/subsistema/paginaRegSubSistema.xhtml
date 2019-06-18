@@ -1,73 +1,75 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <body>
+<body>
 
-        <ui:composition template="../../template/plantilla.xhtml">
+<ui:composition template="../../template/plantilla.xhtml">
 
-            <ui:define name="content">
-                <h:form> 
-                    <p:panel id="panelActualizarSubSis">
-                        <p:growl id="messages" showDetail="true"/>
-                        <p:panelGrid columns="2"  style="width: 400px">
-                            
-                            <p:outputLabel for="co_conexi" value="Id:" />
-                            <p:inputText id="co_conexi" value="#{subSistemaBean.subsistema.co_subsis}" rendered="#{subSistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{subSistemaBean.subsistema.co_subsis}" rendered="#{!subSistemaBean.isregEditable}"/>
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panelActualizarSubSis">
+                <p:growl id="messages" showDetail="true"/>
+                <p:panelGrid columns="2" style="width: 400px">
 
-                            <p:outputLabel for="no_conexi" value="Nombre:" />
-                            <p:inputText id="no_conexi" value="#{subSistemaBean.subsistema.no_subsis}"
-                                         required="true" requiredMessage="Debe ingresar un Nombre."
-                                         rendered="#{subSistemaBean.isregEditable}"/>
-                            <p:outputLabel value="#{subSistemaBean.subsistema.no_subsis}" rendered="#{!subSistemaBean.isregEditable}"/>
+                    <p:outputLabel for="co_conexi" value="Id:"/>
+                    <p:outputLabel id="co_conexi" value="#{subSistemaBean.subsistema.co_subsis}"/>
 
-                            <p:outputLabel for="co_sistem" value="Sistema:" />
-                            <h:selectOneMenu id="co_sistem" value="#{subSistemaBean.subsistema.co_sistem}"
-                                             required="true" requiredMessage="Debe ingresar un Sistema."
-                                             rendered="#{subSistemaBean.isregEditable}"
-                                             dynamic="true">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="" />
-                                <f:selectItems value="#{sistemaBean.getComboSistema()}" />
-                            </h:selectOneMenu>
-                            <p:outputLabel value="#{subSistemaBean.subsistema.no_sistem}" rendered="#{!subSistemaBean.isregEditable}"/>
+                    <p:outputLabel for="no_conexi" value="Nombre:"/>
+                    <p:inputText id="no_conexi" value="#{subSistemaBean.subsistema.no_subsis}"
+                                 required="true" requiredMessage="Debe ingresar un Nombre."/>
 
-                            <p:outputLabel for="ur_logsub" value="Logo:"/>
-                            <p:fileUpload id="ur_logsub"  mode="advanced" label="Escoger"
-                                          dragDropSupport="true"
-                                          update="messages" sizeLimit="100000" fileLimit="3"
-                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                          value="#{subSistemaBean.subsistema.ur_logsub}"
-                                          rendered="#{subSistemaBean.isregEditable}"
-                                          uploadLabel="Subir" cancelLabel="Cancelar"/>
-                            <p:outputLabel value="#{subSistemaBean.subsistema.ur_logsub}" rendered="#{!subSistemaBean.isregEditable}"/>
+                    <p:outputLabel for="co_sistem" value="Sistema:"/>
+                    <p:selectOneMenu id="co_sistem" value="#{subSistemaBean.subsistema.co_sistem}"
+                                     required="true" requiredMessage="Debe ingresar un Sistema."
+                                     dynamic="true">
+                        <f:selectItem itemLabel="Seleccionar" itemValue=""/>
+                        <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
+                    </p:selectOneMenu>
 
-                        </p:panelGrid>
-                        <p:panelGrid style="width: 400px" >
-                            <p:commandButton  action="#{subSistemaBean.load()}"
-                                              actionListener="#{subSistemaBean.doListener()}"
-                                              value="Atrás"
-                                              title="Volver al reporte de subsistemaes"
-                                              immediate="true">
-                            </p:commandButton>
-                            <p:commandButton value="Grabar"
-                                             action="#{subSistemaBean.saveRegist}"
-                                             type="submit"
-                                             update="panelActualizarSubSis">
-                                <p:ajax rendered="panelActualizarSubSis"/>
-                            </p:commandButton>
-                            
-                        </p:panelGrid>
-                    </p:panel>
+                    <p:outputLabel for="ur_logsub" value="Logo:"/>
+                    <p:fileUpload id="ur_logsub" mode="advanced" label="Escoger"
+                                  dragDropSupport="true"
+                                  update="messages" sizeLimit="100000" fileLimit="3"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  value="#{subSistemaBean.subsistema.ar_logsub}"
+                                  uploadLabel="Subir" cancelLabel="Cancelar"/>
 
-                </h:form>
-            </ui:define>
+                    <p:outputLabel for="no_temdef" value="Tema:"/>
+                    <p:selectOneMenu id="no_temdef" value="#{subSistemaBean.subsistema.no_temdef}">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="Sepia" itemValue="Sepia"/>
+                        <f:selectItem itemLabel="Dark" itemValue="Dark"/>
+                        <f:selectItem itemLabel="Material" itemValue="Material"/>
+                    </p:selectOneMenu>
 
-        </ui:composition>
+                </p:panelGrid>
+                <p:panelGrid style="width: 400px">
+                    <p:commandButton action="#{subSistemaBean.load()}"
+                                     actionListener="#{subSistemaBean.doListener()}"
+                                     value="Atrás"
+                                     title="Volver al reporte de subsistemaes"
+                                     immediate="true">
+                    </p:commandButton>
+                    <p:commandButton value="Grabar"
+                                     action="#{subSistemaBean.saveRegist}"
+                                     type="submit"
+                                     update="panelActualizarSubSis">
+                        <p:ajax rendered="panelActualizarSubSis"/>
+                    </p:commandButton>
 
-    </body>
+                </p:panelGrid>
+            </p:panel>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+
+</body>
 </html>

@@ -52,7 +52,7 @@ public class SubSistemaDAO {
             nQuery.setInteger("co_subsis", subsistema.getCo_subsis() == null ? -1 : subsistema.getCo_subsis());
             nQuery.setString("no_subsis", subsistema.getNo_subsis());
             nQuery.setInteger("co_sistem", subsistema.getCo_sistem());
-            nQuery.setString("ur_logsub", subsistema.getUr_logsub());
+            nQuery.setString("ur_logsub", subsistema.getAr_logsub());
 
             System.out.println("[SistemaDAO:grabarSubSistema] Q = " + nQuery.getQueryString());
 

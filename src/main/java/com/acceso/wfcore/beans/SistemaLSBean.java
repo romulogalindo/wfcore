@@ -2,9 +2,7 @@ package com.acceso.wfcore.beans;
 
 import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.SistemaDAO;
-import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.SistemaDTO;
-import com.acceso.wfcore.log.Log;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -22,7 +20,7 @@ import java.util.List;
  */
 @ManagedBean
 @ViewScoped
-public class SistemaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
+public class SistemaLSBean extends MainBean implements Serializable, DefaultMaintenceWeb {
 
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
     private static final String URL_DETALLE = "/admin/jsf_exec/pagex/sistema/paginaSistemas.xhtml";
@@ -36,7 +34,7 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
 
     private boolean isregEditable;
 
-    public SistemaBean() {
+    public SistemaLSBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Sistemas";
         this.sistema = new SistemaDTO();
@@ -45,51 +43,30 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
 
     public List<SelectItem> getComboSistema() {
         List<SelectItem> res = new ArrayList<>();
-        selectDto();
-        sistemas.stream().filter(s -> !s.getIl_sisfor()).forEach(sis -> {
+
+        for (SistemaDTO sis : sistemas) {
             SelectItem item = new SelectItem();
             item.setLabel(sis.getNo_sistem());
             item.setDescription(sis.getDe_sistem());
             item.setValue(sis.getCo_sistem());
             res.add(item);
-        });
-//        for (SistemaDTO sis : sistemas) {
-//            SelectItem item = new SelectItem();
-//            item.setLabel(sis.getNo_sistem());
-//            item.setDescription(sis.getDe_sistem());
-//            item.setValue(sis.getCo_sistem());
-//            res.add(item);
-//        }
+        }
         return res;
     }
 
+    /*
+    ACCION DE CARGA==>NO TOCAR
+     */
     @PostConstruct
     public void loadModule() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
-        ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
-
-//        Log.info("[PaginaBean]->PostConstruct:" + getWindowID().getId());
-        Log.info("[SistemaBean]->PostConstruct:");
-        /*EXP-->TRANSFER*/
-        String idSisTransa = "X64SIS";
-        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idSisTransa);
-        Log.info("[SistemaBean]obj = " + obj);
-
-        if (obj != null) {
-            //        PaginaDAO dao = new PaginaDAO();
-//        this.paginas = dao.getPaginas();
-//        dao.close();
-            this.sistema = (SistemaDTO) obj;
-
-//            Log.info("[SistemaBean]pagina:" + sistema);
-//            PaginaDAO dao = new PaginaDAO();
-//            sistema.setLs_botone(dao.getButtons(sistema.getCo_pagina()));
-//            sistema.setLs_elemen(dao.getElementos(sistema.getCo_pagina()));
-//            dao.close();
-        }
-
+        doListener();
+        System.out.println("* do listener= >>");
+        //------------------------
+        SistemaDAO dao = new SistemaDAO();
+        this.sistemas = dao.getSistemas();
+        dao.close();
     }
+
 
     @Override
     public String load() {
@@ -143,54 +120,57 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
+        /*EXP-->TRANSFER*/
+        String idSisTransa = "X64SIS";
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put(idSisTransa, sistema);
         return URL_EDITAR;
     }
 
     @Override
     public String deleteRegist() {
-        deleteDto();
+//        deleteDto();
 
         return URL_LISTA;
     }
 
     @Override
     public String saveRegist() {
-        saveDto();
+//        saveDto();
         return URL_LISTA;
     }
 
-    @Override
-    public void selectDto() {
-        SistemaDAO dao = new SistemaDAO();
-        this.sistemas = dao.getSistemas();
-        dao.close();
-    }
-
-    @Override
-    public void saveDto() {
-        SistemaDAO dao = new SistemaDAO();
-        this.sistema = dao.grabarSistema(sistema);
-        this.sistemas = dao.getSistemas();
-//      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
-        dao.close();
-    }
-
-    @Override
-    public void updateDto() {
-        SistemaDAO dao = new SistemaDAO();
-        this.sistema = dao.grabarSistema(sistema);
-        this.sistemas = dao.getSistemas();
-//      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
-        dao.close();
-    }
-
-    @Override
-    public void deleteDto() {
-        SistemaDAO dao = new SistemaDAO();
-        String resultado = dao.deleteSistema(sistema);
-        this.sistemas = dao.getSistemas();
-        dao.close();
-    }
+//    @Override
+//    public void selectDto() {
+//        SistemaDAO dao = new SistemaDAO();
+//        this.sistemas = dao.getSistemas();
+//        dao.close();
+//    }
+//
+//    @Override
+//    public void saveDto() {
+//        SistemaDAO dao = new SistemaDAO();
+//        this.sistema = dao.grabarSistema(sistema);
+//        this.sistemas = dao.getSistemas();
+////      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
+//        dao.close();
+//    }
+//
+//    @Override
+//    public void updateDto() {
+//        SistemaDAO dao = new SistemaDAO();
+//        this.sistema = dao.grabarSistema(sistema);
+//        this.sistemas = dao.getSistemas();
+////      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
+//        dao.close();
+//    }
+//
+//    @Override
+//    public void deleteDto() {
+//        SistemaDAO dao = new SistemaDAO();
+//        String resultado = dao.deleteSistema(sistema);
+//        this.sistemas = dao.getSistemas();
+//        dao.close();
+//    }
 
     public List<SistemaDTO> getSistemas() {
         return sistemas;

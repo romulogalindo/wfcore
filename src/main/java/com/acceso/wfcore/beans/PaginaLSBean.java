@@ -30,7 +30,6 @@ import javax.faces.bean.ViewScoped;
 public class PaginaLSBean extends MainBean implements Serializable, DefaultMaintenceWeb {
 
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
-    //    private static final String URL_DETALLE = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/pagina/paginaRegPagina.xhtml";
 
@@ -38,9 +37,6 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
 
     private List<PaginaDTO> paginas;
     private PaginaDTO pagina;
-//    private BotonDTO botonSeleccionado;
-//    private ElementoDTO elementoSeleccionado;
-//    private List<PaginaDTO> filtroPagina;
 
     private boolean thisEditable = true;
     private boolean btnEditable = true;
@@ -48,20 +44,6 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
 
     public int defaultTabIndex;
 
-//    private List<RegistroDTO> registros;
-//    private List<RegistroDTO> registrosCargados;
-//    public ScriptDTO script;
-
-    /*UTIL*/
-//    public SelectItem[] ls_ti_estreg = Util.get_ls_ti_estreg();
-//    public SelectItem[] ls_ti_pagreg = Util.get_ls_ti_pagreg();
-//    public SelectItem[] ls_ti_boton = Util.get_ls_ti_boton();
-//    public SelectItem[] ls_ti_alireg = Util.get_ls_ti_alireg();
-//    public SelectItem[] ls_ti_valign = Util.get_ls_ti_valign();
-//    public SelectItem[] ls_ti_nowrap = Util.get_ls_ti_nowrap();
-//    public SelectItem[] ls_no_icobot = Util.get_ls_ti_icobot();
-//    public SelectItem[] ls_no_icopos = Util.get_ls_ti_icopos();
-//    public SelectItem[] ls_dt_pagina;
     public PaginaLSBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Paginas";
@@ -166,8 +148,6 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
         pagina.setLs_botone(dao.getButtons(pagina.getCo_pagina()));
         pagina.setLs_elemen(dao.getElementos(pagina.getCo_pagina()));
         dao.close();
-
-//        defaultTabIndex = 0;
 
         /*EXP-->TRANSFER*/
         String idPagTransa = "X64PAG";

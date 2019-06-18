@@ -268,9 +268,15 @@ function loadFormulario64(index, row, aditional, dom2) {
 //    console.log('reg:' + row.regs);
 //    var reg;
     for (const reg of row.regs) {
-//        console.log('?' + reg);
+        //IDs
         var ultraid = 'P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V';
+        var ultraid2 = 'P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'K';
+
         var eledom = document.getElementsByName(ultraid)[0];
+        var labdom = document.getElementsByName(ultraid2)[0];
+        if(reg.label!=undefined){
+            labdom.innerHTML = reg.label + '<span style="border-right:2px solid #00477e;padding-left: 5px;"></span>';
+        }
         var valdom = reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text;
         console.log('(' + co_pagina() + ')>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
@@ -498,31 +504,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         // eledom.setAttribute("va_pagreg", reg.value);
                         eledom.getElementsByTagName("INPUT")[0].checked = reg.value;
                     } else if (ti_pagreg == '7') {
-                        // eledom.setAttribute("va_pagreg", reg.value);
-                        try {
-                            document.getElementById(eledom.getAttribute('id') + '_dd').value = ifnull(reg.value, '').substring(8, 10);
-                            document.getElementById(eledom.getAttribute('id') + '_mm').value = ifnull(reg.value, '').substring(5, 7);
-                            document.getElementById(eledom.getAttribute('id') + '_yyyy').value = ifnull(reg.value, '').substring(0, 4);
-                            document.getElementById(eledom.getAttribute('id') + '_date').value = reg.value;
-                            document.getElementById(eledom.getAttribute('id') + '_date').onchange = function () {
-                                var fecha = this.value;
-                                var id = this.getAttribute('id').replace('_date', '');
-                                console.log('this.id=' + this.id);
-                                document.getElementById(id + '_dd').value = fecha.substring(8, 10);
-                                document.getElementById(id + '_mm').value = fecha.substring(5, 7);
-                                document.getElementById(id + '_yyyy').value = fecha.substring(0, 4);
-                            };
-
-                            Calendar.setup({
-                                inputField: eledom.getAttribute('id') + '_date', // id of the input field
-                                ifFormat: "%Y-%m-%d", // format of the input field
-                                button: eledom.getAttribute('id') + '_btn', // trigger for the calendar (button ID)
-                                align: "cc", // alignment (defaults to "Bl")
-                                singleClick: true
-                            });
-                        } catch (e) {
-                            console.log("e:" + e);
-                        }
+                        eledom.getElementsByTagName("INPUT")[0].value = reg.value == undefined ? '' : reg.value;
                     } else if (ti_pagreg == '8') {
                         //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         // eledom.getElementsByTagName("CONPAG")[0].setAttribute('href', valdom);

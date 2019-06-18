@@ -27,7 +27,6 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-//@SessionScoped
 public class PaginaBean extends MainBean implements Serializable, DefaultMaintenceWeb, DefaultMaintenceDao {
 
     private static final String URL_LISTA = "/admin/jsf_exec/pagex/pagina/paginaPaginas.xhtml";
@@ -285,11 +284,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     }
 
-    //    public BotonDTO emptyButton() {
-//        BotonDTO botonDTO = new BotonDTO();
-//        botonDTO.setCo_pagbot(-1);
-//        return botonDTO;
-//    }
     public String pagbot_new() {
         botonSeleccionado = new BotonDTO();
         botonSeleccionado.setCo_pagbot(-1);

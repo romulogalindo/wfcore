@@ -14,22 +14,19 @@ import javax.persistence.NamedNativeQuery;
 import java.io.Serializable;
 
 /**
- *
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
  * Created on 30 nov. 2018, 15:11:45
  */
 @Entity
 @NamedNativeQueries({
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_SELECT_SISTEMA,
-            query = "select co_sistem, no_sistem, de_sistem, ur_logsis, no_temdef "
-            + "from wfsistem.pbsistema_list()",
-            resultClass = SistemaDTO.class),
-    @NamedNativeQuery(
-            name = Values.QUERYS_NATIVE_GRABAR_SISTEMA,
-            query = "select co_sistem, no_sistem, de_sistem, ur_logsis, no_temdef "
-            + "from wfsistem.pbsistema_save(:co_sistem, :no_sistem, :de_sistem, :ur_logsis, :no_temdef)",
-            resultClass = SistemaDTO.class)
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_SELECT_SISTEMA,
+                query = "select * from wfsistem.pbsistema_list()",
+                resultClass = SistemaDTO.class),
+        @NamedNativeQuery(
+                name = Values.QUERYS_NATIVE_GRABAR_SISTEMA,
+                query = "select * from wfsistem.pbsistema_save(:co_sistem, :no_sistem, :de_sistem, :ur_logsis, :no_temdef)",
+                resultClass = SistemaDTO.class)
 })
 public class SistemaDTO implements Serializable {
 
@@ -38,8 +35,13 @@ public class SistemaDTO implements Serializable {
 
     String no_sistem;
     String de_sistem;
-    String ur_logsis;
+    String ar_logsis;
     String no_temdef;
+    String ur_sistem;
+    Boolean il_sisfor;
+
+    public SistemaDTO() {
+    }
 
     public Integer getCo_sistem() {
         return co_sistem;
@@ -65,12 +67,12 @@ public class SistemaDTO implements Serializable {
         this.de_sistem = de_sistem;
     }
 
-    public String getUr_logsis() {
-        return ur_logsis;
+    public String getAr_logsis() {
+        return ar_logsis;
     }
 
-    public void setUr_logsis(String ur_logsis) {
-        this.ur_logsis = ur_logsis;
+    public void setAr_logsis(String ar_logsis) {
+        this.ar_logsis = ar_logsis;
     }
 
     public String getNo_temdef() {
@@ -81,14 +83,19 @@ public class SistemaDTO implements Serializable {
         this.no_temdef = no_temdef;
     }
 
-    @Override
-    public String toString() {
-        return "SistemaDTO{" +
-              "co_sistem=" + co_sistem +
-              ", no_sistem='" + no_sistem + '\'' +
-              ", de_sistem='" + de_sistem + '\'' +
-              ", ur_logsis='" + ur_logsis + '\'' +
-              ", no_temdef='" + no_temdef + '\'' +
-              '}';
+    public String getUr_sistem() {
+        return ur_sistem;
+    }
+
+    public void setUr_sistem(String ur_sistem) {
+        this.ur_sistem = ur_sistem;
+    }
+
+    public Boolean getIl_sisfor() {
+        return il_sisfor;
+    }
+
+    public void setIl_sisfor(Boolean il_sisfor) {
+        this.il_sisfor = il_sisfor;
     }
 }

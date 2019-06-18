@@ -65,8 +65,7 @@
 
                     <p:column headerText="Acciones" style="width:160px;text-align: center">
 
-                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
-                                         action="#{paginaLSBean.updateRegist}" update="mainPanel" ajax="true"
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaLSBean.updateRegist}" update="mainPanel" ajax="true"
                                          async="false">
                             <f:setPropertyActionListener value="#{pag}" target="#{paginaLSBean.pagina}"/>
                         </p:commandButton>
