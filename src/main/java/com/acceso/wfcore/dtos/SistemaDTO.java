@@ -25,7 +25,7 @@ import java.io.Serializable;
                 resultClass = SistemaDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_GRABAR_SISTEMA,
-                query = "select * from wfsistem.pbsistema_save(:co_sistem, :no_sistem, :de_sistem, :ur_logsis, :no_temdef)",
+                query = "select * from wfsistem.pbsistema_save(:co_sistem, :no_sistem, :de_sistem, :ar_logsis, :no_temdef, :il_sisfor, :ur_sistem)",
                 resultClass = SistemaDTO.class)
 })
 public class SistemaDTO implements Serializable {
@@ -35,7 +35,7 @@ public class SistemaDTO implements Serializable {
 
     String no_sistem;
     String de_sistem;
-    String ar_logsis;
+    Long ar_logsis;
     String no_temdef;
     String ur_sistem;
     Boolean il_sisfor;
@@ -67,11 +67,11 @@ public class SistemaDTO implements Serializable {
         this.de_sistem = de_sistem;
     }
 
-    public String getAr_logsis() {
+    public Long getAr_logsis() {
         return ar_logsis;
     }
 
-    public void setAr_logsis(String ar_logsis) {
+    public void setAr_logsis(Long ar_logsis) {
         this.ar_logsis = ar_logsis;
     }
 

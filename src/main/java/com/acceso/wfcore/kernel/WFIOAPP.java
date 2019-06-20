@@ -45,7 +45,7 @@ public class WFIOAPP {
     public static final WFIOAPP APP;
 
     /*
-    *FIRST RUN!
+     *FIRST RUN!
      */
     static {
         APP = new WFIOAPP();

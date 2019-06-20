@@ -91,8 +91,7 @@ public class SubSistemaLSBean extends MainBean implements Serializable, DefaultM
 
     @Override
     public String newRegist() {
-        //Data la causistica el metodo nuevo esta encapsuado en defaultAction
-        return null;
+        return URL_EDITAR;
     }
 
     @Override

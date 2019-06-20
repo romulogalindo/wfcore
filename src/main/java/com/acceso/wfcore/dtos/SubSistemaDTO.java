@@ -25,8 +25,7 @@ import java.io.Serializable;
                 resultClass = SubSistemaDTO.class),
         @NamedNativeQuery(
                 name = Values.QUERYS_NATIVE_GRABAR_SUBSISTEMA,
-                query = "select co_subsis, no_subsis, co_sistem, ur_logsub, no_sistem"
-                        + "from wfsistem.pbsubsistema_save(:co_subsis, :no_subsis, :co_sistem, :ur_logsub)",
+                query = "select * from wfsistem.pbsubsistema_save(:co_subsis, :no_subsis, :co_sistem, :ur_logsub, :no_temdef)",
                 resultClass = SubSistemaDTO.class)
 })
 public class SubSistemaDTO implements Serializable {
@@ -36,10 +35,13 @@ public class SubSistemaDTO implements Serializable {
 
     String no_subsis;
     Integer co_sistem;
-    String ar_logsub;
+    Long ar_logsub;
     String no_sistem;
     String no_temdef;
 
+
+    public SubSistemaDTO() {
+    }
 
     public Integer getCo_subsis() {
         return co_subsis;
@@ -65,11 +67,11 @@ public class SubSistemaDTO implements Serializable {
         this.co_sistem = co_sistem;
     }
 
-    public String getAr_logsub() {
+    public Long getAr_logsub() {
         return ar_logsub;
     }
 
-    public void setAr_logsub(String ar_logsub) {
+    public void setAr_logsub(Long ar_logsub) {
         this.ar_logsub = ar_logsub;
     }
 
@@ -95,8 +97,9 @@ public class SubSistemaDTO implements Serializable {
                 "co_subsis=" + co_subsis +
                 ", no_subsis='" + no_subsis + '\'' +
                 ", co_sistem=" + co_sistem +
-                ", ar_logsub='" + ar_logsub + '\'' +
+                ", ar_logsub=" + ar_logsub +
                 ", no_sistem='" + no_sistem + '\'' +
+                ", no_temdef='" + no_temdef + '\'' +
                 '}';
     }
 }

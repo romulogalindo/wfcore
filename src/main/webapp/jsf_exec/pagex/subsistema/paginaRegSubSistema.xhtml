@@ -14,11 +14,11 @@
     <ui:define name="content">
         <h:form>
             <p:panel id="panelActualizarSubSis">
-                <p:growl id="messages" showDetail="true"/>
+<!--                <p:growl id="messages" showDetail="true"/>-->
                 <p:panelGrid columns="2" style="width: 400px">
 
                     <p:outputLabel for="co_conexi" value="Id:"/>
-                    <p:outputLabel id="co_conexi" value="#{subSistemaBean.subsistema.co_subsis}"/>
+                    <p:inputText id="co_conexi" value="#{subSistemaBean.subsistema.co_subsis}"/>
 
                     <p:outputLabel for="no_conexi" value="Nombre:"/>
                     <p:inputText id="no_conexi" value="#{subSistemaBean.subsistema.no_subsis}"
@@ -29,16 +29,17 @@
                                      required="true" requiredMessage="Debe ingresar un Sistema."
                                      dynamic="true">
                         <f:selectItem itemLabel="Seleccionar" itemValue=""/>
-                        <f:selectItems value="#{sistemaBean.getComboSistema()}"/>
+                        <f:selectItems value="#{subSistemaBean.getComboSistema()}"/>
                     </p:selectOneMenu>
 
                     <p:outputLabel for="ur_logsub" value="Logo:"/>
-                    <p:fileUpload id="ur_logsub" mode="advanced" label="Escoger"
-                                  dragDropSupport="true"
-                                  update="messages" sizeLimit="100000" fileLimit="3"
+                    <p:fileUpload id="ur_logsub"
+                                  auto="true"
+                                  fileUploadListener="#{subSistemaBean.uploadImage}"
                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
                                   value="#{subSistemaBean.subsistema.ar_logsub}"
-                                  uploadLabel="Subir" cancelLabel="Cancelar"/>
+                                  rendered="#{subSistemaBean.isregEditable}"
+                    />
 
                     <p:outputLabel for="no_temdef" value="Tema:"/>
                     <p:selectOneMenu id="no_temdef" value="#{subSistemaBean.subsistema.no_temdef}">
@@ -59,7 +60,8 @@
                     <p:commandButton value="Grabar"
                                      action="#{subSistemaBean.saveRegist}"
                                      type="submit"
-                                     update="panelActualizarSubSis">
+                                     update="panelActualizarSubSis" ajax="true"
+                                     async="false">
                         <p:ajax rendered="panelActualizarSubSis"/>
                     </p:commandButton>
 

@@ -110,8 +110,7 @@ public class SistemaLSBean extends MainBean implements Serializable, DefaultMain
 
     @Override
     public String newRegist() {
-        //Data la causistica el metodo nuevo esta encapsuado en defaultAction
-        return null;
+        return URL_EDITAR;
     }
 
     @Override
@@ -128,49 +127,19 @@ public class SistemaLSBean extends MainBean implements Serializable, DefaultMain
 
     @Override
     public String deleteRegist() {
-//        deleteDto();
+        SistemaDAO dao = new SistemaDAO();
+        String resultado = dao.deleteSistema(sistema);
+        this.sistemas = dao.getSistemas();
+        dao.close();
 
         return URL_LISTA;
     }
 
     @Override
     public String saveRegist() {
-//        saveDto();
+        //NO IMPLEMENTADO AQUI
         return URL_LISTA;
     }
-
-//    @Override
-//    public void selectDto() {
-//        SistemaDAO dao = new SistemaDAO();
-//        this.sistemas = dao.getSistemas();
-//        dao.close();
-//    }
-//
-//    @Override
-//    public void saveDto() {
-//        SistemaDAO dao = new SistemaDAO();
-//        this.sistema = dao.grabarSistema(sistema);
-//        this.sistemas = dao.getSistemas();
-////      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
-//        dao.close();
-//    }
-//
-//    @Override
-//    public void updateDto() {
-//        SistemaDAO dao = new SistemaDAO();
-//        this.sistema = dao.grabarSistema(sistema);
-//        this.sistemas = dao.getSistemas();
-////      Sistema.out.println("ConexionBean actualizarConexion = " + this.sistema);
-//        dao.close();
-//    }
-//
-//    @Override
-//    public void deleteDto() {
-//        SistemaDAO dao = new SistemaDAO();
-//        String resultado = dao.deleteSistema(sistema);
-//        this.sistemas = dao.getSistemas();
-//        dao.close();
-//    }
 
     public List<SistemaDTO> getSistemas() {
         return sistemas;

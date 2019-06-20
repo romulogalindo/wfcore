@@ -4,7 +4,14 @@ import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.SistemaDAO;
 import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.SistemaDTO;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
+import com.acceso.wfcore.utils.Util;
+import com.acceso.wfcore.utils.Values;
+import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.dtos.ArchivDTO;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -12,7 +19,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,13 +64,6 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
             item.setValue(sis.getCo_sistem());
             res.add(item);
         });
-//        for (SistemaDTO sis : sistemas) {
-//            SelectItem item = new SelectItem();
-//            item.setLabel(sis.getNo_sistem());
-//            item.setDescription(sis.getDe_sistem());
-//            item.setValue(sis.getCo_sistem());
-//            res.add(item);
-//        }
         return res;
     }
 
@@ -69,24 +73,13 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).updateBreadCumBar("Editar", URL_EDITAR);
         ((ManagerBean) context.getApplication().getVariableResolver().resolveVariable(context, "managerBean")).setRenderedCommandButton(false);
 
-//        Log.info("[PaginaBean]->PostConstruct:" + getWindowID().getId());
         Log.info("[SistemaBean]->PostConstruct:");
         /*EXP-->TRANSFER*/
-        String idSisTransa = "X64SIS";
-        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idSisTransa);
+        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("X64SIS");
         Log.info("[SistemaBean]obj = " + obj);
 
         if (obj != null) {
-            //        PaginaDAO dao = new PaginaDAO();
-//        this.paginas = dao.getPaginas();
-//        dao.close();
             this.sistema = (SistemaDTO) obj;
-
-//            Log.info("[SistemaBean]pagina:" + sistema);
-//            PaginaDAO dao = new PaginaDAO();
-//            sistema.setLs_botone(dao.getButtons(sistema.getCo_pagina()));
-//            sistema.setLs_elemen(dao.getElementos(sistema.getCo_pagina()));
-//            dao.close();
         }
 
     }
@@ -190,6 +183,49 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
         String resultado = dao.deleteSistema(sistema);
         this.sistemas = dao.getSistemas();
         dao.close();
+    }
+
+    public void uploadImage(FileUploadEvent event) {
+        try {
+            UploadedFile uploadedFile = event.getFile();
+            File file = Util.toFile(uploadedFile);
+            System.out.println("file = " + file);
+
+            //crear id_image
+            ArchivDTO arcadj;
+
+            Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
+            arcadj = dao.setArchiv(file.getName());
+            dao.close();
+            //seteo de valor
+            sistema.setAr_logsis(arcadj.getCo_archiv());
+
+            String fileName = Util.formatName(file.getName());
+            String pre_url = WFIOAPP.APP.getDataSourceService().getValueOfKey("AIO_DATA_FILE");
+
+            File archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()));
+            System.out.println("archivo(1) = " + archivo);
+
+            try {
+                System.out.println("archivo(2) = " + archivo.exists());
+
+                if (!archivo.exists()) {
+                    archivo.mkdirs();
+                }
+
+                archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
+                System.out.println("archivo(3) = " + archivo);
+
+                Files.copy(new FileInputStream(file), archivo.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("archivo(3?) = " + archivo.exists());
+
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("" + arcadj.getCo_archiv(), archivo);
+            } catch (Exception ep) {
+                ep.printStackTrace();
+            }
+        } catch (Exception ep) {
+            System.out.println("ep = " + ep);
+        }
     }
 
     public List<SistemaDTO> getSistemas() {

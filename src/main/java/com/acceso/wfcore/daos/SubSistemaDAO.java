@@ -30,9 +30,9 @@ public class SubSistemaDAO {
 
             nQuery.work(session.getNamedQuery(Values.QUERYS_NATIVE_SELECT_SUBSISTEMA));
 
-            System.out.println("[SistemaDAO:getSubSistemas] Q = " + nQuery.getQueryString());
+//            System.out.println("[SistemaDAO:getSubSistemas] Q = " + nQuery.getQueryString());
             subsistemas = nQuery.list();
-            System.out.println("[SistemaDAO:getSubSistemas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
+//            System.out.println("[SistemaDAO:getSubSistemas] Q = " + nQuery.getQueryString() + " T = " + nQuery.getExecutionTime() + "ms");
 
         } catch (Exception ep) {
             System.out.println("[SistemaDAO:getSubSistemas] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
@@ -52,7 +52,8 @@ public class SubSistemaDAO {
             nQuery.setInteger("co_subsis", subsistema.getCo_subsis() == null ? -1 : subsistema.getCo_subsis());
             nQuery.setString("no_subsis", subsistema.getNo_subsis());
             nQuery.setInteger("co_sistem", subsistema.getCo_sistem());
-            nQuery.setString("ur_logsub", subsistema.getAr_logsub());
+            nQuery.setLong("ur_logsub", subsistema.getAr_logsub() == null ? -1 : subsistema.getAr_logsub());
+            nQuery.setString("no_temdef", subsistema.getNo_temdef());
 
             System.out.println("[SistemaDAO:grabarSubSistema] Q = " + nQuery.getQueryString());
 

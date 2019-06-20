@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -8,72 +8,72 @@
       xmlns:p="http://primefaces.org/ui">
 
 
-    <ui:composition template="../../template/plantilla.xhtml">
-        <ui:define name="content">
-            
-            <h:form>
-                <p:panel id="panelActualizarSis">
-                    <!--<p:growl id="messages" showDetail="true"/>-->
-                    <p:panelGrid columns="2" style="width: 400px">
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
 
-                        <p:outputLabel for="co_sistem" value="Id:"/>
-                        <p:outputLabel id="co_sistem" value="#{sistemaBean.sistema.co_sistem}" />
+        <h:form>
+            <p:panel id="panelActualizarSis">
+                <!--<p:growl id="messages" showDetail="true"/>-->
+                <p:panelGrid columns="2" style="width: 400px">
 
-                        <p:outputLabel for="no_sistem" value="Nombre:"/>
-                        <p:inputText id="no_sistem" value="#{sistemaBean.sistema.no_sistem}"
-                                     required="true" requiredMessage="Debe ingresar un Nombre."/>
+                    <p:outputLabel for="co_sistem" value="Id:"/>
+                    <p:outputLabel id="co_sistem" value="#{sistemaBean.sistema.co_sistem}"/>
 
-                        <p:outputLabel for="de_sistem" value="Descripción:"/>
-                        <p:inputTextarea id="de_sistem" value="#{sistemaBean.sistema.de_sistem}"
-                                         rows="5" cols="30" autoResize="false"/>
+                    <p:outputLabel for="no_sistem" value="Nombre:"/>
+                    <p:inputText id="no_sistem" value="#{sistemaBean.sistema.no_sistem}"
+                                 required="true" requiredMessage="Debe ingresar un Nombre."/>
 
-                        <p:outputLabel for="ur_logsis" value="Logo:"/>
-                        <p:fileUpload id="ur_logsis"  mode="advanced" label="Escoger"
-                                      dragDropSupport="true"
-                                      update="messages" sizeLimit="100000" fileLimit="3"
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                      value="#{sistemaBean.sistema.ar_logsis}"
-                                      rendered="#{sistemaBean.isregEditable}"
-                                      uploadLabel="Subir" cancelLabel="Cancelar"/>
+                    <p:outputLabel for="de_sistem" value="Descripción:"/>
+                    <p:inputTextarea id="de_sistem" value="#{sistemaBean.sistema.de_sistem}"
+                                     rows="5" cols="30" autoResize="false"/>
 
-                        <p:outputLabel for="no_temdef" value="Tema:"/>
-                        <p:selectOneMenu id="no_temdef" value="#{sistemaBean.sistema.no_temdef}">
-                            <f:selectItem itemLabel="Seleccione" itemValue=""/>
-                            <f:selectItem itemLabel="Sepia" itemValue="Sepia"/>
-                            <f:selectItem itemLabel="Dark" itemValue="Dark"/>
-                            <f:selectItem itemLabel="Material" itemValue="Material"/>
-                        </p:selectOneMenu>
+                    <p:outputLabel for="ur_logsis" value="Logo:"/>
+                    <p:fileUpload id="ur_logsis"
+                                  auto="true"
+                                  fileUploadListener="#{sistemaBean.uploadImage}"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  value="#{sistemaBean.sistema.ar_logsis}"
+                                  rendered="#{sistemaBean.isregEditable}"
+                    />
+
+                    <p:outputLabel for="no_temdef" value="Tema:"/>
+                    <p:selectOneMenu id="no_temdef" value="#{sistemaBean.sistema.no_temdef}">
+                        <f:selectItem itemLabel="Seleccione" itemValue=""/>
+                        <f:selectItem itemLabel="Sepia" itemValue="Sepia"/>
+                        <f:selectItem itemLabel="Dark" itemValue="Dark"/>
+                        <f:selectItem itemLabel="Material" itemValue="Material"/>
+                    </p:selectOneMenu>
 
 
-                        <p:outputLabel for="il_sisfor" value="Sistema Foraneo:"/>
-                        <p:selectBooleanCheckbox id="il_sisfor" value="#{sistemaBean.sistema.il_sisfor}"/>
+                    <p:outputLabel for="il_sisfor" value="Sistema Foraneo:"/>
+                    <p:selectBooleanCheckbox id="il_sisfor" value="#{sistemaBean.sistema.il_sisfor}"/>
 
-                        <p:outputLabel for="ur_sistem" value="Url Sistema:"/>
-                        <p:inputText id="ur_sistem" value="#{sistemaBean.sistema.ur_sistem}"
-                                     required="true" requiredMessage="Requerido."/>
+                    <p:outputLabel for="ur_sistem" value="Url Sistema:"/>
+                    <p:inputText id="ur_sistem" value="#{sistemaBean.sistema.ur_sistem}"
+                                 required="true" requiredMessage="Requerido."/>
 
-                    </p:panelGrid>
-                    <p:panelGrid style="width: 400px">
-                        <p:commandButton action="#{sistemaBean.load()}"
-                                         actionListener="#{sistemaBean.doListener()}"
-                                         value="Atrás"
-                                         title="Volver al reporte de sistemas"
-                                         immediate="true">
-                        </p:commandButton>
-                        <p:commandButton value="Grabar"
-                                         action="#{sistemaBean.saveRegist}"
-                                         actionListener="#{sistemaBean.doListener()}"
-                                         type="submit"
-                                         update="panelActualizarSis">
-                            <p:ajax rendered="panelActualizarSis"/>
-                        </p:commandButton>
+                </p:panelGrid>
+                <p:panelGrid style="width: 400px">
+                    <p:commandButton action="#{sistemaBean.load()}"
+                                     actionListener="#{sistemaBean.doListener()}"
+                                     value="Atrás"
+                                     title="Volver al reporte de sistemas"
+                                     immediate="true">
+                    </p:commandButton>
+                    <p:commandButton value="Grabar"
+                                     action="#{sistemaBean.saveRegist}"
+                                     actionListener="#{sistemaBean.doListener()}"
+                                     type="submit"
+                                     update="panelActualizarSis">
+                        <p:ajax rendered="panelActualizarSis"/>
+                    </p:commandButton>
 
-                    </p:panelGrid>
-                </p:panel>
+                </p:panelGrid>
+            </p:panel>
 
-            </h:form>
-        </ui:define>
+        </h:form>
+    </ui:define>
 
-    </ui:composition>
+</ui:composition>
 
 </html>

@@ -8,11 +8,15 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
 import org.hibernate.exception.GenericJDBCException;
 import org.hibernate.exception.SQLGrammarException;
+import org.primefaces.model.UploadedFile;
 
 import javax.faces.model.SelectItem;
 import javax.persistence.PersistenceException;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -188,6 +192,18 @@ public class Util {
             ext = FilenameUtils.getExtension(filename);
         }
         return ext;
+    }
+
+    public static File toFile(UploadedFile uploadedFile){
+        try{
+            String pathname;
+            File file =  new File(uploadedFile.getFileName());
+            Files.copy(uploadedFile.getInputstream(),file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            return file;
+        }catch (Exception ep){
+            System.out.println("ep = " + ep);
+            return null;
+        }
     }
 
     /**

@@ -19,6 +19,20 @@
 
             <!--<p:growl id="msgs" showDetail="true"/>-->
             <h:form id="form">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:outputPanel value="Lista de Sistemas"/>
+                    </f:facet>
+
+                    <f:facet name="right">
+                        <p:commandButton value="Nuevo" action="#{subSistemaLSBean.newRegist}" update="messages"
+                                         icon="pi pi-plus"/>
+                    </f:facet>
+
+                </p:toolbar>
+
+                <p:spacer height="1"/>
+
                 <p:dataTable id="lista"
                              var="subsis"
                              value="#{subSistemaLSBean.subsistemas}"

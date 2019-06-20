@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,88 +7,100 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="../../template/plantilla.xhtml">
-        <ui:define name="content">
+<ui:composition template="../../template/plantilla.xhtml">
+    <ui:define name="content">
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
-            </p:confirmDialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times"/>
+        </p:confirmDialog>
 
-            <p:panel id="panelListaSis">
+        <p:panel id="panelListaSis">
 
-                <!--<p:growl id="msgs" showDetail="true"/>-->
-                <h:form id="form">
-                    <p:dataTable id="lista"
-                                 var="sis"
-                                 value="#{sistemaLSBean.sistemas}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                 paginator="true"
-                                 paginatorPosition="bottom"
-                                 rows="100"
-                                 widgetVar="widTable"
-                                 selectionMode="single"
-                                 selection="#{sistemaLSBean.sistema}"
-                                 rowKey="#{sis.co_sistem}"
-                                 rowIndexVar="N">
+            <h:form id="form">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:outputPanel value="Lista de Sistemas"/>
+                    </f:facet>
 
+                    <f:facet name="right">
+                        <p:commandButton value="Nuevo" action="#{sistemaLSBean.newRegist}" update="messages"
+                                         icon="pi pi-plus"/>
+                    </f:facet>
+
+                </p:toolbar>
+
+                <p:spacer height="1"/>
+
+                <p:dataTable id="lista"
+                             var="sis"
+                             value="#{sistemaLSBean.sistemas}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rows="100"
+                             widgetVar="widTable"
+                             selectionMode="single"
+                             selection="#{sistemaLSBean.sistema}"
+                             rowKey="#{sis.co_sistem}"
+                             rowIndexVar="N">
+
+
+                    <p:ajax event="sort" skipChildren="false"/>
+
+                    <p:column style="text-align: right" width="20">
                         <f:facet name="header">
-                            Lista de Sistemas
+                            <h:outputText value="#"/>
                         </f:facet>
+                        <h:outputText value="#{N + 1}"/>
+                    </p:column>
 
-                        <p:ajax event="sort" skipChildren="false"/>
+                    <p:column sortBy="#{sis.no_sistem}" width="100">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{sis.no_sistem}"/>
+                    </p:column>
 
-                        <p:column style="text-align: right" width="20">
-                            <f:facet name="header">
-                                <h:outputText value="#"/>
-                            </f:facet>
-                            <h:outputText value="#{N + 1}"/>
-                        </p:column>
+                    <p:column headerText="Descripción" width="50" style="text-align: left" sortBy="#{sis.de_sistem}">
+                        <h:outputText value="#{sis.de_sistem}"/>
+                    </p:column>
 
-                        <p:column sortBy="#{sis.no_sistem}" width="100">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{sis.no_sistem}"/>
-                        </p:column>
+                    <p:column headerText="Logo" width="50" style="text-align: left" sortBy="#{sis.ar_logsis}">
+                        <h:outputText value="#{sis.ar_logsis}"/>
+                    </p:column>
 
-                        <p:column headerText="Descripción" width="50" style="text-align: left" sortBy="#{sis.de_sistem}">
-                            <h:outputText value="#{sis.de_sistem}"/>
-                        </p:column>
+                    <p:column headerText="Tipo" width="50">
+                        <h:outputText value="Foraneo" rendered="#{sis.il_sisfor}"/>
+                        <h:outputText value="Interno" rendered="#{!sis.il_sisfor}"/>
+                    </p:column>
 
-                        <p:column headerText="Logo" width="50" style="text-align: left" sortBy="#{sis.ar_logsis}">
-                            <h:outputText value="#{sis.ar_logsis}"/>
-                        </p:column>
+                    <p:column headerText="Ruta" width="250" sortBy="#{sis.il_sisfor}">
+                        <h:outputText value="#{sis.ur_sistem}"/>
+                    </p:column>
 
-                        <p:column headerText="Tema"  width="50"  sortBy="#{sis.il_sisfor}">
-                            <h:outputText value="Foraneo" rendered="#{sis.il_sisfor}"/>
-                            <h:outputText value="Interno" rendered="#{!sis.il_sisfor}"/>
-                        </p:column>
+                    <p:column style="width:160px;text-align: center">
 
-                        <p:column headerText="Ruta"  width="250"  sortBy="#{sis.il_sisfor}">
-                            <h:outputText value="#{sis.ur_sistem}" />
-                        </p:column>
+                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
+                                         action="#{sistemaLSBean.updateRegist}" update="mainPanel" ajax="true"
+                                         async="false">
+                            <f:setPropertyActionListener value="#{sis}" target="#{sistemaLSBean.sistema}"/>
+                        </p:commandButton>
 
-                        <p:column style="width:160px;text-align: center">
+                        <p:commandButton icon="fa fa-trash" title="Eliminar" value="Eliminar"
+                                         action="#{sistemaLSBean.deleteRegist}"
+                                         update=":form:lista">
+                            <f:setPropertyActionListener value="#{sis}" target="#{sistemaLSBean.sistema}"/>
+                            <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                       icon="fa fa-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:column>
 
-                            <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{sistemaLSBean.updateRegist}" update="mainPanel" ajax="true"
-                                             async="false">
-                                <f:setPropertyActionListener value="#{sis}" target="#{sistemaLSBean.sistema}"/>
-                            </p:commandButton>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
 
-                            <p:commandButton icon="fa fa-trash" title="Eliminar"  value="Eliminar" action="#{sistemaLSBean.deleteRegist}"
-                                             update=":form:lista">
-                                <f:setPropertyActionListener value="#{sis}" target="#{sistemaLSBean.sistema}"/>
-                                <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                           icon="fa fa-exclamation-triangle"/>
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </h:form>
-            </p:panel>
-
-        </ui:define>
-    </ui:composition>
+    </ui:define>
+</ui:composition>
 
 </html>
