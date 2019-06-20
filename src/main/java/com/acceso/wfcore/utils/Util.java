@@ -194,14 +194,13 @@ public class Util {
         return ext;
     }
 
-    public static File toFile(UploadedFile uploadedFile){
-        try{
-            String pathname;
-            File file =  new File(uploadedFile.getFileName());
-            Files.copy(uploadedFile.getInputstream(),file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    public static File toFile(UploadedFile uploadedFile) {
+        try {
+            File file = new File(uploadedFile.getFileName());
+            Files.copy(uploadedFile.getInputstream(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             return file;
-        }catch (Exception ep){
-            System.out.println("ep = " + ep);
+        } catch (Exception ep) {
+            System.out.println("*ep = " + ep);
             return null;
         }
     }

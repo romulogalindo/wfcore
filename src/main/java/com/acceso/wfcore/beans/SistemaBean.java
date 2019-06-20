@@ -1,8 +1,6 @@
 package com.acceso.wfcore.beans;
 
-import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.SistemaDAO;
-import com.acceso.wfcore.dtos.PaginaDTO;
 import com.acceso.wfcore.dtos.SistemaDTO;
 import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
@@ -15,7 +13,6 @@ import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -26,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
@@ -46,6 +44,7 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
     private SistemaDTO sistema;
 
     private boolean isregEditable;
+//    private SelectItem[] si_sistema;
 
     public SistemaBean() {
         this.beanName = BEAN_NAME;
@@ -82,6 +81,22 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
             this.sistema = (SistemaDTO) obj;
         }
 
+//        List<SelectItem> res = new ArrayList<>();
+//        selectDto();
+//        sistemas.stream().filter(s -> !s.getIl_sisfor()).forEach(sis -> {
+//            SelectItem item = new SelectItem();
+//            item.setLabel(sis.getNo_sistem());
+//            item.setDescription(sis.getDe_sistem());
+//            item.setValue(sis.getCo_sistem());
+//            res.add(item);
+//        });
+//        si_sistema = (SelectItem[]) sistemas.stream().map(s -> {
+//            SelectItem si = new SelectItem();
+//            si.setLabel(s.getNo_sistem());
+//            si.setDescription(s.getDe_sistem());
+//            si.setValue(s.getCo_sistem());
+//            return si;
+//        }).collect(Collectors.toList()).toArray();
     }
 
     @Override
@@ -251,5 +266,13 @@ public class SistemaBean extends MainBean implements Serializable, DefaultMainte
     public void setIsregEditable(boolean isregEditable) {
         this.isregEditable = isregEditable;
     }
+
+//    public SelectItem[] getSi_sistema() {
+//        return si_sistema;
+//    }
+//
+//    public void setSi_sistema(SelectItem[] si_sistema) {
+//        this.si_sistema = si_sistema;
+//    }
 
 }

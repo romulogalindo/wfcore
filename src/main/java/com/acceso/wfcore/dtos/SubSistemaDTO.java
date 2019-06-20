@@ -19,15 +19,14 @@ import java.io.Serializable;
  */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_SELECT_SUBSISTEMA,
-                query = "select * from wfsistem.pbsubsistema_list()",
-                resultClass = SubSistemaDTO.class),
-        @NamedNativeQuery(
-                name = Values.QUERYS_NATIVE_GRABAR_SUBSISTEMA,
-                query = "select * from wfsistem.pbsubsistema_save(:co_subsis, :no_subsis, :co_sistem, :ur_logsub, :no_temdef)",
-                resultClass = SubSistemaDTO.class)
-})
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_SELECT_SUBSISTEMA,
+            query = "select * from wfsistem.pbsubsistema_list()",
+            resultClass = SubSistemaDTO.class),
+    @NamedNativeQuery(
+            name = Values.QUERYS_NATIVE_GRABAR_SUBSISTEMA,
+            query = "select * from wfsistem.pbsubsistema_save(:co_subsis, :no_subsis, :co_sistem, :ur_logsub, :no_temdef)",
+            resultClass = SubSistemaDTO.class)})
 public class SubSistemaDTO implements Serializable {
 
     @Id
@@ -38,7 +37,6 @@ public class SubSistemaDTO implements Serializable {
     Long ar_logsub;
     String no_sistem;
     String no_temdef;
-
 
     public SubSistemaDTO() {
     }
@@ -93,13 +91,13 @@ public class SubSistemaDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "SubSistemaDTO{" +
-                "co_subsis=" + co_subsis +
-                ", no_subsis='" + no_subsis + '\'' +
-                ", co_sistem=" + co_sistem +
-                ", ar_logsub=" + ar_logsub +
-                ", no_sistem='" + no_sistem + '\'' +
-                ", no_temdef='" + no_temdef + '\'' +
-                '}';
+        return "SubSistemaDTO{"
+                + "co_subsis=" + co_subsis
+                + ", no_subsis='" + no_subsis + '\''
+                + ", co_sistem=" + co_sistem
+                + ", ar_logsub=" + ar_logsub
+                + ", no_sistem='" + no_sistem + '\''
+                + ", no_temdef='" + no_temdef + '\''
+                + '}';
     }
 }

@@ -1,12 +1,10 @@
 package com.acceso.wfcore.beans;
 
-import com.acceso.wfcore.daos.PaginaDAO;
 import com.acceso.wfcore.daos.SistemaDAO;
 import com.acceso.wfcore.dtos.SistemaDTO;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
