@@ -280,6 +280,7 @@ public class Frawor4DAO extends DAO {
         return idfraworDTO;
     }
 
+    @Deprecated
     public ProcesoDTO saveCompar(long p_id_frawor, int p_co_conten, int p_co_conpar, String p_va_conpar, boolean islocal) {
         ProcesoDTO procesoDTO = null;
         NQuery nQuery = new NQuery(TAG + ":CONPAR");
@@ -308,18 +309,46 @@ public class Frawor4DAO extends DAO {
         return procesoDTO;
     }
 
+    public ProcesoDTO saveCompar(long p_id_frawor, int p_co_conten, String p_co_conpar, String p_va_conpar, boolean islocal) {
+        ProcesoDTO procesoDTO = null;
+        NQuery nQuery = new NQuery(TAG + ":CONPAR");
+        Transaction transaction = null;
+
+        try {
+            //Codigo que hace explicito la transaccion
+            transaction = session.beginTransaction();
+            nQuery.work(session.getNamedQuery(islocal ? Values.QUERYS_WEB_SELECT_PFCONPAR : Values.QUERYS_WEB_SELECT_PFCONPAR2), true, true);
+            nQuery.setLong("p_id_frawor", p_id_frawor);
+            nQuery.setInteger("p_co_conten", p_co_conten);
+            nQuery.setShort("p_co_conpar", (short) Short.parseShort(p_co_conpar.replace("co_conpar_", "")));
+            //ESTO SERA EL FUTURO
+            //nQuery.setString("p_no_conpar", p_co_conpar);
+            nQuery.setString("p_va_conpar", p_va_conpar);
+
+            procesoDTO = (ProcesoDTO) nQuery.uniqueResult();
+            transaction.commit();
+            //CIerra la transaccion explicita!
+        } catch (Exception ep) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
+            ep.printStackTrace();
+        }
+
+        return procesoDTO;
+    }
+
     public List<WParametroDTO> getParams(int p_co_conten, int p_co_pagina, short p_co_pagbot) {
         List<WParametroDTO> parametroDTOS = null;
         NQuery nQuery = new NQuery(TAG + ":PAGPAR");
 
         try {
-
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_SELECT_PFPAGPAR), true, true);
             nQuery.setInteger("p_co_conten", p_co_conten);
             nQuery.setInteger("p_co_pagina", p_co_pagina);
             nQuery.setShort("p_co_pagbot", p_co_pagbot);
             parametroDTOS = nQuery.list();
-
         } catch (Exception ep) {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
@@ -333,11 +362,9 @@ public class Frawor4DAO extends DAO {
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
-
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCADJ), true, true);
             nQuery.setInteger("p_id_arcadj", p_id_arcadj);
             arcadjDTO = (ArcadjDTO) nQuery.uniqueResult();
-
         } catch (Exception ep) {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
@@ -351,11 +378,9 @@ public class Frawor4DAO extends DAO {
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
-
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCHIV_READ), true, true);
             nQuery.setInteger("p_co_archiv", p_co_archiv);
             archivDTO = (ArchivDTO) nQuery.uniqueResult();
-
         } catch (Exception ep) {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
@@ -369,11 +394,9 @@ public class Frawor4DAO extends DAO {
         NQuery nQuery = new NQuery(TAG + ":PAGINA");
 
         try {
-
             nQuery.work(session.getNamedQuery(Values.QUERYS_WEB_ARCHIV_INS), true, true);
             nQuery.setString("p_no_archiv", p_no_archiv);
             archivDTO = (ArchivDTO) nQuery.uniqueResult();
-
         } catch (Exception ep) {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
@@ -450,7 +473,6 @@ public class Frawor4DAO extends DAO {
             System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
             ep.printStackTrace();
         }
-
     }
 
     public List<ComboDTO> getCombo(int p_co_pagina, long p_id_frawor, int p_co_conten, short p_co_regist) {

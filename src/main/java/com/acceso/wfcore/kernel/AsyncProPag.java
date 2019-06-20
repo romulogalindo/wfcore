@@ -5,6 +5,7 @@ import com.acceso.wfcore.utils.ScriptContextExecutor;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
 import com.acceso.wfweb.utils.JsonResponseP;
@@ -15,7 +16,6 @@ import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.Map;
-
 
 public class AsyncProPag extends AsyncProcessor {
 
@@ -37,7 +37,16 @@ public class AsyncProPag extends AsyncProcessor {
             short co_botone = Util.toShort(requestManager.getParam("co_botone"), (short) -1);
             boolean il_proces = Util.toBoolean(requestManager.getParam("il_proces"), false);
             String ls_allreg = requestManager.getParam("ls_allreg");
-            String ls_conpar = requestManager.getParam("ls_conpar");
+//            String ls_conpar = requestManager.getParam("ls_conpar");
+
+            String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
+            System.out.println("ls_conpar = " + ls_conpar);
+
+            requestManager.getConpars().entrySet().stream().forEach(m -> {
+//                contenedor.put_conpar(m.getKey(), m.getValue());
+                System.out.println("key = " + m.getKey() + ", value = " + m.getValue());
+            });
+            
             System.out.println("ls_conpar = " + ls_conpar);
             Usuario usuario = requestManager.getUser();
             String ls_regist = "";

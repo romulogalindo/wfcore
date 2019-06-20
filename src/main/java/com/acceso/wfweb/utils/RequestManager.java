@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.*;
 
 public class RequestManager {
+
     public static String REQUEST_METHOD_GET = "GET";
     public static String REQUEST_METHOD_POST = "POST";
 
@@ -135,22 +136,25 @@ public class RequestManager {
         this.response.sendRedirect(url);
     }
 
-    public HashMap<Integer, String> getConpars() {
-        HashMap<Integer, String> conpars = new HashMap<>();
-
-        for (HashMap.Entry<String, String[]> param : this.parameters.entrySet()) {
-            if (param.getKey().contains("co_conpar_")) {
-                conpars.put(Util.toInt(param.getKey().replace("co_conpar_", "")), param.getValue()[0]);
-            }
-        }
-
-//        Enumeration<String> parametersNames = this.request.getParameterNames();
-//        while (parametersNames.hasMoreElements()) {
-//            String paramKey = parametersNames.nextElement();
-//            if (paramKey.contains("co_conpar_")) {
-//                conpars.put(Util.toInt(paramKey.replace("co_conpar_", "")), this.request.getParameter(paramKey));
+//    public HashMap<Integer, String> getConpars() {
+//        HashMap<Integer, String> conpars = new HashMap<>();
+//
+//        for (HashMap.Entry<String, String[]> param : this.parameters.entrySet()) {
+//            if (param.getKey().contains("co_conpar_")) {
+//                conpars.put(Util.toInt(param.getKey().replace("co_conpar_", "")), param.getValue()[0]);
 //            }
 //        }
+//        return conpars;
+//    }
+    public Map<String, String> getConpars() {
+        Map<String, String> conpars = new HashMap<>();
+
+        this.parameters.entrySet()
+                .stream()
+                .filter((param) -> (!param.getKey().contains("co_conten")))
+                .forEach((param) -> {
+                    conpars.put(param.getKey(), param.getValue()[0]);
+                });
 
         return conpars;
     }

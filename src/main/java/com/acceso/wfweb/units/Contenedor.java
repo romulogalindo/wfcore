@@ -13,11 +13,10 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     int co_conten;
     long id_frawor;
     String co_contit;
-    //    boolean il_header;
     boolean il_popup;
     String ls_conpar;
+    Map<String, String> mp_conpar;
 
-    //    public Contenedor(int co_conten, long id_frawor, String co_contit) {
     public Contenedor(int co_conten, long id_frawor, String co_contit, List<WContabDTO> contabs) {
         this.co_conten = co_conten;
         this.id_frawor = id_frawor;
@@ -25,6 +24,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 
         this.paginas = new LinkedHashMap<>();
         this.contabs = contabs;
+        this.mp_conpar = new HashMap<>();
     }
 
     public void addPagina(Pagina pagina) {
@@ -76,11 +76,29 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     }
 
     public String getLs_conpar() {
+        ls_conpar = "{";
+        ls_conpar = mp_conpar.entrySet().stream()
+                .map((conpar) -> "\"" + conpar.getKey() + "\":\"" + conpar.getValue() + "\",")
+                .reduce(ls_conpar, String::concat);
+        ls_conpar = (ls_conpar.length() == 1 ? ls_conpar : ls_conpar.substring(0, ls_conpar.length() - 1)) + "}";
+
         return ls_conpar;
     }
 
     public void setLs_conpar(String ls_conpar) {
         this.ls_conpar = ls_conpar;
+    }
+
+    public Map<String, String> getMp_conpar() {
+        return mp_conpar;
+    }
+
+    public void setMp_conpar(Map<String, String> mp_conpar) {
+        this.mp_conpar = mp_conpar;
+    }
+
+    public void put_conpar(String key, String value) {
+        this.mp_conpar.put(key, value);
     }
 
     @Override

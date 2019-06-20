@@ -38,15 +38,11 @@ public class ContenedorBean implements Serializable {
         requestManager.getConpars().entrySet().stream().forEach((conpar) -> {
             ProcesoDTO procesoDTO = dao.saveCompar(id_frawor, co_conten, conpar.getKey(), conpar.getValue(), true);
         });
-
-        ls_conpar = requestManager.getConpars().entrySet().stream()
-                .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getValue() + "\",")
-                .reduce(ls_conpar, String::concat);
-
-        ls_conpar = ls_conpar.substring(0, ls_conpar.length() - 1) + "}";
-
         dao.close();
 
+//        ls_conpar = requestManager.getConpars().entrySet().stream()
+//                .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getValue() + "\",")
+//                .reduce(ls_conpar, String::concat);
         //preguntar a la cache si tienen este contenedor
         contenedor = (Contenedor) WFIOAPP.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
 
@@ -58,9 +54,20 @@ public class ContenedorBean implements Serializable {
 
             contenedor.setId_frawor(id_frawor);
         }
-//        System.out.println("|||@@@|||requestManager.getParam(\"il_popup\") = " + requestManager.getParam("il_popup"));
+        //ES POPUP?
         contenedor.setIl_popup(Util.toBoolean(requestManager.getParam("il_popup"), false));
-        contenedor.setLs_conpar(ls_conpar);
+
+        //SE LE ASIGNA LOS PARAMETROS
+//        ls_conpar = requestManager.getConpars().entrySet().stream()
+//                .map((conpar) -> "\"" + conpar.getKey() + "\":\"" + conpar.getValue() + "\",")
+//                .reduce(ls_conpar, String::concat);
+//
+//        ls_conpar = (ls_conpar.length() == 1 ? "" : ls_conpar.substring(0, ls_conpar.length() - 1)) + "}";
+//        System.out.println("ls_conpar => " + ls_conpar);
+        requestManager.getConpars().entrySet().stream().forEach(m -> {
+            contenedor.put_conpar(m.getKey(), m.getValue());
+        });
+//        contenedor.setLs_conpar(ls_conpar);
 
         requestManager.save_over_session("CNT" + contenedor.getCo_conten() + ":" + id_frawor, contenedor);
     }
