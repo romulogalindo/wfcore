@@ -6,22 +6,43 @@
 <head>
     <script>
         function handleFileSelect(e) {
-            //ir a su padre y decirle que tiene data
             parent.document.inputuploadchange("${param.id}");
+        }
+
+        function autoload(evt) {
+            // var tgt = evt.target || window.event.srcElement,
+            //     files = tgt.files;
+            //
+            // // FileReader support
+            // if (FileReader && files && files.length) {
+            //     var fr = new FileReader();
+            //     fr.onload = function () {
+            //         document.getElementById(outImage).src = fr.result;
+            //     }
+            //     fr.readAsDataURL(files[0]);
+            // }
+            //
+            // // Not supported
+            // else {
+            //     // fallback -- perhaps submit the input to an iframe and temporarily store
+            //     // them on the server until the user's session ends.
+            // }
+            var auto = ${param.auto};
+            console.log('auto:' + auto);
+            // parent.document.onchange_vafile(document.getElementById('vafile'));
+            window.parent.onchange_vafile2(document.getElementById('vafile'));
+            if (auto) {
+                console.log('upload:' + evt);
+                document.getElementById('form_data').submit();
+            }
+
         }
     </script>
 </head>
 <body>
-<form id="form_data" action="/doc?ti_docume=U" enctype="MULTIPART/FORM-DATA" method="post" accept-charset="ISO-8859-1">
-    <%--<buttom id="va_regist_file2" type="button" name="va_regist_file2"--%>
-    <%--onclick="document.getElementById('va_regist_file').click()" class="load_buttom" style=" "--%>
-    <%--nuevo="<%=nuevo%>">--%>
-    <%--Seleccione archivo--%>
-    <%--</buttom>--%>
-
-    <%--<input id="vafile" type="file" name="vafile" onchange="handleFileSelect(event)"/>--%>
-    <input id="vafile" type="file" name="vafile" domid="${param.id}"/>
+<form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}" enctype="MULTIPART/FORM-DATA" method="post"
+      accept-charset="ISO-8859-1">
+    <input id="vafile" type="file" name="vafile" domid="${param.id}" onchange="autoload(event);"/>
 </form>
-<%--<label id="NAME_FILE" class="tdPagina4" name="" estado="UNCOMPLETE" style="display:none;"></label>--%>
 </body>
 </html>
