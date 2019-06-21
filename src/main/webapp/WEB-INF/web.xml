@@ -156,6 +156,7 @@
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/dingo</url-pattern>
+        <url-pattern>/salamander</url-pattern>
         <url-pattern>/beaver</url-pattern>
         <url-pattern>/uxtion</url-pattern>
         <url-pattern>/pangolin</url-pattern>

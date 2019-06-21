@@ -52,6 +52,20 @@ $D.doLogoutJson = function () {
     net.send(null);
 }
 
+doPutParamForce = function (url) {
+    console.log('url=' + url);
+    var net = new Inet();
+    net.open("POST", url, true); //false para que sea sincrono
+    // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+            console.log(net.responseText);
+        }
+    }
+
+    net.send();
+}
+
 doDinpag = function (url, regparams, data) {
     console.log('url=' + url);
 //    console.log('regparams=' + regparams);
@@ -156,6 +170,13 @@ doPropag = function (url, regparams, data) {
                     // window.parent.page_to_master(regparams);
                     window.parent.page_to_master(rpta.ls_params);
                 } else if (rpta.no_action == 'REFRESH') {
+                    /*SI HAY PARAMETROA A SOBRE-PONER*/
+                    if (rpta.ls_params != undefined) {
+                        for (var i = 0; i < rpta.ls_params.length; i++) {
+                            doPutParamForce('/salamander?id_frawor=' + id_frawor() + '&co_conten=' + co_conten() + '&no_conpar=' + rpta.ls_params[i].no_param + '&va_conpar=' + rpta.ls_params[i].va_param);
+                        }
+                    }
+
                     for (var i = 0; i < rpta.ls_pagina.length; i++) {
                         //para todos los iframes que coincidan reload
                         var irpta = rpta.ls_pagina[i];

@@ -3,6 +3,7 @@ package com.acceso.wfweb.servlets;
 import com.acceso.wfcore.kernel.AsyncProPag;
 import com.acceso.wfcore.kernel.AsyncValPag;
 import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 
 import java.io.IOException;
@@ -67,6 +68,17 @@ public class ValpagServlet extends HttpServlet {
                 //propag
                 Usuario usuario = ((Usuario) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("US"));
                 usuario.setMainMenu(usuario.getMainMenus().get(request.getParameter("comenu")));
+                asyncCtx.complete();
+                break;
+            }
+            case "/salamander": {
+                //propag
+                String co_conten = request.getParameter("co_conten");
+                String id_frawor = request.getParameter("id_frawor");
+                String no_conpar = request.getParameter("no_conpar");
+                String va_conpar = request.getParameter("va_conpar");
+                ((Contenedor) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).put_conpar(no_conpar, va_conpar);
+
                 asyncCtx.complete();
                 break;
             }

@@ -98,6 +98,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
     }
 
     public void put_conpar(String key, String value) {
+        System.out.println("key = " + key + ", value = " + value);
         this.mp_conpar.put(key, value);
     }
 
