@@ -24,10 +24,9 @@ public class Regist22 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-//                html += "<input type=hidden id='" + id + "V' class=\"hidden pagreg\" name='" + id + "V' value=>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"22\" class=\"hidden xaction pagreg\" >";
-                html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + " value=>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg='22' class='hidden xaction pagreg' >";
+                html += "       <div class='md-form mt-0' style='margin-bottom: 0px;'>";
+                html += "           <input type='text' class='w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "' " + (registroDTO.isIl_onchan() ? "onblur='dinpag(this," + registroDTO.getCo_pagreg() + ")'" : "") + " value=''>";
                 html += "       </div>";
                 html += "   </span>";
 
@@ -43,9 +42,9 @@ public class Regist22 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"22\" class=\"writer xaction pagreg\" >";
-                html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                html += "           <input type=text class=\"w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "\" " + (registroDTO.isIl_onchan() ? "onblur=\"extractNumber(this, 0, true);dinpag(this," + registroDTO.getCo_pagreg() + ")" : "") + "\" onkeyup=\"extractNumber(this, 0, true);\" onkeypress=\"return blockNonNumbers(this, event, false, true);\"  style=\"text-align:center;\" value=>";
+                html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg='22' class='writer xaction pagreg' >";
+                html += "       <div class='md-form mt-0' style='margin-bottom: 0px;'>";
+                html += "           <input type='text' class='w3-input w3-border form-control " + (registroDTO.isIl_onchan() ? "dynpag" : "") + "' " + (registroDTO.isIl_onchan() ? "onblur='extractNumber(this, 0, true);dinpag(this," + registroDTO.getCo_pagreg() + ")'" : "") + " onkeyup='extractNumber(this, 0, true);' onkeypress='return blockNonNumbers(this, event, false, true);'  style='text-align:center;' value=''>";
                 html += "       </div>";
                 html += "   </span>";
                 html += "</td>";
@@ -56,11 +55,11 @@ public class Regist22 extends HTMLRenderer {
                 html += "<tr name=" + id + " style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "<td name=" + id + "K class=wf_f_titreg>";
                 html += registroDTO.getNo_pagreg();
-                html += "<span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
+                html += "<span style='border-right:2px solid #00477e;padding-left: 5px;'></span>";
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-                html += "<span id='" + id + "V' class=\"reader pagreg\" name='" + id + "V' va_pagreg=\"\" ti_pagreg=\"22\"></span>";
+                html += "<span id='" + id + "V' class='reader pagreg' name='" + id + "V' va_pagreg='' ti_pagreg='22'></span>";
                 html += "</td>";
                 html += "</tr>";
                 break;

@@ -11,15 +11,15 @@ import org.primefaces.event.DragDropEvent;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.extensions.event.CompleteEvent;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
@@ -73,7 +73,43 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     public SelectItem[] ls_no_icopos = Util.get_ls_ti_icopos();
     public SelectItem[] ls_dt_pagina;
 
+    public List<String> catalogo = new ArrayList<>();
+
     public PaginaBean() {
+        catalogo = new ArrayList<>();
+        catalogo.add("DATA");
+        catalogo.add("DATA.SQL('database_name',\"select 1\", 10);");
+        catalogo.add("COALESCE");
+        catalogo.add("COALESCE(LS_CONPAR.co,'');");
+        catalogo.add("NULLIF");
+        catalogo.add("NULLIF(var,'');");
+        catalogo.add("new ");
+        catalogo.add("new Row();");
+        catalogo.add("new Reg();");
+        catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_});");
+        catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_, tx_pagreg : p_});");
+        catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_, ob_dindat : p_});");
+        catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_, tx_pagreg : p_, ob_dindat : p_});");
+        catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_, ur_pagreg : p_});");
+        catalogo.add("row.addReg(");
+        catalogo.add("addReg(");
+        catalogo.add("co_pagreg");
+        catalogo.add("va_pagreg");
+        catalogo.add("tx_pagreg");
+        catalogo.add("ob_dindat");
+        catalogo.add("ur_pagreg");
+        catalogo.add("return ");
+        catalogo.add("return valpagJson;");
+        catalogo.add("return OK(");
+        catalogo.add("return OK2({");
+        catalogo.add("SHOWINFO(true);");
+        //bucles
+        catalogo.add("for each( var a in b){");
+        catalogo.add("if(a == b){");
+        catalogo.add("}");
+        catalogo.add("} else {");
+        catalogo.add("} else if (a == b){");
+
         this.beanName = BEAN_NAME;
         this.titleName = "Paginas";
         this.thisEditable = true;
@@ -281,7 +317,19 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
         WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
 
+    }
 
+    public List<String> complete(final CompleteEvent event) {
+        System.out.println("event.getContext() = " + event.getContext() + ", event.getToken() = " + event.getToken() + ", column = " + event.getColumn() + ", line = " + event.getLine());
+        List<String> suggestions = new ArrayList<String>();
+
+//        suggestions.add("context: " + event.getContext());
+//        suggestions.add("token: " + event.getToken());
+        suggestions = catalogo.stream()
+                .filter(e -> e.startsWith(event.getToken()))
+                .collect(Collectors.toList());
+
+        return suggestions;
     }
 
     public String pagbot_new() {

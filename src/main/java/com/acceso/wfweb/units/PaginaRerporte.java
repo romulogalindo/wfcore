@@ -213,7 +213,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
                             itr += "<td class=\"ti_pag_reg2 text-center\">"
                                     + "       <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=\"36\" class=\"reader " + " pagreg\">"
-                                    + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fas fa-download\" aria-hidden=\"true\"></i> Descargar</a>]"
+                                    + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  onclick=\"return doupload('X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V')\"><i class=\"fas fa-upload\" aria-hidden=\"true\"></i> <span>Subir</span></a>]"
+                                    + "   <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" style=\"display:none;\"></iframe>"
                                     + "</span>"
                                     + "</td>";
                         } else {

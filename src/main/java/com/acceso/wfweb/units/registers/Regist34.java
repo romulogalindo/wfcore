@@ -26,8 +26,9 @@ public class Regist34 extends HTMLRenderer {
 
                 html += "<td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" >"
-                        + "           <span valpag=\"\"></span>+"
-                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                        + "           <span valpag=\"\"></span>"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
                 html += "       </span>";
                 html += "</td>";
                 html += "</tr>";
@@ -42,8 +43,9 @@ public class Regist34 extends HTMLRenderer {
                 html += "   </td>";
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\">"
-                        + "           <span valpag=\"\"></span>+"
-                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                        + "           <span valpag=\"\"></span>"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
                 html += "       </span>";
                 html += "   </td>";
                 html += "</tr>";
@@ -57,8 +59,9 @@ public class Regist34 extends HTMLRenderer {
                 html += "   </td>";
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"34\" class=\"reader " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" >"
-                        + "           <span valpag=\"\"></span>+"
-                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i></button>";
+                        + "           <span valpag=\"\"></span>"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','" + registroDTO.getNo_pagreg() + "')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                        + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
                 html += "       </span>";
                 html += "   </td>";
                 html += "</tr>";
