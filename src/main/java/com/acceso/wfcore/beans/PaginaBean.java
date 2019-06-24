@@ -86,6 +86,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         catalogo.add("new ");
         catalogo.add("new Row();");
         catalogo.add("new Reg();");
+        catalogo.add("Reg(;");
         catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_});");
         catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_, tx_pagreg : p_});");
         catalogo.add("new Reg({co_pagreg: 1, va_pagreg: p_, ob_dindat : p_});");
@@ -102,7 +103,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         catalogo.add("return valpagJson;");
         catalogo.add("return OK(");
         catalogo.add("return OK2({");
+        
+        catalogo.add("DO_POST_LOAD_DATA");
+        catalogo.add("DO_POST_LOAD_DATA  = function () {};");
         catalogo.add("SHOWINFO(true);");
+        catalogo.add("PRINTABLE(true);");
+        catalogo.add("document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('TBODY')[0].getElementsByTagName('TR')[0].style.display = 'none';");
         //bucles
         catalogo.add("for each( var a in b){");
         catalogo.add("if(a == b){");

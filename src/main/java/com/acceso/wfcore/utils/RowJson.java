@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author rgalindo
+ * @author Rómulo Galindo Tanta
  */
 public class RowJson {
 
@@ -27,9 +27,15 @@ public class RowJson {
     }
 
     public void addReg(RegJson regJson) {
-        if (regs == null)
-            regs = new ArrayList<>();
         regs.add(regJson);
+    }
+
+    public void add(RegJson regJson) {
+        regs.add(regJson);
+    }
+
+    public static RowJson NEW() {
+        return new RowJson();
     }
 
 }

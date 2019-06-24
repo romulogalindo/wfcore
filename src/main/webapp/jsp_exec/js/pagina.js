@@ -86,10 +86,10 @@ function ifnull(val, def) {
 
 function size_of_pagina() {
 //    height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
-    console.log('MAINPAGINA->clientHeight:' + document.getElementById('mainpagina').clientHeight);
-    console.log('MAINPAGINA->offsetHeight:' + document.getElementById('mainpagina').offsetHeight);
-    console.log('MAINPAGINA->scrollHeight:' + document.getElementById('mainpagina').scrollHeight);
-    console.log('MAINPAGINA->style.height:' + document.getElementById('mainpagina').style.height);
+//    console.log('MAINPAGINA->clientHeight:' + document.getElementById('mainpagina').clientHeight);
+//    console.log('MAINPAGINA->offsetHeight:' + document.getElementById('mainpagina').offsetHeight);
+//    console.log('MAINPAGINA->scrollHeight:' + document.getElementById('mainpagina').scrollHeight);
+//    console.log('MAINPAGINA->style.height:' + document.getElementById('mainpagina').style.height);
     height_table = document.getElementById('mainpagina').offsetHeight + 60;
 //    alert('Set:height_table>>' + height_table);
 //    alert('pagina=' + co_pagina() + ']=>' + height_table);
@@ -263,10 +263,6 @@ function loadFormulario64(index, row, aditional, dom2) {
         document.getElementById("row" + index).innerHTML = dom2;
     }
 
-//    for (var x = 0; x < row.regs.length; x++) {
-//        var reg = row.regs[x];
-//    console.log('reg:' + row.regs);
-//    var reg;
     for (const reg of row.regs) {
         //IDs
         var ultraid = 'P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V';
@@ -277,16 +273,18 @@ function loadFormulario64(index, row, aditional, dom2) {
         if (reg.label != undefined) {
             labdom.innerHTML = reg.label + '<span style="border-right:2px solid #00477e;padding-left: 5px;"></span>';
         }
+
         var valdom = reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text;
         console.log('(' + co_pagina() + ')>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
-            console.log("(" + co_pagina() + ")==========EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName);
+            console.log("(" + co_pagina() + ")=======EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName + "[" + ti_estreg + "]");
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
-                    console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?===>" + (reg.type != undefined & reg.type > -1));
+                    console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?==>" + (reg.type != undefined & reg.type > -1));
 
                     console.log("[ti_pagreg:" + ti_pagreg + "]");
                     var td = eledom.parentNode;
@@ -337,34 +335,49 @@ function loadFormulario64(index, row, aditional, dom2) {
                     if (reg.state != undefined && reg.state == ti_estreg) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
-
-                        // td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
                         td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
-                        console.log("***[" + reg.regist + "](" + co_pagina() + ") es el td:" + td);
-                        //?
                         eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
+                }
+                case "INPUT":
+                {
+
+                    break;
                 }
             }
 
             eledom = document.getElementsByName(ultraid)[0];
 
-            console.log("==========ASIGN DATA=>" + ultraid + ",=>?" + eledom);
+            console.log("=======ASIGN DATA=>" + ultraid + ",=>?" + eledom + ",extra:" + eledom.tagName + "::" + valdom + "::==>>" + eledom.getAttribute("type") + "<==[" + ti_estreg + "]");
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
-                    if (eledom.getAttribute("type") != "hidden")
+                    if (eledom.getAttribute("type") !== "hidden") {
                         domtr(eledom).removeAttribute('style');
+                    }
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
 //                    eledom.getElementsByTagName("INPUT")[0].value = reg.value;
                         if (eledom.getElementsByTagName("INPUT").length > 0) {
-                            eledom.getElementsByTagName("INPUT")[0].value = valdom;
+                            var tm_input = eledom.getElementsByTagName("INPUT")[0];
+                            tm_input.value = valdom;
+                            console.log('reg.va_style:' + reg.style);
+                            if (reg.style != undefined) {
+//                                reg.style = JSON.parse(reg.style);
+                                var allcss = "";
+                                for (const css of JSON.parse(reg.style)) {
+                                    allcss += css + ";";
+                                    console.log('css:' + css);
+                                }
+                                tm_input.setAttribute('style', allcss);
+                            }
                         } else {
                             eledom.innerHTML = valdom;
                         }
@@ -373,7 +386,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 //                    eledom.innerHTML = valdom;
                     } else if (ti_pagreg == '3') {
 
-                        //TEMPORAL=============================
+                        //TEMPORAL====================
                         var ls_compag;
                         try {
                             ls_compag = aditional[reg.regist];
@@ -390,7 +403,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                             ls_compag = JSON.parse(reg.data);
                             console.log('(COMBO)el combo value!:' + ls_compag);
                         }
-                        //=====================================
+                        //=========================
                         var dom_compag = "";
 
                         if (ls_compag) {
@@ -427,7 +440,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                             eledom.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
                         }
                     } else if (ti_pagreg == '4') {
-                        //TEMPORAL=============================
+                        //TEMPORAL====================
                         var ls_compag;
                         try {
                             ls_compag = aditional[reg.regist];
@@ -444,7 +457,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                             ls_compag = JSON.parse(reg.data);
                             console.log('(COMBO)el combo value!:' + ls_compag);
                         }
-                        //=====================================
+                        //=========================
                         var dom_compag = "<option value=\"\"></option>";
 
                         if (ls_compag) {
@@ -563,9 +576,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case
-                "A"
-                : {
+                case "A" :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -577,7 +589,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -585,31 +598,17 @@ function loadFormulario64(index, row, aditional, dom2) {
             }
 
 
-            console.log("==========UPDATE STATE");
+//            console.log("=======UPDATE STATE");
             //EVALUACION DE TIPO DE ESTADO
-            console.log('EVALUACION!> [reg.state!:' + reg.state + '][eledom:' + eledom + '][ti_estreg:' + ti_estreg + '][domtr(eledom):' + domtr(eledom) + ']');
-            // if (reg.state != undefined) {
-            // switch (ti_estreg) {
-            //     case 'O': {
-            //         domtr(eledom).setAttribute('style', 'display:none;');
-            //         break;
-            //     }
-            //     case 'E': {
-            //         domtr(eledom).removeAttribute('style');
-            //         break;
-            //     }
-            //     case 'L': {
-            //         domtr(eledom).getAttribute("co_pagtit").removeAttribute('style');
-            //         break;
-            //     }
-            // }
-
+            console.log('=======UPDATE STATE!=>' + ultraid + ', [reg.state!:' + reg.state + '][eledom:' + eledom + '][ti_estreg:' + ti_estreg + '][domtr(eledom):' + domtr(eledom) + ']');
             switch (ti_estreg) {
-                case 'O': {
+                case 'O':
+                {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E': {
+                case 'E':
+                {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -631,7 +630,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L': {
+                case 'L':
+                {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -686,34 +686,17 @@ function loadFormulario64(index, row, aditional, dom2) {
 }
 
 function loadReporte64(rowid, tbody64, row) {
-    // console.log('[loadReporte64]Cargando tipo Reporte->ex tabla:' + row);
-    // console.log('[loadReporte64]Cargando tipo Reporte->regs:' + row.regs);
-    // var newRow = tbody64.insertRow(tbody64.rows.length);
-
     var n_itr = itr;
-    // var all_tr = '';
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr:' + n_itr);
-
     var nr = document.createElement('tr');
-    // nr.innerHTML = n_itr;
     var nrc = 'C' + rowid;
-//    console.log('====>' + n_itr.replace(/X64UI/g, nrc));
-//    console.log('====>' + n_itr.indexOf('X64UI'));
-//    console.log('====>' + n_itr.indexOf("X64UI"));
     n_itr = n_itr.replace(/X64UI/g, 'P' + co_pagina() + nrc);
     n_itr = n_itr.replace(/%3C/g, '<');
     n_itr = n_itr.replace(/%3E/g, '>');
     n_itr = n_itr.replace(/X32UIR/g, '\'' + nrc + '\'');
-//    console.log("_________________________________________________________-");
-//    console.log(n_itr);
-//    console.log("_________________________________________________________-");
 
     nr.innerHTML = n_itr;
     nr.setAttribute('id', 'row' + rowid);
     tbody64.appendChild(nr);
-    //on post tr create and add!
-    // nr = document.getElementById('row' + rowid);
-    console.log('?>?nr:' + nr);
 
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
@@ -730,17 +713,36 @@ function loadReporte64(rowid, tbody64, row) {
 
         // console.log('ELE:' + 'C' + rowid + 'R' + reg.regist);
         // alert('XCD');
-//        console.log('====>C' +S rowid + 'R' + reg.regist + 'V');
-        var ereg = document.getElementById('P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V');
+//        console.log('===>C' +S rowid + 'R' + reg.regist + 'V');
+
+        var erid = 'P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V';
+        var ereg = document.getElementById(erid);
         console.log('ereg:' + ereg);
         // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
-        if (ereg != null) {
+        var local_ti_pagreg = ereg.getAttribute('ti_pagreg');
+        var nuevo_ti_pagreg = (reg.type == undefined) ? local_ti_pagreg : reg.type;
+        var local_ti_estreg = TI_ESTREG(ereg.getAttribute('class'));
+        var nuevo_ti_estreg = (reg.state == undefined) ? local_ti_estreg : reg.state;
+
+        /*FORMA*/
+        console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+        if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
+            console.log("Los elementos son diferentes");
+            var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
+            ereg.parentNode.innerHTML = _html;
+        } else {
+            console.log("Los elementos son iguales");
+        }
+        ereg = document.getElementById('P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V');
+
+        /*DATA*/
+        if (ereg !== null) {
             // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
             // for (var i = 0; i < eregs.length; i++) {
             //     var ereg = eregs[i];
             if (ereg.getAttribute('ti_pagreg') == null) {
                 ereg.value = txtval;
-            } else if (ereg.getAttribute('ti_pagreg') == '1') {
+            } else if (ereg.getAttribute('ti_pagreg') == '1' | ereg.getAttribute('ti_pagreg') == '22' | ereg.getAttribute('ti_pagreg') == '23') {
                 if (ereg.getElementsByTagName('INPUT').length > 0) {
                     ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
                     ereg.getElementsByTagName('INPUT')[0].value = txtval;
@@ -756,7 +758,7 @@ function loadReporte64(rowid, tbody64, row) {
             } else if (ereg.getAttribute('ti_pagreg') == '3') {
 //                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
                 //*ereg.innerHTML = rowid;
-                //TEMPORAL=============================
+                //TEMPORAL====================
                 var ls_compag;
                 try {
                     ls_compag = aditional[reg.regist];
@@ -773,7 +775,7 @@ function loadReporte64(rowid, tbody64, row) {
                     ls_compag = JSON.parse(reg.data);
                     console.log('(COMBO)el combo value!:' + ls_compag);
                 }
-                //=====================================
+                //=========================
                 var dom_compag = "";
 
                 if (ls_compag) {
@@ -788,7 +790,7 @@ function loadReporte64(rowid, tbody64, row) {
             } else if (ereg.getAttribute('ti_pagreg') == '4') {
 //                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
                 //*ereg.innerHTML = rowid;
-                //TEMPORAL=============================
+                //TEMPORAL====================
                 var ls_compag;
                 try {
                     ls_compag = aditional[reg.regist];
@@ -805,7 +807,7 @@ function loadReporte64(rowid, tbody64, row) {
                     ls_compag = JSON.parse(reg.data);
                     console.log('(COMBO)el combo value!:' + ls_compag);
                 }
-                //=====================================
+                //=========================
                 var dom_compag = "<option value=\"\"></option>";
 
                 if (ls_compag) {
@@ -914,11 +916,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
             var val = null;
 
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     val = eledom.value;
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("ti_pagreg=" + ti_pagreg);
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -957,6 +961,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
                     } else if (ti_pagreg == '5') {
                         val = eledom.getElementById(eledom.id + '_rb').value;
                     } else if (ti_pagreg == '6') {
+                        console.log('??>>>???>>eledom.id:' + eledom.id);
                         val = document.getElementById(eledom.id + 'D').checked;
                     } else if (ti_pagreg == '7') {
                         // console.log('@@>>' + eledom);
@@ -1012,7 +1017,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                     break;
                 }
-                case "A": {
+                case "A":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -1121,11 +1127,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
 //                if (ti_pagreg == '1') {
@@ -1166,7 +1174,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1556,7 +1565,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case '1': {
+                        case '1':
+                        {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -1565,7 +1575,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                                 all_regs += "\"" + regval + "\",";
                             } else {
                                 var iinput = x64.getElementsByTagName('INPUT')[0];
-                                console.log('iinput====>' + iinput);
+                                console.log('iinput===>' + iinput);
                                 console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
                                 if (iinput.getAttribute('TYPE') == 'checkbox') {
                                     regval = iinput.checked;
@@ -1578,11 +1588,13 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                             break;
                         }
-                        case '2': {
+                        case '2':
+                        {
                             all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case '3': {
+                        case '3':
+                        {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;
@@ -1590,7 +1602,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + regval + "\",";
                             break;
                         }
-                        case '36': {
+                        case '36':
+                        {
                             // var iselect = x64.getElementsByTagName('SELECT')[0];
                             // console.log("iselect:" + iselect);
                             // regval = iselect.options[iselect.selectedIndex].value;
@@ -1616,7 +1629,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                                     // data.set('co_regist' + id, '' + futureJson.result[0].co_archiv);
                                     all_regs += "\"" + futureJson.result[0].co_archiv + "\",";
-                                }else{
+                                } else {
                                     all_regs += "\"\",";
                                 }
                             } catch (e) {
@@ -1625,7 +1638,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             //-----
                             break;
                         }
-                        default: {
+                        default:
+                        {
                             all_regs += '\"\"' + ",";
                         }
 
@@ -1789,21 +1803,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' class='writer " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
             html += "       <div class='custom-control custom-checkbox'>";
-            html += "           <input id='" + id + "D' type=checkbox class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " checked/>";
+            html += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked/>";
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
             html += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
             html += "       <div class='custom-control custom-checkbox'>";
-            html += "           <input id='" + id + "D' type=checkbox class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " checked disabled/>";
+            html += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'O') {
             html += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
             html += "       <div class='custom-control custom-checkbox'>";
-            html += "           <input id='" + id + "D' type=checkbox class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " checked disabled/>";
+            html += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
             html += "       </div>";
             html += "   </span>";
@@ -1868,21 +1882,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         console.log('inside type=>ur_pagreg:' + ur_pagreg);
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
-                + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
+                    + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         }
     }
@@ -1890,6 +1904,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
     return html;
 }
 
+function builderTyper2(old_type, new_type, ti_estreg, id, eledom) {
+    var htmlreturn = "";
+    if (new_type == 1) {
+        if (ti_estreg == 'E') {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"1\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\"></span>";
+            htmlreturn += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+            htmlreturn += "            <input type=\"text\" value=\"\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" class=\"w3-input w3-border form-control \">";
+            htmlreturn += "        </div>";
+            htmlreturn += "</span>";
+        } else {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"1\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\"></span>";
+        }
+    }
+    return htmlreturn;
+}
 /*EVENTS*/
 function extractNumber(obj, decimalPlaces, allowNegative) {
     var temp = obj.value;
@@ -1962,5 +1991,15 @@ function checkEmail(I, L) {
         $D.g_ID(L).innerHTML = "";
     } else {
         $D.g_ID(L).innerHTML = "<font color=red>E-mail no v&#225;lido</font>";
+    }
+}
+
+function TI_ESTREG(className) {
+    if (className.indexOf('reader') > -1) {
+        return 'L';
+    } else if (className.indexOf('writer') > -1) {
+        return 'E';
+    } else {
+        return 'O';
     }
 }

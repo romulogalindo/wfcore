@@ -213,8 +213,12 @@ public class Util {
     }
 
     public static ErrorMessage getError(Exception ep) {
+        return getError(ep, 0);
+    }
+
+    public static ErrorMessage getError(Exception ep, int startLine) {
         ErrorMessage errorMessage = new ErrorMessage();
-        System.out.println("error class:" + ep.getClass());
+//        System.out.println("error class:" + ep.getClass());
         String message = "";
 
         if (ep instanceof PersistenceException) {
@@ -246,30 +250,38 @@ public class Util {
         } else if (ep instanceof DataException) {
             message = ((DataException) ep).getSQLException().getMessage();
         } else if (ep instanceof SQLGrammarException) {
-            System.out.println("message = " + message);
+//            System.out.println("message = " + message);
             message = ((SQLGrammarException) ep).getSQLException().getMessage();
         } else if (ep instanceof org.hibernate.exception.JDBCConnectionException) {
             message = ((org.hibernate.exception.JDBCConnectionException) ep).getSQLException().getMessage();
             if (message.indexOf("backend") > -1) {
                 message = "{El sistema esta tardando mucho en responder, por favor intentalo en unos segundos. Si este inconveniente persiste avísanos haciendo clic <a href=\"wf?co_conten=22\">aquí</a>.}";
             }
+        } else if (ep instanceof javax.script.ScriptException) {
+            javax.script.ScriptException epe = ((javax.script.ScriptException) ep);
+            message += "<span style =\"font-size: 0.7em;\">";
+            message += "CAUSA : <b>" + epe.getCause().getMessage() + "</b>";
+            message += "<br/>";
+            message += "LINEA : <b>" + (epe.getLineNumber() - startLine) + "</b>";
+            message += "</span>";
+//            message += "COLUMNA : " + epe.getColumnNumber();
         } else {
             message = ep.getMessage();
         }
 
-        System.out.println("ep = " + ep);
-        System.out.println("ep = " + ep.getMessage());
+//        System.out.println("ep = " + ep);
+//        System.out.println("ep = " + ep.getMessage());
         message = message == null ? (ep.getMessage() == null ? "Por favor revisar y validar los script de la página." : ep.getMessage()) : message;
 
 //        if (message.contentEquals("")) {
 //            message = ep.getMessage();
 //        }
-        System.out.println("message = " + (message == null));
-        System.out.println("ep = " + message);
+//        System.out.println("message = " + (message == null));
+//        System.out.println("ep = " + message);
         if (message.length() > 0 & message.contains("{")) {
             message = message.replace("ERROR: ", "").replace("{", "").replace("}", "").replace("\n", " ").replace("\"", "\\'").replace("\'", "\\'");
         }
-        System.out.println("message! = " + message);
+//        System.out.println("message! = " + message);
         errorMessage.setType((message.contains("{") && message.contains("}")) ? ErrorMessage.ERROR_TYPE_USER : ErrorMessage.ERROR_TYPE_SYSTEM);
         errorMessage.setMessage(message);
 

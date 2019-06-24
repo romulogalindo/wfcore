@@ -75,9 +75,6 @@ public class Regist7 extends HTMLRenderer {
                 html += "</td>";
 
                 html += "<td class=wf_f_valreg>";
-//                html += "<span id='" + id + "V' name='" + id + "V' class=\"reader " + (registroDTO.isIl_onchan() ? "xaction" : "") + " pagreg\" ti_pagreg=\"6\" >";
-//                html += "<input type=checkbox class=\"w3-input w3-border\" disabled/>";
-//                html += "</span>";
                 
                 html += "   <span id='" + id + "V' name='" + id + "V' ti_pagreg=\"7\" class=\"writer xaction pagreg\" >";
                 html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";

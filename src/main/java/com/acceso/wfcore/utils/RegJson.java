@@ -1,5 +1,8 @@
 package com.acceso.wfcore.utils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 /**
@@ -15,6 +18,7 @@ public class RegJson {
     String ti_estreg;
     String ur_pagreg;
     Object ob_dindat;
+    Object ls_styles;
 
     public RegJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
@@ -41,7 +45,18 @@ public class RegJson {
             ur_pagreg = "" + opts.get("ur_pagreg");
         }
 
-        ob_dindat = opts.get("ob_dindat");
+        if (opts.get("ob_dindat") != null) {
+            ob_dindat = opts.get("ob_dindat");
+        }
+        
+        if (opts.get("ls_styles") != null) {
+            Iterator col = ((ScriptObjectMirror) opts.get("ls_styles")).values().iterator();
+            List<String> _styles = new ArrayList<>();
+            while (col.hasNext()) {
+                _styles.add((String) col.next());
+            }
+            ls_styles = _styles;//opts.get("ls_styles");
+        }
     }
 
     public RegJson(int co_pagreg) {
@@ -135,4 +150,15 @@ public class RegJson {
         this.ob_dindat = ob_dindat;
     }
 
+    public Object getLs_styles() {
+        return ls_styles;
+    }
+
+    public void setLs_styles(Object ls_styles) {
+        this.ls_styles = ls_styles;
+    }
+
+    public static RegJson NEW(Object obj) {
+        return new RegJson(obj);
+    }
 }

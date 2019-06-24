@@ -28,12 +28,13 @@ public class AsyncValPag extends AsyncProcessor {
     public void run() {
         JsonResponse jsonResponse = JsonResponse.defultJsonResponseOK("");
         PrintWriter out = null;
-//        System.out.println("Esto es del servlet! type=" + type);
+        Integer co_conten = null;
+        Integer co_pagina = null;
+
         try {
             out = this.asyncContext.getResponse().getWriter();
-
-            Integer co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
-            Integer co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
+            co_conten = Util.toInt(asyncContext.getRequest().getParameter("co_conten"), -1);
+            co_pagina = Util.toInt(asyncContext.getRequest().getParameter("co_pagina"), -1);
             //
             Integer co_pagreg = Util.toInt(asyncContext.getRequest().getParameter("co_pagreg"), -1);
             String va_pagreg = asyncContext.getRequest().getParameter("va_pagreg");
@@ -50,11 +51,15 @@ public class AsyncValPag extends AsyncProcessor {
 
             if (WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina) == null) {
                 Frawor4DAO dao = new Frawor4DAO();
-                String valpag2_js = dao.getJS_Valpag(co_pagina).getScript();
-                String propag2_js = dao.getJS_Propag(co_pagina).getScript();
-                String compag2_js = dao.getJS_Compag(co_pagina).getScript();
-                String dinpag2_js = dao.getJS_Dinpag(co_pagina).getScript();
+                String valpag2_js = "" + dao.getJS_Valpag(co_pagina).getScript();
+                String propag2_js = "" + dao.getJS_Propag(co_pagina).getScript();
+                String compag2_js = "" + dao.getJS_Compag(co_pagina).getScript();
+                String dinpag2_js = "" + dao.getJS_Dinpag(co_pagina).getScript();
                 dao.close();
+                Integer in_valpag2_js = valpag2_js.split("\r\n").length;
+                Integer in_propag2_js = propag2_js.split("\r\n").length;
+                Integer in_compag2_js = compag2_js.split("\r\n").length;
+                Integer in_dinpag2_js = dinpag2_js.split("\r\n").length;
 
                 String scriptpage = Util.getText(WFIOAPP.APP.PAGEJS)
                         .replace("USUARI_DATA_VALPAG", valpag2_js == null ? "" : valpag2_js)
@@ -65,6 +70,10 @@ public class AsyncValPag extends AsyncProcessor {
                 script = WFIOAPP.APP.getJavaScriptService().newContext(scriptpage);
 
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina, script);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":VALPAG", in_valpag2_js);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":PROPAG", in_propag2_js);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":COMPAG", in_compag2_js);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":DINPAG", in_dinpag2_js);
             } else {
                 script = (ScriptContextExecutor) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina);
             }
@@ -106,16 +115,15 @@ public class AsyncValPag extends AsyncProcessor {
 
                 }
             } else {
-                System.out.println(" listo apra ejecutar!= ");
                 valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
-                System.out.println(" listo apra ejecutar!= valpagJson>" + valpagJson);
                 jsonResponse.setResult(valpagJson);
             }
-//            System.out.println("Util.toJSON2(jsonResponse) = " + Util.toJSON2(jsonResponse));
             out.write(Util.toJSON2(jsonResponse));
         } catch (Exception ep) {
 //            System.out.println("[[ERROR!--------------------------------------------//////?????]]?>>" + ep.getMessage());
-            ErrorMessage em = Util.getError(ep);
+//            Integer indice_valpag = (Integer) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina + ":VALPAG");
+//            System.out.println("[valpag=?size]indice_valpag = " + indice_valpag);
+            ErrorMessage em = Util.getError(ep, 89);
             jsonResponse.setError(em);
             jsonResponse.setStatus(JsonResponse.ERROR);
             out.write(Util.toJSON2(jsonResponse));

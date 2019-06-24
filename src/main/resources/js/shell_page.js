@@ -25,8 +25,6 @@ var PARAM = Java.type('com.acceso.wfcore.utils.Param');
 var GSON = new gson_api();
 
 var RETORNO_OK = "{}";
-
-/***/
 var MSG_TYPE_INFO = "info";
 var MSG_TYPE_SUCCESS = "success";
 var MSG_TYPE_ERROR = "error";
@@ -36,27 +34,47 @@ var MSG_POSITION_TOPRIGHT = "md-toast-top-right";
 var MSG_POSITION_TOPLEFT = "md-toast-top-left";
 var MSG_POSITION_BOTTOMRIGHT = "md-toast-bottom-right";
 var MSG_POSITION_BOTTOMLEFT = "md-toast-bottom-left";
-
-/*COALESCE(obj, def)*/
-function COALESCE(obj, def) {
-    if (obj) {
-        return obj
-    } else {
-        return def;
-    }
-}
-
-/*NULLIF(obj1, obj2)*/
-function NULLIF(obj1, obj2) {
-    if (obj1 == obj2) {
-        return null;
-    } else {
-        return obj1;
-    }
-}
-
-/*VAR:Function Ejecuta post*/
 var DO_POST_LOAD_DATA;
+
+function COALESCE(obj, def) {
+    return obj ? obj : def;
+}
+
+function NULLIF(obj1, obj2) {
+    return (obj1 == obj2) ? null : obj1;
+}
+
+function VALID(obj, defobj) {
+    if (obj === undefined) {
+        return (defobj === undefined) ? null : defobj;
+    } else {
+        return obj;
+    }
+}
+
+function UPPER(object){
+    return object.toUpperCase();
+}
+
+function LOWER(object){
+    return object.toLowerCase();
+}
+
+function GET_DO_POST_LOAD_DATA() {
+    return DO_POST_LOAD_DATA;
+}
+
+function ERROR(msg) {
+    return "X5964ERQ17{\"type\":\"USER\", \"message\":\"" + msg + "\"}";
+}
+
+function OK(no_accion, co_condes, ls_params, ls_pagina, ur_file) {
+    return new PROPAG(no_accion, co_condes, ls_params, ls_pagina, ur_file);
+}
+
+function OK2(opts) {
+    return new OK64(opts);
+}
 
 function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
     /*SET*/
@@ -69,31 +87,10 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI
     var VALPAGJS = null;
     var LS_CONPAR = JSON.parse(CONPAR);
 
-    /*MAIN LOGIC TO RUN*/
     USUARI_DATA_VALPAG
 
     DO_POST_LOAD_DATA = '' + DO_POST_LOAD_DATA;
     return VALPAGJS;
-}
-
-function GET_DO_POST_LOAD_DATA() {
-    return DO_POST_LOAD_DATA;
-    DATA.setCo_conten(CO_CONTEN);
-}
-
-function ERROR(msg) {
-    return "X5964ERQ17{\"type\":\"USER\", \"message\":\"" + msg + "\"}";
-}
-
-function OK(no_accion, co_condes, ls_params, ls_pagina, ur_file) {
-    print('OK de 5 parametros');
-    return new PROPAG(no_accion, co_condes, ls_params, ls_pagina, ur_file);
-}
-
-
-function OK2(opts) {
-    print('OK de 1 parametros');
-    return new OK64(opts);
 }
 
 function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, CO_USUARI) {
@@ -124,8 +121,6 @@ function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, 
     DATA.setNo_escena('PROPAG');
 
     var PROPAGJS = null;
-    // var LS_REGIST = JSON.parse(REGIST);
-    print('!ALLREG:' + ALLREG);
     var LS_ALLREG = JSON.parse(ALLREG);
     var LS_CONPAR = JSON.parse(CONPAR);
 
@@ -135,7 +130,6 @@ function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, 
 }
 
 function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
-    //print('do_compag>>>>ID_FRAWOR=' + ID_FRAWOR + ', CO_CONTEN=' + CO_CONTEN + ', CO_PAGINA=' + CO_PAGINA + ', CO_PAGREG=' + CO_PAGREG + ', CONPAR=' + CONPAR + ', CO_USUARI=' + CO_USUARI + ', ID_FRAANT=' + ID_FRAANT + '');
     /*SET*/
     DATA.setCo_usuari(CO_USUARI);
     DATA.setId_sesion(ID_SESION);
@@ -171,3 +165,4 @@ function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR
 
     return PROPAGJS;
 }
+

@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author rgalindo
+ * @author Rómulo Galindo Tanta
  */
 public class ValpagJson implements Serializable {
 
     List<RowJson> rows;
 
     public ValpagJson() {
+        this.rows = new ArrayList<>();
     }
 
     public ValpagJson(List<RowJson> rows) {
@@ -27,9 +28,14 @@ public class ValpagJson implements Serializable {
     }
 
     public void addRow(RowJson rowJson) {
-        if (this.rows == null) {
-            this.rows = new ArrayList<>();
-        }
         this.rows.add(rowJson);
+    }
+
+    public void add(RowJson rowJson) {
+        this.rows.add(rowJson);
+    }
+
+    public static ValpagJson NEW() {
+        return new ValpagJson();
     }
 }

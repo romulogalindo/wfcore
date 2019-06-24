@@ -26,28 +26,28 @@ public class AsyncProPag extends AsyncProcessor {
     @Override
     public void run() {
         PrintWriter out = null;
+        int co_conten = 0;
+        int co_pagina = 0;
 
         try {
             out = this.asyncContext.getResponse().getWriter();
             RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
 
-            int co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
-            int co_pagina = Util.toInt(requestManager.getParam("co_pagina"), -1);
+            co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
+            co_pagina = Util.toInt(requestManager.getParam("co_pagina"), -1);
             long id_frawor = Util.toLong(requestManager.getParam("id_frawor"), -1);
             short co_botone = Util.toShort(requestManager.getParam("co_botone"), (short) -1);
             boolean il_proces = Util.toBoolean(requestManager.getParam("il_proces"), false);
             String ls_allreg = requestManager.getParam("ls_allreg");
-//            String ls_conpar = requestManager.getParam("ls_conpar");
 
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
-            System.out.println("ls_conpar = " + ls_conpar);
+//            System.out.println("ls_conpar = " + ls_conpar);
 
             requestManager.getConpars().entrySet().stream().forEach(m -> {
-//                contenedor.put_conpar(m.getKey(), m.getValue());
                 System.out.println("key = " + m.getKey() + ", value = " + m.getValue());
             });
-            
-            System.out.println("ls_conpar = " + ls_conpar);
+
+//            System.out.println("ls_conpar = " + ls_conpar);
             Usuario usuario = requestManager.getUser();
             String ls_regist = "";
             Frawor4DAO dao;
@@ -109,57 +109,14 @@ public class AsyncProPag extends AsyncProcessor {
             }
 
         } catch (Exception ep) {
-            out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep))));
+            Integer indice_valpag = (Integer) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina + ":VALPAG");
+            out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep, (89 + indice_valpag + 18)))));
             ep.printStackTrace();
         }
-//        }
-        //complete the processing
+
         out.flush();
         out.close();
         asyncContext.complete();
     }
 
 }
-
-/*
-//                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
-//                    ls_regist += "\"co_regist_" + pagreg.getKey() + "\":\"" + pagreg.getValue() + "\",";
-
-//                ls_regist = ls_regist.substring(0, ls_regist.length() - 1) + "}";
-//                System.out.println("ls_regist = " + ls_regist);
-//                System.out.println("> = " + gson);
-//                String propag_js = (String) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).get(co_pagina);
-//                if (propag_js == null) {
-//                    Frawor4DAO dao3 = new Frawor4DAO();
-//                    propag_js = dao3.getJS_Propag(co_pagina).getScript();
-//                    dao3.close();
-//
-//                    if (propag_js == null) {
-//                        propag_js = "PROPAGJS = DATA.SQL('wfacr', 'select true as pfpropag from frawor2.pfpropag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\', cast(\'+CO_PAGBOT+\' as smallint))');";
-//                    }
-//
-//                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PROPAGJS).put(co_pagina, propag_js);
-//                }
-//
-//                propag_js = Util.getText(WFIOAPP.APP.PROPAGJS).replace("USUARI_DATA_JS_TEXT", propag_js);
-//
-//                Object object = il_proces ? WFIOAPP.APP.getJavaScriptService().doPropag64(propag_js, "do_propag", co_pagina, id_frawor, co_conten, co_botone, ls_regist, requestManager.getUser().getCo_usuari()) : "{}";
-
-//            Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, null, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
-//            System.out.println(">>object = " + object);
-//            System.out.println(">>object = " + object.getClass());
-//                jdk.nashorn.api.scripting.ScriptObjectMirror a; a.
-
-//                if (object.toString().contains("X5964ERQ17")) {
-//                    object = object.toString().replace("X5964ERQ17", "");
-//                    out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.gson_typeA.fromJson(object.toString(), ErrorMessage.class))));
-//                } else if (object.toString().contains("X5964IUP17")) {
-//                    object = object.toString().replace("X5964IUP17", "");
-////                    object = Util.toJSON(JsonResponse.defultJsonResponseOK("X5964IUP17"));
-//                    object = Util.toJSON(JsonResponse.defultJsonResponseOK("X5964IUP17")).replace("X5964IUP17", object.toString().replace("\\", ""));
-//                    out.write(object + "");
-//                } else {
-//                    out.write(Util.toJSON(JsonResponse.defultJsonResponseOK("OK")));
-//                }
-
- */

@@ -101,10 +101,10 @@ function workflow(il_popup) {
             openWS();
         }
         //if
-        if ($('#slc_schema').attr('style').indeOf('firsttime') > -1) {
+        if ($('#slc_schema').attr('style') !== undefined && $('#slc_schema').attr('style').indeOf('firsttime') > -1) {
             $('#slc_schema').modal('show');
         }
-        
+
         //LISTO
         console.log('Esto se cargara');
         console.log('Esto se cargara:' + $('#rankanadate'));
@@ -460,9 +460,9 @@ function view_all_system() {
     return false;
 }
 
-function changemodulo(co_sistem, co_subsis, valid){
-    getHTML("/uxtion?comenu="+co_sistem+""+co_subsis);
-    location.reload(); 
+function changemodulo(co_sistem, co_subsis, valid) {
+    getHTML("/uxtion?comenu=" + co_sistem + "" + co_subsis);
+    location.reload();
 }
 
 /*LOGOUT*/

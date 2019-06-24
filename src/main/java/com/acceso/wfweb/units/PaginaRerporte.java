@@ -122,8 +122,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
                             itr += "<td ti_pagreg=\"1\" >";
                             itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
                             itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                            itr += "        <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \">";
-                            itr += "    </div>";
+                            itr += "            <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \">";
+                            itr += "        </div>";
                             itr += "    </span>";
                             itr += "</td>";
                         }
@@ -216,17 +216,20 @@ public class PaginaRerporte extends Pagina implements Serializable {
                             itr += "<input type=hidden id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 pagreg\"" : "class=\"pagreg\"") + " value=\"\" />";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td ti_pagreg=\"1\" >";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"reader pagreg x64\"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" va_pagreg=\"\">";
+                            itr += "<td>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 reader pagreg \"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"22\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
+                            itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+                            itr += "            <input type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \" " + (fila.getRegistroDTO().isIl_onchan() ? "onblur=\\'extractNumber(this, 0, true);dinpag(this," + fila.getRegistroDTO().getCo_pagreg() + ")\\'" : "") + " onkeyup=\\'extractNumber(this, 0, true);\\' onkeypress=\\'return blockNonNumbers(this, event, false, true);\\' readonly>";
+                            itr += "        </div>";
                             itr += "    </span>";
                             itr += "</td>";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td ti_pagreg=\"1\" >";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
+                            itr += "<td>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"22\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
                             itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                            itr += "        <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \">";
-                            itr += "    </div>";
+                            itr += "            <input type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \" " + (fila.getRegistroDTO().isIl_onchan() ? "onblur=\\'extractNumber(this, 0, true);dinpag(this," + fila.getRegistroDTO().getCo_pagreg() + ")\\'" : "") + " onkeyup=\\'extractNumber(this, 0, true);\\' onkeypress=\\'return blockNonNumbers(this, event, false, true);\\'>";
+                            itr += "        </div>";
                             itr += "    </span>";
                             itr += "</td>";
                         }
@@ -238,26 +241,26 @@ public class PaginaRerporte extends Pagina implements Serializable {
                             itr += "<input type=hidden id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 pagreg\"" : "class=\"pagreg\"") + " value=\"\" />";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td ti_pagreg=\"1\" >";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"reader pagreg x64\"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" va_pagreg=\"\">";
+                            itr += "<td>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 reader pagreg \"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"23\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
+                            itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
+                            itr += "            <input type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \" " + (fila.getRegistroDTO().isIl_onchan() ? "onblur=\\'extractNumber(this, -1, true);dinpag(this," + fila.getRegistroDTO().getCo_pagreg() + ")\\'" : "") + " onkeyup=\\'extractNumber(this, -1, true);\\' onkeypress=\\'return blockNonNumbers(this, event, true, true);\\' readonly>";
+                            itr += "        </div>";
                             itr += "    </span>";
                             itr += "</td>";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td ti_pagreg=\"1\" >";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
+                            itr += "<td>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"23\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
                             itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                            itr += "        <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \">";
-                            itr += "    </div>";
+                            itr += "            <input type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \" " + (fila.getRegistroDTO().isIl_onchan() ? "onblur=\\'extractNumber(this, -1, true);dinpag(this," + fila.getRegistroDTO().getCo_pagreg() + ")\\'" : "") + " onkeyup=\\'extractNumber(this, -1, true);\\' onkeypress=\\'return blockNonNumbers(this, event, true, true);\\'>";
+                            itr += "        </div>";
                             itr += "    </span>";
                             itr += "</td>";
                         }
                         break;
                     }
                     case 36: {
-//                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
-//                        System.out.println("fila = REDERER OK!");
-//                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
                             itr += "<td class=\"ti_pag_reg2 text-center\">"
                                     + "       <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" ti_pagreg=\"36\" class=\"reader " + " pagreg\">"
@@ -324,21 +327,18 @@ public class PaginaRerporte extends Pagina implements Serializable {
         if (hvg) {
             html += "<tfoot>";
             html += "<tr>";
-//            html += "<td colspan='" + colspan + "'>";
             html += "<td colspan='" + totalspan + "'>";
             String id = "BTNG";
             for (Fila fila : ultraFilas.values()) {
                 if (fila.getBotonDTOS() != null && fila.getBotonDTOS().size() > 0) {
                     for (WBotonDTO botonDTO : fila.getBotonDTOS()) {
                         if (botonDTO.getTi_pagbot().contentEquals("G")) {
-//                            html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[];";
-//                            for (WParametroDTO parametroDTO : botonDTO.getParametros()) {
-//                                html += "" + id + botonDTO.getCo_pagbot() + "P[" + id + botonDTO.getCo_pagbot() + "P.length] = new Parameter(" + parametroDTO.getCo_pagreg() + "," + parametroDTO.getCo_conpar() + ");";
-//                            }
-//                            html += "</script>";
-
-                            html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >"
-                                    + "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n"
+                            if (botonDTO.isIl_confir()) {
+                                html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"if(confirm(\'" + botonDTO.getNo_confir() + "\')){propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")}\" >";
+                            } else {
+                                html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >";
+                            }
+                            html += "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n"
                                     + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pr-1\" aria-hidden=\"true\"></i>" : "")
                                     + botonDTO.getNo_pagbot()
                                     + (botonDTO.getNo_icopos().toUpperCase().contentEquals("RIGHT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pl-1\" aria-hidden=\"true\"></i>" : "")

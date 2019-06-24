@@ -39,7 +39,7 @@
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
-    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=7"/>
+    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=8"/>
 
 
     <!-- SCRIPTS -->
