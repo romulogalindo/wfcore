@@ -110,6 +110,9 @@ public class AsyncProPag extends AsyncProcessor {
 
         } catch (Exception ep) {
             Integer indice_valpag = (Integer) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina + ":VALPAG");
+            System.out.println("indice_valpag = " + indice_valpag);
+            System.out.println("indice_valpag2 = " + ((89 + indice_valpag + 18)));
+
             out.write(Util.toJSON(JsonResponse.defultJsonResponseERROR(Util.getError(ep, (89 + indice_valpag + 18)))));
             ep.printStackTrace();
         }

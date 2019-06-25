@@ -279,7 +279,7 @@ doDinJson = function (url, data) {
 
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-            console.log('{NET(' + url + ')} ::::' + net.responseText)
+            // console.log('{NET(' + url + ')} ::::' + net.responseText)
             var json = JSON.parse(net.responseText);
             pagina_onload(json);
         }

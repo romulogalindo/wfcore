@@ -200,10 +200,10 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        System.out.println("fila = REDERER OK!");
 //                        itr += "<td class=\"ti_pag_reg2 text-center\"><span name=regist" + fila.getRegistroDTO().getCo_pagreg() + "><input type=checkbox class=\"w3-input w3-border\" checked=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "val\" /></span></td>";
                         itr += "<td class=\"ti_pag_reg2 text-center\">"
-                                + "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=6  co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">"
+                                + "<span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=regist" + fila.getRegistroDTO().getCo_pagreg() + " ti_pagreg=\"6\" class=\"pagreg " + (fila.getRegistroDTO().isIl_guareg() ? "x64" : "") + "\" co_regist=" + fila.getRegistroDTO().getCo_pagreg() + ">"
                                 + "<div class=\"custom-control custom-checkbox\">"
-                                + "<input id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "_check\" type=checkbox class=\"w3-input custom-control-input pagreg check " + (fila.getRegistroDTO().isIl_guareg() ? "x64" : "") + "\" />"
-                                + "<label class=\"custom-control-label\" for=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "_check\"></label>"
+                                + "<input id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V_check\" type=\"checkbox\" class=\"w3-input custom-control-input pagreg check " + (fila.getRegistroDTO().isIl_guareg() ? "x64" : "") + "\" />"
+                                + "<label class=\"custom-control-label\" for=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V_check\"></label>"
                                 + "</div>"
                                 + "</span>"
                                 + "</td>";

@@ -4,6 +4,8 @@
 <%@ page import="com.acceso.wfcore.kernel.WFIOAPP" %>
 <%@ page import="com.acceso.wfcore.utils.Util" %>
 <%@ page import="java.io.*" %>
+<%@ page import="org.apache.commons.io.FileUtils" %>
+<%@ page import="org.apache.commons.io.FilenameUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
@@ -45,11 +47,23 @@
             Log.info("Buscando File:" + full_filename);
 
             File temp_file = new File(full_filename);
-            System.out.println("temp_file = " + temp_file);
-            System.out.println("temp_file = " + temp_file.exists());
+            String ext = FilenameUtils.getExtension(full_filename).toUpperCase();
+            switch (ext) {
+                case "JPG":
+                case "JPEG":
+                case "PNG": {
+                    response.setContentType("image/" + ext);
+                    break;
+                }
+                default: {
+                    response.setContentType("application/octet-stream");
+                }
+            }
 
+            response.setHeader("Content-Disposition",
+                    "attachment;filename=" + filename);
             InputStream in = new FileInputStream(temp_file);
-            OutputStream out2  = response.getOutputStream();
+            OutputStream out2 = response.getOutputStream();
             byte[] buffer = new byte[1048];
 
             int numBytesRead;
@@ -60,13 +74,19 @@
             out2.flush();
             out2.close();
         } catch (Exception ex) {
-//            ex.printStackTrace();
             Log.info("Archivo no encontrado sector 1:" + ex.getMessage());
             existe = false;
         }
     }
 
+    System.out.println("*filename = " + filename);
+%>
 
+<%
+    if (existe) {
+        System.out.println("full_filename = " + request.getContextPath() + "/images/documentos_dia/" + filename);
+//        response.sendRedirect(request.getContextPath() + "/images/documentos_dia/" + filename);
+    } else {
 %>
 <html>
 <head>
@@ -75,21 +95,18 @@
     <meta http-equiv="no-cache">
     <title><%=filename%>
     </title>
-    <link rel="shortcut icon"
-          href="${pageContext.request.contextPath}/system/imagenes/${fn:toLowerCase(paquete_actual.no_paquet)}/favicon.ico">
+    <%--    <link rel="shortcut icon"--%>
+    <%--          href="${pageContext.request.contextPath}/system/imagenes/${fn:toLowerCase(paquete_actual.no_paquet)}/favicon.ico">--%>
 </head>
 <body>
 
-<%
-    if (existe) {
-        response.sendRedirect(request.getContextPath() + "/images/documentos_dia/" + filename);
-    } else {
-%>
+
 Archivo no encontrado.
-<%
-    }
-%>
 
 
 </body>
 </html>
+<%
+    }
+%>
+

@@ -10,23 +10,6 @@
         }
 
         function autoload(evt) {
-            // var tgt = evt.target || window.event.srcElement,
-            //     files = tgt.files;
-            //
-            // // FileReader support
-            // if (FileReader && files && files.length) {
-            //     var fr = new FileReader();
-            //     fr.onload = function () {
-            //         document.getElementById(outImage).src = fr.result;
-            //     }
-            //     fr.readAsDataURL(files[0]);
-            // }
-            //
-            // // Not supported
-            // else {
-            //     // fallback -- perhaps submit the input to an iframe and temporarily store
-            //     // them on the server until the user's session ends.
-            // }
             var auto = ${param.auto};
             console.log('auto:' + auto);
             // parent.document.onchange_vafile(document.getElementById('vafile'));
@@ -40,7 +23,12 @@
     </script>
 </head>
 <body>
-<form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}" enctype="MULTIPART/FORM-DATA" method="post"
+<c:if test="${not empty param.dt_archiv}">
+    <pre>
+            ${param.dt_archiv}
+    </pre>
+</c:if>
+<form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}&id=${param.id}" enctype="MULTIPART/FORM-DATA" method="post"
       accept-charset="ISO-8859-1">
     <input id="vafile" type="file" name="vafile" domid="${param.id}" onchange="autoload(event);"/>
 </form>
