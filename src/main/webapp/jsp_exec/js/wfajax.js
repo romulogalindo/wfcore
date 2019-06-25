@@ -4,9 +4,6 @@
 
 function Inet() {
     var xmlHttp = false;
-    // try {
-    //     xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-    // } catch (e) {
     try {
         xmlHttp = new XMLHttpRequest();
     } catch (e) {
@@ -16,7 +13,6 @@ function Inet() {
         //     xmlHttp = false;
         // }
     }
-    // }
     return xmlHttp;
 }
 

@@ -126,11 +126,11 @@ function workflow(il_popup) {
 
 }
 
-function size_of_pagina() {
-    height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
-    document.getElementById('height_table').value = '' + height_table;
-    document.getElementById('loader').style.height = '' + height_table + 'px';
-}
+//function size_of_pagina() {
+//    height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
+//    document.getElementById('height_table').value = '' + height_table;
+//    document.getElementById('loader').style.height = '' + height_table + 'px';
+//}
 
 function doformulariosubmit(keyEvent) {
     if (keyEvent.which == 10 || keyEvent.which == 13) {
@@ -151,6 +151,10 @@ function iframe(iframe) {
 
 function iframe2(pagina, height_table) {
     //console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
+
+
+//    (iframe.contentDocument || iframe.contentWindow.document).getElementById(refid + '_ms').value = proms;
+//    
     if (height_table == -1) {
         //console.log('Llego -14>->>' + height_table + ",>>>" + pagina);
         document.getElementById(pagina).style.display = 'none';
@@ -158,9 +162,15 @@ function iframe2(pagina, height_table) {
 //        document.getElementById(pagina).parentNode.parentNode.style.display = 'none';
 //        document.getElementById(pagina).parentNode.parentNode.setAttribute('style', 'display:none;');
     } else {
-        document.getElementById(pagina).style.height = height_table + 'px';
-        document.getElementById(pagina).style.display = 'block';
-        // document.getElementById('PAG628').parentNode.parentNode
+        document.getElementById(pagina).setAttribute('style', 'display:block;');
+
+        var iframe = document.getElementById(pagina);
+        iframe.contentWindow.size_of_pagina();
+        var input_height_table = (iframe.contentDocument || iframe.contentWindow.document).getElementById("height_table");
+        if (input_height_table != undefined) {
+            var height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0) + 20;
+            iframe.style.height = height_table + 'px';
+        }
     }
 
 }

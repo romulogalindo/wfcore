@@ -166,3 +166,6 @@ function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR
     return PROPAGJS;
 }
 
+function DECODE(object){
+    return decodeURIComponent(object);
+}

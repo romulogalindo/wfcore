@@ -5,7 +5,7 @@ var CO_CONTEN;
 var ID_FRAWOR;
 var IL_POPUP;
 var TMP_INPUT_DATE;
-
+var CALLED = false;
 /*variables  de funcionalidad*/
 var DYNAMIC = false;
 var DYNAMIC_LS_REGIST = [];
@@ -127,6 +127,9 @@ function doformulariosubmit(keyEvent) {
 }
 
 function pagina_onload(jsonData) {
+    if (!CALLED) {
+        CALLED = true;
+    }
     // console.log('[paginaload@' + co_pagina() + ']jsonData = ' + jsonData);
     // console.log('[paginaload@' + co_pagina() + ']jsonData.status = ' + jsonData.status);
     // console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result);
@@ -134,6 +137,8 @@ function pagina_onload(jsonData) {
 
     if (jsonData.status == 'OK') {
         if (jsonData.result.rows != undefined && jsonData.result.rows.length > 0) {
+            //prueba especial de carga?!
+            document.getElementById('PAG' + co_pagina()).removeAttribute('style');
             var rows = [];
             rows = jsonData.result.rows;
 
@@ -175,9 +180,10 @@ function pagina_onload(jsonData) {
             // }
             //devuevo actualizar el height;
             size_of_pagina();
-            console.log('SEGUN CALL:' + height_table);
-            window.parent.iframe2('PAG' + co_pagina(), height_table);
-
+            if (CALLED) {
+                console.log('SEGUN CALL:' + height_table);
+                window.parent.iframe2('PAG' + co_pagina(), height_table);
+            }
         } else if (ti_pagina() == 'C') {
             //validar el objeto de retorno llamado gdata
             //poner esto en el objeto gdata
@@ -281,7 +287,8 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("(" + co_pagina() + ")=======EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName + "[" + ti_estreg + "]");
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?==>" + (reg.type != undefined & reg.type > -1));
 
@@ -338,7 +345,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                         eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
                 }
-                case "INPUT": {
+                case "INPUT":
+                {
 
                     break;
                 }
@@ -349,14 +357,16 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("=======ASIGN DATA=>" + ultraid + ",=>?" + eledom + ",extra:" + eledom.tagName + "::" + valdom + "::==>>" + eledom.getAttribute("type") + "<==[" + ti_estreg + "]");
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") !== "hidden") {
                         domtr(eledom).removeAttribute('style');
                     }
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -457,7 +467,12 @@ function loadFormulario64(index, row, aditional, dom2) {
                             }
                         } catch (e) {
                             console.log('(COMBO)el combo value!:' + reg.data);
-                            ls_compag = JSON.parse(reg.data);
+//                            ls_compag = JSON.parse(reg.data);
+                            if (reg.data != undefined) {
+                                ls_compag = JSON.parse(reg.data);
+                            } else {
+                                false
+                            }
                             console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
@@ -579,7 +594,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "A" : {
+                case "A" :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -591,7 +607,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -603,11 +620,13 @@ function loadFormulario64(index, row, aditional, dom2) {
             //EVALUACION DE TIPO DE ESTADO
             console.log('=======UPDATE STATE!=>' + ultraid + ', [reg.state!:' + reg.state + '][eledom:' + eledom + '][ti_estreg:' + ti_estreg + '][domtr(eledom):' + domtr(eledom) + ']');
             switch (ti_estreg) {
-                case 'O': {
+                case 'O':
+                {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E': {
+                case 'E':
+                {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -629,7 +648,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L': {
+                case 'L':
+                {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -639,40 +659,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                 }
             }
 
-            // if (reg.state != undefined) {
-            /*if (reg.state == 'O') {
-             domtr(eledom).setAttribute('style', 'display:none;');
-             } else if (reg.state == 'E') {
-             domtr(eledom).removeAttribute('style');
-             } else if (reg.state == 'L') {
-             domtr(eledom).getAttribute("co_pagtit").removeAttribute('style');
-             }
-             } else {*/
-
-
-            //muestra al padre
-            // console.log("(*)DOMELE: " + "P" + co_pagina() + "C" + index + "T" + eledom.getAttribute("co_pagtit"));
-            // var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
-            // domtitle.setAttribute("style", "");
-            // }
-
         }
 // document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
-
-    // var all_selects = document.getElementsByClassName('mdb-select');
-    // for (var i = 0; i < all_selects.length; i++) {
-    //     var me_select = all_selects[i];
-    //     console.log('me_select:' + me_select);
-    //     console.log('me_select->class:' + me_select.getAttribute('class'));
-    //     console.log('me_select->indexof:' + me_select.getAttribute('class').indexOf('initialized'));
-    //     if (me_select.getAttribute('class').indexOf('initialized') == -1) {
-    //         $(me_select).materialSelect();
-    //         console.log('Se ejecuto la create!');
-    //     }
-    // }
-
-    // $('.mdb-select').materialSelect();
 
     $('.datepicker').pickadate({
         onFocus: function () {
@@ -915,11 +904,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
             var val = null;
 
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     val = eledom.value;
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("ti_pagreg=" + ti_pagreg);
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -1014,7 +1005,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                     break;
                 }
-                case "A": {
+                case "A":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -1123,11 +1115,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
 //                if (ti_pagreg == '1') {
@@ -1168,7 +1162,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1544,10 +1539,10 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('TYPE'));
                     if (x64.getAttribute('TYPE') == 'text') {
                         regval = x64.value;
-                        all_regs += "\"" + regval + "\",";
+                        all_regs += "\"" + encodeURIComponent(regval) + "\",";
                     } else if (x64.getAttribute('TYPE') == 'hidden') {
                         regval = x64.value;
-                        all_regs += "\"" + regval + "\",";
+                        all_regs += "\"" + encodeURIComponent(regval) + "\",";
                     } else if (x64.getAttribute('TYPE') == 'checkbox') {
                         regval = x64.checked;
                         all_regs += regval + ",";
@@ -1558,13 +1553,14 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case '1': {
+                        case '1':
+                        {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
                                 //es de tipo lectura
                                 regval = x64.getAttribute('va_pagreg');
-                                all_regs += "\"" + regval + "\",";
+                                all_regs += "\"" + encodeURIComponent(regval) + "\",";
                             } else {
                                 var iinput = x64.getElementsByTagName('INPUT')[0];
                                 console.log('iinput===>' + iinput);
@@ -1580,11 +1576,13 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                             break;
                         }
-                        case '2': {
+                        case '2':
+                        {
                             all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case '3': {
+                        case '3':
+                        {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;
@@ -1592,7 +1590,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + regval + "\",";
                             break;
                         }
-                        case '36': {
+                        case '36':
+                        {
                             // var iselect = x64.getElementsByTagName('SELECT')[0];
                             // console.log("iselect:" + iselect);
                             // regval = iselect.options[iselect.selectedIndex].value;
@@ -1627,7 +1626,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             //-----
                             break;
                         }
-                        default: {
+                        default:
+                        {
                             all_regs += '\"\"' + ",";
                         }
 
@@ -1870,21 +1870,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         console.log('inside type=>ur_pagreg:' + ur_pagreg);
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
-                + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
+                    + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         }
     }
