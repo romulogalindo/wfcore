@@ -1,13 +1,11 @@
 package com.acceso.wfcore.kernel;
 
-import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ComboDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
-import com.acceso.wfweb.utils.JsonResponseC;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -44,6 +42,7 @@ public class AsyncValPag extends AsyncProcessor {
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
             Usuario usuario = ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US"));
             String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
+            System.out.println("UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
             ScriptContextExecutor script;
 

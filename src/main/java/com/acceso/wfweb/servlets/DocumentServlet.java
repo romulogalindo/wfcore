@@ -1052,10 +1052,10 @@ public class DocumentServlet extends HttpServlet {
 
                     response1.setResult(items2);
 
-//                    ((ServletOutputStream) out).println(new Gson().toJson(response1));
+                    ((ServletOutputStream) out).println(new Gson().toJson(response1));
 
-//                    out.flush();
-                    response.sendRedirect("/jsp_exec/ocelot/upload.jsp?dt_archiv=" + new Gson().toJson(response1) + "id=" + request.getParameter("id") + "&ti_docume=U&auto=true");
+                    out.flush();
+//                    response.sendRedirect("/jsp_exec/ocelot/upload.jsp?dt_archiv=" + new Gson().toJson(response1) + "id=" + request.getParameter("id") + "&ti_docume=U&auto=true");
 
                     out.close();
                     // </editor-fold>

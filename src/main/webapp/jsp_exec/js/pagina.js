@@ -229,9 +229,6 @@ function pagina_onload(jsonData) {
     var all_selects = document.getElementsByClassName('mdb-select');
     for (var i = 0; i < all_selects.length; i++) {
         var me_select = all_selects[i];
-//        console.log('me_select:' + me_select);
-//        console.log('me_select->class:' + me_select.getAttribute('class'));
-//        console.log('me_select->indexof:' + me_select.getAttribute('class').indexOf('initialized'));
         if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
             $(me_select).materialSelect();
             console.log('Se ejecuto la create!');
