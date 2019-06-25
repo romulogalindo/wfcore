@@ -23,15 +23,13 @@ doPagJson = function (url) {
 
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-            // console.log('{NET(' + url + ')} ::::' + net.responseText)
             var json = JSON.parse(net.responseText);
             pagina_onload(json);
         }
-
-    }
+    };
     // net.send(null);
     net.send();
-}
+};
 
 $D.doLogoutJson = function () {
     var net = new inet();
@@ -39,11 +37,9 @@ $D.doLogoutJson = function () {
 
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-            // console.log('{NET(' + url + ')} ::::' + net.responseText)
-            console.log('al cerrar:' + window.location.host);
             window.location.href = '//' + window.location.host + '/';
         }
-    }
+    };
 
     net.send(null);
 }

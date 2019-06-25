@@ -1,10 +1,12 @@
 var $D = document;
 var $MAP = {};
 var CO_PAGINA;
+var TI_PAGINA;
 var CO_CONTEN;
 var ID_FRAWOR;
 var IL_POPUP;
 var TMP_INPUT_DATE;
+var HTML_PAGINA;
 var CALLED = false;
 /*variables  de funcionalidad*/
 var DYNAMIC = false;
@@ -13,16 +15,22 @@ var DYNAMIC_LS_REGIST = [];
 //Google chart
 var GDATA;
 
+//constantes
+const DATA_STATUS_OK = 'OK';
+const DATA_STATUS_ERROR = 'ERROR';
+const PAGE_TYPE_FORM = 'F';
+const PAGE_TYPE_REPORT = 'T';
+
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
 
     this.getConpar = function () {
-        return this.conpar
+        return this.conpar;
     };
 
     this.getPagreg = function () {
-        return this.pagreg
+        return this.pagreg;
     };
 }
 
@@ -57,21 +65,21 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
-function id_frawor() {
-    return document.getElementById('id_frawor').value;
-}
+//function ID_FRAWOR {
+//    return document.getElementById('id_frawor').value;
+//}
 
-function co_conten() {
-    return document.getElementById('co_conten').value;
-}
+//function CO_CONTEN {
+//    return document.getElementById('co_conten').value;
+//}
+//
+//function CO_PAGINA {
+//    return document.getElementById('co_pagina').value;
+//}
 
-function co_pagina() {
-    return document.getElementById('co_pagina').value;
-}
-
-function ti_pagina() {
-    return document.getElementById('ti_pagina').value;
-}
+//function ti_pagina() {
+//    return document.getElementById('ti_pagina').value;
+//}
 
 function ls_hamoda() {
     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
@@ -85,39 +93,42 @@ function ifnull(val, def) {
 }
 
 function size_of_pagina() {
-//    height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
-//    console.log('MAINPAGINA->clientHeight:' + document.getElementById('mainpagina').clientHeight);
-//    console.log('MAINPAGINA->offsetHeight:' + document.getElementById('mainpagina').offsetHeight);
-//    console.log('MAINPAGINA->scrollHeight:' + document.getElementById('mainpagina').scrollHeight);
-//    console.log('MAINPAGINA->style.height:' + document.getElementById('mainpagina').style.height);
     height_table = document.getElementById('mainpagina').offsetHeight + 60;
-//    alert('Set:height_table>>' + height_table);
-//    alert('pagina=' + co_pagina() + ']=>' + height_table);
     document.getElementById('height_table').value = '' + height_table;
 }
 
-function il_popup() {
-    return document.getElementById('il_popup').value;
-}
+//function il_popup() {
+//    return document.getElementById('il_popup').value;
+//}
 
 function pagina() {
     //Seteamos el height para que lo absorva el iframe!<main.jsp
     size_of_pagina();
-    /*SET INI*/
-    CO_PAGINA = co_pagina();
-    CO_CONTEN = co_conten();
-    IL_POPUP = il_popup();
+    /*SETEO DE VARIABLES*/
+    ID_FRAWOR = document.getElementById('id_frawor').value;
+    CO_CONTEN = document.getElementById('co_conten').value;
+    CO_PAGINA = document.getElementById('co_pagina').value;
+    IL_POPUP = document.getElementById('il_popup').value;
+    TI_PAGINA = document.getElementById('ti_pagina').value;
+    HTML_PAGINA = document.getElementById('PAG' + CO_PAGINA);
+//    CO_PAGINA = co_pagina();
+//    CO_CONTEN = co_conten();
+//    IL_POPUP = il_popup();
 
-    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
+//    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
+    doPagJson('/pangolin?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&id_frawor=' + ID_FRAWOR);
 
-    var input_cansubmit = document.getElementsByTagName('INPUT');
-
-    for (var i = 0; i < input_cansubmit.length; i++) {
-        var input_submit = input_cansubmit[i];
-        if (input_submit.getAttribute('type').toUpperCase() == 'TEXT') {
-            input_submit.addEventListener('keyup', doformulariosubmit);
-        }
-    }
+    //despues de pintar la pagina
+    /*
+     var input_cansubmit = document.getElementsByTagName('INPUT');
+     
+     for (var i = 0; i < input_cansubmit.length; i++) {
+     var input_submit = input_cansubmit[i];
+     if (input_submit.getAttribute('type').toUpperCase() == 'TEXT') {
+     input_submit.addEventListener('keyup', doformulariosubmit);
+     }
+     }
+     */
 }
 
 function doformulariosubmit(keyEvent) {
@@ -126,69 +137,66 @@ function doformulariosubmit(keyEvent) {
     }
 }
 
-function pagina_onload(jsonData) {
+function pagina_onload(_data) {
     if (!CALLED) {
         CALLED = true;
     }
-    // console.log('[paginaload@' + co_pagina() + ']jsonData = ' + jsonData);
-    // console.log('[paginaload@' + co_pagina() + ']jsonData.status = ' + jsonData.status);
-    // console.log('[paginaload@' + co_pagina() + ']jsonData.result = ' + jsonData.result);
+    // console.log('[paginaload@' + CO_PAGINA + ']jsonData = ' + jsonData);
+    // console.log('[paginaload@' + CO_PAGINA + ']jsonData.status = ' + jsonData.status);
+    // console.log('[paginaload@' + CO_PAGINA + ']jsonData.result = ' + jsonData.result);
     //PAGINA SIEMPRE LISTA
 
-    if (jsonData.status == 'OK') {
-        if (jsonData.result.rows != undefined && jsonData.result.rows.length > 0) {
+    if (_data.status == DATA_STATUS_OK) {
+        if (_data.result != undefined && _data.result.rows != undefined && _data.result.rows.length > 0) {
             //prueba especial de carga?!
-            document.getElementById('PAG' + co_pagina()).removeAttribute('style');
-            var rows = [];
-            rows = jsonData.result.rows;
-
-            // var dom2= document.getElementsByClassName("row1")[0].cloneNode(true);
-            // var dom2 = '<tbody>' + document.getElementById("row1").innerHTML + '</tbody>'
+//            document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+            HTML_PAGINA.removeAttribute('style');
+            var rows = _data.result.rows;
             var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
-
             var tbody64;
-            if (ti_pagina() == 'R') {
-                // document.getElementById('PAG' + co_pagina()).style.display = 'block';
-                document.getElementById('PAG' + co_pagina()).removeAttribute('style');
+
+            const ID_PAGINA = 'PAG' + CO_PAGINA;
+//            var HTML_PAGINA = document.getElementById(ID_PAGINA);
+
+            if (TI_PAGINA == PAGE_TYPE_REPORT) {
+//            if (ti_pagina() == 'R') {
+//                document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+//                HTML_PAGINA.removeAttribute('style');
                 //-----
-                tbody64 = document.getElementById('PAG' + co_pagina()).getElementsByTagName('TBODY')[0];
+                tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
                 tbody64.innerHTML = '';
                 itr = itr.replace('<tr>', '').replace('</tr>', '');
             }
 
             for (var i = 0; i < rows.length; i++) {
-                // console.log('[paginaload@' + co_pagina() + ']rows= ' + rows[i]);
-                // console.log('[paginaload@' + co_pagina() + ']rows.regs = ' + rows[i].regs);
-                // console.log('[paginaload@' + co_pagina() + ']ti_pagina()  = ' + ti_pagina());
-                // console.log('[paginaload@' + co_pagina() + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
+                // console.log('[paginaload@' + CO_PAGINA + ']rows= ' + rows[i]);
+                // console.log('[paginaload@' + CO_PAGINA + ']rows.regs = ' + rows[i].regs);
+                // console.log('[paginaload@' + CO_PAGINA + ']ti_pagina()  = ' + ti_pagina());
+                // console.log('[paginaload@' + CO_PAGINA + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
 
-                if (ti_pagina() == 'F')
-                    loadFormulario64((i + 1), rows[i], jsonData.aditional, dom2);
+//                if (ti_pagina() == 'F')
+                if (TI_PAGINA == PAGE_TYPE_FORM)
+                    loadFormulario64((i + 1), rows[i], _data.aditional, dom2);
                 else
                     loadReporte64((i + 1), tbody64, rows[i]);
             }
 
             /*BEFORE VIEW*/
-            var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
-            console.log('>>' + fnpost);
+            var fnpost = 'try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
+//            console.log('>>' + fnpost);
             eval(fnpost);
 
-            // if (ti_pagina() == 'R') {
-
-            // tbody64.innerHTML = '';
-            // itr = itr.replace('<tr>', '').replace('</tr>', '');
-            // }
             //devuevo actualizar el height;
             size_of_pagina();
             if (CALLED) {
-                console.log('SEGUN CALL:' + height_table);
-                window.parent.iframe2('PAG' + co_pagina(), height_table);
+//                console.log('SEGUN CALL:' + height_table);
+                window.parent.iframe2('PAG' + CO_PAGINA, height_table);
             }
         } else if (ti_pagina() == 'C') {
             //validar el objeto de retorno llamado gdata
             //poner esto en el objeto gdata
-            var GDATAX = []
-            GDATA = jsonData.result;
+            var GDATAX = [];
+            GDATA = _data.result;
             for (var x = 0; x < GDATA.length; x++) {
                 // console.log('GDATA[' + x + ']=' + GDATA[x]);
                 var MDATA = [];
@@ -201,31 +209,32 @@ function pagina_onload(jsonData) {
             GDATA = GDATAX;
 
             /*BEFORE VIEW*/
-            var fnpost = 'try{function xc() {this.newjspex = ' + jsonData.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
+            var fnpost = 'try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
             // console.log('>>' + fnpost);
             eval(fnpost);
             //devuevo actualizar el height;
             size_of_pagina();
 
-            window.parent.iframe2('PAG' + co_pagina(), height_table);
+            window.parent.iframe2('PAG' + CO_PAGINA, height_table);
         } else {
-            document.getElementById('PAG' + co_pagina()).style.display = 'none';
-            window.parent.iframe2('PAG' + co_pagina(), -1);
-            console.log('[pagina@\' + co_pagina() + \']rows unde fined!!= ' + jsonData.result);
+            document.getElementById('PAG' + CO_PAGINA).style.display = 'none';
+            window.parent.iframe2('PAG' + CO_PAGINA, -1);
+//            console.log('[pagina@\' + CO_PAGINA + \']rows unde fined!!= ' + _data.result);
         }
+
         document.getElementById('loader').style.display = 'none';
     } else {
         document.getElementById('content_table_loader').style.display = 'none';
         //seteo de valores
-        document.getElementById('title_error').innerHTML = 'Error: P&aacute;gina ' + co_pagina();
-        document.getElementById('detail_error').innerHTML = jsonData.error.message;
+        document.getElementById('title_error').innerHTML = 'Error: P&aacute;gina ' + CO_PAGINA;
+        document.getElementById('detail_error').innerHTML = _data.error.message;
 
         document.getElementById('card_error').style.display = 'block';
     }
 
     /*TOOLTIP*/
     $('[data-toggle="tooltip"]').tooltip();
-    //SLECT
+    /*SELECT*/
     var all_selects = document.getElementsByClassName('mdb-select');
     for (var i = 0; i < all_selects.length; i++) {
         var me_select = all_selects[i];
@@ -233,20 +242,6 @@ function pagina_onload(jsonData) {
             $(me_select).materialSelect();
             console.log('Se ejecuto la create!');
         }
-    }
-
-    // $('.mdb-select').materialSelect();
-}
-
-function iframe2(pagina, height_table) {
-    console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
-    if (height_table == -1) {
-        console.log('Llego -14>->>' + height_table + ",>>>" + pagina);
-        document.getElementById(pagina).parentNode.parentNode.style.display = 'none';
-        document.getElementById(pagina).parentNode.parentNode.setAttribute('style', 'display:none;');
-    } else {
-        document.getElementById(pagina).style.height = height_table + 'px';
-        // document.getElementById('PAG628').parentNode.parentNode
     }
 
 }
@@ -257,19 +252,19 @@ function readypagina(pag) {
 
 function loadFormulario64(index, row, aditional, dom2) {
     if (index > 1) {
-        var mpage = document.getElementById('PAG' + co_pagina());
+        var mpage = document.getElementById('PAG' + CO_PAGINA);
         dom2 = dom2.replace('row1', 'row' + index);
         dom2 = dom2.replace(/C1/g, 'C' + index);
-        var nele = document.createElement('TBODY');//.innerHTML = dom2;
-        nele.setAttribute('id', 'row' + index)
+        var nele = document.createElement('TBODY');//.innerHTML = dom24603321043944324;
+        nele.setAttribute('id', 'row' + index);
         mpage.appendChild(nele);
         document.getElementById("row" + index).innerHTML = dom2;
     }
 
     for (const reg of row.regs) {
         //IDs
-        var ultraid = 'P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V';
-        var ultraid2 = 'P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'K';
+        var ultraid = 'P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V';
+        var ultraid2 = 'P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'K';
 
         var eledom = document.getElementsByName(ultraid)[0];
         var labdom = document.getElementsByName(ultraid2)[0];
@@ -278,10 +273,10 @@ function loadFormulario64(index, row, aditional, dom2) {
         }
 
         var valdom = reg.text == undefined ? (reg.value == undefined ? '' : reg.value) : reg.text;
-        console.log('(' + co_pagina() + ')>>eledom=[' + eledom + ']');
+        console.log('(' + CO_PAGINA + ')>>eledom=[' + eledom + ']');
         // console.log('>>eledom=[' + eledom + ':' + eledom.tagName + ', valdom=[' + valdom + ']');
         if (eledom) {
-            console.log("(" + co_pagina() + ")=======EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName + "[" + ti_estreg + "]");
+            console.log("(" + CO_PAGINA + ")=======EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName + "[" + ti_estreg + "]");
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
                 case "SPAN":
@@ -306,10 +301,10 @@ function loadFormulario64(index, row, aditional, dom2) {
                     var il_onchag = eledom.getAttribute('class').indexOf('xaction') > -1 ? true : false;
                     var ur_pagreg = reg.link == undefined ? '' : reg.link;
 
-                    console.log('(' + co_pagina() + ')EVALUACION!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']');
+                    console.log('(' + CO_PAGINA + ')EVALUACION!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']');
                     // if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type && reg.type > 0) {
                     if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type) {
-                        console.log('(' + co_pagina() + ')[' + reg.regist + ']Es un cambio de tipo:[de:' + ti_pagreg + '][a:' + reg.type + ']');
+                        console.log('(' + CO_PAGINA + ')[' + reg.regist + ']Es un cambio de tipo:[de:' + ti_pagreg + '][a:' + reg.type + ']');
                         //de cualquier tipo(en span) a!
 
                         console.log('[' + reg.regist + ']eledom.getAttribute(\'class\')=' + eledom.getAttribute('class'));
@@ -318,9 +313,9 @@ function loadFormulario64(index, row, aditional, dom2) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
 
                         td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
-                        console.log("*[" + reg.regist + "](" + co_pagina() + ") es el td:" + td);
+                        console.log("*[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
-                        eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
 
                     //Si el elemento es lo mismo solo que con diferente estado para saltar la limitante del tipo de dato
@@ -330,16 +325,16 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                         // td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
                         td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
-                        console.log("**[" + reg.regist + "](" + co_pagina() + ") es el td:" + td);
+                        console.log("**[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
-                        eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
 
                     if (reg.state != undefined && reg.state == ti_estreg) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
                         td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
-                        eledom = document.getElementsByName('P' + co_pagina() + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
                 }
                 case "INPUT":
@@ -626,7 +621,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                 {
                     domtr(eledom).removeAttribute('style');
                     //-------
-                    var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
+                    var domtitle = document.getElementsByName("P" + CO_PAGINA + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
                     domtitle.setAttribute("style", "");
 
                     //SOlo si es dinpag
@@ -650,14 +645,14 @@ function loadFormulario64(index, row, aditional, dom2) {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
-                    var domtitle = document.getElementsByName("P" + co_pagina() + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
+                    var domtitle = document.getElementsByName("P" + CO_PAGINA + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
                     domtitle.setAttribute("style", "");
                     break;
                 }
             }
 
         }
-// document.getElementsByName('P' + co_pagina() + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
+// document.getElementsByName('P' + CO_PAGINA + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
     }
 
     $('.datepicker').pickadate({
@@ -673,7 +668,7 @@ function loadReporte64(rowid, tbody64, row) {
     var n_itr = itr;
     var nr = document.createElement('tr');
     var nrc = 'C' + rowid;
-    n_itr = n_itr.replace(/X64UI/g, 'P' + co_pagina() + nrc);
+    n_itr = n_itr.replace(/X64UI/g, 'P' + CO_PAGINA + nrc);
     n_itr = n_itr.replace(/%3C/g, '<');
     n_itr = n_itr.replace(/%3E/g, '>');
     n_itr = n_itr.replace(/X32UIR/g, '\'' + nrc + '\'');
@@ -685,8 +680,8 @@ function loadReporte64(rowid, tbody64, row) {
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
         // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
-        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
-        // document.getElementsByName('P' + co_pagina() + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+        // document.getElementsByName('P' + CO_PAGINA + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+        // document.getElementsByName('P' + CO_PAGINA + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
         var txtval = reg.text == undefined ? reg.value : reg.text;
         txtval = txtval == undefined ? '' : txtval;
         //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
@@ -699,7 +694,7 @@ function loadReporte64(rowid, tbody64, row) {
         // alert('XCD');
 //        console.log('===>C' +S rowid + 'R' + reg.regist + 'V');
 
-        var erid = 'P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V';
+        var erid = 'P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V';
         var ereg = document.getElementById(erid);
         console.log('erid' + erid + 'ereg:' + ereg);
         // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
@@ -718,7 +713,7 @@ function loadReporte64(rowid, tbody64, row) {
             } else {
                 console.log("Los elementos son iguales");
             }
-            ereg = document.getElementById('P' + co_pagina() + 'C' + rowid + 'R' + reg.regist + 'V');
+            ereg = document.getElementById('P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V');
         }
         /*DATA*/
         if (ereg !== null) {
@@ -844,13 +839,13 @@ function loadReporte64(rowid, tbody64, row) {
     //tbody64.appendChild(nr); //ADDRECIENTE
     // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
 
-    // var dom_pag = document.getElementById('PAG' + co_pagina());
+    // var dom_pag = document.getElementById('PAG' + CO_PAGINA);
     // var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
     // console.log('[loadReporte64]Cargando tipo Reporte->itr(3):' + new_tr);
     // dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
     //
     // //do-for
-    // var alltd = document.getElementById('PAG' + co_pagina()).getElementsByClassName('ti_pag_Reg2');
+    // var alltd = document.getElementById('PAG' + CO_PAGINA).getElementsByClassName('ti_pag_Reg2');
     // for (var i = 0; i < alltd.length; i++) {
     //     alltd[i].getElementsByTagName('SPAN')[0].innerHTML = '' + (i + 1);
     //     // alltd[i].innerHTML = '<span>' + (i + 1) + '</span>span>';
@@ -863,9 +858,9 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
     /*LOGIC*/
     var data = new FormData();
-    data.append('id_frawor', '' + id_frawor());
-    data.append('co_pagina', '' + co_pagina());
-    data.append('co_conten', '' + co_conten());
+    data.append('id_frawor', '' + ID_FRAWOR);
+    data.append('co_pagina', '' + CO_PAGINA);
+    data.append('co_conten', '' + CO_CONTEN);
     data.append('co_botone', '' + co_button);
     data.append('il_proces', '' + il_proces);
     var ls_conpar = "{";
@@ -894,8 +889,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
     var preimg = [];
 
     for (var eledom of document.getElementsByClassName('pagreg')) {
-        console.log('[' + eledom.id + ']=?[' + 'P' + co_pagina() + cycle + 'R' + ']??>??' + eledom.id.indexOf('P' + co_pagina() + cycle + 'R'));
-        if (eledom.id.indexOf('P' + co_pagina() + cycle + 'R') > -1) {
+        console.log('[' + eledom.id + ']=?[' + 'P' + CO_PAGINA + cycle + 'R' + ']??>??' + eledom.id.indexOf('P' + CO_PAGINA + cycle + 'R'));
+        if (eledom.id.indexOf('P' + CO_PAGINA + cycle + 'R') > -1) {
 // var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
             var id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
             var val = null;
@@ -1091,10 +1086,10 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         console.error('[prepair_parameters_propag64]e:' + e)
         //P9213C1R1P
         try {
-            console.log('----------------->' + 'P' + co_pagina() + cycle + 'BTN' + co_button + 'P');
-            //btnpar = eval('P' + co_pagina() + cycle + 'BTN' + co_button + 'P');
-            eval(document.getElementById('P' + co_pagina() + cycle + 'BTN' + co_button + 'PS').innerHTML);
-            btnpar = eval('P' + co_pagina() + cycle + 'BTN' + co_button + 'P');
+            console.log('----------------->' + 'P' + CO_PAGINA + cycle + 'BTN' + co_button + 'P');
+            //btnpar = eval('P' + CO_PAGINA + cycle + 'BTN' + co_button + 'P');
+            eval(document.getElementById('P' + CO_PAGINA + cycle + 'BTN' + co_button + 'PS').innerHTML);
+            btnpar = eval('P' + CO_PAGINA + cycle + 'BTN' + co_button + 'P');
         } catch (e2) {
             console.error('[prepair_parameters_propag64]e2:' + e2);
             btnpar = [];
@@ -1109,7 +1104,7 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var spagreg = param.getPagreg();
         var sconpar = param.getConpar();
 
-        var eledom = document.getElementById('P' + co_pagina() + cycle + 'R' + spagreg + 'V');
+        var eledom = document.getElementById('P' + CO_PAGINA + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
             case "INPUT":
@@ -1261,7 +1256,7 @@ function child_popup_update(regist, ls_params) {
     //resize pagian
     console.log('EXE lo!');
     size_of_pagina();
-    window.parent.iframe2('PAG' + co_pagina(), height_table);
+    window.parent.iframe2('PAG' + CO_PAGINA, height_table);
 }
 
 function master_popup_close() {
@@ -1364,8 +1359,8 @@ function do_open_multiselect(eleid) {
     //--
     var mid = eleid.id.replace('_btn', '');
     // document.getElementById(mid + '_ms').value = proms;
-    // window.parent.master_open_multiselect('PAG' + co_pagina(), mid, $MAP[mid], document.getElementById(mid + '_ms').value);
-    window.parent.master_open_multiselect('PAG' + co_pagina(), mid, $MAP[mid], document.getElementById(mid + '_ms').value);
+    // window.parent.master_open_multiselect('PAG' + CO_PAGINA, mid, $MAP[mid], document.getElementById(mid + '_ms').value);
+    window.parent.master_open_multiselect('PAG' + CO_PAGINA, mid, $MAP[mid], document.getElementById(mid + '_ms').value);
 }
 
 function master_open_multiselect(pagid, refid, data, val) {
@@ -1499,9 +1494,9 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
     /*LOGIC*/
     var data = new FormData();
-    data.append('id_frawor', '' + id_frawor());
-    data.append('co_pagina', '' + co_pagina());
-    data.append('co_conten', '' + co_conten());
+    data.append('id_frawor', '' + ID_FRAWOR);
+    data.append('co_pagina', '' + CO_PAGINA);
+    data.append('co_conten', '' + CO_CONTEN);
     data.append('co_botone', '' + co_button);
     data.append('il_proces', '' + il_proces);
 
@@ -1510,11 +1505,11 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
     var all_regs = "[";
 
-    // console.log("'PAG' + co_pagina():" + 'PAG' + co_pagina());
-    // console.log("'PAG' + co_pagina().length!:" + document.getElementById('PAG' + co_pagina()).tBodies[0].rows);
+    // console.log("'PAG' + CO_PAGINA:" + 'PAG' + CO_PAGINA);
+    // console.log("'PAG' + CO_PAGINA.length!:" + document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows);
 
-    for (var i = 0; i < document.getElementById('PAG' + co_pagina()).tBodies[0].rows.length; i++) {
-        var x64s = document.getElementById('PAG' + co_pagina()).tBodies[0].rows[i].getElementsByClassName('pagreg');
+    for (var i = 0; i < document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows.length; i++) {
+        var x64s = document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows[i].getElementsByClassName('pagreg');
         if (x64s.length > 0) {
 
             all_regs += "{";
@@ -1649,9 +1644,9 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 function dinpag(obj, co_pagreg) {
     //preguntar al core que hacer?
     var data = new FormData();
-    data.append('id_frawor', '' + id_frawor());
-    data.append('co_pagina', '' + co_pagina());
-    data.append('co_conten', '' + co_conten());
+    data.append('id_frawor', '' + ID_FRAWOR);
+    data.append('co_pagina', '' + CO_PAGINA);
+    data.append('co_conten', '' + CO_CONTEN);
 
     //VA_PAGREG
     var va_pagreg = '';
@@ -1696,7 +1691,7 @@ function dinpag(obj, co_pagreg) {
     console.log("ls_conpar:" + ls_conpar);
     data.append('ls_conpar', ls_conpar);
 
-    doDinJson('/ocelot?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda(), data);
+    doDinJson('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR + "&ls_hamoda=" + ls_hamoda(), data);
 }
 
 function PRINTABLE(opt) {
@@ -1710,7 +1705,7 @@ function SHOWINFO(opt) {
 //function AUTOINCREMENT(opt) {
 function OPTION_ADD(opt) {
     document.getElementById('pagopt_plus').style.visibility = 'visible';
-    child_popup(opt, null, co_conten(), null, null);
+    child_popup(opt, null, CO_CONTEN, null, null);
 }
 
 /*
@@ -1868,19 +1863,19 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
                     + "           <span valpag=\"\"></span>"
-                    + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', co_conten(),'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
+                    + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', CO_CONTEN,'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
                     + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
                     + "           <span valpag=\"\"></span>"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
                     + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
                     + "           <span valpag=\"\"></span>"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',co_conten(),'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
                     + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         }
