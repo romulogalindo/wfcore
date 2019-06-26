@@ -14,10 +14,10 @@ import java.io.Serializable;
  */
 @Entity
 @NamedNativeQueries({
-        @NamedNativeQuery(
-                name = Values.QUERYS_WEB_SELECT_PFCONTAB,
-                query = "select T.* from frawor4.pfpagtab(:p_co_conten) T ",
-                resultClass = WContabDTO.class)
+    @NamedNativeQuery(
+            name = Values.QUERYS_WEB_SELECT_PFCONTAB,
+            query = "select T.* from frawor4.pfpagtab(:p_co_conten) T ",
+            resultClass = WContabDTO.class)
 })
 public class WContabDTO implements Serializable {
 
@@ -104,4 +104,10 @@ public class WContabDTO implements Serializable {
     public void setCa_tamcel(int ca_tamcel) {
         this.ca_tamcel = ca_tamcel;
     }
+
+    @Override
+    public String toString() {
+        return "WContabDTO{" + "co_contab=" + co_contab + ", nu_rowspa=" + nu_rowspa + ", nu_colspa=" + nu_colspa + ", or_numrow=" + or_numrow + ", or_numcol=" + or_numcol + ", ti_haling=" + ti_haling + ", ti_valing=" + ti_valing + ", ca_tamcel=" + ca_tamcel + '}';
+    }
+
 }

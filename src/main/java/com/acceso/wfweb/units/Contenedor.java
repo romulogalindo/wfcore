@@ -110,36 +110,51 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 
         List<WContabDTO> cols = new ArrayList<>();
 //        System.out.println("contabs.size()=" + contabs.size());
+        int curren_row = -1;
+        boolean has_rowspan = false;
         for (int i = 0; i < contabs.size(); i++) {
             WContabDTO contab = contabs.get(i);
-//            System.out.println("eval>>[contab =" + contab + ":" + i + "]");
+            System.out.println("eval>>[contab =" + contab + ":" + i + "]");
 
-            if (i == 0) {
-                cols.add(contab);
+            if (!has_rowspan) {
+                curren_row = contab.getOr_numrow();
+            }
+//            cols.add(contab);
+            if (rows.get(curren_row) == null) {
+                cols = new ArrayList<>();
+                rows.put(curren_row, cols);
+            }
+            rows.get(curren_row).add(contab);
+
+            if (contab.getNu_rowspa() > 1) {
+                has_rowspan = true;
             } else {
-//                System.out.println("[cols.get(cols.size() - 1).getOr_numrow()=" + (cols.get(cols.size() - 1).getOr_numrow()) + "]!=[contab.getOr_numrow()=" + contab.getOr_numrow() + "]");
-                if (cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow()) {
-                    rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
-                    cols = new ArrayList<>();
-                }
-
-                cols.add(contab);
+                has_rowspan = false;
             }
-
-            if ((contabs.size() - 1) == (i)) {
-//                System.out.println("ultimo elemento>" + i);
-                rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
-            }
-
+//            if (i == 0) {
+//                cols.add(contab);
+//            } else {
+//                if (cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow()) {
+//                    rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
+//                    cols = new ArrayList<>();
+//                }
+//                cols.add(contab);
+//            }
+//
+//            if ((contabs.size() - 1) == (i)) {
+//                rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
+//            }
         }
 
         for (Map.Entry<Integer, List<WContabDTO>> rowx : rows.entrySet()) {
+            System.out.println("rowx->index = " + rowx.getKey());
+            System.out.println("rowx->valores(" + rowx.getValue().size() + ") = " + rowx.getValue());
             HTML += "<div class=\"row\">";
             int filas = rowx.getValue().size();
             String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
-
-            for (WContabDTO contab : rowx.getValue()) {
-                HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";
+            if (rowx.getValue().size() < 3) {
+                for (WContabDTO contab : rowx.getValue()) {
+                    HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";
 
 //                for (Pagina pagina : paginas.values()) {
 ////                    System.out.println("compara>>" + pagina.getCo_contab() + "::" + contab.getCo_contab());
@@ -147,13 +162,80 @@ public class Contenedor extends HTMLRenderer implements Serializable {
 //                        HTML += "<iframe class=\"wf4_iframe\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
 //                    }
 //                }
-                HTML = paginas.values().stream()
-                        .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
-                        .map((pagina) -> "<iframe class=\"wf4_iframe\" type=\"" + pagina.getTi_pagina() + "\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
-                        .reduce(HTML, String::concat);
+                    HTML = paginas.values().stream()
+                            .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab()))
+                            .map((pagina) -> "<iframe class=\"wf4_iframe\" type=\"" + pagina.getTi_pagina() + "\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
+                            .reduce(HTML, String::concat);
 
-                HTML += "</div>";
+                    HTML += "</div>";
+                }
+            } else {
+                //re-organizar columnas
+                System.out.println("reorganizando columnas");
+                List<WContabDTO> col1 = new ArrayList<>();
+                List<WContabDTO> col2 = new ArrayList<>();
+                List<WContabDTO> col3 = new ArrayList<>();
+                List<WContabDTO> col4 = new ArrayList<>();
+
+                for (WContabDTO contab : rowx.getValue()) {
+                    System.out.println("contab = " + contab);
+                    if (contab.getOr_numcol() == 1) {
+                        col1.add(contab);
+                        System.out.println("Agregando col1 = ");
+                    } else if (contab.getOr_numcol() == 2) {
+                        col2.add(contab);
+                        System.out.println("Agregando col2 = ");
+                    }
+                }
+                if (col1.size() > 0 & col2.size() > 0) {
+                    HTML += "<div class=\"col-md-6\" style=\"height: auto;\">";
+                    //contenido
+                    HTML += "   <div class=\"row\">";
+                    for (WContabDTO ctab : col1) {
+                        System.out.println("Contenido COL1 = " + ctab);
+                        Iterator<Pagina> it = paginas.values().iterator();
+                        while (it.hasNext()) {
+                            Pagina cpagina = it.next();
+                            System.out.println("SI! (cpagina.getCo_contab():" + cpagina.getCo_contab() + ")=(ctab.getCo_contab():" + ctab.getCo_contab() + ")");
+                            if (cpagina.getCo_contab() == ctab.getCo_contab()) {
+                                String ifr = "<iframe class=\"wf4_iframe\" type=\"" + cpagina.getTi_pagina() + "\" id=\"PAG" + cpagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
+                                HTML += ifr;
+                            }
+                        }
+//                        HTML = paginas.values().stream()
+//                                .filter((pagina) -> (pagina.getCo_contab() == ctab.getCo_contab()))
+//                                .map((pagina) -> "<iframe class=\"wf4_iframe\" type=\"" + pagina.getTi_pagina() + "\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
+//                                .reduce(HTML, String::concat);
+                    }
+
+                    HTML += "   </div>";
+                    HTML += "</div>";
+
+                    HTML += "<div class=\"col-md-6\" style=\"height: auto;\">";
+                    //contenido
+                    HTML += "   <div class=\"row\">";
+                    for (WContabDTO ctab : col2) {
+                        System.out.println("Contenido COL2 = " + ctab);
+                        Iterator<Pagina> it = paginas.values().iterator();
+                        while (it.hasNext()) {
+                            Pagina cpagina = it.next();
+                            System.out.println("SI! (cpagina.getCo_contab():" + cpagina.getCo_contab() + ")=(ctab.getCo_contab():" + ctab.getCo_contab() + ")");
+                            if (cpagina.getCo_contab() == ctab.getCo_contab()) {
+                                String ifr = "<iframe class=\"wf4_iframe\" type=\"" + cpagina.getTi_pagina() + "\" id=\"PAG" + cpagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>";
+                                HTML += ifr;
+                            }
+                        }
+//                        HTML = paginas.values().stream()
+//                                .filter((pagina) -> (pagina.getCo_contab() == ctab.getCo_contab()))
+//                                .map((pagina) -> "<iframe class=\"wf4_iframe\" type=\"" + pagina.getTi_pagina() + "\" id=\"PAG" + pagina.getCo_pagina() + "\" onload=\"iframe(this)\" frameborder=0></iframe>")
+//                                .reduce(HTML, String::concat);
+                    }
+
+                    HTML += "   </div>";
+                    HTML += "</div>";
+                }
             }
+
             HTML += "</div>";
         }
 

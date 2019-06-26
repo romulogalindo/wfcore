@@ -30,7 +30,8 @@ public class MainWS {
 
     @OnClose
     public void onClose(Session session) {
-        System.out.println("onClose::" + session.getId());
+        //NOT YET!
+//        System.out.println("onClose::" + session.getId());
     }
 
     @OnMessage
