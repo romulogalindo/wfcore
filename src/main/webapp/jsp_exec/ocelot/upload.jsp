@@ -10,7 +10,7 @@
         }
 
         function autoload(evt) {
-            var auto = ${param.auto};
+            var auto = ${empty param.auto ? 'false': param.auto };
             console.log('auto:' + auto);
             // parent.document.onchange_vafile(document.getElementById('vafile'));
             window.parent.onchange_vafile2(document.getElementById('vafile'));
@@ -28,7 +28,8 @@
             ${param.dt_archiv}
     </pre>
 </c:if>--%>
-<form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}&id=${param.id}" enctype="MULTIPART/FORM-DATA" method="post"
+<form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}&id=${param.id}" enctype="MULTIPART/FORM-DATA"
+      method="post"
       accept-charset="ISO-8859-1">
     <input id="vafile" type="file" name="vafile" domid="${param.id}" onchange="autoload(event);"/>
 </form>

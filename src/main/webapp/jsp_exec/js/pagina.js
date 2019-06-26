@@ -19,7 +19,9 @@ var GDATA;
 const DATA_STATUS_OK = 'OK';
 const DATA_STATUS_ERROR = 'ERROR';
 const PAGE_TYPE_FORM = 'F';
-const PAGE_TYPE_REPORT = 'T';
+const PAGE_TYPE_REPORT = 'R';
+const PAGE_TYPE_CHART = 'C';
+const PAGE_TYPE_MAPS = 'G';
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -65,22 +67,6 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
-//function ID_FRAWOR {
-//    return document.getElementById('id_frawor').value;
-//}
-
-//function CO_CONTEN {
-//    return document.getElementById('co_conten').value;
-//}
-//
-//function CO_PAGINA {
-//    return document.getElementById('co_pagina').value;
-//}
-
-//function ti_pagina() {
-//    return document.getElementById('ti_pagina').value;
-//}
-
 function ls_hamoda() {
     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
 }
@@ -97,10 +83,6 @@ function size_of_pagina() {
     document.getElementById('height_table').value = '' + height_table;
 }
 
-//function il_popup() {
-//    return document.getElementById('il_popup').value;
-//}
-
 function pagina() {
     //Seteamos el height para que lo absorva el iframe!<main.jsp
     size_of_pagina();
@@ -111,12 +93,8 @@ function pagina() {
     IL_POPUP = document.getElementById('il_popup').value;
     TI_PAGINA = document.getElementById('ti_pagina').value;
     HTML_PAGINA = document.getElementById('PAG' + CO_PAGINA);
-//    CO_PAGINA = co_pagina();
-//    CO_CONTEN = co_conten();
-//    IL_POPUP = il_popup();
 
-//    doPagJson('/pangolin?co_conten=' + co_conten() + '&co_pagina=' + co_pagina() + '&id_frawor=' + id_frawor() + "&ls_hamoda=" + ls_hamoda());
-    doPagJson('/pangolin?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&id_frawor=' + ID_FRAWOR);
+    doPagJson('/pangolin?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&id_frawor=' + ID_FRAWOR + "&ls_hamoda=" + ls_hamoda());
 
     //despues de pintar la pagina
     /*
@@ -141,40 +119,24 @@ function pagina_onload(_data) {
     if (!CALLED) {
         CALLED = true;
     }
-    // console.log('[paginaload@' + CO_PAGINA + ']jsonData = ' + jsonData);
-    // console.log('[paginaload@' + CO_PAGINA + ']jsonData.status = ' + jsonData.status);
-    // console.log('[paginaload@' + CO_PAGINA + ']jsonData.result = ' + jsonData.result);
-    //PAGINA SIEMPRE LISTA
 
     if (_data.status == DATA_STATUS_OK) {
         if (_data.result != undefined && _data.result.rows != undefined && _data.result.rows.length > 0) {
             //prueba especial de carga?!
-//            document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
             HTML_PAGINA.removeAttribute('style');
             var rows = _data.result.rows;
             var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
             var tbody64;
 
             const ID_PAGINA = 'PAG' + CO_PAGINA;
-//            var HTML_PAGINA = document.getElementById(ID_PAGINA);
-
+            console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
             if (TI_PAGINA == PAGE_TYPE_REPORT) {
-//            if (ti_pagina() == 'R') {
-//                document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
-//                HTML_PAGINA.removeAttribute('style');
-                //-----
                 tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
                 tbody64.innerHTML = '';
                 itr = itr.replace('<tr>', '').replace('</tr>', '');
             }
 
             for (var i = 0; i < rows.length; i++) {
-                // console.log('[paginaload@' + CO_PAGINA + ']rows= ' + rows[i]);
-                // console.log('[paginaload@' + CO_PAGINA + ']rows.regs = ' + rows[i].regs);
-                // console.log('[paginaload@' + CO_PAGINA + ']ti_pagina()  = ' + ti_pagina());
-                // console.log('[paginaload@' + CO_PAGINA + ']ti_pagina()?  = ' + (ti_pagina() == 'F'));
-
-//                if (ti_pagina() == 'F')
                 if (TI_PAGINA == PAGE_TYPE_FORM)
                     loadFormulario64((i + 1), rows[i], _data.aditional, dom2);
                 else
@@ -182,17 +144,14 @@ function pagina_onload(_data) {
             }
 
             /*BEFORE VIEW*/
-            var fnpost = 'try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
-//            console.log('>>' + fnpost);
-            eval(fnpost);
+            eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
 
-            //devuevo actualizar el height;
+            /*UPDATE HEIGHT*/
             size_of_pagina();
             if (CALLED) {
-//                console.log('SEGUN CALL:' + height_table);
                 window.parent.iframe2('PAG' + CO_PAGINA, height_table);
             }
-        } else if (ti_pagina() == 'C') {
+        } else if (TI_PAGINA == PAGE_TYPE_CHART) {
             //validar el objeto de retorno llamado gdata
             //poner esto en el objeto gdata
             var GDATAX = [];
@@ -209,9 +168,7 @@ function pagina_onload(_data) {
             GDATA = GDATAX;
 
             /*BEFORE VIEW*/
-            var fnpost = 'try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}';
-            // console.log('>>' + fnpost);
-            eval(fnpost);
+            eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
             //devuevo actualizar el height;
             size_of_pagina();
 
@@ -279,8 +236,7 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("(" + CO_PAGINA + ")=======EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName + "[" + ti_estreg + "]");
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?==>" + (reg.type != undefined & reg.type > -1));
 
@@ -337,8 +293,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
                 }
-                case "INPUT":
-                {
+                case "INPUT": {
 
                     break;
                 }
@@ -349,16 +304,14 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("=======ASIGN DATA=>" + ultraid + ",=>?" + eledom + ",extra:" + eledom.tagName + "::" + valdom + "::==>>" + eledom.getAttribute("type") + "<==[" + ti_estreg + "]");
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "INPUT": {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") !== "hidden") {
                         domtr(eledom).removeAttribute('style');
                     }
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -586,8 +539,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "A" :
-                {
+                case "A" : {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -599,8 +551,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default:
-                {
+                default: {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -612,13 +563,11 @@ function loadFormulario64(index, row, aditional, dom2) {
             //EVALUACION DE TIPO DE ESTADO
             console.log('=======UPDATE STATE!=>' + ultraid + ', [reg.state!:' + reg.state + '][eledom:' + eledom + '][ti_estreg:' + ti_estreg + '][domtr(eledom):' + domtr(eledom) + ']');
             switch (ti_estreg) {
-                case 'O':
-                {
+                case 'O': {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E':
-                {
+                case 'E': {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + CO_PAGINA + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -640,8 +589,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L':
-                {
+                case 'L': {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -896,13 +844,11 @@ function propag(cycle, co_button, il_proces, co_condes) {
             var val = null;
 
             switch (eledom.tagName) {
-                case "INPUT":
-                {
+                case "INPUT": {
                     val = eledom.value;
                     break;
                 }
-                case "SPAN":
-                {
+                case "SPAN": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("ti_pagreg=" + ti_pagreg);
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -997,8 +943,7 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                     break;
                 }
-                case "A":
-                {
+                case "A": {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -1077,6 +1022,7 @@ function preproces_propag64(cycle, co_button, il_proces, co_condes, preimg, proi
 }
 
 function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, data) {
+    console.log('prepair_parameters_propag64:[' + cycle + "][" + co_button + "][" + il_proces + "][" + co_condes + "][" + data + "]");
     var parametros = [];
     var btnpar = [];
 
@@ -1107,13 +1053,11 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + CO_PAGINA + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT":
-            {
+            case "INPUT": {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN":
-            {
+            case "SPAN": {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
 //                if (ti_pagreg == '1') {
@@ -1151,11 +1095,28 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                     // var dom_select = eledom.getElementById("SELECT")[0];
                     valdom = eledom.getElementsByTagName("INPUT")[0].value;
                     // valdom = document.getElementById(eledom.id + '_date').value;
+                } else if (ti_pagreg == '34') {
+                    //PWNDIENTE MARIO!!!
+                    valdom = eledom.getElementsByTagName("SPAN")[0].getAttribute("valpag");
+                } else if (ti_pagreg == '36') {
+                    var vaframe = eledom.getElementsByTagName("IFRAME")[0];
+
+
+                    futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+                    futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                    console.log('(**)futureJson=' + futureJson)
+                    futureJson = JSON.parse(futureJson);
+
+                    if (futureJson.status = 'OK') {
+                        // var eledom = document.getElementById(proimg);
+                        // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+                        console.log('REGISTERO36>>');
+                        valdom = futureJson.result[0].co_archiv;
+                    }
                 }
                 break;
             }
-            default:
-            {
+            default: {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1430,7 +1391,10 @@ function docheckall(chk, reg) {
     // console.log('sie:' + ls_checks.length);
     if (chk.checked) {
         for (var i = 0; i < ls_checks.length; i++) {
-            if (ls_checks[i].id.indexOf('R' + reg + '_check') > -1) {
+            console.log('[CHECK]ls_checks[i].id:' + ls_checks[i].id);
+            console.log('[CHECK]\'R\' + reg + \'_check\':' + ('R' + reg + '_check'));
+            console.log('[CHECK]\'R\' + reg + \'_check\'?INDEX:' + ls_checks[i].id.indexOf('R' + reg + '_check'));
+            if (ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
                 // console.log("r:" + ls_checks[i]);
                 ls_checks[i].setAttribute('checked', 'checked');
                 ls_checks[i].checked = true;
@@ -1438,7 +1402,7 @@ function docheckall(chk, reg) {
         }
     } else {
         for (var i = 0; i < ls_checks.length; i++) {
-            if (ls_checks[i].id.indexOf('R' + reg + '_check') > -1) {
+            if (ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
                 // console.log("r:" + ls_checks[i]);
                 ls_checks[i].removeAttribute('checked');
                 ls_checks[i].checked = false;
@@ -1535,23 +1499,22 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     } else if (x64.getAttribute('TYPE') == 'hidden') {
                         regval = x64.value;
                         all_regs += "\"" + encodeURIComponent(regval) + "\",";
-                    } else if (x64.getAttribute('TYPE') == 'checkbox') {
-                        regval = x64.checked;
-                        all_regs += regval + ",";
-                    }
+                    } /*else if (x64.getAttribute('TYPE') == 'checkbox') {
+                        regval = x64.checked == undefined ? 'false' : '' + x64.checked;
+                        all_regs += "\""+regval + "\",";
+                    }*/
                 } else if (x64.tagName == 'SELECT') {
                     console.log('is select');
                 } else if (x64.tagName == 'SPAN') {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case '1':
-                        {
+                        case '1': {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
                                 //es de tipo lectura
-                                regval = x64.getAttribute('va_pagreg');
+                                regval = (x64.getAttribute('va_pagreg') == undefined | x64.getAttribute('va_pagreg') == 'undefined') ? '' : x64.getAttribute('va_pagreg');
                                 all_regs += "\"" + encodeURIComponent(regval) + "\",";
                             } else {
                                 var iinput = x64.getElementsByTagName('INPUT')[0];
@@ -1568,13 +1531,11 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                             break;
                         }
-                        case '2':
-                        {
+                        case '2': {
                             all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case '3':
-                        {
+                        case '3': {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;
@@ -1582,8 +1543,17 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + regval + "\",";
                             break;
                         }
-                        case '36':
-                        {
+                        case '6': {
+                            var iinput = x64.getElementsByTagName('INPUT')[0];
+                            console.log('iinput===>' + iinput);
+                            console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
+                            if (iinput.getAttribute('TYPE') == 'checkbox') {
+                                regval = iinput.checked == undefined ? 'false' : iinput.checked;
+                                all_regs += regval + ",";
+                            }
+                            break;
+                        }
+                        case '36': {
                             // var iselect = x64.getElementsByTagName('SELECT')[0];
                             // console.log("iselect:" + iselect);
                             // regval = iselect.options[iselect.selectedIndex].value;
@@ -1618,8 +1588,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             //-----
                             break;
                         }
-                        default:
-                        {
+                        default: {
                             all_regs += '\"\"' + ",";
                         }
 
@@ -1754,29 +1723,29 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
     } else if (type == 3) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"writer pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "xaction" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "></select>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "xaction" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
             html += "   </span>";
         } else if (ti_estreg == 'O') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "xaction" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
             html += "   </span>";
         }
     } else if (type == 4) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"4\" class=\"writer pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "><option value=\"\"></option></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "xaction" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "><option value=\"\"></option></select>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"4\" class=\"reader pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "xaction" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
             html += "   </span>";
         } else if (ti_estreg == 'O') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"4\" class=\"reader pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "xaction" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
             html += "   </span>";
         }
     } else if (type == 6) {
@@ -1862,21 +1831,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         console.log('inside type=>ur_pagreg:' + ur_pagreg);
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                    + "           <span valpag=\"\"></span>"
-                    + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', CO_CONTEN,'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
-                    + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                + "           <span valpag=\"\"></span>"
+                + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', CO_CONTEN,'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
+                + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                    + "           <span valpag=\"\"></span>"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                + "           <span valpag=\"\"></span>"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                    + "           <span valpag=\"\"></span>"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                + "           <span valpag=\"\"></span>"
+                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         }
     }

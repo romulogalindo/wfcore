@@ -100,7 +100,7 @@ function pushMessage(type, title, message, conten, clear) {
     }
 
     if (conten != undefined) {
-        if (conten == co_conten()) {
+        if (conten == CO_CONTEN) {
             toastr[type](message, title);
         }
     } else {
