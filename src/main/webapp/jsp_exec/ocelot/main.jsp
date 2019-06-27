@@ -178,7 +178,7 @@
                 <li class="logo-sn waves-effect">
                     <div class=" text-center">
                         <a href="#" class="pl-0">
-                            <img src="/jsp_exec/imgs/defaults/logo_wfcore.jpg" alt="" style="height: 54px;"/>
+                            <img src="/jsp_exec/imgs/defaults/logo_wfcore.png" alt="" style="height: 54px;"/>
                         </a>
                     </div>
                 </li>
