@@ -4,6 +4,10 @@ var current_pagina = -1;
 var current_regist = -1;
 var mutable_date_picker;
 
+var CO_CONTEN;
+var ID_FRAWOR;
+var CO_USUARI;
+
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
@@ -52,13 +56,13 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
-function id_frawor() {
-    return document.getElementById('id_frawor').value;
-}
+// function id_frawor() {
+//     return document.getElementById('id_frawor').value;
+// }
 
-function co_conten() {
-    return document.getElementById('co_conten').value;
-}
+// function co_conten() {
+//     return document.getElementById('co_conten').value;
+// }
 
 // function co_pagina() {
 //     return document.getElementById('co_pagina').value;
@@ -68,15 +72,19 @@ function co_conten() {
 //     return document.getElementById('ti_pagina').value;
 // }
 
-function ls_hamoda() {
-    return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
-}
+// function ls_hamoda() {
+//     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
+// }
 
-function co_usuari() {
-    return document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
-}
+// function co_usuari() {
+//     return document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
+// }
 
 function workflow(il_popup) {
+    CO_CONTEN = document.getElementById('co_conten').value;
+    ID_FRAWOR = document.getElementById('id_frawor').value;
+    CO_USUARI = document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
+
     /*FRONT*/
     if (!il_popup) {
         $(".button-collapse").sideNav();
@@ -85,10 +93,10 @@ function workflow(il_popup) {
 
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
-            iframe.src = '/karmic?co_conten=' + co_conten()
-                    + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
-                    + '&id_frawor=' + id_frawor()
-                    + '&il_popup=' + il_popup;
+            iframe.src = '/karmic?co_conten=' + CO_CONTEN
+                + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+                + '&id_frawor=' + ID_FRAWOR
+                + '&il_popup=' + il_popup;
     }
 
 //--FRONT AND MODALª!
@@ -122,8 +130,6 @@ function workflow(il_popup) {
         document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
         document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
     });
-
-
 }
 
 //function size_of_pagina() {
@@ -150,6 +156,7 @@ function iframe(iframe) {
 }
 
 function iframe2(pagina, height_table) {
+    var localframe = document.getElementById(pagina);
     //console.log('renueva iframe>>' + pagina + ', des he=' + height_table);
 
 
@@ -157,19 +164,31 @@ function iframe2(pagina, height_table) {
 //    
     if (height_table == -1) {
         //console.log('Llego -14>->>' + height_table + ",>>>" + pagina);
-        document.getElementById(pagina).style.display = 'none';
+        // var localframe = document.getElementById(pagina);
+        localframe.style.display = 'none';
+        localframe.parentNode.style.display = 'none';
+
+        //ocultar al padre wfcol!
 
 //        document.getElementById(pagina).parentNode.parentNode.style.display = 'none';
 //        document.getElementById(pagina).parentNode.parentNode.setAttribute('style', 'display:none;');
     } else {
-        document.getElementById(pagina).setAttribute('style', 'display:block;');
+        localframe.parentNode.style.display = 'block';
+        localframe.setAttribute('style', 'display:block; height:;');
 
-        var iframe = document.getElementById(pagina);
-        iframe.contentWindow.size_of_pagina();
-        var input_height_table = (iframe.contentDocument || iframe.contentWindow.document).getElementById("height_table");
+        // var iframe = document.getElementById(pagina);
+        localframe.contentWindow.size_of_pagina();
+        var input_height_table = (localframe.contentDocument || iframe.contentWindow.document).getElementById("height_table");
         if (input_height_table != undefined) {
-            var height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0) + 20;
-            iframe.style.height = height_table + 'px';
+            var height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0);
+            if (height_table > 60) {
+                height_table = height_table + 20;
+                localframe.style.height = height_table + 'px';
+            } else {
+                localframe.contentWindow.size_of_pagina();
+                height_table = (input_height_table != undefined ? parseInt(input_height_table.value) : 0);
+                console.log('caso particula de resize:' + height_table);
+            }
         }
     }
 
@@ -431,11 +450,6 @@ function container(co_pagina) {
 
 
 function master_open_popup_date(val, co_pagina) {
-    // var currentDay = dateObj.getUTCDate();
-    // var currentMonth = dateObj.getUTCMonth();
-    // var currentYear = dateObj.getUTCFullYear();
-    // var maxYear = currentYear - 18;
-    // var minYear = currentYear - 100;
 
     console.log('[open_popup_date]la date:' + val);
     $('#rankanadate').val(val);

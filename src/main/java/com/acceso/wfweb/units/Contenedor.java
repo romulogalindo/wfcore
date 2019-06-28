@@ -149,12 +149,13 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         for (Map.Entry<Integer, List<WContabDTO>> rowx : rows.entrySet()) {
             System.out.println("rowx->index = " + rowx.getKey());
             System.out.println("rowx->valores(" + rowx.getValue().size() + ") = " + rowx.getValue());
-            HTML += "<div class=\"row\">";
+            HTML += "<div class=\"row wfrow\">";
             int filas = rowx.getValue().size();
-            String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
+//            String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
+            String varcolwidth = filas == 1 ? "col-md-6" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
             if (rowx.getValue().size() < 3) {
                 for (WContabDTO contab : rowx.getValue()) {
-                    HTML += "<div class=\"" + varcolwidth + "\" style=\"height: auto;\">";
+                    HTML += "<div class=\"" + varcolwidth + " wfcol\" style=\"height: 0 auto; margin: 0px auto;\">";
 
 //                for (Pagina pagina : paginas.values()) {
 ////                    System.out.println("compara>>" + pagina.getCo_contab() + "::" + contab.getCo_contab());
@@ -188,7 +189,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
                     }
                 }
                 if (col1.size() > 0 & col2.size() > 0) {
-                    HTML += "<div class=\"col-md-6\" style=\"height: auto;\">";
+                    HTML += "<div class=\"col-md-6 wfcol\" style=\"height: auto; margin: 0px auto;\">";
                     //contenido
                     HTML += "   <div class=\"row\">";
                     for (WContabDTO ctab : col1) {
@@ -211,7 +212,7 @@ public class Contenedor extends HTMLRenderer implements Serializable {
                     HTML += "   </div>";
                     HTML += "</div>";
 
-                    HTML += "<div class=\"col-md-6\" style=\"height: auto;\">";
+                    HTML += "<div class=\"col-md-6 wfcol\" style=\"height: auto; margin: 0px auto;\">";
                     //contenido
                     HTML += "   <div class=\"row\">";
                     for (WContabDTO ctab : col2) {

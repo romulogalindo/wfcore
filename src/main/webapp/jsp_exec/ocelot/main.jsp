@@ -58,21 +58,6 @@
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=37"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=16"></script>
 
-    <script>
-        <%--var WSURL = '<%=com.acceso.wfcore.utils.Values.WEBSOCKET_ENDPOINT_URL%>';--%>
-
-        //            function changemodulo(sys, sybsys, paq, mod) {
-        //                //conseguir menu y change!
-        //                //[PDT]
-        //                if (mod) {
-        //                    $('#slc_schema').modal('hide');
-        //                }
-        //
-        //                return false;
-        //            }
-
-    </script>
-
     <style>
         .side-nav .logo-sn {
             padding-bottom: 1rem;

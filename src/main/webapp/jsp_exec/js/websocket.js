@@ -32,7 +32,7 @@ function openWS() {
                 var loginjson = '{\n' +
                         '\t"status": "OK",\n' +
                         '\t"type": "login",\n' +
-                        '\t"user": "' + co_usuari() + '",\n' +
+                        '\t"user": "' + CO_USUARI + '",\n' +
                         '\t"xact": "",\n' +
                         '\t"mact": ""\n' +
                         '}';
