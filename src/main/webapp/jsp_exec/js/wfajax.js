@@ -127,7 +127,8 @@ doPropag = function (url, regparams, data) {
             var rpta = JSON.parse(net.responseText);
             if (rpta.error) {
                 window.parent.showloading(false);
-                alert('' + rpta.error.message + '');
+                window.parent.showMessageModal(rpta.error.message);
+//                alert('' + rpta.error.message + '');
             } else {
                 console.log("rpta.params===>" + rpta.ls_params);
                 if (rpta.ls_params != undefined) {

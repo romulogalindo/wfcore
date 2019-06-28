@@ -218,7 +218,7 @@ public class Util {
 
     public static ErrorMessage getError(Exception ep, int startLine) {
         ErrorMessage errorMessage = new ErrorMessage();
-//        System.out.println("error class:" + ep.getClass());
+        System.out.println("error class:" + ep.getClass());
         String message = "";
 
         if (ep instanceof PersistenceException) {

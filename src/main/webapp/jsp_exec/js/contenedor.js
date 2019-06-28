@@ -94,9 +94,9 @@ function workflow(il_popup) {
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
             iframe.src = '/karmic?co_conten=' + CO_CONTEN
-                + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
-                + '&id_frawor=' + ID_FRAWOR
-                + '&il_popup=' + il_popup;
+                    + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+                    + '&id_frawor=' + ID_FRAWOR
+                    + '&il_popup=' + il_popup;
     }
 
 //--FRONT AND MODALª!
@@ -304,6 +304,11 @@ function showloading(action) {
         $('#mdb-preloader').show();
     else
         $('#mdb-preloader').hide();
+}
+
+function showMessageModal(text) {
+    $('#messageModalBody').html(text);
+    $('#messageModal').modal({show: true});
 }
 
 // function onchange_vafile(vafile, lbfile) {

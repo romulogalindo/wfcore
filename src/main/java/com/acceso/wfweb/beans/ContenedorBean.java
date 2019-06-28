@@ -9,6 +9,7 @@ import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ProcesoDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.utils.RequestManager;
+import org.apache.commons.lang3.SerializationUtils;
 import org.ocpsoft.rewrite.servlet.impl.HttpRewriteWrappedRequest;
 
 public class ContenedorBean implements Serializable {
@@ -50,11 +51,14 @@ public class ContenedorBean implements Serializable {
 
             contenedor = ApplicationManager.buildContainer(co_conten, id_frawor);
             WFIOAPP.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
+//            contenedor = (Contenedor) contenedor.clone();
         } else {
 
             contenedor.setId_frawor(id_frawor);
         }
         //ES POPUP?
+        contenedor = SerializationUtils.clone(contenedor);
+//        contenedor = (Contenedor) contenedor.clone();
         contenedor.setIl_popup(Util.toBoolean(requestManager.getParam("il_popup"), false));
 
         //SE LE ASIGNA LOS PARAMETROS

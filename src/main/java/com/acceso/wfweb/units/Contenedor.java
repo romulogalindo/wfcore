@@ -5,7 +5,7 @@ import com.acceso.wfweb.dtos.WContabDTO;
 import java.io.Serializable;
 import java.util.*;
 
-public class Contenedor extends HTMLRenderer implements Serializable {
+public class Contenedor extends HTMLRenderer implements Serializable, Cloneable {
 
     //objeto de distribucion(ahora solo vertical)
     LinkedHashMap<Integer, Pagina> paginas;
@@ -243,4 +243,14 @@ public class Contenedor extends HTMLRenderer implements Serializable {
         return HTML;
     }
 
+    @Override
+    public Object clone() {
+        Object obj = null;
+        try {
+            obj = super.clone();
+        } catch (CloneNotSupportedException ex) {
+            System.out.println(" no se puede duplicar");
+        }
+        return obj;
+    }
 }
