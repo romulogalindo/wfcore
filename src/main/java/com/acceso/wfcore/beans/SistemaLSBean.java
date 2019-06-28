@@ -25,7 +25,7 @@ public class SistemaLSBean extends MainBean implements Serializable, DefaultMain
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/sistema/paginaRegSistema.xhtml";
 
-    public static final String BEAN_NAME = "sistemaBean";
+    public static final String BEAN_NAME = "sistemaLSBean";
 
     private List<SistemaDTO> sistemas;
     private SistemaDTO sistema;

@@ -25,7 +25,7 @@ public class SubSistemaLSBean extends MainBean implements Serializable, DefaultM
     private static final String URL_EDITAR = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
     private static final String URL_NEW = "/admin/jsf_exec/pagex/subsistema/paginaRegSubSistema.xhtml";
 
-    public static final String BEAN_NAME = "subSistemaBean";
+    public static final String BEAN_NAME = "subSistemaLSBean";
 
     private List<SubSistemaDTO> subsistemas;
     private SubSistemaDTO subsistema;

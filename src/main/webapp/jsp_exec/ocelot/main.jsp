@@ -9,11 +9,11 @@
 
 <%@ page contentType="text/html; charset=iso-8859-1" pageEncoding="iso-8859-1" language="java" %>
 <jsp:useBean id="mainBean" class="com.acceso.wfweb.beans.MainBean" scope="session"/>
-<jsp:useBean id="contenedorBean" class="com.acceso.wfweb.beans.ContenedorBean" scope="session"/>
+<jsp:useBean id="cntBean" class="com.acceso.wfweb.beans.ContenedorBean" scope="session"/>
 
-<html co_conten="${contenedorBean.do64(pageContext.request)}">
+<html co_conten="${cntBean.do64(pageContext.request)}">
     <head>
-        <title>${contenedorBean.contenedor.co_contit} - AIO2</title>
+        <title>${cntBean.contenedor.co_contit} - AIO2</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +89,7 @@
                 border-top: 1px solid #eee;
             }
 
-            <c:if test="${contenedorBean.contenedor.il_popup}">
+            <c:if test="${cntBean.contenedor.il_popup}">
                 body {
                     background-color: rgba(255, 255, 255, .0);
                 }
@@ -97,15 +97,15 @@
             </c:if>
         </style>
     </head>
-    <body onload="workflow(${contenedorBean.contenedor.il_popup})"
-          class="fixed-sn light-blue-skin ${!contenedorBean.contenedor.il_popup}">
-        <input type="hidden" value="${contenedorBean.contenedor.id_frawor}" id="id_frawor"/>
-        <input type="hidden" value="${contenedorBean.contenedor.co_conten}" id="co_conten"/>
+    <body onload="workflow(${cntBean.contenedor.il_popup})"
+          class="fixed-sn light-blue-skin ${!cntBean.contenedor.il_popup}">
+        <input type="hidden" value="${cntBean.contenedor.id_frawor}" id="id_frawor"/>
+        <input type="hidden" value="${cntBean.contenedor.co_conten}" id="co_conten"/>
         <input type="hidden" value="${US.co_usuari}" id="co_usuari"/>
 
-        <textarea style="display:none;" id="ls_conpar">${contenedorBean.contenedor.ls_conpar}</textarea>
+        <textarea style="display:none;" id="ls_conpar">${cntBean.contenedor.ls_conpar}</textarea>
 
-        <c:if test="${!contenedorBean.contenedor.il_popup}">
+        <c:if test="${!cntBean.contenedor.il_popup}">
             <!--Main Navigation-->
             <header>
 
@@ -121,7 +121,7 @@
 
                     <!-- Breadcrumb-->
                     <div class="breadcrumb-dn mr-auto white-text">
-                        <p>${contenedorBean.contenedor.co_contit}</p>
+                        <p>${cntBean.contenedor.co_contit}</p>
                     </div>
 
                     <!-- Links -->
@@ -489,9 +489,9 @@
             <div class="container-fluid">
                 <section card card-cascade narrower mb-5>
                     <!--<div class="w3-row" style="height: 65px;"></div>-->
-                    <input type="hidden" id="il_popup" name="il_popup" value="${contenedorBean.contenedor.il_popup}">
+                    <input type="hidden" id="il_popup" name="il_popup" value="${cntBean.contenedor.il_popup}">
                     <%--<div>Aqui va todo el contenido</div>--%>
-                    ${contenedorBean.contenedor.toHTML()}
+                    ${cntBean.contenedor.toHTML()}
                 </section>
 
             </div>

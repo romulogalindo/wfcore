@@ -31,7 +31,7 @@ doPagJson = function (url) {
     net.send();
 };
 
-$D.doLogoutJson = function () {
+doLogoutJson = function () {
     var net = new inet();
     net.open("POST", "/logout64", true); //false para que sea sincrono
 
@@ -282,7 +282,7 @@ doDinJson = function (url, data) {
     net.send(data);
 }
 
-$D.getJSONE = function (url) {
+getJSONE = function (url) {
     var net = new inet();
     net.open("POST", url, false); //false para que sea sincrono
 
@@ -322,7 +322,7 @@ getHTML = function (url) {
     return html;
 };
 
-$D.getHTML2 = function (url) {
+getHTML2 = function (url) {
     var net = new inet();
     net.open("POST", url, false); //false para que sea sincrono
     var html;
@@ -339,7 +339,7 @@ $D.getHTML2 = function (url) {
     return html;
 };
 
-$D.getTEXT = function (url) {
+getTEXT = function (url) {
     var net = new inet();
     net.open("POST", url, false); //false para que sea sincrono
     var html;

@@ -131,19 +131,6 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
             } else {
                 has_rowspan = false;
             }
-//            if (i == 0) {
-//                cols.add(contab);
-//            } else {
-//                if (cols.get(cols.size() - 1).getOr_numrow() != contab.getOr_numrow()) {
-//                    rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
-//                    cols = new ArrayList<>();
-//                }
-//                cols.add(contab);
-//            }
-//
-//            if ((contabs.size() - 1) == (i)) {
-//                rows.put(cols.get(cols.size() - 1).getCo_contab(), cols);
-//            }
         }
 
         for (Map.Entry<Integer, List<WContabDTO>> rowx : rows.entrySet()) {
@@ -155,6 +142,44 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
             String varcolwidth = filas == 1 ? "col-md-6" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
             if (rowx.getValue().size() < 3) {
                 for (WContabDTO contab : rowx.getValue()) {
+                    try {
+                        System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !1");
+                        if (filas == 1) {
+                            System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !2");
+                            for (int p = 0; p < paginas.size(); p++) {
+                                Pagina pag = paginas.get(p);
+                                System.out.println("pag = " + pag);
+                                if (pag != null) {
+                                    System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !3[pag.getCo_contab():" + pag.getCo_contab() + "][contab.getCo_contab():" + contab.getCo_contab() + "]");
+                                    if (pag.getCo_contab() == contab.getCo_contab()) {
+                                        System.out.println("{{}}{--->}pag.getTi_pagina() =>>> " + pag.getTi_pagina());
+                                        if (pag.getTi_pagina().contentEquals("F")) {
+                                            varcolwidth = "col-md-6";
+                                        }/*else{
+                                        varcolwidth = "col-md-12";
+                                    }*/
+                                        p = 1000;
+                                    }
+                                }else{
+                                    System.out.println("pag>>>>>>>>> = " + pag);
+                                }
+                            }
+                        }
+
+//                        Pagina pag = paginas.values().stream()
+//                                .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab())).findFirst().get();
+//
+//
+//                        if (pag.getTi_pagina().contentEquals("F")) {
+//                            varcolwidth = "col-md-6";
+//                        } else {
+//                            varcolwidth = "col-md-12";
+//                        }
+                    } catch (Exception ep) {
+                        ep.printStackTrace();
+                        varcolwidth = "col-md-6";
+                    }
+
                     HTML += "<div class=\"" + varcolwidth + " wfcol\" style=\"height: 0 auto; margin: 0px auto;\">";
 
 //                for (Pagina pagina : paginas.values()) {

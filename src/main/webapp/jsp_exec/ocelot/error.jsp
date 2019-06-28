@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css">
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/workflow.js?a=6"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=6"></script>
     <style>
         h3 {
