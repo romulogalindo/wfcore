@@ -21,7 +21,7 @@ import java.util.List;
             resultClass = BotonDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_SAVE_BUTTON,
-            query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :p_co_pagbot, :p_no_pagbot, :p_or_pagbot, :p_ti_pagbot, :p_il_proces, :p_il_confir, :p_no_confir, :p_il_autent, :p_il_peresc, :p_no_icobot, :p_no_icopos);",
+            query = "select * from wfsistem.pbpagbot_save(:p_co_pagina, :p_co_pagbot, :p_no_pagbot, :p_or_pagbot, :p_ti_pagbot, :p_il_proces, :p_il_confir, :p_no_confir, :p_il_autent, :p_il_peresc, :p_no_icobot, :p_no_icopos, :p_va_colbot, :p_va_toltip);",
             resultClass = BotonDTO.class),
     @NamedNativeQuery(
             name = Values.QUERYS_NATIVE_DELETE_BUTTON,
@@ -43,6 +43,8 @@ public class BotonDTO implements Serializable {
     boolean il_peresc;
     String no_icobot;
     String no_icopos;
+    String va_colbot;
+    String va_toltip;
 
     @Transient
     PagconDTO pagconDTO;
@@ -155,6 +157,22 @@ public class BotonDTO implements Serializable {
 
     public void setNo_icopos(String no_icopos) {
         this.no_icopos = no_icopos;
+    }
+
+    public String getVa_colbot() {
+        return va_colbot;
+    }
+
+    public void setVa_colbot(String va_colbot) {
+        this.va_colbot = va_colbot;
+    }
+
+    public String getVa_toltip() {
+        return va_toltip;
+    }
+
+    public void setVa_toltip(String va_toltip) {
+        this.va_toltip = va_toltip;
     }
 
     @Override

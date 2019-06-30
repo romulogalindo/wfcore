@@ -170,6 +170,32 @@
                                             </p:column>
                                         </p:row>
 
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_va_colbot" value="Color del boton"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:colorPicker id="sb_va_colbot" value="#{paginaBean.botonSeleccionado.va_colbot}" />
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column styleClass="form_col_title">
+                                                <p:outputLabel for="sb_va_toltip" value="Texto de tooltip"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_empty">
+                                                <p:spacer width="1" height="24"
+                                                          style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                            </p:column>
+                                            <p:column styleClass="form_col_detail">
+                                                <p:inputText id="sb_va_toltip"
+                                                             value="#{paginaBean.botonSeleccionado.va_toltip}"
+                                                             disabled="#{!paginaBean.btnEditable}"/>
+                                            </p:column>
+                                        </p:row>
                                     </p:panelGrid>
                                 </p:outputLabel>
                             </p:column>
@@ -189,10 +215,10 @@
                                 </p:commandButton>
                             </p:column>
                             <p:column style="text-align: center;">
-                                <p:commandButton value="Grabar"
-                                                 action="#{paginaBean.pagbot_save}"
-                                                 type="submit"
-                                                 icon="pi pi-save"
+                                <p:commandButton value="Grabar y Aplicar"
+                                                 actionListener="#{paginaBean.pagbot_save}"
+                                                 icon="pi pi-refresh"
+                                                 ajax="true" async="false"
                                                  >
                                 </p:commandButton>
                             </p:column>

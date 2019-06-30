@@ -103,7 +103,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         catalogo.add("return valpagJson;");
         catalogo.add("return OK(");
         catalogo.add("return OK2({");
-        
+
         catalogo.add("DO_POST_LOAD_DATA");
         catalogo.add("DO_POST_LOAD_DATA  = function () {};");
         catalogo.add("SHOWINFO(true);");
@@ -227,14 +227,10 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //        Log.info("[PaginaBean]->PostConstruct:" + getWindowID().getId());
         Log.info("[PaginaBean]->PostConstruct:");
         /*EXP-->TRANSFER*/
-        String idPagTransa = "X64PAG";
-        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(idPagTransa);
-        Log.info("[PaginaBean]obj = " + obj);
+        Object obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("X64PAG");
+        Log.info("[PaginaBean]X64PAG = " + obj);
 
         if (obj != null) {
-            //        PaginaDAO dao = new PaginaDAO();
-//        this.paginas = dao.getPaginas();
-//        dao.close();
             this.pagina = (PaginaDTO) obj;
 
             Log.info("[PaginaBean]pagina:" + pagina);
@@ -244,6 +240,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
             dao.close();
         }
 
+        obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("X64BOT");
+        Log.info("[PaginaBean]X64BOT => " + obj);
+        if (obj != null) {
+            this.botonSeleccionado = (BotonDTO) obj;
+        }
     }
 
     @Override
@@ -353,10 +354,16 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagbot_edit() {
-        return URL_BTN_NEW;
+        //X64BOT
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("X64PAG", pagina);
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("X64BOT", botonSeleccionado);
+
+        return URL_BTN_EDITAR;
     }
 
     public String pagbot_save() {
+        System.out.println("[pagbot_save]pagina = " + pagina);
+        System.out.println("[pagbot_save]botonSeleccionado = " + botonSeleccionado);
         PaginaDAO dao = new PaginaDAO();
 
         dao.saveButton(pagina.getCo_pagina(), botonSeleccionado);

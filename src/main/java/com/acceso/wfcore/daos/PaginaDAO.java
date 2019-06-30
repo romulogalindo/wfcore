@@ -274,6 +274,9 @@ public class PaginaDAO {
 
             nQuery.setString("p_no_icobot", botonDTO.getNo_icobot());
             nQuery.setString("p_no_icopos", botonDTO.getNo_icopos());
+            
+            nQuery.setString("p_va_colbot", botonDTO.getVa_colbot());
+            nQuery.setString("p_va_toltip", botonDTO.getVa_toltip());
 
             System.out.println("[PaginaDAO:save] Q = " + nQuery.getQueryString());
             botonDTO = (BotonDTO) nQuery.uniqueResult();

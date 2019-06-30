@@ -222,8 +222,10 @@
 
                                             <p:column headerText="Acciones" style="text-align: center">
 
-                                                <p:commandButton icon="fa fa-fw fa-edit" value="Editar" title="Editar"
-                                                                 action="#{paginaBean.pagreg_edit}">
+                                                <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaBean.pagreg_edit}" update="mainPanel" ajax="true"
+                                                                 async="false">
+                                                    <!--<f:setPropertyActionListener value="#{pag}" target="#{paginaLSBean.pagina}"/>-->
+
                                                     <f:setPropertyActionListener value="#{ele}"
                                                                                  target="#{paginaBean.elementoSeleccionado}"/>
                                                     <f:setPropertyActionListener value="true"
@@ -320,9 +322,9 @@
 
 
                                             <p:column headerText="Acciones" style="text-align: center">
-
-                                                <p:commandButton icon="fa fa-fw fa-edit" title="Editar" value="Editar"
-                                                                 action="#{paginaBean.pagbot_edit}">
+                                                <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaBean.pagbot_edit}" update="mainPanel" ajax="true"
+                                                                 async="false">
+                                                    <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
                                                     <f:setPropertyActionListener value="#{bot}"
                                                                                  target="#{paginaBean.botonSeleccionado}"/>
                                                     <f:setPropertyActionListener value="true"
@@ -371,18 +373,11 @@
                                                            lineWrapping="true"
                                                            matchBrackets="true"
                                                            keyMap="sublime"
-                                                           />
-                                        </p:outputPanel>
-                                    </p:tab>
-
-                                    <p:tab id="compagjs" title="Script de Combos">
-                                        <p:outputPanel style="text-align: left;">
-                                            <pe:codeMirror id="cadeJS3" mode="javascript" theme="material" label="valpag.js"
-                                                           value="#{paginaBean.pagina.js_compag}"
-                                                           lineNumbers="true"
-                                                           lineWrapping="true"
-                                                           matchBrackets="true"
-                                                           keyMap="sublime"
+                                                           tabSize="4"
+                                                           indentUnit="4"
+                                                           widgetVar="cadeJS2"
+                                                           completeMethod="#{paginaBean.complete}"  
+                                                           extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS2').complete(); }}"
                                                            />
                                         </p:outputPanel>
                                     </p:tab>
@@ -395,6 +390,11 @@
                                                            lineWrapping="true"
                                                            matchBrackets="true"
                                                            keyMap="sublime"
+                                                           tabSize="4"
+                                                           indentUnit="4"
+                                                           widgetVar="cadeJS4"
+                                                           completeMethod="#{paginaBean.complete}"  
+                                                           extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS4').complete(); }}"
                                                            />
                                         </p:outputPanel>
                                     </p:tab>
@@ -419,20 +419,11 @@
                                 </p:commandButton>
                             </p:column>
                             <p:column style="text-align: center;width: 60%;">
-                                <!--                                <p:commandButton value="Grabar"
-                                                                                 action="{paginaBean.saveRegist}"
-                                                                                 type="submit"
-                                                                                 icon="pi pi-save"
-                                                                                 update="panelActualizarPagina">
-                                                                    <p:ajax rendered="panelActualizarPagina"/>
-                                                                </p:commandButton>-->
                                 <p:commandButton value="Grabar y Aplicar"
                                                  actionListener="#{paginaBean.saveRegistApply}"
-                                                 
                                                  icon="pi pi-refresh"
                                                  ajax="true" async="false"
                                                  update="panelActualizarPagina">
-                                    <!--<p:ajax rendered="panelActualizarPagina"/>-->
                                 </p:commandButton>
                             </p:column>
                         </p:row>

@@ -146,24 +146,34 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
                         System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !1");
                         if (filas == 1) {
                             System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !2");
-                            for (int p = 0; p < paginas.size(); p++) {
-                                Pagina pag = paginas.get(p);
-                                System.out.println("pag = " + pag);
-                                if (pag != null) {
-                                    System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !3[pag.getCo_contab():" + pag.getCo_contab() + "][contab.getCo_contab():" + contab.getCo_contab() + "]");
-                                    if (pag.getCo_contab() == contab.getCo_contab()) {
-                                        System.out.println("{{}}{--->}pag.getTi_pagina() =>>> " + pag.getTi_pagina());
-                                        if (pag.getTi_pagina().contentEquals("F")) {
-                                            varcolwidth = "col-md-6";
-                                        }/*else{
-                                        varcolwidth = "col-md-12";
-                                    }*/
-                                        p = 1000;
-                                    }
-                                }else{
-                                    System.out.println("pag>>>>>>>>> = " + pag);
-                                }
+//                            for (int p = 0; p < paginas.size(); p++) {
+//                                Pagina pag = paginas.values().get(p);
+//                                System.out.println("pag = " + pag);
+//                                if (pag != null) {
+//                                    System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !3[pag.getCo_contab():" + pag.getCo_contab() + "][contab.getCo_contab():" + contab.getCo_contab() + "]");
+//                                    if (pag.getCo_contab() == contab.getCo_contab()) {
+//                                        System.out.println("{{}}{--->}pag.getTi_pagina() =>>> " + pag.getTi_pagina());
+//                                        if (pag.getTi_pagina().contentEquals("F")) {
+//                                            varcolwidth = "col-md-6";
+//                                        }/*else{
+//                                        varcolwidth = "col-md-12";
+//                                    }*/
+//                                        p = 1000;
+//                                    }
+//                                }else{
+//                                    System.out.println("pag>>>>>>>>> = " + pag);
+//                                }
+//                            }
+
+                            Pagina pag = paginas.values().stream()
+                                    .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab())).findFirst().get();
+                            System.out.println("pag()--> = " + pag.getTi_pagina());
+                            if (pag.getTi_pagina().contentEquals("F")) {
+                                varcolwidth = "col-md-6";
+                            } else {
+                                varcolwidth = "col-md-12";
                             }
+
                         }
 
 //                        Pagina pag = paginas.values().stream()
