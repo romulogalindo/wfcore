@@ -22,7 +22,7 @@ public class PaginaFormulario extends Pagina implements Serializable {
         String html = "";
 
         html += "<input type=hidden id=ti_pagina value=F />";
-        html += "<input type=hidden id=ls_hamoda value=\"" + getLs_hamoda() + "\" />";
+//        html += "<input type=hidden id=ls_hamoda value=\"" + getLs_hamoda() + "\" />";
 
         html += "<table id=PAG" + this.co_pagina + " class=\"table table-hover mb-0\">";
         html += "<tbody id=\"row1\">";

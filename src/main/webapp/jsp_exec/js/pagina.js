@@ -67,9 +67,10 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
-function ls_hamoda() {
-    return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
-}
+/*Codigo que sera heliminado*/
+//function ls_hamoda() {
+//    return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
+//}
 
 function ifnull(val, def) {
     if (val == null | val == undefined) {
@@ -94,7 +95,7 @@ function pagina() {
     TI_PAGINA = document.getElementById('ti_pagina').value;
     HTML_PAGINA = document.getElementById('PAG' + CO_PAGINA);
 
-    doPagJson('/pangolin?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&id_frawor=' + ID_FRAWOR + "&ls_hamoda=" + ls_hamoda());
+    doPagJson('/pangolin?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&id_frawor=' + ID_FRAWOR);
 
     //despues de pintar la pagina
     /*

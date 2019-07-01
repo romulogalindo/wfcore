@@ -166,6 +166,7 @@ table.wf-report thead tr th {
     font-size: 0.8rem;
     padding-right: 0.4rem !important;
     padding-left: 0.4rem !important;
+    white-space: nowrap;
 }
 
 table.wf-report td {
@@ -177,6 +178,15 @@ table.wf-report tbody td {
     padding-left: 0.4rem !important;
     font-size: 0.85rem;
 }
+
+table.wf-report tbody td span div input.select-dropdown {
+    width: unset !important;
+}
+
+table.wf-report tbody td span div input.w3-input {
+    width: unset !important;
+}
+
 table.wf-report tfoot tr td {
     text-align: center;
     padding-top: 10px !important;

@@ -13,11 +13,11 @@ function Parameter(co_pagreg, co_conpar) {
     this.pagreg = co_pagreg;
 
     this.getConpar = function () {
-        return this.conpar
+        return this.conpar;
     };
 
     this.getPagreg = function () {
-        return this.pagreg
+        return this.pagreg;
     };
 }
 
@@ -55,30 +55,6 @@ function viewtab(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " w3-red";
 }
-
-// function id_frawor() {
-//     return document.getElementById('id_frawor').value;
-// }
-
-// function co_conten() {
-//     return document.getElementById('co_conten').value;
-// }
-
-// function co_pagina() {
-//     return document.getElementById('co_pagina').value;
-// }
-
-// function ti_pagina() {
-//     return document.getElementById('ti_pagina').value;
-// }
-
-// function ls_hamoda() {
-//     return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
-// }
-
-// function co_usuari() {
-//     return document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
-// }
 
 function workflow(il_popup) {
     CO_CONTEN = document.getElementById('co_conten').value;

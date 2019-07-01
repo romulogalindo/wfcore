@@ -41,7 +41,7 @@ public class AsyncValPag extends AsyncProcessor {
 
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
             Usuario usuario = ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US"));
-            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
+//            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
             System.out.println("UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
             ScriptContextExecutor script;
@@ -85,34 +85,32 @@ public class AsyncValPag extends AsyncProcessor {
                 jsonResponse.setResult(valpagx);
                 jsonResponse.setFnpost(script.dopvpj("GET_DO_POST_LOAD_DATA"));
 
-                if (valpagx instanceof ValpagJson) {
-                    valpagJson = (ValpagJson) valpagx;
-                    if (valpagJson != null && (valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
-                        HashMap<String, Object> map_hamodas = new HashMap<>();
-                        Map<Short, Object> compags = script.doCompag64(id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
-
-                        compags
-                                .entrySet()
-                                .stream()
-                                .filter(o -> o.getValue() != null && ((JsonResponse) o.getValue()).getStatus().contentEquals("OK"))
-                                .forEach(
-                                        entry -> {
-                                            List<ComboDTO> combo = new ArrayList<>();
-                                            for (Object rss : (List) ((JsonResponse) entry.getValue()).getResult()) {
-                                                if (rss != null) {
-                                                    java.util.HashMap hashMap = (HashMap) rss;
-                                                    combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
-                                                }
-                                            }
-                                            map_hamodas.put("" + entry.getKey(), combo);
-                                        }
-                                );
-
-                        jsonResponse.setAditional(map_hamodas);
-                    }
-                } else {
-
-                }
+//                if (valpagx instanceof ValpagJson) {
+//                    valpagJson = (ValpagJson) valpagx;
+//                    if (valpagJson != null && (valpagJson.getRows() != null && !valpagJson.getRows().isEmpty()) && ls_hamoda.length() > 0) {
+//                        HashMap<String, Object> map_hamodas = new HashMap<>();
+//                        Map<Short, Object> compags = script.doCompag64(id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+//
+//                        compags
+//                                .entrySet()
+//                                .stream()
+//                                .filter(o -> o.getValue() != null && ((JsonResponse) o.getValue()).getStatus().contentEquals("OK"))
+//                                .forEach(
+//                                        entry -> {
+//                                            List<ComboDTO> combo = new ArrayList<>();
+//                                            for (Object rss : (List) ((JsonResponse) entry.getValue()).getResult()) {
+//                                                if (rss != null) {
+//                                                    java.util.HashMap hashMap = (HashMap) rss;
+//                                                    combo.add(new ComboDTO("" + hashMap.get("co_compag"), "" + hashMap.get("no_compag")));
+//                                                }
+//                                            }
+//                                            map_hamodas.put("" + entry.getKey(), combo);
+//                                        }
+//                                );
+//
+//                        jsonResponse.setAditional(map_hamodas);
+//                    }
+//                }
             } else {
                 valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
                 jsonResponse.setResult(valpagJson);
@@ -138,49 +136,3 @@ public class AsyncValPag extends AsyncProcessor {
     }
 
 }
-//ejecutar valpag
-//            System.out.println(LOG + " INI-- ");
-//            if (WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_conten + "" + co_pagina) == null) {
-//
-//                Frawor4DAO dao = new Frawor4DAO();
-//                valpag_js = dao.getJS_Valpag(co_pagina).getScript();
-//                dao.close();
-//
-//                valpag_js = valpag_js == null ? "VALPAGJS = DATA.VALPAG_LEGACY('wfacr', 'select * from frawor2.pfvalpag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');" : valpag_js;
-//                valpag_js = valpag_js.replace("P989115793P", "PAG" + co_pagina);
-//
-//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).put(co_conten + "" + co_pagina, valpag_js);
-//            } else {
-//                valpag_js = (String) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_VALPAGJS).get(co_conten + "" + co_pagina);
-//            }
-//
-//            valpag_js = Util.getText(WFIOAPP.APP.VALPAGJS).replace("USUARI_DATA_JS_TEXT", valpag_js);
-//            System.out.println(LOG + " VPJS(" + valpag_js.length() + ")>:" + valpag_js);
-//
-//            /*EXE VALPAGJS*/
-//            ValpagJson valpagJson = (ValpagJson) WFIOAPP.APP.getJavaScriptService().doValpag64(valpag_js, "do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
-//
-//            jsonResponse.setResult(valpagJson);
-
-
-/* COMPAGJS */
-//                String compag_js = (String) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).get(co_pagina);
-//                if (compag_js == null || compag_js.contentEquals("null")) {
-//
-//                    Frawor4DAO dao = new Frawor4DAO();
-//                    compag_js = dao.getJS_Compag(co_pagina).getScript();
-//                    dao.close();
-//
-//                    if (compag_js == null) {
-//                        compag_js = "VALPAGJS = DATA.COMPAG_LEGACY('wfacr', 'select * from frawor2.pfcompag(\'+CO_PAGINA+\', \'+ID_FRAWOR+\', \'+CO_CONTEN+\')');";
-//                    }
-//
-//                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_COMPAGJS).put(co_pagina, compag_js);
-//                }
-//
-//                compag_js = Util.getText(WFIOAPP.APP.COMPAGJS).replace("USUARI_DATA_JS_TEXT", compag_js);
-//
-//                Map<Short, Object> compags = WFIOAPP.APP.getJavaScriptService().doCompag64(compag_js, "do_compag", id_frawor, co_conten, co_pagina, ls_hamoda.split(","), ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
-//            String urpta = Util.toJSON2(jsonResponse);
-//
-//            System.out.println(LOG + " VR? = " + urpta);
