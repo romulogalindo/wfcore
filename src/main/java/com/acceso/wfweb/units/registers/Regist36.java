@@ -38,11 +38,24 @@ public class Regist36 extends HTMLRenderer {
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";
-                html += "       <span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" ti_pagreg=\"36\" >"
-                        + "   <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">"
-                        + "<i class=\"fa fa-upload\" aria-hidden=\"true\"></i> <span>Subir archivo<span></a>"
-                        + "   <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "\" style=\"display:none;\"></iframe>"
-                        + "</span>";
+                html += "       <span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg\" ti_pagreg=\"36\" style=\"border: 1px solid #8a8888;border-radius: 3px;padding: 0px 10px;background: #cdcdcd;\" >"
+                        + "         <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">"
+                        + "              <span>Sube tu archivo<span>"
+//                        + "             <i class=\"fa fa-upload\" aria-hidden=\"true\"></i>"
+                        + "          </a>"
+
+//                        + "              <span>Selecciona Archivo<span>"
+                        + "         <button onclick=\"return doupload36('" + id + "V')\" class=\"wf-button-transparent\" title=\"Selecciona tu archivo\">"
+                        + "             <i class=\"fa fa-upload\" aria-hidden=\"true\" ></i>"
+                        + "          </button>"
+
+                        + "         <button onclick=\"return doclean36('" + id + "V')\" class=\"wf-button-transparent\" title=\"Borrar\">"
+                        + "         <i class=\"fas fa-eraser\" aria-hidden=\"true\" ></i>"
+//                        + "         <i class=\"fas fa-eraser\" aria-hidden=\"true\"></i> <span>Borrar<span>"
+                        + "          </button>"
+
+                        + "         <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "\" style=\"display:none;\"></iframe>"
+                        + "     </span>";
                 html += "   </td>";
                 html += "</tr>";
                 break;
