@@ -282,7 +282,7 @@ doDinJson = function (url, data) {
     net.send(data);
 }
 
-doDinJson2 = function (url, data) {
+doDinJson2 = function (url, data, rowuid) {
     var net = new Inet();
     net.open("POST", url, true); //false para que sea sincrono
 
@@ -290,7 +290,7 @@ doDinJson2 = function (url, data) {
         if (net.readyState == 4 && net.status == 200) {
             // console.log('{NET(' + url + ')} ::::' + net.responseText)
             var json = JSON.parse(net.responseText);
-            pagina_onload2(json);
+            pagina_onload2(json,rowuid);
         }
 
     }

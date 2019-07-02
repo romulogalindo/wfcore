@@ -144,7 +144,21 @@ function pagina_onload(_data) {
                     loadReporte64((i + 1), tbody64, rows[i]);
             }
 
+            /*ON END LOAD*/
+            /*SELECT*/
+            var all_selects = document.getElementsByClassName('mdb-select');
+//    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
+//    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
+            for (var i = 0; i < all_selects.length; i++) {
+                var me_select = all_selects[i];
+                if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
+                    $(me_select).materialSelect();
+//            console.log('Se ejecuto la create!');
+                }
+            }
+
             /*BEFORE VIEW*/
+//            alert('antes de view!');
             eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
 
             /*UPDATE HEIGHT*/
@@ -192,21 +206,11 @@ function pagina_onload(_data) {
 
     /*TOOLTIP*/
     $('[data-toggle="tooltip"]').tooltip();
-    /*SELECT*/
-    var all_selects = document.getElementsByClassName('mdb-select');
-    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
-    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
-    for (var i = 0; i < all_selects.length; i++) {
-        var me_select = all_selects[i];
-        if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
-            $(me_select).materialSelect();
-            console.log('Se ejecuto la create!');
-        }
-    }
+
 
 }
 
-function pagina_onload2(_data) {
+function pagina_onload2(_data, rowid) {
     if (!CALLED) {
         CALLED = true;
     }
@@ -225,7 +229,7 @@ function pagina_onload2(_data) {
             // for (var i = 0; i < rows.length; i++) {
             // loadReporte64((i + 1), tbody64, rows[0]);
             var row = rows[0];
-            var rowid = rowid_over_table_temp;
+//            var rowid = rowid_over_table_temp;
             console.log('rowid:::>>>>>>>>>>' + rowid_over_table_temp);
             //-------------------
             for (var x = 0; x < row.regs.length; x++) {
@@ -442,7 +446,8 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("(" + CO_PAGINA + ")=======EVAL DATA TYPE=>" + ultraid + ",=>?" + eledom.tagName + "[" + ti_estreg + "]");
             //EVALUACION DE TIPO DE DATO
             switch (eledom.tagName) {
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("[ti_pagreg:" + ti_pagreg + "]?[reg.type:" + reg.type + "]=>[(reg.type != undefined ):" + (reg.type != undefined) + "].[reg.type > -1):" + (reg.type > -1) + "]?==>" + (reg.type != undefined & reg.type > -1));
 
@@ -499,7 +504,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
                 }
-                case "INPUT": {
+                case "INPUT":
+                {
 
                     break;
                 }
@@ -510,14 +516,16 @@ function loadFormulario64(index, row, aditional, dom2) {
             console.log("=======ASIGN DATA=>" + ultraid + ",=>?" + eledom + ",extra:" + eledom.tagName + "::" + valdom + "::==>>" + eledom.getAttribute("type") + "<==[" + ti_estreg + "]");
             //ASIGNACION DE DATA
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     eledom.value = valdom;
                     if (eledom.getAttribute("type") !== "hidden") {
                         domtr(eledom).removeAttribute('style');
                     }
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -745,7 +753,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     domtr(eledom).removeAttribute('style');
                     break;
                 }
-                case "A" : {
+                case "A" :
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -757,7 +766,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     break;
                 }
-                default: {
+                default:
+                {
                     eledom.innerHTML = valdom;
                     domtr(eledom).removeAttribute('style');
                 }
@@ -769,11 +779,13 @@ function loadFormulario64(index, row, aditional, dom2) {
             //EVALUACION DE TIPO DE ESTADO
             console.log('=======UPDATE STATE!=>' + ultraid + ', [reg.state!:' + reg.state + '][eledom:' + eledom + '][ti_estreg:' + ti_estreg + '][domtr(eledom):' + domtr(eledom) + ']');
             switch (ti_estreg) {
-                case 'O': {
+                case 'O':
+                {
                     domtr(eledom).setAttribute('style', 'display:none;');
                     break;
                 }
-                case 'E': {
+                case 'E':
+                {
                     domtr(eledom).removeAttribute('style');
                     //-------
                     var domtitle = document.getElementsByName("P" + CO_PAGINA + "C" + index + "T" + domtr(eledom).getAttribute("co_pagtit"))[0];
@@ -795,7 +807,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     }
                     break;
                 }
-                case 'L': {
+                case 'L':
+                {
                     domtr(eledom).getAttribute("co_pagtit");
                     domtr(eledom).removeAttribute('style');
                     //------
@@ -1051,11 +1064,13 @@ function propag(cycle, co_button, il_proces, co_condes) {
             var val = null;
 
             switch (eledom.tagName) {
-                case "INPUT": {
+                case "INPUT":
+                {
                     val = eledom.value;
                     break;
                 }
-                case "SPAN": {
+                case "SPAN":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     console.log("ti_pagreg=" + ti_pagreg);
                     if (ti_pagreg == '1' | ti_pagreg == '22' | ti_pagreg == '23') {
@@ -1150,7 +1165,8 @@ function propag(cycle, co_button, il_proces, co_condes) {
 
                     break;
                 }
-                case "A": {
+                case "A":
+                {
                     var ti_pagreg = eledom.getAttribute('ti_pagreg');
                     if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
@@ -1260,11 +1276,13 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
         var eledom = document.getElementById('P' + CO_PAGINA + cycle + 'R' + spagreg + 'V');
         var valdom = '';
         switch (eledom.tagName) {
-            case "INPUT": {
+            case "INPUT":
+            {
                 valdom = eledom.value;
                 break;
             }
-            case "SPAN": {
+            case "SPAN":
+            {
                 var ti_pagreg = eledom.getAttribute('ti_pagreg');
                 //console.log("ti_pagreg=" + ti_pagreg + "->" + (ti_pagreg == '13'));
 //                if (ti_pagreg == '1') {
@@ -1323,7 +1341,8 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 valdom = eledom.innerHTML;
             }
         }
@@ -1716,7 +1735,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case '1': {
+                        case '1':
+                        {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -1738,11 +1758,13 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                             break;
                         }
-                        case '2': {
+                        case '2':
+                        {
                             all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case '3': {
+                        case '3':
+                        {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
                             regval = iselect.options[iselect.selectedIndex].value;
@@ -1750,7 +1772,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + regval + "\",";
                             break;
                         }
-                        case '6': {
+                        case '6':
+                        {
                             var iinput = x64.getElementsByTagName('INPUT')[0];
                             console.log('iinput===>' + iinput);
                             console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
@@ -1760,7 +1783,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             }
                             break;
                         }
-                        case '36': {
+                        case '36':
+                        {
                             // var iselect = x64.getElementsByTagName('SELECT')[0];
                             // console.log("iselect:" + iselect);
                             // regval = iselect.options[iselect.selectedIndex].value;
@@ -1795,7 +1819,8 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             //-----
                             break;
                         }
-                        default: {
+                        default:
+                        {
                             all_regs += '\"\"' + ",";
                         }
 
@@ -1876,7 +1901,6 @@ function dinpag2(obj, co_pagreg) {
     console.log('co_pagreg2>>>::' + co_pagreg);
     //preguntar al core que hacer?
     var data = new FormData();
-    data.append('id_fraworx', '' + 0);
     data.append('id_frawor', '' + ID_FRAWOR);
     data.append('co_pagina', '' + CO_PAGINA);
     data.append('co_conten', '' + CO_CONTEN);
@@ -1905,7 +1929,7 @@ function dinpag2(obj, co_pagreg) {
     var urls = ("" + parent.location).split('&');
     for (var i = 0; i < urls.length; i++) {
         var url = urls[i];
-        console.log('url=' + url + "--->" + (url.indexOf('co_conpar') > -1));
+//        console.log('url=' + url + "--->" + (url.indexOf('co_conpar') > -1));
         if (url.indexOf('co_conpar') > -1) {
             if (url.split('=').length = 2) {
                 ls_conpar += "\"" + url.split('=')[0] + "\":\"" + url.split('=')[1] + "\",";
@@ -1922,7 +1946,7 @@ function dinpag2(obj, co_pagreg) {
     rowid_over_table_temp = rowid_over_table_temp.parentNode;
     rowid_over_table_temp = rowid_over_table_temp.id;
     rowid_over_table_temp = rowid_over_table_temp.substring(rowid_over_table_temp.indexOf('C') + 1, rowid_over_table_temp.indexOf('R'));
-
+    console.log('rowid_over_table_temp:' + rowid_over_table_temp);
     //---------------------
     //estructura momentanea
     var all_regs = "[";
@@ -1959,16 +1983,17 @@ function dinpag2(obj, co_pagreg) {
                             regval = x64.value;
                             all_regs += "\"" + encodeURIComponent(regval) + "\",";
                         } /*else if (x64.getAttribute('TYPE') == 'checkbox') {
-                     regval = x64.checked == undefined ? 'false' : '' + x64.checked;
-                     all_regs += "\""+regval + "\",";
-                     }*/
+                         regval = x64.checked == undefined ? 'false' : '' + x64.checked;
+                         all_regs += "\""+regval + "\",";
+                         }*/
                     } else if (x64.tagName == 'SELECT') {
                         console.log('is select');
                     } else if (x64.tagName == 'SPAN') {
                         console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                         var ti_pagreg = x64.getAttribute('ti_pagreg');
                         switch (ti_pagreg) {
-                            case '1': {
+                            case '1':
+                            {
                                 console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                                 console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                                 if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -1990,11 +2015,13 @@ function dinpag2(obj, co_pagreg) {
 
                                 break;
                             }
-                            case '2': {
+                            case '2':
+                            {
                                 all_regs += "\"" + x64.innerHTML + "\",";
                                 break;
                             }
-                            case '3': {
+                            case '3':
+                            {
                                 var iselect = x64.getElementsByTagName('SELECT')[0];
                                 console.log("iselect:" + iselect);
                                 regval = iselect.options[iselect.selectedIndex].value;
@@ -2002,7 +2029,8 @@ function dinpag2(obj, co_pagreg) {
                                 all_regs += "\"" + regval + "\",";
                                 break;
                             }
-                            case '6': {
+                            case '6':
+                            {
                                 var iinput = x64.getElementsByTagName('INPUT')[0];
                                 console.log('iinput===>' + iinput);
                                 console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
@@ -2012,7 +2040,8 @@ function dinpag2(obj, co_pagreg) {
                                 }
                                 break;
                             }
-                            case '36': {
+                            case '36':
+                            {
                                 // var iselect = x64.getElementsByTagName('SELECT')[0];
                                 // console.log("iselect:" + iselect);
                                 // regval = iselect.options[iselect.selectedIndex].value;
@@ -2047,7 +2076,8 @@ function dinpag2(obj, co_pagreg) {
                                 //-----
                                 break;
                             }
-                            default: {
+                            default:
+                            {
                                 all_regs += '\"\"' + ",";
                             }
 
@@ -2068,7 +2098,7 @@ function dinpag2(obj, co_pagreg) {
     data.append('ls_allreg', '' + all_regs);
     console.log('toda la dtaa readey!!!>>' + data);
 
-    doDinJson2('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR, data);
+    doDinJson2('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR, data, rowid_over_table_temp);
 }
 
 function PRINTABLE(opt) {
@@ -2239,21 +2269,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         console.log('inside type=>ur_pagreg:' + ur_pagreg);
         if (ti_estreg == 'E') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg\">"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', CO_CONTEN,'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
-                + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class='wf-button-transparent' onclick=\"child_popup(ur_pagreg, '" + id + "', CO_CONTEN,'titulo','')\" title='Abrir'><i class='fa fa-window-restore' aria-hidden='true'></i>Abrir</button>"
+                    + "           <button class='wf-button-transparent' onclick=\"clean_popup('" + id + "')\" title='Limpiar'><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'L') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         } else if (ti_estreg == 'O') {
             html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"34\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\" >"
-                + "           <span valpag=\"\"></span>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
-                + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
+                    + "           <span valpag=\"\"></span>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
         }
     }
