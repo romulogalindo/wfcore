@@ -52,11 +52,11 @@ function VALID(obj, defobj) {
     }
 }
 
-function UPPER(object){
+function UPPER(object) {
     return object.toUpperCase();
 }
 
-function LOWER(object){
+function LOWER(object) {
     return object.toLowerCase();
 }
 
@@ -147,7 +147,8 @@ function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION
     return COMPAGJS;
 }
 
-function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ID_SESION, CO_USUARI, ID_FRAANT) {
+// function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ID_SESION, CO_USUARI, ID_FRAANT) {
+function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ALLREG, ID_SESION, CO_USUARI, ID_FRAANT) {
     /*SET*/
     print('here');
     DATA.setCo_usuari(CO_USUARI);
@@ -159,6 +160,15 @@ function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR
 
     var PROPAGJS = null;
     var LS_REGIST = JSON.parse(REGIST);
+    var LS_ALLREG = null;
+    try {
+        LS_ALLREG = JSON.parse(ALLREG);
+        print('existe>' + LS_ALLREG);
+        print('existe>' + LS_ALLREG.length);
+        LS_ALLREG = LS_ALLREG[0];
+        print('*existe>' + LS_ALLREG);
+    } catch (e) {
+    }
     var LS_CONPAR = JSON.parse(CONPAR);
 
     USUARI_DATA_DINPAG
@@ -166,6 +176,6 @@ function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR
     return PROPAGJS;
 }
 
-function DECODE(object){
+function DECODE(object) {
     return decodeURIComponent(object);
 }

@@ -282,6 +282,22 @@ doDinJson = function (url, data) {
     net.send(data);
 }
 
+doDinJson2 = function (url, data) {
+    var net = new Inet();
+    net.open("POST", url, true); //false para que sea sincrono
+
+    net.onreadystatechange = function () {
+        if (net.readyState == 4 && net.status == 200) {
+            // console.log('{NET(' + url + ')} ::::' + net.responseText)
+            var json = JSON.parse(net.responseText);
+            pagina_onload2(json);
+        }
+
+    }
+    // net.send(null);
+    net.send(data);
+}
+
 getJSONE = function (url) {
     var net = new inet();
     net.open("POST", url, false); //false para que sea sincrono

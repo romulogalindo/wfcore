@@ -6,12 +6,10 @@ import com.acceso.wfweb.dtos.ComboDTO;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
+import com.acceso.wfweb.utils.RequestManager;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +35,21 @@ public class AsyncValPag extends AsyncProcessor {
             Integer co_pagreg = Util.toInt(asyncContext.getRequest().getParameter("co_pagreg"), -1);
             String va_pagreg = asyncContext.getRequest().getParameter("va_pagreg");
             String ls_allreg = asyncContext.getRequest().getParameter("ls_allreg");
+            Iterator it = asyncContext.getRequest().getAttributeNames().asIterator();
+            while (it.hasNext()) {
+                Object itx = it.next();
+                System.out.println("??itx = " + itx);
+            }
+            it = asyncContext.getRequest().getParameterNames().asIterator();
+            while (it.hasNext()) {
+                Object itx = it.next();
+                System.out.println("????itx = " + itx);
+            }
+
+            //---
+            RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
+            ls_allreg = requestManager.getParam("ls_allreg");
+            System.out.println("!!!ls_allreg = " + ls_allreg);
 //            String ls_conpar = requestManager.getParam("ls_conpar");
 
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
@@ -112,7 +125,7 @@ public class AsyncValPag extends AsyncProcessor {
 //                    }
 //                }
             } else {
-                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
                 jsonResponse.setResult(valpagJson);
             }
             out.write(Util.toJSON2(jsonResponse));

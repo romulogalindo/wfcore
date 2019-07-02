@@ -206,6 +206,209 @@ function pagina_onload(_data) {
 
 }
 
+function pagina_onload2(_data) {
+    if (!CALLED) {
+        CALLED = true;
+    }
+
+    if (_data.status == DATA_STATUS_OK) {
+        if (_data.result != undefined && _data.result.rows != undefined && _data.result.rows.length == 1) {
+            //prueba especial de carga?!
+            HTML_PAGINA.removeAttribute('style');
+            var rows = _data.result.rows;
+            var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
+            // var tbody64;
+
+            const ID_PAGINA = 'PAG' + CO_PAGINA;
+            console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
+
+            // for (var i = 0; i < rows.length; i++) {
+            // loadReporte64((i + 1), tbody64, rows[0]);
+            var row = rows[0];
+            var rowid = rowid_over_table_temp;
+            console.log('rowid:::>>>>>>>>>>' + rowid_over_table_temp);
+            //-------------------
+            for (var x = 0; x < row.regs.length; x++) {
+                var reg = row.regs[x];
+                // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
+                // document.getElementsByName('P' + CO_PAGINA + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+                // document.getElementsByName('P' + CO_PAGINA + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
+                var txtval = reg.text == undefined ? reg.value : reg.text;
+                txtval = txtval == undefined ? '' : txtval;
+                //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
+                // console.log('>[' + 'regist' + reg.regist + 'val' + '] >por> ' + txtval);
+                // n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
+                // n_itr.replace('<tr>','').replace('</tr>','')
+                // console.log('[loadReporte64:update!]>>>:' + n_itr);
+
+                // console.log('ELE:' + 'C' + rowid + 'R' + reg.regist);
+                // alert('XCD');
+//        console.log('===>C' +S rowid + 'R' + reg.regist + 'V');
+
+                var erid = 'P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V';
+                var ereg = document.getElementById(erid);
+                console.log('erid:' + erid + ', ereg:' + ereg);
+                // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
+                if (ereg != null) {
+                    var local_ti_pagreg = ereg.getAttribute('ti_pagreg') == undefined ? 1 : ereg.getAttribute('ti_pagreg');
+                    var nuevo_ti_pagreg = (reg.type == undefined) ? local_ti_pagreg : reg.type;
+                    var local_ti_estreg = TI_ESTREG(ereg.getAttribute('class'));
+                    var nuevo_ti_estreg = (reg.state == undefined) ? local_ti_estreg : reg.state;
+
+                    /*FORMA*/
+                    console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+                    if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
+                        console.log("Los elementos son diferentes");
+                        var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
+                        console.log('TAG CREADO!>>' + _html);
+                        ereg.parentNode.innerHTML = _html;
+                    } else {
+                        console.log("Los elementos son iguales");
+                    }
+                    ereg = document.getElementById('P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V');
+                }
+
+                /*DATA*/
+                if (ereg !== null) {
+                    // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
+                    // for (var i = 0; i < eregs.length; i++) {
+                    //     var ereg = eregs[i];
+                    if (ereg.getAttribute('ti_pagreg') == null) {
+                        ereg.value = txtval;
+                    } else if (ereg.getAttribute('ti_pagreg') == '1' | ereg.getAttribute('ti_pagreg') == '22' | ereg.getAttribute('ti_pagreg') == '23') {
+                        if (ereg.getElementsByTagName('INPUT').length > 0) {
+                            ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                            ereg.getElementsByTagName('INPUT')[0].value = txtval;
+                        } else {
+                            ereg.innerHTML = txtval;
+                            ereg.setAttribute('va_pagreg', reg.value);
+                        }
+
+                    } else if (ereg.getAttribute('ti_pagreg') == '2') {
+//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                        ereg.innerHTML = rowid;
+
+                    } else if (ereg.getAttribute('ti_pagreg') == '3') {
+//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                        //*ereg.innerHTML = rowid;
+                        //TEMPORAL====================
+                        var ls_compag;
+                        try {
+                            ls_compag = aditional[reg.regist];
+                            console.log('(COMBO)ls_compag?:' + ls_compag);
+                            if (ls_compag == undefined) {
+                                try {
+                                    ls_compag = JSON.parse(reg.data);
+                                } catch (e) {
+                                    console.log('(COMBO)el combo value!:' + ls_compag);
+                                }
+                            }
+                        } catch (e) {
+                            console.log('(COMBO)el combo value!:' + reg.data);
+                            ls_compag = JSON.parse(reg.data);
+                            console.log('(COMBO)el combo value!:' + ls_compag);
+                        }
+                        //=========================
+                        var dom_compag = "";
+
+                        if (ls_compag) {
+                            for (var i = 0; i < ls_compag.length; i++) {
+                                compag = ls_compag[i];
+
+                                dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                            }
+                            ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                        }
+
+                    } else if (ereg.getAttribute('ti_pagreg') == '4') {
+//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
+                        //*ereg.innerHTML = rowid;
+                        //TEMPORAL====================
+                        var ls_compag;
+                        try {
+                            ls_compag = aditional[reg.regist];
+                            console.log('(COMBO)ls_compag?:' + ls_compag);
+                            if (ls_compag == undefined) {
+                                try {
+                                    ls_compag = JSON.parse(reg.data);
+                                } catch (e) {
+                                    console.log('(COMBO)el combo value!:' + ls_compag);
+                                }
+                            }
+                        } catch (e) {
+                            console.log('(COMBO)el combo value!:' + reg.data);
+                            ls_compag = JSON.parse(reg.data);
+                            console.log('(COMBO)el combo value!:' + ls_compag);
+                        }
+                        //=========================
+                        var dom_compag = "<option value=\"\"></option>";
+
+                        if (ls_compag) {
+                            for (var i = 0; i < ls_compag.length; i++) {
+                                compag = ls_compag[i];
+
+                                dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
+                            }
+
+                            ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                        }
+
+                    } else if (ereg.getAttribute('ti_pagreg') == '6') {
+                        console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                        // ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
+                        // ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'R' + reg.regist + '_check');
+
+                        console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
+
+                        if (reg.value == 't' | reg.value == 'T' | reg.value == 'true' | reg.value == 'TRUE' | reg.value == 'verdadero') {
+                            ereg.getElementsByTagName('INPUT')[0].setAttribute('checked', 'checked');
+                            ereg.getElementsByTagName('INPUT')[0].checked = true;
+                        } else {
+                            ereg.getElementsByTagName('INPUT')[0].removeAttribute('checked');
+                            ereg.getElementsByTagName('INPUT')[0].checked = false;
+                        }
+
+                        // console.log('to add?:' + ' check' + reg.regist);
+                        // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
+                    } else if (ereg.getAttribute('ti_pagreg') == '36') {
+                        console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                        // ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
+                        // ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'R' + reg.regist + '_check');
+
+                        console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
+                        ereg.getElementsByTagName('A')[0].setAttribute('href', '/jsp_exec/ocelot/viewer.jsp?file=' + txtval);
+
+                        // console.log('to add?:' + ' check' + reg.regist);
+                        // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
+                    } else {
+                    }
+                }
+            }
+            // }
+
+            /*UPDATE HEIGHT*/
+            size_of_pagina();
+        }
+
+        // document.getElementById('loader').style.display = 'none';
+    }
+
+    /*TOOLTIP*/
+    $('[data-toggle="tooltip"]').tooltip();
+    /*SELECT*/
+    var all_selects = document.getElementsByClassName('mdb-select');
+    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
+    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
+    for (var i = 0; i < all_selects.length; i++) {
+        var me_select = all_selects[i];
+        if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
+            $(me_select).materialSelect();
+            console.log('Se ejecuto la create!');
+        }
+    }
+
+}
+
 function readypagina(pag) {
     console.log('La pàgina ya cargo:' + pag);
 }
@@ -1663,8 +1866,209 @@ function dinpag(obj, co_pagreg) {
     ls_conpar += "}";
     console.log("ls_conpar:" + ls_conpar);
     data.append('ls_conpar', ls_conpar);
+    doDinJson('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR, data);
+}
 
-    doDinJson('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR + "&ls_hamoda=" + ls_hamoda(), data);
+var rowid_over_table_temp;
+
+function dinpag2(obj, co_pagreg) {
+    console.log('dinpag2>>>::' + obj);
+    console.log('co_pagreg2>>>::' + co_pagreg);
+    //preguntar al core que hacer?
+    var data = new FormData();
+    data.append('id_fraworx', '' + 0);
+    data.append('id_frawor', '' + ID_FRAWOR);
+    data.append('co_pagina', '' + CO_PAGINA);
+    data.append('co_conten', '' + CO_CONTEN);
+
+    //VA_PAGREG
+    var va_pagreg = '';
+    if (obj.tagName.toLowerCase() == 'select') {
+        try {
+            va_pagreg = obj.options[obj.selectedIndex].value;
+        } catch (e) {
+
+        }
+    } else if (obj.tagName.toLowerCase() == 'input') {
+        if (obj.getAttribute('type').toLowerCase() == 'text') {
+            va_pagreg = obj.value;
+        } else if (obj.getAttribute('type').toLowerCase() == 'checkbox') {
+            va_pagreg = obj.checked;
+        }
+    }
+
+
+    data.append('va_pagreg', '' + va_pagreg);
+
+    var ls_conpar = "{";
+
+    var urls = ("" + parent.location).split('&');
+    for (var i = 0; i < urls.length; i++) {
+        var url = urls[i];
+        console.log('url=' + url + "--->" + (url.indexOf('co_conpar') > -1));
+        if (url.indexOf('co_conpar') > -1) {
+            if (url.split('=').length = 2) {
+                ls_conpar += "\"" + url.split('=')[0] + "\":\"" + url.split('=')[1] + "\",";
+                // ls_conpar[ls_conpar.length] = new PARAM(url.split('=')[0], url.split('=')[1]);
+            }
+        }
+    }
+    ls_conpar = ls_conpar.length == 1 ? ls_conpar : ls_conpar.substring(0, ls_conpar.length - 1);
+    ls_conpar += "}";
+    data.append('ls_conpar', ls_conpar);
+
+
+    rowid_over_table_temp = obj.parentNode;
+    rowid_over_table_temp = rowid_over_table_temp.parentNode;
+    rowid_over_table_temp = rowid_over_table_temp.id;
+    rowid_over_table_temp = rowid_over_table_temp.substring(rowid_over_table_temp.indexOf('C') + 1, rowid_over_table_temp.indexOf('R'));
+
+    //---------------------
+    //estructura momentanea
+    var all_regs = "[";
+
+    // console.log("'PAG' + CO_PAGINA:" + 'PAG' + CO_PAGINA);
+    // console.log("'PAG' + CO_PAGINA.length!:" + document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows);
+
+    for (var i = 0; i < document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows.length; i++) {
+        if (rowid_over_table_temp == (i + 1)) {
+            var x64s = document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows[i].getElementsByClassName('pagreg');
+            if (x64s.length > 0) {
+
+                all_regs += "{";
+
+                for (var o = 0; o < x64s.length; o++) {
+                    var x64 = x64s[o];
+                    var x64id = x64.getAttribute('id');
+                    var rowuid = x64id.substring(x64id.indexOf('C') + 1, x64id.indexOf('R'));
+                    var reguid = x64id.substring(x64id.indexOf('R') + 1, x64id.indexOf('_') == -1 ? x64id.length : x64id.indexOf('_'));
+                    reguid = reguid.replace('V', '');
+                    var regval = '';
+
+                    // var rows_row = ls_rows[parseInt(rowuid) - 1];
+                    // console.log("x64:" + x64 + ", x64id:" + x64id + ", rowuid:" + rowuid + ", reguid:" + reguid);
+
+                    all_regs += "\"co_regist_" + reguid + "\":";
+
+                    if (x64.tagName == 'INPUT') {
+                        console.log('?INPUT?=>' + x64.getAttribute('TYPE'));
+                        if (x64.getAttribute('TYPE') == 'text') {
+                            regval = x64.value;
+                            all_regs += "\"" + encodeURIComponent(regval) + "\",";
+                        } else if (x64.getAttribute('TYPE') == 'hidden') {
+                            regval = x64.value;
+                            all_regs += "\"" + encodeURIComponent(regval) + "\",";
+                        } /*else if (x64.getAttribute('TYPE') == 'checkbox') {
+                     regval = x64.checked == undefined ? 'false' : '' + x64.checked;
+                     all_regs += "\""+regval + "\",";
+                     }*/
+                    } else if (x64.tagName == 'SELECT') {
+                        console.log('is select');
+                    } else if (x64.tagName == 'SPAN') {
+                        console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
+                        var ti_pagreg = x64.getAttribute('ti_pagreg');
+                        switch (ti_pagreg) {
+                            case '1': {
+                                console.log('FSP:' + x64.getElementsByTagName('INPUT'));
+                                console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
+                                if (x64.getElementsByTagName('INPUT').length == 0) {
+                                    //es de tipo lectura
+                                    regval = (x64.getAttribute('va_pagreg') == undefined | x64.getAttribute('va_pagreg') == 'undefined') ? '' : x64.getAttribute('va_pagreg');
+                                    all_regs += "\"" + encodeURIComponent(regval) + "\",";
+                                } else {
+                                    var iinput = x64.getElementsByTagName('INPUT')[0];
+                                    console.log('iinput===>' + iinput);
+                                    console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
+                                    if (iinput.getAttribute('TYPE') == 'checkbox') {
+                                        regval = iinput.checked;
+                                        all_regs += regval + ",";
+                                    } else if (iinput.getAttribute('TYPE') == 'text') {
+                                        regval = iinput.value;
+                                        all_regs += "\"" + regval + "\",";
+                                    }
+                                }
+
+                                break;
+                            }
+                            case '2': {
+                                all_regs += "\"" + x64.innerHTML + "\",";
+                                break;
+                            }
+                            case '3': {
+                                var iselect = x64.getElementsByTagName('SELECT')[0];
+                                console.log("iselect:" + iselect);
+                                regval = iselect.options[iselect.selectedIndex].value;
+                                console.log("regval:" + regval);
+                                all_regs += "\"" + regval + "\",";
+                                break;
+                            }
+                            case '6': {
+                                var iinput = x64.getElementsByTagName('INPUT')[0];
+                                console.log('iinput===>' + iinput);
+                                console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
+                                if (iinput.getAttribute('TYPE') == 'checkbox') {
+                                    regval = iinput.checked == undefined ? 'false' : iinput.checked;
+                                    all_regs += regval + ",";
+                                }
+                                break;
+                            }
+                            case '36': {
+                                // var iselect = x64.getElementsByTagName('SELECT')[0];
+                                // console.log("iselect:" + iselect);
+                                // regval = iselect.options[iselect.selectedIndex].value;
+                                // console.log("regval:" + regval);
+
+                                // all_regs += "\"" + regval + "\",";
+
+                                //-----
+                                // var vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0];
+                                var vaframe = x64.getElementsByTagName("IFRAME")[0];
+                                var futureJson;
+                                // var waitfor = false;
+
+                                try {
+                                    futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+                                    futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                                    console.log('futureJson=' + futureJson)
+                                    futureJson = JSON.parse(futureJson);
+
+                                    if (futureJson.status = 'OK') {
+                                        // var eledom = document.getElementById(proimg);
+                                        // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+
+                                        // data.set('co_regist' + id, '' + futureJson.result[0].co_archiv);
+                                        all_regs += "\"" + futureJson.result[0].co_archiv + "\",";
+                                    } else {
+                                        all_regs += "\"\",";
+                                    }
+                                } catch (e) {
+                                    all_regs += "\"\",";
+                                }
+                                //-----
+                                break;
+                            }
+                            default: {
+                                all_regs += '\"\"' + ",";
+                            }
+
+                        }
+                        console.log('?is select:' + ti_pagreg);
+                    } else {
+                        all_regs += "\"\",";
+                    }
+                }
+                all_regs = all_regs.substring(0, all_regs.length - 1);
+                all_regs += "},";
+            }
+        }
+    }
+    all_regs = all_regs.substring(0, all_regs.length - 1);
+    all_regs += "]";
+
+    data.append('ls_allreg', '' + all_regs);
+    console.log('toda la dtaa readey!!!>>' + data);
+
+    doDinJson2('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR, data);
 }
 
 function PRINTABLE(opt) {
@@ -1858,6 +2262,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
 }
 
 function builderTyper2(old_type, new_type, ti_estreg, id, eledom) {
+    console.log('old_type=' + old_type + ', new_type=' + new_type + ', ti_estreg=' + ti_estreg + ', eledom=' + eledom);
     var htmlreturn = "";
     if (new_type == 1) {
         if (ti_estreg == 'E') {
@@ -1868,6 +2273,22 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom) {
             htmlreturn += "</span>";
         } else {
             htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"1\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\"></span>";
+        }
+    } else if (new_type == 3) {
+        if (ti_estreg == 'E') {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"3\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+            htmlreturn += "        <select name=\"regist" + 90 + "\" class=\"mdb-select md-formx " + (false ? "dynpag" : "") + "\" " + (false ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + "></select>";
+            htmlreturn += "</span>";
+        } else {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"3\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+        }
+    } else if (new_type == 4) {
+        if (ti_estreg == 'E') {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+            htmlreturn += "        <select name=\"regist" + 90 + "\" class=\"mdb-select md-formx " + (false ? "dynpag" : "") + "\" " + (false ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + "></select>";
+            htmlreturn += "</span>";
+        } else {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
         }
     }
     return htmlreturn;

@@ -42,7 +42,7 @@ public class ValpagServlet extends HttpServlet {
 
         AsyncContext asyncCtx = request.startAsync();
         asyncCtx.setTimeout(100000);//10 Seg
-
+        System.out.println("??request.getServletPath() = " + request.getServletPath());
         switch (request.getServletPath()) {
             case "/pangolin": {
                 //valpag

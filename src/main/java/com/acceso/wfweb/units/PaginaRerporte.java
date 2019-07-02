@@ -143,20 +143,20 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        System.out.println("fila = REDERER OK!");
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
                             itr += "<td ti_pagreg=\"3\" class=\"ti_pag_reg2 text-left\">";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"3\" class=\"writer  pagreg\">";
-                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx \">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"writer  pagreg " + (fila.getRegistroDTO().isIl_onchan() ? "xaction" : "") + "\">";
+                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
                             itr += "    </span>";
                             itr += "</td>";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
                             itr += "<td ti_pagreg=\"3\" class=\"ti_pag_reg2 text-left\">";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"3\" class=\"reader  pagreg\">";
-                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx \">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"reader  pagreg" + (fila.getRegistroDTO().isIl_onchan() ? "xaction" : "") + "\">";
+                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
                             itr += "    </span>";
                             itr += "</td>";
                         } else {
                             itr += "<td ti_pagreg=\"3\" class=\"ti_pag_reg2 text-left\">";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"3\" class=\"hidden  pagreg\">";
-                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx \">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"hidden  pagreg" + (fila.getRegistroDTO().isIl_onchan() ? "xaction" : "") + "\">";
+                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
                             itr += "    </span>";
                             itr += "</td>";
                         }
@@ -169,20 +169,20 @@ public class PaginaRerporte extends Pagina implements Serializable {
 //                        System.out.println("fila = REDERER OK!");
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
                             itr += "<td ti_pagreg=\"4\" class=\"ti_pag_reg2 text-left\">";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"writer  pagreg\">";
-                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx \">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"writer  pagreg " + (fila.getRegistroDTO().isIl_onchan() ? "xaction" : "") + "\">";
+                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
                             itr += "    </span>";
                             itr += "</td>";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
                             itr += "<td ti_pagreg=\"4\" class=\"ti_pag_reg2 text-left\">";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"reader  pagreg\">";
-                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx \">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"reader  pagreg" + (fila.getRegistroDTO().isIl_onchan() ? "xaction" : "") + "\">";
+                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
                             itr += "    </span>";
                             itr += "</td>";
                         } else {
                             itr += "<td ti_pagreg=\"4\" class=\"ti_pag_reg2 text-left\">";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"hidden  pagreg\">";
-                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx \">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"4\" class=\"hidden  pagreg" + (fila.getRegistroDTO().isIl_onchan() ? "xaction" : "") + "\">";
+                            itr += "        <select name=\"regist" + fila.getRegistroDTO().getCo_pagreg() + "\" class=\"mdb-select md-formx " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + ">regist" + fila.getRegistroDTO().getCo_pagreg() + "</select>";
                             itr += "    </span>";
                             itr += "</td>";
                         }
