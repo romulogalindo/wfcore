@@ -25,7 +25,7 @@
 <body>
 <%--<c:if test="${not empty param.dt_archiv}">
     <pre>
-            ${param.dt_archiv}
+    {"status":"OK","result":[{"co_archiv":${param.extfil},"no_archiv":"${param.extfil}","fe_archiv":""}]}
     </pre>
 </c:if>--%>
 <form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}&id=${param.id}" enctype="MULTIPART/FORM-DATA"

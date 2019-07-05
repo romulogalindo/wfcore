@@ -740,6 +740,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         } catch (e) {
 
                         }
+
                         if (reg.value != undefined && reg.value.length > 0) {
 
                             console.log('es la data del 36:' + reg.value);
@@ -759,6 +760,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         //hacer algo diferente para el tipo 38
                         eledom.innerHTML = valdom;
                     }
+
                     domtr(eledom).removeAttribute('style');
                     break;
                 }
