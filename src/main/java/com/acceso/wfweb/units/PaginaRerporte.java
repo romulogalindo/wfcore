@@ -260,6 +260,26 @@ public class PaginaRerporte extends Pagina implements Serializable {
                         }
                         break;
                     }
+                    case 34: {
+                        if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
+                            itr += "   <td class=wf_f_valreg>"
+                                    + "       <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"34\" class=\"writer " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + " pagreg\">"
+                                    + "           <span valpag=\"\"></span>"
+                                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, \\'X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\\', CO_CONTEN,\\'titulo\\',\\'\\')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+                                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup(\\'X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\\')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>"
+                                    + "       </span>"
+                                    + "   </td>";
+                        } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
+                            itr += "   <td class=wf_f_valreg>"
+                                    + "       <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"34\" class=\"reader " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + " pagreg\">"
+                                    + "           <span valpag=\"\"></span>"
+                                    + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg, \\'X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\\', CO_CONTEN,\\'titulo\\',\\'\\')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+//                                    + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup(\\'X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "\\')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>"
+                                    + "       </span>"
+                                    + "   </td>";
+                        }
+                        break;
+                    }
                     case 36: {
                         if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
                             itr += "<td class=\"ti_pag_reg2 text-center\">"

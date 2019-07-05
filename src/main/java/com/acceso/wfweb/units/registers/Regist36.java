@@ -39,20 +39,21 @@ public class Regist36 extends HTMLRenderer {
 
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg alert alert-primary\" ti_pagreg=\"36\" style=\"padding: 0px 2px 0px 10px;border-color:#83bdfc\" >"
-                        + "         <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">"
+//                        + "         <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">"
+                        + "         <a  href=\"#\"  onclick=\"return false\" style=\"text-decoration: none !important;\" va_pagreg=\"\">"
                         + "             <i id=\""+ id +"_img\" class=\"\" aria-hidden=\"true\"></i>"
-                        + "             <span id=\""+ id +"_text\">Sube tu archivo<span>"
+                        + "             <span id=\""+ id +"_text\" title=\"\" data-toggle=\"tooltip\">Sube tu archivo<span>"
                         + "          </a>"
 
                         + "          <span style=\"border-right: 1px solid #83bdfc; margin: 0 5px;\"></span>"
 
-                        + "         <button onclick=\"return doupload36('" + id + "V')\" class=\"wf-button-transparent\" title=\"Selecciona tu archivo\" data-toggle=\"tooltip\">"
+                        + "         <button id=\""+ id +"_upload\"onclick=\"return doupload64('" + id + "V')\" class=\"wf-button-transparent\" title=\"Selecciona tu archivo\" data-toggle=\"tooltip\">"
                         + "             <i class=\"fas fa-cloud-upload-alt\" aria-hidden=\"true\" ></i>"
                         + "          </button>"
 
                         + "          <span style=\"border-right: 1px solid #83bdfc; margin: 0 5px 0px 0px;\"></span>"
 
-                        + "         <button onclick=\"return doclean36('" + id + "V')\" class=\"wf-button-transparent\" title=\"Borrar el archivo actual\" data-toggle=\"tooltip\">"
+                        + "         <button id=\""+id+"_delete\"onclick=\"return doclean64('" + id + "V')\" class=\"wf-button-transparent\" title=\"Borrar el archivo actual\" data-toggle=\"tooltip\" disabled>"
                         + "             <i class=\"far fa-trash-alt\" aria-hidden=\"true\" ></i>"
                         + "         </button>"
 

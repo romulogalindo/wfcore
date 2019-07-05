@@ -712,13 +712,6 @@ function loadFormulario64(index, row, aditional, dom2) {
                     } else if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
-                    } else if (ti_pagreg == '36') {
-
-                        // var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                        eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile").onchange = function () {
-                            onchange_vafile(this);
-                        };
-
                     } else if (ti_pagreg == '34') {
                         //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         //eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -738,6 +731,26 @@ function loadFormulario64(index, row, aditional, dom2) {
                         // console.log('onclicktext = ' + onclicktext);
                         eledom.getElementsByTagName("IFRAME")[0].contentWindow.setCode(valdom);
                         // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
+                    } else if (ti_pagreg == '36') {
+                        //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
+                        try {
+                            eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile").onchange = function () {
+                                onchange_vafile(this);
+                            };
+                        } catch (e) {
+
+                        }
+                        if (reg.value != undefined && reg.value.length > 0) {
+
+                            console.log('es la data del 36:' + reg.value);
+                            console.log('eledom.getElementsByTagName("A")[0]>' + eledom.getElementsByTagName("A")[0]);
+                            eledom.getElementsByTagName("A")[0].setAttribute('href', '/jsp_exec/ocelot/viewer.jsp?file=' + reg.value);
+                            eledom.getElementsByTagName("A")[0].href = '/jsp_exec/ocelot/viewer.jsp?file=' + reg.value;
+                            eledom.getElementsByTagName("A")[0].setAttribute('onclick', 'return true');
+                            document.getElementById(eledom.id.replace('V', '_text')).innerText = '' + reg.value;
+                        }
+
+
                     } else if (ti_pagreg == '38') {
                         //valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -863,7 +876,11 @@ function loadReporte64(rowid, tbody64, row) {
             var nuevo_ti_estreg = (reg.state == undefined) ? local_ti_estreg : reg.state;
 
             /*FORMA*/
+            local_ti_pagreg = local_ti_pagreg == undefined ? null : parseInt(local_ti_pagreg);
             console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+            console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
+
+
             if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
                 console.log("Los elementos son diferentes");
                 var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
@@ -976,6 +993,11 @@ function loadReporte64(rowid, tbody64, row) {
 
                 // console.log('to add?:' + ' check' + reg.regist);
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
+            } else if (ereg.getAttribute('ti_pagreg') == '34') {
+                console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                var btnreg = ereg.getElementsByTagName('BUTTON')[0];
+                btnreg.setAttribute('onclick', btnreg.getAttribute('onclick').replace('ur_pagreg', "'" + reg.link + "'"));
+
             } else if (ereg.getAttribute('ti_pagreg') == '36') {
                 console.log('tip:' + ereg.getAttribute('ti_pagreg'));
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
@@ -1134,15 +1156,73 @@ function propag(cycle, co_button, il_proces, co_condes) {
                         // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                         val = eledom.getElementsByTagName("IFRAME")[0].contentWindow.getCode();
                     } else if (ti_pagreg == '36') {
-                        var vaform = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("form_data");
+                        var vaframe = eledom.getElementsByTagName("IFRAME")[0];
+                        var fracon = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document;
 
-                        if (vaform != undefined) {
-                            var vafile = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
-                            if (vafile.files.length > 0) {
+                        if (fracon.getElementById("form_data") != undefined) {
+                            var vafile = fracon.getElementById("vafile");
+                            if (vafile != undefined && vafile.files.length > 0) {
                                 preimg[preimg.length] = eledom.getAttribute('id');
+                                val = null;
                             }
+                            console.log('E·xiste el form->');
+                            val = null;
+                        } else if (fracon.getElementsByTagName("BODY")[0].innerHTML.length > 0) {
+                            try {
+                                var futureJson = fracon.getElementsByTagName("BODY")[0].innerHTML;
+                                futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                                console.log('(***)futureJson=' + futureJson);
+                                futureJson = JSON.parse(futureJson);
+
+                                if (futureJson.status = 'OK') {
+                                    // var eledom = document.getElementById(proimg);
+                                    // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+                                    console.log('REGISTERO36>>:' + futureJson.result[0].co_archiv);
+                                    val = futureJson.result[0].co_archiv;
+                                } else {
+                                    val = '';
+                                }
+                            } catch (e) {
+                                val = '';
+                            }
+                        } else {
                             val = null;
                         }
+
+                        // var vaform = vaframe.contentWindow.document.getElementById("form_data");
+                        // console.log('here!!36:' + vaform);
+                        // if (vaform == null) {
+                        //
+                        // } else if (vaform != undefined) {
+                        //
+                        //     console.log('here!!36:vaframe::' + vaframe);
+                        //     var vafile = vaframe.contentWindow.document.getElementById("vafile");
+                        //     console.log('here!!36:vafile::' + vafile);
+                        //
+                        //     if (vafile != undefined && vafile.files.length > 0) {
+                        //         preimg[preimg.length] = eledom.getAttribute('id');
+                        //         val = null;
+                        //     } else {
+                        //         try {
+                        //             var futureJson = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+                        //             futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                        //             console.log('(***)futureJson=' + futureJson);
+                        //             futureJson = JSON.parse(futureJson);
+                        //
+                        //             if (futureJson.status = 'OK') {
+                        //                 // var eledom = document.getElementById(proimg);
+                        //                 // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+                        //                 console.log('REGISTERO36>>:' + futureJson.result[0].co_archiv);
+                        //                 val = futureJson.result[0].co_archiv;
+                        //             } else {
+                        //                 val = '';
+                        //             }
+                        //         } catch (e) {
+                        //             val = '';
+                        //         }
+                        //     }
+                        //
+                        // }
                     } else if (ti_pagreg == '38') {
 
                         // eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);
@@ -1313,17 +1393,26 @@ function prepair_parameters_propag64(cycle, co_button, il_proces, co_condes, dat
                     var vaframe = eledom.getElementsByTagName("IFRAME")[0];
 
 
-                    futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
-                    futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
-                    console.log('(**)futureJson=' + futureJson)
-                    futureJson = JSON.parse(futureJson);
+                    try {
+                        futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
+                        futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                        console.log('/(?**)futureJson=' + futureJson);
+                        futureJson = JSON.parse(futureJson);
 
-                    if (futureJson.status = 'OK') {
-                        // var eledom = document.getElementById(proimg);
-                        // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-                        console.log('REGISTERO36>>');
-                        valdom = futureJson.result[0].co_archiv;
+                        if (futureJson.status = 'OK') {
+                            // var eledom = document.getElementById(proimg);
+                            // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+                            console.log('?REGISTERO36>>:' + futureJson.result[0].co_archiv);
+                            valdom = futureJson.result[0].co_archiv;
+                        } else {
+                            valdom = '';
+                        }
+                    } catch (e) {
+                        console.log('/(???**)futureJson=' + e);
+                        valdom = '';
                     }
+
+                    console.log('--------------------------->futureJson=' + valdom);
                 }
                 break;
             }
@@ -1467,6 +1556,16 @@ function doupload2(ele) {
     return false;
 }
 
+function doclean64(ele) {
+    var valdom = document.getElementById(ele);
+    valdom.getElementsByTagName("IFRAME")[0].src = '/jsp_exec/ocelot/upload.jsp?id=' + ele;
+    // var vafile = valdom.getElementsByTagName("IFRAME")[0].contentWindow.document.getElementById("vafile");
+    document.getElementById(ele.replace('V', '_text')).innerHTML = 'Sube tu archivo';
+    // vafile.click();
+
+    return false;
+}
+
 function rb_change(rb, id) {
     console.log('rb=' + rb + ',@=' + rb.value + ',id=' + id);
     console.log('-->' + id + '_rb==>' + document.getElementById(id + '_rb'));
@@ -1492,8 +1591,12 @@ function quitar(father, item) {
 
 function onchange_vafile(vafile) {
     //var label = document.getElementById(vafile.getAttribute('domid').replace('V', '') + 'V').getElementsByTagName("SPAN")[0];
-    var label = document.getElementById(vafile.getAttribute('domid').replace('_text', '') + 'V');
-    var icon = document.getElementById(vafile.getAttribute('domid').replace('_text', '') + 'V');
+    var filevaid = vafile.getAttribute('domid');
+    console.log('vafile.getAttribute(\'domid\'):' + filevaid);
+    var label = document.getElementById(vafile.getAttribute('domid').replace('V', '') + '_text');
+    var icon = document.getElementById(vafile.getAttribute('domid').replace('V', '') + '_img');
+    var btn1 = document.getElementById(vafile.getAttribute('domid').replace('V', '') + '_upload');
+    var btn2 = document.getElementById(vafile.getAttribute('domid').replace('V', '') + '_delete');
     if (vafile.files.length > 0) {
         var file = vafile.files[0].name;
         var extension = file.split('.').pop().toUpperCase();
@@ -1502,28 +1605,47 @@ function onchange_vafile(vafile) {
             case "PNG":
             case "JPG":
             case"JEPG": {
-                faicon="far fa-image";
+                faicon = "far fa-image";
                 break;
             }
             case "XLS":
             case "XLSX": {
-                faicon="far fa-file-excel";
+                faicon = "far fa-file-excel";
                 break;
             }
             case "DOC":
             case "DOCX": {
-                faicon="far fa-file-word";
+                faicon = "far fa-file-word";
                 break;
             }
             case "PDF": {
-                faicon="far fa-file-pdf";
+                faicon = "far fa-file-pdf";
+                break;
+            }
+            case "ZIP":
+            case "RAR":
+            case "TAR.GZ": {
+                faicon = "far fa-file-pdf";
                 break;
             }
             default: {
-
+                faicon = "far fa-file";
             }
         }
-        label.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
+        icon.setAttribute('class', faicon);
+        var filename2 = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
+        var filename = "";
+        if (filename2.length > 20) {
+            filename = filename2.substring(0, 17) + "...";
+        } else {
+            filename = filename2;
+        }
+
+        label.innerHTML = filename;
+        label.setAttribute('title', filename2);
+        label.setAttribute('data-original-title', filename2);
+
+        btn2.removeAttribute('disabled');
     }
 }
 
@@ -1813,13 +1935,14 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             //-----
                             // var vaframe = document.getElementById(proimg).getElementsByTagName("IFRAME")[0];
                             var vaframe = x64.getElementsByTagName("IFRAME")[0];
+                            console.log('------------->');
                             var futureJson;
                             // var waitfor = false;
 
                             try {
                                 futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
                                 futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
-                                console.log('futureJson=' + futureJson)
+                                console.log('//>>futureJson=' + futureJson)
                                 futureJson = JSON.parse(futureJson);
 
                                 if (futureJson.status = 'OK') {
