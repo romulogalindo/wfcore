@@ -18,7 +18,6 @@
                 console.log('upload:' + evt);
                 document.getElementById('form_data').submit();
             }
-
         }
     </script>
 </head>

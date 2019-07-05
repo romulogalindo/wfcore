@@ -116,6 +116,8 @@ function doformulariosubmit(keyEvent) {
     }
 }
 
+var chace_pagina_formulario_Base = undefined;
+
 function pagina_onload(_data) {
     if (!CALLED) {
         CALLED = true;
@@ -129,12 +131,32 @@ function pagina_onload(_data) {
             var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
             var tbody64;
 
+
             const ID_PAGINA = 'PAG' + CO_PAGINA;
             console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
             if (TI_PAGINA == PAGE_TYPE_REPORT) {
+
                 tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
                 tbody64.innerHTML = '';
                 itr = itr.replace('<tr>', '').replace('</tr>', '');
+            } else {
+                chace_pagina_formulario_Base = chace_pagina_formulario_Base == undefined ? document.getElementById("row1").innerHTML : chace_pagina_formulario_Base;
+                dom2 = chace_pagina_formulario_Base;
+                // var allbodies = document.getElementById(ID_PAGINA);
+                // console.log('PAG(allbodies):' + allbodies);
+                var allbodies = document.getElementById(ID_PAGINA).getElementsByTagName('TBODY');
+                // console.log('allbodies.length:' + allbodies.length);
+
+                if (allbodies.length > 1) {
+                    // console.log('allbodies.length: se eliminaran los bodies');
+                    for (var i = allbodies.length; i > 0; i--) {
+                        // console.log('allbodies.length: se valuara::' + allbodies[i - 1].id + ', ----->' + (allbodies[i - 1].id != 'row1'));
+                        if (allbodies[i - 1].id != 'row1') {
+                            document.getElementById(ID_PAGINA).removeChild(allbodies[i - 1]);
+                            // console.log('elemento eliminado');
+                        }
+                    }
+                }
             }
 
             for (var i = 0; i < rows.length; i++) {
@@ -210,6 +232,7 @@ function pagina_onload(_data) {
 
 }
 
+
 function pagina_onload2(_data, rowid) {
     if (!CALLED) {
         CALLED = true;
@@ -221,7 +244,17 @@ function pagina_onload2(_data, rowid) {
             HTML_PAGINA.removeAttribute('style');
             var rows = _data.result.rows;
             var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
+            // chace_pagina_formulario_Base = chace_pagina_formulario_Base == undefined ? document.getElementById("row1").innerHTML : chace_pagina_formulario_Base;
+            // var dom2 = chace_pagina_formulario_Base;
             // var tbody64;
+            //-----
+            // var trs = document.getElementById("row1").getElementsByTagName('TR');
+            // for (var i = 0; i < trs.length; i++) {
+            //     if (trs[i].id.indexOf('T') > -1) {
+            //         trs[i].setAttribute('style', 'display:none');
+            //     }
+            // }
+            //-----
 
             const ID_PAGINA = 'PAG' + CO_PAGINA;
             console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
@@ -389,6 +422,44 @@ function pagina_onload2(_data, rowid) {
                 }
             }
             // }
+
+            /*ULTRAVALIDACION*/
+            // var allbodies = document.getElementById(ID_PAGINA).getElementsByTagName('TBODY');
+            // console.log('[ULTRA]allbodies.length:' + allbodies.length);
+            // if (allbodies.length > 1) {
+            //     // console.log('allbodies.length: se eliminaran los bodies');
+            //     // var elbodyid=
+            //     for (var i = allbodies.length; i > 0; i--) {
+            //         // console.log('allbodies.length: se valuara::' + allbodies[i - 1].id + ', ----->' + (allbodies[i - 1].id != 'row1'));
+            //         var cbody = allbodies[i - 1];
+            //         var alltitles = [];
+            //         var alltrs = cbody.getElementsByTagName('TR');
+            //
+            //         for (var o = 0; o < alltrs.length; o++) {
+            //             if (alltrs[i].id.indexOf('T') > -1) {
+            //                 alltitles[alltitles.length] = alltrs[i].getAttribute('co_pagtit');
+            //             }
+            //         }
+            //
+            //         for (var o = 0; o < alltitles.length; o++) {
+            //             var allsbx = $('#' + allbodies[i - 1].id + ' TR[co_pagina=' + alltitles + ']');
+            //             var showtitle = false;
+            //             for (var u = 0; u < allsbx.length; u++) {
+            //                 var ultr = allsbx[u];
+            //                 if (ultr.getAttribute('NAME').indexOf('T') == -1) {
+            //                     if (ultr.style.display != 'none') {
+            //                         ultrabox = true;
+            //                         u = 999;
+            //                     }
+            //                 }
+            //             }
+            //             if (!showtitle) {
+            //                 cbody.style.display = 'none';
+            //             }
+            //         }
+            //     }
+            // }
+
 
             /*UPDATE HEIGHT*/
             size_of_pagina();
