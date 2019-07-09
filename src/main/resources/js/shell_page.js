@@ -76,9 +76,10 @@ function OK2(opts) {
     return new OK64(opts);
 }
 
-function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
+// function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
+function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, USUARI, ID_FRAANT) {
     /*SET*/
-    DATA.setCo_usuari(CO_USUARI);
+    DATA.setCo_usuari(USUARI.co_usuari);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_pagina(CO_PAGINA);
@@ -93,9 +94,10 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, CO_USUARI
     return VALPAGJS;
 }
 
-function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, CO_USUARI) {
+// function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, CO_USUARI) {
+function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, ID_SESION, USUARI) {
     /*SET*/
-    DATA.setCo_usuari(CO_USUARI);
+    DATA.setCo_usuari(USUARI.co_usuari);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_conten(CO_CONTEN);
@@ -111,9 +113,9 @@ function do_propag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, REGIST, I
     return PROPAGJS;
 }
 
-function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, ID_SESION, CO_USUARI) {
+function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, ID_SESION, USUARI) {
     /*SET*/
-    DATA.setCo_usuari(CO_USUARI);
+    DATA.setCo_usuari(USUARI.co_usuari);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_conten(CO_CONTEN);
@@ -129,9 +131,9 @@ function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, 
     return PROPAGJS;
 }
 
-function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION, CO_USUARI, ID_FRAANT) {
+function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION, USUARI, ID_FRAANT) {
     /*SET*/
-    DATA.setCo_usuari(CO_USUARI);
+    DATA.setCo_usuari(USUARI.co_usuari);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_conten(CO_CONTEN);
@@ -148,10 +150,10 @@ function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION
 }
 
 // function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ID_SESION, CO_USUARI, ID_FRAANT) {
-function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ALLREG, ID_SESION, CO_USUARI, ID_FRAANT) {
+function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ALLREG, ID_SESION, USUARI, ID_FRAANT) {
     /*SET*/
     print('here');
-    DATA.setCo_usuari(CO_USUARI);
+    DATA.setCo_usuari(USUARI.co_usuari);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
     DATA.setCo_conten(CO_CONTEN);
