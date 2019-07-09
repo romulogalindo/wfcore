@@ -331,19 +331,21 @@ function pagina_onload2(_data, rowid) {
                         //TEMPORAL====================
                         var ls_compag;
                         try {
-                            ls_compag = aditional[reg.regist];
-                            console.log('(COMBO)ls_compag?:' + ls_compag);
-                            if (ls_compag == undefined) {
-                                try {
-                                    ls_compag = JSON.parse(reg.data);
-                                } catch (e) {
-                                    console.log('(COMBO)el combo value!:' + ls_compag);
-                                }
-                            }
-                        } catch (e) {
-                            console.log('(COMBO)el combo value!:' + reg.data);
                             ls_compag = JSON.parse(reg.data);
-                            console.log('(COMBO)el combo value!:' + ls_compag);
+                            // ls_compag = aditional[reg.regist];
+                            // console.log('(COMBO)ls_compag?:' + ls_compag);
+                            // if (ls_compag == undefined) {
+                            //     try {
+                            //         ls_compag = JSON.parse(reg.data);
+                            //     } catch (e) {
+                            //         console.log('(COMBO)el combo value!:' + ls_compag);
+                            //     }
+                            // }
+                        } catch (e) {
+                            ls_compag = [];
+                            // console.log('(COMBO)el combo value!:' + reg.data);
+                            // ls_compag = JSON.parse(reg.data);
+                            // console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "";
@@ -363,19 +365,21 @@ function pagina_onload2(_data, rowid) {
                         //TEMPORAL====================
                         var ls_compag;
                         try {
-                            ls_compag = aditional[reg.regist];
-                            console.log('(COMBO)ls_compag?:' + ls_compag);
-                            if (ls_compag == undefined) {
-                                try {
-                                    ls_compag = JSON.parse(reg.data);
-                                } catch (e) {
-                                    console.log('(COMBO)el combo value!:' + ls_compag);
-                                }
-                            }
-                        } catch (e) {
-                            console.log('(COMBO)el combo value!:' + reg.data);
                             ls_compag = JSON.parse(reg.data);
-                            console.log('(COMBO)el combo value!:' + ls_compag);
+                            // ls_compag = aditional[reg.regist];
+                            // console.log('(COMBO)ls_compag?:' + ls_compag);
+                            // if (ls_compag == undefined) {
+                            //     try {
+                            //         ls_compag = JSON.parse(reg.data);
+                            //     } catch (e) {
+                            //         console.log('(COMBO)el combo value!:' + ls_compag);
+                            //     }
+                            // }
+                        } catch (e) {
+                            ls_compag = [];
+                            // console.log('(COMBO)el combo value!:' + reg.data);
+                            // ls_compag = JSON.parse(reg.data);
+                            // console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "<option value=\"\"></option>";
@@ -624,22 +628,24 @@ function loadFormulario64(index, row, aditional, dom2) {
                         //TEMPORAL====================
                         var ls_compag;
                         try {
-                            ls_compag = aditional[reg.regist];
-                            // console.log('(COMBO)ls_compag?:' + ls_compag);
-                            if (ls_compag == undefined) {
-                                try {
-                                    ls_compag = JSON.parse(reg.data);
-                                } catch (e) {
-                                    console.log('(COMBO)el combo value!:' + ls_compag);
-                                }
-                            }
+                            ls_compag = JSON.parse(reg.data);
+                            // ls_compag = aditional[reg.regist];
+                            // // console.log('(COMBO)ls_compag?:' + ls_compag);
+                            // if (ls_compag == undefined) {
+                            //     try {
+                            //         ls_compag = JSON.parse(reg.data);
+                            //     } catch (e) {
+                            //         console.log('(COMBO)el combo value!:' + ls_compag);
+                            //     }
+                            // }
                         } catch (e) {
                             // console.log('(COMBO)el combo value!:' + reg.data);
-                            if (reg.data != undefined) {
-                                ls_compag = JSON.parse(reg.data);
-                            } else {
-                                false
-                            }
+                            ls_compag = [];
+                            // if (reg.data != undefined) {
+                            //     ls_compag = JSON.parse(reg.data);
+                            // } else {
+                            //     false
+                            // }
                             // console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
@@ -990,18 +996,18 @@ function loadReporte64(rowid, tbody64, row) {
                 //TEMPORAL====================
                 var ls_compag;
                 try {
-                    ls_compag = aditional[reg.regist];
-                    console.log('(COMBO)ls_compag?:' + ls_compag);
-                    if (ls_compag == undefined) {
-                        try {
-                            ls_compag = JSON.parse(reg.data);
-                        } catch (e) {
-                            console.log('(COMBO)el combo value!:' + ls_compag);
-                        }
-                    }
+                    // ls_compag = aditional[reg.regist];
+                    // console.log('(COMBO)ls_compag?:' + ls_compag);
+                    // if (ls_compag == undefined) {
+                    //     try {
+                    ls_compag = JSON.parse(reg.data);
+                    //     } catch (e) {
+                    //         console.log('(COMBO)el combo value!:' + ls_compag);
+                    //     }
+                    // }
                 } catch (e) {
                     console.log('(COMBO)el combo value!:' + reg.data);
-                    ls_compag = JSON.parse(reg.data);
+                    ls_compag = [];//JSON.parse(reg.data);
                     console.log('(COMBO)el combo value!:' + ls_compag);
                 }
                 //=========================
@@ -1022,19 +1028,21 @@ function loadReporte64(rowid, tbody64, row) {
                 //TEMPORAL====================
                 var ls_compag;
                 try {
-                    ls_compag = aditional[reg.regist];
-                    console.log('(COMBO)ls_compag?:' + ls_compag);
-                    if (ls_compag == undefined) {
-                        try {
-                            ls_compag = JSON.parse(reg.data);
-                        } catch (e) {
-                            console.log('(COMBO)el combo value!:' + ls_compag);
-                        }
-                    }
-                } catch (e) {
-                    console.log('(COMBO)el combo value!:' + reg.data);
                     ls_compag = JSON.parse(reg.data);
-                    console.log('(COMBO)el combo value!:' + ls_compag);
+                    // ls_compag = aditional[reg.regist];
+                    // console.log('(COMBO)ls_compag?:' + ls_compag);
+                    // if (ls_compag == undefined) {
+                    //     try {
+                    //         ls_compag = JSON.parse(reg.data);
+                    //     } catch (e) {
+                    //         console.log('(COMBO)el combo value!:' + ls_compag);
+                    //     }
+                    // }
+                } catch (e) {
+                    ls_compag = [];
+                    // console.log('(COMBO)el combo value!:' + reg.data);
+                    // ls_compag = JSON.parse(reg.data);
+                    // console.log('(COMBO)el combo value!:' + ls_compag);
                 }
                 //=========================
                 var dom_compag = "<option value=\"\"></option>";
