@@ -92,7 +92,8 @@ public class AsyncProPag extends AsyncProcessor {
             }
 
             //ejecutar propag
-            Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, ls_conpar, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
+//            Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, ls_conpar, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari()) : "{}";
+            Object object = il_proces ? script.doPropag64(type, co_pagina, id_frawor, co_conten, co_botone, ls_conpar, type == 1 ? ls_regist : ls_allreg, usuario.getId_sesion(), usuario) : "{}";
 
             if (object instanceof String) {
                 if (object.toString().contains("X5964ERQ17")) {

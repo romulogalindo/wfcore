@@ -1,5 +1,7 @@
 package com.acceso.wfcore.utils;
 
+import com.acceso.wfweb.units.Usuario;
+
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -23,34 +25,40 @@ public class ScriptContextExecutor {
     }
 
     //    function exec valpag
-    public Object doValpag64(long id_frawor, int co_conten, int co_pagina, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+//    public Object doValpag64(long id_frawor, int co_conten, int co_pagina, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    public Object doValpag64(long id_frawor, int co_conten, int co_pagina, String ls_conpar, long id_sesion, Usuario usuari, int id_fraant) throws Exception {
         Invocable inv = (Invocable) engine_nashornjs;
-        return inv.invokeFunction("do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, id_sesion, co_usuari, id_fraant);
+//        return inv.invokeFunction("do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, id_sesion, co_usuari, id_fraant);
+        return inv.invokeFunction("do_valpag", id_frawor, co_conten, co_pagina, ls_conpar, id_sesion, usuari, id_fraant);
     }
 
-    public Object doDinpag64(long id_frawor, int co_conten, int co_pagina, int co_pagreg, String va_pagreg, String ls_conpar, String ls_regist, String ls_allreg, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    //    public Object doDinpag64(long id_frawor, int co_conten, int co_pagina, int co_pagreg, String va_pagreg, String ls_conpar, String ls_regist, String ls_allreg, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    public Object doDinpag64(long id_frawor, int co_conten, int co_pagina, int co_pagreg, String va_pagreg, String ls_conpar, String ls_regist, String ls_allreg, long id_sesion, Usuario usuari, int id_fraant) throws Exception {
         Invocable inv = (Invocable) engine_nashornjs;
-        return inv.invokeFunction("do_dinpag", id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_regist, ls_allreg, id_sesion, co_usuari, id_fraant);
+//        return inv.invokeFunction("do_dinpag", id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_regist, ls_allreg, id_sesion, co_usuari, id_fraant);
+        return inv.invokeFunction("do_dinpag", id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_regist, ls_allreg, id_sesion, usuari, id_fraant);
     }
 
     //    function exec valpag
-    public Map<Short, Object> doCompag64(long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+//    public Map<Short, Object> doCompag64(long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, long co_usuari, int id_fraant) throws Exception {
+    public Map<Short, Object> doCompag64(long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, Usuario usuari, int id_fraant) throws Exception {
         Map<Short, Object> result = new HashMap<>();
         Invocable inv = (Invocable) engine_nashornjs;
         for (String co_pagreg : co_pagregs) {
-            Object rslt = inv.invokeFunction("do_compag", id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, id_sesion, co_usuari, id_fraant);
+            Object rslt = inv.invokeFunction("do_compag", id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, id_sesion, usuari, id_fraant);
             result.put(Util.toShort(co_pagreg, (short) -1), rslt);
         }
 
         return result;
     }
 
-    public Object doPropag64(int type, int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_conpar, String ls_regist, long id_sesion, long co_usuari) throws Exception {
+    //    public Object doPropag64(int type, int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_conpar, String ls_regist, long id_sesion, long co_usuari) throws Exception {
+    public Object doPropag64(int type, int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_conpar, String ls_regist, long id_sesion, Usuario usuari) throws Exception {
         Invocable inv = (Invocable) engine_nashornjs;
         if (type == 1) {
-            return inv.invokeFunction("do_propag", id_frawor, co_conten, co_pagina, co_pagbot, ls_conpar, ls_regist, id_sesion, co_usuari);
+            return inv.invokeFunction("do_propag", id_frawor, co_conten, co_pagina, co_pagbot, ls_conpar, ls_regist, id_sesion, usuari);
         } else {
-            return inv.invokeFunction("do_propagg", id_frawor, co_conten, co_pagina, co_pagbot, ls_conpar, ls_regist, id_sesion, co_usuari);
+            return inv.invokeFunction("do_propagg", id_frawor, co_conten, co_pagina, co_pagbot, ls_conpar, ls_regist, id_sesion, usuari);
         }
     }
 

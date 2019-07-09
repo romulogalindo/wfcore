@@ -1,6 +1,7 @@
 package com.acceso.security.dtos;
 
 import com.acceso.security.utils.Values;
+
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,14 +21,14 @@ import javax.persistence.Transient;
  */
 @Entity
 @NamedNativeQueries({
-    @NamedNativeQuery(
-            name = Values.wfsistem_ppregsesini_KEY,
-            query = Values.wfsistem_ppregsesini_VALUE,
-            resultClass = RegsesiniDTO.class),
-    @NamedNativeQuery(
-            name = Values.wfsistem_ppregsesiniweb_KEY,
-            query = Values.wfsistem_ppregsesiniweb_VALUE,
-            resultClass = RegsesiniDTO.class)
+        @NamedNativeQuery(
+                name = Values.wfsistem_ppregsesini_KEY,
+                query = Values.wfsistem_ppregsesini_VALUE,
+                resultClass = RegsesiniDTO.class),
+        @NamedNativeQuery(
+                name = Values.wfsistem_ppregsesiniweb_KEY,
+                query = Values.wfsistem_ppregsesiniweb_VALUE,
+                resultClass = RegsesiniDTO.class)
 })
 public class RegsesiniDTO implements Serializable {
 
@@ -41,11 +42,12 @@ public class RegsesiniDTO implements Serializable {
 
     Integer co_sistem;
     Integer co_subsis;
-//    Integer co_paquet;
+    //    Integer co_paquet;
     Integer co_modulo;
 
     int co_mensaj;
     String de_mensaj;
+    String no_correo;
 
     @Transient
     String ip_remoto;
@@ -158,6 +160,14 @@ public class RegsesiniDTO implements Serializable {
 
     public void setIl_prilog(String il_prilog) {
         this.il_prilog = il_prilog;
+    }
+
+    public String getNo_correo() {
+        return no_correo;
+    }
+
+    public void setNo_correo(String no_correo) {
+        this.no_correo = no_correo;
     }
 
     @Override

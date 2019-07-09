@@ -94,7 +94,8 @@ public class AsyncValPag extends AsyncProcessor {
             ValpagJson valpagJson = null;
             Object valpagx = null;
             if (type == 1) {
-                valpagx = script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+//                valpagx = script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                valpagx = script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario, 1);
                 jsonResponse.setResult(valpagx);
                 jsonResponse.setFnpost(script.dopvpj("GET_DO_POST_LOAD_DATA"));
 
@@ -125,7 +126,8 @@ public class AsyncValPag extends AsyncProcessor {
 //                    }
 //                }
             } else {
-                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+//                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, ls_allreg, usuario.getId_sesion(), usuario.getCo_usuari(), 1);
+                valpagJson = (ValpagJson) script.doDinpag64(id_frawor, co_conten, co_pagina, co_pagreg, va_pagreg, ls_conpar, ls_allreg, ls_allreg, usuario.getId_sesion(), usuario, 1);
                 jsonResponse.setResult(valpagJson);
             }
             out.write(Util.toJSON2(jsonResponse));

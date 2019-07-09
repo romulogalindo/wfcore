@@ -18,10 +18,12 @@ public class Usuario implements Serializable {
 
     Integer co_sistem;
     Integer co_subsis;
-//    Integer co_paquet;
+    //    Integer co_paquet;
     Integer co_modulo;
 
     boolean il_schema;
+
+    String no_correo;
 
     Root root;
     MainMenu mainMenu;
@@ -102,7 +104,7 @@ public class Usuario implements Serializable {
         this.co_subsis = co_subsis;
     }
 
-//    public Integer getCo_paquet() {
+    //    public Integer getCo_paquet() {
 //        return co_paquet;
 //    }
 //
@@ -131,6 +133,14 @@ public class Usuario implements Serializable {
 
     public void setMainMenus(Map<String, MainMenu> mainMenus) {
         this.mainMenus = mainMenus;
+    }
+
+    public String getNo_correo() {
+        return no_correo;
+    }
+
+    public void setNo_correo(String no_correo) {
+        this.no_correo = no_correo;
     }
 
     @Override
