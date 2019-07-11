@@ -284,7 +284,7 @@ function pagina_onload2(_data, rowid) {
 
                 var erid = 'P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V';
                 var ereg = document.getElementById(erid);
-                console.log('erid:' + erid + ', ereg:' + ereg);
+                // console.log('erid:' + erid + ', ereg:' + ereg);
                 // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
                 if (ereg != null) {
                     var local_ti_pagreg = ereg.getAttribute('ti_pagreg') == undefined ? 1 : ereg.getAttribute('ti_pagreg');
@@ -293,14 +293,14 @@ function pagina_onload2(_data, rowid) {
                     var nuevo_ti_estreg = (reg.state == undefined) ? local_ti_estreg : reg.state;
 
                     /*FORMA*/
-                    console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+                    // console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
                     if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
-                        console.log("Los elementos son diferentes");
+                        // console.log("Los elementos son diferentes");
                         var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
-                        console.log('TAG CREADO!>>' + _html);
+                        // console.log('TAG CREADO!>>' + _html);
                         ereg.parentNode.innerHTML = _html;
                     } else {
-                        console.log("Los elementos son iguales");
+                        // console.log("Los elementos son iguales");
                     }
                     ereg = document.getElementById('P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V');
                 }
@@ -2239,10 +2239,15 @@ function dinpag2(obj, co_pagreg) {
                                 all_regs += "\"" + x64.innerHTML + "\",";
                                 break;
                             }
-                            case '3': {
+                            case '3':
+                            case '4': {
                                 var iselect = x64.getElementsByTagName('SELECT')[0];
                                 console.log("iselect:" + iselect);
-                                regval = iselect.options[iselect.selectedIndex].value;
+                                try {
+                                    regval = iselect.options[iselect.selectedIndex].value;
+                                } catch (e) {
+                                    regval = '';
+                                }
                                 console.log("regval:" + regval);
                                 all_regs += "\"" + regval + "\",";
                                 break;
@@ -2324,10 +2329,17 @@ function SHOWINFO(opt) {
     document.getElementById('pagopt_info').style.visibility = 'visible';
 }
 
-//function AUTOINCREMENT(opt) {
 function OPTION_ADD(opt) {
     document.getElementById('pagopt_plus').style.visibility = 'visible';
     child_popup(opt, null, CO_CONTEN, null, null);
+}
+
+/*CONFIGURACION ADICIONAL DE TABLA*/
+function CFGDATATABLE(cfgopts) {
+    $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
+    document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
+    document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
 }
 
 /*

@@ -5055,7 +5055,8 @@ input[type="button"].btn-block {
 .page-link {
     position: relative;
     display: block;
-    padding: 0.5rem 0.75rem;
+    /*padding: 0.5rem 0.75rem;*/
+    padding: 0.4rem 0.6rem;
     margin-left: -1px;
     line-height: 1.25;
     color: #007bff;
@@ -20012,12 +20013,12 @@ a.btn:not([href]):not([tabindex]):hover {
     transition: all 0.2s linear;
     -webkit-border-radius: 0.125rem;
     border-radius: 0.125rem;
-    background-color: #4285f4;
+    background-color: #2bbbad;
     color: #fff;
 }
 
 .pagination .page-item.active .page-link:hover {
-    background-color: #4285f4;
+    background-color: #2bbbad;
 }
 
 .pagination .page-item.disabled .page-link {
@@ -20031,7 +20032,8 @@ a.btn:not([href]):not([tabindex]):hover {
     outline: 0;
     border: 0;
     background-color: transparent;
-    font-size: 0.9rem;
+    /*font-size: 0.9rem;*/
+    font-size: 0.8rem;
     color: #212529;
 }
 

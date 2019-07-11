@@ -51,22 +51,30 @@ div.dataTables_wrapper div.dataTables_filter {
 
 div.dataTables_wrapper div.dataTables_info {
   font-weight: normal;
-  padding-top: 1rem;
-  padding-bottom: 1rem; }
+  /*padding-top: 1rem;*/
+  padding-top: .1rem;
+  /*padding-bottom: 1rem; */
+  padding-bottom: 0rem;
+  font-size: 0.8rem;
+}
 
 div.dataTables_wrapper div.dataTables_paginate {
   font-weight: normal;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  /*padding-top: 1rem;*/
+  padding-top: .1rem;
+  /*padding-bottom: 1rem;*/
+  padding-bottom: 0rem;
   text-align: right;
-  margin: 0; }
+  margin: 0;
+}
+
   div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end; }
     div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
-      background-color: #4285f4; }
+      background-color: #2bbbad; }
     div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item .page-link:focus {
       -webkit-box-shadow: none;
       box-shadow: none; }
