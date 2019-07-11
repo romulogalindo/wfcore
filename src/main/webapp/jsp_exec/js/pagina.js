@@ -152,7 +152,12 @@ function pagina_onload(_data) {
                     for (var i = allbodies.length; i > 0; i--) {
                         // console.log('allbodies.length: se valuara::' + allbodies[i - 1].id + ', ----->' + (allbodies[i - 1].id != 'row1'));
                         if (allbodies[i - 1].id != 'row1') {
-                            document.getElementById(ID_PAGINA).removeChild(allbodies[i - 1]);
+                            try {
+                                document.getElementById(ID_PAGINA).removeChild(allbodies[i - 1]);
+                            } catch (e) {
+
+                            }
+
                             // console.log('elemento eliminado');
                         }
                     }
@@ -688,24 +693,26 @@ function loadFormulario64(index, row, aditional, dom2) {
                         //TEMPORAL====================
                         var ls_compag;
                         try {
-                            ls_compag = aditional[reg.regist];
-                            console.log('(COMBO)ls_compag?:' + ls_compag);
-                            if (ls_compag == undefined) {
-                                try {
-                                    ls_compag = JSON.parse(reg.data);
-                                } catch (e) {
-                                    console.log('(COMBO)el combo value!:' + ls_compag);
-                                }
-                            }
+                            ls_compag = JSON.parse(reg.data);
+                            // ls_compag = aditional[reg.regist];
+                            // console.log('(COMBO)ls_compag?:' + ls_compag);
+                            // if (ls_compag == undefined) {
+                            //     try {
+                            //         ls_compag = JSON.parse(reg.data);
+                            //     } catch (e) {
+                            //         console.log('(COMBO)el combo value!:' + ls_compag);
+                            //     }
+                            // }
                         } catch (e) {
-                            console.log('(COMBO)el combo value!:' + reg.data);
-//                            ls_compag = JSON.parse(reg.data);
-                            if (reg.data != undefined) {
-                                ls_compag = JSON.parse(reg.data);
-                            } else {
-                                false
-                            }
-                            console.log('(COMBO)el combo value!:' + ls_compag);
+                            ls_compag = [];
+//                             console.log('(COMBO)el combo value!:' + reg.data);
+// //                            ls_compag = JSON.parse(reg.data);
+//                             if (reg.data != undefined) {
+//                                 ls_compag = JSON.parse(reg.data);
+//                             } else {
+//                                 false
+//                             }
+//                             console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "<option value=\"\"></option>";
