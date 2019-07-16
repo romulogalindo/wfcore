@@ -179,7 +179,7 @@
 
         <p:layout fullPage="true">
 
-            <p:layoutUnit position="west" size="230" resizable="false" closable="false" collapsible="true" collapsed="false"
+            <p:layoutUnit position="west" size="230" resizable="false" closable="false" collapsible="false" collapsed="false"
                           style="text-align:left;border: none;" gutter="0">
 
                 <p:growl id="messages" showDetail="true">
@@ -255,7 +255,7 @@
                 </h:form>
             </p:layoutUnit>
 
-            <p:layoutUnit position="center" resizable="false">
+            <p:layoutUnit position="center" resizable="false" collapsible="false" collapsed="false">
                 <p:outputPanel id="mainPanel">
 
                     <p:breadCrumb styleClass="main_breadcrumb" model="#{managerBean.model}">

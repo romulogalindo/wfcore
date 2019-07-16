@@ -195,13 +195,13 @@ public class HttpAPI extends GenericAPI {
                 response = content.toString();
                 conHTTPS.disconnect();
             }
+
             return JsonResponse.defultJsonResponseOK(response);
         } catch (Exception ep) {
             Util.toJSON(JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, ep.getMessage())));
             ep.printStackTrace();
             return JsonResponse.defultJsonResponseERROR(Util.getError(ep));
         }
-//        System.out.println("response = " + response);
 
     }
 

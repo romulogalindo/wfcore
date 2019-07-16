@@ -189,7 +189,7 @@ public class DataAPI extends GenericAPI {
             }
 
             Long midt = Transactional.insert(1, Long.parseLong(getCo_usuari()), no_consul);
-            if (no_consul.trim().toLowerCase().startsWith("insert") | no_consul.trim().toLowerCase().startsWith("update")) {
+            if (no_consul.trim().toLowerCase().startsWith("insert") | no_consul.trim().toLowerCase().startsWith("update") | no_consul.trim().toLowerCase().startsWith("delete")) {
                 int rowsaf = sql.executeUpdate();
                 List<LinkedHashMap<String, Object>> lsh = new ArrayList<>();
                 LinkedHashMap<String, Object> lh = new LinkedHashMap<>();
