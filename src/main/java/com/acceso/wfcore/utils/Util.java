@@ -12,6 +12,7 @@ import org.primefaces.model.UploadedFile;
 
 import javax.faces.model.SelectItem;
 import javax.persistence.PersistenceException;
+import javax.swing.text.DefaultEditorKit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -265,6 +266,13 @@ public class Util {
             message += "LINEA : <b>" + (epe.getLineNumber() - startLine) + "</b>";
             message += "</span>";
 //            message += "COLUMNA : " + epe.getColumnNumber();
+        } else if (ep instanceof NoSuchMethodException) {
+            NoSuchMethodException epx = (NoSuchMethodException) ep;
+            if (epx.getMessage().indexOf("No such function") > -1) {
+                message += "Se ha encontrado un error. Revise su código. Se intenta conseguir un elemento de un objeto \'undefined\'.";
+            } else {
+                message += ep.getMessage();
+            }
         } else {
             message = ep.getMessage();
         }
@@ -359,58 +367,58 @@ public class Util {
 
     public static SelectItem[] get_ls_ti_estreg() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("E", "Escritura"),
-            new SelectItem("L", "Lectura"),
-            new SelectItem("O", "Oculto")
+                new SelectItem("E", "Escritura"),
+                new SelectItem("L", "Lectura"),
+                new SelectItem("O", "Oculto")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_boton() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("E", "Especifico"),
-            new SelectItem("G", "General")
+                new SelectItem("E", "Especifico"),
+                new SelectItem("G", "General")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_alireg() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("left", "Izquierda"),
-            new SelectItem("right", "Derecha"),
-            new SelectItem("center", "Centrado"),
-            new SelectItem("justify", "Justificado")
+                new SelectItem("left", "Izquierda"),
+                new SelectItem("right", "Derecha"),
+                new SelectItem("center", "Centrado"),
+                new SelectItem("justify", "Justificado")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_valign() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("top", "Arriba"),
-            new SelectItem("middle", "En medio"),
-            new SelectItem("bottom", "Abajo")
+                new SelectItem("top", "Arriba"),
+                new SelectItem("middle", "En medio"),
+                new SelectItem("bottom", "Abajo")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_nowrap() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("normal", "Normal"),
-            new SelectItem("nowrap", "Nowrap")
+                new SelectItem("normal", "Normal"),
+                new SelectItem("nowrap", "Nowrap")
         };
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_icobot() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("left", "Izquierda"),};
+                new SelectItem("left", "Izquierda"),};
         return ls_estreg;
     }
 
     public static SelectItem[] get_ls_ti_icopos() {
         SelectItem[] ls_estreg = new SelectItem[]{
-            new SelectItem("left", "Izquierda"),
-            new SelectItem("right", "Derecha")
+                new SelectItem("left", "Izquierda"),
+                new SelectItem("right", "Derecha")
         };
         return ls_estreg;
     }

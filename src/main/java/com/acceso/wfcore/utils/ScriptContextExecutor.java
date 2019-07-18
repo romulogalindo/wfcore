@@ -35,16 +35,16 @@ public class ScriptContextExecutor {
     }
 
     //    function exec valpag
-    public Map<Short, Object> doCompag64(long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, Usuario usuari, int id_fraant) throws Exception {
-        Map<Short, Object> result = new HashMap<>();
-        Invocable inv = (Invocable) engine_nashornjs;
-        for (String co_pagreg : co_pagregs) {
-            Object rslt = inv.invokeFunction("do_compag", id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, id_sesion, usuari, id_fraant);
-            result.put(Util.toShort(co_pagreg, (short) -1), rslt);
-        }
-
-        return result;
-    }
+//    public Map<Short, Object> doCompag64(long id_frawor, int co_conten, int co_pagina, String[] co_pagregs, String ls_conpar, long id_sesion, Usuario usuari, int id_fraant) throws Exception {
+//        Map<Short, Object> result = new HashMap<>();
+//        Invocable inv = (Invocable) engine_nashornjs;
+//        for (String co_pagreg : co_pagregs) {
+//            Object rslt = inv.invokeFunction("do_compag", id_frawor, co_conten, co_pagina, co_pagreg, ls_conpar, id_sesion, usuari, id_fraant);
+//            result.put(Util.toShort(co_pagreg, (short) -1), rslt);
+//        }
+//
+//        return result;
+//    }
 
     public Object doPropag64(int type, int co_pagina, long id_frawor, int co_conten, short co_pagbot, String ls_conpar, String ls_regist, long id_sesion, Usuario usuari) throws Exception {
         Invocable inv = (Invocable) engine_nashornjs;

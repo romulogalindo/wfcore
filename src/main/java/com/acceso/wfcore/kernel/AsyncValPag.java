@@ -35,16 +35,6 @@ public class AsyncValPag extends AsyncProcessor {
             Integer co_pagreg = Util.toInt(asyncContext.getRequest().getParameter("co_pagreg"), -1);
             String va_pagreg = asyncContext.getRequest().getParameter("va_pagreg");
             String ls_allreg = asyncContext.getRequest().getParameter("ls_allreg");
-            Iterator it = asyncContext.getRequest().getAttributeNames().asIterator();
-            while (it.hasNext()) {
-                Object itx = it.next();
-                System.out.println("??itx = " + itx);
-            }
-            it = asyncContext.getRequest().getParameterNames().asIterator();
-            while (it.hasNext()) {
-                Object itx = it.next();
-                System.out.println("????itx = " + itx);
-            }
 
             //---
             RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
@@ -106,7 +96,7 @@ public class AsyncValPag extends AsyncProcessor {
 //            System.out.println("[[ERROR!--------------------------------------------//////?????]]?>>" + ep.getMessage());
 //            Integer indice_valpag = (Integer) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina + ":VALPAG");
 //            System.out.println("[valpag=?size]indice_valpag = " + indice_valpag);
-            ErrorMessage em = Util.getError(ep, 89);
+            ErrorMessage em = Util.getError(ep, 90);
             jsonResponse.setError(em);
             jsonResponse.setStatus(JsonResponse.ERROR);
             out.write(Util.toJSON2(jsonResponse));
