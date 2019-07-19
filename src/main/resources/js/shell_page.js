@@ -81,6 +81,7 @@ function do_valpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CONPAR, ID_SESION, USUARI, I
     DATA.setCo_usuari(USUARI.co_usuari);
     DATA.setId_sesion(ID_SESION);
     DATA.setId_frawor(ID_FRAWOR);
+    DATA.setCo_conten(CO_CONTEN);
     DATA.setCo_pagina(CO_PAGINA);
     DATA.setNo_escena('VALPAG');
 
@@ -127,24 +128,6 @@ function do_propagg(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGBOT, CONPAR, ALLREG, 
     USUARI_DATA_PROPAG
 
     return PROPAGJS;
-}
-
-function do_compag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, CONPAR, ID_SESION, USUARI, ID_FRAANT) {
-    /*SET*/
-    DATA.setCo_usuari(USUARI.co_usuari);
-    DATA.setId_sesion(ID_SESION);
-    DATA.setId_frawor(ID_FRAWOR);
-    DATA.setCo_conten(CO_CONTEN);
-    DATA.setCo_pagina(CO_PAGINA);
-    DATA.setNo_escena('COMPAG');
-
-    var COMPAGJS = null;
-    var LS_CONPAR = JSON.parse(CONPAR);
-
-    /*MAIN LOGIC TO RUN*/
-    USUARI_DATA_COMPAG
-
-    return COMPAGJS;
 }
 
 function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR, REGIST, ALLREG, ID_SESION, USUARI, ID_FRAANT) {
