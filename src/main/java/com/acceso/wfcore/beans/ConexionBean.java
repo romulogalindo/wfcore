@@ -45,8 +45,13 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
         this.isregEditable = true;
 
         //crear y cargar la lista de tipo de conexiones
-        ls_ti_conexi = new SelectItem[4];
-        ls_ti_conexi[0] = new SelectItem("","");
+        ls_ti_conexi = new SelectItem[6];
+        ls_ti_conexi[0] = new SelectItem("1", "JDBC:POSTGRES");
+        ls_ti_conexi[1] = new SelectItem("2", "JDBC:ORACLE");
+        ls_ti_conexi[2] = new SelectItem("3", "JDBC:MYSQL");
+        ls_ti_conexi[3] = new SelectItem("4", "JDBC:SQL-SERVER");
+        ls_ti_conexi[4] = new SelectItem("5", "JDBC:MONGODB");
+        ls_ti_conexi[5] = new SelectItem("6", "JDBC:HADDOP");
     }
 
     @Override
@@ -234,6 +239,14 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
 
     public void setIsregEditable(boolean isregEditable) {
         this.isregEditable = isregEditable;
+    }
+
+    public SelectItem[] getLs_ti_conexi() {
+        return ls_ti_conexi;
+    }
+
+    public void setLs_ti_conexi(SelectItem[] ls_ti_conexi) {
+        this.ls_ti_conexi = ls_ti_conexi;
     }
 
     @Override

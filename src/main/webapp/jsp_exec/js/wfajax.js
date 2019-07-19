@@ -174,7 +174,12 @@ doPropag = function (url, regparams, data) {
                         //para todos los iframes que coincidan reload
                         var irpta = rpta.ls_pagina[i];
                         //decirle al iframe padre que lo refresque
-                        window.parent.dynamic_change_page('PAG' + irpta);
+                        try {
+                            window.parent.dynamic_change_page('PAG' + irpta);
+                        } catch (e) {
+                            console.error("ERROR: La página " + irpta + " no existe.");
+                        }
+
                     }
 
                     window.parent.showloading(false);
@@ -290,7 +295,7 @@ doDinJson2 = function (url, data, rowuid) {
         if (net.readyState == 4 && net.status == 200) {
             // console.log('{NET(' + url + ')} ::::' + net.responseText)
             var json = JSON.parse(net.responseText);
-            pagina_onload2(json,rowuid);
+            pagina_onload2(json, rowuid);
         }
 
     }
