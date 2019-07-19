@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 /**
  * @author Mario Huillca <mario.huillca@acceso.com.pe>
@@ -35,11 +36,17 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
 
     private boolean isregEditable;
 
+    private SelectItem[] ls_ti_conexi;
+
     public ConexionBean() {
         this.beanName = BEAN_NAME;
         this.titleName = "Conexiones";
         this.conexion = new ConexionDTO();
         this.isregEditable = true;
+
+        //crear y cargar la lista de tipo de conexiones
+        ls_ti_conexi = new SelectItem[4];
+        ls_ti_conexi[0] = new SelectItem("","");
     }
 
     @Override
@@ -200,7 +207,18 @@ public class ConexionBean extends MainBean implements Serializable, DefaultMaint
 //            System.out.println("statistics.getSessionCloseCount() = " + statistics.getSessionCloseCount());
 //            System.out.println("statistics.getQueries() = " + statistics.getQueries());
 //            System.out.println("statistics.getConnectCount() = " + statistics.getConnectCount());
-            conexionDTO.setIl_conexi(WFIOAPP.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()).getStatus() == DataManager.ACTIVE);
+            if (WFIOAPP.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()) == null) {
+                //crear el manager
+                conexionDTO.setIl_conexi(false);
+            } else {
+                try {
+                    conexionDTO.setIl_conexi(WFIOAPP.APP.dataSourceService.getManager(conexionDTO.getNo_conexi()).getStatus() == DataManager.ACTIVE);
+                } catch (Exception ep) {
+                    System.out.println("GET:CNX-->" + ep.getMessage());
+                    ep.printStackTrace();
+                }
+            }
+
         }
 
         return conexiones;
