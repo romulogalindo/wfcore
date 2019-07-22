@@ -58,14 +58,14 @@
 
                 <div style="display: inherit;">
                     <button id="pagopt_info" type="button" title="Información de la página."
-                            class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden"
+                            class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;"
                             onclick="alert('Página: ' + CO_PAGINA);">
-                        <i class="fas fa-info-circle mt-0"></i>
+                        <i class="fas fa-info-circle mt-0" style="font-size: 0.9rem;"></i>
                     </button>
                     <button id="pagopt_print" type="button" title="Imprimir"
-                            class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden;"
+                            class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;"
                             onclick="print()">
-                        <i class="fas fa-print mt-0"></i>
+                        <i class="fas fa-print mt-0" style="font-size: 0.9rem;"></i>
                     </button>
                 </div>
 
@@ -73,13 +73,13 @@
                       class="maintitle white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
 
                 <div style="display: inherit;">
-                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden;">
-                        <i class="far fa-trash-alt mt-0"></i>
+                    <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2" style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;">
+                        <i class="far fa-trash-alt mt-0" style="font-size: 0.9rem;"></i>
                     </button>
                     <button id="pagopt_plus" type="button" title="Nuevo registro"
                             class="btn btn-outline-white btn-rounded btn-sm px-2"
-                            style="visibility: hidden;">
-                        <i class="fas fa-plus-circle mt-0"></i>
+                            style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;">
+                        <i class="fas fa-plus-circle mt-0" style="font-size: 0.9rem;"></i>
                     </button>
                 </div>
 

@@ -134,8 +134,8 @@ table tr {
 }
 
 table.table td, table.table th {
-    padding-top: 0.1rem !important;
-    padding-bottom: 0.1rem !important;
+    padding-top: 0.11rem !important;
+    padding-bottom: 0.11rem !important;
 }
 
 .table td, .table th {
@@ -176,7 +176,7 @@ table.wf-report td {
 table.wf-report tbody td {
     padding-right: 0.4rem !important;
     padding-left: 0.4rem !important;
-    font-size: 0.85rem;
+    font-size: 0.80rem;
 }
 
 table.wf-report tbody td span div input.select-dropdown {

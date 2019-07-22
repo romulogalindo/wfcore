@@ -26413,7 +26413,7 @@ select:disabled {
 .dropdown-content li > a,
 .dropdown-content li > span {
     /*font-size: 0.9rem;*/
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     /*color: #212529;*/
     display: block;
     /*padding: 0.5rem;*/

@@ -674,7 +674,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                                     for (var i = 0; i < ls_compag.length; i++) {
                                         compag = ls_compag[i];
                                         if (ls_comgru[z] == compag.co_comgru) {
-                                            dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + " " + (compag.ur_comima == undefined ? "" : " data-icon=\"" + compag.ur_comima + "\" ") + " class=\"rounded-circle\">" + compag.no_compag + "</option>";
+                                            dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? " selected=\"selected\"" : "") + " " + (compag.ur_comima == undefined ? "" : " data-icon=\"" + compag.ur_comima + "\" ") + " class=\"rounded-circle\">" + compag.no_compag + "</option>";
                                         }
                                     }
                                     dom_compag += "</optgroup>";
@@ -737,7 +737,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                                     for (var i = 0; i < ls_compag.length; i++) {
                                         compag = ls_compag[i];
                                         if (ls_comgru[z] == compag.co_comgru) {
-                                            dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + " " + (compag.ur_comima == undefined ? "" : " data-icon=\"" + compag.ur_comima + "\" ") + " class=\"rounded-circle\">" + compag.no_compag + "</option>";
+                                            console.log('XFTTTT>>>[reg.value :' + reg.value + ']=[' + compag.co_compag + ']????[' + (reg.value == compag.co_compag) + ']![' + (reg.value == 'compag.co_compag') + ']');
+                                            dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? " selected=\"selected\"" : "") + " " + (compag.ur_comima == undefined ? "" : " data-icon=\"" + compag.ur_comima + "\" ") + " class=\"rounded-circle\">" + compag.no_compag + "</option>";
                                         }
                                     }
                                     dom_compag += "</optgroup>";
@@ -1003,15 +1004,7 @@ function loadReporte64(rowid, tbody64, row) {
                 //TEMPORAL====================
                 var ls_compag;
                 try {
-                    // ls_compag = aditional[reg.regist];
-                    // console.log('(COMBO)ls_compag?:' + ls_compag);
-                    // if (ls_compag == undefined) {
-                    //     try {
                     ls_compag = JSON.parse(reg.data);
-                    //     } catch (e) {
-                    //         console.log('(COMBO)el combo value!:' + ls_compag);
-                    //     }
-                    // }
                 } catch (e) {
                     console.log('(COMBO)el combo value!:' + reg.data);
                     ls_compag = [];//JSON.parse(reg.data);
@@ -1036,20 +1029,8 @@ function loadReporte64(rowid, tbody64, row) {
                 var ls_compag;
                 try {
                     ls_compag = JSON.parse(reg.data);
-                    // ls_compag = aditional[reg.regist];
-                    // console.log('(COMBO)ls_compag?:' + ls_compag);
-                    // if (ls_compag == undefined) {
-                    //     try {
-                    //         ls_compag = JSON.parse(reg.data);
-                    //     } catch (e) {
-                    //         console.log('(COMBO)el combo value!:' + ls_compag);
-                    //     }
-                    // }
                 } catch (e) {
                     ls_compag = [];
-                    // console.log('(COMBO)el combo value!:' + reg.data);
-                    // ls_compag = JSON.parse(reg.data);
-                    // console.log('(COMBO)el combo value!:' + ls_compag);
                 }
                 //=========================
                 var dom_compag = "<option value=\"\"></option>";
@@ -2029,7 +2010,14 @@ function propagg(cycle, co_button, il_proces, co_condes) {
 
                             try {
                                 futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
-                                futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                                if (futureJson.indexOf('<pre') > -1) {
+                                    futureJson = vaframe.contentWindow.document.getElementsByTagName("PRE")[0].innerHTML;
+                                } else {
+                                    futureJson = '';
+                                }
+
+                                //futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                                //futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
                                 console.log('//>>futureJson=' + futureJson)
                                 futureJson = JSON.parse(futureJson);
 

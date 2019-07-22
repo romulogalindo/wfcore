@@ -65,7 +65,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
         html += "<input type=hidden id=ti_pagina value=R />";
 //        html += "<input type=hidden id=ls_hamoda value=\"" + getLs_hamoda() + "\" />";
 
-        html += "<table id=PAG" + co_pagina + " class=\"wf-report table table-striped table-hover mb-0 table-responsive\">";
+        html += "<table id=PAG" + co_pagina + " class=\"wf-report table table-striped table-bordered table-hover mb-0 table-responsive\">";
         html += "<thead>";
 
         html += "<tr>";
