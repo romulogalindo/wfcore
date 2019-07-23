@@ -8,6 +8,9 @@ var CO_CONTEN;
 var ID_FRAWOR;
 var CO_USUARI;
 
+/*elmento que ejecutara para ver el menu*/
+var el_actmen;
+
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
     this.pagreg = co_pagreg;
@@ -65,14 +68,19 @@ function workflow(il_popup) {
     if (!il_popup) {
         $(".button-collapse").sideNav();
         Ps.initialize(document.querySelector('.custom-scrollbar'));
+
+        console.log('HERE!2569');
+        if (el_actmen != undefined) {
+            document.getElementById(el_actmen).click();
+        }
     }
 
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0)
             iframe.src = '/karmic?co_conten=' + CO_CONTEN
-                    + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
-                    + '&id_frawor=' + ID_FRAWOR
-                    + '&il_popup=' + il_popup;
+                + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+                + '&id_frawor=' + ID_FRAWOR
+                + '&il_popup=' + il_popup;
     }
 
 //--FRONT AND MODALª!

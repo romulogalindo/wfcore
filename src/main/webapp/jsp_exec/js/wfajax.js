@@ -158,7 +158,14 @@ doPropag = function (url, regparams, data) {
                 }
 
                 if (rpta.no_action == 'REDIRECT') {
-                    window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                    //verificar co_condes
+                    if (rpta.co_condes != undefined) {
+                        url = url.substring(0, url.indexOf('=') + 1) + rpta.co_condes;
+                        window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                    } else {
+                        window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                    }
+
                 } else if (rpta.no_action == 'POPUP') {
                     // window.parent.page_to_master(regparams);
                     window.parent.page_to_master(rpta.ls_params);

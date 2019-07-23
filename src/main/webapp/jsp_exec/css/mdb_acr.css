@@ -37160,7 +37160,9 @@ ul.search-dropdown li a {
 }
 
 .side-nav .current-menu-item > a {
-    color: #4285f4 !important;
+    /*color: #4285f4 !important;*/
+    color: #fff !important;
+    font-weight: 500;
 }
 
 .hidden-sn main {
