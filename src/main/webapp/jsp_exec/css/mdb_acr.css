@@ -26311,7 +26311,7 @@ label.btn input[type="checkbox"]:disabled:checked + label:after {
 
 .select-wrapper ul {
     list-style-type: none;
-    padding-left: 0;
+    padding: 2px 4px;
 }
 
 .select-wrapper.md-form > ul li label {
@@ -26408,6 +26408,8 @@ select:disabled {
 .dropdown-content li:hover, .dropdown-content li.active {
     /*background-color: #eeeeee;*/
     background-color: #4d728f;
+    font-weight: 400;
+    opacity: 1;
 }
 
 .dropdown-content li > a,
@@ -26424,6 +26426,7 @@ select:disabled {
 .dropdown-content li:hover, .dropdown-content li.active > a, .dropdown-content li:hover, .dropdown-content li.active > span {
     /*background-color: #eeeeee;*/
     color: #fff;
+    opacity: 0.8;
 }
 
 .dropdown-content li > a > i {
@@ -27449,11 +27452,13 @@ span[data-jarallax-element] {
 .side-nav .collapsible .fab,
 .side-nav .collapsible .far {
     font-size: 0.8rem;
-    margin-right: 13px;
+    /*margin-right: 13px;*/
+    margin-right: 8px;
 }
 
 .side-nav .collapsible-body a {
-    padding-left: 47px;
+    /*padding-left: 47px;*/
+    padding-left: 28px;
     height: 36px;
     line-height: 36px;
     background-color: rgba(0, 0, 0, 0.15);
@@ -27464,7 +27469,8 @@ span[data-jarallax-element] {
     font-size: 1rem;
     height: 56px;
     line-height: 56px;
-    padding-left: 20px;
+    /*padding-left: 20px;*/
+    padding-left: 10px;
 }
 
 .side-nav .fa-angle-down.rotate-icon {

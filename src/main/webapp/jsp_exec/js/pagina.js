@@ -546,8 +546,9 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                     var il_onchag = eledom.getAttribute('class').indexOf('xaction') > -1 ? true : false;
                     var ur_pagreg = reg.link == undefined ? '' : reg.link;
+                    var il_axtsea = false;
 
-                    console.log('(' + CO_PAGINA + ')EVALUACION!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']');
+                    console.log('(' + CO_PAGINA + ')EVALUACION{' + co_regist + '}!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']');
                     // if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type && reg.type > 0) {
                     if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type) {
                         console.log('(' + CO_PAGINA + ')[' + reg.regist + ']Es un cambio de tipo:[de:' + ti_pagreg + '][a:' + reg.type + ']');
@@ -558,10 +559,26 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
 
-                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
+                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
                         console.log("*[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
+                    } else {
+                        if (reg.searchable != undefined) {
+                            console.log('??----->??[' + reg.searchable + ']');
+                            reg.searchable = JSON.parse(reg.searchable);
+                            il_axtsea = true;
+                            // console.log("*?![" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
+                            ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
+                            ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
+                            // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
+
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
+
+                            console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + reg.searchable.active + ")(" + reg.searchable.text + ") es el td:" + td.innerHTML);
+                            //?
+                            eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        }
                     }
 
                     //Si el elemento es lo mismo solo que con diferente estado para saltar la limitante del tipo de dato
@@ -569,8 +586,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
 
-                        // td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
-                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
+                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
                         console.log("**[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
@@ -579,7 +595,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                     if (reg.state != undefined && reg.state == ti_estreg) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
-                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, eleid);
+                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
+                        console.log("***[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
                 }
@@ -2366,13 +2383,13 @@ function AUTODYNAMIC(opt, ls_regist) {
 }
 
 /*BUILDER*/
-function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
+function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract, searchable, id) {
     var html = "";
     if (type == 1) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"1\" class=\"writer pagreg\" >";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-            html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + ">";
+            html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " maxlength='" + ca_caract + "'>";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
@@ -2383,29 +2400,29 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
     } else if (type == 3) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + (searchable.active ? " searchable=\"" + searchable.text + "\"" : "") + " ></select>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + (searchable.active ? " searchable=\"" + searchable.text + "\"" : "") + " disabled></select>";
             html += "   </span>";
         } else if (ti_estreg == 'O') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"3\" class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + (searchable.active ? " searchable=\"" + searchable.text + "\"" : "") + "disabled></select>";
             html += "   </span>";
         }
     } else if (type == 4) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"4\" class=\"writer " + (il_onchag ? "xaction" : "") + " pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "><option value=\"\"></option></select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + (searchable.active ? " searchable=\"" + searchable.text + "\"" : "") + "><option value=\"\"></option></select>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"4\" class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + (searchable.active ? " searchable=\"" + searchable.text + "\"" : "") + "disabled value=\"\"><option></option</select>";
             html += "   </span>";
         } else if (ti_estreg == 'O') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"4\" class=\"reader " + (il_onchag ? "xaction" : "") + " pagreg\" >";
-            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + "disabled value=\"\"><option></option</select>";
+            html += "       <select class=\"mdb-select md-formx " + (il_onchag ? "dynpag" : "") + "\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + (searchable.active ? " searchable=\"" + searchable.text + "\"" : "") + "disabled value=\"\"><option></option</select>";
             html += "   </span>";
         }
     } else if (type == 6) {
@@ -2467,7 +2484,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"22\" class=\"writer pagreg\" >";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-            html += "           <input type='text' class='w3-input w3-border form-control' value='' " + (il_onchag ? "onchange='extractNumber(this, 0, true);dinpag(this," + co_regist + ")'" : "") + " onkeyup='extractNumber(this, 0, true);' onkeypress='return blockNonNumbers(this, event, false, true);' style='text-align:center;' >";
+            html += "           <input type='text' class='w3-input w3-border form-control' value='' " + (il_onchag ? "onchange='extractNumber(this, 0, true);dinpag(this," + co_regist + ")'" : "") + " onkeyup='extractNumber(this, 0, true);' onkeypress='return blockNonNumbers(this, event, false, true);' maxlength='" + ca_caract + "' style='text-align:center;' >";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
@@ -2479,7 +2496,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, id) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"23\" class='writer pagreg' >";
             html += "       <div class='md-form mt-0' style='margin-bottom: 0px;'>";
-            html += "           <input type='text' class='w3-input w3-border form-control' value='' " + (il_onchag ? "onchange='extractNumber(this, -1, true);dinpag(this," + co_regist + ")'" : "") + " onkeyup='extractNumber(this, -1, true);' onkeypress='return blockNonNumbers(this, event, true, true);' style='text-align:center;' >";
+            html += "           <input type='text' class='w3-input w3-border form-control' value='' " + (il_onchag ? "onchange='extractNumber(this, -1, true);dinpag(this," + co_regist + ")'" : "") + " onkeyup='extractNumber(this, -1, true);' onkeypress='return blockNonNumbers(this, event, true, true);' maxlength='" + ca_caract + "' style='text-align:center;' >";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {

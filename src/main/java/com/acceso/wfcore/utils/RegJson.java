@@ -3,6 +3,7 @@ package com.acceso.wfcore.utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 /**
@@ -19,6 +20,8 @@ public class RegJson {
     String ur_pagreg;
     Object ob_dindat;
     Object ls_styles;
+    Object ca_caract;
+    Object cf_search;
 
     public RegJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
@@ -48,7 +51,7 @@ public class RegJson {
         if (opts.get("ob_dindat") != null) {
             ob_dindat = opts.get("ob_dindat");
         }
-        
+
         if (opts.get("ls_styles") != null) {
             Iterator col = ((ScriptObjectMirror) opts.get("ls_styles")).values().iterator();
             List<String> _styles = new ArrayList<>();
@@ -56,6 +59,15 @@ public class RegJson {
                 _styles.add((String) col.next());
             }
             ls_styles = _styles;//opts.get("ls_styles");
+        }
+
+        if (opts.get("ca_caract") != null) {
+            ca_caract = opts.get("ca_caract");
+        }
+
+        if (opts.get("cf_search") != null) {
+            ScriptObjectMirror cfg_serach = (ScriptObjectMirror) opts.get("cf_search");
+            cf_search = "{\"active\":" + cfg_serach.get("il_search") + ", \"text\":\"" + cfg_serach.get("tx_search") + "\"}";
         }
     }
 
@@ -156,6 +168,23 @@ public class RegJson {
 
     public void setLs_styles(Object ls_styles) {
         this.ls_styles = ls_styles;
+    }
+
+    public Object getCa_caract() {
+        return ca_caract;
+    }
+
+    public void setCa_caract(Object ca_caract) {
+        this.ca_caract = ca_caract;
+    }
+
+
+    public Object getCf_search() {
+        return cf_search;
+    }
+
+    public void setCf_search(Object cf_search) {
+        this.cf_search = cf_search;
     }
 
     public static RegJson NEW(Object obj) {

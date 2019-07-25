@@ -11,7 +11,7 @@ public class RegJsonAdapter implements JsonSerializer<RegJson> {
 
     @Override
     public JsonElement serialize(RegJson src, Type typeOfSrc,
-            JsonSerializationContext context) {
+                                 JsonSerializationContext context) {
 
         JsonObject obj = new JsonObject();
         obj.addProperty("regist", src.co_pagreg);
@@ -28,6 +28,13 @@ public class RegJsonAdapter implements JsonSerializer<RegJson> {
         }
         if (src.ob_dindat != null) {
             obj.addProperty("data", new Gson().toJson(src.ob_dindat));
+        }
+        if (src.ca_caract != null) {
+            obj.addProperty("length", "" + src.ca_caract);
+        }
+
+        if (src.cf_search != null) {
+            obj.addProperty("searchable", "" + src.cf_search);
         }
 
         return obj;

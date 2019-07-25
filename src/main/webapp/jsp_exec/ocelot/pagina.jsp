@@ -13,13 +13,13 @@
         <!--CSS-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=13">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=5">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=6">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables.css?a=5">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables-select.css">
         <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
 
         <!--JS -->
-        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?a=${paginaBean.sys()}"
+        <script src="${pageContext.request.contextPath}/jsp_exec/js/pagina.js?b=${paginaBean.sys()}"
         charset="ISO-8859-1"></script>
         <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=${paginaBean.sys()}"
         charset="ISO-8859-1"></script>

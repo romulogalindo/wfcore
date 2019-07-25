@@ -41,13 +41,11 @@ public class AsyncProPag extends AsyncProcessor {
             String ls_allreg = requestManager.getParam("ls_allreg");
 
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
-//            System.out.println("ls_conpar = " + ls_conpar);
 
-            requestManager.getConpars().entrySet().stream().forEach(m -> {
-                System.out.println("key = " + m.getKey() + ", value = " + m.getValue());
-            });
+//            requestManager.getConpars().entrySet().stream().forEach(m -> {
+//                System.out.println("key = " + m.getKey() + ", value = " + m.getValue());
+//            });
 
-//            System.out.println("ls_conpar = " + ls_conpar);
             Usuario usuario = requestManager.getUser();
             String ls_regist = "";
             Frawor4DAO dao;

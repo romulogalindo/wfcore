@@ -21,7 +21,6 @@ public class MessageAPI extends GenericAPI {
         } else {
             //tipo mensaje de difusion
         }
-
     }
 
     public void PUSH_TO_USER(Object api_toid, String api_mact) throws Exception {
