@@ -37,6 +37,9 @@ public class RegJsonAdapter implements JsonSerializer<RegJson> {
             obj.addProperty("searchable", "" + src.cf_search);
         }
 
+        if (src.do_valreg != null) {
+            obj.addProperty("validation", "" + src.do_valreg);
+        }
         return obj;
     }
 }

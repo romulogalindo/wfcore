@@ -22,6 +22,7 @@ public class RegJson {
     Object ls_styles;
     Object ca_caract;
     Object cf_search;
+    Object do_valreg;
 
     public RegJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
@@ -68,6 +69,18 @@ public class RegJson {
         if (opts.get("cf_search") != null) {
             ScriptObjectMirror cfg_serach = (ScriptObjectMirror) opts.get("cf_search");
             cf_search = "{\"active\":" + cfg_serach.get("il_search") + ", \"text\":\"" + cfg_serach.get("tx_search") + "\"}";
+        }
+
+
+        if (opts.get("do_valreg") != null) {
+            ScriptObjectMirror cfg_serach = (ScriptObjectMirror) opts.get("do_valreg");
+            Iterator pagbots = ((ScriptObjectMirror) cfg_serach.get("lk_pagbot")).values().iterator();
+            List<String> _styles = new ArrayList<>();
+            while (pagbots.hasNext()) {
+                _styles.add("" + pagbots.next());
+            }
+
+            do_valreg = "{\"regexp\":\"" + cfg_serach.get("va_regexp") + "\", \"event\":\"" + cfg_serach.get("tx_keyeve") + "\", \"pagbots\":\"[" + String.join(",", _styles) + "]\"}";
         }
     }
 
@@ -185,6 +198,14 @@ public class RegJson {
 
     public void setCf_search(Object cf_search) {
         this.cf_search = cf_search;
+    }
+
+    public Object getDo_valreg() {
+        return do_valreg;
+    }
+
+    public void setDo_valreg(Object do_valreg) {
+        this.do_valreg = do_valreg;
     }
 
     public static RegJson NEW(Object obj) {

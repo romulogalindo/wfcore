@@ -559,7 +559,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
 
-                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
+                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
                         console.log("*[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
@@ -573,9 +573,33 @@ function loadFormulario64(index, row, aditional, dom2) {
                             ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
                             // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
 
-                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
 
                             console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + reg.searchable.active + ")(" + reg.searchable.text + ") es el td:" + td.innerHTML);
+                            //?
+                            eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        } else if (reg.length != undefined) {
+                            il_axtsea = true;
+                            // console.log("*?![" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
+                            ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
+                            ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
+                            // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
+
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, undefined, eleid);
+
+                            console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + ") es el td:" + td.innerHTML);
+                            //?
+                            eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        } else if (reg.validation != undefined) {
+                            il_axtsea = true;
+                            // console.log("*?![" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
+                            ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
+                            ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
+                            // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
+
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, reg.validation, eleid);
+
+                            console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + ") es el td:" + td.innerHTML);
                             //?
                             eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                         }
@@ -586,7 +610,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
 
-                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
+                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
                         console.log("**[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
@@ -595,7 +619,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     if (reg.state != undefined && reg.state == ti_estreg) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
-                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, eleid);
+                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
                         console.log("***[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
@@ -2383,13 +2407,26 @@ function AUTODYNAMIC(opt, ls_regist) {
 }
 
 /*BUILDER*/
-function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract, searchable, id) {
+function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract, searchable, validation, id) {
     var html = "";
+    if (searchable == undefined) {
+        searchable = JSON.parse("{\"active\":false,\"text\":\"\"}");
+    }
+    if (validation == undefined) {
+        validation = JSON.parse("{\"regexp\":null,\"event\":\"\",\"pagbots\":\"\"}");
+    }
+
     if (type == 1) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"1\" class=\"writer pagreg\" >";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-            html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " maxlength='" + ca_caract + "'>";
+
+            if (validation.regexp == null) {
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " maxlength='" + ca_caract + "'>";
+            } else {
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " onkeypress='return inputLImiter(event, \"Numbers\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\");' maxlength='" + ca_caract + "'>";
+            }
+
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
@@ -2645,5 +2682,53 @@ function TI_ESTREG(className) {
         return 'E';
     } else {
         return 'O';
+    }
+}
+
+
+function inputLimiter(e, allow) {
+    var AllowableCharacters = '';
+    if (allow == 'Letters') {
+        AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    }
+    if (allow == 'Numbers') {
+        AllowableCharacters = '1234567890';
+    }
+    if (allow == 'Numbers2') {
+        AllowableCharacters = '1234567890/';
+    }
+    if (allow == 'Currency') {
+        AllowableCharacters = '1234567890.';
+    }
+    if (allow == 'NameCharacters') {
+        AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
+    }
+    if (allow == 'NameCharactersAndNumbers') {
+        AllowableCharacters = '1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-\'';
+    }
+    if (allow == 'NameCharactersAndNumbersURL') {
+        AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_';
+    }
+    if (allow == 'LettersNumbers') {
+        AllowableCharacters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    }
+
+    var k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+    if (k != 13 && k != 8 && k != 0) {
+        if ((e.ctrlKey == false) && (e.altKey == false)) {
+            return (AllowableCharacters.indexOf(String.fromCharCode(k)) != -1);
+        } else {
+            return true;
+        }
+    } else {
+        return true;
+    }
+}
+
+function validar_regexp(input, regex){
+    if(regex.test(input.value)){
+        console.log('todo bien!');
+    }else{
+        console.log('todo mal!');
     }
 }
