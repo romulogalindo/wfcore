@@ -58,6 +58,7 @@ public class DoLogin {
         usuario.setCo_sistem(regsesiniDTO.getCo_sistem());
         usuario.setCo_subsis(regsesiniDTO.getCo_subsis());
         usuario.setNo_correo(regsesiniDTO.getNo_correo());
+        usuario.setIp_remoto(regsesiniDTO.getIp_remoto());
 //        usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
         usuario.setIl_schema(true);
 

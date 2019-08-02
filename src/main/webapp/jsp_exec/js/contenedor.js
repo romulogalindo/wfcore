@@ -76,11 +76,23 @@ function workflow(il_popup) {
     }
 
     for (var iframe of document.getElementsByTagName('IFRAME')) {
-        if (iframe.getAttribute('id').indexOf("PAG") == 0)
+        if (iframe.getAttribute('id').indexOf("PAG") == 0) {
+            console.log('@@@@@@@@@@PRE!!' + iframe.getAttribute('id') + ", CO_CONTEN:" + CO_CONTEN + ", ID_FRAWOR:" + ID_FRAWOR + ", il_popup:" + il_popup);
+            // setTimeout(function (CO_CONTEN, ID_FRAWOR, il_popup) {
+            //     console.log('@@@@@@@@@@START' + iframe.getAttribute('id') + ", CO_CONTEN:" + CO_CONTEN + ", ID_FRAWOR:" + ID_FRAWOR + ", il_popup:" + il_popup);
+            //     iframe.src = '/karmic?co_conten=' + CO_CONTEN
+            //         + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
+            //         + '&id_frawor=' + ID_FRAWOR
+            //         + '&il_popup=' + il_popup;
+            //     console.log('@@@@@@@@@@STOP ' + iframe.getAttribute('id'));
+            // }, 0)
+
             iframe.src = '/karmic?co_conten=' + CO_CONTEN
                 + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
                 + '&id_frawor=' + ID_FRAWOR
                 + '&il_popup=' + il_popup;
+        }
+
     }
 
 //--FRONT AND MODALª!

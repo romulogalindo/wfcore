@@ -39,7 +39,7 @@
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
-    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=8"/>
+    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=9"/>
 
 
     <!-- SCRIPTS -->
@@ -54,7 +54,7 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=23"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=24"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=37"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=17"></script>
 
@@ -495,176 +495,183 @@
 </div-->
 
 <!--Main layout-->
-<main>
-    <div class="container-fluid">
-        <section card card-cascade narrower mb-5>
-            <!--<div class="w3-row" style="height: 65px;"></div>-->
-            <input type="hidden" id="il_popup" name="il_popup" value="${cntBean.contenedor.il_popup}">
-            <%--<div>Aqui va todo el contenido</div>--%>
-            ${cntBean.contenedor.toHTML()}
-        </section>
+<c:if test="${cntBean.contenedor.il_popup}">
+<main style="margin-left:0;margin-right: 0px;padding-top: 2rem">
+    </c:if>
+    <c:if test="${!cntBean.contenedor.il_popup}">
+    <main>
+        </c:if>
 
-    </div>
-</main>
+        <div class="container-fluid">
+            <section card card-cascade narrower mb-5>
+                <!--<div class="w3-row" style="height: 65px;"></div>-->
+                <input type="hidden" id="il_popup" name="il_popup" value="${cntBean.contenedor.il_popup}">
+                <%--<div>Aqui va todo el contenido</div>--%>
+                ${cntBean.contenedor.toHTML()}
+            </section>
 
-<!--MODAL-->
-<%--<c:if test="${US.il_schema}">--%>
-<!--Modal: modalSocial-->
-<div class="modal fade ${US.il_schema? 'firsttime':''}" id="slc_schema" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog cascading-modal modal-xl" role="document">
+        </div>
+    </main>
 
-        <!--Content-->
-        <div class="modal-content">
+    <!--MODAL-->
+    <%--<c:if test="${US.il_schema}">--%>
+    <!--Modal: modalSocial-->
+    <div class="modal fade ${US.il_schema? 'firsttime':''}" id="slc_schema" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog cascading-modal modal-xl" role="document">
 
-            <!--Header-->
-            <div class="modal-header darken-3 white-text" style="background-color: #2bbbad;border-radius: 0.5rem;">
-                <h4 class="title">
-                    Sistemas
-                </h4>
-            </div>
+            <!--Content-->
+            <div class="modal-content">
 
-            <!--Body-->
-            <div class="modal-body">
-                <div class="container-fluid" style="height: 560px;overflow-y: scroll;">
+                <!--Header-->
+                <div class="modal-header darken-3 white-text" style="background-color: #2bbbad;border-radius: 0.5rem;">
+                    <h4 class="title">
+                        Sistemas
+                    </h4>
+                </div>
 
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="container-fluid" style="height: 560px;overflow-y: scroll;">
+
+                        <c:set value="1" var="yxt"/>
+                        <c:set value="0" var="clse"/>
+
+                        <c:forEach var="sistema" items="${US.root.sistemas}">
+                            <c:if test="${sistema.il_sisfor}">
+                                <c:if test="${yxt==1}">
+                                    <div class="row">
+                                    <c:set value="0" var="clse"/>
+                                </c:if>
+
+                                <div class="card mb-4 col-md-3 yxt${yxt}"
+                                     style="height: 130px;padding: 0px;margin: 0px auto;max-width: 23%;">
+
+                                    <!-- Card image -->
+                                    <div class="view overlay" style="padding: .5em;">
+                                        <img class="card-img-top card-img-bottom"
+                                             src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
+                                             alt="Card image cap">
+                                        <a href="${sistema.ur_sistem}" target="_blank"
+                                        >
+                                            <div class="mask rgba-white-light"></div>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card content -->
+                                    <div class="card-body" style="text-align: center;padding: .0rem 1rem .8rem;">
+                                        <h5 class="card-title" style="margin-bottom: 0px;">${sistema.no_sistem}</h5>
+                                    </div>
+
+                                </div>
+
+
+                                <c:if test="${yxt==4}">
+                                    </div>
+                                    <c:set value="0" var="yxt"/>
+                                    <c:set value="1" var="clse"/>
+                                </c:if>
+                                <c:set value="${yxt+1}" var="yxt"/>
+                                <%--</c:forEach>--%>
+                                <%--</c:forEach>--%>
+                            </c:if>
+                        </c:forEach>
+                        <c:if test="${clse==0}">
+                    </div>
+                    </c:if>
                     <c:set value="1" var="yxt"/>
                     <c:set value="0" var="clse"/>
 
                     <c:forEach var="sistema" items="${US.root.sistemas}">
-                        <c:if test="${sistema.il_sisfor}">
-                            <c:if test="${yxt==1}">
-                                <div class="row">
-                                <c:set value="0" var="clse"/>
-                            </c:if>
+                        <c:if test="${!sistema.il_sisfor}">
+                            <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
+                                <%--<c:forEach var="paquete" items="${sub_sistema.paquetes}">--%>
+                                <c:if test="${yxt==1}">
+                                    <div class="row">
+                                    <c:set value="0" var="clse"/>
+                                </c:if>
 
-                            <div class="card mb-4 col-md-3 yxt${yxt}"
-                                 style="height: 130px;padding: 0px;margin: 0px auto;max-width: 23%;">
+                                <div class="card mb-4 col-md-3 yxt${yxt}"
+                                     style="height: 220px;padding: 0px;margin: 0px auto;max-width: 23%;">
 
-                                <!-- Card image -->
-                                <div class="view overlay" style="padding: .5em;">
-                                    <img class="card-img-top card-img-bottom"
-                                         src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
-                                         alt="Card image cap">
-                                    <a href="${sistema.ur_sistem}" target="_blank"
-                                    >
-                                        <div class="mask rgba-white-light"></div>
-                                    </a>
+                                    <!-- Card image -->
+                                    <div class="view overlay">
+                                        <img class="card-img-top"
+                                             src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
+                                             alt="Card image cap">
+                                        <a href="#"
+                                           onclick="return changemodulo(${sistema.co_sistem}, ${sub_sistema.co_subsis}, true);">
+                                            <div class="mask rgba-white-slight"></div>
+                                        </a>
+                                    </div>
+
+                                    <!-- Card content -->
+                                    <div class="card-body" style="text-align: center;padding: .8rem 1rem;">
+
+                                        <h5 class="card-title" style="margin-bottom: 0px;">${sub_sistema.no_subsis}</h5>
+                                        <span class="card-text">${sistema.no_sistem}</span>
+                                    </div>
+
                                 </div>
 
-                                <!-- Card content -->
-                                <div class="card-body" style="text-align: center;padding: .0rem 1rem .8rem;">
-                                    <h5 class="card-title" style="margin-bottom: 0px;">${sistema.no_sistem}</h5>
-                                </div>
 
-                            </div>
-
-
-                            <c:if test="${yxt==4}">
-                                </div>
-                                <c:set value="0" var="yxt"/>
-                                <c:set value="1" var="clse"/>
-                            </c:if>
-                            <c:set value="${yxt+1}" var="yxt"/>
-                            <%--</c:forEach>--%>
-                            <%--</c:forEach>--%>
+                                <c:if test="${yxt==4}">
+                                    </div>
+                                    <c:set value="0" var="yxt"/>
+                                    <c:set value="1" var="clse"/>
+                                </c:if>
+                                <c:set value="${yxt+1}" var="yxt"/>
+                                <%--</c:forEach>--%>
+                            </c:forEach>
                         </c:if>
                     </c:forEach>
                     <c:if test="${clse==0}">
                 </div>
                 </c:if>
-                <c:set value="1" var="yxt"/>
-                <c:set value="0" var="clse"/>
-
-                <c:forEach var="sistema" items="${US.root.sistemas}">
-                    <c:if test="${!sistema.il_sisfor}">
-                        <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
-                            <%--<c:forEach var="paquete" items="${sub_sistema.paquetes}">--%>
-                            <c:if test="${yxt==1}">
-                                <div class="row">
-                                <c:set value="0" var="clse"/>
-                            </c:if>
-
-                            <div class="card mb-4 col-md-3 yxt${yxt}"
-                                 style="height: 220px;padding: 0px;margin: 0px auto;max-width: 23%;">
-
-                                <!-- Card image -->
-                                <div class="view overlay">
-                                    <img class="card-img-top"
-                                         src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
-                                         alt="Card image cap">
-                                    <a href="#"
-                                       onclick="return changemodulo(${sistema.co_sistem}, ${sub_sistema.co_subsis}, true);">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-
-                                <!-- Card content -->
-                                <div class="card-body" style="text-align: center;padding: .8rem 1rem;">
-
-                                    <h5 class="card-title" style="margin-bottom: 0px;">${sub_sistema.no_subsis}</h5>
-                                    <span class="card-text">${sistema.no_sistem}</span>
-                                </div>
-
-                            </div>
-
-
-                            <c:if test="${yxt==4}">
-                                </div>
-                                <c:set value="0" var="yxt"/>
-                                <c:set value="1" var="clse"/>
-                            </c:if>
-                            <c:set value="${yxt+1}" var="yxt"/>
-                            <%--</c:forEach>--%>
-                        </c:forEach>
-                    </c:if>
-                </c:forEach>
-                <c:if test="${clse==0}">
-            </div>
-            </c:if>
-        </div>
-    </div>
-</div>
-<!--/.Content-->
-
-</div>
-</div>
-<!--Modal: modalSocial-->
-<!--${US.setIl_schema(false)}-->
-<%--</c:if>--%>
-
-<%--DEFAULT MSG--%>
-<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
-
-    <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
-    <div class="modal-dialog modal-dialog-centered" role="document">
-
-
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>-->
-            </div>
-            <div id="messageModalBody" class="modal-body">
-                [TEXT]
-            </div>
-            <div class="modal-footer" style="text-align: center;display: block;">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div>
+    <!--/.Content-->
 
-<%--DINPUAH--%>
-<input placeholder="Selected date" style="display:none;" type="text" id="rankanadate" class="form-control datepicker"
-       onchange="close_popup_date(this);">
+    </div>
+    </div>
+    <!--Modal: modalSocial-->
+    <!--${US.setIl_schema(false)}-->
+    <%--</c:if>--%>
 
-<%--<c:set scope="session" var="US" property="il_schema" value="false"/>--%>
-<%--<script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>--%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js?a=2"></script>
+    <%--DEFAULT MSG--%>
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+
+        <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>-->
+                </div>
+                <div id="messageModalBody" class="modal-body">
+                    [TEXT]
+                </div>
+                <div class="modal-footer" style="text-align: center;display: block;">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%--DINPUAH--%>
+    <input placeholder="Selected date" style="display:none;" type="text" id="rankanadate"
+           class="form-control datepicker"
+           onchange="close_popup_date(this);">
+
+    <%--<c:set scope="session" var="US" property="il_schema" value="false"/>--%>
+    <%--<script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>--%>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js?a=2"></script>
 </body>
 </html>

@@ -354,9 +354,9 @@ public class PaginaRerporte extends Pagina implements Serializable {
                     for (WBotonDTO botonDTO : fila.getBotonDTOS()) {
                         if (botonDTO.getTi_pagbot().contentEquals("G")) {
                             if (botonDTO.isIl_confir()) {
-                                html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"if(confirm(\'" + botonDTO.getNo_confir() + "\')){propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")}\" >";
+                                html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" style=\"background-color: " + botonDTO.getVa_colbot() + " !important;\" class=\"btn btn-default\" onclick=\"if(confirm(\'" + botonDTO.getNo_confir() + "\')){propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")}\" >";
                             } else {
-                                html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" class=\"btn btn-default\" onclick=\"propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >";
+                                html += "<button id=\"" + id + botonDTO.getCo_pagbot() + "\" name=\"" + id + botonDTO.getCo_pagbot() + "\" style=\"background-color: " + botonDTO.getVa_colbot() + " !important;\" class=\"btn btn-default\" onclick=\"propagg(\'C1\'," + botonDTO.getCo_pagbot() + "," + botonDTO.isIl_proces() + ", " + botonDTO.getCo_condes() + ")\" >";
                             }
                             html += "<i class=\"fa fa-hand-pointer-o\" aria-hidden=\"true\"></i>\n"
                                     + (botonDTO.getNo_icopos().toUpperCase().contentEquals("LEFT") ? "<i class=\"" + botonDTO.getNo_icobot() + " pr-1\" aria-hidden=\"true\"></i>" : "")

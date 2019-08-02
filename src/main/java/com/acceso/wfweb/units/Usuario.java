@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
     boolean il_schema;
 
     String no_correo;
+    String ip_remoto;
 
     Root root;
     MainMenu mainMenu;
@@ -141,6 +142,14 @@ public class Usuario implements Serializable {
 
     public void setNo_correo(String no_correo) {
         this.no_correo = no_correo;
+    }
+
+    public String getIp_remoto() {
+        return ip_remoto;
+    }
+
+    public void setIp_remoto(String ip_remoto) {
+        this.ip_remoto = ip_remoto;
     }
 
     @Override

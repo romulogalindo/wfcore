@@ -49,7 +49,7 @@ public class RegsesiniDTO implements Serializable {
     String de_mensaj;
     String no_correo;
 
-    @Transient
+//    @Transient
     String ip_remoto;
 
     @Transient
