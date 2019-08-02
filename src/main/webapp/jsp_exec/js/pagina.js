@@ -564,6 +564,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     } else {
+                        console.log('reg.validation:' + reg.validation);
                         if (reg.searchable != undefined) {
                             console.log('??----->??[' + reg.searchable + ']');
                             reg.searchable = JSON.parse(reg.searchable);
@@ -591,6 +592,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                             //?
                             eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                         } else if (reg.validation != undefined) {
+                            reg.validation = JSON.parse(reg.validation);
                             il_axtsea = true;
                             // console.log("*?![" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                             ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
@@ -960,6 +962,30 @@ function loadFormulario64(index, row, aditional, dom2) {
             return null;
         }
     });
+
+    //evaluar los botones!
+    for (var y = 1; y < 11; y++) {
+        try {
+            var ls_valida = eval('BTN' + y + 'E');
+            var bl_valida = true;
+            // console.log('validando!----->' + ls_valida + ", ------>" + ls_valida.length);
+            for (var v = 0; v < ls_valida.length; v++) {
+                // console.log('elemento interno-------**-*-*->>>' + ls_valida[v].getValue());
+                bl_valida = (bl_valida && ls_valida[v].getValue());
+                // console.log('elemento interno-------**-*-*->>>' + bl_valida);
+            }
+
+            if (bl_valida) {
+                document.getElementsByName('BTN' + y)[0].removeAttribute('disabled');
+                // console.log('Telemento interno-------**-*-*->>>' + bl_valida);
+            } else {
+                document.getElementsByName('BTN' + y)[0].setAttribute('disabled', 'disabled');
+                // console.log('Felemento interno-------**-*-*->>>' + bl_valida);
+            }
+        } catch (e) {
+            // console.log('@@ERROR@@' + e);
+        }
+    }
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
@@ -2424,7 +2450,39 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
             if (validation.regexp == null) {
                 html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " maxlength='" + ca_caract + "'>";
             } else {
-                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " onkeypress='return inputLImiter(event, \"Numbers\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\");' maxlength='" + ca_caract + "'>";
+                // html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " onkeypress='return inputLImiter(event, \"Numbers\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\");' maxlength='" + ca_caract + "'>";
+                var itis_disab = false;
+
+                try {
+
+                    for (var b = 0; b < validation.pagbots.length; b++) {
+                        // console.log("[" + 'BTN' + validation.pagbots[b] + 'E' + "]@[" + 'R' + co_regist + "]@" + b + "@" + validation.pagbots[b]);
+                        // eval('BTN' + validation.pagbots[b] + 'E')['R' + co_regist] = false;
+                        var xzz = eval('BTN' + validation.pagbots[b] + 'E');
+
+                        //validar que no este
+                        var prev = -1;
+                        for (var t = 0; t < xzz.length; t++) {
+                            if (co_regist == xzz[t].getKey()) {
+                                prev = t;
+                                t = 999999;
+                            }
+                        }
+                        if (prev > -1) {
+                            xzz[prev] = new RegistLauncher(co_regist, false);
+                        } else {
+                            xzz[xzz.length] = new RegistLauncher(co_regist, false);
+                        }
+                        //xzz[xzz.length]=
+                        // console.log('tons:' + eval('BTN' + validation.pagbots[b] + 'E')['R' + co_regist]);
+                    }
+                } catch (e) {
+                    // console.log('en la creacion----->' + e);
+                }
+
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' maxlength='" + ca_caract + "'>";
+
+
             }
 
             html += "       </div>";
@@ -2725,10 +2783,97 @@ function inputLimiter(e, allow) {
     }
 }
 
-function validar_regexp(input, regex){
-    if(regex.test(input.value)){
-        console.log('todo bien!');
-    }else{
-        console.log('todo mal!');
+function validar_regexp(input, regex, co_regist, message) {
+    // console.log('input.value:' + input.value + ', ->' + RegExp(regex) + ". ->" + RegExp(regex).test(input.value));
+    if (RegExp(regex).test(input.value)) {
+        input.setAttribute('class', 'w3-input w3-border form-control');
+        // console.log('todo bien!');
+        //return true;
+        for (var y = 1; y < 11; y++) {
+            try {
+                var xzz = eval('BTN' + y + 'E');
+                for (var t = 0; t < xzz.length; t++) {
+                    if (co_regist == xzz[t].getKey()) {
+                        xzz[t].setValue(true);
+                        t = 99999;
+                    }
+                }
+            } catch (e) {
+                // console.log('@ERROR-true@' + e);
+            }
+        }
+
+    } else {
+        // console.log('todo mal!');
+        input.setAttribute('class', 'w3-input w3-border form-control invalid');
+
+        for (var y = 1; y < 11; y++) {
+            try {
+                var xzz = eval('BTN' + y + 'E');
+                for (var t = 0; t < xzz.length; t++) {
+                    if (co_regist == xzz[t].getKey()) {
+                        xzz[t].setValue(false);
+                        t = 99999;
+                    }
+                }
+            } catch (e) {
+                // console.log('@ERROR-true@' + e);
+            }
+        }
     }
+    //--------
+    // for (var b = 0; b < validation.pagbots.length; b++) {
+    //     eval('BTN' + co_botone + 'E')['R' + co_regist] = false;
+    // }
+
+    for (var y = 1; y < 11; y++) {
+        try {
+            var ls_valida = eval('BTN' + y + 'E');
+            var bl_valida = true;
+            // console.log('validando!----->' + ls_valida + ", ------>" + ls_valida.length);
+            for (var v = 0; v < ls_valida.length; v++) {
+                // console.log('elemento interno-------**-*-*->>>' + ls_valida[v].getValue());
+                bl_valida = (bl_valida && ls_valida[v].getValue());
+                // console.log('elemento interno-------**-*-*->>>' + bl_valida);
+            }
+
+            if (bl_valida) {
+                document.getElementsByName('BTN' + y)[0].removeAttribute('disabled');
+                // console.log('Telemento interno-------**-*-*->>>' + bl_valida);
+            } else {
+                document.getElementsByName('BTN' + y)[0].setAttribute('disabled', 'disabled');
+                // console.log('Felemento interno-------**-*-*->>>' + bl_valida);
+            }
+        } catch (e) {
+            // console.log('@@ERROR@@' + e);
+        }
+    }
+
+
+}
+
+// function valida_btnena(regexp, btns) {
+//     if (regexp) {
+//         //validacion global
+//         for (var b = 0; b < btns.length; b++) {
+//
+//         }
+//     }
+// }
+function RegistLauncher(k, v) {
+    this.K = k;
+    this.V = v;
+    this.getValue = function () {
+        return this.V;
+    };
+    this.setValue = function (cv) {
+        this.V = cv;
+    };
+    this.getKey = function () {
+        return this.K;
+    };
+    this.setKey = function (ck) {
+        this.K = ck;
+    };
+
 }

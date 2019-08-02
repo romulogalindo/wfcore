@@ -173,7 +173,7 @@ doPropag = function (url, regparams, data) {
                     /*SI HAY PARAMETROA A SOBRE-PONER*/
                     if (rpta.ls_params != undefined) {
                         for (var i = 0; i < rpta.ls_params.length; i++) {
-                            doPutParamForce('/salamander?id_frawor=' + ID_FRAWOR + '&co_conten=' + CO_CONTEN + '&no_conpar=' + rpta.ls_params[i].no_param + '&va_conpar=' + rpta.ls_params[i].va_param);
+                            doPutParamForce('/salamander?id_frawor=' + ID_FRAWOR + '&co_conten=' + CO_CONTEN + '&no_conpar=' + rpta.ls_params[i].no_param + '&va_conpar=' + encodeURIComponent(rpta.ls_params[i].va_param));
                         }
                     }
 

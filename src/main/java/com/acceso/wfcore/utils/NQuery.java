@@ -50,7 +50,11 @@ public class NQuery {
 
     public void setString(String param_name, String param_value) {
         query.setParameter(param_name, param_value, org.hibernate.type.StringType.INSTANCE);
-        queryString = queryString.replaceFirst(":" + param_name, "\'" + String.valueOf(param_value) + "\'");
+        try {
+            queryString = queryString.replaceFirst(":" + param_name, "\'" + String.valueOf(param_value) + "\'");
+        }catch(Exception ep){
+            System.out.println("ep = " + ep);
+        }
     }
 
     /**

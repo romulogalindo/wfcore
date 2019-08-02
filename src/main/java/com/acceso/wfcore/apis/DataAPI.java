@@ -412,4 +412,65 @@ public class DataAPI extends GenericAPI {
 
         return file;
     }
+
+    public File CREATE_PDF(Object obj) {
+        ScriptObjectMirror opts = (ScriptObjectMirror) obj;
+        String no_archiv = opts.get("no_archiv") == null ? "aiofile" : opts.get("no_archiv").toString();
+        Object ls_archiv = opts.get("ls_archiv");
+        System.out.println("ls_archiv = " + ls_archiv);
+        System.out.println("ls_archiv = " + ls_archiv.getClass());
+        jdk.nashorn.api.scripting.ScriptObjectMirror obh = (jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv;
+        System.out.println("obh = " + obh.isArray());
+//        Collection cls = obh.values();
+//        Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror)ls_archiv).values().iterator();
+//        while (it.hasNext()) {
+//            Object oit = it.next();
+//            if(oit instanceof File){
+//
+//            }
+//            System.out.println("oit = " + oit);
+//            System.out.println("oit = " + oit.getClass());
+//        }
+//        System.out.println("cls = " + cls);
+//        List<Object> asl = Arrays.asList(ls_archiv);
+//        System.out.println("asl = " + asl);
+        //-------------------
+        File file = null;
+        try {
+            file = new File(System.getProperty("java.io.tmpdir") + File.separator + no_archiv);
+        } catch (Exception ep) {
+            file = null;
+        }
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            ZipOutputStream zipOS = new ZipOutputStream(fos);
+
+            Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv).values().iterator();
+            while (it.hasNext()) {
+                Object oit = it.next();
+                if (oit instanceof File) {
+                    File file1 = (File) oit;
+
+                    FileInputStream fis = new FileInputStream(file1);
+                    ZipEntry zipEntry = new ZipEntry(file1.getName());
+                    zipOS.putNextEntry(zipEntry);
+
+                    byte[] bytes = new byte[1024];
+                    int length;
+                    while ((length = fis.read(bytes)) >= 0) {
+                        zipOS.write(bytes, 0, length);
+                    }
+
+                    zipOS.closeEntry();
+                    fis.close();
+                }
+            }
+            zipOS.close();
+            fos.close();
+        } catch (Exception ep) {
+        }
+
+        return file;
+    }
 }

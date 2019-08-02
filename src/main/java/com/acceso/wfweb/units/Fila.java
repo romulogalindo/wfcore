@@ -107,7 +107,7 @@ public class Fila extends HTMLRenderer implements Serializable {
 
             for (WBotonDTO botonDTO : botonDTOS) {
 
-                html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[];";
+                html += "<script> var " + id + botonDTO.getCo_pagbot() + "P=[]; var " + id + botonDTO.getCo_pagbot() + "E=[];";
                 for (WParametroDTO parametroDTO : botonDTO.getParametros()) {
                     html += "" + id + botonDTO.getCo_pagbot() + "P[" + id + botonDTO.getCo_pagbot() + "P.length] = new Parameter(" + parametroDTO.getCo_pagreg() + "," + parametroDTO.getCo_conpar() + ");";
                 }

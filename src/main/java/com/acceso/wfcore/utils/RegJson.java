@@ -22,7 +22,7 @@ public class RegJson {
     Object ls_styles;
     Object ca_caract;
     Object cf_search;
-    Object do_valreg;
+    Object do_valida;
 
     public RegJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
@@ -72,15 +72,15 @@ public class RegJson {
         }
 
 
-        if (opts.get("do_valreg") != null) {
-            ScriptObjectMirror cfg_serach = (ScriptObjectMirror) opts.get("do_valreg");
-            Iterator pagbots = ((ScriptObjectMirror) cfg_serach.get("lk_pagbot")).values().iterator();
+        if (opts.get("do_valida") != null) {
+            ScriptObjectMirror cfg_serach = (ScriptObjectMirror) opts.get("do_valida");
+            Iterator pagbots = ((ScriptObjectMirror) cfg_serach.get("lk_pagbots")).values().iterator();
             List<String> _styles = new ArrayList<>();
             while (pagbots.hasNext()) {
                 _styles.add("" + pagbots.next());
             }
 
-            do_valreg = "{\"regexp\":\"" + cfg_serach.get("va_regexp") + "\", \"event\":\"" + cfg_serach.get("tx_keyeve") + "\", \"pagbots\":\"[" + String.join(",", _styles) + "]\"}";
+            do_valida = "{\"charset\":\""+cfg_serach.get("ti_charset")+"\", \"regexp\":\"" + cfg_serach.get("va_regexp") + "\", \"message\":\"" + cfg_serach.get("tx_invalid") + "\", \"pagbots\":[" + String.join(",", _styles) + "]}";
         }
     }
 
@@ -200,12 +200,12 @@ public class RegJson {
         this.cf_search = cf_search;
     }
 
-    public Object getDo_valreg() {
-        return do_valreg;
+    public Object getDo_valida() {
+        return do_valida;
     }
 
-    public void setDo_valreg(Object do_valreg) {
-        this.do_valreg = do_valreg;
+    public void setDo_valreg(Object do_valida) {
+        this.do_valida = do_valida;
     }
 
     public static RegJson NEW(Object obj) {

@@ -39,13 +39,13 @@ public class AsyncValPag extends AsyncProcessor {
             //---
             RequestManager requestManager = new RequestManager((HttpServletRequest) asyncContext.getRequest(), null);
             ls_allreg = requestManager.getParam("ls_allreg");
-            System.out.println("!!!ls_allreg = " + ls_allreg);
+//            System.out.println("!!!ls_allreg = " + ls_allreg);
 //            String ls_conpar = requestManager.getParam("ls_conpar");
 
             Long id_frawor = Util.toLong(asyncContext.getRequest().getParameter("id_frawor"), -1);
             Usuario usuario = ((Usuario) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("US"));
 //            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
-            System.out.println("UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
+//            System.out.println("UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
             ScriptContextExecutor script;
 

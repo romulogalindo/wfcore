@@ -27157,7 +27157,8 @@ function _createClass(Constructor, protoProps, staticProps) {
             }, {
                 key: "_onHTMLClick",
                 value: function _onHTMLClick(e) {
-                    if (!$(e.target).closest("#select-options-".concat(this.uuid)).length) {
+                    // if (!$(e.target).closest("#select-options-".concat(this.uuid)).length) {
+                    if (!$(e.target).closest("#select-options-".concat(this.uuid)).length && !$(e.target).hasClass('mdb-select') && $("#select-options-".concat(this.uuid)).hasClass('active')) {
                         this.$materialSelect.trigger('close');
                     }
                 }
@@ -29886,9 +29887,9 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
 
             // Months and weekdays
             monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             weekdaysFull: ['Domingo', 'Lunes', 'Martes', 'Mi\u00E9rcoles', 'Jueves', 'Viernes', 'S\u00E1bado'],
-            weekdaysShort: ['Dom','Lun','Mar','Mi\u00E9','Juv','Vie','S\u00E1b'],
+            weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mi\u00E9', 'Juv', 'Vie', 'S\u00E1b'],
 //            monthsFull: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 //            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 //            weekdaysFull: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],

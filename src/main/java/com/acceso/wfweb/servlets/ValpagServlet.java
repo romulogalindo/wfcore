@@ -37,12 +37,11 @@ public class ValpagServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("ISO-8859-1");
-//        response.setContentType("text/html;charset=ISO-8859-1");
         response.setContentType("aplication/json;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
         asyncCtx.setTimeout(100000);//10 Seg
-        System.out.println("??request.getServletPath() = " + request.getServletPath());
+//        System.out.println("??request.getServletPath() = " + request.getServletPath());
         switch (request.getServletPath()) {
             case "/pangolin": {
                 //valpag
@@ -77,7 +76,8 @@ public class ValpagServlet extends HttpServlet {
                 String id_frawor = request.getParameter("id_frawor");
                 String no_conpar = request.getParameter("no_conpar");
                 String va_conpar = request.getParameter("va_conpar");
-                System.out.println("(2)UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
+                System.out.println("va_conpar = " + va_conpar);
+//                System.out.println("(2)UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
                 ((Contenedor) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).put_conpar(no_conpar, va_conpar);
 
                 asyncCtx.complete();

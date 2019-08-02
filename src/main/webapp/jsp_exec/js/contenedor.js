@@ -100,9 +100,6 @@ function workflow(il_popup) {
         //LISTO
         console.log('Esto se cargara');
         console.log('Esto se cargara:' + $('#rankanadate'));
-//        $('#rankanadate').pickadate();
-//        $("#rankanadate").unbind("focus");
-//        $("#rankanadate").off("focus");
     });
 
     $("#modal").on('hide.bs.modal', function () {
