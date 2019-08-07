@@ -1,5 +1,9 @@
 package com.acceso.wfcore.utils;
 
+import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfcore.log.Log;
+import com.acceso.wfweb.daos.Frawor4DAO;
+import com.acceso.wfweb.dtos.ArchivDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FilenameUtils;
@@ -421,5 +425,41 @@ public class Util {
                 new SelectItem("right", "Derecha")
         };
         return ls_estreg;
+    }
+
+    /*MGN IMGS*/
+    public static File get_archiv(Integer co_imagen) {
+        String filename = WFIOAPP.APP.getDataSourceService().getValueOfKey("AIO_DATA_FILE") + File.separator;
+
+        if (co_imagen == null | co_imagen == 0) {
+            return null;
+        }
+
+//        if (co_imagen != 0) {
+        try {
+            ArchivDTO arcadj = null;
+//            try {
+
+            Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
+            arcadj = dao.getArchiv(co_imagen);
+            dao.close();
+
+//            } catch (Exception ep) {
+//                ep.printStackTrace();
+//            }
+
+//            filename = arcadj.getCo_archiv() + "." + Util.getFileExtension(arcadj.getNo_archiv());
+            filename = filename + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + arcadj.getCo_archiv() + "." + Util.getFileExtension(arcadj.getNo_archiv());
+//            full_filename = WFIOAPP.APP.getDataSourceService().getValueOfKey("AIO_DATA_FILE") + File.separator + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + filename;
+            Log.info("Buscando File:" + filename);
+
+            return new File(filename);
+
+        } catch (Exception ex) {
+            Log.info("Archivo no encontrado sector 1:" + ex.getMessage());
+//            existe = false;
+            return null;
+        }
+//        }
     }
 }

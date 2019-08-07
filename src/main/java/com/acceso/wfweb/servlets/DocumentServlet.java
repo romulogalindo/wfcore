@@ -1076,6 +1076,8 @@ public class DocumentServlet extends HttpServlet {
                         response.setContentType("application/vnd.ms-excel");
                     } else if (ext.contentEquals("XLSX")) {
                         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    }else if (ext.contentEquals("ZIP")) {
+                        response.setContentType("application/zip, application/octet-stream");
                     }
 
                     try {

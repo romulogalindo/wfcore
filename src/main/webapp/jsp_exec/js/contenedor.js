@@ -2,6 +2,7 @@ var $D = document;
 var $MAP = {};
 var current_pagina = -1;
 var current_regist = -1;
+var current_button = -1;
 var mutable_date_picker;
 
 var CO_CONTEN;
@@ -258,11 +259,6 @@ function master_popup(co_pagina, urlpopup, ele, titulo) {
 
     // $('#popup').modal({backdrop: 'static', show: true});
     $('#popup').modal({show: true});
-    // $("#popup").on('hide.bs.modal', function () {
-    //     alert('modal is closed');
-    //     document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
-    //     document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
-    // });
     $('#popup_body').attr('src', urlpopup);
 }
 
@@ -276,6 +272,23 @@ function master_popup_close2() {
     document.getElementById("popup2").style.display = "none";
     overlay(false);
     // document.getElementById("popup_body").src = '';
+}
+
+/*BUTTON GO POPUP GO*/
+function master_button_popup(co_pagina, co_button, urlpopup) {
+    current_pagina = co_pagina;
+    current_button = co_button;
+    console.log('current_pagina =' + current_pagina);
+    console.log('urlpopup =' + urlpopup);
+    console.log('ele =' + co_button);
+    // console.log('titulo =' + titulo);
+
+    document.getElementsByTagName('MAIN')[0].setAttribute('style', 'filter:blur(5px)');
+    document.getElementsByTagName('HEADER')[0].setAttribute('style', 'filter:blur(5px)');
+
+    // $('#popup').modal({backdrop: 'static', show: true});
+    $('#popup').modal({show: true});
+    $('#popup_body').attr('src', urlpopup);
 }
 
 function doupload(ele) {

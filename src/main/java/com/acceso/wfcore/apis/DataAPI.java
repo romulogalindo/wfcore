@@ -8,6 +8,11 @@ import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.utils.JsonResponse;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
@@ -346,6 +351,8 @@ public class DataAPI extends GenericAPI {
             file = new Converter(file).OBJECT_TO_XLS(ob_dindat);
         } else if (no_extens.toUpperCase().contains("TXT")) {
             file = new Converter(file).OBJECT_TO_TXT(ob_dindat);
+        } else if (no_extens.toUpperCase().contains("CSV")) {
+            file = new Converter(file).OBJECT_TO_CSV(ob_dindat);
         }
 
         return file;
@@ -415,60 +422,38 @@ public class DataAPI extends GenericAPI {
 
     public File CREATE_PDF(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
-        String no_archiv = opts.get("no_archiv") == null ? "aiofile" : opts.get("no_archiv").toString();
-        Object ls_archiv = opts.get("ls_archiv");
-        System.out.println("ls_archiv = " + ls_archiv);
-        System.out.println("ls_archiv = " + ls_archiv.getClass());
-        jdk.nashorn.api.scripting.ScriptObjectMirror obh = (jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv;
-        System.out.println("obh = " + obh.isArray());
-//        Collection cls = obh.values();
-//        Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror)ls_archiv).values().iterator();
-//        while (it.hasNext()) {
-//            Object oit = it.next();
-//            if(oit instanceof File){
-//
-//            }
-//            System.out.println("oit = " + oit);
-//            System.out.println("oit = " + oit.getClass());
-//        }
-//        System.out.println("cls = " + cls);
-//        List<Object> asl = Arrays.asList(ls_archiv);
-//        System.out.println("asl = " + asl);
-        //-------------------
-        File file = null;
-        try {
-            file = new File(System.getProperty("java.io.tmpdir") + File.separator + no_archiv);
-        } catch (Exception ep) {
-            file = null;
+        String no_archiv = opts.get("no_archiv").toString();
+        Integer co_archiv = Integer.parseInt(opts.get("co_archiv").toString());
+        String no_conexi = opts.get("no_conexi").toString();
+        ArrayList ls_params = (ArrayList) opts.get("ls_params");
+
+        Map<String, Object> parameters = new HashMap<String, Object>();
+
+        for (Object oit : ls_params) {
+            com.acceso.wfcore.utils.Param param = (com.acceso.wfcore.utils.Param) oit;
+            parameters.put(param.getNo_param(), param.getVa_param());
         }
 
+        File jasper_file = Util.get_archiv(co_archiv);
+
+        File file = null;
+        String filename = "";
+
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            ZipOutputStream zipOS = new ZipOutputStream(fos);
+            filename = System.getProperty("java.io.tmpdir") + File.separator + no_archiv + ".pdf";
+            JasperPrint print = JasperFillManager.fillReport(new FileInputStream(jasper_file), parameters, WFIOAPP.APP.getDataSourceService().getManager(no_conexi).getNativeSession().connection());
 
-            Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv).values().iterator();
-            while (it.hasNext()) {
-                Object oit = it.next();
-                if (oit instanceof File) {
-                    File file1 = (File) oit;
+            // exports report to pdf
+            JRExporter exporter = new JRPdfExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, new FileOutputStream(filename));
+            exporter.exportReport();
 
-                    FileInputStream fis = new FileInputStream(file1);
-                    ZipEntry zipEntry = new ZipEntry(file1.getName());
-                    zipOS.putNextEntry(zipEntry);
-
-                    byte[] bytes = new byte[1024];
-                    int length;
-                    while ((length = fis.read(bytes)) >= 0) {
-                        zipOS.write(bytes, 0, length);
-                    }
-
-                    zipOS.closeEntry();
-                    fis.close();
-                }
-            }
-            zipOS.close();
-            fos.close();
+            file = new File(filename);
+            System.out.println("exporter = " + file);
         } catch (Exception ep) {
+            ep.printStackTrace();
+            file = null;
         }
 
         return file;

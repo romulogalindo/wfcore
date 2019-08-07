@@ -1,9 +1,6 @@
 package com.acceso.wfcore.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,14 +9,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.opencsv.CSVWriter;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -250,6 +244,70 @@ public class Converter {
             }
 
             writer.close();
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
+
+        return file;
+    }
+
+    public File OBJECT_TO_CSV(Object data) {
+        try {
+            Writer writer = new FileWriter(file);
+            CSVWriter csvWriter = new CSVWriter(writer,
+                    CSVWriter.DEFAULT_SEPARATOR,
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+
+            if (data instanceof ArrayList) {
+                int rowexp = 0;
+                boolean header = true;
+                for (Object d1 : (ArrayList) data) {
+                    System.out.println("d1 = " + d1);
+
+                    List<String> _row;
+                    if (d1 instanceof HashMap) {
+                        int _cell = 0;
+                        if (header) {
+                            _row = new ArrayList<>();
+
+                            for (Object d2 : ((HashMap) d1).entrySet()) {
+                                HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
+
+                                _row.add("" + d3.getKey());
+                                _cell++;
+                            }
+
+                            header = false;
+                            rowexp++;
+
+                            String[] tmparr = new String[_row.size()];
+                            tmparr = _row.toArray(tmparr);
+                            csvWriter.writeNext(tmparr);
+                        }
+
+                        _row = new ArrayList<>();
+
+                        _cell = 0;
+                        for (Object d2 : ((HashMap) d1).entrySet()) {
+                            HashMap.Entry<Object, Object> d3 = (HashMap.Entry<Object, Object>) d2;
+
+                            _row.add("" + d3.getValue());
+                            _cell++;
+                        }
+
+                        String[] tmparr = new String[_row.size()];
+                        tmparr = _row.toArray(tmparr);
+                        csvWriter.writeNext(tmparr);
+
+                        rowexp++;
+                    }
+                }
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
         } catch (Exception ep) {
             ep.printStackTrace();
         }

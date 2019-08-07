@@ -54,8 +54,8 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=24"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=37"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=25"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=38"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=17"></script>
 
     <style>
@@ -179,16 +179,16 @@
                 <!--/. Logo -->
 
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs md-tabs nav-justified primary-color" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#panel555" role="tab"
-                           style="line-height: 20px;padding: 0px !important;height:20px;">
-                            <!--i class="fas fa-user pr-2"></i-->Modulos</a>
-                    </li>
+                <ul class="nav nav-tabs md-tabs nav-justified primary-color"  style="padding-left: .5rem;padding-right: .5rem;" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#panel666" role="tab"
                            style="line-height: 20px;padding: 0px !important;height:20px;">
                             <!--i class="fas fa-heart pr-2"></i-->Sistemas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#panel555" role="tab"
+                           style="line-height: 20px;padding: 0px !important;height:20px;">
+                            <!--i class="fas fa-user pr-2"></i-->Modulos</a>
                     </li>
                 </ul>
                 <!-- Nav tabs -->
