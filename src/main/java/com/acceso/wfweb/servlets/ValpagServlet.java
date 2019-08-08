@@ -64,9 +64,11 @@ public class ValpagServlet extends HttpServlet {
                 break;
             }
             case "/uxtion": {
-                //propag
+                //propag->getHTML("/uxtion?co_sistem=" + co_sistem + "&co_subsis=" + co_subsis);
                 Usuario usuario = ((Usuario) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("US"));
-                usuario.setMainMenu(usuario.getMainMenus().get(request.getParameter("comenu")));
+                usuario.setMainMenu(usuario.getMainMenus().get(request.getParameter("co_sistem") + request.getParameter("co_subsis")));
+                usuario.setCo_sistem(Integer.parseInt(request.getParameter("co_sistem")));
+                usuario.setCo_subsis(Integer.parseInt(request.getParameter("co_subsis")));
                 asyncCtx.complete();
                 break;
             }

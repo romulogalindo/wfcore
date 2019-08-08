@@ -169,7 +169,8 @@
                 </li>
                 <li class="">
                     <div class=" text-center">
-                        <a href="#" onclick="return view_all_system()" style="color:white;" class="pl-0"
+                        <a id="main_system" href="#" onclick="return view_all_system()" style="color:white;"
+                           class="pl-0"
                            style="color:white;height: 30px;line-height: 20px;">
                             SISTEMAS
                             <i class="fas fa-cogs"></i>
@@ -179,16 +180,17 @@
                 <!--/. Logo -->
 
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs md-tabs nav-justified primary-color"  style="padding-left: .5rem;padding-right: .5rem;" role="tablist">
+                <ul class="nav nav-tabs md-tabs nav-justified primary-color"
+                    style="padding-left: .5rem;padding-right: .5rem;" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#panel666" role="tab"
                            style="line-height: 20px;padding: 0px !important;height:20px;">
-                            <!--i class="fas fa-heart pr-2"></i-->Sistemas</a>
+                            Sistemas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#panel555" role="tab"
                            style="line-height: 20px;padding: 0px !important;height:20px;">
-                            <!--i class="fas fa-user pr-2"></i-->Modulos</a>
+                            Modulos</a>
                     </li>
                 </ul>
                 <!-- Nav tabs -->
@@ -291,6 +293,11 @@
                                 <!-- Side navigation links -->
                                 <c:forEach var="sistema" items="${US.root.sistemas}">
                                     <c:if test="${!sistema.il_sisfor}">
+                                        <c:if test="${sistema.co_sistem == US.co_sistem}">
+                                            <script>
+                                                document.getElementById("main_system").innerHTML = '${sistema.no_sistem} ' + '<i class="fas fa-cogs"></i>';
+                                            </script>
+                                        </c:if>
                                         <li>
                                             <a class="collapsible-header waves-effect arrow-r">
                                                 <i class="fas fa-chevron-right"></i>
@@ -533,7 +540,7 @@
 
                 <!--Body-->
                 <div class="modal-body">
-                    <div class="container-fluid" style="height: 560px;overflow-y: scroll;">
+                    <div class="container-fluid" style="height: auto;overflow-y: scroll;">
 
                         <c:set value="1" var="yxt"/>
                         <c:set value="0" var="clse"/>
@@ -550,11 +557,19 @@
 
                                     <!-- Card image -->
                                     <div class="view overlay" style="padding: .5em;">
-                                        <img class="card-img-top card-img-bottom"
-                                             src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
-                                             alt="Card image cap">
-                                        <a href="${sistema.ur_sistem}" target="_blank"
-                                        >
+                                        <c:if test="${empty sistema.ar_logsis}">
+                                            <img class="card-img-top"
+                                                 src="/jsp_exec/imgs/defaults/logo_acceso.png"
+                                                 alt="Card image cap">
+                                        </c:if>
+                                        <c:if test="${not empty sistema.ar_logsis}">
+                                            <img class="card-img-top"
+                                                 src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
+                                                 alt="Card image cap">
+                                        </c:if>
+
+<%--                                        <img class="card-img-top card-img-bottom" src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}" >--%>
+                                        <a href="${sistema.ur_sistem}" target="_blank">
                                             <div class="mask rgba-white-light"></div>
                                         </a>
                                     </div>
@@ -585,45 +600,52 @@
 
                     <c:forEach var="sistema" items="${US.root.sistemas}">
                         <c:if test="${!sistema.il_sisfor}">
-                            <c:forEach var="sub_sistema" items="${sistema.subsistemas}">
-                                <%--<c:forEach var="paquete" items="${sub_sistema.paquetes}">--%>
-                                <c:if test="${yxt==1}">
-                                    <div class="row">
-                                    <c:set value="0" var="clse"/>
-                                </c:if>
+                            <%--                            <c:forEach var="sub_sistema" items="${sistema.subsistemas}">--%>
+                            <c:if test="${yxt==1}">
+                                <div class="row">
+                                <c:set value="0" var="clse"/>
+                            </c:if>
 
-                                <div class="card mb-4 col-md-3 yxt${yxt}"
-                                     style="height: 220px;padding: 0px;margin: 0px auto;max-width: 23%;">
+                            <div class="card mb-4 col-md-3 yxt${yxt}"
+                                 style="height: 130px;padding: 0px;margin: 0px auto;max-width: 23%;">
 
-                                    <!-- Card image -->
-                                    <div class="view overlay">
+                                <!-- Card image -->
+                                <div class="view overlay">
+                                    <c:if test="${empty sistema.ar_logsis}">
+                                        <img class="card-img-top"
+                                             src="/jsp_exec/imgs/defaults/logo_acceso.png"
+                                             alt="Card image cap">
+                                    </c:if>
+                                    <c:if test="${not empty sistema.ar_logsis}">
                                         <img class="card-img-top"
                                              src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}"
                                              alt="Card image cap">
-                                        <a href="#"
-                                           onclick="return changemodulo(${sistema.co_sistem}, ${sub_sistema.co_subsis}, true);">
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
-                                    </div>
+                                    </c:if>
 
-                                    <!-- Card content -->
-                                    <div class="card-body" style="text-align: center;padding: .8rem 1rem;">
-
-                                        <h5 class="card-title" style="margin-bottom: 0px;">${sub_sistema.no_subsis}</h5>
-                                        <span class="card-text">${sistema.no_sistem}</span>
-                                    </div>
-
+                                    <a href="#"
+                                       onclick="return changemodulo(${sistema.co_sistem}, ${sistema.subsistemas[0].co_subsis}, true);">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
                                 </div>
 
+                                <!-- Card content -->
+                                <div class="card-body" style="text-align: center;padding: .8rem 1rem;">
 
-                                <c:if test="${yxt==4}">
-                                    </div>
-                                    <c:set value="0" var="yxt"/>
-                                    <c:set value="1" var="clse"/>
-                                </c:if>
-                                <c:set value="${yxt+1}" var="yxt"/>
-                                <%--</c:forEach>--%>
-                            </c:forEach>
+                                        <%--                                        <h5 class="card-title" style="margin-bottom: 0px;">${sub_sistema.no_subsis}</h5>--%>
+                                    <h5 class="card-title" style="margin-bottom: 0px;">${sistema.no_sistem}</h5>
+                                    <span class="card-text"></span>
+                                </div>
+
+                            </div>
+
+
+                            <c:if test="${yxt==4}">
+                                </div>
+                                <c:set value="0" var="yxt"/>
+                                <c:set value="1" var="clse"/>
+                            </c:if>
+                            <c:set value="${yxt+1}" var="yxt"/>
+                            <%--                            </c:forEach>--%>
                         </c:if>
                     </c:forEach>
                     <c:if test="${clse==0}">

@@ -496,7 +496,8 @@ function view_all_system() {
 }
 
 function changemodulo(co_sistem, co_subsis, valid) {
-    getHTML("/uxtion?comenu=" + co_sistem + "" + co_subsis);
+    //getHTML("/uxtion?comenu=" + co_sistem + "" + co_subsis);
+    getHTML("/uxtion?co_sistem=" + co_sistem + "&co_subsis=" + co_subsis);
     location.reload();
 }
 
