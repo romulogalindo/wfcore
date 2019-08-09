@@ -82,16 +82,16 @@ public class DoLogin {
         List<PermisbloDTO> permisRoot = getPermisBy("MOD-PADRE");
         List<PermisbloDTO> permisMenu1 = getPermisBy("MOD-NVL1");
         List<PermisbloDTO> permisMenu2 = getPermisBy("MOD-NVL2");
-        List<PermisbloDTO> permisMenu3 = getPermisBy("MOD-NVL3");
-        List<PermisbloDTO> permisMenu4 = getPermisBy("MOD-NVL4");
-        List<PermisbloDTO> permisMenu5 = getPermisBy("MOD-NVL5");
+//        List<PermisbloDTO> permisMenu3 = getPermisBy("MOD-NVL3");
+//        List<PermisbloDTO> permisMenu4 = getPermisBy("MOD-NVL4");
+//        List<PermisbloDTO> permisMenu5 = getPermisBy("MOD-NVL5");
         Map<String, MainMenu> mainMenus = new HashMap<>();
 
         for (int a = root.getSistemas().size(); a > 0; a--) {
             Sistema sistema = root.getSistemas().get(a - 1);
             boolean renderer = evaluar(sistema.getCo_sistem(), permisSistema);
-            System.out.println("(1)sistema = " + sistema.getCo_sistem() + "({" + renderer + "})");
-            System.out.println("(1)sistema:sistema.getIl_sisfor() =>({" + sistema.getIl_sisfor() + "})");
+            System.out.println("(" + a + ")SYS = " + sistema.getCo_sistem() + ", NAME=" + sistema.getNo_sistem() + "({" + (renderer ? "VISIBLE" : "OCULTO") + "})");
+//            System.out.println("(" + a + ")sistema:sistema.getIl_sisfor() =>({" + sistema.getIl_sisfor() + "})");
 
             if (!renderer) {
 
@@ -103,13 +103,15 @@ public class DoLogin {
                         Subsistema subsistema = sistema.getSubsistemas().get(b - 1);
                         renderer = evaluar(subsistema.getCo_subsis(), permisSubSistema);
 
-                        System.out.println("subsistema = " + subsistema.getCo_subsis() + "({" + renderer + "})");
+                        System.out.println(" |----subsistema = " + subsistema.getCo_subsis() + "({" + renderer + "})");
                         if (!renderer) {
 
-                            subsistema.getPaquetes().remove(b - 1);
+                            //subsistema.getPaquetes().remove(b - 1);
+                            sistema.getSubsistemas().remove(b - 1);
                         } else {
                             MainMenu _mainMenu = subsistema.getMmenu();
                             mainMenus.put(sistema.getCo_sistem() + "" + subsistema.getCo_subsis(), _mainMenu);
+                            System.out.println(" |--------MainMenu => " + (sistema.getCo_sistem() + "" + subsistema.getCo_subsis()) + "({" + renderer + "})");
 
                             for (int d = _mainMenu.getMenu().size(); d > 0; d--) {
                                 Menu menu = _mainMenu.getMenu().get(d - 1);
@@ -119,6 +121,7 @@ public class DoLogin {
 
                                     _mainMenu.getMenu().remove(d);
                                 } else {
+                                    System.out.println(" |------------MainMenu => " + (menu.getSub()) + "({" + renderer + "})");
                                     if (menu.getSub() != null) {
                                         for (int e = menu.getSub().size(); e > 0; e--) {
                                             MenuItem menuItem = menu.getSub().get(e - 1);
@@ -128,7 +131,7 @@ public class DoLogin {
 
                                                 menu.getSub().remove(e - 1);
                                             } else {
-
+                                                System.out.println(" |----------------MenuItem => " + (menu.getSub()) + "({" + renderer + "})");
                                                 //bis
                                             }
                                         }
