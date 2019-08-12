@@ -30,12 +30,12 @@ function openWS() {
             var wsMsg = messageEvent.data;
             if (wsMsg == 'AIO_WS_READY') {
                 var loginjson = '{\n' +
-                        '\t"status": "OK",\n' +
-                        '\t"type": "login",\n' +
-                        '\t"user": "' + CO_USUARI + '",\n' +
-                        '\t"xact": "",\n' +
-                        '\t"mact": ""\n' +
-                        '}';
+                    '\t"status": "OK",\n' +
+                    '\t"type": "login",\n' +
+                    '\t"user": "' + CO_USUARI + '",\n' +
+                    '\t"xact": "",\n' +
+                    '\t"mact": ""\n' +
+                    '}';
                 MSG_toWS(loginjson);
             } else {
                 // console.log("WebSocket MESSAGE: " + wsMsg);
@@ -43,7 +43,7 @@ function openWS() {
                 console.log('retorno:' + wsMsg);
                 var xmsg = JSON.parse(wsMsg);
                 toascfg(xmsg.position);
-                pushMessage(xmsg.type, xmsg.title, xmsg.body, xmsg.conten, xmsg.clear);
+                pushMessage(xmsg.type, xmsg.title, xmsg.body, xmsg.conten, xmsg.clear, xmsg.timeout);
             }
 
         };
@@ -84,7 +84,7 @@ function toascfg(position) {
         "preventDuplicates": false,
         "showDuration": -1,
         "hideDuration": 1000,
-        "timeOut": -1,
+        "timeOut": 3000,
         "extendedTimeOut": 1000,
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -93,7 +93,16 @@ function toascfg(position) {
     };
 }
 
-function pushMessage(type, title, message, conten, clear) {
+//"timeOut": -1,
+
+function pushMessage(type, title, message, conten, clear, timeout) {
+    console.log("EXE PUSH!" + timeout);
+    if (timeout == -1) {
+        toastr.options.timeOut = -1;
+    } else {
+        toastr.options.timeOut = (timeout * 1000);
+    }
+
     if (clear != undefined) {
         if (clear == 'true')
             toastr.remove()

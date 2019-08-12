@@ -3,7 +3,6 @@ package com.acceso.wfweb.utils;
 import java.io.Serializable;
 
 /**
- *
  * @author Rómulo Galindo
  */
 public class JsonSocketMessage implements Serializable {
@@ -14,14 +13,16 @@ public class JsonSocketMessage implements Serializable {
     String position;
     String conten;
     boolean clear;
+    Integer timeout;
 
-    public JsonSocketMessage(String type, String title, String body, String position, String contenedor, Boolean clear) {
+    public JsonSocketMessage(String type, String title, String body, String position, String contenedor, Boolean clear, Integer timeout) {
         this.type = type;
         this.title = title;
         this.body = body;
         this.position = position;
         this.conten = contenedor;
         this.clear = clear == null ? false : clear;
+        this.timeout = timeout;
     }
 
     public String getType() {
@@ -70,6 +71,14 @@ public class JsonSocketMessage implements Serializable {
 
     public void setClear(boolean clear) {
         this.clear = clear;
+    }
+
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
     }
 
     @Override

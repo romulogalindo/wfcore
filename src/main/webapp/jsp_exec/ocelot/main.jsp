@@ -56,7 +56,7 @@
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=25"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=38"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=17"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>
 
     <style>
         .side-nav .logo-sn {
