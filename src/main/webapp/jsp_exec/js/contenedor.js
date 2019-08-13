@@ -60,7 +60,7 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
-function workflow(il_popup) {
+function workflow(il_popup, il_firtim) {
     CO_CONTEN = document.getElementById('co_conten').value;
     ID_FRAWOR = document.getElementById('id_frawor').value;
     CO_USUARI = document.getElementById('co_usuari') != undefined ? document.getElementById('co_usuari').value : null;
@@ -78,15 +78,6 @@ function workflow(il_popup) {
 
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0) {
-            console.log('@@@@@@@@@@PRE!!' + iframe.getAttribute('id') + ", CO_CONTEN:" + CO_CONTEN + ", ID_FRAWOR:" + ID_FRAWOR + ", il_popup:" + il_popup);
-            // setTimeout(function (CO_CONTEN, ID_FRAWOR, il_popup) {
-            //     console.log('@@@@@@@@@@START' + iframe.getAttribute('id') + ", CO_CONTEN:" + CO_CONTEN + ", ID_FRAWOR:" + ID_FRAWOR + ", il_popup:" + il_popup);
-            //     iframe.src = '/karmic?co_conten=' + CO_CONTEN
-            //         + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
-            //         + '&id_frawor=' + ID_FRAWOR
-            //         + '&il_popup=' + il_popup;
-            //     console.log('@@@@@@@@@@STOP ' + iframe.getAttribute('id'));
-            // }, 0)
 
             iframe.src = '/karmic?co_conten=' + CO_CONTEN
                 + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
@@ -103,7 +94,10 @@ function workflow(il_popup) {
 
         //P2
         if (!il_popup) {
+            //Activando WEB-SOCKET
             openWS();
+            //SHOW SYSOUT FT
+            if (il_firtim) view_all_system();
         }
         //if
         if ($('#slc_schema').attr('style') !== undefined && $('#slc_schema').attr('style').indeOf('firsttime') > -1) {
@@ -125,12 +119,6 @@ function workflow(il_popup) {
         document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
     });
 }
-
-//function size_of_pagina() {
-//    height_table = document.getElementsByTagName('BODY')[0].offsetHeight;
-//    document.getElementById('height_table').value = '' + height_table;
-//    document.getElementById('loader').style.height = '' + height_table + 'px';
-//}
 
 function doformulariosubmit(keyEvent) {
     if (keyEvent.which == 10 || keyEvent.which == 13) {

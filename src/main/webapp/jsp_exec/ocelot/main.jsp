@@ -54,7 +54,7 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=25"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=26"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=38"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>
 
@@ -97,7 +97,7 @@
         </c:if>
     </style>
 </head>
-<body onload="workflow(${cntBean.contenedor.il_popup})"
+<body onload="workflow(${cntBean.contenedor.il_popup}, ${US.do_firtim()})"
       class="fixed-sn light-blue-skin ${!cntBean.contenedor.il_popup}">
 <input type="hidden" value="${cntBean.contenedor.id_frawor}" id="id_frawor"/>
 <input type="hidden" value="${cntBean.contenedor.co_conten}" id="co_conten"/>
@@ -568,7 +568,7 @@
                                                  alt="Card image cap">
                                         </c:if>
 
-<%--                                        <img class="card-img-top card-img-bottom" src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}" >--%>
+                                            <%--                                        <img class="card-img-top card-img-bottom" src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}" >--%>
                                         <a href="${sistema.ur_sistem}" target="_blank">
                                             <div class="mask rgba-white-light"></div>
                                         </a>

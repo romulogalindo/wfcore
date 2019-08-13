@@ -30,6 +30,8 @@ public class Usuario implements Serializable {
     MainMenu mainMenu;
     Map<String, MainMenu> mainMenus;
 
+    boolean il_firtim = false;
+
     public Usuario() {
     }
 
@@ -150,6 +152,25 @@ public class Usuario implements Serializable {
 
     public void setIp_remoto(String ip_remoto) {
         this.ip_remoto = ip_remoto;
+    }
+
+    public boolean isIl_firtim() {
+        return il_firtim;
+    }
+
+    public void setIl_firtim(boolean il_firtim) {
+        this.il_firtim = il_firtim;
+    }
+
+    public boolean do_firtim() {
+        System.out.println("this.il_firtim = " + this.il_firtim);
+        if (!this.il_firtim) {
+            this.il_firtim = true;
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override
