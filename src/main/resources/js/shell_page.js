@@ -161,3 +161,11 @@ function do_dinpag(ID_FRAWOR, CO_CONTEN, CO_PAGINA, CO_PAGREG, VA_PAGREG, CONPAR
 function DECODE(object) {
     return decodeURIComponent(object);
 }
+
+function to_date(str_date) {
+    //dd/mm/yyyy
+    var iday = str_date.substring(0, 2);
+    var imonth = parseInt(str_date.substring(3, 5)) - 1;
+    var iyear = str_date.substring(6, 10);
+    return new Date(iyear, imonth, iday);
+}
