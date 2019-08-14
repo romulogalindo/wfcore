@@ -164,8 +164,12 @@ function DECODE(object) {
 
 function to_date(str_date) {
     //dd/mm/yyyy
-    var iday = str_date.substring(0, 2);
-    var imonth = parseInt(str_date.substring(3, 5)) - 1;
-    var iyear = str_date.substring(6, 10);
-    return new Date(iyear, imonth, iday);
+    if ((str_date != null | str_date != undefined) & str_date.length == 10) {
+        var iday = str_date.substring(0, 2);
+        var imonth = parseInt(str_date.substring(3, 5)) - 1;
+        var iyear = str_date.substring(6, 10);
+        return new Date(iyear, imonth, iday);
+    }
+
+    return null;
 }
