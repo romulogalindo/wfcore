@@ -167,6 +167,12 @@ doPropag = function (url, regparams, data, co_button) {
                         // window.parent.page_to_master(regparams);
                         window.parent.page_to_master(action.ls_params);
                     } else if (action.no_action == 'REFRESH') {
+                        if (rpta.ls_params != undefined) {
+                            for (var i = 0; i < rpta.ls_params.length; i++) {
+                                doPutParamForce('/salamander?id_frawor=' + ID_FRAWOR + '&co_conten=' + CO_CONTEN + '&no_conpar=' + rpta.ls_params[i].no_param + '&va_conpar=' + encodeURIComponent(rpta.ls_params[i].va_param));
+                            }
+                        }
+
                         for (var i = 0; i < action.ls_pagina.length; i++) {
                             //para todos los iframes que coincidan reload
                             var irpta = action.ls_pagina[i];
