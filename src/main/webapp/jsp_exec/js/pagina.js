@@ -2032,7 +2032,9 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                     var ti_pagreg = x64.getAttribute('ti_pagreg');
                     switch (ti_pagreg) {
-                        case '1': {
+                        case '1':
+                        case '22':
+                        case '23': {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -2058,10 +2060,16 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             all_regs += "\"" + x64.innerHTML + "\",";
                             break;
                         }
-                        case '3': {
+                        case '3':
+                        case '4': {
                             var iselect = x64.getElementsByTagName('SELECT')[0];
                             console.log("iselect:" + iselect);
-                            regval = iselect.options[iselect.selectedIndex].value;
+                            try {
+                                regval = iselect.options[iselect.selectedIndex].value;
+                            } catch (e) {
+                                regval = '';
+                            }
+
                             console.log("regval:" + regval);
                             all_regs += "\"" + regval + "\",";
                             break;
