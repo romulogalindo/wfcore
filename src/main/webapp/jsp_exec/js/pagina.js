@@ -2034,7 +2034,12 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     switch (ti_pagreg) {
                         case '1':
                         case '22':
-                        case '23': {
+                        case '233*' +
+                        '*' +
+                        '' +
+                        '+*' +
+                        '-*' +
+                        '+': {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -2206,6 +2211,7 @@ var rowid_over_table_temp;
 function dinpag2(obj, co_pagreg) {
     console.log('dinpag2>>>::' + obj);
     console.log('co_pagreg2>>>::' + co_pagreg);
+    console.log('obj.tagName>>>::' + obj.tagName);
     //preguntar al core que hacer?
     var data = new FormData();
     data.append('id_frawor', '' + ID_FRAWOR);

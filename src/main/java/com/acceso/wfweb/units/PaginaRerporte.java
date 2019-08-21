@@ -122,7 +122,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
                             itr += "<td ti_pagreg=\"1\" >";
                             itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
                             itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-                            itr += "            <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" class=\"w3-input w3-border form-control \">";
+                            itr += "            <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + " class=\"w3-input w3-border form-control " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\">";
                             itr += "        </div>";
                             itr += "    </span>";
                             itr += "</td>";

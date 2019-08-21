@@ -98,4 +98,17 @@ public class SistemaDTO implements Serializable {
     public void setIl_sisfor(Boolean il_sisfor) {
         this.il_sisfor = il_sisfor;
     }
+
+    @Override
+    public String toString() {
+        return "SistemaDTO{" +
+                "co_sistem=" + co_sistem +
+                ", no_sistem='" + no_sistem + '\'' +
+                ", de_sistem='" + de_sistem + '\'' +
+                ", ar_logsis=" + ar_logsis +
+                ", no_temdef='" + no_temdef + '\'' +
+                ", ur_sistem='" + ur_sistem + '\'' +
+                ", il_sisfor=" + il_sisfor +
+                '}';
+    }
 }

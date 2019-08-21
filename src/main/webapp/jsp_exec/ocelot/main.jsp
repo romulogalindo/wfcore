@@ -556,7 +556,7 @@
                                      style="height: 130px;padding: 0px;margin: 0px auto;max-width: 23%;">
 
                                     <!-- Card image -->
-                                    <div class="view overlay" style="padding: .5em;">
+                                    <div class="view overlay" style="padding: .5em .8em;">
                                         <c:if test="${empty sistema.ar_logsis}">
                                             <img class="card-img-top"
                                                  src="/jsp_exec/imgs/defaults/logo_acceso.png"
@@ -610,7 +610,7 @@
                                  style="height: 130px;padding: 0px;margin: 0px auto;max-width: 23%;">
 
                                 <!-- Card image -->
-                                <div class="view overlay">
+                                <div class="view overlay" style="padding: .5em .8em;">
                                     <c:if test="${empty sistema.ar_logsis}">
                                         <img class="card-img-top"
                                              src="/jsp_exec/imgs/defaults/logo_acceso.png"
@@ -633,7 +633,7 @@
 
                                         <%--                                        <h5 class="card-title" style="margin-bottom: 0px;">${sub_sistema.no_subsis}</h5>--%>
                                     <h5 class="card-title" style="margin-bottom: 0px;">${sistema.no_sistem}</h5>
-                                    <span class="card-text"></span>
+                                    <span class="card-text">${sistema.de_sistem}</span>
                                 </div>
 
                             </div>

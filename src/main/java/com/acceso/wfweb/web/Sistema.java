@@ -7,6 +7,7 @@ public class Sistema implements Serializable {
 
     int co_sistem;
     String no_sistem;
+    String de_sistem;
     String no_temdef;
     String ar_logsis;
     Boolean il_sisfor;
@@ -79,6 +80,14 @@ public class Sistema implements Serializable {
 
     public void setRenderer(boolean renderer) {
         this.renderer = renderer;
+    }
+
+    public String getDe_sistem() {
+        return de_sistem;
+    }
+
+    public void setDe_sistem(String de_sistem) {
+        this.de_sistem = de_sistem;
     }
 
     @Override
