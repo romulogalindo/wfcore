@@ -13,7 +13,7 @@
     <!--CSS-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=13">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=7">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables.css?a=5">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables-select.css">
     <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
@@ -59,13 +59,13 @@
         <div style="display: inherit;">
             <button id="pagopt_info" type="button" title="Información de la página."
                     class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;"
+                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
                     onclick="alert('Página: ' + CO_PAGINA);">
                 <i class="fas fa-info-circle mt-0" style="font-size: 0.9rem;"></i>
             </button>
             <button id="pagopt_print" type="button" title="Imprimir"
                     class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;"
+                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
                     onclick="print()">
                 <i class="fas fa-print mt-0" style="font-size: 0.9rem;"></i>
             </button>
@@ -76,12 +76,12 @@
 
         <div style="display: inherit;">
             <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;">
+                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
                 <i class="far fa-trash-alt mt-0" style="font-size: 0.9rem;"></i>
             </button>
             <button id="pagopt_plus" type="button" title="Nuevo registro"
                     class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;">
+                    style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
                 <i class="fas fa-plus-circle mt-0" style="font-size: 0.9rem;"></i>
             </button>
         </div>

@@ -1,6 +1,7 @@
 package com.acceso.security;
 
 import com.acceso.security.daos.SecurityDAO;
+import com.acceso.security.daos.SecurityLDAO;
 import com.acceso.security.dtos.PermisbloDTO;
 import com.acceso.security.dtos.RegsesiniDTO;
 import com.acceso.wfcore.kernel.WFIOAPP;
@@ -41,6 +42,13 @@ public class DoLogin {
         //[FED]
         regsesiniDTO.setIp_remoto(remoteip);
         System.out.println("regsesiniDTO = " + regsesiniDTO);
+
+        //ADITIONAL->2019-08-22
+        if (regsesiniDTO.getCo_mensaj() == LOGIN_OK) {
+            //TEST LDAP
+            SecurityLDAO ldao = new SecurityLDAO();
+            //ldao.connect();
+        }
 
         //Logica de seguridad
         return regsesiniDTO.getCo_mensaj() == LOGIN_OK;

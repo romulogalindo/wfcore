@@ -23,7 +23,8 @@
 }
 
 .maintitle {
-    font-size: 0.92rem;
+    /*font-size: 0.92rem;*/
+    font-size: 0.85rem;
     padding: 0.1rem .2rem !important;
     margin-left: 1.0rem !important;
     margin-right: 1.0rem !important;
@@ -41,7 +42,8 @@
     min-height: 22px;
     text-align: right;
     cursor: default;
-    font-size: 0.8rem;
+    /*font-size: 0.8rem;*/
+    font-size: 0.75rem;
 
     padding-top: 0.2rem !important;
     padding-right: 0.25rem !important;
@@ -53,7 +55,7 @@
     width: 60%;
     vertical-align: middle;
     padding: 2px 0.25rem 2px 0.25rem !important;
-    font-size: 0.85rem;
+    font-size: 0.80rem;
     color: #000000;
 }
 
@@ -61,7 +63,8 @@
     text-align: right !important;
     padding: 5px 2px;
     cursor: default;
-    font-size: 0.8rem !important;
+    /*font-size: 0.8rem !important;*/
+    font-size: 0.75rem !important;
 }
 
 .wf_t_stitle {
@@ -327,7 +330,8 @@ span.pagreg[ti_pagreg='8'] span.item span.close {
 /*MDB*/
 .card.card-cascade .view.view-cascade.gradient-card-header {
     padding: 0.1rem .2rem !important;
-    margin-bottom: 0.7rem !important;
+    /*margin-bottom: 0.7rem !important;*/
+    margin-bottom: 0.5rem !important;
 
     margin-left: 1.0rem !important;
     margin-right: 1.0rem !important;
