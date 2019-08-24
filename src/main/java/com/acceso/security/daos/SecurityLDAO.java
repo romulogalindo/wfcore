@@ -1,13 +1,14 @@
 package com.acceso.security.daos;
 
 import com.acceso.wfcore.daos.DAO;
+//import org.apache.directory.ldap.client.api.LdapConnection;
+//import org.apache.directory.ldap.client.api.LdapConnectionConfig;
+//import org.apache.directory.ldap.client.api.LdapNetworkConnection;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
+import javax.naming.directory.*;
+import java.security.MessageDigest;
 import java.util.Properties;
 
 public class SecurityLDAO extends DAO {
@@ -18,69 +19,164 @@ public class SecurityLDAO extends DAO {
     }
 
     public void connect() {
-        System.out.println("CONNECT =>>>>>>>>>>>< ");
-        String username = "areyes";
-//        String username = "cn=admin,dc=acceso,dc=com,dc=pe";
-        String password = "Acceso.123";
-//        String password = "";
-        Properties props = new Properties();
-        props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        props.put(Context.PROVIDER_URL, "ldap://192.168.44.82:389");
-//        props.put(Context.SECURITY_PRINCIPAL, "uid=adminuser,ou=special users,o=xx.com");//adminuser - User with special priviledge, dn user
-        props.put(Context.SECURITY_PRINCIPAL, "cn=admin,dc=acceso,dc=com,dc=pe");//adminuser - User with special priviledge, dn user
-        props.put(Context.SECURITY_CREDENTIALS, "Acceso.123");//dn user password
+//        System.out.println("CONNECT =>>>>>>>>>>>< ");
+//        String username = "areyes";
+////        String username = "cn=admin,dc=acceso,dc=com,dc=pe";
+//        String password = "Acceso.123";
+////        String password = "";
+//        Properties props = new Properties();
+//        props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+//        props.put(Context.PROVIDER_URL, "ldap://192.168.44.82:389");
+////        props.put(Context.SECURITY_PRINCIPAL, "uid=adminuser,ou=special users,o=xx.com");//adminuser - User with special priviledge, dn user
+//        props.put(Context.SECURITY_PRINCIPAL, "cn=admin,dc=acceso,dc=com,dc=pe");//adminuser - User with special priviledge, dn user
+//        props.put(Context.SECURITY_CREDENTIALS, "Acceso.123");//dn user password
+//
+//
+//        SearchControls ctrls = new SearchControls();
+//        ctrls.setReturningAttributes(new String[]{"givenName", "sn", "memberOf"});
+//        ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+//
+//        InitialDirContext context = null;
+//        NamingEnumeration<SearchResult> answers = null;
+//        try {
+//            context = new InitialDirContext(props);
+//            answers = context.search("o=xx.com", "(uid=" + username + ")", ctrls);
+//            System.out.println("context = " + context);
+//            System.out.println("answers = " + answers);
+//        } catch (Exception ep) {
+//            System.out.println("==================================== = ");
+//            ep.printStackTrace();
+//        }
+//
+//        javax.naming.directory.SearchResult result = answers.nextElement();
+//        System.out.println("result = " + result);
+//        System.out.println("result = " + result.getAttributes());
+//
+//        Attributes attributes = result.getAttributes();
+//        NamingEnumeration namingEnumeration = attributes.getAll();
+//        attributes.getAll();
+//
+//        try {
+//            while (namingEnumeration.hasMore()) {
+//                Object o = namingEnumeration.next();
+//                System.out.println("??o = " + o);
+//            }
+//        } catch (Exception ep) {
+//            System.out.println("ep = " + ep);
+//            ep.printStackTrace();
+//        }
+//
+//        String user = result.getNameInNamespace();
+//        System.out.println("user = " + user);
+//        try {
+//            props = new Properties();
+//            props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+//            props.put(Context.PROVIDER_URL, "ldap://192.168.44.82:389");
+//            props.put(Context.SECURITY_PRINCIPAL, user);
+//            props.put(Context.SECURITY_CREDENTIALS, password);
+//
+//            context = new InitialDirContext(props);
+//            System.out.println("context = " + context);
+//        } catch (Exception ep) {
+//            System.out.println("==================================== = ");
+//            ep.printStackTrace();
+//        }
 
+        System.out.println("LDAP");
+        String serverURL = "ldap://192.168.44.82:389";
+        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
+        String bindPassword = "Acceso.123";
+
+        Properties parms = new Properties();
+        parms.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        parms.put(Context.PROVIDER_URL, serverURL);
+//        parms.put(Context.SECURITY_PROTOCOL, "ssl");
+        parms.put(Context.SECURITY_AUTHENTICATION, "simple");
+        parms.put(Context.SECURITY_PRINCIPAL, bindDN);
+        parms.put(Context.SECURITY_CREDENTIALS, bindPassword);
+
+        DirContext ctx = null;
+        NamingEnumeration<SearchResult> answers = null;
 
         SearchControls ctrls = new SearchControls();
-        ctrls.setReturningAttributes(new String[]{"givenName", "sn", "memberOf"});
+        ctrls.setReturningAttributes(new String[]{"givenName", "sn", "memberOf", "userPassword"});
         ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-        InitialDirContext context = null;
-        NamingEnumeration<SearchResult> answers = null;
         try {
-            context = new InitialDirContext(props);
-            answers = context.search("o=xx.com", "(uid=" + username + ")", ctrls);
-            System.out.println("context = " + context);
-            System.out.println("answers = " + answers);
-        } catch (Exception ep) {
-            System.out.println("==================================== = ");
-            ep.printStackTrace();
-        }
+            ctx = new InitialDirContext(parms);
+            System.err.println("Successful authenticated bind");
+            System.out.println("ctx = " + ctx.getNameInNamespace());
 
-        javax.naming.directory.SearchResult result = answers.nextElement();
-        System.out.println("result = " + result);
-        System.out.println("result = " + result.getAttributes());
+            //answers = ctx.search("o=xx.com", "(uid=areyes)", ctrls);
+//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=areyes)",ctrls);
+            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
+//            Attributes attributes = answers.getAttributes();
+//            NamingEnumeration namingEnumeration = attributes.getAll();
+//            attributes.getAll();
 
-        Attributes attributes = result.getAttributes();
-        NamingEnumeration namingEnumeration = attributes.getAll();
-        attributes.getAll();
+            try {
+                while (answers.hasMore()) {
+//                    Object o = answers.next();
+                    Attributes attributes = answers.next().getAttributes();
+                    NamingEnumeration namingEnumeration = attributes.getAll();
+                    while (namingEnumeration.hasMore()) {
+                        Object o2 = namingEnumeration.next();
+                        System.out.println("o2 = " + o2);
+                        String attrId;
+//                        Attribute attribute = attributes.get(o2 + "");
+                        Attribute attribute = (Attribute) o2;
+                        if (attribute.get() instanceof java.lang.String) {
+                            //modo string
+                            System.out.println("attribute = " + attribute + ",-->" + attribute.get().getClass() + ",--->" + attribute.getID());
+                        } else {
+                            //es password
+                            String pwd = new String((byte[]) attribute.get());
+                            System.out.println("attribute = " + attribute + ",-->" + encryptLdapPassword("MD5", pwd));
+                        }
 
-        try {
-            while (namingEnumeration.hasMore()) {
-                Object o = namingEnumeration.next();
-                System.out.println("??o = " + o);
+
+//                        System.out.println("o2 = " + attribute.get() + ",=====>" + attribute.getID() + "----" + attribute.size());
+                    }
+//                    System.out.println("??o = " + o);
+                }
+            } catch (Exception ep) {
+                System.out.println("ep = " + ep);
+                ep.printStackTrace();
             }
-        } catch (Exception ep) {
-            System.out.println("ep = " + ep);
-            ep.printStackTrace();
-        }
 
-        String user = result.getNameInNamespace();
-        System.out.println("user = " + user);
-        try {
-            props = new Properties();
-            props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-            props.put(Context.PROVIDER_URL, "ldap://192.168.44.82:389");
-            props.put(Context.SECURITY_PRINCIPAL, user);
-            props.put(Context.SECURITY_CREDENTIALS, password);
-
-            context = new InitialDirContext(props);
-            System.out.println("context = " + context);
-        } catch (Exception ep) {
-            System.out.println("==================================== = ");
-            ep.printStackTrace();
+        } catch (Exception ne) {
+            System.err.println("Unsuccessful authenticated bind\n");
+            ne.printStackTrace(System.err);
         }
     }
 
+    private String encryptLdapPassword(String algorithm, String _password) {
+        String sEncrypted = _password;
+        if ((_password != null) && (_password.length() > 0)) {
+            boolean bMD5 = algorithm.equalsIgnoreCase("MD5");
+            boolean bSHA = algorithm.equalsIgnoreCase("SHA")
+                    || algorithm.equalsIgnoreCase("SHA1")
+                    || algorithm.equalsIgnoreCase("SHA-1");
+            if (bSHA || bMD5) {
+                String sAlgorithm = "MD5";
+                if (bSHA) {
+                    sAlgorithm = "SHA";
+                }
+                try {
+                    MessageDigest md = MessageDigest.getInstance(sAlgorithm);
+                    md.update(_password.getBytes("UTF-8"));
 
+//                    sEncrypted = "{" + sAlgorithm + "}" + (new BASE64Encoder()).encode(md.digest());
+                    sEncrypted = "{" + sAlgorithm + "}" + java.util.Base64.getEncoder().encode(md.digest());
+                } catch (Exception e) {
+                    sEncrypted = null;
+//                    logger.error(e, e);
+                }
+            }
+        }
+        return sEncrypted;
+    }
 }
+
+
+//}

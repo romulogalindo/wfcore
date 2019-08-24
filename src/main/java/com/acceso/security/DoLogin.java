@@ -47,7 +47,7 @@ public class DoLogin {
         if (regsesiniDTO.getCo_mensaj() == LOGIN_OK) {
             //TEST LDAP
             SecurityLDAO ldao = new SecurityLDAO();
-            //ldao.connect();
+            ldao.connect();
         }
 
         //Logica de seguridad
