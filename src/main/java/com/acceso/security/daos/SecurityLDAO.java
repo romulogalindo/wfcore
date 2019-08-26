@@ -84,8 +84,10 @@ public class SecurityLDAO extends DAO {
 
         System.out.println("LDAP");
         String serverURL = "ldap://192.168.44.82:389";
-        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
-        String bindPassword = "Acceso.123";
+//        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
+        String bindDN = "cn=rgalindo,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe";
+//        String bindPassword = "Acceso.123";
+        String bindPassword = "acceso123";
 
         Properties parms = new Properties();
         parms.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
@@ -131,7 +133,8 @@ public class SecurityLDAO extends DAO {
                         } else {
                             //es password
                             String pwd = new String((byte[]) attribute.get());
-                            System.out.println("attribute = " + attribute + ",-->" + encryptLdapPassword("MD5", pwd));
+//                            System.out.println("attribute = " + attribute + ",-->" + encryptLdapPassword("MD5", pwd));
+                            System.out.println("attribute = " + attribute + ",-->" + pwd);
                         }
 
 
