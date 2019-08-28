@@ -301,7 +301,7 @@ function pagina_onload2(_data, rowid) {
                     // console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
                     if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
                         // console.log("Los elementos son diferentes");
-                        var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
+                        var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg, reg.link);
                         // console.log('TAG CREADO!>>' + _html);
                         ereg.parentNode.innerHTML = _html;
                     } else {
@@ -2089,6 +2089,18 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                             }
                             break;
                         }
+                        case '34': {
+                            console.log('propagg');
+                            // alert("");
+                            try {
+                                regval = x64.getElementsByTagName("SPAN")[0].getAttribute("valpag");
+                            } catch (e) {
+                                regval = '';
+                            }
+
+                            all_regs += "\"" + regval + "\",";
+                            break;
+                        }
                         case '36': {
                             // var iselect = x64.getElementsByTagName('SELECT')[0];
                             // console.log("iselect:" + iselect);
@@ -2354,6 +2366,30 @@ function dinpag2(obj, co_pagreg) {
                                 }
                                 break;
                             }
+                            case '34': {
+                                /*
+                                console.log('propagg');
+                            // alert("");
+                            try {
+                                regval = x64.getElementsByTagName("SPAN")[0].getAttribute("valpag");
+                            } catch (e) {
+                                regval = '';
+                            }
+
+                            all_regs += "\"" + regval + "\",";
+                            break;
+                                * */
+                                try {
+                                    var iinput = x64.getElementsByTagName("SPAN")[0].getAttribute("valpag");
+                                    all_regs += "\"" + futureJson.result[0].co_archiv + "\",";
+                                } catch (e) {
+                                    var iinput = x64.getElementsByTagName("SPAN")[0].getAttribute("valpag");
+                                    all_regs += "\"\",";
+                                }
+
+
+                                break;
+                            }
                             case '36': {
                                 // var iselect = x64.getElementsByTagName('SELECT')[0];
                                 // console.log("iselect:" + iselect);
@@ -2462,7 +2498,7 @@ function AUTODYNAMIC(opt, ls_regist) {
     }
 }
 
-/*BUILDER*/
+/*BUILDERS*/
 function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract, searchable, validation, id) {
     var html = "";
     if (searchable == undefined) {
@@ -2655,7 +2691,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
     return html;
 }
 
-function builderTyper2(old_type, new_type, ti_estreg, id, eledom) {
+function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_onchag, ca_caract) {
     console.log('old_type=' + old_type + ', new_type=' + new_type + ', ti_estreg=' + ti_estreg + ', eledom=' + eledom);
     var htmlreturn = "";
     if (new_type == 1) {
@@ -2681,6 +2717,16 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom) {
             htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
             htmlreturn += "        <select name=\"regist" + 90 + "\" class=\"mdb-select md-formx " + (false ? "dynpag" : "") + "\" " + (false ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + "></select>";
             htmlreturn += "</span>";
+        } else {
+            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+        }
+    } else if (new_type == 34) {
+        if (ti_estreg == 'E') {
+            htmlreturn += "       <span id=\"" + id + "\" name=\"" + id + "\" ti_pagreg=\"34\" class=\"writer " + (false ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + " pagreg\">"
+            htmlreturn += "           <span valpag=\"\"></span>"
+            htmlreturn += "           <button class=\"wf-button-transparent\" onclick=\"child_popup('" + ur_pagreg + "', '" + id + "', " + CO_CONTEN + ", 'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
+            htmlreturn += "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>"
+            htmlreturn += "       </span>"
         } else {
             htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
         }
