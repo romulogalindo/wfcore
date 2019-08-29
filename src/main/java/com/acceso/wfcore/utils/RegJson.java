@@ -9,7 +9,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 /**
  * @author rgalindo
  */
-public class RegJson {
+public class RegJson extends StandarRegisterJson {
 
     int co_pagreg;
     String va_pagreg;
@@ -80,7 +80,7 @@ public class RegJson {
                 _styles.add("" + pagbots.next());
             }
 
-            do_valida = "{\"charset\":\""+cfg_serach.get("ti_charset")+"\", \"regexp\":\"" + cfg_serach.get("va_regexp") + "\", \"message\":\"" + cfg_serach.get("tx_invalid") + "\", \"pagbots\":[" + String.join(",", _styles) + "]}";
+            do_valida = "{\"charset\":\"" + cfg_serach.get("ti_charset") + "\", \"regexp\":\"" + cfg_serach.get("va_regexp") + "\", \"message\":\"" + cfg_serach.get("tx_invalid") + "\", \"pagbots\":[" + String.join(",", _styles) + "]}";
         }
     }
 

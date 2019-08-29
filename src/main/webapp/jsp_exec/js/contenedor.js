@@ -79,6 +79,15 @@ function workflow(il_popup, il_firtim) {
     for (var iframe of document.getElementsByTagName('IFRAME')) {
         if (iframe.getAttribute('id').indexOf("PAG") == 0) {
 
+            var iframeType = iframe.getAttribute('type');
+            console.log("iframeType:" + iframeType + ", =>" + (iframeType == 'B'));
+            if (iframeType == 'B') {
+                console.log(">>>>>" + iframe.style.maxWidth);
+                iframe.style.maxWidth = '100%';
+                console.log(">>>>>" + iframe.style.maxWidth);
+                iframe.setAttribute('class', 'wf4_iframe fullwidth');
+            }
+
             iframe.src = '/karmic?co_conten=' + CO_CONTEN
                 + '&co_pagina=' + iframe.getAttribute('id').replace('PAG', '')
                 + '&id_frawor=' + ID_FRAWOR

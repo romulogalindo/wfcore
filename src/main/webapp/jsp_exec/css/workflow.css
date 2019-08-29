@@ -336,3 +336,15 @@ span.pagreg[ti_pagreg='8'] span.item span.close {
     margin-left: 1.0rem !important;
     margin-right: 1.0rem !important;
 }
+
+.fullwidth {
+    max-width: 100%;
+}
+
+.color_acr {
+    color: #2bbbad !important;
+}
+
+.bg_acr {
+    background-color: #2bbbad !important;
+}

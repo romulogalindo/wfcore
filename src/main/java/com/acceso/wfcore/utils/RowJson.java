@@ -8,21 +8,34 @@ import java.util.List;
  */
 public class RowJson {
 
-    List<RegJson> regs;
+    //    List<RegJson> regs;
+    List<StandarRegisterJson> regs;
 
     public RowJson() {
         regs = new ArrayList<>();
     }
 
-    public RowJson(List<RegJson> regs) {
+//    public RowJson(List<RegJson> regs) {
+//        this.regs = regs;
+//    }
+//
+//    public List<RegJson> getRegs() {
+//        return regs;
+//    }
+
+    public RowJson(List<StandarRegisterJson> regs) {
         this.regs = regs;
     }
 
-    public List<RegJson> getRegs() {
+    public List<StandarRegisterJson> getRegs() {
         return regs;
     }
 
-    public void setRegs(List<RegJson> regs) {
+//    public void setRegs(List<RegJson> regs) {
+//        this.regs = regs;
+//    }
+
+    public void setRegs(List<StandarRegisterJson> regs) {
         this.regs = regs;
     }
 
@@ -30,7 +43,13 @@ public class RowJson {
         regs.add(regJson);
     }
 
+    /*ADD new RegJson*/
     public void add(RegJson regJson) {
+        regs.add(regJson);
+    }
+
+    /*ADD new TabJson*/
+    public void add(TabJson regJson) {
         regs.add(regJson);
     }
 

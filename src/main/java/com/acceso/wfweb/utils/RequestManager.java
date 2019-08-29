@@ -136,7 +136,11 @@ public class RequestManager {
         this.response.sendRedirect(url);
     }
 
-//    public HashMap<Integer, String> getConpars() {
+    public Integer getCo_conten() {
+        return Util.toInt(getParam("co_conten"), -1);
+    }
+
+    //    public HashMap<Integer, String> getConpars() {
 //        HashMap<Integer, String> conpars = new HashMap<>();
 //
 //        for (HashMap.Entry<String, String[]> param : this.parameters.entrySet()) {

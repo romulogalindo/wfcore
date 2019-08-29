@@ -11,7 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <title>UNNAMED</title>
     <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=13">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=14">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb/addons/datatables.css?a=5">
@@ -53,50 +53,59 @@
 <input type="hidden" id="co_pagina" value="${param.co_pagina}">
 <input type="hidden" id="il_popup" value="${param.il_popup}">
 
-<div id="mainpagina" class="card card-cascade narrower">
-    <div class="view view-cascade gradient-card-header default-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
-
-        <div style="display: inherit;">
-            <button id="pagopt_info" type="button" title="Información de la página."
-                    class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
-                    onclick="alert('Página: ' + CO_PAGINA);">
-                <i class="fas fa-info-circle mt-0" style="font-size: 0.9rem;"></i>
-            </button>
-            <button id="pagopt_print" type="button" title="Imprimir"
-                    class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
-                    onclick="print()">
-                <i class="fas fa-print mt-0" style="font-size: 0.9rem;"></i>
-            </button>
-        </div>
-
-        <span style="width: 100%;padding: 0px !important;"
-              class="maintitle white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
-
-        <div style="display: inherit;">
-            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
-                <i class="far fa-trash-alt mt-0" style="font-size: 0.9rem;"></i>
-            </button>
-            <button id="pagopt_plus" type="button" title="Nuevo registro"
-                    class="btn btn-outline-white btn-rounded btn-sm px-2"
-                    style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
-                <i class="fas fa-plus-circle mt-0" style="font-size: 0.9rem;"></i>
-            </button>
-        </div>
-
-    </div>
-
-    <div id="mainconten" class="px-4">
-
-        <div class="table-wrapper" style="margin-bottom: 12px;">
+<c:if test="${paginaBean.pagina.ti_pagina == 'B'}">
+    <div id="mainpagina">
             ${paginaBean.pagina.toHTML()}
+    </div>
+</c:if>
+<c:if test="${paginaBean.pagina.ti_pagina != 'B'}">
+    <div id="mainpagina" class="card card-cascade narrower">
+        <div class="view view-cascade gradient-card-header default-color narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+            <div style="display: inherit;">
+                <button id="pagopt_info" type="button" title="Información de la página."
+                        class="btn btn-outline-white btn-rounded btn-sm px-2"
+                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
+                        onclick="alert('Página: ' + CO_PAGINA);">
+                    <i class="fas fa-info-circle mt-0" style="font-size: 0.9rem;"></i>
+                </button>
+                <button id="pagopt_print" type="button" title="Imprimir"
+                        class="btn btn-outline-white btn-rounded btn-sm px-2"
+                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
+                        onclick="print()">
+                    <i class="fas fa-print mt-0" style="font-size: 0.9rem;"></i>
+                </button>
+            </div>
+
+            <span style="width: 100%;padding: 0px !important;"
+                  class="maintitle white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
+
+            <div style="display: inherit;">
+                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
+                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
+                    <i class="far fa-trash-alt mt-0" style="font-size: 0.9rem;"></i>
+                </button>
+                <button id="pagopt_plus" type="button" title="Nuevo registro"
+                        class="btn btn-outline-white btn-rounded btn-sm px-2"
+                        style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
+                    <i class="fas fa-plus-circle mt-0" style="font-size: 0.9rem;"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <div id="mainconten" class="px-4">
+
+            <div class="table-wrapper" style="margin-bottom: 12px;">
+                    ${paginaBean.pagina.toHTML()}
+            </div>
+
         </div>
 
     </div>
 
-</div>
+</c:if>
+
 
 <%--             style="position:fixed; width:100%;height:300px;top: 0;left: 0;background-color: rgba(238,238,238,0.7);">--%>
 <div id="loader" style="position:fixed; width:100%;height:300px;top: 0;left: 0;background-color: rgba(238,238,238,1);">

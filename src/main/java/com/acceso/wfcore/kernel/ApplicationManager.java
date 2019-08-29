@@ -77,10 +77,8 @@ public class ApplicationManager {
         contabDTOS = dao.getContabDTO(contenedorDTO.getCo_conten());
 
         //work!
-//        Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit());
         Contenedor contenedor = new Contenedor(contenedorDTO.getCo_conten(), id_frawor, contenedorDTO.getNo_contit(), contabDTOS);
         for (WPaginaDTO paginaDTO : paginaDTOS) {
-//            System.out.println("AM:" + paginaDTO.getCo_pagina() + ",:::" + paginaDTO.getTi_pagina() + ",:::" + paginaDTO.getNo_pagtit());
             //pagina nueva
             List<TituloDTO> tituloDTOS = dao.getTituloDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
             List<WRegistroDTO> registroDTOS = dao.getRegistroDTO(paginaDTO.getCo_pagina(), contenedorDTO.getCo_conten(), id_frawor);
@@ -97,7 +95,6 @@ public class ApplicationManager {
 
                 for (WRegistroDTO registroDTO : registroDTOS) {
                     if (registroDTO.getCo_pagtit() == tituloDTO.getCo_pagtit()) {
-//                        idFila = "P" + paginaDTO.getCo_pagina() + "T" + tituloDTO.getCo_pagtit() + "R" + registroDTO.getCo_pagreg();
                         idFila = "P" + paginaDTO.getCo_pagina() + "C1R" + registroDTO.getCo_pagreg();
                         ultraFilas.put(idFila, new Fila(registroDTO, idFila));
                     }
@@ -110,19 +107,29 @@ public class ApplicationManager {
                     List<WParametroDTO> parametroDTOS = dao.getParams(contenedorDTO.getCo_conten(), paginaDTO.getCo_pagina(), (short) botonDTO.getCo_pagbot());
                     botonDTO.setParametros(parametroDTOS);
                 }
+                
                 ultraFilas.put("BTN", new Fila(botonDTOS, "BTN"));
-
             }
 
-//            System.out.println("paginaDTO.getTi_pagina() = " + paginaDTO.getTi_pagina());
-//            System.out.println("paginaDTO.getTi_pagina().contentEquals(\"R\") = " + paginaDTO.getTi_pagina().contentEquals("R"));
-            if (paginaDTO.getTi_pagina().contentEquals("R")) {
-                contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
-            } else if (paginaDTO.getTi_pagina().contentEquals("T")) {
-                contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
-            } else if (paginaDTO.getTi_pagina().contentEquals("C")) {
-                contenedor.addPagina(new PaginaChart(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+            switch (paginaDTO.getTi_pagina()) {
+                case "R": {
+                    contenedor.addPagina(new PaginaFormulario(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+                    break;
+                }
+                case "T": {
+                    contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+                    break;
+                }
+                case "C": {
+                    contenedor.addPagina(new PaginaChart(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+                    break;
+                }
+                case "B": {
+                    contenedor.addPagina(new PaginaTab(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+                    break;
+                }
             }
+
         }
 
         dao.close();

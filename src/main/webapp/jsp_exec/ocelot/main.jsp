@@ -39,7 +39,7 @@
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
-    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=9"/>
+    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=10"/>
 
 
     <!-- SCRIPTS -->
@@ -54,7 +54,7 @@
 
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=26"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=27"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=38"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>
 
@@ -95,6 +95,8 @@
         }
 
         </c:if>
+
+
     </style>
 </head>
 <body onload="workflow(${cntBean.contenedor.il_popup}, ${US.do_firtim()})"

@@ -22,10 +22,10 @@ public class ContenedorBean implements Serializable {
     public void do64(HttpRewriteWrappedRequest httpRewriteWrappedRequest) {
         //Esto debe ser eliminado
         RequestManager requestManager = new RequestManager(httpRewriteWrappedRequest, null);
-        Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
+//        Integer co_conten = Util.toInt(requestManager.getParam("co_conten"), -1);
+        Integer co_conten = requestManager.getCo_conten();
 
         long id_frawor;
-        String ls_conpar = "{ ";
 
         //construir el conenedor!!
         Frawor4DAO dao = new Frawor4DAO();
@@ -41,6 +41,7 @@ public class ContenedorBean implements Serializable {
         });
         dao.close();
 
+//        String ls_conpar = "{ ";
 //        ls_conpar = requestManager.getConpars().entrySet().stream()
 //                .map((conpar) -> "\"co_conpar_" + conpar.getKey() + "\":\"" + conpar.getValue() + "\",")
 //                .reduce(ls_conpar, String::concat);
@@ -48,17 +49,14 @@ public class ContenedorBean implements Serializable {
         contenedor = (Contenedor) WFIOAPP.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(co_conten);
 
         if (contenedor == null) {
-
             contenedor = ApplicationManager.buildContainer(co_conten, id_frawor);
             WFIOAPP.APP.cacheService.getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).put(co_conten, contenedor);
-//            contenedor = (Contenedor) contenedor.clone();
         } else {
-
             contenedor.setId_frawor(id_frawor);
         }
+
         //ES POPUP?
         contenedor = SerializationUtils.clone(contenedor);
-//        contenedor = (Contenedor) contenedor.clone();
         contenedor.setIl_popup(Util.toBoolean(requestManager.getParam("il_popup"), false));
 
         //SE LE ASIGNA LOS PARAMETROS

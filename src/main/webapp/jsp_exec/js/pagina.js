@@ -22,6 +22,7 @@ const PAGE_TYPE_FORM = 'F';
 const PAGE_TYPE_REPORT = 'R';
 const PAGE_TYPE_CHART = 'C';
 const PAGE_TYPE_MAPS = 'G';
+const PAGE_TYPE_TABS = 'B';
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -139,7 +140,7 @@ function pagina_onload(_data) {
                 tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
                 tbody64.innerHTML = '';
                 itr = itr.replace('<tr>', '').replace('</tr>', '');
-            } else {
+            } else if (TI_PAGINA == PAGE_TYPE_FORM) {
                 chace_pagina_formulario_Base = chace_pagina_formulario_Base == undefined ? document.getElementById("row1").innerHTML : chace_pagina_formulario_Base;
                 dom2 = chace_pagina_formulario_Base;
                 // var allbodies = document.getElementById(ID_PAGINA);
@@ -165,10 +166,14 @@ function pagina_onload(_data) {
             }
 
             for (var i = 0; i < rows.length; i++) {
-                if (TI_PAGINA == PAGE_TYPE_FORM)
+                if (TI_PAGINA == PAGE_TYPE_FORM) {
                     loadFormulario64((i + 1), rows[i], _data.aditional, dom2);
-                else
+                } else if (TI_PAGINA == PAGE_TYPE_TABS) {
+                    loadTabber64((i + 1), rows[i]);
+                } else {
                     loadReporte64((i + 1), tbody64, rows[i]);
+                }
+
             }
 
             /*ON END LOAD*/
@@ -988,6 +993,51 @@ function loadFormulario64(index, row, aditional, dom2) {
     }
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
+
+
+function loadTabber64(index, row) {
+    // if (index > 1) {
+    //     var mpage = document.getElementById('PAG' + CO_PAGINA);
+    //     dom2 = dom2.replace('row1', 'row' + index);
+    //     dom2 = dom2.replace(/C1/g, 'C' + index);
+    //     var nele = document.createElement('TBODY');//.innerHTML = dom24603321043944324;
+    //     nele.setAttribute('id', 'row' + index);
+    //     mpage.appendChild(nele);
+    //     document.getElementById("row" + index).innerHTML = dom2;
+    // }
+
+    var tab_ls = "";
+    var tab_ds = "";
+
+    var firstTab = false;
+    for (const reg of row.regs) {
+        console.log('[TAB] REG:' + reg);
+        //IDs
+        var base_ls = "<li class=\"nav-item\">\n" +
+            "      <a class=\"nav-link  waves-light " + (firstTab == false ? ' active show' : '') + "\" id=\"profile-tab-classic-orange\" data-toggle=\"tab\" href=\"#tab" + reg.co_pagtab + "\"\n" +
+            "        role=\"tab\" aria-controls=\"profile-classic-orange\" aria-selected=\""+ (firstTab == false ? 'true' : 'false') +"\"><i class=\"" + reg.ic_pagtab + "\"\n" +
+            "          aria-hidden=\"true\"></i><br>" + reg.va_pagtab + "</a>\n" +
+            "    </li>";
+        var base_ds = "<div class=\"tab-pane fade " + (firstTab == false ? ' active show' : '') + " \" id=\"tab" + reg.co_pagtab + "\" role=\"tabpanel\" aria-labelledby=\"profile-tab-classic-orange\">\n" +
+            "      <iframe ></iframe>" +
+            "    </div>";
+
+        tab_ls += base_ls;
+        tab_ds += base_ds;
+        if (firstTab == false) {
+            firstTab = true;
+        }
+
+    }
+
+    document.getElementById("tabber_ls").innerHTML = tab_ls;
+    document.getElementById("tabber_ds").innerHTML = tab_ds;
+
+    //evaluar los botones!
+
+//si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
+}
+
 
 function loadReporte64(rowid, tbody64, row) {
     var n_itr = itr;

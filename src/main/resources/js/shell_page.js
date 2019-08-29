@@ -1,7 +1,8 @@
 /*(P989115793P)MAIN JS FILE TO RUN! ALL!*/
-var ValpagJson = Java.type('com.acceso.wfcore.utils.ValpagJson');
-var Row = Java.type('com.acceso.wfcore.utils.RowJson');
-var Reg = Java.type('com.acceso.wfcore.utils.RegJson');
+var ValpagJson = Java.type('com.acceso.wfcore.utils.ValpagJson');//*Unidad de respuesta primordial
+var Row = Java.type('com.acceso.wfcore.utils.RowJson');//Fila Base
+var Reg = Java.type('com.acceso.wfcore.utils.RegJson');//Registro tipo Registro Standar
+var Tab = Java.type('com.acceso.wfcore.utils.TabJson');//Registro tipo Pestaña
 var JsonResponse = Java.type('com.acceso.wfweb.utils.JsonResponse');
 var OK64 = Java.type('com.acceso.wfweb.utils.JsonResponseP');
 var PROPAG = Java.type('com.acceso.wfweb.utils.JsonResponseP');

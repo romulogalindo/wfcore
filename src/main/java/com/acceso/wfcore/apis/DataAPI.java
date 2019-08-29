@@ -334,6 +334,7 @@ public class DataAPI extends GenericAPI {
 
     public File CREATE_FILE(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
+        String co_archiv = opts.get("co_archiv") == null ? null : ("" + opts.get("co_archiv"));
         String no_archiv = opts.get("no_archiv") == null ? "aiofile" : opts.get("no_archiv").toString();
         String no_extens = opts.get("no_extens") == null ? "txt" : opts.get("no_extens").toString();
         Object ob_dindat = opts.get("ob_dindat");
@@ -345,14 +346,18 @@ public class DataAPI extends GenericAPI {
             file = null;
         }
 
-        if (no_extens.toUpperCase().contains("XLS")) {
-            file = new Converter(file).OBJECT_TO_XLS(ob_dindat);
-        } else if (no_extens.toUpperCase().contains("XLSX")) {
-            file = new Converter(file).OBJECT_TO_XLS(ob_dindat);
-        } else if (no_extens.toUpperCase().contains("TXT")) {
-            file = new Converter(file).OBJECT_TO_TXT(ob_dindat);
-        } else if (no_extens.toUpperCase().contains("CSV")) {
-            file = new Converter(file).OBJECT_TO_CSV(ob_dindat);
+        if (co_archiv != null) {
+            file = new Converter(file).ARCHIVO(co_archiv);
+        } else {
+            if (no_extens.toUpperCase().contains("XLS")) {
+                file = new Converter(file).OBJECT_TO_XLS(ob_dindat);
+            } else if (no_extens.toUpperCase().contains("XLSX")) {
+                file = new Converter(file).OBJECT_TO_XLS(ob_dindat);
+            } else if (no_extens.toUpperCase().contains("TXT")) {
+                file = new Converter(file).OBJECT_TO_TXT(ob_dindat);
+            } else if (no_extens.toUpperCase().contains("CSV")) {
+                file = new Converter(file).OBJECT_TO_CSV(ob_dindat);
+            }
         }
 
         return file;
