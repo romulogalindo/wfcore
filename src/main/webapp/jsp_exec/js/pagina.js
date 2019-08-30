@@ -236,10 +236,19 @@ function pagina_onload(_data) {
         document.getElementById('card_error').style.display = 'block';
     }
 
+
     /*TOOLTIP*/
     $('[data-toggle="tooltip"]').tooltip();
 
 
+    /* TABS.....*/
+    console.log('AFTERTOOLTIP>>>' + $('#PAG' + CO_PAGINA + ' a[data-toggle="tab"]') + ">>>" + $('#PAG' + CO_PAGINA + ' a[data-toggle="tab"]').length);
+    $('#PAG' + CO_PAGINA + ' a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // e.target // newly activated tab
+        // e.relatedTarget // previous active tab
+        console.log("Evento lanzado!>" + e);
+        activity_dynamic_tab(e);
+    });
 }
 
 
@@ -1015,11 +1024,11 @@ function loadTabber64(index, row) {
         //IDs
         var base_ls = "<li class=\"nav-item\">\n" +
             "      <a class=\"nav-link  waves-light " + (firstTab == false ? ' active show' : '') + "\" id=\"profile-tab-classic-orange\" data-toggle=\"tab\" href=\"#tab" + reg.co_pagtab + "\"\n" +
-            "        role=\"tab\" aria-controls=\"profile-classic-orange\" aria-selected=\""+ (firstTab == false ? 'true' : 'false') +"\"><i class=\"" + reg.ic_pagtab + "\"\n" +
+            "        role=\"tab\" aria-controls=\"profile-classic-orange\" aria-selected=\"" + (firstTab == false ? 'true' : 'false') + "\"><i class=\"" + reg.ic_pagtab + " fa-2x \"" +
             "          aria-hidden=\"true\"></i><br>" + reg.va_pagtab + "</a>\n" +
             "    </li>";
-        var base_ds = "<div class=\"tab-pane fade " + (firstTab == false ? ' active show' : '') + " \" id=\"tab" + reg.co_pagtab + "\" role=\"tabpanel\" aria-labelledby=\"profile-tab-classic-orange\">\n" +
-            "      <iframe ></iframe>" +
+        var base_ds = "<div class=\"tab-pane fade " + (firstTab == false ? ' active show' : '') + " \" id=\"tab" + reg.co_pagtab + "\" role=\"tabpanel\" aria-labelledby=\"profile-tab-classic-orange\">" +
+            "<iframe class=\"wf4_iframe\" type=\"X\" id=\"CNT" + reg.co_pagtab + "\" onload=\"iframe(this,'" + reg.ur_pagtab + "'," + firstTab + ")\" frameborder=\"0\" style=\"max-width: 100%;\"></iframe>" +
             "    </div>";
 
         tab_ls += base_ls;
@@ -1029,6 +1038,20 @@ function loadTabber64(index, row) {
         }
 
     }
+
+    console.log('>>>' + $('#PAG' + CO_PAGINA + ' a[data-toggle="tab"]'));
+    $('#PAG' + CO_PAGINA + ' a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // e.target // newly activated tab
+        // e.relatedTarget // previous active tab
+        console.log("Evento lanzado!>" + e);
+        activity_dynamic_tab(e);
+    });
+    // $('#PAG' + CO_PAGINA + ' a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    //     // e.target // newly activated tab
+    //     // e.relatedTarget // previous active tab
+    //     console.log("Evento lanzado!!!>" + e);
+    //     activity_dynamic_tab(e);
+    // });
 
     document.getElementById("tabber_ls").innerHTML = tab_ls;
     document.getElementById("tabber_ds").innerHTML = tab_ds;
@@ -2976,6 +2999,32 @@ function validar_regexp(input, regex, co_regist, message) {
     }
 
 
+}
+
+function iframe(xframe, ur_pag, il_act) {
+    console.log("CARGANDO IFRAME!!! TABBEADO!!!>>>xframe=" + xframe + "(" + xframe.id + "),ur_pag=" + ur_pag + ",il_act=" + il_act);
+    if (!il_act) {
+        var iframe_loaded = xframe.getAttribute("loaded");
+        if (iframe_loaded == undefined) {
+            xframe.setAttribute("loaded", "true");
+            xframe.src = ur_pag + "&il_popup=true";
+        } else {
+            console.log("iframe_loaded is" + iframe_loaded);
+        }
+
+    } else {
+//modificamos el dinamic source
+    }
+
+    console.log("Elemento activo: ur_pag=" + ur_pag + ",il_act=" + il_act);
+}
+
+function activity_dynamic_tab(e) {
+    e.target; // newly activated tab
+    e.relatedTarget // previous active tab
+    console.log("adt://e=" + e);
+    console.log("adt://e.target=" + e.target);
+    console.log("adt://e.relatedTarget=" + e.relatedTarget);
 }
 
 // function valida_btnena(regexp, btns) {

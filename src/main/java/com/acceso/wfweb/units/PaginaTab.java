@@ -23,10 +23,10 @@ public class PaginaTab extends Pagina implements Serializable {
 
         html += "<input type=hidden id=ti_pagina value=B />";
 
-        html += "<div id=\"PAG" + co_pagina + "\"  class=\"classic-tabs mx-2\" style=\"width: 100%; height: 100%;\">";
+        html += "<div id=\"PAG" + co_pagina + "\"  class=\"classic-tabs\" style=\"width: 100%; height: 100%;\">";
         html += "<ul class=\"nav bg_acr\" id=\"tabber_ls\" role=\"tablist\">";
         html += "</ul>";
-        html += "<div class=\"tab-content card\" id=\"tabber_ds\">";
+        html += "<div class=\"tab-content card\" id=\"tabber_ds\" style=\"padding: 0px;\">";
         html += "</div>";
         html += "</div>";
 
