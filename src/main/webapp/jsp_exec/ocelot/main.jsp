@@ -513,9 +513,7 @@
 
         <div class="container-fluid">
             <section card card-cascade narrower mb-5>
-                <!--<div class="w3-row" style="height: 65px;"></div>-->
                 <input type="hidden" id="il_popup" name="il_popup" value="${cntBean.contenedor.il_popup}">
-                <%--<div>Aqui va todo el contenido</div>--%>
                 ${cntBean.contenedor.toHTML()}
             </section>
 

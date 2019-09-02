@@ -105,8 +105,6 @@ public class WFIOAPP {
         Log.info("╟-----------------------------------------------╢");
         messageService.start();
         Log.info("║" + messageService.getNameService() + "**\t\t\t\t║");
-//        Log.info("╟-----------------------------------------------╢");
-
         Log.info("╚===============================================╝");
 
         //creamos la cache del menu - LVL1

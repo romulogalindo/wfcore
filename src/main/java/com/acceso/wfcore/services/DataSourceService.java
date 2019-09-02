@@ -121,6 +121,9 @@ public class DataSourceService extends Service {
                 key = PROPS.get(key) == null ? "/" : PROPS.get(key);
                 break;
             }
+            default: {
+                key = PROPS.get(key);
+            }
         }
 
         return key;

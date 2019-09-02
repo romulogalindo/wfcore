@@ -1005,16 +1005,6 @@ function loadFormulario64(index, row, aditional, dom2) {
 
 
 function loadTabber64(index, row) {
-    // if (index > 1) {
-    //     var mpage = document.getElementById('PAG' + CO_PAGINA);
-    //     dom2 = dom2.replace('row1', 'row' + index);
-    //     dom2 = dom2.replace(/C1/g, 'C' + index);
-    //     var nele = document.createElement('TBODY');//.innerHTML = dom24603321043944324;
-    //     nele.setAttribute('id', 'row' + index);
-    //     mpage.appendChild(nele);
-    //     document.getElementById("row" + index).innerHTML = dom2;
-    // }
-
     var tab_ls = "";
     var tab_ds = "";
 
@@ -1028,7 +1018,7 @@ function loadTabber64(index, row) {
             "          aria-hidden=\"true\"></i><br>" + reg.va_pagtab + "</a>\n" +
             "    </li>";
         var base_ds = "<div class=\"tab-pane fade " + (firstTab == false ? ' active show' : '') + " \" id=\"tab" + reg.co_pagtab + "\" role=\"tabpanel\" aria-labelledby=\"profile-tab-classic-orange\">" +
-            "<iframe class=\"wf4_iframe\" type=\"X\" id=\"CNT" + reg.co_pagtab + "\" onload=\"iframe(this,'" + reg.ur_pagtab + "'," + firstTab + ")\" frameborder=\"0\" style=\"max-width: 100%;\"></iframe>" +
+            "<iframe class=\"wf4_iframe\" type=\"X\" id=\"CNT" + reg.co_pagtab + "\" onload=\"iframe(this,'" + reg.ur_pagtab + "'," + firstTab + ")\" frameborder=\"0\" src2='" + reg.ur_pagtab + "' style=\"max-width: 100%;min-height: 340px;\" ></iframe>" +
             "    </div>";
 
         tab_ls += base_ls;
@@ -3022,7 +3012,22 @@ function iframe(xframe, ur_pag, il_act) {
 function activity_dynamic_tab(e) {
     e.target; // newly activated tab
     e.relatedTarget // previous active tab
-    console.log("adt://e=" + e);
+
+    var dyele = "" + e.target;
+    dyele = dyele.substring(dyele.indexOf('#') + 1, dyele.length);
+
+    //samle
+    //#tab20
+    var is_loaded = document.getElementById(dyele.replace("tab", "CNT")).getAttribute("loaded");
+    console.log("is_loaded==>" + is_loaded+",===>"+(is_loaded != true));
+    if (is_loaded != "true") {
+        var n_src = document.getElementById(dyele.replace("tab", "CNT")).getAttribute("src2");
+        //cargar
+        console.log("load!");
+        document.getElementById(dyele.replace("tab", "CNT")).src = n_src+"&il_popup=true";
+        document.getElementById(dyele.replace("tab", "CNT")).setAttribute("loaded", "true");
+    }
+    console.log("adt://e=" + dyele);
     console.log("adt://e.target=" + e.target);
     console.log("adt://e.relatedTarget=" + e.relatedTarget);
 }

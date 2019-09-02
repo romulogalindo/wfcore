@@ -34,6 +34,11 @@ public class DoLogin {
         String password = requestManager.getParam(WFIOAPP.APP.getLoginCTRL().getLogin_param_password());
         String remoteip = requestManager.getIp();
 
+        //LOGIN--A/1
+        String ENABLED_LOGIN_LDAP = WFIOAPP.APP.getDataSourceService().getValueOfKey("ENABLED_LOGIN_LDAP");
+        System.out.println("ENABLED_LOGIN_LDAP = " + ENABLED_LOGIN_LDAP);
+
+        //LOGIN--A/2
         SecurityDAO securityDAO = new SecurityDAO();
         regsesiniDTO = securityDAO.regsesini(username, Security.toMD5(password), remoteip);
 //        permisbloDTO = securityDAO.getListBloq(regsesiniDTO.getCo_usuari());
