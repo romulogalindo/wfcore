@@ -162,7 +162,13 @@ doPropag = function (url, regparams, data, co_button) {
                     console.log('ACTION:' + action.no_action);
 
                     if (action.no_action == 'REDIRECT') {
-                        window.parent.location.href = url + urlpart;
+                        //verificar co_condes
+                        if (rpta.co_condes != undefined) {
+                            url = url.substring(0, url.indexOf('=') + 1) + rpta.co_condes;
+                            window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                        } else {
+                            window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                        }
                     } else if (action.no_action == 'POPUP') {
                         // window.parent.page_to_master(regparams);
                         window.parent.page_to_master(action.ls_params);
@@ -292,7 +298,13 @@ doPropagg = function (url, regparams, data) {
                     var action = rpta.ls_action[z];
 
                     if (action.no_action == 'REDIRECT') {
-                        window.parent.location.href = url + urlpart;
+                        //verificar co_condes
+                        if (rpta.co_condes != undefined) {
+                            url = url.substring(0, url.indexOf('=') + 1) + rpta.co_condes;
+                            window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                        } else {
+                            window.parent.location.href = url + urlpart + (IL_POPUP == 'true' ? '&il_popup=true' : '');
+                        }
                     } else if (action.no_action == 'POPUP') {
                         // window.parent.page_to_master(regparams);
                         window.parent.page_to_master(action.ls_params);
