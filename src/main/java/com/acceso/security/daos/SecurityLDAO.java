@@ -1,6 +1,7 @@
 package com.acceso.security.daos;
 
 import com.acceso.wfcore.daos.DAO;
+import com.acceso.wfweb.units.UsuarioLDAP;
 //import org.apache.directory.ldap.client.api.LdapConnection;
 //import org.apache.directory.ldap.client.api.LdapConnectionConfig;
 //import org.apache.directory.ldap.client.api.LdapNetworkConnection;
@@ -13,27 +14,28 @@ import java.util.Properties;
 
 public class SecurityLDAO extends DAO {
     public static String TAG = "SECURE-LDAP";
+    protected String LDAPServer;
+    protected String LDAPDn;
 
-    public SecurityLDAO() {
-
+    public SecurityLDAO(String LDAPServer, String LDAPDn) {
+        this.LDAPServer = LDAPServer;
+        this.LDAPDn = LDAPDn;
     }
 
-    public void connect() {
+    //
+    //String serverURL = "ldap://192.168.44.82:389";
+    public UsuarioLDAP connect(String LDAPUser, String LDAPPassword) {
 
         System.out.println("LDAP");
-        String serverURL = "ldap://192.168.44.82:389";
+//        String serverURL = "ldap://192.168.44.82:389";
 //        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
-        String bindDN = "cn=rgalindo,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe";
+//        String bindDN = "cn=rgalindo,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe";
 //        String bindPassword = "Acceso.123";
-        String bindPassword = "acceso123";
-
-        Properties parms = new Properties();
-        parms.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        parms.put(Context.PROVIDER_URL, serverURL);
-//        parms.put(Context.SECURITY_PROTOCOL, "ssl");
-        parms.put(Context.SECURITY_AUTHENTICATION, "simple");
-        parms.put(Context.SECURITY_PRINCIPAL, bindDN);
-        parms.put(Context.SECURITY_CREDENTIALS, bindPassword);
+//        String bindPassword = "W41t3Kn1g4t";
+        UsuarioLDAP usuarioLDAP = new UsuarioLDAP();
+        Properties parms = getLDAPProperties(false);
+        parms.put(Context.SECURITY_PRINCIPAL, LDAPDn.replaceAll("USER", LDAPUser));
+        parms.put(Context.SECURITY_CREDENTIALS, LDAPPassword);
 
         DirContext ctx = null;
         NamingEnumeration<SearchResult> answers = null;
@@ -43,27 +45,22 @@ public class SecurityLDAO extends DAO {
         ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
         try {
+            //LOGIN
             ctx = new InitialDirContext(parms);
             System.err.println("Successful authenticated bind");
             System.out.println("ctx = " + ctx.getNameInNamespace());
-
-            //answers = ctx.search("o=xx.com", "(uid=areyes)", ctrls);
-//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=areyes)",ctrls);
+            usuarioLDAP.setIl_conect(true);
+            usuarioLDAP.setUser(LDAPUser);
             answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
-//            Attributes attributes = answers.getAttributes();
-//            NamingEnumeration namingEnumeration = attributes.getAll();
-//            attributes.getAll();
 
             try {
                 while (answers.hasMore()) {
-//                    Object o = answers.next();
                     Attributes attributes = answers.next().getAttributes();
                     NamingEnumeration namingEnumeration = attributes.getAll();
                     while (namingEnumeration.hasMore()) {
                         Object o2 = namingEnumeration.next();
                         System.out.println("o2 = " + o2);
                         String attrId;
-//                        Attribute attribute = attributes.get(o2 + "");
                         Attribute attribute = (Attribute) o2;
                         if (attribute.get() instanceof java.lang.String) {
                             //modo string
@@ -71,24 +68,36 @@ public class SecurityLDAO extends DAO {
                         } else {
                             //es password
                             String pwd = new String((byte[]) attribute.get());
-//                            System.out.println("attribute = " + attribute + ",-->" + encryptLdapPassword("MD5", pwd));
                             System.out.println("attribute = " + attribute + ",-->" + pwd);
                         }
-
-
-//                        System.out.println("o2 = " + attribute.get() + ",=====>" + attribute.getID() + "----" + attribute.size());
                     }
-//                    System.out.println("??o = " + o);
                 }
             } catch (Exception ep) {
                 System.out.println("ep = " + ep);
                 ep.printStackTrace();
             }
 
+            return usuarioLDAP;
         } catch (Exception ne) {
+            usuarioLDAP.setIl_conect(false);
+            usuarioLDAP.setUser(LDAPUser);
             System.err.println("Unsuccessful authenticated bind\n");
             ne.printStackTrace(System.err);
+            return usuarioLDAP;
         }
+
+
+    }
+
+    protected Properties getLDAPProperties(boolean ssl) {
+        Properties parms = new Properties();
+        parms.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        parms.put(Context.PROVIDER_URL, LDAPServer);
+        if (ssl)
+            parms.put(Context.SECURITY_PROTOCOL, "ssl");
+        parms.put(Context.SECURITY_AUTHENTICATION, "simple");
+
+        return parms;
     }
 
     private String encryptLdapPassword(String algorithm, String _password) {

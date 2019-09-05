@@ -6,8 +6,10 @@ import com.acceso.security.dtos.PermisbloDTO;
 import com.acceso.security.dtos.RegsesiniDTO;
 import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Security;
+import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Usuario;
+import com.acceso.wfweb.units.UsuarioLDAP;
 import com.acceso.wfweb.utils.RequestManager;
 import com.acceso.wfweb.web.*;
 
@@ -26,6 +28,7 @@ public class DoLogin {
     public static final int LOGIN_FAIL_PASSWORD = 403;
 
     protected RegsesiniDTO regsesiniDTO;
+    protected UsuarioLDAP usuarioLDAP;
     protected List<PermisbloDTO> permisbloDTO;
 
     public boolean SecurityLogin(RequestManager requestManager) throws Exception {
@@ -35,24 +38,41 @@ public class DoLogin {
         String remoteip = requestManager.getIp();
 
         //LOGIN--A/1
-        String ENABLED_LOGIN_LDAP = WFIOAPP.APP.getDataSourceService().getValueOfKey("ENABLED_LOGIN_LDAP");
+        boolean ENABLED_LOGIN_LDAP = Util.toBoolean(WFIOAPP.APP.getDataSourceService().getValueOfKey("ENABLED_LOGIN_LDAP"), false);
         System.out.println("ENABLED_LOGIN_LDAP = " + ENABLED_LOGIN_LDAP);
 
         //LOGIN--A/2
-        SecurityDAO securityDAO = new SecurityDAO();
-        regsesiniDTO = securityDAO.regsesini(username, Security.toMD5(password), remoteip);
+        if (ENABLED_LOGIN_LDAP) {
+            //autenticacion anexa
+            //        String serverURL = "ldap://192.168.44.82:389";
+//        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
+//        String bindDN = "cn=rgalindo,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe";
+            SecurityLDAO ldao = new SecurityLDAO("ldap://192.168.44.82:389", "cn=USER,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe");
+            usuarioLDAP = ldao.connect(username, password);
+            System.out.println("usuarioLDAP = " + usuarioLDAP);
+            if (usuarioLDAP.isIl_conect()) {
+                SecurityDAO securityDAO = new SecurityDAO();
+                regsesiniDTO = securityDAO.regsesini(username, Security.toMD5(password), remoteip);
 //        permisbloDTO = securityDAO.getListBloq(regsesiniDTO.getCo_usuari());
-        securityDAO.close();
+                securityDAO.close();
+                //[FED]
+                regsesiniDTO.setIp_remoto(remoteip);
+                System.out.println("regsesiniDTO = " + regsesiniDTO);
+            } else {
+                regsesiniDTO = new RegsesiniDTO();
+                regsesiniDTO.setCo_mensaj(404);
+                regsesiniDTO.setDe_mensaj("LDAP-Credenciales invalidas.");
+            }
+        } else {
+            //autenticacion tradicional
+            SecurityDAO securityDAO = new SecurityDAO();
+            regsesiniDTO = securityDAO.regsesini(username, Security.toMD5(password), remoteip);
+//        permisbloDTO = securityDAO.getListBloq(regsesiniDTO.getCo_usuari());
+            securityDAO.close();
 
-        //[FED]
-        regsesiniDTO.setIp_remoto(remoteip);
-        System.out.println("regsesiniDTO = " + regsesiniDTO);
-
-        //ADITIONAL->2019-08-22
-        if (regsesiniDTO.getCo_mensaj() == LOGIN_OK) {
-            //TEST LDAP
-            SecurityLDAO ldao = new SecurityLDAO();
-            ldao.connect();
+            //[FED]
+            regsesiniDTO.setIp_remoto(remoteip);
+            System.out.println("regsesiniDTO = " + regsesiniDTO);
         }
 
         //Logica de seguridad
@@ -71,8 +91,10 @@ public class DoLogin {
         usuario.setCo_sistem(regsesiniDTO.getCo_sistem());
         usuario.setCo_subsis(regsesiniDTO.getCo_subsis());
         usuario.setNo_correo(regsesiniDTO.getNo_correo());
+        usuario.setNu_docide(regsesiniDTO.getNu_docide());
         usuario.setIp_remoto(regsesiniDTO.getIp_remoto());
 //        usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
+        usuario.setLdap(regsesiniDTO.getLdap());
         usuario.setIl_schema(true);
 
         SecurityDAO securityDAO = new SecurityDAO();

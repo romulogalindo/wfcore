@@ -15,6 +15,11 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <%--    <script src="/jsp_exec/js/aniplex/three.r92.js"></script>--%>
+    <%--    <script src="/jsp_exec/js/aniplex/vanta.net.js"></script>--%>
+    <script>
+
+    </script>
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
@@ -28,6 +33,9 @@
 
     <script>
         function do64() {
+            // VANTA.NET({
+            //     el: "#body"
+            // });
             document.getElementsByName("username")[0].focus();
         }
     </script>
@@ -38,7 +46,8 @@
 
         body {
             /* The image used */
-            background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            /*background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");*/
+            background: linear-gradient(rgba(255, 255, 255, .5), rgba(255, 255, 255, .5)), url("https://i.ytimg.com/vi/FgxJ1etZHGo/maxresdefault.jpg");
 
             /* Half height */
             height: 50%;
@@ -51,7 +60,7 @@
     </style>
 </head>
 <!--body class="w3-theme-l4" onload="do64()"-->
-<body onload="do64()">
+<body id="body" onload="do64()">
 
 <!--div class="bg"></div-->
 

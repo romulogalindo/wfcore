@@ -1,6 +1,7 @@
 package com.acceso.security.dtos;
 
 import com.acceso.security.utils.Values;
+import com.acceso.wfweb.units.UsuarioLDAP;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -48,12 +49,16 @@ public class RegsesiniDTO implements Serializable {
     int co_mensaj;
     String de_mensaj;
     String no_correo;
+    String nu_docide;
 
-//    @Transient
+    //    @Transient
     String ip_remoto;
 
     @Transient
     String il_prilog;
+
+    @Transient
+    UsuarioLDAP ldap;
 
     public RegsesiniDTO() {
     }
@@ -168,6 +173,22 @@ public class RegsesiniDTO implements Serializable {
 
     public void setNo_correo(String no_correo) {
         this.no_correo = no_correo;
+    }
+
+    public String getNu_docide() {
+        return nu_docide;
+    }
+
+    public void setNu_docide(String nu_docide) {
+        this.nu_docide = nu_docide;
+    }
+
+    public UsuarioLDAP getLdap() {
+        return ldap;
+    }
+
+    public void setLdap(UsuarioLDAP ldap) {
+        this.ldap = ldap;
     }
 
     @Override

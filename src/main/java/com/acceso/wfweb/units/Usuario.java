@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
     boolean il_schema;
 
     String no_correo;
+    String nu_docide;
     String ip_remoto;
 
     Root root;
@@ -31,6 +32,7 @@ public class Usuario implements Serializable {
     Map<String, MainMenu> mainMenus;
 
     boolean il_firtim = false;
+    UsuarioLDAP ldap;
 
     public Usuario() {
     }
@@ -146,6 +148,14 @@ public class Usuario implements Serializable {
         this.no_correo = no_correo;
     }
 
+    public String getNu_docide() {
+        return nu_docide;
+    }
+
+    public void setNu_docide(String nu_docide) {
+        this.nu_docide = nu_docide;
+    }
+
     public String getIp_remoto() {
         return ip_remoto;
     }
@@ -171,6 +181,14 @@ public class Usuario implements Serializable {
             return false;
         }
 
+    }
+
+    public UsuarioLDAP getLdap() {
+        return ldap;
+    }
+
+    public void setLdap(UsuarioLDAP ldap) {
+        this.ldap = ldap;
     }
 
     @Override
