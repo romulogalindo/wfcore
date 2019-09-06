@@ -276,13 +276,13 @@ function pagina_onload2(_data, rowid) {
             //-----
 
             const ID_PAGINA = 'PAG' + CO_PAGINA;
-            console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
+            // console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
 
             // for (var i = 0; i < rows.length; i++) {
             // loadReporte64((i + 1), tbody64, rows[0]);
             var row = rows[0];
 //            var rowid = rowid_over_table_temp;
-            console.log('rowid:::>>>>>>>>>>' + rowid_over_table_temp);
+//             console.log('rowid:::>>>>>>>>>>' + rowid_over_table_temp);
             //-------------------
             for (var x = 0; x < row.regs.length; x++) {
                 var reg = row.regs[x];
@@ -495,8 +495,8 @@ function pagina_onload2(_data, rowid) {
     $('[data-toggle="tooltip"]').tooltip();
     /*SELECT*/
     var all_selects = document.getElementsByClassName('mdb-select');
-    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
-    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
+    // console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
+    // console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
     for (var i = 0; i < all_selects.length; i++) {
         var me_select = all_selects[i];
         if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
@@ -2527,10 +2527,92 @@ function OPTION_ADD(opt) {
 
 /*CONFIGURACION ADICIONAL DE TABLA*/
 function CFGDATATABLE(cfgopts) {
+    //remove css class
+    document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', ''));
     $('#PAG' + CO_PAGINA).dataTable(cfgopts);
     document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
     document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
     document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+    //adicional
+    console.log("A punto de iniciar");
+    var t = document.getElementById('PAG' + CO_PAGINA);
+    var d = t.getElementsByTagName("tbody")[0];
+    d = d.getElementsByTagName("tr")[0];
+    d = d.getElementsByTagName("td");
+    //--------
+    var t2 = document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].getElementsByTagName("TABLE")[0];
+    var d2 = t2.getElementsByTagName("thead")[0];
+    d2 = d2.getElementsByTagName("tr")[1];
+    d2 = d2.getElementsByTagName("th");
+    console.log("d:" + d + ":::d2" + d2);
+    var rz = 0;
+    for (var i = 0; i < d.length; i++) {
+        var r = d[i].offsetWidth;
+        var r2 = d2[i].offsetWidth;
+        var rx = 0;
+
+        if (r2 > r) {
+            rx = r2;
+        } else {
+            rx = r;
+        }
+        rz += rx;
+        d[i].setAttribute('style', 'width:' + rx + 'px;');
+        d2[i].setAttribute('style', 'width:' + rx + 'px;');
+        console.log("TH[W:" + r2 + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
+    }
+    //generales
+    console.log("TOTAL:" + rz);
+    t.removeAttribute('style');
+    t.setAttribute('style', 'width:' + rz + 'px;');
+    console.log("t:" + t);
+    t.style.width = rz + 'px';
+    t.setAttribute('style', 'width:' + rz + 'px;');
+    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
+    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
+    t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
+}
+
+function fixsize(settings, json) {
+    console.log('Ejecucion post:!!data load2!');
+    //adicional
+    console.log("A punto de iniciar2");
+    var t = document.getElementById('PAG' + CO_PAGINA);
+    var d = t.getElementsByTagName("tbody")[0];
+    d = d.getElementsByTagName("tr")[0];
+    d = d.getElementsByTagName("td");
+    //--------
+    var t2 = document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].getElementsByTagName("TABLE")[0];
+    var d2 = t2.getElementsByTagName("thead")[0];
+    d2 = d2.getElementsByTagName("tr")[1];
+    d2 = d2.getElementsByTagName("th");
+    console.log("d:" + d + ":::d2" + d2);
+    var rz = 0;
+    for (var i = 0; i < d.length; i++) {
+        var r = d[i].offsetWidth;
+        var r2 = d2[i].offsetWidth;
+        var rx = 0;
+
+        if (r2 > r) {
+            rx = r2;
+        } else {
+            rx = r;
+        }
+        rz += rx;
+        d[i].setAttribute('style', 'width:' + rx + 'px;');
+        d2[i].setAttribute('style', 'width:' + rx + 'px;');
+        console.log("TH[W:" + r2 + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
+    }
+    //generales
+    console.log("TOTAL2:" + rz);
+    t.removeAttribute('style');
+    t.setAttribute('style', 'width:' + rz + 'px;');
+    console.log("t:" + t);
+    t.style.width = rz + 'px';
+    t.setAttribute('style', 'width:' + rz + 'px;');
+    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
+    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
+    t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
 }
 
 /*
@@ -3019,12 +3101,12 @@ function activity_dynamic_tab(e) {
     //samle
     //#tab20
     var is_loaded = document.getElementById(dyele.replace("tab", "CNT")).getAttribute("loaded");
-    console.log("is_loaded==>" + is_loaded+",===>"+(is_loaded != true));
+    console.log("is_loaded==>" + is_loaded + ",===>" + (is_loaded != true));
     if (is_loaded != "true") {
         var n_src = document.getElementById(dyele.replace("tab", "CNT")).getAttribute("src2");
         //cargar
         console.log("load!");
-        document.getElementById(dyele.replace("tab", "CNT")).src = n_src+"&il_popup=true";
+        document.getElementById(dyele.replace("tab", "CNT")).src = n_src + "&il_popup=true";
         document.getElementById(dyele.replace("tab", "CNT")).setAttribute("loaded", "true");
     }
     console.log("adt://e=" + dyele);
