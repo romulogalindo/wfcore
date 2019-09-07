@@ -33,6 +33,7 @@
     <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/style.css" rel="stylesheet">-->
     <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/themes/theme-${US.no_temdef}.css?a=1">
 
     <!--link rel="icon" type="image/png" href="{pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png"-->
     <link rel='shortcut icon' type='image/x-icon'
@@ -40,18 +41,6 @@
 
     <!--CSS-->
     <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=10"/>
-
-
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/jquery-3.3.1.min.js"></script>-->
-    <!-- Bootstrap tooltips -->
-    <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/popper.min.js"></script>-->
-    <!-- Bootstrap core JavaScript -->
-    <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/bootstrap.min.js"></script>-->
-    <!-- MDB core JavaScript -->
-    <!--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/mdb.js"></script>-->
-
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=27"></script>

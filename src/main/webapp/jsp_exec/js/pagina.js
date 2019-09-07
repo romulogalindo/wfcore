@@ -2529,10 +2529,81 @@ function OPTION_ADD(opt) {
 function CFGDATATABLE(cfgopts) {
     //remove css class
     document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', ''));
-    $('#PAG' + CO_PAGINA).dataTable(cfgopts);
-    document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
-    document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
-    document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+    //fase1;
+    var tx = document.getElementById('PAG' + CO_PAGINA);
+    var dx = tx.getElementsByTagName("tbody")[0];
+    // dx = dx.getElementsByTagName("tr")[0];
+    var tds = tx.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName('TD');
+    var ths = tx.getElementsByTagName("thead")[0].getElementsByTagName("tr")[1].getElementsByTagName('TH');
+
+    var tnz = 0;
+    for (var i = 0; i < tds.length; i++) {
+        var nz = tds[i].offsetWidth;
+        tnz += nz;
+        ths[i].style.width = nz + 'px';
+        tds[i].style.width = nz + 'px';
+
+        ths[i].setAttribute('style', 'width: ' + nz + 'px');
+        tds[i].setAttribute('style', 'width: ' + nz + 'px');
+        console.log('td(' + (i + 1) + ')=>nz:' + nz);
+    }
+    console.log('TNZ::' + tnz);
+    tx.style.width = tnz + 'px';
+    document.getElementById('PAG' + CO_PAGINA).setAttribute("style", "width: " + tnz + "px");
+
+    // return;
+    // $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    // document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
+    // document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
+    // document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+    // // //adicional
+    // console.log("A punto de iniciar");
+    // var t = document.getElementById('PAG' + CO_PAGINA);
+    // var d = t.getElementsByTagName("tbody")[0];
+    // d = d.getElementsByTagName("tr")[0];
+    // d = d.getElementsByTagName("td");
+    // //--------
+    // var t2 = document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].getElementsByTagName("TABLE")[0];
+    // var d2 = t2.getElementsByTagName("thead")[0];
+    // d2 = d2.getElementsByTagName("tr")[1];
+    // d2 = d2.getElementsByTagName("th");
+    // console.log("d:" + d + ":::d2" + d2);
+    // var rz = 0;
+    // for (var i = 0; i < d.length; i++) {
+    //     var r = d[i].offsetWidth;
+    //     var r2 = d2[i].offsetWidth;
+    //     var rx = 0;
+    //
+    //     if (r2 > r) {
+    //         rx = r2;
+    //     } else {
+    //         rx = r;
+    //     }
+    //     rz += rx;
+    //     d[i].setAttribute('style', 'width:' + rx + 'px');
+    //     d2[i].setAttribute('style', 'width:' + rx + 'px');
+    //     console.log("TH[W:" + r2 + ",??" + d2[i].getAttribute('style') + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
+    // }
+    // //generales
+    // console.log("@@TOTAL:" + rz);
+    // t = document.getElementById('PAG' + CO_PAGINA);
+    // t.removeAttribute('style');
+    // // t.setAttribute('style', 'width:' + rz + 'px');
+    // t.style.width = 'width:' + rz + 'px';
+    //
+    // console.log("(1)t:" + t);
+    // t.style.width = rz + 'px';
+    // console.log('ZXD::' + t.id + '::' + t.getAttribute("id") + '//' + t.getAttribute('style'));
+    // t.setAttribute('style', 'width:' + rz + 'px');
+    // t.style.width = rz + 'px';
+    // document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
+    // document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
+    // t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
+}
+
+function fixsize(settings, json) {
+    return;
+    console.log('Ejecucion post:!!data loadX!');
     //adicional
     console.log("A punto de iniciar");
     var t = document.getElementById('PAG' + CO_PAGINA);
@@ -2557,59 +2628,21 @@ function CFGDATATABLE(cfgopts) {
             rx = r;
         }
         rz += rx;
-        d[i].setAttribute('style', 'width:' + rx + 'px;');
-        d2[i].setAttribute('style', 'width:' + rx + 'px;');
-        console.log("TH[W:" + r2 + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
+        d[i].setAttribute('style', 'width:' + rx + 'px');
+        d2[i].setAttribute('style', 'width:' + rx + 'px');
+        console.log("TH[W:" + r2 + ",??" + d2[i].getAttribute('style') + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
     }
     //generales
     console.log("TOTAL:" + rz);
+    t = document.getElementById('PAG' + CO_PAGINA);
     t.removeAttribute('style');
-    t.setAttribute('style', 'width:' + rz + 'px;');
-    console.log("t:" + t);
+    // t.setAttribute('style', 'width:' + rz + 'px');
+    t.style.width = 'width:' + rz + 'px';
+    console.log("(1)t:" + t);
     t.style.width = rz + 'px';
+    console.log('ZXD:://' + t.getAttribute('style'));
     t.setAttribute('style', 'width:' + rz + 'px;');
-    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
-    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
-    t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
-}
-
-function fixsize(settings, json) {
-    console.log('Ejecucion post:!!data load2!');
-    //adicional
-    console.log("A punto de iniciar2");
-    var t = document.getElementById('PAG' + CO_PAGINA);
-    var d = t.getElementsByTagName("tbody")[0];
-    d = d.getElementsByTagName("tr")[0];
-    d = d.getElementsByTagName("td");
-    //--------
-    var t2 = document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].getElementsByTagName("TABLE")[0];
-    var d2 = t2.getElementsByTagName("thead")[0];
-    d2 = d2.getElementsByTagName("tr")[1];
-    d2 = d2.getElementsByTagName("th");
-    console.log("d:" + d + ":::d2" + d2);
-    var rz = 0;
-    for (var i = 0; i < d.length; i++) {
-        var r = d[i].offsetWidth;
-        var r2 = d2[i].offsetWidth;
-        var rx = 0;
-
-        if (r2 > r) {
-            rx = r2;
-        } else {
-            rx = r;
-        }
-        rz += rx;
-        d[i].setAttribute('style', 'width:' + rx + 'px;');
-        d2[i].setAttribute('style', 'width:' + rx + 'px;');
-        console.log("TH[W:" + r2 + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
-    }
-    //generales
-    console.log("TOTAL2:" + rz);
-    t.removeAttribute('style');
-    t.setAttribute('style', 'width:' + rz + 'px;');
-    console.log("t:" + t);
     t.style.width = rz + 'px';
-    t.setAttribute('style', 'width:' + rz + 'px;');
     document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
     document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
     t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');

@@ -33,6 +33,7 @@ public class Usuario implements Serializable {
 
     boolean il_firtim = false;
     UsuarioLDAP ldap;
+    String no_temdef;
 
     public Usuario() {
     }
@@ -189,6 +190,14 @@ public class Usuario implements Serializable {
 
     public void setLdap(UsuarioLDAP ldap) {
         this.ldap = ldap;
+    }
+
+    public String getNo_temdef() {
+        return no_temdef;
+    }
+
+    public void setNo_temdef(String no_temdef) {
+        this.no_temdef = no_temdef;
     }
 
     @Override

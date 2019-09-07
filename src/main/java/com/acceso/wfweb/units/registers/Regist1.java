@@ -18,7 +18,8 @@ public class Regist1 extends HTMLRegistRenderer {
                 html += "<tr name=\"" + id + "\" style=\"display:none;\" co_pagtit=\"" + registroDTO.getCo_pagtit() + "\">";
                 html += "   <td name=\"" + id + "K\" class=\"wf_f_titreg\">";
                 html += registroDTO.getNo_pagreg();
-                html += "       <span style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
+//                html += "       <span class=\"w3-bar\" style=\"border-right:2px solid #00477e;padding-left: 5px;\"></span>";
+                html += "       <span class=\"w3-bar\"></span>";
                 html += "   </td>";
 
                 html += "   <td class=wf_f_valreg>";

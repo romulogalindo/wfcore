@@ -3,8 +3,11 @@ package com.acceso.wfweb.servlets;
 import com.acceso.wfcore.kernel.AsyncProPag;
 import com.acceso.wfcore.kernel.AsyncValPag;
 import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.units.Usuario;
+import com.acceso.wfweb.web.Root;
+import com.acceso.wfweb.web.Sistema;
 
 import java.io.IOException;
 import javax.servlet.AsyncContext;
@@ -65,10 +68,18 @@ public class ValpagServlet extends HttpServlet {
             }
             case "/uxtion": {
                 //propag->getHTML("/uxtion?co_sistem=" + co_sistem + "&co_subsis=" + co_subsis);
+                String no_temdef = "";
+                for (Sistema sistema : ((Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE")).getSistemas()) {
+                    if (sistema.getCo_sistem() == Integer.parseInt(request.getParameter("co_sistem"))) {
+                        no_temdef = sistema.getNo_temdef();
+                    }
+                }
+
                 Usuario usuario = ((Usuario) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("US"));
                 usuario.setMainMenu(usuario.getMainMenus().get(request.getParameter("co_sistem") + request.getParameter("co_subsis")));
                 usuario.setCo_sistem(Integer.parseInt(request.getParameter("co_sistem")));
                 usuario.setCo_subsis(Integer.parseInt(request.getParameter("co_subsis")));
+                usuario.setNo_temdef(no_temdef);
                 asyncCtx.complete();
                 break;
             }
