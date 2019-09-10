@@ -172,9 +172,17 @@ table.wf-report {
 table.wf-report thead tr th {
     text-align: center;
     font-size: 0.8rem;
+    /*padding-right: 0.4rem !important;*/
+    padding-right: 0rem !important;
+    /*padding-left: 0.4rem !important;*/
+    padding-left: 0rem !important;
+    white-space: nowrap;
+}
+
+table.wf-report thead tr th span {
+    display: block;
     padding-right: 0.4rem !important;
     padding-left: 0.4rem !important;
-    white-space: nowrap;
 }
 
 table.wf-report td {
@@ -182,9 +190,10 @@ table.wf-report td {
 }
 
 table.wf-report tbody td {
-    padding-right: 0.4rem !important;
-    padding-left: 0.4rem !important;
-    font-size: 0.80rem;
+    padding-right: 0.24rem !important;
+    padding-left: 0.24rem !important;
+    /*font-size: 0.80rem;*/
+    font-size: 0.75rem;
     white-space: nowrap;
 }
 
@@ -195,6 +204,7 @@ table.wf-report tbody td span div input.select-dropdown {
 table.wf-report tbody td span div input.w3-input {
     width: unset !important;
 }
+
 /*#select-options-dee35595-097d-4825-8e4c-61a4c2dff7b2 > li:nth-child(1)/html/body/div[1]/div[2]/div/table/tbody/tr[1]/td[13]/span/div/ul/li*/
 table.wf-report tbody td span[ti_pagreg="3"] div ul li {
     display: inline-table;
@@ -352,4 +362,67 @@ span.pagreg[ti_pagreg='8'] span.item span.close {
 
 .bg_acr {
     background-color: #2bbbad !important;
+}
+
+/*ADITIONAL CONTEXTY MENU*/
+.context-menu-list {
+    position: absolute;
+    display: inline-block;
+    min-width: 13em;
+    max-width: 26em;
+    padding: .25em 0;
+    margin: .3em;
+    font-family: inherit;
+    font-size: inherit;
+    list-style-type: none;
+    background: #fff;
+    border: 1px solid #bebebe;
+    border-radius: .2em;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+}
+
+.context-menu-item {
+    position: relative;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    padding: .2em 2em;
+    color: #2f2f2f;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #fff;
+}
+
+.context-menu-item.context-menu-hover {
+    color: #fff;
+    cursor: pointer;
+    background-color: #2980b9;
+}
+
+.context-menu-item.context-menu-hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+.context-menu-icon::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 2em;
+    font-family: "context-menu-icons";
+    font-size: 1em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    color: #2980b9;
+    text-align: center;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

@@ -338,6 +338,7 @@ public class DataAPI extends GenericAPI {
         String no_archiv = opts.get("no_archiv") == null ? "aiofile" : opts.get("no_archiv").toString();
         String no_extens = opts.get("no_extens") == null ? "txt" : opts.get("no_extens").toString();
         Object ob_dindat = opts.get("ob_dindat");
+        Object ur_file = opts.get("ur_file");
         //-------------------
         File file = null;
         try {
@@ -346,8 +347,10 @@ public class DataAPI extends GenericAPI {
             file = null;
         }
 
-        if (co_archiv != null) {
+        if (co_archiv != null & ur_file == null) {
             file = new Converter(file).ARCHIVO(co_archiv);
+        } else if (co_archiv == null & ur_file != null) {
+            file = new Converter(file).DOWNLOAD(ur_file);
         } else {
             if (no_extens.toUpperCase().contains("XLS")) {
                 file = new Converter(file).OBJECT_TO_XLS(ob_dindat);

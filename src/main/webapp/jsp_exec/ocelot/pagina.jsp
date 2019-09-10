@@ -100,7 +100,8 @@
             <div class="table-wrapper" style="margin-bottom: 12px;">
                     ${paginaBean.pagina.toHTML()}
             </div>
-
+            <div id="context-menu" class="dropdown-menu dropdown-menu-sm context-menu-list css-title context-menu-root" >
+            </div>
         </div>
 
     </div>
@@ -190,6 +191,8 @@
         src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables.js?a=2"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables-select.js"></script>
+<%--<script type="text/javascript"--%>
+<%--        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/BootstrapMenu.js"></script>--%>
 <c:if test="${paginaBean.pagina.ti_pagina == 'C'}">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>

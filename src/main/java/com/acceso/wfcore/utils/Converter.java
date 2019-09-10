@@ -1,6 +1,7 @@
 package com.acceso.wfcore.utils;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.opencsv.CSVWriter;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -315,8 +317,19 @@ public class Converter {
         return file;
     }
 
-    public File ARCHIVO(String co_archiv){
+    public File ARCHIVO(String co_archiv) {
 
         return null;
+    }
+
+    public File DOWNLOAD(Object ur_file) {
+        try {
+            FileUtils.copyURLToFile(
+                    new URL(ur_file.toString()),
+                    file);
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
+        return file;
     }
 }

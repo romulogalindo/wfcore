@@ -68,6 +68,33 @@ function viewtab(evt, cityName) {
     evt.currentTarget.className += " w3-red";
 }
 
+function MenuItem(_label, _link) {
+    this.label;
+    this.link;
+
+    this.setLabel = function (l) {
+        this.label = l;
+    };
+    this.getLabel = function () {
+        return this.label;
+    };
+
+    this.setLink = function (l) {
+        this.link = l;
+    };
+
+    this.getLink = function () {
+        return this.link;
+    };
+
+    this.init = function (l1, l2) {
+        this.label = l1;
+        this.link = l2;
+    };
+
+    this.init(_label, _link);
+}
+
 /*Codigo que sera heliminado*/
 //function ls_hamoda() {
 //    return document.getElementById('ls_hamoda') != undefined ? document.getElementById('ls_hamoda').value : null;
@@ -2539,6 +2566,7 @@ function CFGDATATABLE(cfgopts) {
     var tnz = 0;
     for (var i = 0; i < tds.length; i++) {
         var nz = tds[i].offsetWidth;
+        nz += 10;
         tnz += nz;
         ths[i].style.width = nz + 'px';
         tds[i].style.width = nz + 'px';
@@ -2552,53 +2580,56 @@ function CFGDATATABLE(cfgopts) {
     document.getElementById('PAG' + CO_PAGINA).setAttribute("style", "width: " + tnz + "px");
 
     // return;
-    // $('#PAG' + CO_PAGINA).dataTable(cfgopts);
-    // document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
-    // document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
-    // document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
-    // // //adicional
-    // console.log("A punto de iniciar");
-    // var t = document.getElementById('PAG' + CO_PAGINA);
-    // var d = t.getElementsByTagName("tbody")[0];
-    // d = d.getElementsByTagName("tr")[0];
-    // d = d.getElementsByTagName("td");
-    // //--------
-    // var t2 = document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].getElementsByTagName("TABLE")[0];
-    // var d2 = t2.getElementsByTagName("thead")[0];
-    // d2 = d2.getElementsByTagName("tr")[1];
-    // d2 = d2.getElementsByTagName("th");
-    // console.log("d:" + d + ":::d2" + d2);
-    // var rz = 0;
-    // for (var i = 0; i < d.length; i++) {
-    //     var r = d[i].offsetWidth;
-    //     var r2 = d2[i].offsetWidth;
-    //     var rx = 0;
-    //
-    //     if (r2 > r) {
-    //         rx = r2;
-    //     } else {
-    //         rx = r;
-    //     }
-    //     rz += rx;
-    //     d[i].setAttribute('style', 'width:' + rx + 'px');
-    //     d2[i].setAttribute('style', 'width:' + rx + 'px');
-    //     console.log("TH[W:" + r2 + ",??" + d2[i].getAttribute('style') + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
-    // }
-    // //generales
-    // console.log("@@TOTAL:" + rz);
-    // t = document.getElementById('PAG' + CO_PAGINA);
-    // t.removeAttribute('style');
-    // // t.setAttribute('style', 'width:' + rz + 'px');
-    // t.style.width = 'width:' + rz + 'px';
-    //
-    // console.log("(1)t:" + t);
-    // t.style.width = rz + 'px';
-    // console.log('ZXD::' + t.id + '::' + t.getAttribute("id") + '//' + t.getAttribute('style'));
-    // t.setAttribute('style', 'width:' + rz + 'px');
-    // t.style.width = rz + 'px';
-    // document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
-    // document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
-    // t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
+    $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
+    document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
+    document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+    //---ADD
+    // document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('THEAD')[0].getElementsByTagName('TR')[0].style.display = 'none';
+    console.log('iniciando second part::' + tnz);
+    setTimeout(function () {
+        document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('THEAD')[0].getElementsByTagName('TR')[0].setAttribute('style', 'display:none');
+        console.log('document.getElementById(\'PAG\' + CO_PAGINA)::' + document.getElementById('PAG' + CO_PAGINA));
+        var ths2 = document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('THEAD')[0].getElementsByTagName('TR')[1].getElementsByTagName("TH");
+        for (var i = 0; i < ths2.length; i++) {
+            ths2[i].style.padding = '0px';
+        }
+    }, 500);
+
+
+}
+
+/*MENU CONTEXTUAL*/
+function CONTEXTMENU(items) {
+    console.log('items:0' + items);
+    console.log('items:0' + items.length);
+// <a class="dropdown-item" href="#">Action</a>
+    var body_context = '';
+    for (var i = 0; i < items.length; i++) {
+        console.log('<a class="dropdown-item " target="_blank" href="' + items[i].getLink() + '">' + items[i].getLabel() + '</a>');
+        body_context += '<a class="dropdown-item context-menu-item context-menu-icon context-menu-icon-cut" target="_blank" href="' + items[i].getLink() + '">' + items[i].getLabel() + '</a>';
+    }
+
+    console.log('body_context:' + body_context);
+    document.getElementById("context-menu").innerHTML = body_context;
+
+    $('#PAG' + CO_PAGINA + ' TBODY TR').on('contextmenu', function (e) {
+        var top = e.pageY - 45;
+        var left = e.pageX - 5;
+        $("#context-menu").css({
+            display: "block",
+            top: top,
+            left: left
+        }).addClass("show");
+        return false; //blocks default Webbrowser right click menu
+    }).on("click", function () {
+        $("#context-menu").removeClass("show").hide();
+    });
+
+    $("#context-menu a").on("click", function () {
+        $(this).parent().removeClass("show").hide();
+    });
+
 }
 
 function fixsize(settings, json) {
