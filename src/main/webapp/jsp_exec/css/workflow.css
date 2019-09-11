@@ -179,6 +179,16 @@ table.wf-report thead tr th {
     white-space: nowrap;
 }
 
+.dataTables_scrollHeadInner table.wf-report thead tr th span {
+    display: block;
+    padding-right: 0.4rem !important;
+    padding-left: 0.4rem !important;
+}
+
+.dataTables_scrollFoot {
+    display: none;
+}
+
 table.wf-report thead tr th span {
     display: block;
     padding-right: 0.4rem !important;
@@ -207,12 +217,16 @@ table.wf-report tbody td span div input.w3-input {
 
 /*#select-options-dee35595-097d-4825-8e4c-61a4c2dff7b2 > li:nth-child(1)/html/body/div[1]/div[2]/div/table/tbody/tr[1]/td[13]/span/div/ul/li*/
 table.wf-report tbody td span[ti_pagreg="3"] div ul li {
-    display: inline-table;
+    /*display: inline-table;*/
 }
 
 table.wf-report tfoot tr td {
     text-align: center;
     padding-top: 10px !important;
+}
+
+table.wf-report tbody td span  div ul{
+    width: unset !important;
 }
 
 table tbody td a {

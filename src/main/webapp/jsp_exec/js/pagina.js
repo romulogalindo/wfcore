@@ -212,6 +212,7 @@ function pagina_onload(_data) {
                 var me_select = all_selects[i];
                 if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
                     $(me_select).materialSelect();
+                    // alert('doit !>' + me_select.getAttribute('name'));
 //            console.log('Se ejecuto la create!');
                 }
             }
@@ -372,26 +373,11 @@ function pagina_onload2(_data, rowid) {
                         ereg.innerHTML = rowid;
 
                     } else if (ereg.getAttribute('ti_pagreg') == '3') {
-//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
-                        //*ereg.innerHTML = rowid;
-                        //TEMPORAL====================
                         var ls_compag;
                         try {
                             ls_compag = JSON.parse(reg.data);
-                            // ls_compag = aditional[reg.regist];
-                            // console.log('(COMBO)ls_compag?:' + ls_compag);
-                            // if (ls_compag == undefined) {
-                            //     try {
-                            //         ls_compag = JSON.parse(reg.data);
-                            //     } catch (e) {
-                            //         console.log('(COMBO)el combo value!:' + ls_compag);
-                            //     }
-                            // }
                         } catch (e) {
                             ls_compag = [];
-                            // console.log('(COMBO)el combo value!:' + reg.data);
-                            // ls_compag = JSON.parse(reg.data);
-                            // console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "";
@@ -399,33 +385,18 @@ function pagina_onload2(_data, rowid) {
                         if (ls_compag) {
                             for (var i = 0; i < ls_compag.length; i++) {
                                 compag = ls_compag[i];
-
                                 dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
                             }
                             ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                            ereg.getElementsByTagName("SELECT")[0].setAttribute('class', 'mdb-select md-formx');
                         }
 
                     } else if (ereg.getAttribute('ti_pagreg') == '4') {
-//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
-                        //*ereg.innerHTML = rowid;
-                        //TEMPORAL====================
                         var ls_compag;
                         try {
                             ls_compag = JSON.parse(reg.data);
-                            // ls_compag = aditional[reg.regist];
-                            // console.log('(COMBO)ls_compag?:' + ls_compag);
-                            // if (ls_compag == undefined) {
-                            //     try {
-                            //         ls_compag = JSON.parse(reg.data);
-                            //     } catch (e) {
-                            //         console.log('(COMBO)el combo value!:' + ls_compag);
-                            //     }
-                            // }
                         } catch (e) {
                             ls_compag = [];
-                            // console.log('(COMBO)el combo value!:' + reg.data);
-                            // ls_compag = JSON.parse(reg.data);
-                            // console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "<option value=\"\"></option>";
@@ -433,11 +404,11 @@ function pagina_onload2(_data, rowid) {
                         if (ls_compag) {
                             for (var i = 0; i < ls_compag.length; i++) {
                                 compag = ls_compag[i];
-
                                 dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
                             }
 
                             ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                            ereg.getElementsByTagName("SELECT")[0].setAttribute('class', 'mdb-select md-formx');
                         }
 
                     } else if (ereg.getAttribute('ti_pagreg') == '6') {
@@ -522,13 +493,14 @@ function pagina_onload2(_data, rowid) {
     $('[data-toggle="tooltip"]').tooltip();
     /*SELECT*/
     var all_selects = document.getElementsByClassName('mdb-select');
-    // console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
-    // console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
+    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
+    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
     for (var i = 0; i < all_selects.length; i++) {
         var me_select = all_selects[i];
         if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
             $(me_select).materialSelect();
             console.log('Se ejecuto la create!');
+            // alert('(' + (i + 1) + ')pagregA-->' + all_selects.getAttribute('name'));
         }
     }
 
@@ -1111,7 +1083,7 @@ function loadReporte64(rowid, tbody64, row) {
 
         var erid = 'P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V';
         var ereg = document.getElementById(erid);
-        console.log('erid:' + erid + ', ereg:' + ereg);
+        // console.log('erid:' + erid + ', ereg:' + ereg);
         // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
         if (ereg != null) {
             var local_ti_pagreg = ereg.getAttribute('ti_pagreg') == undefined ? 1 : ereg.getAttribute('ti_pagreg');
@@ -1121,16 +1093,16 @@ function loadReporte64(rowid, tbody64, row) {
 
             /*FORMA*/
             local_ti_pagreg = local_ti_pagreg == undefined ? null : parseInt(local_ti_pagreg);
-            console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
-            console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
+            // console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+            // console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
 
 
             if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
-                console.log("Los elementos son diferentes");
+                // console.log("Los elementos son diferentes");
                 var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
                 ereg.parentNode.innerHTML = _html;
             } else {
-                console.log("Los elementos son iguales");
+                // console.log("Los elementos son iguales");
             }
             ereg = document.getElementById('P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V');
         }
@@ -2310,10 +2282,11 @@ function dinpag(obj, co_pagreg) {
 
 var rowid_over_table_temp;
 
+// function dinpag2(obj, co_pagreg) {
 function dinpag2(obj, co_pagreg) {
-    console.log('dinpag2>>>::' + obj);
-    console.log('co_pagreg2>>>::' + co_pagreg);
-    console.log('obj.tagName>>>::' + obj.tagName);
+    // console.log('dinpag2>>>::' + obj);
+    // console.log('co_pagreg2>>>::' + co_pagreg);
+    // console.log('obj.tagName>>>::' + obj.tagName);
     //preguntar al core que hacer?
     var data = new FormData();
     data.append('id_frawor', '' + ID_FRAWOR);
@@ -2361,7 +2334,7 @@ function dinpag2(obj, co_pagreg) {
     rowid_over_table_temp = rowid_over_table_temp.parentNode;
     rowid_over_table_temp = rowid_over_table_temp.id;
     rowid_over_table_temp = rowid_over_table_temp.substring(rowid_over_table_temp.indexOf('C') + 1, rowid_over_table_temp.indexOf('R'));
-    console.log('rowid_over_table_temp:' + rowid_over_table_temp);
+    // console.log('rowid_over_table_temp:' + rowid_over_table_temp);
     //---------------------
     //estructura momentanea
     var all_regs = "[";
@@ -2390,7 +2363,7 @@ function dinpag2(obj, co_pagreg) {
                     all_regs += "\"co_regist_" + reguid + "\":";
 
                     if (x64.tagName == 'INPUT') {
-                        console.log('?INPUT?=>' + x64.getAttribute('TYPE'));
+                        // console.log('?INPUT?=>' + x64.getAttribute('TYPE'));
                         if (x64.getAttribute('TYPE') == 'text') {
                             regval = x64.value;
                             all_regs += "\"" + encodeURIComponent(regval) + "\",";
@@ -2402,22 +2375,22 @@ function dinpag2(obj, co_pagreg) {
                          all_regs += "\""+regval + "\",";
                          }*/
                     } else if (x64.tagName == 'SELECT') {
-                        console.log('is select');
+                        // console.log('is select');
                     } else if (x64.tagName == 'SPAN') {
-                        console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
+                        // console.log('?INPUT?=>' + x64.getAttribute('ti_pagreg'));
                         var ti_pagreg = x64.getAttribute('ti_pagreg');
                         switch (ti_pagreg) {
                             case '1': {
-                                console.log('FSP:' + x64.getElementsByTagName('INPUT'));
-                                console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
+                                // console.log('FSP:' + x64.getElementsByTagName('INPUT'));
+                                // console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                                 if (x64.getElementsByTagName('INPUT').length == 0) {
                                     //es de tipo lectura
                                     regval = (x64.getAttribute('va_pagreg') == undefined | x64.getAttribute('va_pagreg') == 'undefined') ? '' : x64.getAttribute('va_pagreg');
                                     all_regs += "\"" + encodeURIComponent(regval) + "\",";
                                 } else {
                                     var iinput = x64.getElementsByTagName('INPUT')[0];
-                                    console.log('iinput===>' + iinput);
-                                    console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
+                                    // console.log('iinput===>' + iinput);
+                                    // console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
                                     if (iinput.getAttribute('TYPE') == 'checkbox') {
                                         regval = iinput.checked;
                                         all_regs += regval + ",";
@@ -2436,20 +2409,20 @@ function dinpag2(obj, co_pagreg) {
                             case '3':
                             case '4': {
                                 var iselect = x64.getElementsByTagName('SELECT')[0];
-                                console.log("iselect:" + iselect);
+                                // console.log("iselect:" + iselect);
                                 try {
                                     regval = iselect.options[iselect.selectedIndex].value;
                                 } catch (e) {
                                     regval = '';
                                 }
-                                console.log("regval:" + regval);
+                                // console.log("regval:" + regval);
                                 all_regs += "\"" + regval + "\",";
                                 break;
                             }
                             case '6': {
                                 var iinput = x64.getElementsByTagName('INPUT')[0];
-                                console.log('iinput===>' + iinput);
-                                console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
+                                // console.log('iinput===>' + iinput);
+                                // console.log('es del tipo 1 entonces?' + iinput.getAttribute('TYPE'));
                                 if (iinput.getAttribute('TYPE') == 'checkbox') {
                                     regval = iinput.checked == undefined ? 'false' : iinput.checked;
                                     all_regs += regval + ",";
@@ -2497,7 +2470,7 @@ function dinpag2(obj, co_pagreg) {
                                 try {
                                     futureJson = vaframe.contentWindow.document.getElementsByTagName("BODY")[0].innerHTML;
                                     futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
-                                    console.log('futureJson=' + futureJson)
+                                    // console.log('futureJson=' + futureJson)
                                     futureJson = JSON.parse(futureJson);
 
                                     if (futureJson.status = 'OK') {
@@ -2520,7 +2493,7 @@ function dinpag2(obj, co_pagreg) {
                             }
 
                         }
-                        console.log('?is select:' + ti_pagreg);
+                        // console.log('?is select:' + ti_pagreg);
                     } else {
                         all_regs += "\"\",";
                     }
@@ -2555,7 +2528,8 @@ function OPTION_ADD(opt) {
 /*CONFIGURACION ADICIONAL DE TABLA*/
 function CFGDATATABLE(cfgopts) {
     //remove css class
-    document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', ''));
+    // document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', ''));
+    document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', 'wf-w'));
     //fase1;
     var tx = document.getElementById('PAG' + CO_PAGINA);
     var dx = tx.getElementsByTagName("tbody")[0];
@@ -2571,32 +2545,37 @@ function CFGDATATABLE(cfgopts) {
         ths[i].style.width = nz + 'px';
         tds[i].style.width = nz + 'px';
 
-        ths[i].setAttribute('style', 'width: ' + nz + 'px');
-        tds[i].setAttribute('style', 'width: ' + nz + 'px');
-        console.log('td(' + (i + 1) + ')=>nz:' + nz);
+        if (tds[i].getAttribute('style').indexOf('flex') > -1) {
+            ths[i].setAttribute('style', 'width: ' + nz + 'px');
+            tds[i].setAttribute('style', 'width: ' + nz + 'px;display:flex;');
+        } else {
+            ths[i].setAttribute('style', 'width: ' + nz + 'px');
+            tds[i].setAttribute('style', 'width: ' + nz + 'px');
+        }
+
+        // ths[i].setAttribute('style', 'width: ' + nz + 'px');
+        // tds[i].setAttribute('style', 'width: ' + nz + 'px');
+        // console.log('td(' + (i + 1) + ')=>nz:' + nz);
     }
-    console.log('TNZ::' + tnz);
+    document.getElementById('wf-w').innerHTML = 'table#PAG' + CO_PAGINA + '{width:' + tnz + 'px;} ' +
+        '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHead .wf-w{width:' + tnz + 'px !important;}' +
+        '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHeadInner{width:' + tnz + 'px !important;}' +
+        '#PAG' + CO_PAGINA + '_wrapper table#PAG' + CO_PAGINA + ' thead tr th{border: none !important; padding: 0px !important;margin: 0px !important;}';
+    // console.log('TNZ::' + tnz);
     tx.style.width = tnz + 'px';
     document.getElementById('PAG' + CO_PAGINA).setAttribute("style", "width: " + tnz + "px");
-
+    // console.log('-->' + document.getElementById('PAG' + CO_PAGINA).getAttribute("style"));
+    $('#PAG' + CO_PAGINA).css("width", tnz + "px");
+    $('#PAG' + CO_PAGINA).attr("style", "width, tnz + 'px");
+    $('.wf-report').attr("style", "width, tnz + 'px");
     // return;
     $('#PAG' + CO_PAGINA).dataTable(cfgopts);
     document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
     document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
     document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+
     //---ADD
-    // document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('THEAD')[0].getElementsByTagName('TR')[0].style.display = 'none';
-    console.log('iniciando second part::' + tnz);
-    setTimeout(function () {
-        document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('THEAD')[0].getElementsByTagName('TR')[0].setAttribute('style', 'display:none');
-        console.log('document.getElementById(\'PAG\' + CO_PAGINA)::' + document.getElementById('PAG' + CO_PAGINA));
-        var ths2 = document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('THEAD')[0].getElementsByTagName('TR')[1].getElementsByTagName("TH");
-        for (var i = 0; i < ths2.length; i++) {
-            ths2[i].style.padding = '0px';
-        }
-    }, 500);
-
-
+    // console.log('iniciando second part::' + tnz);
 }
 
 /*MENU CONTEXTUAL*/
@@ -2632,53 +2611,6 @@ function CONTEXTMENU(items) {
 
 }
 
-function fixsize(settings, json) {
-    return;
-    console.log('Ejecucion post:!!data loadX!');
-    //adicional
-    console.log("A punto de iniciar");
-    var t = document.getElementById('PAG' + CO_PAGINA);
-    var d = t.getElementsByTagName("tbody")[0];
-    d = d.getElementsByTagName("tr")[0];
-    d = d.getElementsByTagName("td");
-    //--------
-    var t2 = document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].getElementsByTagName("TABLE")[0];
-    var d2 = t2.getElementsByTagName("thead")[0];
-    d2 = d2.getElementsByTagName("tr")[1];
-    d2 = d2.getElementsByTagName("th");
-    console.log("d:" + d + ":::d2" + d2);
-    var rz = 0;
-    for (var i = 0; i < d.length; i++) {
-        var r = d[i].offsetWidth;
-        var r2 = d2[i].offsetWidth;
-        var rx = 0;
-
-        if (r2 > r) {
-            rx = r2;
-        } else {
-            rx = r;
-        }
-        rz += rx;
-        d[i].setAttribute('style', 'width:' + rx + 'px');
-        d2[i].setAttribute('style', 'width:' + rx + 'px');
-        console.log("TH[W:" + r2 + ",??" + d2[i].getAttribute('style') + "] - TD[W:" + r + "]->RX[W:" + rx + "]?" + d2[i].getAttribute('style'));
-    }
-    //generales
-    console.log("TOTAL:" + rz);
-    t = document.getElementById('PAG' + CO_PAGINA);
-    t.removeAttribute('style');
-    // t.setAttribute('style', 'width:' + rz + 'px');
-    t.style.width = 'width:' + rz + 'px';
-    console.log("(1)t:" + t);
-    t.style.width = rz + 'px';
-    console.log('ZXD:://' + t.getAttribute('style'));
-    t.setAttribute('style', 'width:' + rz + 'px;');
-    t.style.width = rz + 'px';
-    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].removeAttribute('style');
-    document.getElementById('PAG' + CO_PAGINA + "_wrapper").getElementsByClassName("dataTables_scrollHeadInner")[0].setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
-    t2.setAttribute('style', 'box-sizing: content-box; width: ' + rz + 'px; padding-right: 0px;');
-}
-
 /*
  TRUE: se ejecuta automaticamente el valpagpos
  * @param {type} opt
@@ -2689,18 +2621,18 @@ function AUTODYNAMIC(opt, ls_regist) {
     DYNAMIC_LS_REGIST = ls_regist;
     //--------------------------------
     //ultimo ver si se debe ejecutar el dinpage;
-    console.log('DYNAMIC:' + DYNAMIC);
+    // console.log('DYNAMIC:' + DYNAMIC);
     if (DYNAMIC) {
         var dynpags = document.getElementsByClassName('dynpag');
-        console.log('DYNAMIC->dynpags:' + dynpags + ',(*):' + dynpags.length);
+        // console.log('DYNAMIC->dynpags:' + dynpags + ',(*):' + dynpags.length);
         for (var i = 0; i < dynpags.length; i++) {
             var dynpag = dynpags[i];
-            console.log('DYNAMIC->dynpags->dynpag:' + dynpag);
-            console.log('DYNAMIC->dynpags->dynpag->dynpag.tagName:' + dynpag.tagName);
+            // console.log('DYNAMIC->dynpags->dynpag:' + dynpag);
+            // console.log('DYNAMIC->dynpags->dynpag->dynpag.tagName:' + dynpag.tagName);
             if (dynpag.tagName == 'INPUT') {
                 dynpag.onchange();
             } else if (dynpag.tagName == 'SELECT') {
-                console.log('DYNAMIC->dynpags->dynpag->dynpag.tagName?onchange');
+                // console.log('DYNAMIC->dynpags->dynpag->dynpag.tagName?onchange');
                 dynpag.onchange();
             }
         }
@@ -3178,14 +3110,6 @@ function activity_dynamic_tab(e) {
     console.log("adt://e.relatedTarget=" + e.relatedTarget);
 }
 
-// function valida_btnena(regexp, btns) {
-//     if (regexp) {
-//         //validacion global
-//         for (var b = 0; b < btns.length; b++) {
-//
-//         }
-//     }
-// }
 function RegistLauncher(k, v) {
     this.K = k;
     this.V = v;
