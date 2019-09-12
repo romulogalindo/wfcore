@@ -3,7 +3,7 @@ package com.acceso.wfweb.web;
 import java.io.Serializable;
 import java.util.List;
 
-public class Root implements Serializable {
+public class Root implements Serializable, Cloneable {
 
     List<Sistema> sistemas;
 
@@ -23,4 +23,8 @@ public class Root implements Serializable {
         return "Root{" + "sistemas=" + sistemas + '}';
     }
 
+//    @Override
+//    public Object clone() throws CloneNotSupportedException {
+//        return super.clone();
+//    }
 }
