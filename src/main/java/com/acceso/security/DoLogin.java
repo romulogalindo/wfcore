@@ -107,10 +107,9 @@ public class DoLogin {
         securityfDAO.close();
 
         //elementos que han sido capados por la capa de securidad ->>> desde la cache
-        Root root = (Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE");
-        System.out.println("root = " + root);
-//        root = root.clone();
-        root = SerializationUtils.clone(root);
+        Root root = SerializationUtils.clone((Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE"));
+//        System.out.println("root = " + root);
+//        root = SerializationUtils.clone(root);
         MainMenu mainMenu;// = ((Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE")).getSistemas().get(0).getSubsistemas().get(0).getPaquetes().get(0).getMmenu();
 
         List<PermisbloDTO> permisSistema = getPermisBy("SISTEMA");
@@ -125,19 +124,19 @@ public class DoLogin {
 //        List<PermisbloDTO> permisMenu5 = getPermisBy("MOD-NVL5");
         Map<String, MainMenu> mainMenus = new HashMap<>();
 
+        Map<Integer, Object> ls_mensis = new HashMap<>();
+
         for (int a = root.getSistemas().size(); a > 0; a--) {
             Sistema sistema = root.getSistemas().get(a - 1);
             boolean renderer = evaluar(sistema.getCo_sistem(), permisSistema);
             System.out.println("*[" + sistema.getCo_sistem() + "::" + sistema.getNo_sistem() + "](" + (renderer ? "VISIBLE" : "OCULTO") + ")");
-//            System.out.println("(" + a + ")sistema:sistema.getIl_sisfor() =>({" + sistema.getIl_sisfor() + "})");
 
             if (!renderer) {
-
                 root.getSistemas().remove(a - 1);
+
             } else {
                 //verificar si es un sistema foraneo.. sino no llamar
                 if (!sistema.getIl_sisfor()) {
-//                    System.out.println("**Cantidad de susbsistemas: " + sistema.getSubsistemas().size());
                     for (int b = sistema.getSubsistemas().size(); b > 0; b--) {
                         Subsistema subsistema = sistema.getSubsistemas().get(b - 1);
                         renderer = evaluar(subsistema.getCo_subsis(), permisSubSistema);
@@ -145,7 +144,6 @@ public class DoLogin {
                         System.out.println(" |----*[" + subsistema.getCo_subsis() + ":: " + subsistema.getNo_subsis() + "] (" + (renderer ? "VISIBLE" : "OCULTO") + ")");
                         if (!renderer) {
 
-                            //subsistema.getPaquetes().remove(b - 1);
                             sistema.getSubsistemas().remove(b - 1);
                         } else {
                             MainMenu _mainMenu = subsistema.getMmenu();
@@ -160,6 +158,7 @@ public class DoLogin {
 
                                     _mainMenu.getMenu().remove(d - 1);
                                 } else {
+
                                     System.out.println(" |------------[" + menu.getCo_mensis() + ":" + menu.getName() + "] => " + (menu.getSub()) + "({" + renderer + "})");
                                     if (menu.getSub() != null) {
                                         for (int e = menu.getSub().size(); e > 0; e--) {
@@ -170,9 +169,16 @@ public class DoLogin {
 
                                                 menu.getSub().remove(e - 1);
                                             } else {
+                                                if (getConten(menuItem.getUrl()) > -1) {
+                                                    ls_mensis.put(getConten(menuItem.getUrl()), menuItem.getUrl());
+                                                }
+
                                                 System.out.println(" |-------------------[" + menuItem.getCo_mensis() + "::" + (menuItem.getName()) + "::" + menuItem.getUrl() + "]({" + (renderer ? "VISIBLE" : "OCULTO") + "})");
-                                                //bis
                                             }
+                                        }
+                                    } else if (menu.getUrl() != null) {
+                                        if (getConten(menu.getUrl()) > -1) {
+                                            ls_mensis.put(getConten(menu.getUrl()), menu.getUrl());
                                         }
                                     }
                                 }
@@ -185,6 +191,7 @@ public class DoLogin {
 
         usuario.setRoot(root);
         usuario.setMainMenus(mainMenus);
+        usuario.setLs_mensis(ls_mensis);
         System.out.println("mainMenus = " + mainMenus.size());
 
         /*GET MAIN MENU*/
@@ -227,6 +234,14 @@ public class DoLogin {
         }
 
         return r;
+    }
+
+    public Integer getConten(String url) {
+        //wf?co_conten=20031
+        System.out.println("Consultando =>>> " + url);
+        String rpta = ("" + url).split("co_conten=")[1].split("&")[0];
+        Integer co_conten = Util.toInt(rpta, -1);
+        return co_conten;
     }
 
     public String getMessage() {

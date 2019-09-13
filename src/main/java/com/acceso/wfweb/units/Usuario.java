@@ -35,6 +35,8 @@ public class Usuario implements Serializable {
     UsuarioLDAP ldap;
     String no_temdef;
 
+    Map<Integer, Object> ls_mensis;
+
     public Usuario() {
     }
 
@@ -198,6 +200,14 @@ public class Usuario implements Serializable {
 
     public void setNo_temdef(String no_temdef) {
         this.no_temdef = no_temdef;
+    }
+
+    public Map<Integer, Object> getLs_mensis() {
+        return ls_mensis;
+    }
+
+    public void setLs_mensis(Map<Integer, Object> ls_mensis) {
+        this.ls_mensis = ls_mensis;
     }
 
     @Override
