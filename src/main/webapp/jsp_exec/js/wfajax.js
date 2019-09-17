@@ -426,19 +426,44 @@ getJSONE = function (url) {
 
 getHTML = function (url) {
     var net = new Inet();
-    net.open("POST", url, false); //false para que sea sincrono
+    // net.open("POST", url, false); //false para que sea sincrono
 
     var html;
     net.open("POST", url, false); //gettime will be the servlet name
     net.onreadystatechange = function () {
         if (net.readyState == 4) {
             if (net.status == 200) {
-                html = net.responseBody;
+                console.log('------------------------------------------------');
+                html = net.responseText;
+                console.log('HTML>>' + html);
+                console.log('------------------------------------------------');
             }
         }
     };
     net.send(null);
+    console.log('rpta htm::' + html);
     return html;
+};
+
+getJSON = function (url) {
+    var net = new Inet();
+    // net.open("POST", url, false); //false para que sea sincrono
+
+    var html;
+    net.open("POST", url, false); //gettime will be the servlet name
+    net.onreadystatechange = function () {
+        if (net.readyState == 4) {
+            if (net.status == 200) {
+                console.log('------------------------------------------------');
+                html = net.responseText;
+                console.log('HTML>>' + html);
+                console.log('------------------------------------------------');
+            }
+        }
+    };
+    net.send(null);
+    console.log('rpta htm::' + html);
+    return JSON.parse(html);
 };
 
 getHTML2 = function (url) {

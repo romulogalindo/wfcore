@@ -43,8 +43,8 @@
     <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=10"/>
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=27"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=38"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=28"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=40"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>
 
     <style>
@@ -208,14 +208,12 @@
                                 <!-- Side navigation links -->
                                 <c:set scope="page" var="p_co_conten"
                                        value="${''+param['co_conten']}"/>
-                                <c:set scope="page" var="p_co_index"
-                                       value="0"/>
-                                <li>
+                                <li id="ls_module">
                                     <ul class="collapsible collapsible-accordion">
                                         <c:forEach var="menu" items="${US.mainMenu.menu}">
                                             <li>
                                                 <c:if test="${empty menu.url and fn:length(menu.sub) > 0}">
-                                                    <a id="menu${p_co_index}"
+                                                    <a id="menu${menu.co_mensis}"
                                                        class="collapsible-header waves-effect arrow-r">
                                                         <i class="fas fa-chevron-right"></i>
                                                             ${menu.name}
@@ -251,7 +249,7 @@
                                                                     </c:if>
                                                                     <c:if test="${fn:indexOf(menuitem.url,p_co_conten) > -1 }">
                                                                         <script>
-                                                                            el_actmen = 'menu${p_co_index}';
+                                                                            el_actmen = 'menu${menu.co_mensis}';
                                                                         </script>
                                                                     </c:if>
                                                                 </li>

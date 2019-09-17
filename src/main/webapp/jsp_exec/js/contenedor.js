@@ -493,9 +493,11 @@ function view_all_system() {
 }
 
 function changemodulo(co_sistem, co_subsis, valid) {
-    //getHTML("/uxtion?comenu=" + co_sistem + "" + co_subsis);
-    getHTML("/uxtion?co_sistem=" + co_sistem + "&co_subsis=" + co_subsis);
-    location.reload();
+    var rpta = getJSON("/uxtion?co_sistem=" + co_sistem + "&co_subsis=" + co_subsis);
+    console.log('rpta=' + rpta);
+    console.log('rpta=' + rpta.result);
+    document.getElementById("ls_module").innerHTML = rpta.result;
+    // location.reload();
 }
 
 /*LOGOUT*/

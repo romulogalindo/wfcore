@@ -44,13 +44,14 @@ public class MainFilter implements Filter {
 
         if (usuario != null) {
             System.out.println("!!!suario.getLs_mensis().get(co_conten) = " + usuario.getLs_mensis().get(co_conten));
-            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
-                System.out.println("validado = ");
-                chain.doFilter(req, res);
-            } else {
-                System.out.println("Error escribir");
-                throw new ServletException("No tiene permiso de acceso. Comuniquese con la administraciòn");
-            }
+//            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
+//                System.out.println("validado = ");
+//                chain.doFilter(req, res);
+//            } else {
+//                System.out.println("Error escribir");
+//                throw new ServletException("No tiene permiso de acceso. Comuniquese con la administraciòn");
+//            }
+            chain.doFilter(req, res);
             //existe osea si se puede loguear
 
         } else {
