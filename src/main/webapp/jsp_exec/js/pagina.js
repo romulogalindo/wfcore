@@ -1319,13 +1319,14 @@ function propag(cycle, co_button, il_proces, co_condes) {
                         val = eledom.getElementById(eledom.id + '_rb').value;
                     } else if (ti_pagreg == '6') {
                         console.log('??>>>???>>eledom.id:' + eledom.id);
-                        val = document.getElementById(eledom.id + 'D').checked;
+                        try{
+                            val = document.getElementById(eledom.id + 'D').checked;
+                        }catch (e) {
+                            val = document.getElementById(eledom.id + '_check').checked;
+                        }
+
+                        console.log('??>>>???>>val:' + val);
                     } else if (ti_pagreg == '7') {
-                        // console.log('@@>>' + eledom);
-                        // console.log('@@>>' + eledom.id + '_date');
-                        // console.log('@@>>' + eledom.id + '_date');
-                        // console.log('@@>>' + eledom.getElementById(eledom.id + '_date'));
-                        // val = eledom.getElementById(eledom.id + '_date').value;
                         val = eledom.getElementsByTagName("INPUT")[0].value;
 //                        val = document.getElementById(eledom.id + '_date').value;
                     } else if (ti_pagreg == '8') {
@@ -2860,6 +2861,37 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_
             htmlreturn += "</span>";
         } else {
             htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+        }
+    } else if (new_type == 6) {
+        // if (ti_estreg == 'E') {
+        //     htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+        //     htmlreturn += "        <select name=\"regist" + 90 + "\" class=\"mdb-select md-formx " + (false ? "dynpag" : "") + "\" " + (false ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + "></select>";
+        //     htmlreturn += "</span>";
+        // } else {
+        //     htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+        // }
+        // //------
+        if (ti_estreg == 'E') {
+            htmlreturn += "   <span id='" + id + "' name='" + id + "' class='writer " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            htmlreturn += "       <div class='custom-control custom-checkbox'>";
+            htmlreturn += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked/>";
+            htmlreturn += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            htmlreturn += "       </div>";
+            htmlreturn += "   </span>";
+        } else if (ti_estreg == 'L') {
+            htmlreturn += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            htmlreturn += "       <div class='custom-control custom-checkbox'>";
+            htmlreturn += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
+            htmlreturn += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            htmlreturn += "       </div>";
+            htmlreturn += "   </span>";
+        } else if (ti_estreg == 'O') {
+            htmlreturn += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            htmlreturn += "       <div class='custom-control custom-checkbox'>";
+            htmlreturn += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
+            htmlreturn += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            htmlreturn += "       </div>";
+            htmlreturn += "   </span>";
         }
     } else if (new_type == 34) {
         if (ti_estreg == 'E') {
