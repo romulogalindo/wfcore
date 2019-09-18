@@ -44,7 +44,9 @@
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=28"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=40"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=40AQç"></script>
+
+
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>
 
     <style>
@@ -174,12 +176,12 @@
                 <ul class="nav nav-tabs md-tabs nav-justified primary-color"
                     style="padding-left: .5rem;padding-right: .5rem;" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#panel666" role="tab"
+                        <a id="topanel666" class="nav-link" data-toggle="tab" href="#panel666" role="tab"
                            style="line-height: 20px;padding: 0px !important;height:20px;">
                             Sistemas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#panel555" role="tab"
+                        <a id="topanel555" class="nav-link active" data-toggle="tab" href="#panel555" role="tab"
                            style="line-height: 20px;padding: 0px !important;height:20px;">
                             Modulos</a>
                     </li>
@@ -556,7 +558,7 @@
                                         </c:if>
 
                                             <%--                                        <img class="card-img-top card-img-bottom" src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}" >--%>
-                                        <a href="${sistema.ur_sistem}" target="_blank">
+                                        <a href="${sistema.ur_sistem}" target="_blank" >
                                             <div class="mask rgba-white-light"></div>
                                         </a>
                                     </div>

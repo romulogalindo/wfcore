@@ -108,6 +108,7 @@ function workflow(il_popup, il_firtim) {
             //SHOW SYSOUT FT
             if (il_firtim) view_all_system();
         }
+
         //if
         if ($('#slc_schema').attr('style') !== undefined && $('#slc_schema').attr('style').indeOf('firsttime') > -1) {
             $('#slc_schema').modal('show');
@@ -314,32 +315,6 @@ function showMessageModal(text) {
     $('#messageModal').modal({show: true});
 }
 
-// function onchange_vafile(vafile, lbfile) {
-// function onchange_vafile(vafile) {
-//     // console.log("vafile=" + vafile + " && lbfile=" + lbfile + " && ");
-//     console.log("vafile=" + vafile.innerHTML);
-//     console.log("vafile=" + vafile.files);
-//     // console.log("vafile=" + vafile.files.length);
-//     // console.log("vafile=" + vafile.files.length);
-//
-//     console.log("this!=" + this);
-//     console.log("this!=" + this.files);
-//     // console.log("this!=" + this.files.length);
-//     // console.log("lbfile!=" + lbfile);
-//     console.log("2lbfile!=" + vafile.getAttribute('domid') + 'V');
-//     console.log("3lbfile!=" + document.getElementById(vafile.getAttribute('domid') + 'V'));
-//     // var label = document.getElementById(lbfile).getElementsByTagName("SPAN")[0];
-//     var label = document.getElementById(vafile.getAttribute('domid') + 'V').getElementsByTagName("SPAN")[0];
-//     if (vafile.files.length > 0) {
-//         console.log("vafile.files[0].name=" + vafile.files[0].name);
-//         console.log(">>vafile.files[0].name=" + (vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name));
-//         // console.log("vafile.files[0].name="+vafile.files[0].name);
-//         // lbfile.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
-//         label.innerHTML = vafile.files[0].name == undefined || vafile.files[0].name == '' ? 'Subir archivo' : vafile.files[0].name;
-//     }
-//
-// }
-
 function quitar(father, item) {
     var elechild = document.getElementById(father + '_' + item);
     document.getElementById(father).removeChild(elechild);
@@ -497,7 +472,73 @@ function changemodulo(co_sistem, co_subsis, valid) {
     console.log('rpta=' + rpta);
     console.log('rpta=' + rpta.result);
     document.getElementById("ls_module").innerHTML = rpta.result;
+    $('#topanel555').click();
     // location.reload();
+}
+
+function showmenu(e) {
+    console.log(">>" + e);
+    // var element = $(e.target);
+    e = '#' + e;
+    console.log(">>" + e);
+    var element = $(e);
+    console.log(">>element>>    " + element);
+
+    if (isChildrenOfPanelHeader(element)) {
+        element = getPanelHeader(element);
+    }
+
+    element.toggleClass('active');
+    accordionOpen(element);
+}
+
+function isChildrenOfPanelHeader(object) {
+    var panelHeader = getPanelHeader(object);
+    return panelHeader.length > 0;
+}
+
+function getPanelHeader(object) {
+    return object.closest('li > .collapsible-header');
+}
+
+function accordionOpen(object) {
+    $panelHeaders = $.find('#ls_module ul > li > .collapsible-header');
+
+    if (object.hasClass('active')) {
+        object.parent().addClass('active');
+    } else {
+        object.parent().removeClass('active');
+    }
+
+    if (object.parent().hasClass('active')) {
+        object.siblings('.collapsible-body').stop(true, false).slideDown({
+            duration: 350,
+            easing: 'easeOutQuart',
+            queue: false,
+            complete: function complete() {
+                $(this).css('height', '');
+            }
+        });
+    } else {
+        object.siblings('.collapsible-body').stop(true, false).slideUp({
+            duration: 350,
+            easing: 'easeOutQuart',
+            queue: false,
+            complete: function complete() {
+                $(this).css('height', '');
+            }
+        });
+    }
+
+    $('#ls_module ul > li > .collapsible-header').not(object).removeClass('active').parent().removeClass('active');
+    $('#ls_module ul > li > .collapsible-header').not(object).parent().children('.collapsible-body').stop(true, false).slideUp({
+        duration: 350,
+        easing: 'easeOutQuart',
+        queue: false,
+        complete: function complete() {
+            $(this).css('height', '');
+        }
+    });
 }
 
 /*LOGOUT*/

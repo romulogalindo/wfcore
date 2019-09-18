@@ -14,6 +14,8 @@ import com.acceso.wfweb.web.Sistema;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AsyncMenu extends AsyncProcessor {
 
@@ -49,62 +51,66 @@ public class AsyncMenu extends AsyncProcessor {
             String htmlresponse = "";
             htmlresponse += "<ul class=\"collapsible collapsible-accordion\">";
             for (Menu menu : usuario.getMainMenu().getMenu()) {
-                htmlresponse += "                            <li>";
-                if (menu.getUrl() != null && menu.getUrl().length() > 0) {
-                    htmlresponse += "                            <a id=\"menu" + menu.getCo_mensis() + "\" class=\"collapsible-header waves-effect arrow-r\">";
-                    htmlresponse += "                                <i class=\"fas fa-chevron-right\"></i>";
+                htmlresponse += "<li>";
+                String murl = (menu.getUrl() == null ? "" : menu.getUrl()).trim();
+                List<MenuItem> lsub = menu.getSub() == null ? new ArrayList<>() : menu.getSub();
+//                System.out.println("@murl = " + murl + ", ");
+//                System.out.println("@menu.getSub() = " + menu.getSub() + ", ");
+
+                if (murl.length() == 0 & lsub.size() > 0) {
+                    htmlresponse += "<a id=\"menu" + menu.getCo_mensis() + "\" class=\"collapsible-header waves-effect arrow-r\" onclick=\"showmenu('menu" + menu.getCo_mensis() + "')\">";
+                    htmlresponse += "<i class=\"fas fa-chevron-right\"></i>";
                     htmlresponse += menu.getName();
-                    htmlresponse += "                                        <i class=\"fas fa-angle-down rotate-icon\"></i>";
-                    htmlresponse += "                                    </a>";
-                    htmlresponse += "                                    <div class=\"collapsible-body\"> ";
-                    htmlresponse += "                                        <ul>";
+                    htmlresponse += "<i class=\"fas fa-angle-down rotate-icon\"></i>";
+                    htmlresponse += "</a>";
+                    htmlresponse += "<div class=\"collapsible-body\"> ";
+                    htmlresponse += "<ul>";
 
                     for (MenuItem menuItem : menu.getSub()) {
-                        htmlresponse += "                                               <li class=\"\">";
-                        if (menuItem.getUrl() == null & menuItem.getSub().size() > 0) {
-                            htmlresponse += "                                                                <a class=\"collapsible-header waves-effect arrow-r\">";
-                            htmlresponse += "                                                                     <i class=\"fas fa-chevron-right\"></i>";
+                        htmlresponse += "   <li class=\"\">";
+                        String murl2 = (menuItem.getUrl() == null ? "" : menuItem.getUrl()).trim();
+                        List<MenuItem> lsub2 = menuItem.getSub() == null ? new ArrayList<>() : menuItem.getSub();
+//                        System.out.println("murl2 = " + murl2);
+//                        System.out.println("menuItem.getSub()=" + menuItem.getSub());
+
+                        if (murl2.length() == 0 & lsub2.size() > 0) {
+                            htmlresponse += "<a class=\"collapsible-header waves-effect arrow-r\" >";
+                            htmlresponse += " <i class=\"fas fa-chevron-right\"></i>";
                             htmlresponse += menuItem.getName();
-                            htmlresponse += "                                                            <i class=\"fas fa-angle-down rotate-icon\"></i>";
-                            htmlresponse += "                                                        </a>";
-                            htmlresponse += "                                                        <div class=\"collapsible-body\">";
-                            htmlresponse += "                                                            <ul>";
+                            htmlresponse += "<i class=\"fas fa-angle-down rotate-icon\"></i>";
+                            htmlresponse += "</a>";
+                            htmlresponse += "<div class=\"collapsible-body\">";
+                            htmlresponse += "<ul>";
+
                             for (MenuItem menuItem2 : menuItem.getSub()) {
-                                if (menuItem2.getUrl() != null & menuItem2.getSub().size() == 0) {
-                                    htmlresponse += "                                                                       <li class=\"\">";
-                                    htmlresponse += "                                                                            <a href=\"" + menuItem2.getUrl() + "\" class=\"waves-effect a\">" + menuItem2.getName() + "</a>";
-                                    htmlresponse += "                                                                        </li>";
+                                String murl3 = (menuItem2.getUrl() == null ? "" : menuItem2.getUrl()).trim();
+                                if (murl3.length() == 0 & menuItem2.getSub().size() == 0) {
+                                    htmlresponse += "   <li class=\"\">";
+                                    htmlresponse += "<a href=\"" + menuItem2.getUrl() + "\" class=\"waves-effect a\">" + menuItem2.getName() + "</a>";
+                                    htmlresponse += "</li>";
                                 }
                             }
-                            htmlresponse += "                                                            </ul>";
-                            htmlresponse += "                                                        </div>";
+                            htmlresponse += "</ul>";
+                            htmlresponse += "</div>";
+                        } else {
+                            htmlresponse += "<a href=\"" + menuItem.getUrl() + "\" class=\"waves-effect\">" + menuItem.getName() + "</a>";
                         }
-//                                                                    <c:if test="${empty menuitem.url and fn:length(menuitem.sub) > 0}">
-//
-//                                                                    </c:if>
-//                                                                    <c:if test="${not empty menuitem.url and fn:length(menuitem.sub) eq 0}">
-                        if (menuItem.getUrl() != null & menuItem.getSub().size() == 0) {
-                            htmlresponse += "                                                        <a href=\"" + menuItem.getUrl() + "\" class=\"waves-effect\">" + menuItem.getName() + "</a>";
-                        }
-
-//                                                                    </c:if>
-
-                        htmlresponse += "                                               </li>";
+                        htmlresponse += "   </li>";
                     }
-                    htmlresponse += "                                        </ul>";
-                    htmlresponse += "                                    </div>";
+
+                    htmlresponse += "</ul>";
+                    htmlresponse += "</div>";
+                } else {
+                    htmlresponse += "<a href=\"" + menu.getUrl() + "\" class=\"waves-effect\">" + menu.getName() + "</a>";
                 }
-//                                                <c:if test="${empty menu.url and fn:length(menu.sub) > 0}">
+
+//                if (menu.getUrl() == null) {
 //
-//                                                </c:if>
+//                }
 
-                if (menu.getUrl() == null) {
-                    htmlresponse += "                                    <a href=\"" + menu.getUrl() + "\" class=\"waves-effect\">" + menu.getName() + "</a>";
-                }
-
-                htmlresponse += "                            </li>";
+                htmlresponse += "</li>";
             }
-            htmlresponse += "                    </ul>";
+            htmlresponse += "</ul>";
 
 
             /*EXE VALPAGJS*/
