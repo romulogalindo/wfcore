@@ -1980,7 +1980,8 @@ function docheckall(chk, reg) {
             console.log('[CHECK]ls_checks[i].id:' + ls_checks[i].id);
             console.log('[CHECK]\'R\' + reg + \'_check\':' + ('R' + reg + '_check'));
             console.log('[CHECK]\'R\' + reg + \'_check\'?INDEX:' + ls_checks[i].id.indexOf('R' + reg + '_check'));
-            if (ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
+            console.log('[CHECK]\'R\' + reg + \'_check\'?INDEX:' + ls_checks[i].disabled);
+            if (ls_checks[i].disabled == false & ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
                 // console.log("r:" + ls_checks[i]);
                 ls_checks[i].setAttribute('checked', 'checked');
                 ls_checks[i].checked = true;
@@ -1988,7 +1989,7 @@ function docheckall(chk, reg) {
         }
     } else {
         for (var i = 0; i < ls_checks.length; i++) {
-            if (ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
+            if (ls_checks[i].disabled == false &  ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
                 // console.log("r:" + ls_checks[i]);
                 ls_checks[i].removeAttribute('checked');
                 ls_checks[i].checked = false;
@@ -2870,26 +2871,26 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_
         // } else {
         //     htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
         // }
-        // //------
+        // //------X64UIR120V_check
         if (ti_estreg == 'E') {
             htmlreturn += "   <span id='" + id + "' name='" + id + "' class='writer " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
             htmlreturn += "       <div class='custom-control custom-checkbox'>";
-            htmlreturn += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked/>";
-            htmlreturn += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            htmlreturn += "           <input id='" + id + "_check' type='checkbox' class='check w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked/>";
+            htmlreturn += "           <label class='custom-control-label' for='" + id + "_check'></label>";
             htmlreturn += "       </div>";
             htmlreturn += "   </span>";
         } else if (ti_estreg == 'L') {
             htmlreturn += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
             htmlreturn += "       <div class='custom-control custom-checkbox'>";
-            htmlreturn += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
-            htmlreturn += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            htmlreturn += "           <input id='" + id + "_check' type='checkbox' class='check w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
+            htmlreturn += "           <label class='custom-control-label' for='" + id + "_check'></label>";
             htmlreturn += "       </div>";
             htmlreturn += "   </span>";
         } else if (ti_estreg == 'O') {
             htmlreturn += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
             htmlreturn += "       <div class='custom-control custom-checkbox'>";
-            htmlreturn += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
-            htmlreturn += "           <label class='custom-control-label' for='" + id + "D'></label>";
+            htmlreturn += "           <input id='" + id + "_check' type='checkbox' class='check w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
+            htmlreturn += "           <label class='custom-control-label' for='" + id + "_check'></label>";
             htmlreturn += "       </div>";
             htmlreturn += "   </span>";
         }

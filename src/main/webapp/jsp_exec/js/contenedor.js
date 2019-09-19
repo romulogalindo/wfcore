@@ -398,13 +398,14 @@ function master_process_multiselect(pagid, refid) {
     overlay(false);
 }
 
-function page_to_master(ls_params) {
-    console.log('Recibimos ls_params desde la pagina:' + ls_params);
-    window.parent.popup_to_master(ls_params);
+function page_to_master(ls_params, ls_pagina) {
+    console.log('Recibimos ls_params desde la pagina:' + ls_params + ", ls_pagina=" + ls_pagina);
+    window.parent.popup_to_master(ls_params, ls_pagina);
 }
 
-function popup_to_master(ls_params) {
+function popup_to_master(ls_params, ls_pagina) {
     console.log('Recibimos ls_params modo->:' + ls_params);
+    console.log('Recibimos ls_pagina modo->:' + ls_pagina);
     console.log('Recibimos== y a ??>>' + current_pagina);
     //ahora hacia el hijo
     var mframe = document.getElementById('PAG' + current_pagina);
@@ -420,6 +421,13 @@ function popup_to_master(ls_params) {
     document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
     document.getElementsByTagName('HEADER')[0].setAttribute('style', '');
 
+    //-------------------
+    if (ls_pagina != undefined && ls_pagina.length > 0) {
+        for (var i = 0; i < ls_pagina.length; i++) {
+            var pagref = ls_pagina[i];
+            dynamic_change_page('PAG' + pagref);
+        }
+    }
 }
 
 function dynamic_change_page(pag) {

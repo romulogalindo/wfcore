@@ -43,8 +43,8 @@
     <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=10"/>
 
     <!--JS -->
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=28"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=40AQç"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=29"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=40"></script>
 
 
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>

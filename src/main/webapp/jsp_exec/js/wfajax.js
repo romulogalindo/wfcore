@@ -95,7 +95,7 @@ doDinpag = function (url, regparams, data) {
                     window.parent.location.href = url + urlpart;
                 } else if (rpta.no_action == 'POPUP') {
                     // window.parent.page_to_master(regparams);
-                    window.parent.page_to_master(rpta.ls_params);
+                    window.parent.page_to_master(rpta.ls_params, rpta.ls_pagina);
                 } else if (rpta.no_action == 'REFRESH') {
                     for (var i = 0; i < ls_pagina.length; i++) {
                         //para todos los iframes que coincidan reload
@@ -171,7 +171,7 @@ doPropag = function (url, regparams, data, co_button) {
                         }
                     } else if (action.no_action == 'POPUP') {
                         // window.parent.page_to_master(regparams);
-                        window.parent.page_to_master(action.ls_params);
+                        window.parent.page_to_master(action.ls_params, action.ls_pagina);
                     } else if (action.no_action == 'REFRESH') {
                         if (rpta.ls_params != undefined) {
                             for (var i = 0; i < rpta.ls_params.length; i++) {
