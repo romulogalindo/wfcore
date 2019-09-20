@@ -10,6 +10,7 @@ public class RowJson {
 
     //    List<RegJson> regs;
     List<StandarRegisterJson> regs;
+    List<CfgJson> cfgobjs;
 
     public RowJson() {
         regs = new ArrayList<>();
@@ -51,6 +52,12 @@ public class RowJson {
     /*ADD new TabJson*/
     public void add(TabJson regJson) {
         regs.add(regJson);
+    }
+
+    /*SOLO TIPO TABLA(por ahora)*/
+    public void cfg(List<CfgJson> cfgobjs) {
+        System.out.println("cfgobjs = " + cfgobjs);
+        this.cfgobjs = cfgobjs;
     }
 
     public static RowJson NEW() {

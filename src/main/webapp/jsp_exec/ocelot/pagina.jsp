@@ -70,11 +70,10 @@
                         onclick="alert('Página: ' + CO_PAGINA);">
                     <i class="fas fa-info-circle mt-0" style="font-size: 0.9rem;"></i>
                 </button>
-                <button id="pagopt_print" type="button" title="Imprimir"
+                <button id="pagopt_plus" type="button" title="Nuevo registro"
                         class="btn btn-outline-white btn-rounded btn-sm px-2"
-                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
-                        onclick="print()">
-                    <i class="fas fa-print mt-0" style="font-size: 0.9rem;"></i>
+                        style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
+                    <i class="fas fa-plus-circle mt-0" style="font-size: 0.9rem;"></i>
                 </button>
             </div>
 
@@ -82,14 +81,21 @@
                   class="maintitle white-text mx-3">${paginaBean.pagina.no_pagtit}</span>
 
             <div style="display: inherit;">
-                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"
-                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
-                    <i class="far fa-trash-alt mt-0" style="font-size: 0.9rem;"></i>
-                </button>
-                <button id="pagopt_plus" type="button" title="Nuevo registro"
+                    <%--                <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"--%>
+                    <%--                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">--%>
+                    <%--                    <i class="far fa-trash-alt mt-0" style="font-size: 0.9rem;"></i>--%>
+                    <%--                </button>--%>
+                <button id="pagopt_xls" type="button" title="Exportar archivo XLS"
                         class="btn btn-outline-white btn-rounded btn-sm px-2"
-                        style="visibility: hidden;width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;">
-                    <i class="fas fa-plus-circle mt-0" style="font-size: 0.9rem;"></i>
+                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
+                >
+                    <i class="fas fa-file-excel mt-0" style="font-size: 0.9rem;"></i>
+                </button>
+                <button id="pagopt_print" type="button" title="Imprimir"
+                        class="btn btn-outline-white btn-rounded btn-sm px-2"
+                        style="visibility: hidden; width: 25px;padding-right: 0.2rem !important;padding-left: 0.15rem !important;height: 23px;padding-top: 0.1rem !important;padding-bottom: 0.1rem !important;text-align: center;margin: 0px !important;"
+                        onclick="print()">
+                    <i class="fas fa-print mt-0" style="font-size: 0.9rem;"></i>
                 </button>
             </div>
 
@@ -100,7 +106,7 @@
             <div class="table-wrapper" style="margin-bottom: 12px;">
                     ${paginaBean.pagina.toHTML()}
             </div>
-            <div id="context-menu" class="dropdown-menu dropdown-menu-sm context-menu-list css-title context-menu-root" >
+            <div id="context-menu" class="dropdown-menu dropdown-menu-sm context-menu-list css-title context-menu-root">
             </div>
         </div>
 
@@ -189,8 +195,16 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/popper.min.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables.js?a=3"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables-select.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/FileSaver.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/shim.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/exportxlsx.js"></script>
+<%--<script src="http://requirejs.org/docs/release/2.3.6/minified/require.js"></script>--%>
+<%--<script>--%>
+<%--    require(['dist/excellentexport'], function (ee) {--%>
+<%--        window.ExcellentExport = ee;--%>
+<%--    });--%>
+<%--</script>--%>
+
 <%--<script type="text/javascript"--%>
 <%--        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/BootstrapMenu.js"></script>--%>
 <c:if test="${paginaBean.pagina.ti_pagina == 'C'}">

@@ -125,13 +125,13 @@ public class Converter {
                     CellReference cr = new CellReference(cell);
 
                     if (cellType.getCode() == CellType.NUMERIC.getCode()) {
-                        System.out.print("->" + cell.getNumericCellValue() + " ");
+//                        System.out.print("->" + cell.getNumericCellValue() + " ");
                         cellsx.put("" + (cr.getCol() + 1), cell.getNumericCellValue());
                     } else if (cellType.getCode() == CellType.BOOLEAN.getCode()) {
-                        System.out.print("->" + cell.getBooleanCellValue() + " ");
+//                        System.out.print("->" + cell.getBooleanCellValue() + " ");
                         cellsx.put("" + (cr.getCol() + 1), cell.getBooleanCellValue());
                     } else {
-                        System.out.print("->" + cell.getStringCellValue() + " ");
+//                        System.out.print("->" + cell.getStringCellValue() + " ");
                         cellsx.put("" + (cr.getCol() + 1), cell.getStringCellValue());
                     }
                 }
@@ -188,12 +188,9 @@ public class Converter {
                         try {
                             Double d = Double.parseDouble("" + d3.getValue());
                             cell = _row.createCell(_cell, CellType.NUMERIC);
-                            System.out.println("ct = " + d3.getValue());
-                            System.out.println("d = " + d);
                             cell.setCellValue(d);
                         } catch (Exception ep) {
                             cell = _row.createCell(_cell, CellType.STRING);
-                            System.out.println("ct = " + d3.getValue());
                             cell.setCellValue("" + d3.getValue());
                         }
 

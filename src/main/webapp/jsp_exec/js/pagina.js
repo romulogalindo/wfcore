@@ -194,11 +194,12 @@ function pagina_onload(_data) {
 
             for (var i = 0; i < rows.length; i++) {
                 if (TI_PAGINA == PAGE_TYPE_FORM) {
-                    loadFormulario64((i + 1), rows[i], _data.aditional, dom2);
+                    // loadFormulario64((i + 1), rows[i], _data.aditional, dom2);
+                    loadFormulario64((i + 1), rows[i], rows[i].cfgobjs, dom2);
                 } else if (TI_PAGINA == PAGE_TYPE_TABS) {
                     loadTabber64((i + 1), rows[i]);
                 } else {
-                    loadReporte64((i + 1), tbody64, rows[i]);
+                    loadReporte64((i + 1), tbody64, rows[i], rows[i].cfgobjs);
                 }
 
             }
@@ -682,32 +683,14 @@ function loadFormulario64(index, row, aditional, dom2) {
                                 eledom.setAttribute('va_pagreg', reg.value);
                         }
 
-//                    eledom.setAttribute("va_pagreg", reg.value);
-//                    eledom.innerHTML = valdom;
                     } else if (ti_pagreg == '3') {
 
                         //TEMPORAL====================
                         var ls_compag;
                         try {
                             ls_compag = JSON.parse(reg.data);
-                            // ls_compag = aditional[reg.regist];
-                            // // console.log('(COMBO)ls_compag?:' + ls_compag);
-                            // if (ls_compag == undefined) {
-                            //     try {
-                            //         ls_compag = JSON.parse(reg.data);
-                            //     } catch (e) {
-                            //         console.log('(COMBO)el combo value!:' + ls_compag);
-                            //     }
-                            // }
                         } catch (e) {
-                            // console.log('(COMBO)el combo value!:' + reg.data);
                             ls_compag = [];
-                            // if (reg.data != undefined) {
-                            //     ls_compag = JSON.parse(reg.data);
-                            // } else {
-                            //     false
-                            // }
-                            // console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "";
@@ -750,25 +733,8 @@ function loadFormulario64(index, row, aditional, dom2) {
                         var ls_compag;
                         try {
                             ls_compag = JSON.parse(reg.data);
-                            // ls_compag = aditional[reg.regist];
-                            // console.log('(COMBO)ls_compag?:' + ls_compag);
-                            // if (ls_compag == undefined) {
-                            //     try {
-                            //         ls_compag = JSON.parse(reg.data);
-                            //     } catch (e) {
-                            //         console.log('(COMBO)el combo value!:' + ls_compag);
-                            //     }
-                            // }
                         } catch (e) {
                             ls_compag = [];
-//                             console.log('(COMBO)el combo value!:' + reg.data);
-// //                            ls_compag = JSON.parse(reg.data);
-//                             if (reg.data != undefined) {
-//                                 ls_compag = JSON.parse(reg.data);
-//                             } else {
-//                                 false
-//                             }
-//                             console.log('(COMBO)el combo value!:' + ls_compag);
                         }
                         //=========================
                         var dom_compag = "<option value=\"\"></option>";
@@ -967,6 +933,8 @@ function loadFormulario64(index, row, aditional, dom2) {
 
         }
 // document.getElementsByName('P' + CO_PAGINA + '' + reg.regist + 'V')[0].innerHTML = reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front;
+        //configuracion de botones
+
     }
 
     $('.datepicker').pickadate({
@@ -999,6 +967,8 @@ function loadFormulario64(index, row, aditional, dom2) {
             // console.log('@@ERROR@@' + e);
         }
     }
+
+
 //si los elementos no provienen del valpag->evaluarlos para que el padre!(titulo) se oculte
 }
 
@@ -1051,7 +1021,7 @@ function loadTabber64(index, row) {
 }
 
 
-function loadReporte64(rowid, tbody64, row) {
+function loadReporte64(rowid, tbody64, row, aditional) {
     var n_itr = itr;
     var nr = document.createElement('tr');
     var nrc = 'C' + rowid;
@@ -1229,6 +1199,24 @@ function loadReporte64(rowid, tbody64, row) {
     //     alltd[i].getElementsByTagName('SPAN')[0].innerHTML = '' + (i + 1);
     //     // alltd[i].innerHTML = '<span>' + (i + 1) + '</span>span>';
     // }
+
+    //aditional
+    if (aditional != undefined && aditional.length > 0) {
+
+        for (var i = 0; i < aditional.length; i++) {
+            var ti_object = aditional[i].ti_object;
+            var co_object = aditional[i].co_object;
+            var disabled = aditional[i].disabled;
+
+            if (ti_object == 'button') {
+                // console.log('>>>>P' + CO_PAGINA + 'C' + rowid + 'R' + co_object);
+                var eld = document.getElementsByName('P' + CO_PAGINA + 'C' + rowid + 'R' + co_object)[0];
+                if (disabled) {
+                    eld.setAttribute('disabled', 'disabled');
+                }
+            }
+        }
+    }
 }
 
 function propag(cycle, co_button, il_proces, co_condes) {
@@ -1319,9 +1307,9 @@ function propag(cycle, co_button, il_proces, co_condes) {
                         val = eledom.getElementById(eledom.id + '_rb').value;
                     } else if (ti_pagreg == '6') {
                         console.log('??>>>???>>eledom.id:' + eledom.id);
-                        try{
+                        try {
                             val = document.getElementById(eledom.id + 'D').checked;
-                        }catch (e) {
+                        } catch (e) {
                             val = document.getElementById(eledom.id + '_check').checked;
                         }
 
@@ -1989,7 +1977,7 @@ function docheckall(chk, reg) {
         }
     } else {
         for (var i = 0; i < ls_checks.length; i++) {
-            if (ls_checks[i].disabled == false &  ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
+            if (ls_checks[i].disabled == false & ls_checks[i].id.indexOf('R' + reg + 'V_check') > -1) {
                 // console.log("r:" + ls_checks[i]);
                 ls_checks[i].removeAttribute('checked');
                 ls_checks[i].checked = false;
@@ -2516,6 +2504,19 @@ function dinpag2(obj, co_pagreg) {
 
 function PRINTABLE(opt) {
     document.getElementById('pagopt_print').style.visibility = 'visible';
+}
+
+function EXPORTABLE(opt) {
+    // onclick="return ExcellentExport.excel(this, 'datatable', 'DATA');"
+    //document.getElementById('pagopt_xls').setAttribute('onclick','return ExcellentExport.excel(this, \'PAG'+CO_PAGINA+'\', \'DATA\');');
+    document.getElementById('pagopt_xls').setAttribute('onclick', 'DO_XLS()');
+    document.getElementById('pagopt_xls').style.visibility = 'visible';
+}
+
+function DO_XLS() {
+    var elt = document.getElementById("PAG" + CO_PAGINA);
+    var wb = XLSX.utils.table_to_book(elt, {sheet: "Sheet JS"});
+    XLSX.writeFile(wb, 'SheetJSTableExport.xlsx');
 }
 
 function SHOWINFO(opt) {

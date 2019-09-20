@@ -404,19 +404,14 @@ function page_to_master(ls_params, ls_pagina) {
 }
 
 function popup_to_master(ls_params, ls_pagina) {
-    console.log('Recibimos ls_params modo->:' + ls_params);
-    console.log('Recibimos ls_pagina modo->:' + ls_pagina);
-    console.log('Recibimos== y a ??>>' + current_pagina);
+    // console.log('Recibimos ls_params modo->:' + ls_params);
+    // console.log('Recibimos ls_pagina modo->:' + ls_pagina);
+    // console.log('Recibimos== y a ??>>' + current_pagina);
     //ahora hacia el hijo
     var mframe = document.getElementById('PAG' + current_pagina);
-    // console.log('conseguimos la pagina1:' + mframe);
-    // console.log('conseguimos la pagina2:' + mframe.contentDocument);
-    // console.log('conseguimos la pagina3:' + mframe.contentWindow);
-    // console.log('conseguimos la pagina4:' + mframe.contentWindow.document);
-    // (mframe.contentDocument || mframe.contentWindow.document).child_popup_update(ls_params);
-    // (mframe.contentDocument || mframe.contentWindow).child_popup_update(ls_params);
     mframe.contentWindow.child_popup_update(current_regist, ls_params);
-    console.log('listo!>');
+
+    // console.log('listo!>');
     $('#popup').modal('hide');
     document.getElementsByTagName('MAIN')[0].setAttribute('style', '');
     document.getElementsByTagName('HEADER')[0].setAttribute('style', '');

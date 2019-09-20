@@ -29,7 +29,6 @@ public class ValpagServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("ISO-8859-1");
-//        response.setContentType("text/html;charset=ISO-8859-1");
         response.setContentType("aplication/json;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
@@ -46,8 +45,8 @@ public class ValpagServlet extends HttpServlet {
         response.setContentType("aplication/json;charset=ISO-8859-1");
 
         AsyncContext asyncCtx = request.startAsync();
-        asyncCtx.setTimeout(100000);//10 Seg
-//        System.out.println("??request.getServletPath() = " + request.getServletPath());
+        asyncCtx.setTimeout(100000);
+
         switch (request.getServletPath()) {
             case "/pangolin": {
                 //valpag
@@ -71,82 +70,6 @@ public class ValpagServlet extends HttpServlet {
             }
             case "/uxtion": {
                 WFIOAPP.APP.getExecutor().execute(new AsyncMenu(asyncCtx, 10000, 2));
-//                String no_temdef = "";
-//                for (Sistema sistema : ((Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE")).getSistemas()) {
-//                    if (sistema.getCo_sistem() == Integer.parseInt(request.getParameter("co_sistem"))) {
-//                        no_temdef = sistema.getNo_temdef();
-//                    }
-//                }
-//
-//                Usuario usuario = ((Usuario) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("US"));
-//                usuario.setMainMenu(usuario.getMainMenus().get(request.getParameter("co_sistem") + request.getParameter("co_subsis")));
-//                usuario.setCo_sistem(Integer.parseInt(request.getParameter("co_sistem")));
-//                usuario.setCo_subsis(Integer.parseInt(request.getParameter("co_subsis")));
-//                usuario.setNo_temdef(no_temdef);
-//
-//                String htmlresponse = "";
-//                htmlresponse += "<ul class=\"collapsible collapsible-accordion\">";
-//                for (Menu menu : usuario.getMainMenu().getMenu()) {
-//                    htmlresponse += "                            <li>";
-//                    if (menu.getUrl() != null && menu.getUrl().length() > 0) {
-//                        htmlresponse += "                            <a id=\"menu${menu.co_mensis}\" class=\"collapsible-header waves-effect arrow-r\">";
-//                        htmlresponse += "                                <i class=\"fas fa-chevron-right\"></i>";
-//                        htmlresponse += menu.getName();
-//                        htmlresponse += "                                        <i class=\"fas fa-angle-down rotate-icon\"></i>";
-//                        htmlresponse += "                                    </a>";
-//                        htmlresponse += "                                    <div class=\"collapsible-body\"> ";
-//                        htmlresponse += "                                        <ul>";
-//
-//                        for (MenuItem menuItem : menu.getSub()) {
-//                            htmlresponse += "                                               <li class=\"\">";
-//                            if (menuItem.getUrl() == null & menuItem.getSub().size() > 0) {
-//                                htmlresponse += "                                                                <a class=\"collapsible-header waves-effect arrow-r\">";
-//                                htmlresponse += "                                                                     <i class=\"fas fa-chevron-right\"></i>";
-//                                htmlresponse += menuItem.getName();
-//                                htmlresponse += "                                                            <i class=\"fas fa-angle-down rotate-icon\"></i>";
-//                                htmlresponse += "                                                        </a>";
-//                                htmlresponse += "                                                        <div class=\"collapsible-body\">";
-//                                htmlresponse += "                                                            <ul>";
-//                                for (MenuItem menuItem2 : menuItem.getSub()) {
-//                                    if (menuItem2.getUrl() != null & menuItem2.getSub().size() == 0) {
-//                                        htmlresponse += "                                                                       <li class=\"\">";
-//                                        htmlresponse += "                                                                            <a href=\"" + menuItem2.getUrl() + "\" class=\"waves-effect a\">${menuitem2.name}</a>";
-//                                        htmlresponse += "                                                                        </li>";
-//                                    }
-//                                }
-//                                htmlresponse += "                                                            </ul>";
-//                                htmlresponse += "                                                        </div>";
-//                            }
-////                                                                    <c:if test="${empty menuitem.url and fn:length(menuitem.sub) > 0}">
-////
-////                                                                    </c:if>
-////                                                                    <c:if test="${not empty menuitem.url and fn:length(menuitem.sub) eq 0}">
-//                            if (menuItem.getUrl() != null & menuItem.getSub().size() == 0) {
-//                                htmlresponse += "                                                        <a href=\"" + menuItem.getUrl() + "\" class=\"waves-effect\">" + menuItem.getName() + "</a>";
-//                            }
-//
-////                                                                    </c:if>
-//
-//                            htmlresponse += "                                               </li>";
-//                        }
-//                        htmlresponse += "                                        </ul>";
-//                        htmlresponse += "                                    </div>";
-//                    }
-////                                                <c:if test="${empty menu.url and fn:length(menu.sub) > 0}">
-////
-////                                                </c:if>
-//
-//                    if (menu.getUrl() == null) {
-//                        htmlresponse += "                                    <a href=\"" + menu.getUrl() + "\" class=\"waves-effect\">${menu.name}</a>";
-//                    }
-//
-//                    htmlresponse += "                            </li>";
-//                }
-//                htmlresponse += "                    </ul>";
-//                htmlresponse = "{\"html\":" + htmlresponse + "}";
-////                response.getWriter().println();
-//                response.getOutputStream().write(htmlresponse.getBytes());
-//                asyncCtx.complete();
                 break;
             }
             case "/salamander": {

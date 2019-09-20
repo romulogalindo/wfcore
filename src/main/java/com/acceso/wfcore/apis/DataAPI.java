@@ -375,19 +375,6 @@ public class DataAPI extends GenericAPI {
         System.out.println("ls_archiv = " + ls_archiv.getClass());
         jdk.nashorn.api.scripting.ScriptObjectMirror obh = (jdk.nashorn.api.scripting.ScriptObjectMirror) ls_archiv;
         System.out.println("obh = " + obh.isArray());
-//        Collection cls = obh.values();
-//        Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror)ls_archiv).values().iterator();
-//        while (it.hasNext()) {
-//            Object oit = it.next();
-//            if(oit instanceof File){
-//
-//            }
-//            System.out.println("oit = " + oit);
-//            System.out.println("oit = " + oit.getClass());
-//        }
-//        System.out.println("cls = " + cls);
-//        List<Object> asl = Arrays.asList(ls_archiv);
-//        System.out.println("asl = " + asl);
         //-------------------
         File file = null;
         try {
