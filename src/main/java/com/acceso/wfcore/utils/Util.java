@@ -462,4 +462,239 @@ public class Util {
         }
 //        }
     }
+
+    public static short getColor(String color) {
+        short c = 0;
+        switch (color) {
+            case "BLACK1": {
+                c = 1;
+                break;
+            }
+            case "WHITE1": {
+                c = 1;
+                break;
+            }
+            case "RED1": {
+                c = 2;
+                break;
+            }
+            case "BRIGHT_GREEN1": {
+                c = 3;
+                break;
+            }
+            case "BLUE1": {
+                c = 4;
+                break;
+            }
+            case "YELLOW1": {
+                c = 5;
+                break;
+            }
+            case "PINK1": {
+                c = 6;
+                break;
+            }
+            case "TURQUOISE1": {
+                c = 7;
+                break;
+            }
+            case "BLACK": {
+                c = 8;
+                break;
+            }
+            case "WHITE": {
+                c = 9;
+                break;
+            }
+            case "RED": {
+                c = 10;
+                break;
+            }
+            case "BRIGHT_GREEN": {
+                c = 11;
+                break;
+            }
+            case "BLUE": {
+                c = 12;
+                break;
+            }
+            case "YELLOW": {
+                c = 13;
+                break;
+            }
+            case "PINK": {
+                c = 14;
+                break;
+            }
+            case "TURQUOISE": {
+                c = 15;
+                break;
+            }
+            case "DARK_RED": {
+                c = 16;
+                break;
+            }
+            case "GREEN": {
+                c = 17;
+                break;
+            }
+            case "DARK_BLUE": {
+                c = 18;
+                break;
+            }
+            case "DARK_YELLOW": {
+                c = 19;
+                break;
+            }
+            case "VIOLET": {
+                c = 20;
+                break;
+            }
+            case "TEAL": {
+                c = 21;
+                break;
+            }
+            case "GREY_25_PERCENT": {
+                c = 22;
+                break;
+            }
+            case "GREY_50_PERCENT": {
+                c = 23;
+                break;
+            }
+            case "CORNFLOWER_BLUE": {
+                c = 24;
+                break;
+            }
+            case "MAROON": {
+                c = 25;
+                break;
+            }
+            case "LEMON_CHIFFON": {
+                c = 26;
+                break;
+            }
+            case "LIGHT_TURQUOISE1": {
+                c = 27;
+                break;
+            }
+            case "ORCHID": {
+                c = 28;
+                break;
+            }
+            case "CORAL": {
+                c = 29;
+                break;
+            }
+            case "ROYAL_BLUE": {
+                c = 30;
+                break;
+            }
+            case "LIGHT_CORNFLOWER_BLUE": {
+                c = 31;
+                break;
+            }
+            case "SKY_BLUE": {
+                c = 40;
+                break;
+            }
+            case "LIGHT_TURQUOISE": {
+                c = 41;
+                break;
+            }
+            case "LIGHT_GREEN": {
+                c = 42;
+                break;
+            }
+            case "LIGHT_YELLOW": {
+                c = 43;
+                break;
+            }
+            case "PALE_BLUE": {
+                c = 44;
+                break;
+            }
+            case "ROSE": {
+                c = 45;
+                break;
+            }
+            case "LAVENDER": {
+                c = 46;
+                break;
+            }
+            case "TAN": {
+                c = 47;
+                break;
+            }
+            case "LIGHT_BLUE": {
+                c = 48;
+                break;
+            }
+            case "AQUA": {
+                c = 49;
+                break;
+            }
+            case "LIME": {
+                c = 50;
+                break;
+            }
+            case "GOLD": {
+                c = 51;
+                break;
+            }
+            case "LIGHT_ORANGE": {
+                c = 52;
+                break;
+            }
+            case "ORANGE": {
+                c = 53;
+                break;
+            }
+            case "BLUE_GREY": {
+                c = 54;
+                break;
+            }
+            case "GREY_40_PERCENT": {
+                c = 55;
+                break;
+            }
+            case "DARK_TEAL": {
+                c = 56;
+                break;
+            }
+            case "SEA_GREEN": {
+                c = 57;
+                break;
+            }
+            case "DARK_GREEN": {
+                c = 58;
+                break;
+            }
+            case "OLIVE_GREEN": {
+                c = 59;
+                break;
+            }
+            case "BROWN": {
+                c = 60;
+                break;
+            }
+            case "PLUM": {
+                c = 61;
+                break;
+            }
+            case "INDIGO": {
+                c = 62;
+                break;
+            }
+            case "GREY_80_PERCENT": {
+                c = 63;
+                break;
+            }
+            case "AUTOMATIC": {
+                c = 64;
+                break;
+            }
+        }
+        return c;
+    }
 }

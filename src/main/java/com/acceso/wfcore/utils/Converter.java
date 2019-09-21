@@ -1,6 +1,7 @@
 package com.acceso.wfcore.utils;
 
 import java.io.*;
+import java.lang.module.Configuration;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,13 +18,11 @@ import java.util.Map;
 import com.opencsv.CSVWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
 
 import javax.json.Json;
 
@@ -200,12 +199,140 @@ public class Converter {
                 }
             }
         }
+
         try {
             FileOutputStream fileOut = new FileOutputStream(file);
             workbook.write(fileOut);
             fileOut.close();
+            workbook.close();
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
 
-            // Closing the workbook
+        return file;
+    }
+
+    public File OBJECT_TO_XLS(Object data, boolean havetitle, Map<Integer, Object> configuration) {
+
+        if (data == null || !(data instanceof ArrayList)) {
+            return null;
+        }
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Sheet1");
+        ArrayList<HashMap<Object, Object>> datalist = (ArrayList) data;
+        int currentRow = 0;
+        int currentCol = 0;
+
+        /*DEFAULT FONT1*/
+        Font defaultFont = workbook.createFont();
+        defaultFont.setBold(true);
+
+        /*DEFAULT FONT2*/
+        Font defaultFont2 = workbook.createFont();
+        defaultFont2.setBold(false);
+
+        /*DEFAULT TITLE STYLE*/
+        CellStyle styleTitle = workbook.createCellStyle();
+        styleTitle.setAlignment(HorizontalAlignment.CENTER);
+        styleTitle.setFont(defaultFont);
+
+        /*DEFAULT TITLE STYLE*/
+        CellStyle styledefault = workbook.createCellStyle();
+        styledefault.setAlignment(HorizontalAlignment.LEFT);
+        styledefault.setFont(defaultFont2);
+
+//        HashMap<Integer, CellStyle> configuracion = new HashMap();
+        System.out.println("datalist.get(0).size()!!! = " + datalist.get(0).size());
+        for (int i = 0; i < datalist.get(0).size(); i++) {
+            ColumnConfigJson configJson = (ColumnConfigJson) configuration.get(i + 1);
+
+            if (configJson != null) {
+                Font customFont = workbook.createFont();
+                CellStyle customStyle = workbook.createCellStyle();
+                switch (configJson.getAlign()) {
+                    case "CENTER": {
+                        customStyle.setAlignment(HorizontalAlignment.CENTER);
+                        break;
+                    }
+                    case "LEFT": {
+                        customStyle.setAlignment(HorizontalAlignment.LEFT);
+                        break;
+                    }
+                    case "RIGHT": {
+                        customStyle.setAlignment(HorizontalAlignment.RIGHT);
+                        break;
+                    }
+                    case "JUSTIFY": {
+                        customStyle.setAlignment(HorizontalAlignment.JUSTIFY);
+                        break;
+                    }
+                }
+
+
+                if (configJson.getColor() != null) {
+                    IndexedColors.LIGHT_GREEN.getIndex();
+                    customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
+                    customFont.setColor(Util.getColor(configJson.getColor()));
+                }
+                if (configJson.getBgcolor() != null) {
+                    customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
+                }
+                if (configJson.isWrap()) {
+                    customStyle.setWrapText(true);
+                }
+                if (configJson.isBold()) {
+                    customFont.setBold(true);
+                }
+
+                customStyle.setFont(customFont);
+                configuration.put((i + 1), customStyle);
+
+            } else {
+                configuration.put((i + 1), styledefault);
+            }
+        }
+
+        System.out.println("EL ttituylo" + configuration.size() + ",::1" + configuration);
+
+        if (havetitle) {
+            Row _row = sheet.createRow(currentRow);
+            for (HashMap.Entry<Object, Object> col : datalist.get(0).entrySet()) {
+                Cell cell = _row.createCell(currentCol, CellType.STRING);
+                cell.setCellStyle(styleTitle);
+                cell.setCellValue("" + col.getKey());
+                System.out.println("cell = >>>[" + col.getKey() + ":" + col.getValue() + "]");
+                currentCol++;
+            }
+            currentCol = 0;
+            currentRow++;
+        }
+
+        System.out.println("EL bodye!!!");
+        datalist.stream().forEach(pararelRow -> {
+            Row _row = sheet.createRow(sheet.getPhysicalNumberOfRows());
+            int _currentCol = 0;
+
+            for (HashMap.Entry<Object, Object> col : pararelRow.entrySet()) {
+                Cell cell;
+                try {
+                    Double d = Double.parseDouble("" + col.getValue());
+                    cell = _row.createCell(_currentCol, CellType.NUMERIC);
+                    cell.setCellValue(d);
+                } catch (Exception ep) {
+                    cell = _row.createCell(_currentCol, CellType.STRING);
+                    cell.setCellValue("" + col.getValue());
+                }
+                cell.setCellStyle((CellStyle) configuration.get(_currentCol + 1));
+
+                _currentCol++;
+            }
+        });
+
+        try {
+            FileOutputStream fileOut = new FileOutputStream(file);
+            workbook.write(fileOut);
+            fileOut.close();
             workbook.close();
         } catch (Exception ep) {
             ep.printStackTrace();
