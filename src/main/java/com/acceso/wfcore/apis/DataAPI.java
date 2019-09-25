@@ -337,41 +337,31 @@ public class DataAPI extends GenericAPI {
         String co_archiv = opts.get("co_archiv") == null ? null : ("" + opts.get("co_archiv"));
         String no_archiv = opts.get("no_archiv") == null ? "aiofile" : opts.get("no_archiv").toString();
         String no_extens = opts.get("no_extens") == null ? "txt" : opts.get("no_extens").toString();
-        boolean il_header = opts.get("il_header") == null ? false : Boolean.parseBoolean(opts.get("il_header").toString());
+        boolean il_header = opts.get("il_header") == null ? true : Boolean.parseBoolean(opts.get("il_header").toString());
         Object ls_config = opts.get("ls_config") == null ? null : opts.get("ls_config");
         Object ob_dindat = opts.get("ob_dindat");
         Object ur_file = opts.get("ur_file");
 
-        System.out.println("ls_config = " + ls_config + ",--->" + ls_config.getClass());
+//        System.out.println("ls_config = " + ls_config + ",--->" + ls_config.getClass());
         Map<Integer, Object> columnsconfiguration = new HashMap<>();
 
-        Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror) ls_config).values().iterator();
-        while(it.hasNext()){
-            ScriptObjectMirror o1 = (ScriptObjectMirror) it.next();
-            //{index : 1, align:'center', color:'#cdcdcd', bold:true, bgcolor:'#ff0000'},
+        if(ls_config!=null){
+            Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror) ls_config).values().iterator();
+            while(it.hasNext()){
+                ScriptObjectMirror o1 = (ScriptObjectMirror) it.next();
 
-            ColumnConfigJson columnConfigJson = new ColumnConfigJson();
-            columnConfigJson.setIndex(Util.toInt(o1.get("index")));
-            columnConfigJson.setAlign(o1.get("align") == null ? null : o1.get("align").toString());
-            columnConfigJson.setBold(o1.get("bold") == null ? false : Boolean.parseBoolean(o1.get("bold").toString()));
-            columnConfigJson.setWrap(o1.get("wrap") == null ? false : Boolean.parseBoolean(o1.get("wrap").toString()));
-            columnConfigJson.setColor(o1.get("color") == null ? null : o1.get("color").toString());
-            columnConfigJson.setBgcolor(o1.get("bgcolor") == null ? null : o1.get("bgcolor").toString());
-            System.out.println("columnConfigJson = " + columnConfigJson);
-            columnsconfiguration.put(columnConfigJson.getIndex(), columnConfigJson);
+                ColumnConfigJson columnConfigJson = new ColumnConfigJson();
+                columnConfigJson.setIndex(Util.toInt(o1.get("index")));
+                columnConfigJson.setAlign(o1.get("align") == null ? null : o1.get("align").toString());
+                columnConfigJson.setBold(o1.get("bold") == null ? false : Boolean.parseBoolean(o1.get("bold").toString()));
+                columnConfigJson.setWrap(o1.get("wrap") == null ? false : Boolean.parseBoolean(o1.get("wrap").toString()));
+                columnConfigJson.setColor(o1.get("color") == null ? null : o1.get("color").toString());
+                columnConfigJson.setBgcolor(o1.get("bgcolor") == null ? null : o1.get("bgcolor").toString());
+                System.out.println("columnConfigJson = " + columnConfigJson);
+                columnsconfiguration.put(columnConfigJson.getIndex(), columnConfigJson);
+            }
         }
-//        for (Object o : ls_config) {
-//            ScriptObjectMirror o1 = (ScriptObjectMirror) o;
-//            //{index : 1, align:'center', color:'#cdcdcd', bold:true, bgcolor:'#ff0000'},
-//
-//            ColumnConfigJson columnConfigJson = new ColumnConfigJson();
-//            columnConfigJson.setIndex(Util.toInt(o1.get("index")));
-//            columnConfigJson.setAlign(o1.get("index") == null ? null : o1.get("index").toString());
-//            columnConfigJson.setBold(o1.get("bold") == null ? false : Boolean.parseBoolean(o1.get("bold").toString()));
-//            columnConfigJson.setColor(o1.get("color") == null ? null : o1.get("color").toString());
-//            columnConfigJson.setBgcolor(o1.get("bgcolor") == null ? null : o1.get("bgcolor").toString());
-//            columnsconfiguration.put(columnConfigJson.getIndex(), columnConfigJson);
-//        }
+
 
         //-------------------
         File file = null;

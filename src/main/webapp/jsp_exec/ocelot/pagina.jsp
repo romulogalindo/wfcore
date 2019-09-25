@@ -191,22 +191,14 @@
 <iframe id="downloader" url="" style="display: none;">
 </iframe>
 <%--<script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled-4.7.4.js"></script>--%>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js?a=1"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/popper.min.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables.js?a=3"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/FileSaver.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/shim.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/exportxlsx.js"></script>
-<%--<script src="http://requirejs.org/docs/release/2.3.6/minified/require.js"></script>--%>
-<%--<script>--%>
-<%--    require(['dist/excellentexport'], function (ee) {--%>
-<%--        window.ExcellentExport = ee;--%>
-<%--    });--%>
-<%--</script>--%>
 
-<%--<script type="text/javascript"--%>
-<%--        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/BootstrapMenu.js"></script>--%>
 <c:if test="${paginaBean.pagina.ti_pagina == 'C'}">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>

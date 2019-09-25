@@ -49,6 +49,8 @@ public class LoginServlet extends HttpServlet {
                     System.out.println("(*)goToUrl = " + goToUrl);
                     requestManager.save_over_request("goto", "go!");
                     requestManager.save_over_session("US", doLogin.getUsuario());
+                    System.out.println("Duraccion de session:" + request.getSession().getMaxInactiveInterval());
+
                     //deberia darme una linea por default>>>>ejeurl-->444
                     goToUrl = "/wf?co_conten=444";
                     System.out.println("goToUrl = " + goToUrl);

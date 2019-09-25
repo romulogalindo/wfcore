@@ -18,24 +18,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-amber.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">-->
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <!-- Bootstrap core CSS -->
-    <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/bootstrap.min.css" rel="stylesheet">-->
-    <!-- Material Design Bootstrap -->
-    <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/mdb.min.css" rel="stylesheet">-->
-    <!-- Your custom styles (optional) -->
-    <!--<link href="${pageContext.request.contextPath}/jsp_exec/css/mdb/style.css" rel="stylesheet">-->
-    <%--<link href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.7.4.min.css" rel="stylesheet">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=2">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/themes/theme-${US.no_temdef}.css?a=1">
 
-    <!--link rel="icon" type="image/png" href="{pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.png"-->
     <link rel='shortcut icon' type='image/x-icon'
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
@@ -44,10 +32,10 @@
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=29"></script>
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=40"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=42"></script>
 
 
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=19"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=20"></script>
 
     <style>
         .side-nav .logo-sn {

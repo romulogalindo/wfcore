@@ -53,6 +53,10 @@
         <description>ServletContextListener</description>
         <listener-class>com.acceso.wfcore.listerners.WFCoreListener</listener-class>
     </listener>
+    <listener>
+        <description>SesionListener</description>
+        <listener-class>com.acceso.wfcore.listerners.SesionListener</listener-class>
+    </listener>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
@@ -163,7 +167,7 @@
         <url-pattern>/ocelot</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>1500</session-timeout>
+        <session-timeout>1</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>login</welcome-file>

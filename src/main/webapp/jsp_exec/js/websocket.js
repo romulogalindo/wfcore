@@ -37,6 +37,9 @@ function openWS() {
                     '\t"mact": ""\n' +
                     '}';
                 MSG_toWS(loginjson);
+            } else if (wsMsg.indexOf('AIO_WS_EXIT') > -1) {
+                alert('Tu sesi\u00f3n ha finalizado');
+                location.reload();
             } else {
                 // console.log("WebSocket MESSAGE: " + wsMsg);
 

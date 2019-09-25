@@ -55,7 +55,7 @@ public class MessageAPI extends GenericAPI {
         String co_conten = opts.get("co_conten").toString();
         Integer timeout = opts.get("ca_timeout") == null ? -1 : Integer.parseInt(opts.get("ca_timeout").toString());
 
-        WFIOAPP.APP.messageService.sendMessageToUser(Long.parseLong("" + api_toid), new JsonSocketMessage(msg_type, msg_title, msg_body, MSG_POSITION_TOPRIGHT, co_conten, false, timeout));
+        WFIOAPP.APP.messageService.sendMessageToUser(Long.parseLong("" + api_toid), new JsonSocketMessage(msg_type, "AIO_WS_EXIT", msg_body, MSG_POSITION_TOPRIGHT, co_conten, false, timeout));
     }
 
     public void PUSH_LOG(String api_to, String api_toid, String api_mact) {
