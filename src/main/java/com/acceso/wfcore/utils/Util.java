@@ -25,6 +25,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -696,5 +697,29 @@ public class Util {
             }
         }
         return c;
+    }
+
+    public static boolean TODAYS_OVER_DATE(Date fecha, int dias) {
+        boolean overDate = false;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_YEAR, dias);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(new Date());
+        calendar2.set(Calendar.HOUR, 0);
+        calendar2.set(Calendar.MINUTE, 0);
+        calendar2.set(Calendar.SECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);
+
+        System.out.println("calendar.getTime() = " + calendar.getTime() + ",==>" + calendar.getTimeInMillis());
+        System.out.println("calendar2.getTime() = " + calendar2.getTime() + ",==>" + calendar2.getTimeInMillis());
+        System.out.println("compare = " + (calendar.getTimeInMillis() >= calendar2.getTimeInMillis()));
+
+        return calendar.getTimeInMillis() >= calendar2.getTimeInMillis();
     }
 }

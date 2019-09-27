@@ -4,6 +4,7 @@ import com.acceso.security.utils.Values;
 import com.acceso.wfweb.units.UsuarioLDAP;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
@@ -51,8 +52,8 @@ public class RegsesiniDTO implements Serializable {
     String no_correo;
     String nu_docide;
 
-    //    @Transient
     String ip_remoto;
+    Date fe_updpas;
 
     @Transient
     String il_prilog;
@@ -189,6 +190,14 @@ public class RegsesiniDTO implements Serializable {
 
     public void setLdap(UsuarioLDAP ldap) {
         this.ldap = ldap;
+    }
+
+    public Date getFe_updpas() {
+        return fe_updpas;
+    }
+
+    public void setFe_updpas(Date fe_updpas) {
+        this.fe_updpas = fe_updpas;
     }
 
     @Override

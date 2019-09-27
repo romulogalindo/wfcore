@@ -97,6 +97,7 @@ public class DoLogin {
 //        usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
         usuario.setLdap(regsesiniDTO.getLdap());
         usuario.setIl_schema(true);
+        usuario.setFe_updpas(regsesiniDTO.getFe_updpas());
 
         SecurityDAO securityDAO = new SecurityDAO();
         permisbloDTO = securityDAO.getListBloq((int) regsesiniDTO.getCo_usuari());

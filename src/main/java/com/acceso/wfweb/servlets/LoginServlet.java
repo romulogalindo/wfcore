@@ -1,6 +1,9 @@
 package com.acceso.wfweb.servlets;
 
 import com.acceso.security.DoLogin;
+import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfcore.utils.Util;
+import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.RequestManager;
 
 import java.io.IOException;
@@ -46,15 +49,46 @@ public class LoginServlet extends HttpServlet {
             try {
                 System.out.println("1* => " + 1);
                 if (doLogin.SecurityLogin(requestManager)) {
-                    System.out.println("(*)goToUrl = " + goToUrl);
-                    requestManager.save_over_request("goto", "go!");
-                    requestManager.save_over_session("US", doLogin.getUsuario());
-                    System.out.println("Duraccion de session:" + request.getSession().getMaxInactiveInterval());
+                    Usuario usuario = doLogin.getUsuario();
+                    usuario.setSesion_tomcat_id(request.getSession().getId());
 
-                    //deberia darme una linea por default>>>>ejeurl-->444
-                    goToUrl = "/wf?co_conten=444";
-                    System.out.println("goToUrl = " + goToUrl);
-                    System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
+                    if (Util.TODAYS_OVER_DATE(usuario.getFe_updpas(), Integer.parseInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("SESSION_TIMEOUT"), 30))) {
+                        System.out.println("(*)goToUrl = " + goToUrl);
+                        requestManager.save_over_request("goto", "go!");
+                        requestManager.save_over_session("US", doLogin.getUsuario());
+                        requestManager.save_over_session("NEED_CHANGE_PASSWORD", false);
+
+                        //tiempo de session por default
+                        int SESSION_TIMEOUT = Integer.parseInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("SESSION_TIMEOUT"), 10);
+                        SESSION_TIMEOUT = SESSION_TIMEOUT * 60;
+                        request.getSession().setMaxInactiveInterval(SESSION_TIMEOUT);
+                        request.getSession().setAttribute("expired_session", SESSION_TIMEOUT);
+                        System.out.println("[LOGIN!]Duraccion de session:" + request.getSession().getMaxInactiveInterval());
+
+                        //deberia darme una linea por default>>>>ejeurl-->444
+                        goToUrl = "/wf?co_conten=444";
+                        System.out.println("goToUrl = " + goToUrl);
+                        System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
+                    } else {
+                        System.out.println("(*)CHANGE PASSOWERD = " + goToUrl);
+                        requestManager.save_over_request("goto", "go!");
+                        requestManager.save_over_session("US", doLogin.getUsuario());
+                        requestManager.save_over_session("NEED_CHANGE_PASSWORD", true);
+
+                        //tiempo de session por default
+                        int SESSION_TIMEOUT = Integer.parseInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("SESSION_TIMEOUT"), 10);
+                        SESSION_TIMEOUT = SESSION_TIMEOUT * 60;
+                        request.getSession().setMaxInactiveInterval(SESSION_TIMEOUT);
+                        request.getSession().setAttribute("expired_session", SESSION_TIMEOUT);
+                        System.out.println("[LOGIN!]Duraccion de session:" + request.getSession().getMaxInactiveInterval());
+
+                        //deberia darme una linea por default>>>>ejeurl-->444
+                        goToUrl = "/password";
+                        System.out.println("goToUrl = " + goToUrl);
+                        System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
+                    }
+
+
                 } else {
                     System.out.println("1** => " + 1);
                     throw new Exception(doLogin.getMessage());

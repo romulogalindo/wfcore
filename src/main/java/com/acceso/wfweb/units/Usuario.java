@@ -4,6 +4,7 @@ import com.acceso.wfweb.web.MainMenu;
 import com.acceso.wfweb.web.Root;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,8 @@ public class Usuario implements Serializable {
     boolean il_firtim = false;
     UsuarioLDAP ldap;
     String no_temdef;
+    Date fe_updpas;
+    String sesion_tomcat_id;
 
     Map<Integer, Object> ls_mensis;
 
@@ -208,6 +211,22 @@ public class Usuario implements Serializable {
 
     public void setLs_mensis(Map<Integer, Object> ls_mensis) {
         this.ls_mensis = ls_mensis;
+    }
+
+    public Date getFe_updpas() {
+        return fe_updpas;
+    }
+
+    public void setFe_updpas(Date fe_updpas) {
+        this.fe_updpas = fe_updpas;
+    }
+
+    public String getSesion_tomcat_id() {
+        return sesion_tomcat_id;
+    }
+
+    public void setSesion_tomcat_id(String sesion_tomcat_id) {
+        this.sesion_tomcat_id = sesion_tomcat_id;
     }
 
     @Override

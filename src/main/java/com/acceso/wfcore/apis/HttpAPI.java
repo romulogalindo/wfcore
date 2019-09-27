@@ -4,6 +4,7 @@ import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
+import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.utils.JsonResponse;
 
 import java.io.BufferedReader;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
 
 public class HttpAPI extends GenericAPI {
 
@@ -202,6 +204,12 @@ public class HttpAPI extends GenericAPI {
             ep.printStackTrace();
             return JsonResponse.defultJsonResponseERROR(Util.getError(ep));
         }
+
+    }
+
+    public void UPDATE_CONPAR(String co_conten, String id_frawor, String no_conpar, String va_conpar) {
+        //sobreescribir sobre session compartida
+//        ((Contenedor) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).put_conpar(no_conpar, va_conpar);)
 
     }
 

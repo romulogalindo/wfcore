@@ -45,23 +45,29 @@ public class MainFilter implements Filter {
 
         if (usuario != null) {
             System.out.println("!!!suario.getLs_mensis().get(co_conten) = " + usuario.getLs_mensis().get(co_conten));
-//            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
-//                System.out.println("validado = ");
-//                chain.doFilter(req, res);
-//            } else {
-//                System.out.println("Error escribir");
-//                throw new ServletException("No tiene permiso de acceso. Comuniquese con la administraciòn");
-//            }
-            System.out.println("Ultimo acceso = " + req.getSession().getLastAccessedTime());
-            System.out.println("Ultimo acceso(2) = " + new Date(req.getSession().getLastAccessedTime()));
-            int milseg = (int)((req.getSession().getLastAccessedTime() - req.getSession().getCreationTime())/1000);
-            System.out.println("tiempo exedido = " + milseg);
-            int current_expired_session = req.getSession().getAttribute("expired_session")==null?req.getSession().getMaxInactiveInterval(): Integer.parseInt(req.getSession().getAttribute("expired_session").toString());
+            //CODIGO ESPECIAL PARA SESSION
+            /*
+            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
+                System.out.println("validado = ");
+                chain.doFilter(req, res);
+            } else {
+                System.out.println("Error escribir");
+                throw new ServletException("No tiene permiso de acceso. Comuniquese con la administraciòn");
+            }
+            */
+
+//            System.out.println("Ultimo acceso = " + req.getSession().getLastAccessedTime());
+//            System.out.println("Ultimo acceso(2) = " + new Date(req.getSession().getLastAccessedTime()));
+            int milseg = (int) ((req.getSession().getLastAccessedTime() - req.getSession().getCreationTime()) / 1000);
+//            System.out.println("tiempo exedido = " + milseg);
+            int current_expired_session = req.getSession().getAttribute("expired_session") == null ? req.getSession().getMaxInactiveInterval() : Integer.parseInt(req.getSession().getAttribute("expired_session").toString());
+//            current_expired_session = current_expired_session * 60;
+            current_expired_session = current_expired_session + milseg;
             req.getSession().setMaxInactiveInterval(current_expired_session + milseg);
 
             System.out.println("[1]Duraccion de session:" + req.getSession().getMaxInactiveInterval());
-            System.out.println("[1]Duraccion de session2:" + (current_expired_session + milseg));
-            req.getSession().setAttribute("expired_session",req.getSession().getMaxInactiveInterval());
+//            System.out.println("[1]Duraccion de session2:" + (current_expired_session + milseg));
+            req.getSession().setAttribute("expired_session", req.getSession().getMaxInactiveInterval());
             chain.doFilter(req, res);
             //existe osea si se puede loguear
 

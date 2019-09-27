@@ -98,6 +98,10 @@
         <jsp-file>/jsp_exec/login/login.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>JSP Password</servlet-name>
+        <jsp-file>/jsp_exec/ocelot/password.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.LoginServlet</servlet-class>
     </servlet>
@@ -130,6 +134,10 @@
     <servlet-mapping>
         <servlet-name>JSP Login</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSP Password</servlet-name>
+        <url-pattern>/password</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -167,7 +175,7 @@
         <url-pattern>/ocelot</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>1</session-timeout>
+        <session-timeout>10</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>login</welcome-file>

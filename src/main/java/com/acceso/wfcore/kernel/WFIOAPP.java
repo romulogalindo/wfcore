@@ -109,6 +109,8 @@ public class WFIOAPP {
 
         //creamos la cache del menu - LVL1
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_MENUTREE, String.class, Object.class, -1);
+        //Crear cache de sessiones
+        cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_SESSIONS, String.class, Object.class, -1);
 
         //creamos la cache de contenedores - LVL2
         cacheService.getZeroDawnCache().createSpace(Values.CACHE_MAIN_CONTAINER, Integer.class, Object.class, -1);
