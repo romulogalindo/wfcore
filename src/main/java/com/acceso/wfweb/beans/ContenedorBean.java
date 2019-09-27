@@ -72,6 +72,9 @@ public class ContenedorBean implements Serializable {
 //        contenedor.setLs_conpar(ls_conpar);
 
         requestManager.save_over_session("CNT" + contenedor.getCo_conten() + ":" + id_frawor, contenedor);
+        
+        //poner tambien el contenedor como referencia en la cache de duracion 
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTENTS).put("CNT" + contenedor.getCo_conten() + ":" + id_frawor, contenedor);
     }
 
     public Contenedor getContenedor() {

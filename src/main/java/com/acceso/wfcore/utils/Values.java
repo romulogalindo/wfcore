@@ -119,6 +119,8 @@ public class Values {
     /*===CACHE===*/
     public static final String CACHE_MAIN_MENUTREE = "CACHE_MAIN_MENUTREE";
     public static final String CACHE_MAIN_SESSIONS = "CACHE_MAIN_SESSIONS";
+    public static final String CACHE_MAIN_CONTENTS = "CACHE_MAIN_CONTENTS";
+    
     public static final String CACHE_MAIN_CONTAINER = "CACHE_MAIN_CONTAINER";
 //    public static final String CACHE_MAIN_VALPAGJS = "CACHE_MAIN_VALPAGJS";
 //    public static final String CACHE_MAIN_COMPAGJS = "CACHE_MAIN_COMPAGJS";

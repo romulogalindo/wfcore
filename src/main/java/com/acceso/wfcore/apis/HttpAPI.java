@@ -39,7 +39,7 @@ public class HttpAPI extends GenericAPI {
                 conHTTP.setRequestMethod("GET");
                 StringBuilder content;
 
-                try (BufferedReader in = new BufferedReader(
+                try ( BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTP.getInputStream()))) {
 
                     String line;
@@ -60,7 +60,7 @@ public class HttpAPI extends GenericAPI {
                 conHTTPS.setRequestMethod("GET");
                 StringBuilder content;
 
-                try (BufferedReader in = new BufferedReader(
+                try ( BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTPS.getInputStream()))) {
 
                     String line;
@@ -136,7 +136,7 @@ public class HttpAPI extends GenericAPI {
 
                 StringBuilder content;
 
-                try (BufferedReader in = new BufferedReader(
+                try ( BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTP.getInputStream()))) {
 
                     String line;
@@ -182,7 +182,7 @@ public class HttpAPI extends GenericAPI {
 
                 StringBuilder content;
 
-                try (BufferedReader in = new BufferedReader(
+                try ( BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTPS.getInputStream()))) {
 
                     String line;
@@ -208,9 +208,8 @@ public class HttpAPI extends GenericAPI {
     }
 
     public void UPDATE_CONPAR(String co_conten, String id_frawor, String no_conpar, String va_conpar) {
-        //sobreescribir sobre session compartida
-//        ((Contenedor) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).put_conpar(no_conpar, va_conpar);)
-
+        Contenedor contenedor = (Contenedor) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTENTS).get("CNT" + co_conten + ":" + id_frawor);
+        contenedor.put_conpar(no_conpar, va_conpar);
     }
 
     public String URL(File file) {
