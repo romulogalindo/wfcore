@@ -28,6 +28,8 @@ function openWS() {
 
         webSocket.onmessage = function (messageEvent) {
             var wsMsg = messageEvent.data;
+            console.log('[WS]:recibido:>' + wsMsg);
+
             if (wsMsg == 'AIO_WS_READY') {
                 var loginjson = '{\n' +
                     '\t"status": "OK",\n' +
@@ -38,8 +40,8 @@ function openWS() {
                     '}';
                 MSG_toWS(loginjson);
             } else if (wsMsg.indexOf('AIO_WS_EXIT') > -1) {
-                alert('Tu sesi\u00f3n ha finalizado');
-                location.reload();
+                // alert('Tu sesi\u00f3n ha finalizado');
+                // location.reload();
             } else {
                 // console.log("WebSocket MESSAGE: " + wsMsg);
 

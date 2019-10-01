@@ -24,6 +24,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.*;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
 import javax.json.Json;
 
 import org.apache.commons.lang3.StringUtils;
@@ -218,9 +220,10 @@ public class Converter {
             return null;
         }
 
-        Workbook workbook = new XSSFWorkbook();
+        Workbook workbook = new SXSSFWorkbook();
+//        Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Sheet1");
-        ArrayList<HashMap<Object, Object>> datalist = (ArrayList) data;
+        List<HashMap<Object, Object>> datalist = (ArrayList) data;
         int currentRow = 0;
         int currentCol = 0;
 
@@ -243,7 +246,7 @@ public class Converter {
         styledefault.setFont(defaultFont2);
 
 //        HashMap<Integer, CellStyle> configuracion = new HashMap();
-        System.out.println("datalist.get(0).size()!!! = " + datalist.get(0).size());
+//        System.out.println("datalist.get(0).size()!!! = " + datalist.get(0).size());
         for (int i = 0; i < datalist.get(0).size(); i++) {
             ColumnConfigJson configJson = (ColumnConfigJson) configuration.get(i + 1);
 
@@ -293,7 +296,7 @@ public class Converter {
             }
         }
 
-        System.out.println("EL ttituylo" + configuration.size() + ",::1" + configuration);
+//        System.out.println("EL ttituylo" + configuration.size() + ",::1" + configuration);
 
         if (havetitle) {
             Row _row = sheet.createRow(currentRow);
@@ -308,7 +311,7 @@ public class Converter {
             currentRow++;
         }
 
-        System.out.println("EL bodye!!!");
+//        System.out.println("EL bodye00>>>>>" + datalist.size());
         datalist.stream().forEach(pararelRow -> {
             Row _row = sheet.createRow(sheet.getPhysicalNumberOfRows());
             int _currentCol = 0;
@@ -327,6 +330,8 @@ public class Converter {
 
                 _currentCol++;
             }
+//            if (sheet.getPhysicalNumberOfRows() % 1000 == 0)
+//                System.out.println("MIL+ = " + _currentCol + "===>");
         });
 
         try {

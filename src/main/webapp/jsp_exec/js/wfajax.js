@@ -265,12 +265,13 @@ doPropagg = function (url, regparams, data) {
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
-
+            console.log('>>>>>>>>>>>>>' + net.responseText);
             var rpta = JSON.parse(net.responseText);
             if (rpta.error) {
                 window.parent.showloading(false);
                 alert('' + rpta.error.message + '');
             } else {
+                console.log('NOHERE');
                 // console.log("rpta.params===>" + rpta.ls_params);
                 if (rpta.ls_params != undefined) {
                     for (var i = 0; i < rpta.ls_params.length; i++) {

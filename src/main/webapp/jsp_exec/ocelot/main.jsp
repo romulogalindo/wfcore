@@ -35,7 +35,7 @@
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=42"></script>
 
 
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=20"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=23"></script>
 
     <style>
         .side-nav .logo-sn {
