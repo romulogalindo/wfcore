@@ -48,7 +48,12 @@ function openWS() {
                 console.log('retorno:' + wsMsg);
                 var xmsg = JSON.parse(wsMsg);
                 toascfg(xmsg.position);
-                pushMessage(xmsg.type, xmsg.title, xmsg.body, xmsg.conten, xmsg.clear, xmsg.timeout);
+                //if (xmsg.type == "PROCESS") {
+                //    pushMessage(xmsg.type, xmsg.title, xmsg.body, xmsg.conten, xmsg.clear, xmsg.timeout);
+                //} else {
+                    pushMessage(xmsg.type, xmsg.title, xmsg.body, xmsg.conten, xmsg.clear, xmsg.timeout);
+                //}
+
             }
 
         };

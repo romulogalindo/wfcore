@@ -7,7 +7,9 @@ public class ColumnConfigJson {
     String color;
     boolean bold;
     String bgcolor;
-    boolean wrap;
+    boolean hwrap;
+    boolean vwrap;
+    String type;
 
     public ColumnConfigJson() {
     }
@@ -52,12 +54,28 @@ public class ColumnConfigJson {
         this.bgcolor = bgcolor;
     }
 
-    public boolean isWrap() {
-        return wrap;
+    public boolean isHwrap() {
+        return hwrap;
     }
 
-    public void setWrap(boolean wrap) {
-        this.wrap = wrap;
+    public void setHwrap(boolean hwrap) {
+        this.hwrap = hwrap;
+    }
+
+    public boolean isVwrap() {
+        return vwrap;
+    }
+
+    public void setVwrap(boolean vwrap) {
+        this.vwrap = vwrap;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -68,7 +86,7 @@ public class ColumnConfigJson {
                 ", color='" + color + '\'' +
                 ", bold=" + bold +
                 ", bgcolor='" + bgcolor + '\'' +
-                ", wrap=" + wrap +
+                ", hwrap=" + hwrap +
                 '}';
     }
 }

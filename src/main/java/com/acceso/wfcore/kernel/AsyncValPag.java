@@ -47,6 +47,7 @@ public class AsyncValPag extends AsyncProcessor {
 //            String ls_hamoda = asyncContext.getRequest().getParameter("ls_hamoda");
 //            System.out.println("UNICO ID SESSION => " + "CNT" + co_conten + ":" + id_frawor);
             String ls_conpar = ((Contenedor) ((HttpServletRequest) asyncContext.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).getLs_conpar();
+            System.setProperty("nashorn.args", "--language=es6");
             ScriptContextExecutor script;
 
             String LOG = "[U" + usuario.getCo_usuari() + "][S" + usuario.getId_sesion() + "][F" + id_frawor + "][C" + co_conten + "][P" + co_pagina + "]";

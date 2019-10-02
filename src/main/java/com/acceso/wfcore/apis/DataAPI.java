@@ -352,11 +352,13 @@ public class DataAPI extends GenericAPI {
 
                 ColumnConfigJson columnConfigJson = new ColumnConfigJson();
                 columnConfigJson.setIndex(Util.toInt(o1.get("index")));
-                columnConfigJson.setAlign(o1.get("align") == null ? null : o1.get("align").toString());
+                columnConfigJson.setAlign(o1.get("align") == null ? "LEFT" : o1.get("align").toString());
                 columnConfigJson.setBold(o1.get("bold") == null ? false : Boolean.parseBoolean(o1.get("bold").toString()));
-                columnConfigJson.setWrap(o1.get("wrap") == null ? false : Boolean.parseBoolean(o1.get("wrap").toString()));
+                columnConfigJson.setHwrap(o1.get("hwrap") == null ? false : Boolean.parseBoolean(o1.get("hwrap").toString()));
+                columnConfigJson.setVwrap(o1.get("vwrap") == null ? false : Boolean.parseBoolean(o1.get("vwrap").toString()));
                 columnConfigJson.setColor(o1.get("color") == null ? null : o1.get("color").toString());
                 columnConfigJson.setBgcolor(o1.get("bgcolor") == null ? null : o1.get("bgcolor").toString());
+                columnConfigJson.setType(o1.get("type") == null ? null : o1.get("type").toString());
                 System.out.println("columnConfigJson = " + columnConfigJson);
                 columnsconfiguration.put(columnConfigJson.getIndex(), columnConfigJson);
             }

@@ -35,7 +35,7 @@
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=42"></script>
 
 
-    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=23"></script>
+    <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=24"></script>
 
     <style>
         .side-nav .logo-sn {
@@ -376,7 +376,8 @@
                             </div>
                         </div>
 
-                        <h4 class="card-title" style="margin: 0px;">Procesando...</h4>
+                        <h4 id="sys_loader_title" class="card-title" style="margin: 0px;">Procesando...</h4>
+                        <span id="sys_loader_stitle" class="card-title" style="margin: 0px;"></span>
                     </div>
                 </div>
             </td>
@@ -546,7 +547,7 @@
                                         </c:if>
 
                                             <%--                                        <img class="card-img-top card-img-bottom" src="/jsp_exec/ocelot/viewer.jsp?file=${sistema.ar_logsis}" >--%>
-                                        <a href="${sistema.ur_sistem}" target="_blank" >
+                                        <a href="${sistema.ur_sistem}" target="_blank">
                                             <div class="mask rgba-white-light"></div>
                                         </a>
                                     </div>

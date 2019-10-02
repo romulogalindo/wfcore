@@ -2,6 +2,7 @@ package com.acceso.wfcore.utils;
 
 import java.io.*;
 import java.lang.module.Configuration;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.usermodel.*;
 
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -220,9 +222,8 @@ public class Converter {
             return null;
         }
 
-        Workbook workbook = new SXSSFWorkbook();
-//        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Sheet1");
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        SXSSFSheet sheet = workbook.createSheet("Sheet1");
         List<HashMap<Object, Object>> datalist = (ArrayList) data;
         int currentRow = 0;
         int currentCol = 0;
@@ -245,14 +246,18 @@ public class Converter {
         styledefault.setAlignment(HorizontalAlignment.LEFT);
         styledefault.setFont(defaultFont2);
 
-//        HashMap<Integer, CellStyle> configuracion = new HashMap();
-//        System.out.println("datalist.get(0).size()!!! = " + datalist.get(0).size());
+        //TYPE's
+        Map<Integer, Integer> types = new HashMap<>();
+        List<Integer> autosizecolumns = new ArrayList<>();
+
         for (int i = 0; i < datalist.get(0).size(); i++) {
             ColumnConfigJson configJson = (ColumnConfigJson) configuration.get(i + 1);
+            int cellType = 0;
 
             if (configJson != null) {
                 Font customFont = workbook.createFont();
                 CellStyle customStyle = workbook.createCellStyle();
+//                System.out.println("configJson.getAlign() = " + configJson.getAlign());
                 switch (configJson.getAlign()) {
                     case "CENTER": {
                         customStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -281,8 +286,16 @@ public class Converter {
                 if (configJson.getBgcolor() != null) {
                     customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
                 }
-                if (configJson.isWrap()) {
+
+//                System.out.println("configJson.isWrap() = " + configJson.isVwrap());
+                if (configJson.isVwrap()) {
+//                    System.out.println("configJson.isWrap() ==> " + configJson.isVwrap());
                     customStyle.setWrapText(true);
+                }
+                if (configJson.isHwrap()) {
+                    System.out.println("configJson.isWrap() ==> " + configJson.isHwrap());
+
+                    autosizecolumns.add((i + 1));
                 }
                 if (configJson.isBold()) {
                     customFont.setBold(true);
@@ -291,12 +304,36 @@ public class Converter {
                 customStyle.setFont(customFont);
                 configuration.put((i + 1), customStyle);
 
+                //DEl tipo de celda
+                if (configJson.getType() != null) {
+                    switch (configJson.getType()) {
+                        case "STRING": {
+                            cellType = CellType.STRING.getCode();
+                            break;
+                        }
+                        case "NUMERIC": {
+                            cellType = CellType.NUMERIC.getCode();
+                            break;
+                        }
+                        default: {
+                            cellType = CellType.STRING.getCode();
+                            break;
+                        }
+                    }
+                } else {
+                    cellType = CellType.STRING.getCode();
+                }
             } else {
                 configuration.put((i + 1), styledefault);
+
+                //DEl tipo de celda
+                cellType = CellType.STRING.getCode();
             }
+            types.put(i + 1, cellType);
         }
 
 //        System.out.println("EL ttituylo" + configuration.size() + ",::1" + configuration);
+//        sheet.trackAllColumnsForAutoSizing();
 
         if (havetitle) {
             Row _row = sheet.createRow(currentRow);
@@ -304,7 +341,7 @@ public class Converter {
                 Cell cell = _row.createCell(currentCol, CellType.STRING);
                 cell.setCellStyle(styleTitle);
                 cell.setCellValue("" + col.getKey());
-                System.out.println("cell = >>>[" + col.getKey() + ":" + col.getValue() + "]");
+//                System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
                 currentCol++;
             }
             currentCol = 0;
@@ -319,12 +356,40 @@ public class Converter {
             for (HashMap.Entry<Object, Object> col : pararelRow.entrySet()) {
                 Cell cell;
                 try {
-                    Double d = Double.parseDouble("" + col.getValue());
-                    cell = _row.createCell(_currentCol, CellType.NUMERIC);
-                    cell.setCellValue(d);
+
+                    if (types.get(_currentCol + 1) == CellType.NUMERIC.getCode()) {
+                        Double d = Double.parseDouble("" + col.getValue());
+                        cell = _row.createCell(_currentCol, CellType.NUMERIC);
+                        cell.setCellValue(d);
+                    } else if (types.get(_currentCol + 1) == CellType.STRING.getCode()) {
+//                        Double d = Double.parseDouble("" + col.getValue());
+                        cell = _row.createCell(_currentCol, CellType.STRING);
+//                        cell.setCellValue(d);
+                        if (col.getValue() == null) {
+                            cell.setCellValue("");
+                        } else {
+                            cell.setCellValue(col.getValue().toString());
+                        }
+
+                    } else {
+                        Double d = Double.parseDouble("" + col.getValue());
+                        cell = _row.createCell(_currentCol, CellType.STRING);
+                        cell.setCellValue(d);
+                    }
+
+
                 } catch (Exception ep) {
                     cell = _row.createCell(_currentCol, CellType.STRING);
-                    cell.setCellValue("" + col.getValue());
+                    try {
+                        if (col.getValue() != null) {
+                            cell.setCellValue("" + col.getValue());
+                        } else {
+                            cell.setCellValue("");
+                        }
+                    } catch (Exception ep2) {
+                        cell.setCellValue("");
+                    }
+
                 }
                 cell.setCellStyle((CellStyle) configuration.get(_currentCol + 1));
 
@@ -333,6 +398,12 @@ public class Converter {
 //            if (sheet.getPhysicalNumberOfRows() % 1000 == 0)
 //                System.out.println("MIL+ = " + _currentCol + "===>");
         });
+
+//        sheet.autoSizeColumn();
+//        for (Integer column : autosizecolumns) {
+//
+//            sheet.autoSizeColumn(column);
+//        }
 
         try {
             FileOutputStream fileOut = new FileOutputStream(file);
