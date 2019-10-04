@@ -8,14 +8,14 @@ import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.dtos.ValpagDTO;
 import com.acceso.wfweb.utils.JsonResponse;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.commons.io.FilenameUtils;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
+import org.hibernate.engine.spi.AbstractDelegatingSessionBuilder;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
@@ -430,9 +430,9 @@ public class DataAPI extends GenericAPI {
 //        System.out.println("ls_config = " + ls_config + ",--->" + ls_config.getClass());
         Map<Integer, Object> columnsconfiguration = new HashMap<>();
 
-        if(ls_config!=null){
+        if (ls_config != null) {
             Iterator it = ((jdk.nashorn.api.scripting.ScriptObjectMirror) ls_config).values().iterator();
-            while(it.hasNext()){
+            while (it.hasNext()) {
                 ScriptObjectMirror o1 = (ScriptObjectMirror) it.next();
 
                 ColumnConfigJson columnConfigJson = new ColumnConfigJson();
@@ -534,7 +534,7 @@ public class DataAPI extends GenericAPI {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
         String no_archiv = opts.get("no_archiv").toString();
         Integer co_archiv = Integer.parseInt(opts.get("co_archiv").toString());
-        String no_conexi = opts.get("no_conexi").toString();
+        String no_conexi = opts.get("no_conexi") == null ? null : opts.get("no_conexi").toString();
         ArrayList ls_params = (ArrayList) opts.get("ls_params");
 
         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -542,22 +542,26 @@ public class DataAPI extends GenericAPI {
         for (Object oit : ls_params) {
             com.acceso.wfcore.utils.Param param = (com.acceso.wfcore.utils.Param) oit;
             parameters.put(param.getNo_param(), param.getVa_param());
+            System.out.println(param.getNo_param() + "=>" + param.getVa_param());
         }
 
         File jasper_file = Util.get_archiv(co_archiv);
-
         File file = null;
         String filename = "";
 
         try {
             filename = System.getProperty("java.io.tmpdir") + File.separator + no_archiv + ".pdf";
-            JasperPrint print = JasperFillManager.fillReport(new FileInputStream(jasper_file), parameters, WFIOAPP.APP.getDataSourceService().getManager(no_conexi).getNativeSession().connection());
+            JasperPrint print;
 
+            JasperReport jasperReport = (JasperReport) JRLoader.loadObject(new FileInputStream(jasper_file));
+
+            if (no_conexi == null || WFIOAPP.APP.getDataSourceService().getManager(no_conexi) == null) {
+                print = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            } else {
+                print = JasperFillManager.fillReport(jasperReport, parameters, WFIOAPP.APP.getDataSourceService().getManager(no_conexi).getNativeSession().connection());
+            }
             // exports report to pdf
-            JRExporter exporter = new JRPdfExporter();
-            exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, new FileOutputStream(filename));
-            exporter.exportReport();
+            JasperExportManager.exportReportToPdfFile(print, filename);
 
             file = new File(filename);
             System.out.println("exporter = " + file);

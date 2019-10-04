@@ -1343,37 +1343,42 @@ function propag(cycle, co_button, il_proces, co_condes) {
                         // eledom.getElementsByTagName("SPAN")[0].innerHTML = valdom;
                         val = eledom.getElementsByTagName("IFRAME")[0].contentWindow.getCode();
                     } else if (ti_pagreg == '36') {
-                        var vaframe = eledom.getElementsByTagName("IFRAME")[0];
-                        var fracon = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document;
+                        if (eledom.getElementsByTagName("IFRAME").length < 1) {
+                            val = '';
+                        } else {
+                            var vaframe = eledom.getElementsByTagName("IFRAME")[0];
+                            var fracon = eledom.getElementsByTagName("IFRAME")[0].contentWindow.document;
 
-                        if (fracon.getElementById("form_data") != undefined) {
-                            var vafile = fracon.getElementById("vafile");
-                            if (vafile != undefined && vafile.files.length > 0) {
-                                preimg[preimg.length] = eledom.getAttribute('id');
+                            if (fracon.getElementById("form_data") != undefined) {
+                                var vafile = fracon.getElementById("vafile");
+                                if (vafile != undefined && vafile.files.length > 0) {
+                                    preimg[preimg.length] = eledom.getAttribute('id');
+                                    val = null;
+                                }
+                                console.log('E·xiste el form->');
                                 val = null;
-                            }
-                            console.log('E·xiste el form->');
-                            val = null;
-                        } else if (fracon.getElementsByTagName("BODY")[0].innerHTML.length > 0) {
-                            try {
-                                var futureJson = fracon.getElementsByTagName("BODY")[0].innerHTML;
-                                futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
-                                console.log('(***)futureJson=' + futureJson);
-                                futureJson = JSON.parse(futureJson);
+                            } else if (fracon.getElementsByTagName("BODY")[0].innerHTML.length > 0) {
+                                try {
+                                    var futureJson = fracon.getElementsByTagName("BODY")[0].innerHTML;
+                                    futureJson = futureJson.replace('<pre>', '').replace('</pre>', '');
+                                    console.log('(***)futureJson=' + futureJson);
+                                    futureJson = JSON.parse(futureJson);
 
-                                if (futureJson.status = 'OK') {
-                                    // var eledom = document.getElementById(proimg);
-                                    // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
-                                    console.log('REGISTERO36>>:' + futureJson.result[0].co_archiv);
-                                    val = futureJson.result[0].co_archiv;
-                                } else {
+                                    if (futureJson.status = 'OK') {
+                                        // var eledom = document.getElementById(proimg);
+                                        // id = eledom.id.substring(eledom.id.indexOf('R') + 1, eledom.id.indexOf('V'));
+                                        console.log('REGISTERO36>>:' + futureJson.result[0].co_archiv);
+                                        val = futureJson.result[0].co_archiv;
+                                    } else {
+                                        val = '';
+                                    }
+                                } catch (e) {
                                     val = '';
                                 }
-                            } catch (e) {
-                                val = '';
+                            } else {
+                                val = null;
                             }
-                        } else {
-                            val = null;
+
                         }
 
                         // var vaform = vaframe.contentWindow.document.getElementById("form_data");
