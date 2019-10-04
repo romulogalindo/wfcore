@@ -248,6 +248,91 @@ public class DataAPI extends GenericAPI {
         return jsonResponse;
     }
 
+    /**
+     * {@link Object}
+     */
+    public JsonResponse SQLMAP(Object obj) {
+        ScriptObjectMirror opts = (ScriptObjectMirror) obj;
+        String no_conexi = opts.get("no_conexi") == null ? "wfacr" : opts.get("no_conexi").toString();
+        String no_consul = opts.get("no_consul") == null ? "select 1 as col1;" : opts.get("no_consul").toString();
+        Integer sg_timout = opts.get("sg_timout") == null ? 30 : Integer.parseInt("" + opts.get("sg_timout"));
+        Integer co_indice = opts.get("co_indice") == null ? 1 : Integer.parseInt("" + opts.get("co_indice"));
+
+        long execution_time;
+        JsonResponse jsonResponse = new JsonResponse();
+        List<LinkedHashMap<String, Object>> valReturn;
+        StatelessSession session = null;
+        Transaction transaction = null;
+        execution_time = System.currentTimeMillis();
+
+        try {
+            session = WFIOAPP.APP.getDataSourceService().getManager(no_conexi).getNativeSession();
+            transaction = session.beginTransaction();
+            transaction.setTimeout(sg_timout);
+
+            Query sql = session.createNativeQuery(no_consul);
+            sql.setTimeout(sg_timout);
+            sql.setResultTransformer(AliasToEntityOrderedMapResultTransformer.INSTANCE);
+
+            if (WFIOAPP.APP.SHOW_PREQUERY) {
+                Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + no_consul);
+            }
+
+            Long midt = Transactional.insert(1, Long.parseLong(getCo_usuari()), no_consul);
+            if (no_consul.trim().toLowerCase().startsWith("insert") | no_consul.trim().toLowerCase().startsWith("update") | no_consul.trim().toLowerCase().startsWith("delete")) {
+                int rowsaf = sql.executeUpdate();
+                List<LinkedHashMap<String, Object>> lsh = new ArrayList<>();
+                LinkedHashMap<String, Object> lh = new LinkedHashMap<>();
+                lh.put("ca_rowafe", rowsaf);
+                lsh.add(lh);
+                valReturn = lsh;
+            } else {
+                valReturn = sql.getResultList();
+            }
+            Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + no_consul + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            transaction.commit();
+            session.close();
+
+            Transactional.update(midt);
+            jsonResponse.setStatus(JsonResponse.OK);
+            jsonResponse.setResult(valReturn);
+
+        } catch (Exception ep) {
+            Log.error("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] E = " + ep);
+
+            try {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+            } catch (Exception ep2) {
+                transaction = null;
+            }
+
+            if (session != null) {
+                session = null;
+            }
+
+            ErrorMessage errormessage = Util.getError(ep);
+            if (errormessage == null) {
+                jsonResponse.setStatus(JsonResponse.OK);
+                jsonResponse.setResult("[]");
+                jsonResponse.setError(null);
+            } else {
+                jsonResponse.setStatus(JsonResponse.ERROR);
+                jsonResponse.setResult(null);
+                jsonResponse.setError(Util.getError(ep));
+            }
+
+            Log.error("[@" + no_conexi + "] Q = " + no_consul + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
+
+            if (WFIOAPP.APP.THROWS_EXCEPTION) {
+                ep.printStackTrace();
+            }
+        }
+
+        return jsonResponse;
+    }
+
     public ValpagJson VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {
 
         long execution_time = System.currentTimeMillis();
@@ -355,10 +440,12 @@ public class DataAPI extends GenericAPI {
                 columnConfigJson.setAlign(o1.get("align") == null ? "LEFT" : o1.get("align").toString());
                 columnConfigJson.setBold(o1.get("bold") == null ? false : Boolean.parseBoolean(o1.get("bold").toString()));
                 columnConfigJson.setHwrap(o1.get("hwrap") == null ? false : Boolean.parseBoolean(o1.get("hwrap").toString()));
+                columnConfigJson.setWidth(o1.get("width") == null ? -1 : Integer.parseInt(o1.get("width").toString()));
                 columnConfigJson.setVwrap(o1.get("vwrap") == null ? false : Boolean.parseBoolean(o1.get("vwrap").toString()));
                 columnConfigJson.setColor(o1.get("color") == null ? null : o1.get("color").toString());
                 columnConfigJson.setBgcolor(o1.get("bgcolor") == null ? null : o1.get("bgcolor").toString());
                 columnConfigJson.setType(o1.get("type") == null ? null : o1.get("type").toString());
+                columnConfigJson.setFormat(o1.get("format") == null ? "" : o1.get("format").toString());
                 System.out.println("columnConfigJson = " + columnConfigJson);
                 columnsconfiguration.put(columnConfigJson.getIndex(), columnConfigJson);
             }

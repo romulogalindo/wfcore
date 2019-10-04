@@ -10,6 +10,8 @@ public class ColumnConfigJson {
     boolean hwrap;
     boolean vwrap;
     String type;
+    String format;
+    int width = 40;
 
     public ColumnConfigJson() {
     }
@@ -78,6 +80,22 @@ public class ColumnConfigJson {
         this.type = type;
     }
 
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     @Override
     public String toString() {
         return "ColumnConfigJson{" +
@@ -87,6 +105,9 @@ public class ColumnConfigJson {
                 ", bold=" + bold +
                 ", bgcolor='" + bgcolor + '\'' +
                 ", hwrap=" + hwrap +
+                ", vwrap=" + vwrap +
+                ", type='" + type + '\'' +
+                ", format='" + format + '\'' +
                 '}';
     }
 }

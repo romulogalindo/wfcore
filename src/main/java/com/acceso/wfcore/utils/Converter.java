@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.module.Configuration;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -246,8 +247,10 @@ public class Converter {
         styledefault.setAlignment(HorizontalAlignment.LEFT);
         styledefault.setFont(defaultFont2);
 
+        DataFormat format = workbook.createDataFormat();
         //TYPE's
         Map<Integer, Integer> types = new HashMap<>();
+        Map<Integer, String> formatDate = new HashMap<>();
         List<Integer> autosizecolumns = new ArrayList<>();
 
         for (int i = 0; i < datalist.get(0).size(); i++) {
@@ -292,6 +295,12 @@ public class Converter {
 //                    System.out.println("configJson.isWrap() ==> " + configJson.isVwrap());
                     customStyle.setWrapText(true);
                 }
+                System.out.println("configJson.getFormat()  => " + configJson.getFormat());
+                if (configJson.getFormat() != null & configJson.getFormat().length() > 0) {
+                    System.out.println("setDataFormat ==> " + configJson.getFormat() + ", ==>" + format.getFormat(configJson.getFormat()));
+                    customStyle.setDataFormat(format.getFormat(configJson.getFormat()));
+                    formatDate.put(i + 1, configJson.getFormat());
+                }
                 if (configJson.isHwrap()) {
                     System.out.println("configJson.isWrap() ==> " + configJson.isHwrap());
 
@@ -299,6 +308,10 @@ public class Converter {
                 }
                 if (configJson.isBold()) {
                     customFont.setBold(true);
+                }
+                System.out.println("configJson.getWidth() = " + configJson.getWidth());
+                if (configJson.getWidth() > -1) {
+                    sheet.setColumnWidth(i, configJson.getWidth() * 100);
                 }
 
                 customStyle.setFont(customFont);
@@ -313,6 +326,10 @@ public class Converter {
                         }
                         case "NUMERIC": {
                             cellType = CellType.NUMERIC.getCode();
+                            break;
+                        }
+                        case "DATE": {
+                            cellType = 6;
                             break;
                         }
                         default: {
@@ -341,14 +358,12 @@ public class Converter {
                 Cell cell = _row.createCell(currentCol, CellType.STRING);
                 cell.setCellStyle(styleTitle);
                 cell.setCellValue("" + col.getKey());
-//                System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
+                System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
                 currentCol++;
             }
             currentCol = 0;
             currentRow++;
         }
-
-//        System.out.println("EL bodye00>>>>>" + datalist.size());
         datalist.stream().forEach(pararelRow -> {
             Row _row = sheet.createRow(sheet.getPhysicalNumberOfRows());
             int _currentCol = 0;
@@ -361,6 +376,11 @@ public class Converter {
                         Double d = Double.parseDouble("" + col.getValue());
                         cell = _row.createCell(_currentCol, CellType.NUMERIC);
                         cell.setCellValue(d);
+                    } else if (types.get(_currentCol + 1) == 6) {
+                        cell = _row.createCell(_currentCol);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        //get date format
+                        cell.setCellValue(sdf.parse(col.getValue().toString()));
                     } else if (types.get(_currentCol + 1) == CellType.STRING.getCode()) {
 //                        Double d = Double.parseDouble("" + col.getValue());
                         cell = _row.createCell(_currentCol, CellType.STRING);
@@ -395,21 +415,24 @@ public class Converter {
 
                 _currentCol++;
             }
-//            if (sheet.getPhysicalNumberOfRows() % 1000 == 0)
-//                System.out.println("MIL+ = " + _currentCol + "===>");
+            if (sheet.getPhysicalNumberOfRows() % 1000 == 0)
+                System.out.println("MIL+ = " + _currentCol + "===>OK");
         });
 
 //        sheet.autoSizeColumn();
 //        for (Integer column : autosizecolumns) {
 //
-//            sheet.autoSizeColumn(column);
+////            sheet.autoSizeColumn(column);
+//            sheet.setColumnWidth(column, 4000);
 //        }
 
         try {
+            System.out.println("BUILDING XLS...");
             FileOutputStream fileOut = new FileOutputStream(file);
             workbook.write(fileOut);
             fileOut.close();
             workbook.close();
+            System.out.println("BUILDING XLS...OK");
         } catch (Exception ep) {
             ep.printStackTrace();
         }
