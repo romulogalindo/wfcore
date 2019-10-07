@@ -7,6 +7,7 @@ import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.log.Log;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
+import com.acceso.wfweb.units.Contenedor;
 import org.primefaces.event.DragDropEvent;
 
 import javax.faces.application.FacesMessage;
@@ -19,6 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+import org.ehcache.Cache;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.extensions.event.CompleteEvent;
 
 /**
@@ -312,11 +315,19 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     @Override
     public void saveDto() {
         PaginaDAO dao = new PaginaDAO();
-        this.pagina = dao.save(this.pagina);
-        this.pagina.setLs_botone(dao.getButtons(this.pagina.getCo_pagina()));
-        this.pagina.setLs_elemen(dao.getElementos(this.pagina.getCo_pagina()));
-        System.out.println("this.pagina = " + this.pagina);
-        this.paginas = dao.getPaginas();
+//        this.pagina = dao.save(this.pagina);
+        dao.save(this.pagina);
+//        if (defaultTabIndex == 3) {
+//            System.out.println("Grabando Botones");
+//            this.pagina.setLs_botone(dao.getButtons(this.pagina.getCo_pagina()));
+//        }
+//        if (defaultTabIndex == 2) {
+//            System.out.println("Grabando registros-titulos");
+//            this.pagina.setLs_elemen(dao.getElementos(this.pagina.getCo_pagina()));
+//        }
+
+//        System.out.println("this.pagina = " + this.pagina);
+//        this.paginas = dao.getPaginas();
         dao.close();
     }
 
@@ -346,9 +357,76 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         dao.close();
 
         //Pendiente de resolver
-        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
-        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
+//        Cache<Integer, Object> dt = WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER);
+//        dt.forEach((t) -> {
+//            System.out.println("(1)Key = " + t.getKey() + ", Value=" + t.getValue());
+//        });
+        System.out.println("contenedores = " + contenedores);
+        if (contenedores != null && !contenedores.isEmpty()) {
+//            for (ContenedorDTO cnt : contenedores) {
+//                System.out.println("cnt = " + cnt.getCo_conten());
+//                Contenedor ocnt = (Contenedor) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(cnt.getCo_conten());
+//                System.out.println("ocnt = " + ocnt);
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).remove(cnt.getCo_conten());
+//
+//                //Luego remover las paginas
+//                String baseId = "" + cnt.getCo_conten() + this.getPagina().getCo_pagina();
+//                System.out.println("cnt = " + baseId);
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId);
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":VALPAG");
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":PROPAG");
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":COMPAG");
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":DINPAG");
+//            }
+            contenedores.forEach(cnt -> {
+                System.out.println("cnt = " + cnt.getCo_conten());
+                Contenedor ocnt = (Contenedor) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).get(cnt.getCo_conten());
+                System.out.println("ocnt = " + ocnt);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).remove(cnt.getCo_conten());
 
+                //Luego remover las paginas
+                String baseId = "" + cnt.getCo_conten() + this.getPagina().getCo_pagina();
+                System.out.println("cnt = " + baseId);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId);
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":VALPAG");
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":PROPAG");
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":COMPAG");
+                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":DINPAG");
+            });
+        }
+
+//        dt = WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER);
+//        dt.forEach((t) -> {
+//            System.out.println("(2)Key = " + t.getKey() + ", Value=" + t.getValue());
+//        });
+
+        /**/
+//        Cache<String, Object> dt2 = WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS);
+//        dt2.forEach((t) -> {
+//            System.out.println("(T)Key = " + t.getKey() + ", Value=" + t.getValue());
+//
+//        });
+//
+//        System.out.println("pagians! = " + contenedores);
+//        if (contenedores != null && !contenedores.isEmpty()) {
+//            for (ContenedorDTO cnt : contenedores) {
+//                String baseId = "" + cnt.getCo_conten() + this.getPagina().getCo_pagina();
+//                System.out.println("cnt = " + baseId);
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId);
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":VALPAG");
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":PROPAG");
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":COMPAG");
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":DINPAG");
+//
+//            }
+//        }
+//
+//        dt2 = WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS);
+//        dt2.forEach((t) -> {
+//            System.out.println("(T2)Key = " + t.getKey() + ", Value=" + t.getValue());
+//        });
+//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
     }
 
     public List<String> complete(final CompleteEvent event) {

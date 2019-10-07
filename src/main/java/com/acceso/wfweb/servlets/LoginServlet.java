@@ -83,7 +83,7 @@ public class LoginServlet extends HttpServlet {
                         System.out.println("[LOGIN!]Duraccion de session:" + request.getSession().getMaxInactiveInterval());
 
                         //deberia darme una linea por default>>>>ejeurl-->444
-                        goToUrl = "/password";
+                        goToUrl = "/wf?co_conten=444";
                         System.out.println("goToUrl = " + goToUrl);
                         System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
                     }

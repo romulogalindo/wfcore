@@ -40,396 +40,427 @@
                 /*.ui-button-text-only .ui-button-text {*/
                 /*    padding: 5px !important;*/
                 /*}*/
+                .custom_top{
+                    height: 30px;
+                    width: 100%;
+                    display: block;
+                }
+                .custom_middle{
+                    height: 100%;
+                    display: block;
+                    bottom: 51px;
+                    width: 100%;
+                }
+                .custom_bottom{
+                    display: block;
+                    position: fixed;
+                    bottom: 0px;
+                    width: 100%;
+                    z-index: 99;
+                    background: white;
+                }
             </style>
             <h:form id="form">
                 <p:panel id="panelActualizarPagina">
-                    <p:toolbar>
-                        <f:facet name="left">
-                            <span>
-                                <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{paginaBean.pagina.no_pagtit}</h3> |
-                                <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{paginaBean.pagina.co_pagina}]</h4>
-                            </span>
-                        </f:facet>
-                    </p:toolbar>
+                    <!--                    <p:toolbar>
+                                            <f:facet name="left" >
+                                                <span>
+                                                    <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{paginaBean.pagina.no_pagtit}</h3> |
+                                                    <h4 style="margin-top:0;margin-bottom: 0px;display: inline;">Página [#{paginaBean.pagina.co_pagina}]</h4>
+                                                </span>
+                                            </f:facet>
+                                        </p:toolbar>-->
 
-                    <p:panelGrid id="pg" style="width: 100%">
-                        <p:row>
-                            <p:column colspan="3" style="text-align: center; padding: .571em 0px 0px;">
+                    <p:outputPanel style="padding: .3em .5em .3em .5em; margin-bottom: .5em;" class="ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix">
+                        <p:panelGrid style="width: 100%;">
+                            <p:row>
+                                <p:column style="width: 40%;background: transparent;padding: 0px;">
+                                    <p:commandButton action="#{paginaBean.load()}"
+                                                     actionListener="#{paginaBean.doListener()}"
+                                                     value="Atrás"
+                                                     title="Volver al reporte de usuarios"
+                                                     icon="pi pi-arrow-left"
+                                                     accesskey="a"
+                                                     immediate="true">
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column style="width: 20%;background: transparent;text-align: center;padding: 0px;">
+                                    <p:commandButton value="Grabar [CTRL+SHIFT+S]"
+                                                     actionListener="#{paginaBean.saveRegistApply}"
+                                                     widgetVar="btn_dyna_sabe"
+                                                     id="btn_dyna_sabe"
+                                                     icon="pi pi-refresh"
+                                                     ajax="true" async="false"
+                                                     update="panelActualizarPagina">
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column style="width: 40%;background: transparent;text-align: right;padding: 0px;">
+                                    <h3 style="margin-top:0;margin-bottom: 0px;display: inline;">#{paginaBean.pagina.no_pagtit}</h3> |
+                                    <h4 style="margin-top:0;margin-bottom: 0px;display: inline;font-weight: bold;">[#{paginaBean.pagina.co_pagina}]</h4>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:outputPanel>
 
-                                <p:tabView id="tb" activeIndex="#{paginaBean.defaultTabIndex}" style="height: 600px;">
-                                    <p:tab title="Datos" >
+                    <p:outputPanel>
+                        <p:tabView id="tb" activeIndex="#{paginaBean.defaultTabIndex}" style="height: 600px;" >
+                            <p:tab title="Datos" >
 
-                                        <p:panelGrid style="display: inline-block;">
+                                <p:panelGrid style="display: inline-block;">
 
-                                            <p:row>
-                                                <p:column styleClass="form_col_title">
-                                                    <p:outputLabel for="co_pagina" value="ID"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_empty">
-                                                    <p:spacer width="1" height="24"
-                                                              style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_detail">
-                                                    <p:outputLabel id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
-                                                                   rendered="#{paginaBean.thisEditable}"/>
-                                                </p:column>
-                                            </p:row>
-                                            <p:row>
-                                                <p:column styleClass="form_col_title">
-                                                    <p:outputLabel for="no_pagtit" value="Nombre(defecto)"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_empty">
-                                                    <p:spacer width="1" height="24"
-                                                              style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_detail">
-                                                    <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
-                                                                 required="true"
-                                                                 requiredMessage="Debe ingresar un Nombre."
-                                                                 rendered="#{paginaBean.thisEditable}"/>
-                                                </p:column>
-                                            </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="co_pagina" value="ID"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:outputLabel id="co_pagina" value="#{paginaBean.pagina.co_pagina}"
+                                                           rendered="#{paginaBean.thisEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="no_pagtit" value="Nombre(defecto)"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputText id="no_pagtit" value="#{paginaBean.pagina.no_pagtit}"
+                                                         required="true"
+                                                         requiredMessage="Debe ingresar un Nombre."
+                                                         rendered="#{paginaBean.thisEditable}"/>
+                                        </p:column>
+                                    </p:row>
 
-                                            <p:row>
-                                                <p:column styleClass="form_col_title">
-                                                    <p:outputLabel for="ti_pagina" value="Tipo"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_empty">
-                                                    <p:spacer width="1" height="24"
-                                                              style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_detail">
-                                                    <p:selectOneRadio id="ti_pagina" value="#{paginaBean.pagina.ti_pagina}"
-                                                                      unselectable="true"
-                                                                      rendered="#{paginaBean.thisEditable}">
-                                                        <f:selectItem itemLabel="Formulario" itemValue="R"/>
-                                                        <f:selectItem itemLabel="Reporte" itemValue="T"/>
-                                                    </p:selectOneRadio>
-                                                </p:column>
-                                            </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="ti_pagina" value="Tipo"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:selectOneRadio id="ti_pagina" value="#{paginaBean.pagina.ti_pagina}"
+                                                              unselectable="true"
+                                                              rendered="#{paginaBean.thisEditable}">
+                                                <f:selectItem itemLabel="Formulario" itemValue="R"/>
+                                                <f:selectItem itemLabel="Reporte" itemValue="T"/>
+                                            </p:selectOneRadio>
+                                        </p:column>
+                                    </p:row>
 
-                                            <p:row>
-                                                <p:column styleClass="form_col_title">
-                                                    <p:outputLabel for="de_pagina" value="Descripción"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_empty">
-                                                    <p:spacer width="1" height="24"
-                                                              style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
-                                                </p:column>
-                                                <p:column styleClass="form_col_detail">
-                                                    <p:inputTextarea id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
-                                                                     required="false"
-                                                                     requiredMessage="Debe ingresar una Descripción."
-                                                                     rendered="#{paginaBean.thisEditable}"/>
-                                                </p:column>
-                                            </p:row>
+                                    <p:row>
+                                        <p:column styleClass="form_col_title">
+                                            <p:outputLabel for="de_pagina" value="Descripción"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_empty">
+                                            <p:spacer width="1" height="24"
+                                                      style="position: relative;bottom: 5px;margin-right: 10px;top: 0px;display: block;border: 1px solid #c8c8c8;"/>
+                                        </p:column>
+                                        <p:column styleClass="form_col_detail">
+                                            <p:inputTextarea id="de_pagina" value="#{paginaBean.pagina.de_pagina}"
+                                                             required="false"
+                                                             requiredMessage="Debe ingresar una Descripción."
+                                                             rendered="#{paginaBean.thisEditable}"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                            </p:tab>
+
+                            <p:tab title="Titulos y Registros">
+                                <p:toolbar>
+                                    <f:facet name="left">
+                                        <p:outputLabel value="Lista de Titulos/Registros"></p:outputLabel>
+                                    </f:facet>
+
+                                    <f:facet name="right">
+                                        <p:commandButton icon="pi pi-file" value="Nuevo título"
+                                                         partialSubmit="true"
+                                                         action="#{paginaBean.pagtit_new}">
+                                            <f:setPropertyActionListener value="true"
+                                                                         target="#{paginaBean.regEditable}"/>
+                                        </p:commandButton>
+                                    </f:facet>
+                                    <f:facet name="right">
+                                        <p:commandButton icon="pi pi-file" value="Nuevo registro"
+                                                         partialSubmit="true"
+                                                         action="#{paginaBean.pagreg_new}">
+                                            <f:setPropertyActionListener value="true"
+                                                                         target="#{paginaBean.regEditable}"/>
+                                        </p:commandButton>
+                                    </f:facet>
+
+                                </p:toolbar>
+
+                                <p:spacer height="1"></p:spacer>
+
+                                <p:dataTable id="listax"
+                                             var="ele"
+                                             value="#{paginaBean.pagina.ls_elemen}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             rows="100"
+                                             widgetVar="widTable3"
+                                             selectionMode="single"
+                                             selection="#{paginaBean.elementoSeleccionado}"
+                                             rowKey="#{ele.co_elemen}"
+                                             rowIndexVar="N"
+                                             scrollable="true"
+                                             scrollHeight="400"
+                                             style="width:100%; ">
+
+                                    <p:ajax event="sort" skipChildren="false"/>
+
+                                    <p:ajax event="rowDblselect" listener="#{paginaBean.eventupdateRegistorTitle}"
+                                            global="false">
+                                        <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
+                                        <f:setPropertyActionListener value="true"
+                                                                     target="#{paginaBean.regEditable}"/>
+                                        <f:setPropertyActionListener value="#{ele}"
+                                                                     target="#{paginaBean.elementoSeleccionado}"/>
+                                    </p:ajax>
+
+                                    <p:column style="text-align: right" width="20">
+                                        <f:facet name="header">
+                                            <h:outputText value="#"/>
+                                        </f:facet>
+                                        <h:outputText value="#{N + 1}"/>
+                                    </p:column>
+
+                                    <p:column headerText="TIT" width="20" styleClass="table_cell_right">
+                                        <h:outputText value="#{ele.pagtitDTO.co_pagtit}"
+                                                      rendered="#{ele.ti_elemen == 1}"/>
+                                    </p:column>
+
+                                    <p:column headerText="REG" width="20" styleClass="table_cell_right">
+                                        <h:outputText value="#{ele.pagregDTO.co_pagreg}"
+                                                      rendered="#{ele.ti_elemen == 2}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Tipo" width="50" styleClass="table_cell_left">
+                                        <h:outputText value="Título" rendered="#{ele.ti_elemen == 1}"/>
+                                        <h:outputText value="&nbsp;&nbsp;Registro"
+                                                      rendered="#{ele.ti_elemen == 2}"/>
+                                    </p:column>
+
+                                    <p:column headerText="" width="10" styleClass="table_cell_center">
+                                        <h:outputText value="#{ele.pagregDTO.ti_pagreg}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Descripción" width="400" colspan="2"
+                                              styleClass="table_cell_left">
+
+                                        <p:panelGrid rendered="#{ele.ti_elemen == 1}">
+                                            <h:outputText value="#{ele.pagtitDTO.no_pagtit}"/>
                                         </p:panelGrid>
+                                        <p:panelGrid columns="2" rendered="#{ele.ti_elemen == 2}" styleClass="subdetitem">
+                                            <h:outputText value="#{ele.pagregDTO.no_pagreg}"/>
+                                            <h:outputText value="#{ele.pagregDTO.ti_pagreg_desc}"/>
+                                        </p:panelGrid>
+                                    </p:column>
 
-                                    </p:tab>
+                                    <p:column headerText="Acciones" style="text-align: center">
 
-                                    <p:tab title="Titulos y Registros">
-                                        <p:toolbar>
-                                            <f:facet name="left">
-                                                <p:outputLabel value="Lista de Titulos/Registros"></p:outputLabel>
-                                            </f:facet>
+                                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaBean.pagreg_edit}" update="mainPanel" ajax="true"
+                                                         async="false">
+                                            <!--<f:setPropertyActionListener value="#{pag}" target="#{paginaLSBean.pagina}"/>-->
 
-                                            <f:facet name="right">
-                                                <p:commandButton icon="pi pi-file" value="Nuevo título"
-                                                                 partialSubmit="true"
-                                                                 action="#{paginaBean.pagtit_new}">
-                                                    <f:setPropertyActionListener value="true"
-                                                                                 target="#{paginaBean.regEditable}"/>
-                                                </p:commandButton>
-                                            </f:facet>
-                                            <f:facet name="right">
-                                                <p:commandButton icon="pi pi-file" value="Nuevo registro"
-                                                                 partialSubmit="true"
-                                                                 action="#{paginaBean.pagreg_new}">
-                                                    <f:setPropertyActionListener value="true"
-                                                                                 target="#{paginaBean.regEditable}"/>
-                                                </p:commandButton>
-                                            </f:facet>
+                                            <f:setPropertyActionListener value="#{ele}"
+                                                                         target="#{paginaBean.elementoSeleccionado}"/>
+                                            <f:setPropertyActionListener value="true"
+                                                                         target="#{paginaBean.regEditable}"/>
+                                        </p:commandButton>
 
-                                        </p:toolbar>
+                                        <p:commandButton icon="fa fa-trash" value="Eliminar"
+                                                         action="#{paginaBean.pagreg_delete}"
+                                                         update="@form">
+                                            <f:setPropertyActionListener value="#{ele}"
+                                                                         target="#{paginaBean.elementoSeleccionado}"/>
+                                            <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                                       icon="fa fa-exclamation-triangle"/>
+                                        </p:commandButton>
 
-                                        <p:spacer height="1"></p:spacer>
+                                    </p:column>
 
-                                        <p:dataTable id="listax"
-                                                     var="ele"
-                                                     value="#{paginaBean.pagina.ls_elemen}"
-                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                                     paginator="true"
-                                                     paginatorPosition="bottom"
-                                                     rows="100"
-                                                     widgetVar="widTable3"
-                                                     selectionMode="single"
-                                                     selection="#{paginaBean.elementoSeleccionado}"
-                                                     rowKey="#{ele.co_elemen}"
-                                                     rowIndexVar="N"
-                                                     scrollable="true"
-                                                     scrollHeight="400"
-                                                     style="width:100%; ">
+                                </p:dataTable>
 
-                                            <p:ajax event="sort" skipChildren="false"/>
+                            </p:tab>
 
-                                            <p:ajax event="rowDblselect" listener="#{paginaBean.eventupdateRegistorTitle}"
-                                                    global="false">
-                                                <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
-                                                <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.regEditable}"/>
-                                                <f:setPropertyActionListener value="#{ele}"
-                                                                             target="#{paginaBean.elementoSeleccionado}"/>
-                                            </p:ajax>
+                            <p:tab title="Botones">
+                                <p:toolbar>
+                                    <f:facet name="left">
+                                        <p:outputLabel value="Lista de botones"></p:outputLabel>
+                                    </f:facet>
 
-                                            <p:column style="text-align: right" width="20">
-                                                <f:facet name="header">
-                                                    <h:outputText value="#"/>
-                                                </f:facet>
-                                                <h:outputText value="#{N + 1}"/>
-                                            </p:column>
+                                    <f:facet name="right">
+                                        <p:commandButton icon="pi pi-file" value="Nuevo botón" partialSubmit="true"
+                                                         action="#{paginaBean.pagbot_new}">
+                                            <f:setPropertyActionListener value="true"
+                                                                         target="#{paginaBean.btnEditable}"/>
+                                        </p:commandButton>
+                                    </f:facet>
 
-                                            <p:column headerText="TIT" width="20" styleClass="table_cell_right">
-                                                <h:outputText value="#{ele.pagtitDTO.co_pagtit}"
-                                                              rendered="#{ele.ti_elemen == 1}"/>
-                                            </p:column>
+                                </p:toolbar>
 
-                                            <p:column headerText="REG" width="20" styleClass="table_cell_right">
-                                                <h:outputText value="#{ele.pagregDTO.co_pagreg}"
-                                                              rendered="#{ele.ti_elemen == 2}"/>
-                                            </p:column>
+                                <p:spacer height="2"></p:spacer>
 
-                                            <p:column headerText="Tipo" width="50" styleClass="table_cell_left">
-                                                <h:outputText value="Título" rendered="#{ele.ti_elemen == 1}"/>
-                                                <h:outputText value="&nbsp;&nbsp;Registro"
-                                                              rendered="#{ele.ti_elemen == 2}"/>
-                                            </p:column>
+                                <p:dataTable id="lista2"
+                                             var="bot"
+                                             value="#{paginaBean.pagina.ls_botone}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             rows="100"
+                                             widgetVar="widTable2"
+                                             selectionMode="single"
+                                             selection="#{paginaBean.botonSeleccionado}"
+                                             rowKey="#{bot.co_pagbot}"
+                                             rowIndexVar="N"
+                                             scrollable="true"
+                                             scrollHeight="400"
+                                             style="width:100%; ">
 
-                                            <p:column headerText="" width="10" styleClass="table_cell_center">
-                                                <h:outputText value="#{ele.pagregDTO.ti_pagreg}"/>
-                                            </p:column>
+                                    <p:ajax event="sort" skipChildren="false"/>
 
-                                            <p:column headerText="Descripción" width="400" colspan="2"
-                                                      styleClass="table_cell_left">
+                                    <p:ajax event="rowDblselect" listener="#{paginaBean.pagbot_edit}"
+                                            global="false">
+                                        <f:setPropertyActionListener value="#{bot}"
+                                                                     target="#{paginaBean.botonSeleccionado}"/>
+                                        <f:setPropertyActionListener value="true"
+                                                                     target="#{paginaBean.btnEditable}"/>
+                                    </p:ajax>
 
-                                                <p:panelGrid rendered="#{ele.ti_elemen == 1}">
-                                                    <h:outputText value="#{ele.pagtitDTO.no_pagtit}"/>
-                                                </p:panelGrid>
-                                                <p:panelGrid columns="2" rendered="#{ele.ti_elemen == 2}" styleClass="subdetitem">
-                                                    <h:outputText value="#{ele.pagregDTO.no_pagreg}"/>
-                                                    <h:outputText value="#{ele.pagregDTO.ti_pagreg_desc}"/>
-                                                </p:panelGrid>
-                                            </p:column>
+                                    <p:column style="text-align: right" width="20">
+                                        <f:facet name="header">
+                                            <h:outputText value="#"/>
+                                        </f:facet>
+                                        <h:outputText value="#{N + 1}"/>
+                                    </p:column>
 
-                                            <p:column headerText="Acciones" style="text-align: center">
+                                    <p:column headerText="COD" width="30" styleClass="table_cell_right">
+                                        <h:outputText value="#{bot.co_pagbot}"/>
+                                    </p:column>
 
-                                                <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaBean.pagreg_edit}" update="mainPanel" ajax="true"
-                                                                 async="false">
-                                                    <!--<f:setPropertyActionListener value="#{pag}" target="#{paginaLSBean.pagina}"/>-->
+                                    <p:column headerText="Nombre" width="150" styleClass="table_cell_left">
+                                        <h:outputText value="#{bot.no_pagbot}"/>
+                                    </p:column>
 
-                                                    <f:setPropertyActionListener value="#{ele}"
-                                                                                 target="#{paginaBean.elementoSeleccionado}"/>
-                                                    <f:setPropertyActionListener value="true"
-                                                                                 target="#{paginaBean.regEditable}"/>
-                                                </p:commandButton>
+                                    <p:column headerText="Orden" width="40" styleClass="table_cell_right">
+                                        <h:outputText value="#{bot.or_pagbot}"/>
+                                    </p:column>
 
-                                                <p:commandButton icon="fa fa-trash" value="Eliminar"
-                                                                 action="#{paginaBean.pagreg_delete}"
-                                                                 update="@form">
-                                                    <f:setPropertyActionListener value="#{ele}"
-                                                                                 target="#{paginaBean.elementoSeleccionado}"/>
-                                                    <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                                               icon="fa fa-exclamation-triangle"/>
-                                                </p:commandButton>
+                                    <p:column headerText="Tipo" width="60" styleClass="table_cell_center">
+                                        <h:outputText value="Estandar" rendered="#{bot.ti_pagbot eq 'E'}"/>
+                                        <h:outputText value="Global" rendered="#{bot.ti_pagbot eq 'G'}"/>
+                                    </p:column>
 
-                                            </p:column>
-
-                                        </p:dataTable>
-
-                                    </p:tab>
-
-                                    <p:tab title="Botones">
-                                        <p:toolbar>
-                                            <f:facet name="left">
-                                                <p:outputLabel value="Lista de botones"></p:outputLabel>
-                                            </f:facet>
-
-                                            <f:facet name="right">
-                                                <p:commandButton icon="pi pi-file" value="Nuevo botón" partialSubmit="true"
-                                                                 action="#{paginaBean.pagbot_new}">
-                                                    <f:setPropertyActionListener value="true"
-                                                                                 target="#{paginaBean.btnEditable}"/>
-                                                </p:commandButton>
-                                            </f:facet>
-
-                                        </p:toolbar>
-
-                                        <p:spacer height="2"></p:spacer>
-
-                                        <p:dataTable id="lista2"
-                                                     var="bot"
-                                                     value="#{paginaBean.pagina.ls_botone}"
-                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-                                                     paginator="true"
-                                                     paginatorPosition="bottom"
-                                                     rows="100"
-                                                     widgetVar="widTable2"
-                                                     selectionMode="single"
-                                                     selection="#{paginaBean.botonSeleccionado}"
-                                                     rowKey="#{bot.co_pagbot}"
-                                                     rowIndexVar="N"
-                                                     scrollable="true"
-                                                     scrollHeight="400"
-                                                     style="width:100%; ">
-
-                                            <p:ajax event="sort" skipChildren="false"/>
-
-                                            <p:ajax event="rowDblselect" listener="#{paginaBean.pagbot_edit}"
-                                                    global="false">
-                                                <f:setPropertyActionListener value="#{bot}"
-                                                                             target="#{paginaBean.botonSeleccionado}"/>
-                                                <f:setPropertyActionListener value="true"
-                                                                             target="#{paginaBean.btnEditable}"/>
-                                            </p:ajax>
-
-                                            <p:column style="text-align: right" width="20">
-                                                <f:facet name="header">
-                                                    <h:outputText value="#"/>
-                                                </f:facet>
-                                                <h:outputText value="#{N + 1}"/>
-                                            </p:column>
-
-                                            <p:column headerText="COD" width="30" styleClass="table_cell_right">
-                                                <h:outputText value="#{bot.co_pagbot}"/>
-                                            </p:column>
-
-                                            <p:column headerText="Nombre" width="150" styleClass="table_cell_left">
-                                                <h:outputText value="#{bot.no_pagbot}"/>
-                                            </p:column>
-
-                                            <p:column headerText="Orden" width="40" styleClass="table_cell_right">
-                                                <h:outputText value="#{bot.or_pagbot}"/>
-                                            </p:column>
-
-                                            <p:column headerText="Tipo" width="60" styleClass="table_cell_center">
-                                                <h:outputText value="Estandar" rendered="#{bot.ti_pagbot eq 'E'}"/>
-                                                <h:outputText value="Global" rendered="#{bot.ti_pagbot eq 'G'}"/>
-                                            </p:column>
-
-                                            <p:column headerText="Propag" width="60" styleClass="table_cell_center">
-                                                <h:outputText value="Si" rendered="#{bot.il_proces}"/>
-                                                <h:outputText value="No" rendered="#{!bot.il_proces}"/>
-                                            </p:column>
+                                    <p:column headerText="Propag" width="60" styleClass="table_cell_center">
+                                        <h:outputText value="Si" rendered="#{bot.il_proces}"/>
+                                        <h:outputText value="No" rendered="#{!bot.il_proces}"/>
+                                    </p:column>
 
 
-                                            <p:column headerText="Acciones" style="text-align: center">
-                                                <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaBean.pagbot_edit}" update="mainPanel" ajax="true"
-                                                                 async="false">
-                                                    <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
-                                                    <f:setPropertyActionListener value="#{bot}"
-                                                                                 target="#{paginaBean.botonSeleccionado}"/>
-                                                    <f:setPropertyActionListener value="true"
-                                                                                 target="#{paginaBean.btnEditable}"/>
-                                                </p:commandButton>
+                                    <p:column headerText="Acciones" style="text-align: center">
+                                        <p:commandButton icon="fa fa-fw fa-edit" title="Editar"  value="Editar" action="#{paginaBean.pagbot_edit}" update="mainPanel" ajax="true"
+                                                         async="false">
+                                            <!--<f:setPropertyActionListener value="{pag}" target="{paginaBean.pagina}"/>-->
+                                            <f:setPropertyActionListener value="#{bot}"
+                                                                         target="#{paginaBean.botonSeleccionado}"/>
+                                            <f:setPropertyActionListener value="true"
+                                                                         target="#{paginaBean.btnEditable}"/>
+                                        </p:commandButton>
 
-                                                <p:spacer width="10px"/>
+                                        <p:spacer width="10px"/>
 
-                                                <p:commandButton icon="fa fa-trash" value="Eliminar"
-                                                                 action="#{paginaBean.pagbot_delete}"
-                                                                 update="@form">
-                                                    <f:setPropertyActionListener value="#{bot}"
-                                                                                 target="#{paginaBean.botonSeleccionado}"/>
-                                                    <p:confirm header="Confirmación" message="¿Desea continuar?"
-                                                               icon="fa fa-exclamation-triangle"/>
-                                                </p:commandButton>
+                                        <p:commandButton icon="fa fa-trash" value="Eliminar"
+                                                         action="#{paginaBean.pagbot_delete}"
+                                                         update="@form">
+                                            <f:setPropertyActionListener value="#{bot}"
+                                                                         target="#{paginaBean.botonSeleccionado}"/>
+                                            <p:confirm header="Confirmación" message="¿Desea continuar?"
+                                                       icon="fa fa-exclamation-triangle"/>
+                                        </p:commandButton>
 
-                                            </p:column>
+                                    </p:column>
 
-                                        </p:dataTable>
+                                </p:dataTable>
 
-                                    </p:tab>
+                            </p:tab>
 
-                                    <p:tab id="valpagjs" title="Script de Carga">
-                                        <p:outputPanel style="text-align: left;padding: 0px;height: 100%">
-                                            <pe:codeMirror id="cadeJS" mode="javascript" theme="material" label="valpag.js"
-                                                           value="#{paginaBean.pagina.js_valpag}"
-                                                           lineNumbers="true"
-                                                           lineWrapping="true"
-                                                           matchBrackets="true"
-                                                           keyMap="sublime"
-                                                           tabSize="4"
-                                                           indentUnit="4"
-                                                           widgetVar="cadeJS"
-                                                           completeMethod="#{paginaBean.complete}"  
-                                                           extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS').complete(); }}"
-                                                           />
-                                        </p:outputPanel>
-                                    </p:tab>
+                            <p:tab id="valpagjs" title="Script de Carga">
+                                <p:outputPanel style="text-align: left;padding: 0px;height: 100%;">
+                                    <pe:codeMirror id="cadeJS" mode="javascript" theme="material" label="valpag.js"
+                                                   value="#{paginaBean.pagina.js_valpag}"
+                                                   lineNumbers="true"
+                                                   lineWrapping="true"
+                                                   matchBrackets="true"
+                                                   keyMap="sublime"
+                                                   tabSize="4"
+                                                   indentUnit="4"
+                                                   widgetVar="cadeJS"
+                                                   completeMethod="#{paginaBean.complete}"  
+                                                   extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS').complete(); }, 'Ctrl-S': function(cm) { $(PF('btn_dyna_sabe').jqId).click() } ,'Ctrl-Shift-S':function(cm) { $(PF('btn_dyna_sabe').jqId).click() }}"
+                                                   />
+                                </p:outputPanel>
+                            </p:tab>
 
-                                    <p:tab id="propagjs" title="Script de Proceso">
-                                        <p:outputPanel style="text-align: left;">
-                                            <pe:codeMirror id="cadeJS2" mode="javascript" theme="material" label="valpag.js"
-                                                           value="#{paginaBean.pagina.js_propag}"
-                                                           lineNumbers="true"
-                                                           lineWrapping="true"
-                                                           matchBrackets="true"
-                                                           keyMap="sublime"
-                                                           tabSize="4"
-                                                           indentUnit="4"
-                                                           widgetVar="cadeJS2"
-                                                           completeMethod="#{paginaBean.complete}"  
-                                                           extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS2').complete(); }}"
-                                                           />
-                                        </p:outputPanel>
-                                    </p:tab>
+                            <p:tab id="propagjs" title="Script de Proceso">
+                                <p:outputPanel style="text-align: left;padding: 0px;height: 100%;">
+                                    <pe:codeMirror id="cadeJS2" mode="javascript" theme="material" label="valpag.js"
+                                                   value="#{paginaBean.pagina.js_propag}"
+                                                   lineNumbers="true"
+                                                   lineWrapping="true"
+                                                   matchBrackets="true"
+                                                   keyMap="sublime"
+                                                   tabSize="4"
+                                                   indentUnit="4"
+                                                   widgetVar="cadeJS2"
+                                                   completeMethod="#{paginaBean.complete}"  
+                                                   extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS2').complete(); }, 'Ctrl-S': function(cm) { $(PF('btn_dyna_sabe').jqId).click() } ,'Ctrl-Shift-S':function(cm) { $(PF('btn_dyna_sabe').jqId).click() }}"
+                                                   />
+                                </p:outputPanel>
+                            </p:tab>
 
-                                    <p:tab id="dinpagjs" title="Script de Dinamismo">
-                                        <p:outputPanel style="text-align: left;">
-                                            <pe:codeMirror id="cadeJS4" mode="javascript" theme="material" label="dinpag.js"
-                                                           value="#{paginaBean.pagina.js_dinpag}"
-                                                           lineNumbers="true"
-                                                           lineWrapping="true"
-                                                           matchBrackets="true"
-                                                           keyMap="sublime"
-                                                           tabSize="4"
-                                                           indentUnit="4"
-                                                           widgetVar="cadeJS4"
-                                                           completeMethod="#{paginaBean.complete}"  
-                                                           extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS4').complete(); }}"
-                                                           />
-                                        </p:outputPanel>
-                                    </p:tab>
-                                </p:tabView>
-
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column colspan="3" style="padding: 0px;">
-                                <p:separator/>
-                            </p:column>
-                        </p:row>
-                        <p:row>
-                            <p:column style="width: 20%;">
-                                <p:commandButton action="#{paginaBean.load()}"
-                                                 actionListener="#{paginaBean.doListener()}"
-                                                 value="Atrás"
-                                                 title="Volver al reporte de usuarios"
-                                                 icon="pi pi-arrow-left"
-                                                 accesskey="a"
-                                                 immediate="true">
-                                </p:commandButton>
-                            </p:column>
-                            <p:column style="text-align: center;width: 60%;">
-                                <p:commandButton value="Grabar y Aplicar"
-                                                 actionListener="#{paginaBean.saveRegistApply}"
-                                                 icon="pi pi-refresh"
-                                                 ajax="true" async="false"
-                                                 update="panelActualizarPagina">
-                                </p:commandButton>
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
+                            <p:tab id="dinpagjs" title="Script de Dinamismo">
+                                <p:outputPanel style="text-align: left;padding: 0px;height: 100%;">
+                                    <pe:codeMirror id="cadeJS4" mode="javascript" theme="material" label="dinpag.js"
+                                                   value="#{paginaBean.pagina.js_dinpag}"
+                                                   lineNumbers="true"
+                                                   lineWrapping="true"
+                                                   matchBrackets="true"
+                                                   keyMap="sublime"
+                                                   tabSize="4"
+                                                   indentUnit="4"
+                                                   widgetVar="cadeJS4"
+                                                   completeMethod="#{paginaBean.complete}"
+                                                   extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS4').complete(); }, 'Ctrl-S': function(cm) { $(PF('btn_dyna_sabe').jqId).click() } ,'Ctrl-Shift-S':function(cm) { $(PF('btn_dyna_sabe').jqId).click() }}"
+                                                   />
+                                </p:outputPanel>
+                            </p:tab>
+                        </p:tabView>
+                    </p:outputPanel>
+                    <!--                    <p:panelGrid id="pg" style="width: 100%">
+                                            <p:row>
+                                                <p:column colspan="1" style="text-align: center; padding: .571em 0px 0px;">
+                    
+                                                    
+                    
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>-->
 
                 </p:panel>
+                <p:hotkey bind="ctrl+shift+s" actionListener="#{paginaBean.saveRegistApply}" />
+                <p:hotkey bind="ctrl+s" actionListener="#{paginaBean.saveRegistApply}"/>
+                <p:hotkey bind="ctrl+b" action="#{paginaBean.load()}" actionListener="#{paginaBean.doListener()}"/>
             </h:form>
 
         </ui:define>
