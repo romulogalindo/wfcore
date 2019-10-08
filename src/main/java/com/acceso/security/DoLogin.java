@@ -45,11 +45,10 @@ public class DoLogin {
         //LOGIN--A/2
         if (ENABLED_LOGIN_LDAP) {
             //autenticacion anexa
-            //        String serverURL = "ldap://192.168.44.82:389";
-//        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
-//        String bindDN = "cn=rgalindo,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe";
-            SecurityLDAO ldao = new SecurityLDAO("ldap://192.168.44.82:389", "cn=USER,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe");
-            usuarioLDAP = ldao.connect(username, password);
+//            SecurityLDAO ldao = new SecurityLDAO("ldap://192.168.44.82:389", "cn=USER,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe");
+            SecurityLDAO ldao = new SecurityLDAO("ldap://10.3.3.111:389", "cn=admins,dc=correocrediticio,dc=pe");
+//            usuarioLDAP = ldao.connect(username, password);
+            usuarioLDAP = ldao.connect("zimbra", "xxB6gUBmGd");
             System.out.println("usuarioLDAP = " + usuarioLDAP);
             if (usuarioLDAP.isIl_conect()) {
                 SecurityDAO securityDAO = new SecurityDAO();

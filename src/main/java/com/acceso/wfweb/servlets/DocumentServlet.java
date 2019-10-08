@@ -1,6 +1,8 @@
 package com.acceso.wfweb.servlets;
 
+import com.acceso.wfcore.apis.HttpAPI;
 import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfcore.listerners.WFCoreListener;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.beans.legacy.*;
@@ -13,9 +15,11 @@ import com.google.gson.Gson;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.usermodel.CharacterRun;
 import org.apache.poi.hwpf.usermodel.Range;
@@ -1038,6 +1042,35 @@ public class DocumentServlet extends HttpServlet {
 
                                     item.write(archivo);
                                     items2.add(arcadj);
+
+                                    /*NEW ADD*/
+                                    byte[] encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(archivo));
+                                    String file64String = new String(encoded, StandardCharsets.US_ASCII);
+
+                                    Map<String, String> headers = new HashMap<>();
+                                    headers.put("Content-Type", "application/json");
+                                    headers.put("Accept", "application/json");
+
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("json", "{\"base\":\"" + file64String + "\"}");
+                                    System.out.println("=====> " + "{\"base\":\"" + file64String + "\"}");
+
+//                                    JsonResponse firstResponse = new HttpAPI().POST("http://sd1.accesocrediticio.com:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
+//                                    JsonResponse firstResponse = new HttpAPI().POST("http://192.168.44.230:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
+                                    JsonResponse firstResponse = new HttpAPI().POST("http://10.3.3.122:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
+                                    System.out.println("firstResponse = " + firstResponse);
+                                    System.out.println("firstResponse = " + firstResponse.getStatus());
+                                    if (firstResponse.getStatus().contentEquals("ERROR")) {
+                                        System.out.println("firstResponse = " + firstResponse.getError().getMessage());
+                                    } else {
+                                        System.out.println("firstResponse = " + firstResponse.getResult());
+                                        System.out.println("firstResponse = " + firstResponse.getResult().toString());
+                                    }
+
+
+//                                    byte[] fileContent = FileUtils.readFileToByteArray(archivo);
+//                                    String encodedString = Base64.getEncoder().encodeToString(fileContent);
+
                                     WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("" + arcadj.getCo_archiv(), archivo);
                                 } catch (Exception ep) {
                                     ep.printStackTrace();
@@ -1076,7 +1109,7 @@ public class DocumentServlet extends HttpServlet {
                         response.setContentType("application/vnd.ms-excel");
                     } else if (ext.contentEquals("XLSX")) {
                         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                    }else if (ext.contentEquals("ZIP")) {
+                    } else if (ext.contentEquals("ZIP")) {
                         response.setContentType("application/zip, application/octet-stream");
                     }
 

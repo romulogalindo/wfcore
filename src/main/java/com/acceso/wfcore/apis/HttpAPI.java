@@ -6,6 +6,7 @@ import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.units.Contenedor;
 import com.acceso.wfweb.utils.JsonResponse;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.File;
