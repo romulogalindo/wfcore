@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import org.ehcache.Cache;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.extensions.event.CompleteEvent;
 
@@ -440,6 +441,27 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
                 .collect(Collectors.toList());
 
         return suggestions;
+    }
+
+    public void onSelect(SelectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
+        System.out.println("event.getObject() = " + event.getObject());
+        System.out.println("getClass = " + event.getObject().getClass());
+        int sel_btn_sel = Integer.parseInt((String) event.getObject());
+
+        for (int i = 0; i < this.pagina.getLs_botone().size(); i++) {
+            System.out.println("i =>> " + getPagina().getLs_botone().get(i));
+            System.out.println("i =>> " + getPagina().getClass());
+            System.out.println("i =>> " + getPagina().getLs_botone().getClass());
+            System.out.println("i =>> " + getPagina().getLs_botone().get(i).getClass());
+            BotonDTO btn = getPagina().getLs_botone().get(i);
+            if (btn.getCo_pagbot() == sel_btn_sel) {
+                this.botonSeleccionado = btn;
+                i = 9999;
+            }
+        }
+
     }
 
     public String pagbot_new() {
