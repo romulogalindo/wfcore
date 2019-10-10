@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
+
 import org.ehcache.Cache;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TabChangeEvent;
@@ -138,6 +139,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         catalogo.add("PRINTABLE(true);");
         catalogo.add("CONFTABLE({searching: false, ordering: false, \"pageLength\": 20, \"scrollX\": true});");
         catalogo.add("document.getElementById('PAG' + CO_PAGINA).getElementsByTagName('TBODY')[0].getElementsByTagName('TR')[0].style.display = 'none';");
+        //msg
+        catalogo.add("MSG.PUSh({co_usuari: CO_USUARI, co_conten: CO_CONTEN,ti_messag : MSG_TYPE_INFO|MSG_TYPE_SUCCESS|MSG_TYPE_ERROR|MSG_TYPE_WARNING, no_title : 'Title', no_body : 'Mensaje', ca_timeout: 10});");
         //bucles
         catalogo.add("for each( var a in b){ }");
         catalogo.add("if(a == b){ }");
@@ -149,6 +152,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
         this.titleName = "Paginas";
         this.thisEditable = true;
         this.registrosCargados = new ArrayList<>();
+        this.botonSeleccionado = new BotonDTO();
     }
 
     public void onRegistroSeleccionado(DragDropEvent ddEvent) {
@@ -269,11 +273,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
             dao.close();
         }
 
-        obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("X64BOT");
-        Log.info("[PaginaBean]X64BOT => " + obj);
-        if (obj != null) {
-            this.botonSeleccionado = (BotonDTO) obj;
-        }
+//        obj = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("X64BOT");
+//        Log.info("[PaginaBean]X64BOT => " + obj);
+//        if (obj != null) {
+//            this.botonSeleccionado = (BotonDTO) obj;
+//        }
+        this.botonSeleccionado = new BotonDTO();
     }
 
     @Override
@@ -292,8 +297,11 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public void saveRegistApply() {
+        System.out.println("saveRegistApply_1");
         saveDto();
+        System.out.println("saveRegistApply_2");
         apply();
+        System.out.println("saveRegistApply_3");
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Página " + this.pagina.getCo_pagina(), "Datos actualizados y aplicacdos."));
 //        return null;
 //        return URL_LISTA;
@@ -387,7 +395,7 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
                 //Luego remover las paginas
                 String baseId = "" + cnt.getCo_conten() + this.getPagina().getCo_pagina();
-                System.out.println("cnt = " + baseId);
+                System.out.println("OBJ Completo BASE = " + baseId);
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId);
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":VALPAG");
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).remove(baseId + ":PROPAG");
@@ -464,11 +472,20 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     }
 
-    public String pagbot_new() {
+//    public String pagbot_new() {
+//        System.out.println("NEW!!!");
+//        botonSeleccionado = new BotonDTO();
+//        botonSeleccionado.setCo_pagbot(-1);
+//
+//        return URL_BTN_NEW;
+//    }
+
+    public void pagbot_new() {
+        System.out.println("NEW!!!");
         botonSeleccionado = new BotonDTO();
         botonSeleccionado.setCo_pagbot(-1);
-
-        return URL_BTN_NEW;
+        System.out.println("!botonSeleccionado>>> = " + botonSeleccionado);
+//        return URL_BTN_NEW;
     }
 
     public String pagbot_view() {
@@ -633,7 +650,12 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 
     public void setBotonSeleccionado(BotonDTO botonSeleccionado) {
         System.out.println("??>>botonSeleccionado = " + botonSeleccionado);
-        this.botonSeleccionado = botonSeleccionado;
+        if (botonSeleccionado == null) {
+            this.botonSeleccionado = new BotonDTO();
+        } else {
+            this.botonSeleccionado = botonSeleccionado;
+        }
+
     }
 
     public ElementoDTO getElementoSeleccionado() {
