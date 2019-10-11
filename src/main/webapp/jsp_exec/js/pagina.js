@@ -1063,16 +1063,16 @@ function loadReporte64(rowid, tbody64, row, aditional) {
 
             /*FORMA*/
             local_ti_pagreg = local_ti_pagreg == undefined ? null : parseInt(local_ti_pagreg);
-            // console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
-            // console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
+            console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+            console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
 
 
             if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
-                // console.log("Los elementos son diferentes");
+                 console.log("[builderTyper2]Los elementos son diferentes");
                 var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
                 ereg.parentNode.innerHTML = _html;
             } else {
-                // console.log("Los elementos son iguales");
+                console.log("[builderTyper2]==>Los elementos son iguales");
             }
             ereg = document.getElementById('P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V');
         }
@@ -2841,7 +2841,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
 }
 
 function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_onchag, ca_caract) {
-    console.log('old_type=' + old_type + ', new_type=' + new_type + ', ti_estreg=' + ti_estreg + ', eledom=' + eledom);
+    console.log('[builderTyper2]old_type=' + old_type + ', new_type=' + new_type + ', ti_estreg=' + ti_estreg + ', eledom=' + eledom);
     var htmlreturn = "";
     if (new_type == 1) {
         if (ti_estreg == 'E') {
@@ -2909,6 +2909,18 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_
             htmlreturn += "       </span>"
         } else {
             htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
+        }
+    } else if (new_type == 36) {
+        console.log('tipo 36??!');
+        if (ti_estreg == 'E') {
+            htmlreturn += "        <span id=\"" + id + "\" name=\"" + id + "\" ti_pagreg=\"36\" class=\"witer " + " pagreg\">"
+            htmlreturn += "     [<a  target=\"_blank\" href=\"#\" class=\"\"  onclick=\"return doupload(\'" + id + "\')\"><i class=\"fas fa-upload\" aria-hidden=\"true\"></i> <span>Subir</span></a>]"
+            htmlreturn += "     <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "&auto=true\" style=\"display:none;\"></iframe>"
+            htmlreturn += "  </span>"
+        } else {
+            htmlreturn += "        <span id=\"" + id + "\" name=" + id + " ti_pagreg=\"36\" class=\"reader " + " pagreg\">"
+            htmlreturn += "   [<a  target=\"_blank\" href=\"#\" class=\"\"  ><i class=\"fas fa-download\" aria-hidden=\"true\"></i> Descargar</a>]"
+            htmlreturn += " </span>"
         }
     }
     return htmlreturn;

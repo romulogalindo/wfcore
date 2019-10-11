@@ -256,11 +256,13 @@ public class DataAPI extends GenericAPI {
         String no_conexi = opts.get("no_conexi") == null ? "wfacr" : opts.get("no_conexi").toString();
         String no_consul = opts.get("no_consul") == null ? "select 1 as col1;" : opts.get("no_consul").toString();
         Integer sg_timout = opts.get("sg_timout") == null ? 30 : Integer.parseInt("" + opts.get("sg_timout"));
-        Integer co_indice = opts.get("co_indice") == null ? 1 : Integer.parseInt("" + opts.get("co_indice"));
+        Integer co_indice = opts.get("co_indice") == null ? -1 : Integer.parseInt("" + opts.get("co_indice"));
+        String no_indice = opts.get("no_indice") == null ? "" : "" + opts.get("no_indice");
 
         long execution_time;
         JsonResponse jsonResponse = new JsonResponse();
         List<LinkedHashMap<String, Object>> valReturn;
+        HashMap<Object, LinkedHashMap<String, Object>> valMapReturn = new HashMap<>();
         StatelessSession session = null;
         Transaction transaction = null;
         execution_time = System.currentTimeMillis();
@@ -289,13 +291,34 @@ public class DataAPI extends GenericAPI {
             } else {
                 valReturn = sql.getResultList();
             }
+
+            if (co_indice == -1) {
+                Iterator<String> it = valReturn.get(0).keySet().iterator();
+                int indicecur = 0;
+                while (it.hasNext()) {
+                    String idcur = it.next();
+                    if (co_indice == (indicecur + 1)) {
+//                        mapidcur = idcur;
+                        no_indice = idcur;
+                    }
+                    indicecur++;
+                }
+            }
+
+            System.out.println("mapidcur = " + no_indice + "?=>" + valReturn.size());
+            for (LinkedHashMap<String, Object> lhm : valReturn) {
+                valMapReturn.put(lhm.get(no_indice), lhm);
+                System.out.print("//*" + lhm.get(no_indice) + ",");
+            }
+            System.out.println("\nmapidcur" + no_indice + ",===>" + valMapReturn.size());
             Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + no_consul + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
             transaction.commit();
             session.close();
 
             Transactional.update(midt);
             jsonResponse.setStatus(JsonResponse.OK);
-            jsonResponse.setResult(valReturn);
+//            jsonResponse.setResult(valReturn);
+            jsonResponse.setResult(valMapReturn);
 
         } catch (Exception ep) {
             Log.error("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] E = " + ep);
@@ -331,6 +354,32 @@ public class DataAPI extends GenericAPI {
         }
 
         return jsonResponse;
+    }
+
+    public HashMap<Object, LinkedHashMap<String, Object>> TOMAP(Object o, int co_indice) {
+        List<LinkedHashMap<String, Object>> obj = (List<LinkedHashMap<String, Object>>) o;
+        HashMap<Object, LinkedHashMap<String, Object>> valMapReturn = new HashMap<>();
+        String no_indice = "";
+//        if (co_indice == -1) {
+        Iterator<String> it = obj.get(0).keySet().iterator();
+        int indicecur = 0;
+        while (it.hasNext()) {
+            String idcur = it.next();
+            if (co_indice == (indicecur + 1)) {
+//                        mapidcur = idcur;
+                no_indice = idcur;
+            }
+            indicecur++;
+        }
+//        }
+
+        System.out.println("mapidcur = " + no_indice + "?=>" + obj.size());
+        for (LinkedHashMap<String, Object> lhm : obj) {
+            valMapReturn.put(lhm.get(no_indice), lhm);
+            System.out.print("//*" + lhm.get(no_indice) + ",");
+        }
+
+        return valMapReturn;
     }
 
     public ValpagJson VALPAG_LEGACY(String conectionName, String sqlQuery) throws Exception {

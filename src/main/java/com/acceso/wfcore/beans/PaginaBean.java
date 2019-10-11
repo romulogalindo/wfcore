@@ -434,8 +434,8 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
 //        dt2.forEach((t) -> {
 //            System.out.println("(T2)Key = " + t.getKey() + ", Value=" + t.getValue());
 //        });
-//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
-//        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_CONTAINER).clear();
+        WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).clear();
     }
 
     public List<String> complete(final CompleteEvent event) {
