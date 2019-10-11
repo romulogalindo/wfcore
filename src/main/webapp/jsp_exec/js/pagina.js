@@ -213,9 +213,10 @@ function pagina_onload(_data) {
                 var me_select = all_selects[i];
                 if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
                     $(me_select).materialSelect();
-                    // alert('doit !>' + me_select.getAttribute('name'));
-//            console.log('Se ejecuto la create!');
+                } else if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('mdb-select md-formx initialized') > -1) {
+                    $(me_select).materialSelect();
                 }
+
             }
 
             /*BEFORE VIEW*/
@@ -855,7 +856,11 @@ function loadFormulario64(index, row, aditional, dom2) {
                             eledom.getElementsByTagName("A")[0].setAttribute('href', '/jsp_exec/ocelot/viewer.jsp?file=' + reg.value);
                             eledom.getElementsByTagName("A")[0].href = '/jsp_exec/ocelot/viewer.jsp?file=' + reg.value;
                             eledom.getElementsByTagName("A")[0].setAttribute('onclick', 'return true');
-                            document.getElementById(eledom.id.replace('V', '_text')).innerText = '' + reg.value;
+                            try {
+                                document.getElementById(eledom.id.replace('V', '_text')).innerText = '' + reg.value;
+                            } catch (e) {
+                            }
+
                         }
 
 
@@ -1068,7 +1073,7 @@ function loadReporte64(rowid, tbody64, row, aditional) {
 
 
             if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
-                 console.log("[builderTyper2]Los elementos son diferentes");
+                console.log("[builderTyper2]Los elementos son diferentes");
                 var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
                 ereg.parentNode.innerHTML = _html;
             } else {
@@ -2834,6 +2839,36 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
                 + "           <button class=\"wf-button-transparent\" onclick=\"child_popup(ur_pagreg,'" + id + "',CO_CONTEN,'titulo','')\" title=\"Abrir\"><i class=\"fa fa-window-restore\" aria-hidden=\"true\"></i>Abrir</button>"
                 + "           <button class=\"wf-button-transparent\" onclick=\"clean_popup('" + id + "')\" title=\"Limpiar\"><i class=\"fa fa-eraser\" aria-hidden=\"true\"></i>Limpiar</button>";
             html += "       </span>";
+        }
+    } else if (type == 36) {
+        console.log('inside36 type=>ur_pagreg:' + ur_pagreg);
+        if (ti_estreg == 'E') {
+            html += "       <span id='" + id + "' name='" + id + "' class=\"writer " + (il_onchag ? "dynpag" : "") + " pagreg alert alert-primary\" ti_pagreg=\"36\" style=\"padding: 0px 2px 0px 10px;border-color:#83bdfc\" >"
+                + "         <a  href=\"#\"  onclick=\"return false\" style=\"text-decoration: none !important;\" va_pagreg=\"\">"
+                + "             <i id=\"" + id + "_img\" class=\"\" aria-hidden=\"true\"></i>"
+                + "             <span id=\"" + id + "_text\" title=\"\" data-toggle=\"tooltip\">Sube tu archivo<span>"
+                + "          </a>"
+
+                + "          <span style=\"border-right: 1px solid #83bdfc; margin: 0 5px;\"></span>"
+
+                + "         <button id=\"" + id + "_upload\"onclick=\"return doupload64('" + id + "')\" class=\"wf-button-transparent\" title=\"Selecciona tu archivo\" data-toggle=\"tooltip\">"
+                + "             <i class=\"fas fa-cloud-upload-alt\" aria-hidden=\"true\" ></i>"
+                + "          </button>"
+
+                + "          <span style=\"border-right: 1px solid #83bdfc; margin: 0 5px 0px 0px;\"></span>"
+
+                + "         <button id=\"" + id + "_delete\"onclick=\"return doclean64('" + id + "')\" class=\"wf-button-transparent\" title=\"Borrar el archivo actual\" data-toggle=\"tooltip\" disabled>"
+                + "             <i class=\"far fa-trash-alt\" aria-hidden=\"true\" ></i>"
+                + "         </button>"
+
+                + "         <iframe src=\"/jsp_exec/ocelot/upload.jsp?id=" + id + "\" style=\"display:none;\"></iframe>"
+                + "     </span>";
+        } else if (ti_estreg == 'L') {
+            html += "       <span id='" + id + "' name='" + id + "' ti_pagreg=\"36\" class=\"reader " + (il_onchag ? "dynpag" : "") + " pagreg\">"
+                + "   [<a  target=\"_blank\" href=\"#\" class=\"pagreg\"  ><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Descargar</a>]"
+                + "</span>";
+        } else {
+            html += "       <input type=hidden id='" + id + "' class=\"pagreg\" name='" + id + "' value=>";
         }
     }
 

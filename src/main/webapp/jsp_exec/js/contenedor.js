@@ -476,6 +476,7 @@ function changemodulo(co_sistem, co_subsis, valid) {
     console.log('rpta=' + rpta.result);
     document.getElementById("ls_module").innerHTML = rpta.result;
     $('#topanel555').click();
+    $('#slc_schema').modal('hide');
     // location.reload();
 }
 

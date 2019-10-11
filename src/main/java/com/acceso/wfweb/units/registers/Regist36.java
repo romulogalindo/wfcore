@@ -39,7 +39,6 @@ public class Regist36 extends HTMLRenderer {
 
                 html += "   <td class=wf_f_valreg>";
                 html += "       <span id='" + id + "V' name='" + id + "V' class=\"writer " + (registroDTO.isIl_onchan() ? "dynpag" : "") + " pagreg alert alert-primary\" ti_pagreg=\"36\" style=\"padding: 0px 2px 0px 10px;border-color:#83bdfc\" >"
-//                        + "         <a  href=\"#\"  onclick=\"return doupload('" + id + "V')\" va_pagreg=\"\">"
                         + "         <a  href=\"#\"  onclick=\"return false\" style=\"text-decoration: none !important;\" va_pagreg=\"\">"
                         + "             <i id=\""+ id +"_img\" class=\"\" aria-hidden=\"true\"></i>"
                         + "             <span id=\""+ id +"_text\" title=\"\" data-toggle=\"tooltip\">Sube tu archivo<span>"
