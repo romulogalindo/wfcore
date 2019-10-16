@@ -530,6 +530,7 @@ function loadFormulario64(index, row, aditional, dom2) {
 
         var eledom = document.getElementsByName(ultraid)[0];
         var labdom = document.getElementsByName(ultraid2)[0];
+
         if (reg.label != undefined) {
             labdom.innerHTML = reg.label + '<span style="border-right:2px solid #00477e;padding-left: 5px;"></span>';
         }
@@ -563,7 +564,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     var ur_pagreg = reg.link == undefined ? '' : reg.link;
                     var il_axtsea = false;
 
-                    console.log('(' + CO_PAGINA + ')EVALUACION{' + co_regist + '}!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']');
+                    console.log('(' + CO_PAGINA + ')EVALUACION{' + co_regist + '}!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']' + ',[reg.placeholder:' + reg.placeholder + ']');
                     // if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type && reg.type > 0) {
                     if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type) {
                         console.log('(' + CO_PAGINA + ')[' + reg.regist + ']Es un cambio de tipo:[de:' + ti_pagreg + '][a:' + reg.type + ']');
@@ -574,12 +575,12 @@ function loadFormulario64(index, row, aditional, dom2) {
 
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
 
-                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
+                        td.innerHTML = builderType(reg.type, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid, reg.placeholder);
                         console.log("*[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     } else {
-                        console.log('reg.validation:' + reg.validation);
+                        console.log('reg.validation:' + reg.validation + ', reg.placeholder:' + reg.placeholder);
                         if (reg.searchable != undefined) {
                             console.log('??----->??[' + reg.searchable + ']');
                             reg.searchable = JSON.parse(reg.searchable);
@@ -589,7 +590,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                             ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
                             // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
 
-                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid, reg.placeholder);
 
                             console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + reg.searchable.active + ")(" + reg.searchable.text + ") es el td:" + td.innerHTML);
                             //?
@@ -601,7 +602,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                             ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
                             // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
 
-                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, undefined, eleid);
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, undefined, eleid, reg.placeholder);
 
                             console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + ") es el td:" + td.innerHTML);
                             //?
@@ -614,9 +615,22 @@ function loadFormulario64(index, row, aditional, dom2) {
                             ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
                             // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
 
-                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, reg.validation, eleid);
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, reg.validation, eleid, reg.placeholder);
 
                             console.log("*[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + ") es el td:" + td.innerHTML);
+                            //?
+                            eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
+                        } else if (reg.placeholder != undefined) {
+                            // reg.validation = JSON.parse(reg.validation);
+                            il_axtsea = true;
+                            // console.log("*?![" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
+                            ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
+                            ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
+                            // console.log('*ti_pagreg:' + ti_pagreg + ',ti_estreg:' + ti_estreg + 'co_regist:' + co_regist);
+
+                            td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, undefined, undefined, eleid, reg.placeholder);
+
+                            console.log("****[" + reg.regist + "](" + CO_PAGINA + ") (" + reg.searchable + ")(" + ") es el td:" + td.innerHTML);
                             //?
                             eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                         }
@@ -627,7 +641,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
 
-                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
+                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid, reg.placeholder);
                         console.log("**[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         //?
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
@@ -636,10 +650,11 @@ function loadFormulario64(index, row, aditional, dom2) {
                     if (reg.state != undefined && reg.state == ti_estreg) {
                         ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
                         ti_pagreg = (reg.type != undefined & reg.type > -1) ? reg.type : ti_pagreg;
-                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid);
+                        td.innerHTML = builderType(ti_pagreg, ti_estreg, co_regist, ur_pagreg, il_onchag, reg.length, reg.searchable, reg.validation, eleid, reg.placeholder);
                         console.log("***[" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                         eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                     }
+
                 }
                 case "INPUT": {
 
@@ -2653,7 +2668,7 @@ function AUTODYNAMIC(opt, ls_regist) {
 }
 
 /*BUILDERS*/
-function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract, searchable, validation, id) {
+function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract, searchable, validation, id, placeholder) {
     var html = "";
     if (searchable == undefined) {
         searchable = JSON.parse("{\"active\":false,\"text\":\"\"}");
@@ -2661,14 +2676,14 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
     if (validation == undefined) {
         validation = JSON.parse("{\"regexp\":null,\"event\":\"\",\"pagbots\":\"\"}");
     }
-
+    console.log('*placeholder:' + placeholder);
     if (type == 1) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"1\" class=\"writer pagreg\" >";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
-
+            console.log('placeholder:' + placeholder);
             if (validation.regexp == null) {
-                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " maxlength='" + ca_caract + "'>";
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " placeholder='" + placeholder + "' maxlength='" + ca_caract + "'>";
             } else {
                 // html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " onkeypress='return inputLImiter(event, \"Numbers\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\");' maxlength='" + ca_caract + "'>";
                 var itis_disab = false;
@@ -2700,7 +2715,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
                     // console.log('en la creacion----->' + e);
                 }
 
-                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\"," + co_regist + ",\"" + validation.message + "\");' maxlength='" + ca_caract + "'>";
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
 
 
             }
@@ -3058,8 +3073,14 @@ function inputLimiter(e, allow) {
     if (allow == 'Numbers2') {
         AllowableCharacters = '1234567890/';
     }
-    if (allow == 'Currency') {
+    if (allow == 'Currency') {//DECIMAL
         AllowableCharacters = '1234567890.';
+    }
+    if (allow == 'Currency2') {//MILES
+        AllowableCharacters = '1234567890,';
+    }
+    if (allow == 'Currency3') {//MILES+DECIMAL
+        AllowableCharacters = '1234567890.,';
     }
     if (allow == 'NameCharacters') {
         AllowableCharacters = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';
@@ -3086,8 +3107,9 @@ function inputLimiter(e, allow) {
     }
 }
 
-function validar_regexp(input, regex, co_regist, message) {
+function validar_regexp(input, regex, co_regist, message, limiter) {
     // console.log('input.value:' + input.value + ', ->' + RegExp(regex) + ". ->" + RegExp(regex).test(input.value));
+    console.log('this?=>' + this + ",====>" + $(this) + ', ===>' + input.value);
     if (RegExp(regex).test(input.value)) {
         input.setAttribute('class', 'w3-input w3-border form-control');
         // console.log('todo bien!');
@@ -3108,7 +3130,17 @@ function validar_regexp(input, regex, co_regist, message) {
 
     } else {
         // console.log('todo mal!');
-        input.setAttribute('class', 'w3-input w3-border form-control invalid');
+        //segunda validacion!@antes de todomal?
+        if (limiter == 'Currency2') {
+            console.log('XCDDDD==>' + limiter + ',=>' + $(input).val() + ', XD?:' + regex);
+            console.log('XCDDDD==>' + limiter + ',=>' + input.value + ', XD?:' + regex);
+            console.log('XCDDDD==>' + limiter + ',=>' + input.value.replace(regex, ',') + ', XD?:' + regex);
+            $(input).val($(input).val().replace(regex, ','));
+            input.value = input.value.replace(regex, ',');
+            input.setAttribute('class', 'w3-input w3-border form-control');
+        } else {
+            input.setAttribute('class', 'w3-input w3-border form-control invalid');
+        }
 
         for (var y = 1; y < 11; y++) {
             try {

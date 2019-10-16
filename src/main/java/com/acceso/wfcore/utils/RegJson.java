@@ -18,6 +18,7 @@ public class RegJson extends StandarRegisterJson {
     Integer ti_pagreg;
     String ti_estreg;
     String ur_pagreg;
+    String tx_plahol;
     Object ob_dindat;
     Object ls_styles;
     Object ca_caract;
@@ -64,6 +65,10 @@ public class RegJson extends StandarRegisterJson {
 
         if (opts.get("ca_caract") != null) {
             ca_caract = opts.get("ca_caract");
+        }
+        System.out.println("opts.get(\"tx_plahol\")  = " + opts.get("tx_plahol"));
+        if (opts.get("tx_plahol") != null) {
+            tx_plahol = opts.get("tx_plahol").toString();
         }
 
         if (opts.get("cf_search") != null) {
@@ -206,6 +211,14 @@ public class RegJson extends StandarRegisterJson {
 
     public void setDo_valreg(Object do_valida) {
         this.do_valida = do_valida;
+    }
+
+    public String getTx_plahol() {
+        return tx_plahol;
+    }
+
+    public void setTx_plahol(String tx_plahol) {
+        this.tx_plahol = tx_plahol;
     }
 
     public static RegJson NEW(Object obj) {

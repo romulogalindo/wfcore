@@ -67,7 +67,7 @@ public class AsyncValPag extends AsyncProcessor {
                 String scriptpage = Util.getText(WFIOAPP.APP.PAGEJS)
                         .replace("USUARI_DATA_VALPAG", valpag2_js == null ? "" : valpag2_js)
                         .replace("USUARI_DATA_PROPAG", propag2_js == null ? "" : propag2_js)
-                        .replace("USUARI_DATA_COMPAG", compag2_js == null ? "" : compag2_js)
+//                        .replace("USUARI_DATA_COMPAG", compag2_js == null ? "" : compag2_js)
                         .replace("USUARI_DATA_DINPAG", dinpag2_js == null ? "" : dinpag2_js);
 
                 script = WFIOAPP.APP.getJavaScriptService().newContext(scriptpage);
@@ -75,7 +75,7 @@ public class AsyncValPag extends AsyncProcessor {
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina, script);
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":VALPAG", in_valpag2_js);
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":PROPAG", in_propag2_js);
-                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":COMPAG", in_compag2_js);
+//                WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":COMPAG", in_compag2_js);
                 WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).put(co_conten + "" + co_pagina + ":DINPAG", in_dinpag2_js);
             } else {
                 script = (ScriptContextExecutor) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_PAGEJS).get(co_conten + "" + co_pagina);
