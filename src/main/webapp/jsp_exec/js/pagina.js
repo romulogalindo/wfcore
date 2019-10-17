@@ -3135,6 +3135,7 @@ function validar_regexp(input, regex, co_regist, message, limiter) {
             console.log('XCDDDD==>' + limiter + ',=>' + $(input).val() + ', XD?:' + regex);
             console.log('XCDDDD==>' + limiter + ',=>' + input.value + ', XD?:' + regex);
             console.log('XCDDDD==>' + limiter + ',=>' + input.value.replace(regex, ',') + ', XD?:' + regex);
+            console.log('XCDDDD==>' + limiter + ',=>' + input.value.replace(RegExp(regex), ',') + ', XD?:' + regex);
             $(input).val($(input).val().replace(regex, ','));
             input.value = input.value.replace(regex, ',');
             input.setAttribute('class', 'w3-input w3-border form-control');
