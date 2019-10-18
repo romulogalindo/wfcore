@@ -4,6 +4,7 @@ import com.acceso.wfcore.apis.DataAPI;
 import com.acceso.wfcore.apis.HttpAPI;
 import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.listerners.WFCoreListener;
+import com.acceso.wfcore.utils.FileServerItemJS;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
 import com.acceso.wfweb.beans.legacy.*;
@@ -1002,74 +1003,36 @@ public class DocumentServlet extends HttpServlet {
                     out = response.getOutputStream();
                     JsonResponse response1 = new JsonResponse();
 
-                    System.out.println("ejecutando U:" + request);
-
                     List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                     List<ArchivDTO> items2 = new ArrayList<>();
-
-                    System.out.println("ejecutando U:" + items);
-                    System.out.println("ejecutando U:" + items.isEmpty());
 
                     items.stream()
                             .filter(item -> !item.isFormField())
                             .filter(item -> item.getSize() <= Values.UPLOAD_FILE_MAXSIZE)
                             .forEach(item -> {
-                                System.out.println("item = " + item);
-                                DataAPI dataAPI = new DataAPI();
-                                ArchivDTO arcadj=dataAPI.SAVE(item);
-                                items2.add(arcadj);
 
-//                                String fileName = Util.formatName(item.getName());
-//                                ArchivDTO arcadj;
-//
-//                                Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
-//                                arcadj = dao.setArchiv(item.getName());
-//                                dao.close();
-//
-//                                String pre_url = WFIOAPP.APP.getDataSourceService().getValueOfKey("AIO_DATA_FILE");
-//
-//                                File archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()));
-//
-//                                try {
-//                                    if (!archivo.exists()) {
-//                                        archivo.mkdirs();
-//                                    }
-//
-//                                    archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
-//                                    System.out.println("archivo(3) = " + archivo);
-//                                    System.out.println("archivo(3?) = " + archivo.exists());
-//
-//                                    item.write(archivo);
-//                                    items2.add(arcadj);
-//
-//                                    /*NEW ADD*/
-//                                    byte[] encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(archivo));
-//                                    String file64String = new String(encoded, StandardCharsets.US_ASCII);
-//
-//                                    Map<String, String> headers = new HashMap<>();
-//                                    headers.put("Content-Type", "application/json");
-//                                    headers.put("Accept", "application/json");
-//
-//                                    Map<String, String> params = new HashMap<>();
-//                                    params.put("json", "{\"base\":\"" + file64String + "\"}");
-//                                    System.out.println("=====> " + "{\"base\":\"" + file64String + "\"}");
-//
-////                                    JsonResponse firstResponse = new HttpAPI().POST("http://sd1.accesocrediticio.com:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
-////                                    JsonResponse firstResponse = new HttpAPI().POST("http://192.168.44.230:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
-//                                    JsonResponse firstResponse = new HttpAPI().POST("http://10.3.3.122:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
-//                                    System.out.println("firstResponse = " + firstResponse);
-//                                    System.out.println("firstResponse = " + firstResponse.getStatus());
-//                                    if (firstResponse.getStatus().contentEquals("ERROR")) {
-//                                        System.out.println("firstResponse = " + firstResponse.getError().getMessage());
-//                                    } else {
-//                                        System.out.println("firstResponse = " + firstResponse.getResult());
-//                                        System.out.println("firstResponse = " + firstResponse.getResult().toString());
-//                                    }
-//
-//                                    WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("" + arcadj.getCo_archiv(), archivo);
-//                                } catch (Exception ep) {
-//                                    ep.printStackTrace();
-//                                }
+                                Map<String, String> params = new HashMap<>();
+                                params.put("json", "{\"ext\":\"" + FilenameUtils.getExtension(item.getName()) + "\",\"base\":\"" + new String(Base64.encodeBase64(item.get()), StandardCharsets.US_ASCII) + "\"}");
+                                JsonResponse firstResponse = new HttpAPI().POST(WFIOAPP.APP.getDataSourceService().getValueOfKey("ENDPOINT_FILESERVER"),
+                                        Util.getDefaultJsonHeader(),
+                                        params,
+                                        10000);
+                                ArchivDTO arcadj;
+
+                                if (firstResponse.getStatus().contentEquals("ERROR")) {
+                                    //usar metodo tradicional
+                                    DataAPI dataAPI = new DataAPI();
+                                    arcadj = dataAPI.SAVE(item, null, null, null);
+
+                                } else {
+                                    //con los datos devuelos
+                                    FileServerItemJS fijs = new Gson().fromJson(firstResponse.getResult().toString(), FileServerItemJS.class);
+
+                                    DataAPI dataAPI = new DataAPI();
+                                    arcadj = dataAPI.SAVE(item, Long.parseLong(fijs.getCo_archiv()), Util.toDate(fijs.getFe_archiv()), item.getName());
+
+                                }
+                                items2.add(arcadj);
                             });
 
                     if (!items2.isEmpty()) {

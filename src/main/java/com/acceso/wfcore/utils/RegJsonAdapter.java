@@ -38,7 +38,9 @@ public class RegJsonAdapter implements JsonSerializer<RegJson> {
         }
 
         if (src.do_valida != null) {
-            obj.addProperty("validation", "" + src.do_valida);
+            String validation = src.do_valida.toString();
+            validation = validation.replace("\\", "\\\\");
+            obj.addProperty("validation", "" + validation);
         }
 
         if (src.tx_plahol != null) {

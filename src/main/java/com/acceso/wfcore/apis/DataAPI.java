@@ -691,62 +691,32 @@ public class DataAPI extends GenericAPI {
         return arcadj;
     }
 
-    public ArchivDTO SAVE(FileItem item) {
-        System.out.println("item = " + item);
-
+    public ArchivDTO SAVE(FileItem item, Long customArchiv, Date customDate, String customName) {
         ArchivDTO arcadj;
         String fileName = Util.formatName(item.getName());
 
-        Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
-        arcadj = dao.setArchiv(item.getName());
-        dao.close();
+        if (customDate == null) {
+            Frawor4DAO dao = new Frawor4DAO(WFIOAPP.APP.dataSourceService.getManager("wfaio").getNativeSession());
+            arcadj = dao.setArchiv(item.getName());
+            dao.close();
+        } else {
+            arcadj = new ArchivDTO();
+            arcadj.setCo_archiv(customArchiv);
+            arcadj.setFe_archiv(customDate);
+            arcadj.setNo_archiv(customName);
+        }
 
         String pre_url = WFIOAPP.APP.getDataSourceService().getValueOfKey("AIO_DATA_FILE");
 
         File archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()));
-//                                File archivo = new File(pre_url + "/" + Util.formatDate1(arcadj.getFe_archiv()) + "/" + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
-        System.out.println("archivo(1) = " + archivo);
         try {
-            System.out.println("archivo(2) = " + archivo.exists());
-
             if (!archivo.exists()) {
                 archivo.mkdirs();
             }
 
             archivo = new File(pre_url + File.separator + Util.formatDate1(arcadj.getFe_archiv()) + File.separator + arcadj.getCo_archiv() + "." + Util.getFileExtension(fileName));
-            System.out.println("archivo(3) = " + archivo);
-            System.out.println("archivo(3?) = " + archivo.exists());
-
             item.write(archivo);
-//            items2.add(arcadj);
 
-            /*NEW ADD*/
-            byte[] encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(archivo));
-            String file64String = new String(encoded, StandardCharsets.US_ASCII);
-
-            Map<String, String> headers = new HashMap<>();
-            headers.put("Content-Type", "application/json");
-            headers.put("Accept", "application/json");
-
-            Map<String, String> params = new HashMap<>();
-            params.put("json", "{\"base\":\"" + file64String + "\"}");
-            System.out.println("=====> " + "{\"base\":\"" + file64String + "\"}");
-
-//                                    JsonResponse firstResponse = new HttpAPI().POST("http://sd1.accesocrediticio.com:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
-//                                    JsonResponse firstResponse = new HttpAPI().POST("http://192.168.44.230:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
-            try {
-                JsonResponse firstResponse = new HttpAPI().POST("http://10.3.3.122:6014/ms/uploadfileJS/v1.0/uploadbase64", headers, params, 10000);
-                System.out.println("firstResponse = " + firstResponse);
-                System.out.println("firstResponse = " + firstResponse.getStatus());
-                if (firstResponse.getStatus().contentEquals("ERROR")) {
-                    System.out.println("firstResponse = " + firstResponse.getError().getMessage());
-                } else {
-                    System.out.println("firstResponse = " + firstResponse.getResult());
-                    System.out.println("firstResponse = " + firstResponse.getResult().toString());
-                }
-            }catch (Exception ep2){
-                //codigo temporal para general second file Base64
-            }
             WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_FILEX).put("" + arcadj.getCo_archiv(), archivo);
         } catch (Exception ep) {
             ep.printStackTrace();

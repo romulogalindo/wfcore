@@ -23,6 +23,8 @@ const PAGE_TYPE_REPORT = 'R';
 const PAGE_TYPE_CHART = 'C';
 const PAGE_TYPE_MAPS = 'G';
 const PAGE_TYPE_TABS = 'B';
+const PAGE_TYPE_FREEREPORRT = 'X';
+const PAGE_TYPE_FREEFORM = 'Y';
 
 function Parameter(co_pagreg, co_conpar) {
     this.conpar = co_conpar;
@@ -162,7 +164,7 @@ function pagina_onload(_data) {
 
             const ID_PAGINA = 'PAG' + CO_PAGINA;
             console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
-            if (TI_PAGINA == PAGE_TYPE_REPORT) {
+            if (TI_PAGINA == PAGE_TYPE_REPORT | TI_PAGINA == PAGE_TYPE_FREEREPORRT) {
 
                 tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
                 tbody64.innerHTML = '';
@@ -608,7 +610,11 @@ function loadFormulario64(index, row, aditional, dom2) {
                             //?
                             eledom = document.getElementsByName('P' + CO_PAGINA + 'C' + index + 'R' + reg.regist + 'V')[0];
                         } else if (reg.validation != undefined) {
+                            console.log('validation:' + reg.validation);
+                            // reg.validation=reg.validation.replace('\\','\\\\');
+                            // reg.validation = JSON.parse('\''+reg.validation+'\'');
                             reg.validation = JSON.parse(reg.validation);
+                            reg.validation.regexp = encodeURIComponent(reg.validation.regexp);
                             il_axtsea = true;
                             // console.log("*?![" + reg.regist + "](" + CO_PAGINA + ") es el td:" + td);
                             ti_estreg = (reg.state != undefined) ? reg.state : ti_estreg;
@@ -2687,7 +2693,6 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
             } else {
                 // html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + (il_onchag ? "onchange=dinpag(this," + co_regist + ")" : "") + " onkeypress='return inputLImiter(event, \"Numbers\")' onkeyup='validar_regexp(this,\"" + validation.regexp + "\");' onchange='validar_regexp(this,\"" + validation.regexp + "\");' onblur='validar_regexp(this,\"" + validation.regexp + "\");' onpaste='validar_regexp(this,\"" + validation.regexp + "\");' maxlength='" + ca_caract + "'>";
                 var itis_disab = false;
-
                 try {
 
                     for (var b = 0; b < validation.pagbots.length; b++) {
@@ -2714,7 +2719,9 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
                 } catch (e) {
                     // console.log('en la creacion----->' + e);
                 }
-
+                console.log('@@--@@:' + validation.regexp);
+                validation.regexp = validation.regexp.replace('\\', '\\\\');
+                console.log('@@--@@:' + validation.regexp);
                 html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
 
 
@@ -3132,12 +3139,9 @@ function validar_regexp(input, regex, co_regist, message, limiter) {
         // console.log('todo mal!');
         //segunda validacion!@antes de todomal?
         if (limiter == 'Currency2') {
-            console.log('XCDDDD==>' + limiter + ',=>' + $(input).val() + ', XD?:' + regex);
-            console.log('XCDDDD==>' + limiter + ',=>' + input.value + ', XD?:' + regex);
-            console.log('XCDDDD==>' + limiter + ',=>' + input.value.replace(regex, ',') + ', XD?:' + regex);
-            console.log('XCDDDD==>' + limiter + ',=>' + input.value.replace(RegExp(regex), ',') + ', XD?:' + regex);
-            $(input).val($(input).val().replace(regex, ','));
-            input.value = input.value.replace(regex, ',');
+            var tmp = '\'' + input.value.replace(/\D/g,'') + '\'.replace(' + decodeURIComponent(regex) + ', \',\')';
+            console.log('tmp::::' + tmp);
+            input.value = eval(tmp);
             input.setAttribute('class', 'w3-input w3-border form-control');
         } else {
             input.setAttribute('class', 'w3-input w3-border form-control invalid');
@@ -3158,10 +3162,6 @@ function validar_regexp(input, regex, co_regist, message, limiter) {
         }
     }
     //--------
-    // for (var b = 0; b < validation.pagbots.length; b++) {
-    //     eval('BTN' + co_botone + 'E')['R' + co_regist] = false;
-    // }
-
     for (var y = 1; y < 11; y++) {
         try {
             var ls_valida = eval('BTN' + y + 'E');

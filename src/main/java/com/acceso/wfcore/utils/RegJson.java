@@ -85,7 +85,7 @@ public class RegJson extends StandarRegisterJson {
                 _styles.add("" + pagbots.next());
             }
 
-            do_valida = "{\"charset\":\"" + cfg_serach.get("ti_charset") + "\", \"regexp\":\"" + cfg_serach.get("va_regexp") + "\", \"message\":\"" + cfg_serach.get("tx_invalid") + "\", \"pagbots\":[" + String.join(",", _styles) + "]}";
+            do_valida = "{\"charset\":\"" + cfg_serach.get("ti_charset") + "\", \"regexp\":\"" + cfg_serach.get("va_regexp").toString().replace("\\","\\") + "\", \"message\":\"" + cfg_serach.get("tx_invalid") + "\", \"pagbots\":[" + String.join(",", _styles) + "]}";
         }
     }
 

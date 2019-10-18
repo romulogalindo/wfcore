@@ -24,15 +24,13 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Util {
 
     private static List<String> exts = Arrays.asList("tar.gz", "tgz", "gz", "zip");
     public static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
+    public static SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
     public static Gson gson_typeA = new Gson();
     public static Gson gson_typeB = new GsonBuilder()
             .registerTypeAdapter(RegJson.class, new RegJsonAdapter())
@@ -216,6 +214,17 @@ public class Util {
      */
     public static String formatDate1(Date date) {
         return date != null ? sdf1.format(date) : null;
+    }
+
+    /**
+     * Utiliza SDF2 => MMM dd, yyyy
+     */
+    public static Date toDate(String date) {
+        try {
+            return sdf2.parse(date);
+        } catch (Exception ep) {
+            return null;
+        }
     }
 
     public static ErrorMessage getError(Exception ep) {
@@ -697,6 +706,13 @@ public class Util {
             }
         }
         return c;
+    }
+
+    public static Map<String, String> getDefaultJsonHeader() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        headers.put("Accept", "application/json");
+        return headers;
     }
 
     public static boolean TODAYS_OVER_DATE(Date fecha, int dias) {
