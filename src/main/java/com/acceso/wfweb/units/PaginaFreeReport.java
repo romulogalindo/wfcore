@@ -25,7 +25,7 @@ public class PaginaFreeReport extends Pagina implements Serializable {
     public String toHTML() {
         String html = "";
         String itr = "";
-        String css = "<style>";
+        String css = "<style>table#PAG" + co_pagina + " thead th{white-space: nowrap;} table.wf-report3 thead th{white-space: nowrap;}";
         String btns = "";
 
         LinkedList<Fila> titlelvl1 = new LinkedList<>();
@@ -62,9 +62,10 @@ public class PaginaFreeReport extends Pagina implements Serializable {
 
         }
 
-        html += "<input type=hidden id=ti_pagina value=X />";
-
-        html += "<table id=PAG" + co_pagina + " class=\"wf-report table table-striped table-bordered table-hover mb-0 table-responsive\" style=\"\">";
+        html += "<input type=hidden id=ti_pagina value=Y />";
+//        table table-striped table-bordered table-sm//mb-0 table-responsive
+//        html += "<table id=PAG" + co_pagina + " class=\"wf-report table table-striped table-bordered table-hover mb-0 table-responsive\" style=\"\">";
+        html += "<table id=PAG" + co_pagina + " class=\"wf-report3 table table-striped table-bordered table-hover \" style=\"\" cellspacing=\"0\" width=\"100%\">";
         html += "<thead>";
 
 //        html += "<tr>";

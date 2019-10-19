@@ -29,7 +29,8 @@
 </c:if>--%>
 <form id="form_data" action="/doc?ti_docume=U&auto=${param.auto}&id=${param.id}" enctype="MULTIPART/FORM-DATA"
       method="post"
-      accept-charset="ISO-8859-1">
+      accept-charset="UTF-8">
+<%--      accept-charset="ISO-8859-1">--%>
     <input id="vafile" type="file" name="vafile" domid="${param.id}" onchange="autoload(event);"/>
 </form>
 </body>

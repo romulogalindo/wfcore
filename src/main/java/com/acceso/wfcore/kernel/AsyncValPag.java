@@ -56,12 +56,12 @@ public class AsyncValPag extends AsyncProcessor {
                 Frawor4DAO dao = new Frawor4DAO();
                 String valpag2_js = "" + dao.getJS_Valpag(co_pagina).getScript();
                 String propag2_js = "" + dao.getJS_Propag(co_pagina).getScript();
-                String compag2_js = "" + dao.getJS_Compag(co_pagina).getScript();
+//                String compag2_js = "" + dao.getJS_Compag(co_pagina).getScript();
                 String dinpag2_js = "" + dao.getJS_Dinpag(co_pagina).getScript();
                 dao.close();
                 Integer in_valpag2_js = valpag2_js.split("\r\n").length;
                 Integer in_propag2_js = propag2_js.split("\r\n").length;
-                Integer in_compag2_js = compag2_js.split("\r\n").length;
+//                Integer in_compag2_js = compag2_js.split("\r\n").length;
                 Integer in_dinpag2_js = dinpag2_js.split("\r\n").length;
 
                 String scriptpage = Util.getText(WFIOAPP.APP.PAGEJS)

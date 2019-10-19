@@ -10,8 +10,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
     <title>UNNAMED</title>
-    <!--CSS-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=16">
+    <!--CSS${paginaBean.pagina.ti_pagina}-->
+    <%--    <c:if test="${paginaBean.pagina.ti_pagina != 'Y'}">--%>
+    <link id="optionalcss" rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=16">
+    <%--    </c:if>--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=9    ">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/themes/theme-${US.no_temdef}.css?a=1">
@@ -106,6 +108,16 @@
             <div class="table-wrapper" style="margin-bottom: 12px;">
                     ${paginaBean.pagina.toHTML()}
             </div>
+            <script>
+                if (document.getElementById('ti_pagina').value == 'Y') {
+                    document.getElementById('optionalcss').setAttribute('href', '//');
+                }
+            </script>
+            <style>
+                #PAG9215{
+
+                }
+            </style>
             <div id="context-menu" class="dropdown-menu dropdown-menu-sm context-menu-list css-title context-menu-root">
             </div>
         </div>
@@ -115,7 +127,6 @@
 </c:if>
 
 
-<%--             style="position:fixed; width:100%;height:300px;top: 0;left: 0;background-color: rgba(238,238,238,0.7);">--%>
 <div id="loader" style="position:fixed; width:100%;height:300px;top: 0;left: 0;background-color: rgba(238,238,238,1);">
 
     <table id="content_table_loader" style="width: 100%;height: 100%">
@@ -182,8 +193,6 @@
             <p id="detail_error" class="card-text" style="font-size: 0.8em;">Some quick example text to build on the
                 panel title and make up the
                 bulk of the panel's content.</p>
-            <%--<a id="linka_error" class="card-link">Card link</a>--%>
-            <%--<a class="card-link">Another link</a>--%>
         </div>
     </div>
 </div>
