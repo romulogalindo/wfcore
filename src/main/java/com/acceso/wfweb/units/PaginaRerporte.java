@@ -2,6 +2,7 @@ package com.acceso.wfweb.units;
 
 import com.acceso.wfweb.dtos.WBotonDTO;
 import com.acceso.wfweb.dtos.WParametroDTO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -25,7 +26,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
     public String toHTML() {
         String html = "";
         String itr = "";
-        String css = "<style>";
+        StringUtils.r
+        String css = "<style>table.wf-report3 thead th{white-space: nowrap;}";
         String btns = "";
 
         LinkedList<Fila> titlelvl1 = new LinkedList<>();

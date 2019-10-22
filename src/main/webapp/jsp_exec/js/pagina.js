@@ -2565,54 +2565,54 @@ function CFGDATATABLE(cfgopts) {
     //remove css class
     // document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', ''));
     if (document.getElementById('ti_pagina').value != 'Y') {
-        document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', 'wf-w'));
-        //fase1;
-        var tx = document.getElementById('PAG' + CO_PAGINA);
-        var dx = tx.getElementsByTagName("tbody")[0];
-        // dx = dx.getElementsByTagName("tr")[0];
-        var tds = tx.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName('TD');
-        var ths = tx.getElementsByTagName("thead")[0].getElementsByTagName("tr")[1].getElementsByTagName('TH');
-
-        var tnz = 0;
-        for (var i = 0; i < tds.length; i++) {
-            var nz = tds[i].offsetWidth;
-            nz += 10;
-            tnz += nz;
-            ths[i].style.width = nz + 'px';
-            tds[i].style.width = nz + 'px';
-
-            if (tds[i].getAttribute('style').indexOf('flex') > -1) {
-                ths[i].setAttribute('style', 'width: ' + nz + 'px');
-                tds[i].setAttribute('style', 'width: ' + nz + 'px;display:flex;');
-            } else {
-                ths[i].setAttribute('style', 'width: ' + nz + 'px');
-                tds[i].setAttribute('style', 'width: ' + nz + 'px');
-            }
-
-            // ths[i].setAttribute('style', 'width: ' + nz + 'px');
-            // tds[i].setAttribute('style', 'width: ' + nz + 'px');
-            // console.log('td(' + (i + 1) + ')=>nz:' + nz);
-        }
-        document.getElementById('wf-w').innerHTML = 'table#PAG' + CO_PAGINA + '{width:' + tnz + 'px;} ' +
-            '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHead .wf-w{width:' + tnz + 'px !important;}' +
-            '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHeadInner{width:' + tnz + 'px !important;}' +
-            '#PAG' + CO_PAGINA + '_wrapper table#PAG' + CO_PAGINA + ' thead tr th{border: none !important; padding: 0px !important;margin: 0px !important;}';
-        // console.log('TNZ::' + tnz);
-        tx.style.width = tnz + 'px';
-        document.getElementById('PAG' + CO_PAGINA).setAttribute("style", "width: " + tnz + "px");
-        // console.log('-->' + document.getElementById('PAG' + CO_PAGINA).getAttribute("style"));
-        $('#PAG' + CO_PAGINA).css("width", tnz + "px");
-        $('#PAG' + CO_PAGINA).attr("style", "width, tnz + 'px");
-        $('.wf-report').attr("style", "width, tnz + 'px");
+        // document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', 'wf-w'));
+        // //fase1;
+        // var tx = document.getElementById('PAG' + CO_PAGINA);
+        // var dx = tx.getElementsByTagName("tbody")[0];
+        // // dx = dx.getElementsByTagName("tr")[0];
+        // var tds = tx.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName('TD');
+        // var ths = tx.getElementsByTagName("thead")[0].getElementsByTagName("tr")[1].getElementsByTagName('TH');
+        //
+        // var tnz = 0;
+        // for (var i = 0; i < tds.length; i++) {
+        //     var nz = tds[i].offsetWidth;
+        //     nz += 10;
+        //     tnz += nz;
+        //     ths[i].style.width = nz + 'px';
+        //     tds[i].style.width = nz + 'px';
+        //
+        //     if (tds[i].getAttribute('style').indexOf('flex') > -1) {
+        //         ths[i].setAttribute('style', 'width: ' + nz + 'px');
+        //         tds[i].setAttribute('style', 'width: ' + nz + 'px;display:flex;');
+        //     } else {
+        //         ths[i].setAttribute('style', 'width: ' + nz + 'px');
+        //         tds[i].setAttribute('style', 'width: ' + nz + 'px');
+        //     }
+        //
+        //     // ths[i].setAttribute('style', 'width: ' + nz + 'px');
+        //     // tds[i].setAttribute('style', 'width: ' + nz + 'px');
+        //     // console.log('td(' + (i + 1) + ')=>nz:' + nz);
+        // }
+        // document.getElementById('wf-w').innerHTML = 'table#PAG' + CO_PAGINA + '{width:' + tnz + 'px;} ' +
+        //     '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHead .wf-w{width:' + tnz + 'px !important;}' +
+        //     '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHeadInner{width:' + tnz + 'px !important;}' +
+        //     '#PAG' + CO_PAGINA + '_wrapper table#PAG' + CO_PAGINA + ' thead tr th{border: none !important; padding: 0px !important;margin: 0px !important;}';
+        // // console.log('TNZ::' + tnz);
+        // tx.style.width = tnz + 'px';
+        // document.getElementById('PAG' + CO_PAGINA).setAttribute("style", "width: " + tnz + "px");
+        // // console.log('-->' + document.getElementById('PAG' + CO_PAGINA).getAttribute("style"));
+        // $('#PAG' + CO_PAGINA).css("width", tnz + "px");
+        // $('#PAG' + CO_PAGINA).attr("style", "width, tnz + 'px");
+        // $('.wf-report').attr("style", "width, tnz + 'px");
     }
 
     console.log('CFG! PAGINA');
     $('#PAG' + CO_PAGINA).dataTable(cfgopts);
-
+    $('#PAG' + CO_PAGINA + ' THEAD TR').css('paddin-top', '0px !important');
     if (document.getElementById('ti_pagina').value != 'Y') {
-        document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
-        document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
-        document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+        // document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
+        // document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
+        // document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
     }
 }
 
@@ -2726,7 +2726,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
                 console.log('@@--@@:' + validation.regexp);
                 validation.regexp = validation.regexp.replace('\\', '\\\\');
                 console.log('@@--@@:' + validation.regexp);
-                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\'); "+(il_onchag ? "dinpag(this," + co_regist + ")" : "") +"\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
 
 
             }
@@ -3147,6 +3147,53 @@ function validar_regexp(input, regex, co_regist, message, limiter) {
             console.log('tmp::::' + tmp);
             input.value = eval(tmp);
             input.setAttribute('class', 'w3-input w3-border form-control');
+        } else if (limiter == 'Currency3') {
+            // var tmp = '\'' + input.value.replace(/\D/g, '') + '\'.replace(' + decodeURIComponent(regex) + ', \',\')';
+            // console.log('tmp::::' + tmp);
+            // input.value = eval(tmp);
+            input.setAttribute('class', 'w3-input w3-border form-control');
+            //--------------------------------------------------------------------------
+            var input_val = input.value;
+
+            // don't validate empty input
+            if (input_val === "") {
+                return;
+            }
+
+            // original length
+            var original_len = input_val.length;
+
+            // initial caret position
+            // var caret_pos = input.prop("selectionStart");
+            var caret_pos = $(input).prop("selectionStart");
+
+            // check for decimal
+            if (input_val.indexOf(".") >= 0) {
+                var decimal_pos = input_val.indexOf(".");
+                var left_side = input_val.substring(0, decimal_pos);
+                var right_side = input_val.substring(decimal_pos);
+                left_side = formatNumber(left_side);
+                right_side = formatNumber(right_side);
+                if (blur === "blur") {
+                    right_side += "00";
+                }
+
+                right_side = right_side.substring(0, 2);
+                input_val = "" + left_side + "." + right_side;
+
+            } else {
+                input_val = formatNumber(input_val);
+                input_val = "" + input_val;
+
+                if (blur === "blur") {
+                    input_val += ".00";
+                }
+            }
+
+            // send updated string to input
+            input.value = input_val;
+            //-------------------------------------------------------------
+
         } else {
             input.setAttribute('class', 'w3-input w3-border form-control invalid');
         }
@@ -3190,6 +3237,12 @@ function validar_regexp(input, regex, co_regist, message, limiter) {
     }
 
 
+}
+
+/*ESP-FUNC => formatNumber*/
+function formatNumber(n) {
+    // format number 1000000 to 1,234,567->>>>>>>>>/\B(?=(\d{3})+(?!\d))/g
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
 function iframe(xframe, ur_pag, il_act) {

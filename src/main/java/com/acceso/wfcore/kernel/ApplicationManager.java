@@ -117,8 +117,8 @@ public class ApplicationManager {
                     break;
                 }
                 case "T": {
-                    //contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
-                    contenedor.addPagina(new PaginaFreeReport(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+                    contenedor.addPagina(new PaginaRerporte(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+//                    contenedor.addPagina(new PaginaFreeReport(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
                     break;
                 }
                 case "C": {

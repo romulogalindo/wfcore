@@ -12,7 +12,7 @@
     <title>UNNAMED</title>
     <!--CSS${paginaBean.pagina.ti_pagina}-->
     <%--    <c:if test="${paginaBean.pagina.ti_pagina != 'Y'}">--%>
-    <link id="optionalcss" rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=16">
+    <link id="optionalcss" rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/workflow.css?a=18">
     <%--    </c:if>--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/js/jscalendar/calendar-win2k-cold-1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp_exec/css/mdb_acr.css?a=9    ">
