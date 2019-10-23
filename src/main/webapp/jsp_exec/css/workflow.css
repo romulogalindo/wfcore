@@ -18,7 +18,15 @@
     max-width: unset;
 }
 
+.wf4_iframe[type='Y'] {
+    max-width: unset;
+}
+
 .wf4_iframe[type='R'] {
+    max-width: 605px;
+}
+
+.wf4_iframe[type='X'] {
     max-width: 605px;
 }
 

@@ -51,7 +51,9 @@ public class SecurityLDAO extends DAO {
             System.out.println("ctx = " + ctx.getNameInNamespace());
             usuarioLDAP.setIl_conect(true);
             usuarioLDAP.setUser(LDAPUser);
-            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
+//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
+//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
+            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
 
             try {
                 while (answers.hasMore()) {

@@ -114,7 +114,7 @@
                 }
             </script>
             <style>
-                #PAG9215{
+                #PAG9215 {
 
                 }
             </style>
@@ -203,10 +203,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb_acr.js?a=1"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/popper.min.js"></script>
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables.js?a=3"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/FileSaver.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/shim.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/exportxlsx.js"></script>
+        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables.js?a=4"></script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/FileSaver.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/shim.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/exportxlsx.js"></script>--%>
 
 <c:if test="${paginaBean.pagina.ti_pagina == 'C'}">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

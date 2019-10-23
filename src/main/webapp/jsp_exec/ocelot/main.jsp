@@ -28,7 +28,7 @@
           href='${pageContext.request.contextPath}/jsp_exec/imgs/defaults/favicon.ico'/>
 
     <!--CSS-->
-    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=10"/>
+    <link rel="stylesheet" href="/jsp_exec/css/workflow.css?a=11"/>
 
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=30"></script>

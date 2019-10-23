@@ -2610,9 +2610,16 @@ function CFGDATATABLE(cfgopts) {
     $('#PAG' + CO_PAGINA).dataTable(cfgopts);
     $('#PAG' + CO_PAGINA + ' THEAD TR').css('paddin-top', '0px !important');
     if (document.getElementById('ti_pagina').value != 'Y') {
-        // document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
-        // document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
-        // document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+        document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
+        document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].getElementsByTagName("TH")[0].setAttribute('style', 'padding-top: 0px !important; padding-bottom: 0px !important;');
+        document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
+        document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
+        setTimeout(function () {
+                var eldt = document.getElementById('PAG' + CO_PAGINA).getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].getElementsByTagName("TH")[0];
+                eldt.setAttribute('style', eldt.getAttribute('style') + ' background: none;padding-top: 0px !important; padding-bottom: 0px !important;');
+            }, 500
+        );
+
     }
 }
 
@@ -2726,7 +2733,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
                 console.log('@@--@@:' + validation.regexp);
                 validation.regexp = validation.regexp.replace('\\', '\\\\');
                 console.log('@@--@@:' + validation.regexp);
-                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\'); "+(il_onchag ? "dinpag(this," + co_regist + ")" : "") +"\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
+                html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\'); " + (il_onchag ? "dinpag(this," + co_regist + ")" : "") + "\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
 
 
             }

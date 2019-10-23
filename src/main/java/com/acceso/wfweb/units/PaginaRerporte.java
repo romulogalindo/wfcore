@@ -26,7 +26,6 @@ public class PaginaRerporte extends Pagina implements Serializable {
     public String toHTML() {
         String html = "";
         String itr = "";
-        StringUtils.r
         String css = "<style>table.wf-report3 thead th{white-space: nowrap;}";
         String btns = "";
 
