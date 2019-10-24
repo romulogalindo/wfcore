@@ -16,25 +16,30 @@ public class SecurityLDAO extends DAO {
     public static String TAG = "SECURE-LDAP";
     protected String LDAPServer;
     protected String LDAPDn;
+    protected String LDAPUser;
+    protected String LDAPPassword;
 
     public SecurityLDAO(String LDAPServer, String LDAPDn) {
         this.LDAPServer = LDAPServer;
         this.LDAPDn = LDAPDn;
     }
 
+    public SecurityLDAO(String url){
+        this.LDAPServer = url.split("@")[1];
+        this.LDAPUser = url.split("@")[0].split(":")[0];
+        this.LDAPPassword = url.split("@")[0].split(":")[1];
+    }
+
     //
     //String serverURL = "ldap://192.168.44.82:389";
-    public UsuarioLDAP connect(String LDAPUser, String LDAPPassword) {
+//    public UsuarioLDAP connect(String LDAPUser, String LDAPPassword) {
+    public UsuarioLDAP connect(String zimbra_username, String zimbre_password) {
 
-        System.out.println("LDAP");
-//        String serverURL = "ldap://192.168.44.82:389";
-//        String bindDN = "cn=admin,dc=acceso,dc=com,dc=pe";
-//        String bindDN = "cn=rgalindo,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe";
-//        String bindPassword = "Acceso.123";
-//        String bindPassword = "W41t3Kn1g4t";
+        System.out.println("LDAP::ADMIN::ACCESO");
+
         UsuarioLDAP usuarioLDAP = new UsuarioLDAP();
         Properties parms = getLDAPProperties(false);
-        parms.put(Context.SECURITY_PRINCIPAL, LDAPDn.replaceAll("USER", LDAPUser));
+        parms.put(Context.SECURITY_PRINCIPAL, LDAPUser);
         parms.put(Context.SECURITY_CREDENTIALS, LDAPPassword);
 
         DirContext ctx = null;
@@ -50,10 +55,10 @@ public class SecurityLDAO extends DAO {
             System.err.println("Successful authenticated bind");
             System.out.println("ctx = " + ctx.getNameInNamespace());
             usuarioLDAP.setIl_conect(true);
-            usuarioLDAP.setUser(LDAPUser);
-//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
-//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=rgalindo)", ctrls);
-            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
+            usuarioLDAP.setUser(zimbra_username);
+            System.out.println("Por probar!!! = " + ctrls);
+//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
+            answers = ctx.search("ou=users,dc=acceso,dc=com,dc=pe", "(uid=" + zimbra_username + ")", ctrls);
 
             try {
                 while (answers.hasMore()) {
@@ -94,7 +99,7 @@ public class SecurityLDAO extends DAO {
     protected Properties getLDAPProperties(boolean ssl) {
         Properties parms = new Properties();
         parms.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        parms.put(Context.PROVIDER_URL, LDAPServer);
+        parms.put(Context.PROVIDER_URL, "ldap://"+LDAPServer);
         if (ssl)
             parms.put(Context.SECURITY_PROTOCOL, "ssl");
         parms.put(Context.SECURITY_AUTHENTICATION, "simple");

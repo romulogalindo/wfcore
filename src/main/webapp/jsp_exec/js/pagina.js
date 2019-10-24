@@ -2694,6 +2694,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
         validation = JSON.parse("{\"regexp\":null,\"event\":\"\",\"pagbots\":\"\"}");
     }
     console.log('*placeholder:' + placeholder);
+    placeholder = placeholder == undefined ? '' : placeholder;
     if (type == 1) {
         if (ti_estreg == 'E') {
             html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"1\" class=\"writer pagreg\" >";
