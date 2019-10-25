@@ -204,6 +204,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/popper.min.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/datatables.js?a=4"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/jsp_exec/js/mdb/addons/RowsGroup/rowsgroup.js"></script>
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/FileSaver.js"></script>--%>
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/shim.js"></script>--%>
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/exportxlsx.js"></script>--%>

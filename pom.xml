@@ -446,26 +446,75 @@
         <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.ldaptive/ldaptive -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.ldaptive</groupId>-->
+        <!--            <artifactId>ldaptive</artifactId>-->
+        <!--            <version>1.2.4</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.ldaptive</groupId>-->
+        <!--            <artifactId>ldaptive-ldapi</artifactId>-->
+        <!--            <version>1.2.4</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.ldaptive</groupId>-->
+        <!--            <artifactId>ldaptive-jldap</artifactId>-->
+        <!--            <version>1.2.4</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.ldaptive</groupId>-->
+        <!--            <artifactId>ldaptive-json</artifactId>-->
+        <!--            <version>1.2.4</version>-->
+        <!--        </dependency>-->
+
 <!--        <dependency>-->
-<!--            <groupId>org.ldaptive</groupId>-->
-<!--            <artifactId>ldaptive</artifactId>-->
-<!--            <version>1.2.4</version>-->
+<!--            <groupId>org.apache.directory.api</groupId>-->
+<!--            <artifactId>api-all</artifactId>-->
+<!--            <version>2.0.0.AM4</version>-->
 <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.ibm.websphere.appserver.api/com.ibm.websphere.appserver.api.passwordUtil -->
+        <dependency>
+            <groupId>com.ibm.websphere.appserver.api</groupId>
+            <artifactId>com.ibm.websphere.appserver.api.passwordUtil</artifactId>
+            <version>1.0.33</version>
+        </dependency>
+
 <!--        <dependency>-->
-<!--            <groupId>org.ldaptive</groupId>-->
-<!--            <artifactId>ldaptive-ldapi</artifactId>-->
-<!--            <version>1.2.4</version>-->
+<!--            <groupId>org.apache.directory.shared</groupId>-->
+<!--            <artifactId>shared-ldap-constants</artifactId>-->
+<!--            <version>0.9.19</version>-->
 <!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.13</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 <!--        <dependency>-->
-<!--            <groupId>org.ldaptive</groupId>-->
-<!--            <artifactId>ldaptive-jldap</artifactId>-->
-<!--            <version>1.2.4</version>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-core</artifactId>-->
+<!--            <version>5.1.6.RELEASE</version>-->
 <!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
 <!--        <dependency>-->
-<!--            <groupId>org.ldaptive</groupId>-->
-<!--            <artifactId>ldaptive-json</artifactId>-->
-<!--            <version>1.2.4</version>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-crypto</artifactId>-->
+<!--            <version>5.2.0.RELEASE</version>-->
 <!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ldap</groupId>-->
+<!--            <artifactId>spring-ldap-core</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-ldap</artifactId>-->
+<!--        </dependency>-->
+
 
     </dependencies>
 
