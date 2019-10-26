@@ -12,8 +12,10 @@ import com.sun.mail.util.BASE64EncoderStream;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.*;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Properties;
 
@@ -38,7 +40,8 @@ public class SecurityLDAO extends DAO {
     //
     //String serverURL = "ldap://192.168.44.82:389";
 //    public UsuarioLDAP connect(String LDAPUser, String LDAPPassword) {
-    public UsuarioLDAP connect(String zimbra_username, String zimbre_password) {
+//    public UsuarioLDAP connect(String zimbra_username, String zimbre_password) {
+    public UsuarioLDAP connect() {
 
         System.out.println("LDAP::ADMIN::ACCESO");
 
@@ -60,10 +63,10 @@ public class SecurityLDAO extends DAO {
             System.err.println("Successful authenticated bind");
             System.out.println("ctx = " + ctx.getNameInNamespace());
             usuarioLDAP.setIl_conect(true);
-            usuarioLDAP.setUser(zimbra_username);
+            usuarioLDAP.setUser(LDAPUser);
             System.out.println("Por probar!!! = " + ctrls);
 //            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
-            answers = ctx.search("ou=users,dc=acceso,dc=com,dc=pe", "(uid=" + zimbra_username + ")", ctrls);
+            answers = ctx.search("ou=users,dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
 
             try {
                 while (answers.hasMore()) {
@@ -80,7 +83,14 @@ public class SecurityLDAO extends DAO {
                             String pwd = new String((byte[]) attribute.get());
                             System.out.println("valPassword = " + valPassword);
                             System.out.println("valPassword2 = " + pwd);
-                            //
+                            NamingEnumeration a = attribute.getAll();
+                            if (a.hasMore()) {
+                                Object o = a.nextElement();
+                                System.out.println("o = " + o);
+                            }
+                            DirContext dirContext = attribute.getAttributeDefinition();
+//                            dirContext.
+                            System.out.println("dirContext = " + dirContext);
 
 //                            public static String generateSSHA(byte[] password)
 //        throws NoSuchAlgorithmException {
@@ -109,23 +119,14 @@ public class SecurityLDAO extends DAO {
                             byte raw[] = md.digest();
                             String rps = new String(org.apache.commons.codec.binary.Base64.encodeBase64(raw));
                             System.out.println("rps =>>>>>>>>>>> " + rps);
-//                            BASE64EncoderStream base64 = new BASE64Encoder();
-//                            String result = "{SHA}" + base64.encode(raw);
-//                            System.out.println("userpassword in LDAP:" + result);
-//                            }
-//                            new LdapShaPasswordEncoder
-//                            String uy = PasswordUtil.encode_password("W41t3Kn1g4t", "SHA");
-//                            System.out.println("uy = " + uy);
+                            //------------------
+                            String password = "W41t3Kn1g4t!";
+                            String encodedPasswordWithSSHA = "{SSHA}d9kd9/WYVx7fpOuYVCQgtFsWhPXq6kUx";
+                            //eaea4531
+//                            System.out.println("encodedPasswordWithSSHA = " + getSshaDigestFor(password, getSalt("eaea4531")));
+                            System.out.println("encodedPasswordWithSSHA = " + getSshaDigestFor(password, "eaea4531".getBytes()));
+//                            Assert.assertEquals(encodedPasswordWithSSHA, getSshaDigestFor(password, getSalt(encodedPasswordWithSSHA)));
                         }
-                        //----
-//                        if (attribute.get() instanceof java.lang.String) {
-//                            //modo string
-//                            System.out.println("attribute = " + attribute + ",-->" + attribute.get().getClass() + ",--->" + attribute.getID());
-//                        } else {
-//                            //es password
-//                            String pwd = new String((byte[]) attribute.get());
-//                            System.out.println("attribute = " + attribute + ",-->" + pwd);
-//                        }
                     }
                 }
             } catch (Exception ep) {
@@ -143,6 +144,32 @@ public class SecurityLDAO extends DAO {
         }
 
 
+    }
+
+    int SIZE_SHA1_HASH = 20;
+
+    // The salt is the remaining part after the SHA1_hash
+    private byte[] getSalt(String encodedPasswordWithSSHA) {
+        byte[] data = Base64.getMimeDecoder().decode(encodedPasswordWithSSHA.substring(6));
+        return Arrays.copyOfRange(data, SIZE_SHA1_HASH, data.length);
+    }
+
+    private String getSshaDigestFor(String password, byte[] salt) throws Exception {
+        // create a SHA1 digest of the password + salt
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+//        MessageDigest crypt = MessageDigest.getInstance("SHA-512");
+        crypt.reset();
+        crypt.update(password.getBytes(Charset.forName("UTF-8")));
+        crypt.update(salt);
+        byte[] hash = crypt.digest();
+
+        // concatenate the hash with the salt
+        byte[] hashPlusSalt = new byte[hash.length + salt.length];
+        System.arraycopy(hash, 0, hashPlusSalt, 0, hash.length);
+        System.arraycopy(salt, 0, hashPlusSalt, hash.length, salt.length);
+
+        // prepend the SSHA tag + base64 encode the result
+        return "{SSHA}" + Base64.getEncoder().encodeToString(hashPlusSalt);
     }
 
     protected Properties getLDAPProperties(boolean ssl) {

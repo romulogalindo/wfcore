@@ -38,6 +38,20 @@ public class SecurityDAO extends DAO {
         return regsesiniDTO;
     }
 
+    public RegsesiniDTO regsesini_ldap(String p_username, String p_password, String p_remoteip) throws Exception {
+        RegsesiniDTO regsesiniDTO = null;
+
+        NQuery nQuery = new NQuery(TAG + ":REGSES");
+
+        nQuery.work(this.session.getNamedQuery(Values.wfsistem_ppregsesiniwebLDAP_KEY), true, true);
+        nQuery.setString("p_username", p_username);
+        nQuery.setString("p_password", p_password);
+        nQuery.setString("p_remoteip", p_remoteip);
+
+        regsesiniDTO = (RegsesiniDTO) nQuery.uniqueResult();
+        return regsesiniDTO;
+    }
+
     public RegsesinifDTO regsesinif(long p_id_sesion,
             long p_co_usuari,
             String p_ip_remoto) {

@@ -30,6 +30,10 @@ import javax.persistence.Transient;
         @NamedNativeQuery(
                 name = Values.wfsistem_ppregsesiniweb_KEY,
                 query = Values.wfsistem_ppregsesiniweb_VALUE,
+                resultClass = RegsesiniDTO.class),
+        @NamedNativeQuery(
+                name = Values.wfsistem_ppregsesiniwebLDAP_KEY,
+                query = Values.wfsistem_ppregsesiniwebLDAP_VALUE,
                 resultClass = RegsesiniDTO.class)
 })
 public class RegsesiniDTO implements Serializable {

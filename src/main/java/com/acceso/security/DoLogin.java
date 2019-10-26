@@ -45,20 +45,14 @@ public class DoLogin {
         //LOGIN--A/2
 //        if (ENABLED_LOGIN_LDAP) {
         if (!ENABLED_LOGIN_LDAP) {
-            //autenticacion anexa
-//            SecurityLDAO ldao = new SecurityLDAO("ldap://192.168.44.82:389", "cn=USER,cn=groups,ou=people,cn=admin,dc=acceso,dc=com,dc=pe");//ORIGINAL
-//            SecurityLDAO ldao = new SecurityLDAO("ldap://10.3.3.111:389", "cn=admins,dc=correocrediticio,dc=pe");//NUEVO
-            //cn=admin,dc=acceso,dc=com,dc=pe:4cc3s02019#@192.168.44.138:389
-//            SecurityLDAO ldao = new SecurityLDAO("ldap://192.168.44.138:389", "cn=USER,dc=acceso,dc=com,dc=pe");//NUEVOdc=acceso,dc=com,dc=pe
-            SecurityLDAO ldao = new SecurityLDAO("cn=admin,dc=acceso,dc=com,dc=pe:4cc3s02019#@192.168.44.138:389");
-//            usuarioLDAP = ldao.connect(username, password);
-//            usuarioLDAP = ldao.connect("admin", "xxB6gUBmGd");
-            usuarioLDAP = ldao.connect("romulo.galindo", "W41t3Kn1g4t");
+            SecurityLDAO ldao = new SecurityLDAO(WFIOAPP.APP.getDataSourceService().getValueOfKey("URL_LDAP").replace("USER_LDAP", username).replace("PASSWORD_LDAP", password));
+
+            usuarioLDAP = ldao.connect();
             System.out.println("usuarioLDAP = " + usuarioLDAP);
             if (usuarioLDAP.isIl_conect()) {
+                //Estas dentro dle LDAP
                 SecurityDAO securityDAO = new SecurityDAO();
-                regsesiniDTO = securityDAO.regsesini(username, Security.toMD5(password), remoteip);
-//        permisbloDTO = securityDAO.getListBloq(regsesiniDTO.getCo_usuari());
+                regsesiniDTO = securityDAO.regsesini_ldap(username, Security.toMD5(password), remoteip);
                 securityDAO.close();
                 //[FED]
                 regsesiniDTO.setIp_remoto(remoteip);
@@ -251,5 +245,9 @@ public class DoLogin {
 
     public String getMessage() {
         return regsesiniDTO.getDe_mensaj();
+    }
+
+    public RegsesiniDTO getRegsesiniDTO(){
+        return  regsesiniDTO;
     }
 }

@@ -90,11 +90,35 @@ public class LoginServlet extends HttpServlet {
 
 
                 } else {
-                    System.out.println("1** => " + 1);
-                    throw new Exception(doLogin.getMessage());
+                    System.out.println("1** => " + 1 + ",==>" + doLogin.getRegsesiniDTO().getCo_mensaj());
+                    if (doLogin.getRegsesiniDTO().getCo_mensaj() == 404) {
+                        //redireccionar al cambio de contrseña TIP_NUEVA CONTRSEÑA
+                        System.out.println("(!!*)CHANGE PASSOWERD = " + goToUrl);
+                        requestManager.save_over_request("goto", "go!");
+//                        requestManager.save_over_session("US", doLogin.getUsuario());
+                        requestManager.save_over_session("US", doLogin.getRegsesiniDTO());
+                        requestManager.save_over_session("NEED_CHANGE_PASSWORD", "TYPE1");
+
+                        //tiempo de session por default
+                        int SESSION_TIMEOUT = Integer.parseInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("SESSION_TIMEOUT"), 10);
+                        SESSION_TIMEOUT = SESSION_TIMEOUT * 60;
+                        request.getSession().setMaxInactiveInterval(SESSION_TIMEOUT);
+                        request.getSession().setAttribute("expired_session", SESSION_TIMEOUT);
+                        System.out.println("[LOGIN!]Duraccion de session:" + request.getSession().getMaxInactiveInterval());
+
+                        //deberia darme una linea por default>>>>ejeurl-->444
+                        goToUrl = "/password";
+                        System.out.println("goToUrl = " + goToUrl);
+//                        System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
+                    } else {
+                        throw new Exception(doLogin.getMessage());
+                    }
+
                 }
 
             } catch (Exception ep) {
+                System.out.println("ep = " + ep);
+                ep.printStackTrace();
                 requestManager.save_over_request("goto", "go!");
                 requestManager.save_over_session("login_error", ep.getMessage());
                 goToUrl = "/";
@@ -105,6 +129,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
+            System.out.println("Nos vamos a!goToUrl = " + goToUrl);
             requestManager.redirect(goToUrl);
         } catch (Exception ep) {
             ep.printStackTrace();

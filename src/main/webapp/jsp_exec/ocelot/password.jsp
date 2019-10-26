@@ -100,11 +100,21 @@
                     <%--                        <label for="username">${APP.loginCTRL.login_lbl_username}</label>--%>
                     <%--                    </div>--%>
 
-                    <!-- Current Password -->
-                    <div class="md-form">
-                        <input type="password" id="current_password" name="password" class="form-control">
-                        <label for="current_password">Contrase&ntilde;a actual</label>
-                    </div>
+                    <!-- Current Password -${NEED_CHANGE_PASSWORD}-->
+                    <c:if test="${NEED_CHANGE_PASSWORD == 'TYPE1'}">
+                        <div class="md-form" style="display: block;height: 20px;">
+                            <label>Hola ${US.no_usuari}</label>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${NEED_CHANGE_PASSWORD == 'TYPE2'}">
+                        <div class="md-form">
+                            <input type="password" id="current_password" name="password" class="form-control">
+                            <label for="current_password">Contrase&ntilde;a actual</label>
+                        </div>
+                    </c:if>
+
+
 
                     <div class="md-form">
                         <input type="password" id="new_password" name="password" class="form-control">

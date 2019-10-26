@@ -12,7 +12,12 @@ public class Values {
     public static final String wfsistem_ppregsesiniweb_KEY = "query_security_ppregsesini_web";
     public static final String wfsistem_ppregsesiniweb_VALUE = "select * from wfsistem.ppregsesini_fwweb(:p_username, :p_password, :p_remoteip) as inises";
 
-//    public static final String QUERYS_SECURITY_REGSESINI = "query_security_ppregsesini";
+
+    public static final String wfsistem_ppregsesiniwebLDAP_KEY = "query_security_ppregsesinildap_web";
+    public static final String wfsistem_ppregsesiniwebLDAP_VALUE = "select * from wfsistem.pbregsesini3(:p_username, :p_password, :p_remoteip, 1) as inises";
+
+
+    //    public static final String QUERYS_SECURITY_REGSESINI = "query_security_ppregsesini";
     public static final String QUERYS_SECURITY_REGSESINI_FOREING = "query_security_ppregsesini_foreing";
 //    public static final String QUERYS_SECURITY_REGSESINI_WEB = "query_security_ppregsesini_web";
     public static final String QUERYS_SECURITY_PERMISBLO_WEB = "query_security_pblist_permis_blo_web";
