@@ -140,14 +140,6 @@
         <url-pattern>/password</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login64</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/logout64</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PaginaServlet</servlet-name>
         <url-pattern>/karmic</url-pattern>
     </servlet-mapping>
@@ -173,6 +165,12 @@
         <url-pattern>/uxtion</url-pattern>
         <url-pattern>/pangolin</url-pattern>
         <url-pattern>/ocelot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login64</url-pattern>
+        <url-pattern>/updpwd64</url-pattern>
+        <url-pattern>/logout64</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>10</session-timeout>

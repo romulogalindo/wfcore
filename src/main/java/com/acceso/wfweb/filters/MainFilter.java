@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Rómulo Galindo Tanta
  */
-public class MainFilter implements Filter {
+    public class MainFilter implements Filter {
 
     public MainFilter() {
     }
@@ -32,16 +32,16 @@ public class MainFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        System.out.println("[**]request = " + req.getContextPath());
-        System.out.println("[**]request = " + req.getRequestURL());
-        System.out.println("[**]request = " + req.getQueryString());
-        System.out.println("[**]request = " + req.getParameter("co_conten"));
+        System.out.println("[MainFilter]request = " + req.getContextPath());
+        System.out.println("[MainFilter]request = " + req.getRequestURL());
+        System.out.println("[MainFilter]request = " + req.getQueryString());
+        System.out.println("[MainFilter]request = " + req.getParameter("co_conten"));
 
         Integer co_conten = Util.toInt(req.getParameter("co_conten"), -1);
-        System.out.println("[**]co_conten = " + co_conten);
+        System.out.println("[MainFilter]co_conten = " + co_conten);
 
         Usuario usuario = (Usuario) req.getSession().getAttribute("US");
-        System.out.println("[**]usuario = " + usuario);
+        System.out.println("[MainFilter]usuario = " + usuario);
 
         if (usuario != null) {
             System.out.println("!!!suario.getLs_mensis().get(co_conten) = " + usuario.getLs_mensis().get(co_conten));

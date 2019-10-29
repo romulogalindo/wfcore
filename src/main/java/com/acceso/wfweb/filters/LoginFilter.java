@@ -28,19 +28,33 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        /*Se valida si existe el atributo de session*/
-        if (!((HttpServletRequest) request).getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)) {
-            //System.out.println("LoginServlet.securidad = " + ((HttpServletRequest) request).getServletPath());
+        System.out.println("[LoginFilter]getServletPath = " + req.getServletPath() + ", getRequestURL = " + req.getRequestURL());
 
+        /*Se valida si existe el atributo de session*/
+        if (req.getServletPath().contains(LoginServlet.LOGINSERVLET_LOGOUT64)) {
+//            System.out.println("*LoginServlet.securidad = " + req.getServletPath());
+
+//            if (req.getSession().getAttribute("US") != null) {
+//                res.sendRedirect("/wf?co_conten=444");
+//            } else {
+//                chain.doFilter(req, res);
+//            }
+
+            System.out.println("**LoginServlet.Evaluando path = " + req.getServletPath());
+
+            chain.doFilter(req, res);
+        } else if (req.getServletPath().contains(LoginServlet.LOGINSERVLET_UPPWD64)) {
+            System.out.println("**LoginServlet.Evaluando path = " + req.getServletPath());
+            chain.doFilter(req, res);
+        } else {
+            System.out.println("***LoginServlet.Evaluando path = " + req.getServletPath());
+//
+//            chain.doFilter(req, res);
             if (req.getSession().getAttribute("US") != null) {
                 res.sendRedirect("/wf?co_conten=444");
             } else {
                 chain.doFilter(req, res);
             }
-        } else {
-            //System.out.println("LoginServlet.Evaluando path = " + ((HttpServletRequest) request).getServletPath());
-
-            chain.doFilter(req, res);
         }
 
     }

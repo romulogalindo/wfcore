@@ -11,6 +11,7 @@ public class LoginCTRL {
     private String login_btn_login;
 
     private String login_action;
+    private String updpwd_action;
 
     private String login_param_username;
     private String login_param_password;
@@ -88,5 +89,13 @@ public class LoginCTRL {
 
     public void setLogin_param_password(String login_param_password) {
         this.login_param_password = login_param_password;
+    }
+
+    public String getUpdpwd_action() {
+        return updpwd_action;
+    }
+
+    public void setUpdpwd_action(String updpwd_action) {
+        this.updpwd_action = updpwd_action;
     }
 }

@@ -37,6 +37,7 @@ public class ApplicationManager {
         loginCTRL.setLogin_btn_login("Ingresar");
 
         loginCTRL.setLogin_action(LoginServlet.LOGINSERVLET_LOGIN64);
+        loginCTRL.setUpdpwd_action(LoginServlet.LOGINSERVLET_UPPWD64);
         loginCTRL.setLogin_param_username("username");
         loginCTRL.setLogin_param_password("password");
 

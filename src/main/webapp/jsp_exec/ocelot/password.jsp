@@ -43,6 +43,45 @@
         function do64() {
             document.getElementsByName("username")[0].focus();
         }
+
+        function validpwd() {
+            // console.log('heres!');
+            var p1 = '' + $('#new_password').val();
+            var p2 = '' + $('#new_password2').val();
+            // console.log('p1:' + p1 + ', p2:' + p2);
+            var p1l = p1.length;
+            var p2l = p2.length;
+            // console.log('p1l:' + p1l + ', p2l:' + p2l);
+            var p1v = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(p1);
+            var p2v = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(p2);
+            var pv = (p1v & p2v);
+            var pc = (p1 == p2);
+            // console.log('p1v:' + p1v + ', p2v:' + p2v + ',pc:' + pc);
+
+            if ((p1l == 0 & p2l == 0) | (p1l > 0 & p2l == 0) | (p1l == 0 & p2l > 0)) {
+                $($('button').get(0)).prop('disabled', true);
+                // console.log('@1');
+                return;
+            } else if (!pv) {
+                //mensakje de que las ocntrasenas no cumplen la fuerz
+                $($('button').get(0)).prop('disabled', true);
+                $('#msg label').html('La/s contraseña/s ingresadas no cumplen con la complejidad requerida.');
+                $('#msg').show();
+                // console.log('@2');
+            } else if (!pc) {
+                //la contrasena no nos iguales
+                $($('button').get(0)).prop('disabled', true);
+                $('#msg label').html('Las contraseñas ingresadas no son iguales.');
+                $('#msg').show();
+                // console.log('@3');
+            } else {
+                //si todo sale bien
+                $('#msg').hide();
+                $('#msg label').html('Las contraseñas ingresadas no son iguales.');
+                $($('button').get(0)).prop('disabled', false);
+                // console.log('@4');
+            }
+        }
     </script>
     <style>
         body, html {
@@ -92,7 +131,7 @@
                 <c:set value="" var="login_error" scope="session"/>
 
                 <!-- Form -->
-                <form class="text-center" style="color: #757575;" action="${APP.loginCTRL.login_action}" method="post">
+                <form class="text-center" style="color: #757575;" action="${APP.loginCTRL.updpwd_action}" method="post">
 
                     <!-- Email -->
                     <%--                    <div class="md-form">--%>
@@ -101,34 +140,34 @@
                     <%--                    </div>--%>
 
                     <!-- Current Password -${NEED_CHANGE_PASSWORD}-->
+                    <input type="hidden" name="type" value="${NEED_CHANGE_PASSWORD}">
+                    <input type="hidden" name="co_usuari" value="${US.co_usuari}">
+                    <input type="hidden" name="co_correo" value="${US.co_usuari}">
                     <c:if test="${NEED_CHANGE_PASSWORD == 'TYPE1'}">
-                        <div class="md-form" style="display: block;height: 20px;">
+                        <div class="md-form" style="display: block;height: 30px;">
                             <label>Hola ${US.no_usuari}</label>
                         </div>
                     </c:if>
 
                     <c:if test="${NEED_CHANGE_PASSWORD == 'TYPE2'}">
                         <div class="md-form">
-                            <input type="password" id="current_password" name="password" class="form-control">
+                            <input type="password" id="current_password" name="current_password" class="form-control">
                             <label for="current_password">Contrase&ntilde;a actual</label>
                         </div>
                     </c:if>
 
 
-
                     <div class="md-form">
-                        <input type="password" id="new_password" name="password" class="form-control">
+                        <input type="password" id="new_password" name="new_password" class="form-control"
+                               onblur="validpwd()">
                         <label for="new_password">Contrase&ntilde;a nueva</label>
                     </div>
 
                     <div class="md-form">
-                        <input type="password" id="new_password2" name="password" class="form-control">
+                        <input type="password" id="new_password2" name="new_password2" class="form-control"
+                               onblur="validpwd()">
                         <label for="new_password">Repite la contrase&ntilde;a nueva</label>
                     </div>
-
-<%--                    <div class="form-group text-left" style="font-size: .8rem;">--%>
-<%--                        La nueva contrase&nacute;a nueva debe tener de cumplir:--%>
-<%--                    </div>--%>
 
                     <div class="alert alert-info text-left">
                         <label class="form-check-label" style="font-size: .8rem">
@@ -150,8 +189,15 @@
                         </label>
                     </div>
 
+                    <div id="msg" class="alert alert-danger" style="display: none;">
+                        <label class="form-check-label" style="font-size: .8rem">
+                            La nueva contrase&ntilde;a nueva debe tener de cumplir:
+                        </label>
+                    </div>
+
                     <!-- Sign in button -->
-                    <button class="btn btn-primary btn-lg btn-block waves-effect z-depth-0" disabled>Actualizar
+                    <button type="submit" class="btn btn-primary btn-lg btn-block waves-effect z-depth-0" disabled>
+                        Actualizar
                     </button>
 
                     <hr>
