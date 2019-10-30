@@ -1,8 +1,10 @@
 package com.acceso.wfweb.servlets;
 
 import com.acceso.security.DoLogin;
+import com.acceso.security.daos.SecurityDAO;
 import com.acceso.security.daos.SecurityLDAO;
 import com.acceso.wfcore.kernel.WFIOAPP;
+import com.acceso.wfcore.utils.Security;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.RequestManager;
@@ -47,6 +49,8 @@ public class LoginServlet extends HttpServlet {
         RequestManager requestManager = new RequestManager(request, response);
         DoLogin doLogin = new DoLogin();
         String goToUrl = "/";
+        String msgRsp = null;
+
         System.out.println("requestManager.getPath() = " + requestManager.getPath());
         if (requestManager.getPath().contains(LOGINSERVLET_LOGIN64) || requestManager.getPath().contentEquals("/")) {
             try {
@@ -87,6 +91,7 @@ public class LoginServlet extends HttpServlet {
 
                         //deberia darme una linea por default>>>>ejeurl-->444
                         goToUrl = "/wf?co_conten=444";
+
                         System.out.println("goToUrl = " + goToUrl);
                         System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
                     }
@@ -133,24 +138,42 @@ public class LoginServlet extends HttpServlet {
             String p_ti_cambio = requestManager.getParam("type");
             String p_no_curpwd = requestManager.getParam("current_password");
             String p_no_passwo = requestManager.getParam("new_password");
-            System.out.println("p_co_usuari = " + p_co_usuari);
-            System.out.println("p_no_correo = " + p_no_correo);
-            System.out.println("p_ti_cambio = " + p_ti_cambio);
-            System.out.println("p_no_curpwd = " + p_no_curpwd);
-            System.out.println("p_no_passwo = " + p_no_passwo);
+//            System.out.println("p_co_usuari = " + p_co_usuari);
+//            System.out.println("p_no_correo = " + p_no_correo);
+//            System.out.println("p_ti_cambio = " + p_ti_cambio);
+//            System.out.println("p_no_curpwd = " + p_no_curpwd);
+//            System.out.println("p_no_passwo = " + p_no_passwo);
 
             SecurityLDAO ldao = new SecurityLDAO("cn=admin,dc=acceso,dc=com,dc=pe:4cc3s02019#@192.168.44.138:389");
+            SecurityDAO dao = new SecurityDAO();
 
             if (p_ti_cambio.contentEquals("TYPE1")) {
                 //cambio de password forzado(o algo asi)
-                System.out.println("TransactionStore.Change");
-                ldao.changepwd(p_no_correo, p_no_curpwd);
+//                System.out.println("TransactionStore.Change");
+                //validar y cambiar pwd en la db
+                if (dao.update_password(Util.toInt(p_co_usuari), Security.toMD5(p_no_passwo)) == Security.PASSWORD_CHANGE_OK) {
+                    if (ldao.changepwd(p_no_correo, p_no_passwo) == Security.PASSWORD_CHANGE_OK) {
+                        msgRsp = "OK";
+                        requestManager.save_over_request("goto", "go!");
+                        requestManager.save_over_session("updpwd_error", null);
+                        requestManager.save_over_session("updpwd_ok", "OK");
+                    } else {
+                        msgRsp = "LDAP.ERROR. No se pudo cambiar la constraseña.";
+                        requestManager.save_over_request("goto", "go!");
+                        requestManager.save_over_session("updpwd_error", "LDAP.ERROR. No se pudo cambiar la constraseña.");
+                    }
+                } else {
+                    msgRsp = "ERROR. Contraseña utilizada recientemente. Utilice otra.";
+                    requestManager.save_over_request("goto", "go!");
+                    requestManager.save_over_session("updpwd_error", "LDAP.ERROR. No se pudo cambiar la constraseña.");
+                }
+
             } else {
                 //cambio de clave por que desea hacerlo
 
             }
-            request.getSession().invalidate();
-            goToUrl = "/";
+//            request.getSession().invalidate();
+            goToUrl = "/password";
         } else if (requestManager.getPath().contains(LOGINSERVLET_LOGOUT64)) {
             request.getSession().invalidate();
             goToUrl = "/";
@@ -158,7 +181,12 @@ public class LoginServlet extends HttpServlet {
 
         try {
             System.out.println("Nos vamos a!goToUrl = " + goToUrl);
-            requestManager.redirect(goToUrl);
+            if (goToUrl != null) {
+                requestManager.redirect(goToUrl);
+            } else {
+                response.getWriter().println(msgRsp);
+                response.flushBuffer();
+            }
         } catch (Exception ep) {
             ep.printStackTrace();
         }

@@ -10,6 +10,7 @@ import com.acceso.wfcore.kernel.WFIOAPP;
 import org.hibernate.StatelessSession;
 import org.hibernate.Transaction;
 
+import java.security.cert.X509Certificate;
 import java.util.List;
 
 public class SecurityDAO extends DAO {
@@ -53,8 +54,8 @@ public class SecurityDAO extends DAO {
     }
 
     public RegsesinifDTO regsesinif(long p_id_sesion,
-            long p_co_usuari,
-            String p_ip_remoto) {
+                                    long p_co_usuari,
+                                    String p_ip_remoto) {
 
         RegsesinifDTO regsesinifDTO = null;
         NQuery nQuery = new NQuery(TAG + ":REGSES");
@@ -96,5 +97,13 @@ public class SecurityDAO extends DAO {
         }
 
         return regsesiniDTO;
+    }
+
+    public int update_password(int co_usuari, String no_password) {
+        int update_result = 0;
+        //[1]cambio correcto
+        //[0]password repetido
+        System.out.println("CDambiando passwword!!! de[" + co_usuari + "," + no_password + "]");
+        return update_result;
     }
 }

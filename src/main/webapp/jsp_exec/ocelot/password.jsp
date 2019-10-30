@@ -82,6 +82,7 @@
                 // console.log('@4');
             }
         }
+
     </script>
     <style>
         body, html {
@@ -143,6 +144,7 @@
                     <input type="hidden" name="type" value="${NEED_CHANGE_PASSWORD}">
                     <input type="hidden" name="co_usuari" value="${US.co_usuari}">
                     <input type="hidden" name="co_correo" value="${US.co_usuari}">
+
                     <c:if test="${NEED_CHANGE_PASSWORD == 'TYPE1'}">
                         <div class="md-form" style="display: block;height: 30px;">
                             <label>Hola ${US.no_usuari}</label>
@@ -156,47 +158,60 @@
                         </div>
                     </c:if>
 
+                    <c:if test="${empty updpwd_ok}">
+                        <div class="md-form">
+                            <input type="password" id="new_password" name="new_password" class="form-control"
+                                   onblur="validpwd()">
+                            <label for="new_password">Contrase&ntilde;a nueva</label>
+                        </div>
 
-                    <div class="md-form">
-                        <input type="password" id="new_password" name="new_password" class="form-control"
-                               onblur="validpwd()">
-                        <label for="new_password">Contrase&ntilde;a nueva</label>
-                    </div>
+                        <div class="md-form">
+                            <input type="password" id="new_password2" name="new_password2" class="form-control"
+                                   onblur="validpwd()">
+                            <label for="new_password">Repite la contrase&ntilde;a nueva</label>
+                        </div>
 
-                    <div class="md-form">
-                        <input type="password" id="new_password2" name="new_password2" class="form-control"
-                               onblur="validpwd()">
-                        <label for="new_password">Repite la contrase&ntilde;a nueva</label>
-                    </div>
+                        <div class="alert alert-info text-left">
+                            <label class="form-check-label" style="font-size: .8rem">
+                                La nueva contrase&ntilde;a nueva debe tener de cumplir:
+                            </label>
+                            <br/>
+                            <label class="form-check-label">
+                                <ul class="mb-0">
+                                    <li class="text-left mb-1" style="font-size: .7rem;">Mayor de 6 caracteres</li>
+                                    <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter en
+                                        Mayuscula
+                                    </li>
+                                    <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter en
+                                        Minuscula
+                                    </li>
+                                    <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter
+                                        especial <strong>|\#*/·$%&/()?¿'¡!.</strong></li>
+                                </ul>
+                            </label>
+                        </div>
+                    </c:if>
 
-                    <div class="alert alert-info text-left">
-                        <label class="form-check-label" style="font-size: .8rem">
-                            La nueva contrase&ntilde;a nueva debe tener de cumplir:
-                        </label>
-                        <br/>
-                        <label class="form-check-label">
-                            <ul class="mb-0">
-                                <li class="text-left mb-1" style="font-size: .7rem;">Mayor de 6 caracteres</li>
-                                <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter en
-                                    Mayuscula
-                                </li>
-                                <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter en
-                                    Minuscula
-                                </li>
-                                <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter
-                                    especial <strong>|\#*/·$%&/()?¿'¡!.</strong></li>
-                            </ul>
-                        </label>
-                    </div>
 
-                    <div id="msg" class="alert alert-danger" style="display: none;">
-                        <label class="form-check-label" style="font-size: .8rem">
-                            La nueva contrase&ntilde;a nueva debe tener de cumplir:
-                        </label>
-                    </div>
+                    <c:if test="${not empty updpwd_error}">
+                        <div id="msg" class="alert alert-danger" style="">
+                            <label class="form-check-label" style="font-size: .8rem">
+                                    ${updpwd_error}
+                            </label>
+                        </div>
+                    </c:if>
+
+                    <c:if test="${empty updpwd_error}">
+                        <div id="msg" class="alert alert-danger" style="display: none;">
+                            <label class="form-check-label" style="font-size: .8rem">
+                                La nueva contrase&ntilde;a nueva debe tener de cumplir:
+                            </label>
+                        </div>
+                    </c:if>
 
                     <!-- Sign in button -->
-                    <button type="submit" class="btn btn-primary btn-lg btn-block waves-effect z-depth-0" disabled>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block waves-effect z-depth-0"
+                            onclick="change()" disabled>
                         Actualizar
                     </button>
 

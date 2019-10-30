@@ -5,6 +5,9 @@ import java.security.MessageDigest;
 
 public class Security {
 
+    public static int PASSWORD_CHANGE_OK = 1;
+    public static int PASSWORD_CHANGE_FAIL = 0;
+
     public static String toMD5(String text) {
         text = "" + text;
 
@@ -22,4 +25,6 @@ public class Security {
             }
         }
     }
+
+
 }

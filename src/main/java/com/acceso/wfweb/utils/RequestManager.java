@@ -124,7 +124,12 @@ public class RequestManager {
     }
 
     public void save_over_session(String objectKey, Object objectValue) {
-        this.request.getSession().setAttribute(objectKey, objectValue);
+        if(objectKey==null){
+            this.request.getSession().removeAttribute(objectKey);
+        }else{
+            this.request.getSession().setAttribute(objectKey, objectValue);
+        }
+
     }
 
     public void save_over_request(String objectKey, Object objectValue) {
