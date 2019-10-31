@@ -24,6 +24,8 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.xssf.streaming.SXSSFCell;
+import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -153,6 +155,7 @@ public class Converter {
     }
 
     public File OBJECT_TO_XLS(Object data) {
+        System.out.println("data = " + data.getClass());
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Sheet1");
         if (data instanceof ArrayList) {
@@ -218,213 +221,244 @@ public class Converter {
     }
 
     public File OBJECT_TO_XLS(Object data, boolean havetitle, Map<Integer, Object> configuration) {
-
-        if (data == null || !(data instanceof ArrayList)) {
+        System.out.println("data = " + data.getClass());
+        System.out.println("havetitle = " + havetitle);
+        System.out.println("configuration = " + configuration);
+        if (data == null || !(data instanceof ArrayList | data instanceof ValpagJson)) {
             return null;
         }
-
+        System.out.println("LIsto!XLS");
         SXSSFWorkbook workbook = new SXSSFWorkbook();
         SXSSFSheet sheet = workbook.createSheet("Sheet1");
-        List<HashMap<Object, Object>> datalist = (ArrayList) data;
-        int currentRow = 0;
-        int currentCol = 0;
+        if (data instanceof com.acceso.wfcore.utils.ValpagJson) {
+            //!"
+            System.out.println("Crendo XLS JSON!");
+            com.acceso.wfcore.utils.ValpagJson valpagJson = (com.acceso.wfcore.utils.ValpagJson) data;
+            for (RowJson rowJson : valpagJson.getRows()) {
+                for (StandarRegisterJson registerJson : rowJson.getRegs()) {
+                    System.out.println("r!egisterJson => " + registerJson);
+                    CellJson cellJson = (CellJson) registerJson;
+                    CellReference cr = new CellReference(cellJson.getNo_addres());
+                    System.out.println("cr = " + cr + ", cellJson=" + cellJson);
+                    SXSSFRow row = null;
+                    try {
+                        row = sheet.getRow(cr.getRow());
+                        if (row == null) {
+                            row = sheet.createRow(cr.getRow());
+                        }
+                    } catch (Exception ep) {
+                        //ON error
+                        row = sheet.createRow(cr.getRow());
+                    }
+                    //CELL
+                    SXSSFCell cell = null;
+                    try {
+                        cell = row.getCell(cr.getCol());
+                        if (cell == null) {
+                            cell = row.createCell(cr.getCol());
+                        }
+                    } catch (Exception ep) {
+                        //ON error
+                        cell = row.createCell(cr.getCol());
+                    }
+                        cell.setCellValue(cellJson.va_pagreg);
 
-        /*DEFAULT FONT1*/
-        Font defaultFont = workbook.createFont();
-        defaultFont.setBold(true);
+                }
+            }
 
-        /*DEFAULT FONT2*/
-        Font defaultFont2 = workbook.createFont();
-        defaultFont2.setBold(false);
+        } else {
+            List<HashMap<Object, Object>> datalist = (ArrayList) data;
+            int currentRow = 0;
+            int currentCol = 0;
 
-        /*DEFAULT TITLE STYLE*/
-        CellStyle styleTitle = workbook.createCellStyle();
-        styleTitle.setAlignment(HorizontalAlignment.CENTER);
-        styleTitle.setFont(defaultFont);
+            /*DEFAULT FONT1*/
+            Font defaultFont = workbook.createFont();
+            defaultFont.setBold(true);
 
-        /*DEFAULT TITLE STYLE*/
-        CellStyle styledefault = workbook.createCellStyle();
-        styledefault.setAlignment(HorizontalAlignment.LEFT);
-        styledefault.setFont(defaultFont2);
+            /*DEFAULT FONT2*/
+            Font defaultFont2 = workbook.createFont();
+            defaultFont2.setBold(false);
 
-        DataFormat format = workbook.createDataFormat();
-        //TYPE's
-        Map<Integer, Integer> types = new HashMap<>();
-        Map<Integer, String> formatDate = new HashMap<>();
-        List<Integer> autosizecolumns = new ArrayList<>();
+            /*DEFAULT TITLE STYLE*/
+            CellStyle styleTitle = workbook.createCellStyle();
+            styleTitle.setAlignment(HorizontalAlignment.CENTER);
+            styleTitle.setFont(defaultFont);
 
-        for (int i = 0; i < datalist.get(0).size(); i++) {
-            ColumnConfigJson configJson = (ColumnConfigJson) configuration.get(i + 1);
-            int cellType = 0;
+            /*DEFAULT TITLE STYLE*/
+            CellStyle styledefault = workbook.createCellStyle();
+            styledefault.setAlignment(HorizontalAlignment.LEFT);
+            styledefault.setFont(defaultFont2);
 
-            if (configJson != null) {
-                Font customFont = workbook.createFont();
-                CellStyle customStyle = workbook.createCellStyle();
+            DataFormat format = workbook.createDataFormat();
+            //TYPE's
+            Map<Integer, Integer> types = new HashMap<>();
+            Map<Integer, String> formatDate = new HashMap<>();
+            List<Integer> autosizecolumns = new ArrayList<>();
+
+            for (int i = 0; i < datalist.get(0).size(); i++) {
+                ColumnConfigJson configJson = (ColumnConfigJson) configuration.get(i + 1);
+                int cellType = 0;
+
+                if (configJson != null) {
+                    Font customFont = workbook.createFont();
+                    CellStyle customStyle = workbook.createCellStyle();
 //                System.out.println("configJson.getAlign() = " + configJson.getAlign());
-                switch (configJson.getAlign()) {
-                    case "CENTER": {
-                        customStyle.setAlignment(HorizontalAlignment.CENTER);
-                        break;
+                    switch (configJson.getAlign()) {
+                        case "CENTER": {
+                            customStyle.setAlignment(HorizontalAlignment.CENTER);
+                            break;
+                        }
+                        case "LEFT": {
+                            customStyle.setAlignment(HorizontalAlignment.LEFT);
+                            break;
+                        }
+                        case "RIGHT": {
+                            customStyle.setAlignment(HorizontalAlignment.RIGHT);
+                            break;
+                        }
+                        case "JUSTIFY": {
+                            customStyle.setAlignment(HorizontalAlignment.JUSTIFY);
+                            break;
+                        }
                     }
-                    case "LEFT": {
-                        customStyle.setAlignment(HorizontalAlignment.LEFT);
-                        break;
-                    }
-                    case "RIGHT": {
-                        customStyle.setAlignment(HorizontalAlignment.RIGHT);
-                        break;
-                    }
-                    case "JUSTIFY": {
-                        customStyle.setAlignment(HorizontalAlignment.JUSTIFY);
-                        break;
-                    }
-                }
 
 
-                if (configJson.getColor() != null) {
-                    IndexedColors.LIGHT_GREEN.getIndex();
-                    customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
-                    customFont.setColor(Util.getColor(configJson.getColor()));
-                }
-                if (configJson.getBgcolor() != null) {
-                    customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
-                }
+                    if (configJson.getColor() != null) {
+                        IndexedColors.LIGHT_GREEN.getIndex();
+                        customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
+                        customFont.setColor(Util.getColor(configJson.getColor()));
+                    }
+                    if (configJson.getBgcolor() != null) {
+                        customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
+                    }
 
 //                System.out.println("configJson.isWrap() = " + configJson.isVwrap());
-                if (configJson.isVwrap()) {
+                    if (configJson.isVwrap()) {
 //                    System.out.println("configJson.isWrap() ==> " + configJson.isVwrap());
-                    customStyle.setWrapText(true);
-                }
-                System.out.println("configJson.getFormat()  => " + configJson.getFormat());
-                if (configJson.getFormat() != null & configJson.getFormat().length() > 0) {
-                    System.out.println("setDataFormat ==> " + configJson.getFormat() + ", ==>" + format.getFormat(configJson.getFormat()));
-                    customStyle.setDataFormat(format.getFormat(configJson.getFormat()));
-                    formatDate.put(i + 1, configJson.getFormat());
-                }
-                if (configJson.isHwrap()) {
-                    System.out.println("configJson.isWrap() ==> " + configJson.isHwrap());
+                        customStyle.setWrapText(true);
+                    }
+                    System.out.println("configJson.getFormat()  => " + configJson.getFormat());
+                    if (configJson.getFormat() != null & configJson.getFormat().length() > 0) {
+                        System.out.println("setDataFormat ==> " + configJson.getFormat() + ", ==>" + format.getFormat(configJson.getFormat()));
+                        customStyle.setDataFormat(format.getFormat(configJson.getFormat()));
+                        formatDate.put(i + 1, configJson.getFormat());
+                    }
+                    if (configJson.isHwrap()) {
+                        System.out.println("configJson.isWrap() ==> " + configJson.isHwrap());
 
-                    autosizecolumns.add((i + 1));
-                }
-                if (configJson.isBold()) {
-                    customFont.setBold(true);
-                }
-                System.out.println("configJson.getWidth() = " + configJson.getWidth());
-                if (configJson.getWidth() > -1) {
-                    sheet.setColumnWidth(i, configJson.getWidth() * 100);
-                }
+                        autosizecolumns.add((i + 1));
+                    }
+                    if (configJson.isBold()) {
+                        customFont.setBold(true);
+                    }
+                    System.out.println("configJson.getWidth() = " + configJson.getWidth());
+                    if (configJson.getWidth() > -1) {
+                        sheet.setColumnWidth(i, configJson.getWidth() * 100);
+                    }
 
-                customStyle.setFont(customFont);
-                configuration.put((i + 1), customStyle);
+                    customStyle.setFont(customFont);
+                    configuration.put((i + 1), customStyle);
 
-                //DEl tipo de celda
-                if (configJson.getType() != null) {
-                    switch (configJson.getType()) {
-                        case "STRING": {
-                            cellType = CellType.STRING.getCode();
-                            break;
+                    //DEl tipo de celda
+                    if (configJson.getType() != null) {
+                        switch (configJson.getType()) {
+                            case "STRING": {
+                                cellType = CellType.STRING.getCode();
+                                break;
+                            }
+                            case "NUMERIC": {
+                                cellType = CellType.NUMERIC.getCode();
+                                break;
+                            }
+                            case "DATE": {
+                                cellType = 6;
+                                break;
+                            }
+                            default: {
+                                cellType = CellType.STRING.getCode();
+                                break;
+                            }
                         }
-                        case "NUMERIC": {
-                            cellType = CellType.NUMERIC.getCode();
-                            break;
-                        }
-                        case "DATE": {
-                            cellType = 6;
-                            break;
-                        }
-                        default: {
-                            cellType = CellType.STRING.getCode();
-                            break;
-                        }
+                    } else {
+                        cellType = CellType.STRING.getCode();
                     }
                 } else {
+                    configuration.put((i + 1), styledefault);
+
+                    //DEl tipo de celda
                     cellType = CellType.STRING.getCode();
                 }
-            } else {
-                configuration.put((i + 1), styledefault);
-
-                //DEl tipo de celda
-                cellType = CellType.STRING.getCode();
+                types.put(i + 1, cellType);
             }
-            types.put(i + 1, cellType);
-        }
 
-//        System.out.println("EL ttituylo" + configuration.size() + ",::1" + configuration);
-//        sheet.trackAllColumnsForAutoSizing();
-
-        if (havetitle) {
-            Row _row = sheet.createRow(currentRow);
-            for (HashMap.Entry<Object, Object> col : datalist.get(0).entrySet()) {
-                Cell cell = _row.createCell(currentCol, CellType.STRING);
-                cell.setCellStyle(styleTitle);
-                cell.setCellValue("" + col.getKey());
-                System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
-                currentCol++;
-            }
-            currentCol = 0;
-            currentRow++;
-        }
-        datalist.stream().forEach(pararelRow -> {
-            Row _row = sheet.createRow(sheet.getPhysicalNumberOfRows());
-            int _currentCol = 0;
-
-            for (HashMap.Entry<Object, Object> col : pararelRow.entrySet()) {
-                Cell cell;
-                try {
-
-                    if (types.get(_currentCol + 1) == CellType.NUMERIC.getCode()) {
-                        Double d = Double.parseDouble("" + col.getValue());
-                        cell = _row.createCell(_currentCol, CellType.NUMERIC);
-                        cell.setCellValue(d);
-                    } else if (types.get(_currentCol + 1) == 6) {
-                        cell = _row.createCell(_currentCol);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        //get date format
-                        cell.setCellValue(sdf.parse(col.getValue().toString()));
-                    } else if (types.get(_currentCol + 1) == CellType.STRING.getCode()) {
-//                        Double d = Double.parseDouble("" + col.getValue());
-                        cell = _row.createCell(_currentCol, CellType.STRING);
-//                        cell.setCellValue(d);
-                        if (col.getValue() == null) {
-                            cell.setCellValue("");
-                        } else {
-                            cell.setCellValue(col.getValue().toString());
-                        }
-
-                    } else {
-                        Double d = Double.parseDouble("" + col.getValue());
-                        cell = _row.createCell(_currentCol, CellType.STRING);
-                        cell.setCellValue(d);
-                    }
-
-
-                } catch (Exception ep) {
-                    cell = _row.createCell(_currentCol, CellType.STRING);
-                    try {
-                        if (col.getValue() != null) {
-                            cell.setCellValue("" + col.getValue());
-                        } else {
-                            cell.setCellValue("");
-                        }
-                    } catch (Exception ep2) {
-                        cell.setCellValue("");
-                    }
-
+            if (havetitle) {
+                Row _row = sheet.createRow(currentRow);
+                for (HashMap.Entry<Object, Object> col : datalist.get(0).entrySet()) {
+                    Cell cell = _row.createCell(currentCol, CellType.STRING);
+                    cell.setCellStyle(styleTitle);
+                    cell.setCellValue("" + col.getKey());
+                    System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
+                    currentCol++;
                 }
-                cell.setCellStyle((CellStyle) configuration.get(_currentCol + 1));
-
-                _currentCol++;
+                currentCol = 0;
+                currentRow++;
             }
-            if (sheet.getPhysicalNumberOfRows() % 1000 == 0)
-                System.out.println("MIL+ = " + _currentCol + "===>OK");
-        });
+            datalist.stream().forEach(pararelRow -> {
+                Row _row = sheet.createRow(sheet.getPhysicalNumberOfRows());
+                int _currentCol = 0;
 
-//        sheet.autoSizeColumn();
-//        for (Integer column : autosizecolumns) {
-//
-////            sheet.autoSizeColumn(column);
-//            sheet.setColumnWidth(column, 4000);
-//        }
+                for (HashMap.Entry<Object, Object> col : pararelRow.entrySet()) {
+                    Cell cell;
+                    try {
+
+                        if (types.get(_currentCol + 1) == CellType.NUMERIC.getCode()) {
+                            Double d = Double.parseDouble("" + col.getValue());
+                            cell = _row.createCell(_currentCol, CellType.NUMERIC);
+                            cell.setCellValue(d);
+                        } else if (types.get(_currentCol + 1) == 6) {
+                            cell = _row.createCell(_currentCol);
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                            //get date format
+                            cell.setCellValue(sdf.parse(col.getValue().toString()));
+                        } else if (types.get(_currentCol + 1) == CellType.STRING.getCode()) {
+//                        Double d = Double.parseDouble("" + col.getValue());
+                            cell = _row.createCell(_currentCol, CellType.STRING);
+//                        cell.setCellValue(d);
+                            if (col.getValue() == null) {
+                                cell.setCellValue("");
+                            } else {
+                                cell.setCellValue(col.getValue().toString());
+                            }
+
+                        } else {
+                            Double d = Double.parseDouble("" + col.getValue());
+                            cell = _row.createCell(_currentCol, CellType.STRING);
+                            cell.setCellValue(d);
+                        }
+
+
+                    } catch (Exception ep) {
+                        cell = _row.createCell(_currentCol, CellType.STRING);
+                        try {
+                            if (col.getValue() != null) {
+                                cell.setCellValue("" + col.getValue());
+                            } else {
+                                cell.setCellValue("");
+                            }
+                        } catch (Exception ep2) {
+                            cell.setCellValue("");
+                        }
+
+                    }
+                    cell.setCellStyle((CellStyle) configuration.get(_currentCol + 1));
+
+                    _currentCol++;
+                }
+                if (sheet.getPhysicalNumberOfRows() % 1000 == 0)
+                    System.out.println("MIL+ = " + _currentCol + "===>OK");
+            });
+        }
+
 
         try {
             System.out.println("BUILDING XLS...");

@@ -474,6 +474,9 @@ public class DataAPI extends GenericAPI {
         return file;
     }
 
+    /*
+    * GENERADOR DE ARCHIVOS
+    * */
     public File CREATE_FILE(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
         String co_archiv = opts.get("co_archiv") == null ? null : ("" + opts.get("co_archiv"));

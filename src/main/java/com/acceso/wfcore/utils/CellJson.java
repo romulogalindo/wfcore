@@ -1,17 +1,18 @@
 package com.acceso.wfcore.utils;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-
 /**
  * @author rgalindo
  */
-public class RegJson extends StandarRegisterJson {
+public class CellJson extends StandarRegisterJson {
 
-    int co_pagreg;
+    //    int co_pagreg;
+    String no_addres;
     String va_pagreg;
     String tx_pagreg;
     String no_pagreg;
@@ -25,9 +26,10 @@ public class RegJson extends StandarRegisterJson {
     Object cf_search;
     Object do_valida;
 
-    public RegJson(Object obj) {
+    public CellJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
-        co_pagreg = opts.get("co_pagreg") == null ? -1 : (int) opts.get("co_pagreg");
+        no_addres = opts.get("no_addres") == null ? "A1" : opts.get("no_addres").toString();
+
         if (opts.get("va_pagreg") != null) {
             va_pagreg = "" + opts.get("va_pagreg");
         }
@@ -89,39 +91,47 @@ public class RegJson extends StandarRegisterJson {
         }
     }
 
-    public RegJson(int co_pagreg) {
-        this(co_pagreg, null, null, null, null, null, null, null);
+//    public CellJson(int co_pagreg) {
+//        this(co_pagreg, null, null, null, null, null, null, null);
+//    }
+//
+//    public CellJson(int co_pagreg, String va_pagreg) {
+//        this(co_pagreg, va_pagreg, null, null, null, null, null, null);
+//    }
+//
+//    public CellJson(int co_pagreg, String va_pagreg, String tx_pagreg) {
+//        this(co_pagreg, va_pagreg, tx_pagreg, null, null, null, null, null);
+//    }
+//
+//    public CellJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg) {
+//        this(co_pagreg, va_pagreg, tx_pagreg, no_pagreg, ti_pagreg, ti_estreg, ur_pagreg, null);
+//    }
+//
+//    public CellJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg, Object ob_dindat) {
+//        this.co_pagreg = co_pagreg;
+//        this.va_pagreg = va_pagreg;
+//        this.tx_pagreg = tx_pagreg;
+//        this.no_pagreg = no_pagreg;
+//        this.ti_pagreg = ti_pagreg;
+//        this.ti_estreg = ti_estreg;
+//        this.ur_pagreg = ur_pagreg;
+//        this.ob_dindat = ob_dindat;
+//    }
+//
+//    public int getCo_pagreg() {
+//        return co_pagreg;
+//    }
+//
+//    public void setCo_pagreg(int co_pagreg) {
+//        this.co_pagreg = co_pagreg;
+//    }
+
+    public String getNo_addres() {
+        return no_addres;
     }
 
-    public RegJson(int co_pagreg, String va_pagreg) {
-        this(co_pagreg, va_pagreg, null, null, null, null, null, null);
-    }
-
-    public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg) {
-        this(co_pagreg, va_pagreg, tx_pagreg, null, null, null, null, null);
-    }
-
-    public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg) {
-        this(co_pagreg, va_pagreg, tx_pagreg, no_pagreg, ti_pagreg, ti_estreg, ur_pagreg, null);
-    }
-
-    public RegJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg, Object ob_dindat) {
-        this.co_pagreg = co_pagreg;
-        this.va_pagreg = va_pagreg;
-        this.tx_pagreg = tx_pagreg;
-        this.no_pagreg = no_pagreg;
-        this.ti_pagreg = ti_pagreg;
-        this.ti_estreg = ti_estreg;
-        this.ur_pagreg = ur_pagreg;
-        this.ob_dindat = ob_dindat;
-    }
-
-    public int getCo_pagreg() {
-        return co_pagreg;
-    }
-
-    public void setCo_pagreg(int co_pagreg) {
-        this.co_pagreg = co_pagreg;
+    public void setNo_addres(String no_addres) {
+        this.no_addres = no_addres;
     }
 
     public String getVa_pagreg() {
@@ -221,10 +231,14 @@ public class RegJson extends StandarRegisterJson {
         this.tx_plahol = tx_plahol;
     }
 
+    public static CellJson NEW(Object obj) {
+        return new CellJson(obj);
+    }
+
     @Override
     public String toString() {
-        return "RegJson{" +
-                "co_pagreg=" + co_pagreg +
+        return "CellJson{" +
+                "no_addres='" + no_addres + '\'' +
                 ", va_pagreg='" + va_pagreg + '\'' +
                 ", tx_pagreg='" + tx_pagreg + '\'' +
                 ", no_pagreg='" + no_pagreg + '\'' +
@@ -238,9 +252,5 @@ public class RegJson extends StandarRegisterJson {
                 ", cf_search=" + cf_search +
                 ", do_valida=" + do_valida +
                 '}';
-    }
-
-    public static RegJson NEW(Object obj) {
-        return new RegJson(obj);
     }
 }

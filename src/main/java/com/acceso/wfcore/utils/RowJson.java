@@ -1,14 +1,14 @@
 package com.acceso.wfcore.utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Rómulo Galindo Tanta
  */
-public class RowJson {
+public class RowJson implements Serializable {
 
-    //    List<RegJson> regs;
     List<StandarRegisterJson> regs;
     List<CfgJson> cfgobjs;
 
@@ -40,18 +40,28 @@ public class RowJson {
         this.regs = regs;
     }
 
-    public void addReg(RegJson regJson) {
+    //    public void addReg(RegJson regJson) {
+    public void addReg(StandarRegisterJson regJson) {
         regs.add(regJson);
     }
 
-    /*ADD new RegJson*/
-    public void add(RegJson regJson) {
-        regs.add(regJson);
-    }
+//    /*ADD new RegJson*/
+//    public void add(CellJson cellJson) {
+//        regs.add(cellJson);
+//    }
+//
+//    /*ADD new RegJson*/
+//    public void add(RegJson regJson) {
+//        regs.add(regJson);
+//    }
+//
+//    /*ADD new TabJson*/
+//    public void add(TabJson regJson) {
+//        regs.add(regJson);
+//    }
 
-    /*ADD new TabJson*/
-    public void add(TabJson regJson) {
-        regs.add(regJson);
+    public void add(StandarRegisterJson reg) {
+        regs.add(reg);
     }
 
     /*SOLO TIPO TABLA(por ahora)*/
