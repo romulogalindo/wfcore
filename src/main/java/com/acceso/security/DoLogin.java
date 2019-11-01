@@ -51,7 +51,7 @@ public class DoLogin {
             System.out.println("usuarioLDAP = " + usuarioLDAP);
             if (usuarioLDAP.isIl_conect()) {
                 System.out.println("Logueado al LDAP");
-                //Estas dentro dle LDAP
+                //Estas dentro dle LDAP//--->logueo-set ldap
                 SecurityDAO securityDAO = new SecurityDAO();
                 regsesiniDTO = securityDAO.regsesini_ldap(username, Security.toMD5(password), remoteip);
                 securityDAO.close();

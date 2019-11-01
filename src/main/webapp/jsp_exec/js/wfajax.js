@@ -308,7 +308,7 @@ doPropagg = function (url, regparams, data) {
                         }
                     } else if (action.no_action == 'POPUP') {
                         // window.parent.page_to_master(regparams);
-                        window.parent.page_to_master(action.ls_params);
+                        window.parent.page_to_master(action.ls_params, action.ls_pagina);
                     } else if (action.no_action == 'REFRESH') {
                         for (var i = 0; i < action.ls_pagina.length; i++) {
                             //para todos los iframes que coincidan reload
