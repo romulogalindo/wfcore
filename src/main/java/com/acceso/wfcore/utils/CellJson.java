@@ -25,6 +25,8 @@ public class CellJson extends StandarRegisterJson {
     Object ca_caract;
     Object cf_search;
     Object do_valida;
+    Integer nu_colspan;
+    Integer nu_rowspan;
 
     public CellJson(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
@@ -32,6 +34,14 @@ public class CellJson extends StandarRegisterJson {
 
         if (opts.get("va_pagreg") != null) {
             va_pagreg = "" + opts.get("va_pagreg");
+        }
+
+        if (opts.get("nu_colspan") != null) {
+            nu_colspan = Util.toInt(opts.get("nu_colspan"), -1);
+        }
+
+        if (opts.get("nu_rowspan") != null) {
+            nu_rowspan = Util.toInt(opts.get("nu_rowspan"), -1);
         }
 
         if (opts.get("tx_pagreg") != null) {
@@ -90,41 +100,6 @@ public class CellJson extends StandarRegisterJson {
             do_valida = "{\"charset\":\"" + cfg_serach.get("ti_charset") + "\", \"regexp\":\"" + cfg_serach.get("va_regexp").toString().replace("\\", "\\") + "\", \"message\":\"" + cfg_serach.get("tx_invalid") + "\", \"pagbots\":[" + String.join(",", _styles) + "]}";
         }
     }
-
-//    public CellJson(int co_pagreg) {
-//        this(co_pagreg, null, null, null, null, null, null, null);
-//    }
-//
-//    public CellJson(int co_pagreg, String va_pagreg) {
-//        this(co_pagreg, va_pagreg, null, null, null, null, null, null);
-//    }
-//
-//    public CellJson(int co_pagreg, String va_pagreg, String tx_pagreg) {
-//        this(co_pagreg, va_pagreg, tx_pagreg, null, null, null, null, null);
-//    }
-//
-//    public CellJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg) {
-//        this(co_pagreg, va_pagreg, tx_pagreg, no_pagreg, ti_pagreg, ti_estreg, ur_pagreg, null);
-//    }
-//
-//    public CellJson(int co_pagreg, String va_pagreg, String tx_pagreg, String no_pagreg, Integer ti_pagreg, String ti_estreg, String ur_pagreg, Object ob_dindat) {
-//        this.co_pagreg = co_pagreg;
-//        this.va_pagreg = va_pagreg;
-//        this.tx_pagreg = tx_pagreg;
-//        this.no_pagreg = no_pagreg;
-//        this.ti_pagreg = ti_pagreg;
-//        this.ti_estreg = ti_estreg;
-//        this.ur_pagreg = ur_pagreg;
-//        this.ob_dindat = ob_dindat;
-//    }
-//
-//    public int getCo_pagreg() {
-//        return co_pagreg;
-//    }
-//
-//    public void setCo_pagreg(int co_pagreg) {
-//        this.co_pagreg = co_pagreg;
-//    }
 
     public String getNo_addres() {
         return no_addres;
@@ -233,6 +208,22 @@ public class CellJson extends StandarRegisterJson {
 
     public static CellJson NEW(Object obj) {
         return new CellJson(obj);
+    }
+
+    public Integer getNu_colspan() {
+        return nu_colspan;
+    }
+
+    public void setNu_colspan(Integer nu_colspan) {
+        this.nu_colspan = nu_colspan;
+    }
+
+    public Integer getNu_rowspan() {
+        return nu_rowspan;
+    }
+
+    public void setNu_rowspan(Integer nu_rowspan) {
+        this.nu_rowspan = nu_rowspan;
     }
 
     @Override

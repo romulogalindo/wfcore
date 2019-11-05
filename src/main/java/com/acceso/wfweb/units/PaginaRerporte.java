@@ -26,9 +26,10 @@ public class PaginaRerporte extends Pagina implements Serializable {
     public String toHTML() {
         String html = "";
         String itr = "";
-        String css = "<style>table.wf-report3 thead th{white-space: nowrap;}";
+        String css = "<style>table.wf-report3 thead th{white-space: nowrap;}\n.dataTables_scrollHeadInner table{overflow-x: unset !important;}\n.dataTables_scrollBody table{overflow-x: unset !important;}\n";
         String btns = "";
-
+//        css += "";
+//        css += "";
         LinkedList<Fila> titlelvl1 = new LinkedList<>();
         int colspan = 0;
         int colcount = 1;
@@ -77,6 +78,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
         }
         if (haveButtons) {
             html += "<th colspan=1 class=\"wf_t_stitle w3-highway-blue\" ></th>";
+
         }
         html += "</tr>";
 
@@ -345,6 +347,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
         }
 
         if (hvg) {
+            css += "\ntable#PAG" + co_pagina + " tfoot tr,table#PAG" + co_pagina + " tfoot tr td, table#PAG" + co_pagina + " tfoot tr td div.dataTables_sizing{height:unset !important;}\n";
             html += "<tfoot>";
             html += "<tr>";
             html += "<td colspan='" + totalspan + "'>";

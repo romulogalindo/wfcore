@@ -43,8 +43,8 @@ public class DoLogin {
         System.out.println("ENABLED_LOGIN_LDAP = " + ENABLED_LOGIN_LDAP);
 
         //LOGIN--A/2
-//        if (ENABLED_LOGIN_LDAP) {
-        if (!ENABLED_LOGIN_LDAP) {
+        if (ENABLED_LOGIN_LDAP) {
+//        if (!ENABLED_LOGIN_LDAP) {
             SecurityLDAO ldao = new SecurityLDAO(WFIOAPP.APP.getDataSourceService().getValueOfKey("URL_LDAP").replace("USER_LDAP", username).replace("PASSWORD_LDAP", password));
 
             usuarioLDAP = ldao.connect();

@@ -23,6 +23,7 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
@@ -233,6 +234,7 @@ public class Converter {
         if (data instanceof com.acceso.wfcore.utils.ValpagJson) {
             //!"
             System.out.println("Crendo XLS JSON!");
+            List<CellJson> regions = new ArrayList<>();
             com.acceso.wfcore.utils.ValpagJson valpagJson = (com.acceso.wfcore.utils.ValpagJson) data;
             for (RowJson rowJson : valpagJson.getRows()) {
                 for (StandarRegisterJson registerJson : rowJson.getRegs()) {
@@ -261,11 +263,26 @@ public class Converter {
                         //ON error
                         cell = row.createCell(cr.getCol());
                     }
-                        cell.setCellValue(cellJson.va_pagreg);
+                    cell.setCellValue(cellJson.va_pagreg);
+                    if (cellJson.getNu_colspan() != null || cellJson.getNu_rowspan() != null) {
+                        regions.add(cellJson);
+                    }
 
                 }
             }
-
+            //una vez agregada la data ahora toca join region!
+            for (CellJson cellJson : regions) {
+                System.out.println("Generando region!");
+                CellReference cr = new CellReference(cellJson.getNo_addres());
+                int firstCol = (cellJson.getNu_colspan() != null & cellJson.getNu_colspan() < 0) ? 1 : cellJson.getNu_colspan();
+                int firstRow = (cellJson.getNu_rowspan() != null & cellJson.getNu_rowspan() < 0) ? 1 : cellJson.getNu_rowspan();
+                System.out.println("firstCol:" + firstCol + ",firstRow:" + firstRow);
+                firstCol = firstCol + cr.getCol() - 1;
+                firstRow = firstRow + cr.getRow() - 1;
+                System.out.println("[" + cr.getCol() + "," + cr.getRow() + "]firstCol:" + firstCol + ",firstRow:" + firstRow);
+//                sheet.addMergedRegion(new CellRangeAddress(cr.getCol(), cr.getRow(), firstRow, firstCol));
+                sheet.addMergedRegion(new CellRangeAddress(cr.getRow(), firstRow, cr.getCol(), firstCol));
+            }
         } else {
             List<HashMap<Object, Object>> datalist = (ArrayList) data;
             int currentRow = 0;
