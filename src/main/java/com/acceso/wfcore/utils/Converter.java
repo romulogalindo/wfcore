@@ -235,13 +235,14 @@ public class Converter {
             //!"
             System.out.println("Crendo XLS JSON!");
             List<CellJson> regions = new ArrayList<>();
+            List<CellJson> styles = new ArrayList<>();
             com.acceso.wfcore.utils.ValpagJson valpagJson = (com.acceso.wfcore.utils.ValpagJson) data;
             for (RowJson rowJson : valpagJson.getRows()) {
                 for (StandarRegisterJson registerJson : rowJson.getRegs()) {
-                    System.out.println("r!egisterJson => " + registerJson);
+//                    System.out.println("r!egisterJson => " + registerJson);
                     CellJson cellJson = (CellJson) registerJson;
                     CellReference cr = new CellReference(cellJson.getNo_addres());
-                    System.out.println("cr = " + cr + ", cellJson=" + cellJson);
+//                    System.out.println("cr = " + cr + ", cellJson=" + cellJson);
                     SXSSFRow row = null;
                     try {
                         row = sheet.getRow(cr.getRow());
@@ -263,26 +264,91 @@ public class Converter {
                         //ON error
                         cell = row.createCell(cr.getCol());
                     }
+
                     cell.setCellValue(cellJson.va_pagreg);
                     if (cellJson.getNu_colspan() != null || cellJson.getNu_rowspan() != null) {
                         regions.add(cellJson);
+                    }
+
+                    if (cellJson.getColumnConfigJson() != null) {
+                        styles.add(cellJson);
                     }
 
                 }
             }
             //una vez agregada la data ahora toca join region!
             for (CellJson cellJson : regions) {
-                System.out.println("Generando region!");
                 CellReference cr = new CellReference(cellJson.getNo_addres());
                 int firstCol = (cellJson.getNu_colspan() != null & cellJson.getNu_colspan() < 0) ? 1 : cellJson.getNu_colspan();
                 int firstRow = (cellJson.getNu_rowspan() != null & cellJson.getNu_rowspan() < 0) ? 1 : cellJson.getNu_rowspan();
-                System.out.println("firstCol:" + firstCol + ",firstRow:" + firstRow);
                 firstCol = firstCol + cr.getCol() - 1;
                 firstRow = firstRow + cr.getRow() - 1;
-                System.out.println("[" + cr.getCol() + "," + cr.getRow() + "]firstCol:" + firstCol + ",firstRow:" + firstRow);
-//                sheet.addMergedRegion(new CellRangeAddress(cr.getCol(), cr.getRow(), firstRow, firstCol));
-                sheet.addMergedRegion(new CellRangeAddress(cr.getRow(), firstRow, cr.getCol(), firstCol));
+                if (!(cr.getRow() == firstRow & cr.getCol() == firstCol)) {
+                    sheet.addMergedRegion(new CellRangeAddress(cr.getRow(), firstRow, cr.getCol(), firstCol));
+                }
             }
+
+            for (CellJson cellJson : styles) {
+                CellReference cr = new CellReference(cellJson.getNo_addres());
+                ColumnConfigJson configJson = cellJson.getColumnConfigJson();
+                Font customFont = workbook.createFont();
+                CellStyle customStyle = workbook.createCellStyle();
+                if (configJson.getAlign() != null) {
+                    switch (configJson.getAlign()) {
+                        case "CENTER": {
+                            customStyle.setAlignment(HorizontalAlignment.CENTER);
+                            break;
+                        }
+                        case "LEFT": {
+                            customStyle.setAlignment(HorizontalAlignment.LEFT);
+                            break;
+                        }
+                        case "RIGHT": {
+                            customStyle.setAlignment(HorizontalAlignment.RIGHT);
+                            break;
+                        }
+                        case "JUSTIFY": {
+                            customStyle.setAlignment(HorizontalAlignment.JUSTIFY);
+                            break;
+                        }
+                    }
+                }
+
+                if (configJson.getColor() != null) {
+                    customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
+                    customFont.setColor(Util.getColor(configJson.getColor()));
+                }
+
+                if (configJson.getBgcolor() != null) {
+                    customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
+                }
+
+                if (configJson.isVwrap()) {
+                    customStyle.setWrapText(true);
+                }
+
+                if (configJson.getBorderTop() != null) {
+                    customStyle = getBorderStyle(customStyle, configJson.getBorderTop());
+                }
+                if (configJson.getBorderRight() != null) {
+                    customStyle = getBorderStyle(customStyle, configJson.getBorderRight());
+                }
+                if (configJson.getBorderBottom() != null) {
+                    customStyle = getBorderStyle(customStyle, configJson.getBorderBottom());
+                }
+                if (configJson.getBorderLeft() != null) {
+                    customStyle = getBorderStyle(customStyle, configJson.getBorderLeft());
+                }
+
+                if (configJson.isBold()) {
+                    customFont.setBold(true);
+                }
+
+                customStyle.setFont(customFont);
+
+                sheet.getRow(cr.getRow()).getCell(cr.getCol()).setCellStyle(customStyle);
+            }
+
         } else {
             List<HashMap<Object, Object>> datalist = (ArrayList) data;
             int currentRow = 0;
@@ -605,5 +671,59 @@ public class Converter {
             ep.printStackTrace();
         }
         return file;
+    }
+
+    public CellStyle getBorderStyle(CellStyle customStyle, String borderType) {
+        switch (borderType) {
+            case "THIN": {
+                customStyle.setBorderBottom(BorderStyle.THIN);
+                break;
+            }
+            case "MEDIUM": {
+                customStyle.setBorderBottom(BorderStyle.MEDIUM);
+                break;
+            }
+            case "DOUBLE": {
+                customStyle.setBorderBottom(BorderStyle.DOUBLE);
+                break;
+            }
+            case "DOTTED": {
+                customStyle.setBorderBottom(BorderStyle.DOTTED);
+                break;
+            }
+            case "DASHED": {
+                customStyle.setBorderBottom(BorderStyle.DASHED);
+                break;
+            }
+            case "HAIR": {
+                customStyle.setBorderBottom(BorderStyle.HAIR);
+                break;
+            }
+            case "DASH_DOT": {
+                customStyle.setBorderBottom(BorderStyle.DASH_DOT);
+                break;
+            }
+            case "DASH_DOT_DOT": {
+                customStyle.setBorderBottom(BorderStyle.DASH_DOT_DOT);
+                break;
+            }
+            case "SLANTED_DASH_DOT": {
+                customStyle.setBorderBottom(BorderStyle.SLANTED_DASH_DOT);
+                break;
+            }
+            case "MEDIUM_DASHED": {
+                customStyle.setBorderBottom(BorderStyle.MEDIUM_DASHED);
+                break;
+            }
+            case "MEDIUM_DASH_DOT": {
+                customStyle.setBorderBottom(BorderStyle.MEDIUM_DASH_DOT);
+                break;
+            }
+            case "MEDIUM_DASH_DOT_DOT": {
+                customStyle.setBorderBottom(BorderStyle.MEDIUM_DASH_DOT_DOT);
+                break;
+            }
+        }
+        return customStyle;
     }
 }

@@ -2117,12 +2117,7 @@ function propagg(cycle, co_button, il_proces, co_condes) {
                     switch (ti_pagreg) {
                         case '1':
                         case '22':
-                        case '233*' +
-                        '*' +
-                        '' +
-                        '+*' +
-                        '-*' +
-                        '+': {
+                        case '23': {
                             console.log('FSP:' + x64.getElementsByTagName('INPUT'));
                             console.log('FSP:' + x64.getElementsByTagName('INPUT').length);
                             if (x64.getElementsByTagName('INPUT').length == 0) {
@@ -2338,7 +2333,7 @@ function dinpag2(obj, co_pagreg) {
     var urls = ("" + parent.location).split('&');
     for (var i = 0; i < urls.length; i++) {
         var url = urls[i];
-//        console.log('url=' + url + "--->" + (url.indexOf('co_conpar') > -1));
+        console.log('url=' + url + "--->" + (url.indexOf('co_conpar') > -1));
         if (url.indexOf('co_conpar') > -1) {
             if (url.split('=').length = 2) {
                 ls_conpar += "\"" + url.split('=')[0] + "\":\"" + url.split('=')[1] + "\",";
@@ -2355,13 +2350,13 @@ function dinpag2(obj, co_pagreg) {
     rowid_over_table_temp = rowid_over_table_temp.parentNode;
     rowid_over_table_temp = rowid_over_table_temp.id;
     rowid_over_table_temp = rowid_over_table_temp.substring(rowid_over_table_temp.indexOf('C') + 1, rowid_over_table_temp.indexOf('R'));
-    // console.log('rowid_over_table_temp:' + rowid_over_table_temp);
+    console.log('rowid_over_table_temp:' + rowid_over_table_temp);
     //---------------------
     //estructura momentanea
     var all_regs = "[";
 
-    // console.log("'PAG' + CO_PAGINA:" + 'PAG' + CO_PAGINA);
-    // console.log("'PAG' + CO_PAGINA.length!:" + document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows);
+    console.log("'PAG' + CO_PAGINA:" + 'PAG' + CO_PAGINA);
+    console.log("'PAG' + CO_PAGINA.length!:" + document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows);
 
     for (var i = 0; i < document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows.length; i++) {
         if (rowid_over_table_temp == (i + 1)) {
@@ -2681,6 +2676,18 @@ function AUTODYNAMIC(opt, ls_regist) {
                 dynpag.onchange();
             }
         }
+    }
+}
+
+function ADJUSTSIZE() {
+    $("#PAG" + CO_PAGINA).removeClass("table-responsive");
+}
+
+function HIDEFIRSTTITLE() {
+    if (TI_PAGINA == 'R') {
+        $($('#PAG' + CO_PAGINA + ' THEAD TR')[0]).hide();
+    } else {
+        $($('#PAG' + CO_PAGINA + ' TBODY TR')[0]).hide();
     }
 }
 

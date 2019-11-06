@@ -346,7 +346,19 @@ public class PaginaRerporte extends Pagina implements Serializable {
             }
         }
 
-        if (hvg) {
+        boolean havebtng = false;
+        for (Fila fila : ultraFilas.values()) {
+            if (fila.getBotonDTOS() != null && fila.getBotonDTOS().size() > 0) {
+                for (WBotonDTO botonDTO : fila.getBotonDTOS()) {
+                    if (botonDTO.getTi_pagbot().contentEquals("G")) {
+                        havebtng = true;
+                    }
+                }
+            }
+        }
+
+//        if (hvg) {
+        if (havebtng) {
             css += "\ntable#PAG" + co_pagina + " tfoot tr,table#PAG" + co_pagina + " tfoot tr td, table#PAG" + co_pagina + " tfoot tr td div.dataTables_sizing{height:unset !important;}\n";
             html += "<tfoot>";
             html += "<tr>";
@@ -370,6 +382,7 @@ public class PaginaRerporte extends Pagina implements Serializable {
                     }
                 }
             }
+
             html += "</td>";
             html += "</tr>";
             html += "</tfoot>";

@@ -16,14 +16,6 @@ public class RowJson implements Serializable {
         regs = new ArrayList<>();
     }
 
-//    public RowJson(List<RegJson> regs) {
-//        this.regs = regs;
-//    }
-//
-//    public List<RegJson> getRegs() {
-//        return regs;
-//    }
-
     public RowJson(List<StandarRegisterJson> regs) {
         this.regs = regs;
     }
@@ -32,33 +24,13 @@ public class RowJson implements Serializable {
         return regs;
     }
 
-//    public void setRegs(List<RegJson> regs) {
-//        this.regs = regs;
-//    }
-
     public void setRegs(List<StandarRegisterJson> regs) {
         this.regs = regs;
     }
 
-    //    public void addReg(RegJson regJson) {
     public void addReg(StandarRegisterJson regJson) {
         regs.add(regJson);
     }
-
-//    /*ADD new RegJson*/
-//    public void add(CellJson cellJson) {
-//        regs.add(cellJson);
-//    }
-//
-//    /*ADD new RegJson*/
-//    public void add(RegJson regJson) {
-//        regs.add(regJson);
-//    }
-//
-//    /*ADD new TabJson*/
-//    public void add(TabJson regJson) {
-//        regs.add(regJson);
-//    }
 
     public void add(StandarRegisterJson reg) {
         regs.add(reg);

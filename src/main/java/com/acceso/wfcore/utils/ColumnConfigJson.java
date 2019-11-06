@@ -12,6 +12,10 @@ public class ColumnConfigJson {
     String type;
     String format;
     int width = 40;
+    String borderTop;
+    String borderRight;
+    String borderBottom;
+    String borderLeft;
 
     public ColumnConfigJson() {
     }
@@ -94,6 +98,38 @@ public class ColumnConfigJson {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public String getBorderTop() {
+        return borderTop;
+    }
+
+    public void setBorderTop(String borderTop) {
+        this.borderTop = borderTop;
+    }
+
+    public String getBorderRight() {
+        return borderRight;
+    }
+
+    public void setBorderRight(String borderRight) {
+        this.borderRight = borderRight;
+    }
+
+    public String getBorderBottom() {
+        return borderBottom;
+    }
+
+    public void setBorderBottom(String borderBottom) {
+        this.borderBottom = borderBottom;
+    }
+
+    public String getBorderLeft() {
+        return borderLeft;
+    }
+
+    public void setBorderLeft(String borderLeft) {
+        this.borderLeft = borderLeft;
     }
 
     @Override
