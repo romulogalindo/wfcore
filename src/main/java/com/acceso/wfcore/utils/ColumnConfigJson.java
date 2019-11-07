@@ -4,8 +4,11 @@ public class ColumnConfigJson {
 
     int index;
     String align;
+    String valign;
     String color;
     boolean bold;
+    boolean italic;
+    boolean underline;
     String bgcolor;
     boolean hwrap;
     boolean vwrap;
@@ -16,6 +19,8 @@ public class ColumnConfigJson {
     String borderRight;
     String borderBottom;
     String borderLeft;
+    Integer size;
+    String font;
 
     public ColumnConfigJson() {
     }
@@ -50,6 +55,14 @@ public class ColumnConfigJson {
 
     public void setBold(boolean bold) {
         this.bold = bold;
+    }
+
+    public boolean isItalic() {
+        return italic;
+    }
+
+    public void setItalic(boolean italic) {
+        this.italic = italic;
     }
 
     public String getBgcolor() {
@@ -130,6 +143,38 @@ public class ColumnConfigJson {
 
     public void setBorderLeft(String borderLeft) {
         this.borderLeft = borderLeft;
+    }
+
+    public boolean isUnderline() {
+        return underline;
+    }
+
+    public void setUnderline(boolean underline) {
+        this.underline = underline;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String font) {
+        this.font = font;
+    }
+
+    public String getValign() {
+        return valign;
+    }
+
+    public void setValign(String valign) {
+        this.valign = valign;
     }
 
     @Override

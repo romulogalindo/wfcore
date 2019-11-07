@@ -236,6 +236,7 @@ public class Converter {
             System.out.println("Crendo XLS JSON!");
             List<CellJson> regions = new ArrayList<>();
             List<CellJson> styles = new ArrayList<>();
+            List<CellJson> widths = new ArrayList<>();
             com.acceso.wfcore.utils.ValpagJson valpagJson = (com.acceso.wfcore.utils.ValpagJson) data;
             for (RowJson rowJson : valpagJson.getRows()) {
                 for (StandarRegisterJson registerJson : rowJson.getRegs()) {
@@ -314,6 +315,23 @@ public class Converter {
                     }
                 }
 
+                if (configJson.getValign() != null) {
+                    switch (configJson.getValign()) {
+                        case "CENTER": {
+                            customStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+                            break;
+                        }
+                        case "TOP": {
+                            customStyle.setVerticalAlignment(VerticalAlignment.TOP);
+                            break;
+                        }
+                        case "BOTTOM": {
+                            customStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
+                            break;
+                        }
+                    }
+                }
+
                 if (configJson.getColor() != null) {
                     customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
                     customFont.setColor(Util.getColor(configJson.getColor()));
@@ -344,9 +362,43 @@ public class Converter {
                     customFont.setBold(true);
                 }
 
+                if (configJson.isItalic()) {
+                    customFont.setItalic(true);
+                }
+
+                if (configJson.isUnderline()) {
+                    customFont.setUnderline(HSSFFont.U_SINGLE);
+                }
+
+                if (configJson.isUnderline()) {
+                    customFont.setUnderline(HSSFFont.U_SINGLE);
+                }
+
+                if (configJson.getSize() != null) {
+                    customFont.setFontHeightInPoints(configJson.getSize().shortValue());
+                }
+
+                if (configJson.getFont() != null) {
+                    customFont.setFontName(configJson.getFont());
+                }
+
                 customStyle.setFont(customFont);
 
                 sheet.getRow(cr.getRow()).getCell(cr.getCol()).setCellStyle(customStyle);
+
+
+                if (configJson.getWidth() > -1) {
+                    widths.add(cellJson);
+
+                }
+            }
+            for (CellJson cellJson : styles) {
+                CellReference cr = new CellReference(cellJson.getNo_addres());
+                ColumnConfigJson configJson = cellJson.getColumnConfigJson();
+                System.out.println("configJson.getWidth() = " + configJson.getWidth());
+//                    if (configJson.getWidth() > -1) {
+                sheet.setColumnWidth(cr.getCol(), configJson.getWidth() * 100);
+//                    }
             }
 
         } else {

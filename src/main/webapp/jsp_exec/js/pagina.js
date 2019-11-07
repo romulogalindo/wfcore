@@ -285,6 +285,7 @@ function pagina_onload(_data) {
 
 
 function pagina_onload2(_data, rowid) {
+    console.log('MIROWID:::>>>>>>>>' + rowid);
     if (!CALLED) {
         CALLED = true;
     }
@@ -2357,9 +2358,27 @@ function dinpag2(obj, co_pagreg) {
 
     console.log("'PAG' + CO_PAGINA:" + 'PAG' + CO_PAGINA);
     console.log("'PAG' + CO_PAGINA.length!:" + document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows);
+//
+
 
     for (var i = 0; i < document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows.length; i++) {
-        if (rowid_over_table_temp == (i + 1)) {
+        //adicional! por que puede estar paginado
+        console.log('ROWN-i:' + i + '????[' + rowid_over_table_temp + '=' + (i + 1) + ']cfg_table_currentPage:' + cfg_table_currentPage + ', cfg_table_pageLength:' + cfg_table_pageLength);
+        var n_rowid_over_table_temp = 0;
+        if (cfg_table_pageLength > 0) {
+            var cfg_table_currentPage2 = $($($('.paginate_button.page-item.active')[0]).find('a')[0]).attr('data-dt-idx');
+            console.log(':1:' + rowid_over_table_temp + ' - (' + cfg_table_currentPage2 + ' * ' + cfg_table_pageLength + ')');
+            console.log(':2:' + rowid_over_table_temp + ' - ' + (cfg_table_currentPage2 * cfg_table_pageLength));
+            console.log(':3:' + (rowid_over_table_temp - (cfg_table_currentPage2 * cfg_table_pageLength) - cfg_table_pageLength));
+            var prev = rowid_over_table_temp - ((cfg_table_currentPage2 * cfg_table_pageLength) - cfg_table_pageLength);
+            n_rowid_over_table_temp = prev;
+        } else {
+            n_rowid_over_table_temp = rowid_over_table_temp;
+        }
+        console.log('BIG EVAL:' + n_rowid_over_table_temp + '=' + (i + 1));
+        // if (rowid_over_table_temp == (i + 1)) {
+        if (n_rowid_over_table_temp == (i + 1)) {
+            console.log('ROWN-i*:' + i + '????[n_rowid_over_table_temp:' + n_rowid_over_table_temp + '][' + rowid_over_table_temp + '=' + (i + 1) + ']');
             var x64s = document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows[i].getElementsByClassName('pagreg');
             if (x64s.length > 0) {
 
@@ -2517,6 +2536,8 @@ function dinpag2(obj, co_pagreg) {
                 all_regs = all_regs.substring(0, all_regs.length - 1);
                 all_regs += "},";
             }
+
+            i = document.getElementById('PAG' + CO_PAGINA).tBodies[0].rows.length + 99999;
         }
     }
     all_regs = all_regs.substring(0, all_regs.length - 1);
@@ -2525,6 +2546,8 @@ function dinpag2(obj, co_pagreg) {
     data.append('ls_allreg', '' + all_regs);
     console.log('toda la dtaa readey!!!>>' + data);
 
+
+    console.log('*rowid_over_table_temp:' + rowid_over_table_temp);
     doDinJson2('/ocelot?co_conten=' + CO_CONTEN + '&co_pagina=' + CO_PAGINA + '&co_pagreg=' + co_pagreg + '&va_pagreg=' + va_pagreg + '&id_frawor=' + ID_FRAWOR, data, rowid_over_table_temp);
 }
 
@@ -2555,6 +2578,10 @@ function OPTION_ADD(opt) {
 }
 
 /*CONFIGURACION ADICIONAL DE TABLA*/
+var cfg_table_pageLength = 0;
+var cfg_table_currentPage = 0;
+var unrealTable;
+
 function CFGDATATABLE(cfgopts) {
     console.log('configurando....');
     //remove css class
@@ -2601,8 +2628,23 @@ function CFGDATATABLE(cfgopts) {
         // $('.wf-report').attr("style", "width, tnz + 'px");
     }
 
-    console.log('CFG! PAGINA');
-    $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    console.log('CFG! PAGINA::' + cfgopts.pageLength);
+    cfg_table_pageLength = cfgopts.pageLength;
+    unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    $('#PAG' + CO_PAGINA).on('page.dt', function () {
+        cfg_table_currentPage = $($($('.paginate_button.page-item.active')[0]).find('a')[0]).attr('data-dt-idx');
+        // var info = unrealTable.page.info();
+        console.log('----------------------->cfg_table_currentPage: ' + cfg_table_currentPage);
+        // AUTODYNAMIC(DYNAMIC);
+        setTimeout(function () {
+            AUTODYNAMIC(DYNAMIC)
+        }, 500);
+    });
+    unrealTable.on('fnDrawCallback', function (oSettings) {
+        // console.log('----------------------->cfg_table_currentPage: XX:' + oSettings);
+        // AUTODYNAMIC(DYNAMIC);
+    });
+
     $('#PAG' + CO_PAGINA + ' THEAD TR').css('paddin-top', '0px !important');
     if (document.getElementById('ti_pagina').value != 'Y') {
         document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';

@@ -43,15 +43,35 @@ public class CellJson extends StandarRegisterJson {
                 colcfg.setAlign(ls_st.get("align") == null ? "LEFT" : ls_st.get("align").toString());
             }
 
+            if (ls_st.get("valign") != null) {
+                colcfg.setValign(ls_st.get("valign") == null ? "CENTER" : ls_st.get("valign").toString());
+            }
+
             if (ls_st.get("bold") != null) {
                 colcfg.setBold(ls_st.get("bold") == null ? false : Boolean.parseBoolean(ls_st.get("bold").toString()));
+            }
+
+            if (ls_st.get("italic") != null) {
+                colcfg.setBold(ls_st.get("italic") == null ? false : Boolean.parseBoolean(ls_st.get("italic").toString()));
+            }
+
+            if (ls_st.get("underline") != null) {
+                colcfg.setUnderline(ls_st.get("underline") == null ? false : Boolean.parseBoolean(ls_st.get("underline").toString()));
+            }
+
+            if (ls_st.get("size") != null) {
+                colcfg.setSize(ls_st.get("size") == null ? null : Integer.parseInt(ls_st.get("size").toString()));
+            }
+
+            if (ls_st.get("font") != null) {
+                colcfg.setFont(ls_st.get("font") == null ? null : ls_st.get("font").toString());
             }
 
 //            if (ls_st.get("alig") != null) {
 //                colcfg.setHwrap(o1.get("hwrap") == null ? false : Boolean.parseBoolean(o1.get("hwrap").toString()));
 //            }
 
-//            colcfg.setWidth(o1.get("width") == null ? -1 : Integer.parseInt(o1.get("width").toString()));
+            colcfg.setWidth(ls_st.get("width") == null ? -1 : Integer.parseInt(ls_st.get("width").toString()));
 //            colcfg.setVwrap(o1.get("vwrap") == null ? false : Boolean.parseBoolean(o1.get("vwrap").toString()));
 
             if (ls_st.get("color") != null) {
