@@ -834,11 +834,12 @@ function loadFormulario64(index, row, aditional, dom2) {
                         }
 
                         console.log('valdom=' + valdom + ',==>' + reg.value);
-                        load_multiselect(eledom.getAttribute('id'), valdom)
+                        load_multiselect(eledom.getAttribute('id'), valdom);
 
                     } else if (ti_pagreg == '9') {
                         // eledom.setAttribute("va_pagreg", reg.value);
-                        eledom.getElementsByTagName("TEXTAREA")[0].innerHTML = valdom;
+                        // eledom.getElementsByTagName("TEXTAREA")[0].innerHTML = valdom;
+                        eledom.getElementsByTagName("TEXTAREA")[0].value = valdom;
                     } else if (ti_pagreg == '13') {
                         valdom = valdom.replace('../reportes/paginaEspecial.jsp?', '/doc?ti_docume=E&');
                         eledom.getElementsByTagName("A")[0].setAttribute('href', valdom);

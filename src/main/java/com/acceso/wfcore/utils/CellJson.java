@@ -52,7 +52,7 @@ public class CellJson extends StandarRegisterJson {
             }
 
             if (ls_st.get("italic") != null) {
-                colcfg.setBold(ls_st.get("italic") == null ? false : Boolean.parseBoolean(ls_st.get("italic").toString()));
+                colcfg.setItalic(ls_st.get("italic") == null ? false : Boolean.parseBoolean(ls_st.get("italic").toString()));
             }
 
             if (ls_st.get("underline") != null) {

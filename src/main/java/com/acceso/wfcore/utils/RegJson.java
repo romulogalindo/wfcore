@@ -66,7 +66,7 @@ public class RegJson extends StandarRegisterJson {
         if (opts.get("ca_caract") != null) {
             ca_caract = opts.get("ca_caract");
         }
-        System.out.println("opts.get(\"tx_plahol\")  = " + opts.get("tx_plahol"));
+//        System.out.println("opts.get(\"tx_plahol\")  = " + opts.get("tx_plahol"));
         if (opts.get("tx_plahol") != null) {
             tx_plahol = opts.get("tx_plahol").toString();
         }
