@@ -102,6 +102,10 @@
         <jsp-file>/jsp_exec/ocelot/password.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>JSP Recovery</servlet-name>
+        <jsp-file>/jsp_exec/ocelot/recovery.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.LoginServlet</servlet-class>
     </servlet>
@@ -138,6 +142,10 @@
     <servlet-mapping>
         <servlet-name>JSP Password</servlet-name>
         <url-pattern>/password</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSP Recovery</servlet-name>
+        <url-pattern>/recovery</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PaginaServlet</servlet-name>

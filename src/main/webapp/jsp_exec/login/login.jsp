@@ -125,8 +125,8 @@
                     <hr>
 
                     <!-- Terms of service -->
-                    <p>Si presenta algun error llamar a
-                        <a href="" target="_blank">helpdesk</a>
+                    <p>
+                        <a href="/recovery" target="_blank">¿Problemas para acceder?</a>
                     </p>
                 </form>
                 <!-- Form -->
