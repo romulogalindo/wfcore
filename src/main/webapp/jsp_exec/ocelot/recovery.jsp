@@ -60,7 +60,7 @@
         function validCode() {
             console.log('heres!');
             var regexp = new RegExp("^\\d{6}$");
-            var cellnumber = '' + $('#validcode').val();
+            var cellnumber = '' + $('#nu_valcod').val();
 
             // if (regexp.test(cellnumber)) {
             //     $('#btn_validcode').prop('disabled', false);
@@ -139,8 +139,10 @@
 
         function sendcode() {
             //enviar codigo al usuario mediante servicio
-            alert('Te hemos enviado un codigo para validar.');
 
+            var il_sendcod = getJSON('/util?xaction=SENDCODE&numero=' + document.getElementById('cellnumber').value +
+                '&id_session=' + document.getElementById('id_session').value);
+            console.log('il_sendcod:' + il_sendcod);
             //POST!!!!SEND CODE!!!!
             if (true) {
                 $('#form_validcode').show();
@@ -148,11 +150,24 @@
                 //----
                 $('#btn_validcode').show();
                 $('#btn_sencode').hide();
+                alert('Te hemos enviado un codigo para validar.');
             }
         }
 
         function processCode() {
-
+            var il_sendcod = getJSON('/util?xaction=VALIDCODE&numero=' + document.getElementById('cellnumber').value +
+                '&id_session=' + document.getElementById('id_session').value +
+                '&nu_valcod=' + document.getElementById('nu_valcod').value);
+            console.log('il_sendcod:' + il_sendcod);
+            //POST!!!!SEND CODE!!!!
+            if (true) {
+                $('#form_validcode').show();
+                $('#form_cellnumber').hide();
+                //----
+                $('#btn_validcode').show();
+                $('#btn_sencode').hide();
+                alert('Te hemos enviado un codigo para validar.');
+            }
         }
 
 
@@ -216,9 +231,8 @@
 
 
                     <!-- Current Password -${NEED_CHANGE_PASSWORD}-->
-                    <input type="hidden" name="type" value="${NEED_CHANGE_PASSWORD}">
-                    <input type="hidden" name="co_usuari" value="${US.co_usuari}">
-                    <input type="hidden" name="co_correo" value="${US.co_usuari}">
+                    <input type="hidden" id="id_session" name="id_session" value="${pageContext.session.id}">
+                    <%--                    <input type="hidden" name="co_usuari" value="${US.co_usuari}">--%>
 
                     <div id="form_cellnumber" class="md-form">
                         <input type="text" id="cellnumber" name="cellnumber" class="form-control"
@@ -230,7 +244,7 @@
 
 
                     <div id="form_validcode" class="md-form" style="display: none;">
-                        <input type="text" id="validcode" name="validcode" class="form-control"
+                        <input type="text" id="nu_valcod" name="validcode" class="form-control"
                                onkeyup="extractNumber(this, 0, true);validCode();"
                                onkeypress="return blockNonNumbers(this, event, false, true);"
                                onblur="extractNumber(this, 0, true); validCode();" maxlength="6">
@@ -246,7 +260,7 @@
                     </button>
 
                     <!--Validar codigo-->
-                    <button id="btn_validcode" type="submit"
+                    <button id="btn_validcode" type="button"
                             class="btn btn-primary btn-lg btn-block waves-effect z-depth-0"
                             onclick="processCode();" style="display: none;" disabled>
                         Validar
@@ -321,5 +335,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/mdb/mdb.js"></script>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js"></script>
 </body>
 </html>

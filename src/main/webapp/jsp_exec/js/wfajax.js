@@ -446,7 +446,7 @@ getHTML = function (url) {
     return html;
 };
 
-getJSON = function (url) {
+getJSON = function (url, data) {
     var net = new Inet();
     // net.open("POST", url, false); //false para que sea sincrono
 
@@ -462,7 +462,7 @@ getJSON = function (url) {
             }
         }
     };
-    net.send(null);
+    net.send(data);
     console.log('rpta htm::' + html);
     return JSON.parse(html);
 };

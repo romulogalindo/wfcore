@@ -130,10 +130,18 @@
         <servlet-name>TahrServlet</servlet-name>
         <servlet-class>com.acceso.wfweb.servlets.OpenServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UtilServlet</servlet-name>
+        <servlet-class>com.acceso.wfweb.servlets.UtilServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/admin/*</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UtilServlet</servlet-name>
+        <url-pattern>/util</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>JSP Login</servlet-name>
