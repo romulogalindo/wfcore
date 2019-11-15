@@ -173,7 +173,7 @@
             <div class="col-md-4 mb-md-0 text-right text-white">
 
                 <!-- Content [version].[Kernel].[modulo].[funciones]-->
-                Ver 1.0.0.64
+                Ver 1.0.0.69
 
             </div>
             <!-- Grid column -->

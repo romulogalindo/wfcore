@@ -119,8 +119,8 @@ public class SecurityLDAO extends DAO {
         return values;
     }
 
-    public int changepwd(String no_correo, String no_password) {
-        System.out.println("LDAP::ADMIN::ACCESO[" + no_correo + "," + no_password + "]");
+    public int changepwd(String uid, String no_password) {
+        System.out.println("LDAP::ADMIN::ACCESO[" + uid + "," + no_password + "]");
 
         Properties parms = getLDAPProperties(false);
         parms.put(Context.SECURITY_PRINCIPAL, LDAPUser);
@@ -138,7 +138,7 @@ public class SecurityLDAO extends DAO {
 
             ModificationItem[] mods = new ModificationItem[1];
             mods[0] = new ModificationItem(DirContext.REPLACE_ATTRIBUTE, new BasicAttribute("userpassword", pwe));
-            ctx.modifyAttributes("uid=" + no_correo + ",ou=users,dc=acceso,dc=com,dc=pe", mods);
+            ctx.modifyAttributes("uid=" + uid + ",ou=users,dc=acceso,dc=com,dc=pe", mods);
 
             return 1;
         } catch (Exception ep) {

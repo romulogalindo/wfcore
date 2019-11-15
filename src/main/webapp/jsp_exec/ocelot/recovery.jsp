@@ -169,7 +169,7 @@
                 $('#card_change').show();
 
             } else {
-                alert('No se pudo validar lo solicitado.');
+                alert('No se pudo validar lo solicit                                                                                                                                                                   ado.');
             }
         }
 
@@ -182,7 +182,7 @@
             if (validation.result.valid) {
                 $('#card_valid').hide();
                 //----rellenar valores
-                $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
+                $('#form_recovery_greeting').html("Hola " + validation.result.user + ", genera un nueva contrase&ntilde;a.");
                 $('#co_usuari').html("Hola " + validation.result.code + ",");
 
                 $('#card_change').show();
@@ -228,6 +228,33 @@
                 $('#msg label').html('Las contraseñas ingresadas no son iguales.');
                 $("#changepwd").prop('disabled', false);
                 // console.log('@4');
+            }
+        }
+
+        function dochange() {
+            var p_id_session = document.getElementById('id_session').value;
+            var p_co_usuari = document.getElementById('co_usuari').value;
+            // var p_no_correo = requestManager.getParam("p_no_correo");
+            // var p_ti_cambio = requestManager.getParam("type");
+            var p_no_curpwd = document.getElementById('new_password').value;
+            // var p_no_passwo = requestManager.getParam("new_password");
+
+            var validation = getJSON('/util?xaction=DOCHANGE&numero=' + document.getElementById('cellnumber').value +
+                '&id_session=' + p_id_session +
+                '&no_curpwd=' + p_no_curpwd +
+                '&co_usuari=' + p_co_usuari);
+            console.log('il_sendcod:' + validation);
+            //POST!!!!SEND CODE!!!!
+            if (validation.result.valid) {
+                $('#card_valid').hide();
+                //----rellenar valores
+                $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
+                $('#co_usuari').html("Hola " + validation.result.code + ",");
+
+                $('#card_change').show();
+
+            } else {
+                alert('No se pudo validar lo solicit                                                                                                                                                                   ado.');
             }
         }
 
@@ -360,20 +387,20 @@
                     <input type="hidden" id="co_usuari" name="co_usuari" value="">
                     <%--                    <input type="hidden" name="co_correo" value="{US.co_usuari}">--%>
 
-                    <div class="md-form" style="display: block;height: 30px;">
+                    <div class="md-form" style="display: block; height: 60px; text-align: left;">
                         <label id="form_recovery_greeting">Hola </label>
                     </div>
 
                     <%--                    <c:if test="${empty updpwd_ok}">--%>
                     <div class="md-form">
                         <input type="password" id="new_password" name="new_password" class="form-control"
-                               onblur="validpwd()">
+                               onblur="validpwd()" autocomplete="off">
                         <label for="new_password">Contrase&ntilde;a nueva</label>
                     </div>
 
                     <div class="md-form">
                         <input type="password" id="new_password2" name="new_password2" class="form-control"
-                               onblur="validpwd()">
+                               onblur="validpwd()" autocomplete="off">
                         <label for="new_password">Repite la contrase&ntilde;a nueva</label>
                     </div>
 
