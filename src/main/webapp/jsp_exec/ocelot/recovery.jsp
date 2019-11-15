@@ -155,21 +155,81 @@
         }
 
         function processCode() {
-            var il_sendcod = getJSON('/util?xaction=VALIDCODE&numero=' + document.getElementById('cellnumber').value +
+            var validation = getJSON('/util?xaction=VALIDCODE&numero=' + document.getElementById('cellnumber').value +
                 '&id_session=' + document.getElementById('id_session').value +
                 '&nu_valcod=' + document.getElementById('nu_valcod').value);
-            console.log('il_sendcod:' + il_sendcod);
+            console.log('il_sendcod:' + validation);
             //POST!!!!SEND CODE!!!!
-            if (true) {
-                $('#form_validcode').show();
-                $('#form_cellnumber').hide();
-                //----
-                $('#btn_validcode').show();
-                $('#btn_sencode').hide();
-                alert('Te hemos enviado un codigo para validar.');
+            if (validation.result.valid) {
+                $('#card_valid').hide();
+                //----rellenar valores
+                $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
+                $('#co_usuari').html("Hola " + validation.result.code + ",");
+
+                $('#card_change').show();
+
+            } else {
+                alert('No se pudo validar lo solicitado.');
             }
         }
 
+        function processChange() {
+            var validation = getJSON('/util?xaction=CHANGEPWD&numero=' + document.getElementById('cellnumber').value +
+                '&id_session=' + document.getElementById('id_session').value +
+                '&nu_valcod=' + document.getElementById('nu_valcod').value);
+            console.log('il_sendcod:' + validation);
+            //POST!!!!SEND CODE!!!!
+            if (validation.result.valid) {
+                $('#card_valid').hide();
+                //----rellenar valores
+                $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
+                $('#co_usuari').html("Hola " + validation.result.code + ",");
+
+                $('#card_change').show();
+
+            } else {
+                alert('No se pudo validar lo solicitado.');
+            }
+        }
+
+        function validpwd() {
+            // console.log('heres!');
+            var p1 = '' + $('#new_password').val();
+            var p2 = '' + $('#new_password2').val();
+            // console.log('p1:' + p1 + ', p2:' + p2);
+            var p1l = p1.length;
+            var p2l = p2.length;
+            // console.log('p1l:' + p1l + ', p2l:' + p2l);
+            var p1v = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(p1);
+            var p2v = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})").test(p2);
+            var pv = (p1v & p2v);
+            var pc = (p1 == p2);
+            // console.log('p1v:' + p1v + ', p2v:' + p2v + ',pc:' + pc);
+
+            if ((p1l == 0 & p2l == 0) | (p1l > 0 & p2l == 0) | (p1l == 0 & p2l > 0)) {
+                $($('button').get(0)).prop('disabled', true);
+                // console.log('@1');
+                return;
+            } else if (!pv) {
+                //mensakje de que las ocntrasenas no cumplen la fuerz
+                $($('button').get(0)).prop('disabled', true);
+                $('#msg label').html('La/s contraseña/s ingresadas no cumplen con la complejidad requerida.');
+                $('#msg').show();
+                // console.log('@2');
+            } else if (!pc) {
+                //la contrasena no nos iguales
+                $($('button').get(0)).prop('disabled', true);
+                $('#msg label').html('Las contraseñas ingresadas no son iguales.');
+                $('#msg').show();
+                // console.log('@3');
+            } else {
+                //si todo sale bien
+                $('#msg').hide();
+                $('#msg label').html('Las contraseñas ingresadas no son iguales.');
+                $("#changepwd").prop('disabled', false);
+                // console.log('@4');
+            }
+        }
 
     </script>
     <style>
@@ -201,7 +261,7 @@
     <div class="flex-center flex-column">
 
         <!-- Material form login -->
-        <div class="card" style="width: 400px;">
+        <div id="card_valid" class="card" style="width: 400px;">
 
             <h5 class="card-header info-color white-text text-center py-4">
                 <strong>Recupera tu acceso</strong>
@@ -267,6 +327,94 @@
                     </button>
 
                     <hr>
+                </form>
+                <!-- Form -->
+
+            </div>
+
+        </div>
+
+        <!--CAMBIO DE CLAVE-->
+        <div id="card_change" class="card" style="width: 400px;">
+
+            <h5 class="card-header info-color white-text text-center py-4">
+                <strong>Cambio de contrase&ntilde;a</strong>
+            </h5>
+
+
+            <!--Card content-->
+            <div class="card-body px-lg-5 pt-0">
+
+                <c:if test="${not empty login_error}">
+                    <div class="alert alert-danger" role="alert"
+                         style="font-size: .7em;max-width: 300px;margin-top: 20px;text-align: justify;">
+                        Cambio de contrase&nacute;a
+                    </div>
+                </c:if>
+                <c:set value="" var="login_error" scope="session"/>
+
+                <!-- Form -->
+                <form class="text-center" style="color: #757575;" action="${APP.loginCTRL.updpwd_action}" method="post">
+
+                    <!-- Email -->
+                    <input type="hidden" id="co_usuari" name="co_usuari" value="">
+                    <%--                    <input type="hidden" name="co_correo" value="{US.co_usuari}">--%>
+
+                    <div class="md-form" style="display: block;height: 30px;">
+                        <label id="form_recovery_greeting">Hola </label>
+                    </div>
+
+                    <%--                    <c:if test="${empty updpwd_ok}">--%>
+                    <div class="md-form">
+                        <input type="password" id="new_password" name="new_password" class="form-control"
+                               onblur="validpwd()">
+                        <label for="new_password">Contrase&ntilde;a nueva</label>
+                    </div>
+
+                    <div class="md-form">
+                        <input type="password" id="new_password2" name="new_password2" class="form-control"
+                               onblur="validpwd()">
+                        <label for="new_password">Repite la contrase&ntilde;a nueva</label>
+                    </div>
+
+                    <div class="alert alert-info text-left">
+                        <label class="form-check-label" style="font-size: .8rem">
+                            La nueva contrase&ntilde;a nueva debe tener de cumplir:
+                        </label>
+                        <br/>
+                        <label class="form-check-label">
+                            <ul class="mb-0">
+                                <li class="text-left mb-1" style="font-size: .7rem;">Mayor de 6 caracteres</li>
+                                <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter en
+                                    Mayuscula
+                                </li>
+                                <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter en
+                                    Minuscula
+                                </li>
+                                <li class="text-left mb-1" style="font-size: .7rem;">Contener minimo un caracter
+                                    especial <strong>|\#*/·$%&/()?¿'¡!.</strong></li>
+                            </ul>
+                        </label>
+                    </div>
+                    <%--                    </c:if>--%>
+
+                    <div id="msg" class="alert alert-danger" style="display: none;">
+                        <label class="form-check-label" style="font-size: .8rem">
+                        </label>
+                    </div>
+
+                    <!-- Sign in button -->
+                    <button id="changepwd" type="button" class="btn btn-primary btn-lg btn-block waves-effect z-depth-0"
+                            onclick="change()" disabled>
+                        Actualizar
+                    </button>
+
+                    <hr>
+
+                    <!-- Terms of service -->
+                    <p>Si presenta algun error llamar a
+                        <a href="" target="_blank">helpdesk</a>
+                    </p>
                 </form>
                 <!-- Form -->
 

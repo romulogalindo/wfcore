@@ -9,9 +9,7 @@ import javax.naming.directory.*;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Properties;
+import java.util.*;
 
 public class SecurityLDAO extends DAO {
     public static String TAG = "SECURE-LDAP";
@@ -19,6 +17,7 @@ public class SecurityLDAO extends DAO {
     protected String LDAPDn;
     protected String LDAPUser;
     protected String LDAPPassword;
+    DirContext ctx = null;
 
     public SecurityLDAO(String LDAPServer, String LDAPDn) {
         this.LDAPServer = LDAPServer;
@@ -40,12 +39,12 @@ public class SecurityLDAO extends DAO {
         parms.put(Context.SECURITY_PRINCIPAL, LDAPUser);
         parms.put(Context.SECURITY_CREDENTIALS, LDAPPassword);
 
-        DirContext ctx = null;
-        NamingEnumeration<SearchResult> answers = null;
 
-        SearchControls ctrls = new SearchControls();
-        ctrls.setReturningAttributes(new String[]{"givenName", "sn", "memberOf", "userPassword"});
-        ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+//        NamingEnumeration<SearchResult> answers = null;
+
+//        SearchControls ctrls = new SearchControls();
+//        ctrls.setReturningAttributes(new String[]{"givenName", "sn", "memberOf", "userPassword"});
+//        ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
         try {
             //LOGIN
@@ -54,9 +53,6 @@ public class SecurityLDAO extends DAO {
             System.out.println("ctx = " + ctx.getNameInNamespace());
             usuarioLDAP.setIl_conect(true);
             usuarioLDAP.setUser(LDAPUser);
-            System.out.println("Por probar!!! = " + ctrls);
-//            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
-//            answers = ctx.search("ou=users,dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
 
 
             return usuarioLDAP;
@@ -68,6 +64,59 @@ public class SecurityLDAO extends DAO {
             return usuarioLDAP;
         }
 
+    }
+
+    public void close() {
+        try {
+            this.ctx.close();
+        } catch (Exception ep) {
+            this.ctx = null;
+        }
+    }
+
+    public Map search(String number) {
+        String uid = null;
+        Map<String, String> values = new HashMap<>();
+        NamingEnumeration<SearchResult> answers = null;
+
+        SearchControls ctrls = new SearchControls();
+//        ctrls.setReturningAttributes(new String[]{"givenName", "sn", "cn", "memberOf"});
+        ctrls.setReturningAttributes(new String[]{"uid", "givenName"});
+        ctrls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+        //            System.out.println("Por probar!!! = " + ctrls);
+        try {
+            answers = ctx.search("dc=acceso,dc=com,dc=pe", "(mobile=" + number + ")", ctrls);
+//            answers = ctx.search("ou=users,dc=acceso,dc=com,dc=pe", "(uid=" + LDAPUser + ")", ctrls);
+        } catch (Exception ep) {
+            ep.printStackTrace();
+        }
+
+        if (answers.hasMoreElements()) {
+            SearchResult searchResult = answers.nextElement();
+            Attributes attributes = searchResult.getAttributes();
+            NamingEnumeration namingEnumeration = attributes.getIDs();
+
+            while (namingEnumeration.hasMoreElements()) {
+                String currentId = null;
+                String currentValue = null;
+                try {
+                    currentId = namingEnumeration.next().toString();
+                    currentValue = attributes.get(currentId).get().toString();
+                    values.put(currentId, currentValue);
+//                    if (currentId.contentEquals("uid")) {
+//                        uid = currentValue;
+//                    }else{
+//
+//                    }
+                } catch (Exception ep) {
+                    ep.printStackTrace();
+                }
+                System.out.println("[currentId=" + currentId + "][currentValue = " + currentValue + "]");
+            }
+
+        }
+
+        return values;
     }
 
     public int changepwd(String no_correo, String no_password) {

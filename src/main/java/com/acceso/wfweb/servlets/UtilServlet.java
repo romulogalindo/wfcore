@@ -1,10 +1,15 @@
 package com.acceso.wfweb.servlets;
 
+import com.acceso.security.daos.SecurityDAO;
+import com.acceso.security.daos.SecurityLDAO;
 import com.acceso.wfcore.apis.HttpAPI;
+import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.ErrorMessage;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfweb.utils.JsonResponse;
+import com.acceso.wfweb.utils.RecoveryUnit;
 import com.google.gson.Gson;
+import org.h2.tools.Recover;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -34,25 +39,29 @@ public class UtilServlet extends HttpServlet {
             case "SENDCODE": {
                 String numero = request.getParameter("numero").toUpperCase();
                 boolean il_havuse = false;
-
+                String uid = null;
+                Map<String, String> values;
                 il_havuse = true;
-                /*BCAR LDAP USER*/
+                /*BUCAR LDAP USER*/
+                SecurityLDAO ldao = new SecurityLDAO(WFIOAPP.APP.getDataSourceService().getValueOfKey("URL_LDAP_ADMIN"));
+                ldao.connect();
+                values = ldao.search(numero);
+                ldao.close();
 
-                if (il_havuse) {
+//                if (il_havuse) {/
+                if (values.size() == 2) {
                     String sesion = request.getParameter("id_session").toUpperCase();
                     String joinco = Util.getRandomNumberString();
 
                     request.getSession().setAttribute(sesion + "_CODE", joinco);
                     request.getSession().setAttribute(sesion + "_DATE", new Date());
-                    request.getSession().setAttribute(sesion + "_USER", null);
+                    request.getSession().setAttribute(sesion + "_DAT", values);
 
                     Map<String, String> params = new HashMap<>();
                     params.put("telefono", numero);
                     params.put("mensaje", "Tu codigo de verificacion es:" + joinco);
                     HttpAPI api = new HttpAPI();
                     JsonResponse jsonResponse = api.POST("https://sd1.accesocrediticio.com/private/v1.0/smsDirecto", null, params, 20);
-//                response.getWriter().println(new Gson().toJson(jsonResponse));
-//                response.getWriter().close();
 
                     System.out.println("jsonResponse = " + jsonResponse);
                     System.out.println("jsonResponse = " + jsonResponse.getStatus());
@@ -74,27 +83,31 @@ public class UtilServlet extends HttpServlet {
                 String XCODE = "" + request.getParameter("nu_valcod");
                 System.out.println("XCODE = " + XCODE);
                 String CODE = request.getSession().getAttribute(sesion + "_CODE").toString();
-                System.out.println("CODE = " + CODE);
-                if (CODE.contentEquals(XCODE)) {
-                    System.out.println("Los codigos son iguales ");
+                Date DATE = (Date) request.getSession().getAttribute(sesion + "_DATE");
+                //SESSION TIME
+                int seconds_waitfor = Util.toInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("RECPVERY_PASSWORD_TIME_WAITFOR"), 60);
+                System.out.println("seconds_waitfor = " + seconds_waitfor);
+                JsonResponse jsonResponse;
+                if (seconds_waitfor >= ((new Date().getTime() - DATE.getTime()) / 1000)) {
+                    //estas en el tiempo
+                    System.out.println("CODE = " + CODE);
+                    if (CODE.contentEquals(XCODE)) {
+                        System.out.println("Los codigos son iguales. ");
+                        Map<String, String> values = (Map<String, String>) request.getSession().getAttribute(sesion + "_DAT");
+//                        jsonResponse = JsonResponse.defultJsonResponseOK("{ \"valid\":true,\"msg\":\"Validación correcta.\",\"user\":\"" + values.get("givenName") + "\", \"code\":\"" + values.get("uid") + "\"}");
+                        jsonResponse = JsonResponse.defultJsonResponseOK(new RecoveryUnit(true, "Validación correcta.", values.get("givenName"), values.get("uid")));
+                    } else {
+                        //los codigos son difertentes
+                        jsonResponse = JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, "Códigos diferente."));
+                    }
+                } else {
+                    //ha expirdo la session
+                    request.getSession().invalidate();
+                    jsonResponse = JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, "La sesión ha caducado."));
                 }
 
-//                String numero = request.getParameter("numero").toUpperCase();
-//                String joinco = Util.getRandomNumberString();
-//
-//                Map<String, String> params = new HashMap<>();
-//                params.put("telefono", numero);
-//                params.put("mensaje", "Tu codigo de verificacion es:" + joinco);
-//                HttpAPI api = new HttpAPI();
-//                JsonResponse jsonResponse = api.POST("https://sd1.accesocrediticio.com/private/v1.0/smsDirecto", null, params, 20);
-////                response.getWriter().println(new Gson().toJson(jsonResponse));
-////                response.getWriter().close();
-//
-//                System.out.println("jsonResponse = " + jsonResponse);
-//                System.out.println("jsonResponse = " + jsonResponse.getStatus());
-//                System.out.println("jsonResponse = " + jsonResponse.getResult());
                 OutputStream out = response.getOutputStream();
-                ((ServletOutputStream) out).println("GO");
+                ((ServletOutputStream) out).println(new Gson().toJson(jsonResponse));
                 out.close();
                 break;
             }
