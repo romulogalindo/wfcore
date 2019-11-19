@@ -114,8 +114,8 @@ public class UtilServlet extends HttpServlet {
             }
             case "DOCHANGE": {
                 String sesion = request.getParameter("id_session").toUpperCase();
-                String no_curpwd = request.getParameter("no_curpwd").toUpperCase();
-                String co_usuari = request.getParameter("co_usuari").toUpperCase();
+                String no_curpwd = request.getParameter("no_curpwd");
+                String co_usuari = request.getParameter("co_usuari");
 //                String XCODE = "" + request.getParameter("nu_valcod");
 //                System.out.println("XCODE = " + XCODE);
 //                String CODE = request.getSession().getAttribute(sesion + "_CODE").toString();
@@ -124,14 +124,16 @@ public class UtilServlet extends HttpServlet {
                 int seconds_waitfor = Util.toInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("RECOVERY_PASSWORD_TIME_WAITFOR"), 60);
                 System.out.println("seconds_waitfor = " + seconds_waitfor);
                 JsonResponse jsonResponse;
+                System.out.println("new Date() = " + new Date() + ". VS=>" + DATE);
                 if (seconds_waitfor >= ((new Date().getTime() - DATE.getTime()) / 1000)) {
                     //estas en el tiempo
                     SecurityLDAO ldao = new SecurityLDAO(WFIOAPP.APP.getDataSourceService().getValueOfKey("URL_LDAP_ADMIN"));
                     ldao.connect();
                     int changepwdact = ldao.changepwd(co_usuari, no_curpwd);
                     ldao.close();
+                    System.out.println("changepwdact = " + changepwdact);
                     if (changepwdact == 1) {
-                        jsonResponse = JsonResponse.defultJsonResponseOK("{\"message\":\"Datos actualizados con exito.\" , \"goto\":\"/\"}");
+                        jsonResponse = JsonResponse.defultJsonResponseOK("{\"message\":\"Datos actualizados con exito. Inicie sessión.\" , \"goto\":\"/\"}");
                     } else {
                         jsonResponse = JsonResponse.defultJsonResponseERROR(new ErrorMessage(ErrorMessage.ERROR_TYPE_USER, "LDAP-Error: No se pudo actualizar."));
                     }

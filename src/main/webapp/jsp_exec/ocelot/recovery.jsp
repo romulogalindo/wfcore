@@ -41,7 +41,7 @@
 
     <script>
         function do64() {
-            document.getElementsByName("username")[0].focus();
+            document.getElementById("cellnumber").focus();
         }
 
         function validNumber() {
@@ -164,7 +164,7 @@
                 $('#card_valid').hide();
                 //----rellenar valores
                 $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
-                $('#co_usuari').html("Hola " + validation.result.code + ",");
+                $('#co_usuari').val(validation.result.code);
 
                 $('#card_change').show();
 
@@ -245,16 +245,19 @@
                 '&co_usuari=' + p_co_usuari);
             console.log('il_sendcod:' + validation);
             //POST!!!!SEND CODE!!!!
-            if (validation.result.valid) {
-                $('#card_valid').hide();
+            if (validation.status == 'OK') {
+                validation = JSON.parse(validation.result);
+                alert(validation.message);
+                // $('#card_valid').hide();
                 //----rellenar valores
-                $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
-                $('#co_usuari').html("Hola " + validation.result.code + ",");
+                // $('#form_recovery_greeting').html("Hola " + validation.result.user + ",");
+                // $('#co_usuari').html("Hola " + validation.result.code + ",");
 
-                $('#card_change').show();
-
+                // $('#card_change').show();
+                // window.location.href = '//' + window.location.host + '/';
+                window.location.href = '//' + window.location.host + validation.goto;
             } else {
-                alert('No se pudo validar lo solicit                                                                                                                                                                   ado.');
+                alert('No se pudo validar lo solicitud.');
             }
         }
 
@@ -325,7 +328,7 @@
                         <input type="text" id="cellnumber" name="cellnumber" class="form-control"
                                onkeyup="extractNumber(this, 0, true);validNumber();"
                                onkeypress="return blockNonNumbers(this, event, false, true);"
-                               onblur="extractNumber(this, 0, true); validNumber();" maxlength="9">
+                               onblur="extractNumber(this, 0, true); validNumber();" maxlength="9" autofocus>
                         <label for="cellnumber">N&uacute;mero de celular</label>
                     </div>
 
@@ -362,7 +365,7 @@
         </div>
 
         <!--CAMBIO DE CLAVE-->
-        <div id="card_change" class="card" style="width: 400px;">
+        <div id="card_change" class="card" style="width: 400px;display:none;">
 
             <h5 class="card-header info-color white-text text-center py-4">
                 <strong>Cambio de contrase&ntilde;a</strong>
@@ -394,7 +397,7 @@
                     <%--                    <c:if test="${empty updpwd_ok}">--%>
                     <div class="md-form">
                         <input type="password" id="new_password" name="new_password" class="form-control"
-                               onblur="validpwd()" autocomplete="off">
+                               onblur="validpwd()" autocomplete="off" autofocus>
                         <label for="new_password">Contrase&ntilde;a nueva</label>
                     </div>
 
@@ -432,16 +435,16 @@
 
                     <!-- Sign in button -->
                     <button id="changepwd" type="button" class="btn btn-primary btn-lg btn-block waves-effect z-depth-0"
-                            onclick="change()" disabled>
+                            onclick="dochange()" disabled>
                         Actualizar
                     </button>
 
-                    <hr>
+<%--                    <hr>--%>
 
                     <!-- Terms of service -->
-                    <p>Si presenta algun error llamar a
-                        <a href="" target="_blank">helpdesk</a>
-                    </p>
+<%--                    <p>Si presenta algun error llamar a--%>
+<%--                        <a href="" target="_blank">helpdesk</a>--%>
+<%--                    </p>--%>
                 </form>
                 <!-- Form -->
 

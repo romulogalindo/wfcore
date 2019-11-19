@@ -126,12 +126,13 @@ public class SecurityLDAO extends DAO {
         parms.put(Context.SECURITY_PRINCIPAL, LDAPUser);
         parms.put(Context.SECURITY_CREDENTIALS, LDAPPassword);
 
-        DirContext ctx = null;
+//        DirContext ctx = null;
 
         try {
             //LOGIN
-            ctx = new InitialDirContext(parms);
-            System.err.println("Successful authenticated bind X1");
+//            ctx = new InitialDirContext(parms);
+//            System.err.println("Successful authenticated bind X1");
+            System.out.println("uid = " + uid);
             System.out.println("ctx = " + ctx.getNameInNamespace());
 
             String pwe = generateSSHA(new String(no_password.getBytes("ISO-8859-1"), "UTF-8").getBytes());
