@@ -33,8 +33,6 @@
     <!--JS -->
     <script src="${pageContext.request.contextPath}/jsp_exec/js/contenedor.js?a=30"></script>
     <script src="${pageContext.request.contextPath}/jsp_exec/js/wfajax.js?a=42"></script>
-
-
     <script src="${pageContext.request.contextPath}/jsp_exec/js/websocket.js?a=24"></script>
 
     <style>

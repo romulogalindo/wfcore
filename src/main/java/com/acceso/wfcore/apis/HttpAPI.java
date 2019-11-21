@@ -31,6 +31,9 @@ public class HttpAPI extends GenericAPI {
         HttpsURLConnection conHTTPS;
         String response = null;
 
+        /*DE SEC TO MILISEC*/
+        timeout = timeout * 1000;
+
         try {
             _url = new URL(url);
             if (_url.getProtocol().contentEquals("http")) {
@@ -40,7 +43,7 @@ public class HttpAPI extends GenericAPI {
                 conHTTP.setRequestMethod("GET");
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTP.getInputStream()))) {
 
                     String line;
@@ -61,7 +64,7 @@ public class HttpAPI extends GenericAPI {
                 conHTTPS.setRequestMethod("GET");
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTPS.getInputStream()))) {
 
                     String line;
@@ -103,6 +106,9 @@ public class HttpAPI extends GenericAPI {
         HttpsURLConnection conHTTPS;
         String response = null;
 
+        /*DE SEC TO MILISEC*/
+        timeout = timeout * 1000;
+
         try {
             _url = new URL(url);
             if (_url.getProtocol().contentEquals("http")) {
@@ -137,7 +143,7 @@ public class HttpAPI extends GenericAPI {
 
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTP.getInputStream()))) {
 
                     String line;
@@ -183,7 +189,7 @@ public class HttpAPI extends GenericAPI {
 
                 StringBuilder content;
 
-                try ( BufferedReader in = new BufferedReader(
+                try (BufferedReader in = new BufferedReader(
                         new InputStreamReader(conHTTPS.getInputStream()))) {
 
                     String line;

@@ -98,7 +98,6 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
     }
 
     public void put_conpar(String key, String value) {
-        System.out.println("key = " + key + ", value = " + value);
         this.mp_conpar.put(key, value);
     }
 
@@ -134,8 +133,6 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
         }
 
         for (Map.Entry<Integer, List<WContabDTO>> rowx : rows.entrySet()) {
-            System.out.println("rowx->index = " + rowx.getKey());
-            System.out.println("rowx->valores(" + rowx.getValue().size() + ") = " + rowx.getValue());
             HTML += "<div class=\"row wfrow\">";
             int filas = rowx.getValue().size();
 //            String varcolwidth = filas == 1 ? "col-md-12" : (filas == 2 ? "col-md-6" : (filas == 3 ? "col-md-4" : "col-md-3"));
@@ -143,9 +140,9 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
             if (rowx.getValue().size() < 3) {
                 for (WContabDTO contab : rowx.getValue()) {
                     try {
-                        System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !1");
+//                        System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !1");
                         if (filas == 1) {
-                            System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !2");
+//                            System.out.println("{{}}{--->}pag.getTi_pagina() =>>> !2");
 //                            for (int p = 0; p < paginas.size(); p++) {
 //                                Pagina pag = paginas.values().get(p);
 //                                System.out.println("pag = " + pag);
@@ -167,7 +164,7 @@ public class Contenedor extends HTMLRenderer implements Serializable, Cloneable 
 
                             Pagina pag = paginas.values().stream()
                                     .filter((pagina) -> (pagina.getCo_contab() == contab.getCo_contab())).findFirst().get();
-                            System.out.println("pag()--> = " + pag.getTi_pagina());
+//                            System.out.println("pag()--> = " + pag.getTi_pagina());
                             if (pag.getTi_pagina().contentEquals("F")) {
                                 varcolwidth = "col-md-6";
                             } else {

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author Rómulo Galindo
  */
 public class SheetJson implements Serializable {
@@ -31,4 +30,11 @@ public class SheetJson implements Serializable {
         this.rows = rows;
     }
 
+    @Override
+    public String toString() {
+        return "SheetJson{" +
+                "name='" + name + '\'' +
+                ", rows=" + rows +
+                '}';
+    }
 }

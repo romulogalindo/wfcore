@@ -1064,20 +1064,8 @@ function loadReporte64(rowid, tbody64, row, aditional) {
 
     for (var x = 0; x < row.regs.length; x++) {
         var reg = row.regs[x];
-        // console.log('reg.regist =' + reg.regist + ',reg.value = ' + reg.value);
-        // document.getElementsByName('P' + CO_PAGINA + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
-        // document.getElementsByName('P' + CO_PAGINA + 'T1R' + reg.regist + 'V')[0].innerHTML = reg.value;
         var txtval = reg.text == undefined ? reg.value : reg.text;
         txtval = txtval == undefined ? '' : txtval;
-        //n_itr = n_itr.replace('reg' + reg.regist + 'val', '' + (reg.front == undefined ? (reg.value == undefined ? '' : reg.value) : reg.front));
-        // console.log('>[' + 'regist' + reg.regist + 'val' + '] >por> ' + txtval);
-        // n_itr = n_itr.replace('regist' + reg.regist + 'val', '' + txtval);
-        // n_itr.replace('<tr>','').replace('</tr>','')
-        // console.log('[loadReporte64:update!]>>>:' + n_itr);
-
-        // console.log('ELE:' + 'C' + rowid + 'R' + reg.regist);
-        // alert('XCD');
-//        console.log('===>C' +S rowid + 'R' + reg.regist + 'V');
 
         var erid = 'P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V';
         var ereg = document.getElementById(erid);
@@ -1091,25 +1079,22 @@ function loadReporte64(rowid, tbody64, row, aditional) {
 
             /*FORMA*/
             local_ti_pagreg = local_ti_pagreg == undefined ? null : parseInt(local_ti_pagreg);
-            console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
-            console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
+            // console.log('local_ti_pagreg:' + local_ti_pagreg + ', nuevo_ti_pagreg: ' + nuevo_ti_pagreg);
+            // console.log('local_ti_estreg:' + local_ti_estreg + ', nuevo_ti_estreg: ' + nuevo_ti_estreg);
 
 
             if ((local_ti_pagreg != nuevo_ti_pagreg) | (local_ti_estreg != nuevo_ti_estreg)) {
-                console.log("[builderTyper2]Los elementos son diferentes");
-                var _html = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
-                ereg.parentNode.innerHTML = _html;
-            } else {
-                console.log("[builderTyper2]==>Los elementos son iguales");
-            }
+                // console.log("[buixlderTyper2]Los elementos son diferentes");
+                ereg.parentNode.innerHTML = builderTyper2(local_ti_pagreg, nuevo_ti_pagreg, nuevo_ti_estreg, erid, ereg);
+            } /*else {
+                // console.log("[builderTyper2]==>Los elementos son iguales");
+            }*/
             ereg = document.getElementById('P' + CO_PAGINA + 'C' + rowid + 'R' + reg.regist + 'V');
         }
 
         /*DATA*/
         if (ereg !== null) {
             // console.log('ereg:' + ereg + ",?>" + ereg.getAttribute('ti_pagreg'));
-            // for (var i = 0; i < eregs.length; i++) {
-            //     var ereg = eregs[i];
             if (ereg.getAttribute('ti_pagreg') == null) {
                 ereg.value = txtval;
             } else if (ereg.getAttribute('ti_pagreg') == '1' | ereg.getAttribute('ti_pagreg') == '22' | ereg.getAttribute('ti_pagreg') == '23') {
@@ -1118,42 +1103,41 @@ function loadReporte64(rowid, tbody64, row, aditional) {
                     ereg.getElementsByTagName('INPUT')[0].value = txtval;
                 } else {
                     ereg.innerHTML = txtval;
-                    ereg.setAttribute('va_pagreg', reg.value);
+                    if (reg.value != undefined) {
+                        ereg.setAttribute('va_pagreg', reg.value);
+                    }
                 }
 
             } else if (ereg.getAttribute('ti_pagreg') == '2') {
-//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
                 ereg.innerHTML = rowid;
 
             } else if (ereg.getAttribute('ti_pagreg') == '3') {
-//                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
-                //*ereg.innerHTML = rowid;
                 //TEMPORAL====================
-                var ls_compag;
+                var ls_compag = [];
                 try {
                     ls_compag = JSON.parse(reg.data);
                 } catch (e) {
-                    console.log('(COMBO)el combo value!:' + reg.data);
+                    // console.log('(COMBO)el combo value!:' + reg.data);
                     ls_compag = [];//JSON.parse(reg.data);
-                    console.log('(COMBO)el combo value!:' + ls_compag);
+                    // console.log('(COMBO)el combo value!:' + ls_compag);
                 }
                 //=========================
                 var dom_compag = "";
 
-                if (ls_compag) {
-                    for (var i = 0; i < ls_compag.length; i++) {
-                        compag = ls_compag[i];
+                // if (ls_compag.length > 0) {
+                for (var i = 0; i < ls_compag.length; i++) {
+                    compag = ls_compag[i];
 
-                        dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
-                    }
-                    ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                    dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
                 }
+                ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                // }
 
             } else if (ereg.getAttribute('ti_pagreg') == '4') {
 //                ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + '' + reg.regist + 'R');
                 //*ereg.innerHTML = rowid;
                 //TEMPORAL====================
-                var ls_compag;
+                var ls_compag = [];
                 try {
                     ls_compag = JSON.parse(reg.data);
                 } catch (e) {
@@ -1162,22 +1146,22 @@ function loadReporte64(rowid, tbody64, row, aditional) {
                 //=========================
                 var dom_compag = "<option value=\"\"></option>";
 
-                if (ls_compag) {
-                    for (var i = 0; i < ls_compag.length; i++) {
-                        compag = ls_compag[i];
+                // if (ls_compag) {
+                for (var i = 0; i < ls_compag.length; i++) {
+                    compag = ls_compag[i];
 
-                        dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
-                    }
-
-                    ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                    dom_compag += "<option value=\"" + compag.co_compag + "\" " + (reg.value == compag.co_compag ? "selected" : "") + ">" + compag.no_compag + "</option>";
                 }
 
+                ereg.getElementsByTagName("SELECT")[0].innerHTML = dom_compag;
+                // }
+
             } else if (ereg.getAttribute('ti_pagreg') == '6') {
-                console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                // console.log('tip:' + ereg.getAttribute('ti_pagreg'));
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
                 // ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'R' + reg.regist + '_check');
 
-                console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
+                // console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
 
                 if (reg.value == 't' | reg.value == 'T' | reg.value == 'true' | reg.value == 'TRUE' | reg.value == 'verdadero') {
                     ereg.getElementsByTagName('INPUT')[0].setAttribute('checked', 'checked');
@@ -1190,43 +1174,25 @@ function loadReporte64(rowid, tbody64, row, aditional) {
                 // console.log('to add?:' + ' check' + reg.regist);
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
             } else if (ereg.getAttribute('ti_pagreg') == '34') {
-                console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                // console.log('tip:' + ereg.getAttribute('ti_pagreg'));
                 var btnreg = ereg.getElementsByTagName('BUTTON')[0];
                 btnreg.setAttribute('onclick', btnreg.getAttribute('onclick').replace('ur_pagreg', "'" + reg.link + "'"));
 
             } else if (ereg.getAttribute('ti_pagreg') == '36') {
-                console.log('tip:' + ereg.getAttribute('ti_pagreg'));
+                // console.log('tip:' + ereg.getAttribute('ti_pagreg'));
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('id', 'C' + rowid + 'R' + reg.regist + '_check');
                 // ereg.getElementsByTagName('LABEL')[0].setAttribute('for', 'C' + rowid + 'R' + reg.regist + '_check');
 
-                console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
+                // console.log('?tip:' + ereg.getAttribute('ti_pagreg') + '::' + reg.regist);
                 ereg.getElementsByTagName('A')[0].setAttribute('href', '/jsp_exec/ocelot/viewer.jsp?file=' + txtval);
 
                 // console.log('to add?:' + ' check' + reg.regist);
                 // ereg.getElementsByTagName('INPUT')[0].setAttribute('class', ereg.getElementsByTagName('INPUT')[0].getAttribute('class') + ' check' + reg.regist);
             } else {
+                //OTROS!
             }
         }
     }
-
-
-    // var nr = document.createElement('tr');
-    // nr.innerHTML = n_itr;
-
-    //tbody64.appendChild(nr); //ADDRECIENTE
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr(2):' + n_itr);
-
-    // var dom_pag = document.getElementById('PAG' + CO_PAGINA);
-    // var new_tr = dom_pag.getElementsByTagName('TBODY')[0].innerHTML + n_itr;
-    // console.log('[loadReporte64]Cargando tipo Reporte->itr(3):' + new_tr);
-    // dom_pag.getElementsByTagName('TBODY')[0].innerHTML = new_tr;
-    //
-    // //do-for
-    // var alltd = document.getElementById('PAG' + CO_PAGINA).getElementsByClassName('ti_pag_Reg2');
-    // for (var i = 0; i < alltd.length; i++) {
-    //     alltd[i].getElementsByTagName('SPAN')[0].innerHTML = '' + (i + 1);
-    //     // alltd[i].innerHTML = '<span>' + (i + 1) + '</span>span>';
-    // }
 
     //aditional
     if (aditional != undefined && aditional.length > 0) {
@@ -2629,9 +2595,10 @@ function CFGDATATABLE(cfgopts) {
         // $('.wf-report').attr("style", "width, tnz + 'px");
     }
 
-    console.log('CFG! PAGINA::' + cfgopts.pageLength);
+    // console.log('CFG! PAGINA::' + cfgopts.pageLength);
     cfg_table_pageLength = cfgopts.pageLength;
     unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    console.log('unrealTable:' + unrealTable);
     $('#PAG' + CO_PAGINA).on('page.dt', function () {
         cfg_table_currentPage = $($($('.paginate_button.page-item.active')[0]).find('a')[0]).attr('data-dt-idx');
         // var info = unrealTable.page.info();
@@ -2960,7 +2927,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
 }
 
 function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_onchag, ca_caract) {
-    console.log('[builderTyper2]old_type=' + old_type + ', new_type=' + new_type + ', ti_estreg=' + ti_estreg + ', eledom=' + eledom);
+    // console.log('[builderTyper2]old_type=' + old_type + ', new_type=' + new_type + ', ti_estreg=' + ti_estreg + ', eledom=' + eledom);
     var htmlreturn = "";
     if (new_type == 1) {
         if (ti_estreg == 'E') {
@@ -2970,7 +2937,8 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_
             htmlreturn += "        </div>";
             htmlreturn += "</span>";
         } else {
-            htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"1\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\"></span>";
+            //RETORNA!!! htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"1\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\"></span>";
+            htmlreturn += "<span id=\"" + id + "\" ti_pagreg=\"1\" class=\"reader pagreg\"></span>";
         }
     } else if (new_type == 3) {
         if (ti_estreg == 'E') {
@@ -3030,7 +2998,7 @@ function builderTyper2(old_type, new_type, ti_estreg, id, eledom, ur_pagreg, il_
             htmlreturn += "<span id=\"" + id + "\" class=\"whiter pagreg\" name=\"" + id + "\" ti_pagreg=\"4\" co_regist=\"" + eledom.getAttribute('co_regist') + "\" va_pagreg=\"\">";
         }
     } else if (new_type == 36) {
-        console.log('tipo 36??!');
+        // console.log('tipo 36??!');
         if (ti_estreg == 'E') {
             htmlreturn += "        <span id=\"" + id + "\" name=\"" + id + "\" ti_pagreg=\"36\" class=\"witer " + " pagreg\">"
             htmlreturn += "     [<a  target=\"_blank\" href=\"#\" class=\"\"  onclick=\"return doupload(\'" + id + "\')\"><i class=\"fas fa-upload\" aria-hidden=\"true\"></i> <span>Subir</span></a>]"

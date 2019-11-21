@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author Rómulo Galindo
  */
 public class ExcelJson implements Serializable {
@@ -31,4 +30,11 @@ public class ExcelJson implements Serializable {
         this.sheets = sheets;
     }
 
+    @Override
+    public String toString() {
+        return "ExcelJson{" +
+                "filename='" + filename + '\'' +
+                ", sheets=" + sheets +
+                '}';
+    }
 }

@@ -132,14 +132,30 @@ public class Converter {
                     CellReference cr = new CellReference(cell);
 
                     if (cellType.getCode() == CellType.NUMERIC.getCode()) {
-//                        System.out.print("->" + cell.getNumericCellValue() + " ");
+//                        System.out.println("->" + cell.getNumericCellValue() + " ");
                         cellsx.put("" + (cr.getCol() + 1), cell.getNumericCellValue());
                     } else if (cellType.getCode() == CellType.BOOLEAN.getCode()) {
-//                        System.out.print("->" + cell.getBooleanCellValue() + " ");
+//                        System.out.println("->" + cell.getBooleanCellValue() + " ");
                         cellsx.put("" + (cr.getCol() + 1), cell.getBooleanCellValue());
+                    } else if (cellType.getCode() == CellType.FORMULA.getCode()) {
+//                        System.out.println("->" + cell.getCachedFormulaResultType() + " ");
+                        if (cell.getCachedFormulaResultType().getCode() == CellType.NUMERIC.getCode()) {
+//                            System.out.println("->" + cell.getNumericCellValue() + " ");
+                            cellsx.put("" + (cr.getCol() + 1), cell.getNumericCellValue());
+                        } else if (cell.getCachedFormulaResultType().getCode() == CellType.STRING.getCode()) {
+//                            System.out.println("1->" + cell.getRichStringCellValue() + " ");
+                            cellsx.put("" + (cr.getCol() + 1), cell.getRichStringCellValue());
+                        }
+//                        System.out.println("->" + cell.getBooleanCellValue() + " ");
+//                        cellsx.put("" + (cr.getCol() + 1), cell.getBooleanCellValue());
                     } else {
-//                        System.out.print("->" + cell.getStringCellValue() + " ");
-                        cellsx.put("" + (cr.getCol() + 1), cell.getStringCellValue());
+                        try {
+//                            System.out.println("1->" + cell.getStringCellValue() + " ");
+                            cellsx.put("" + (cr.getCol() + 1), cell.getStringCellValue());
+                        } catch (Exception ep) {
+//                            System.out.println("ep = " + ep);
+                            ep.printStackTrace();
+                        }
                     }
                 }
 
@@ -152,6 +168,7 @@ public class Converter {
         }
 
         excelJson.setSheets(sheets);
+//        System.out.println("excelJson = " + excelJson);
         return excelJson;
     }
 
@@ -473,21 +490,22 @@ public class Converter {
 //                    System.out.println("configJson.isWrap() ==> " + configJson.isVwrap());
                         customStyle.setWrapText(true);
                     }
-                    System.out.println("configJson.getFormat()  => " + configJson.getFormat());
+//                    System.out.println("configJson.getFormat()  => " + configJson.getFormat());
                     if (configJson.getFormat() != null & configJson.getFormat().length() > 0) {
-                        System.out.println("setDataFormat ==> " + configJson.getFormat() + ", ==>" + format.getFormat(configJson.getFormat()));
+//                        System.out.println("setDataFormat ==> " + configJson.getFormat() + ", ==>" + format.getFormat(configJson.getFormat()));
                         customStyle.setDataFormat(format.getFormat(configJson.getFormat()));
                         formatDate.put(i + 1, configJson.getFormat());
                     }
-                    if (configJson.isHwrap()) {
-                        System.out.println("configJson.isWrap() ==> " + configJson.isHwrap());
 
+                    if (configJson.isHwrap()) {
+//                        System.out.println("configJson.isWrap() ==> " + configJson.isHwrap());
                         autosizecolumns.add((i + 1));
                     }
+
                     if (configJson.isBold()) {
                         customFont.setBold(true);
                     }
-                    System.out.println("configJson.getWidth() = " + configJson.getWidth());
+//                    System.out.println("configJson.getWidth() = " + configJson.getWidth());
                     if (configJson.getWidth() > -1) {
                         sheet.setColumnWidth(i, configJson.getWidth() * 100);
                     }
@@ -533,7 +551,7 @@ public class Converter {
                     Cell cell = _row.createCell(currentCol, CellType.STRING);
                     cell.setCellStyle(styleTitle);
                     cell.setCellValue("" + col.getKey());
-                    System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
+//                    System.out.println("cell = >>>[id:" + currentCol + "][" + col.getKey() + ":" + col.getValue() + "]");
                     currentCol++;
                 }
                 currentCol = 0;

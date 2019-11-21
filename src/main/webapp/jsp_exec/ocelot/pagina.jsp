@@ -1,11 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   User: Rómulo Galindo
   Date: 27/12/18
   Time: 17:11
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="paginaBean" class="com.acceso.wfweb.beans.PaginaBean"/>
 <%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" language="java" %>
+<jsp:useBean id="paginaBean" class="com.acceso.wfweb.beans.PaginaBean"/>
 <html co_conten="${paginaBean.do64(pageContext.request)}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>

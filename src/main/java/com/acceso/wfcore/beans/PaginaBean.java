@@ -504,8 +504,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagbot_save() {
-        System.out.println("[pagbot_save]pagina = " + pagina);
-        System.out.println("[pagbot_save]botonSeleccionado = " + botonSeleccionado);
         PaginaDAO dao = new PaginaDAO();
 
         dao.saveButton(pagina.getCo_pagina(), botonSeleccionado);
@@ -537,7 +535,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagreg_save() {
-        System.out.println("elementoSeleccionado: = " + elementoSeleccionado);
         PaginaDAO dao = new PaginaDAO();
         dao.saveRegist(pagina.getCo_pagina(), elementoSeleccionado.getPagregDTO());
 
@@ -604,7 +601,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public String pagtit_save() {
-        System.out.println("elementoSeleccionado: = " + elementoSeleccionado);
         PaginaDAO dao = new PaginaDAO();
         if (elementoSeleccionado.getTi_elemen() == 1) {
             dao.saveTitle(pagina.getCo_pagina(), elementoSeleccionado.getPagtitDTO());
@@ -640,7 +636,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public void setPagina(PaginaDTO pagina) {
-        Log.info("Seteando pagina>>" + pagina);
         this.pagina = pagina;
     }
 
@@ -649,7 +644,6 @@ public class PaginaBean extends MainBean implements Serializable, DefaultMainten
     }
 
     public void setBotonSeleccionado(BotonDTO botonSeleccionado) {
-        System.out.println("??>>botonSeleccionado = " + botonSeleccionado);
         if (botonSeleccionado == null) {
             this.botonSeleccionado = new BotonDTO();
         } else {

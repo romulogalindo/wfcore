@@ -444,6 +444,7 @@ public class DataAPI extends GenericAPI {
                 }
             }
         } catch (Exception ep) {
+            ep.printStackTrace();
             return null;
         }
 

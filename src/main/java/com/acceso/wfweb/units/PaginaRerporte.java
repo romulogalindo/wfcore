@@ -115,13 +115,16 @@ public class PaginaRerporte extends Pagina implements Serializable {
                             itr += "<input type=hidden id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 pagreg\"" : "class=\"pagreg\"") + " value=\"\" />";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("L")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td ti_pagreg=\"1\" >";
-                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"reader pagreg x64\"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" va_pagreg=\"\">";
+//                            itr += "<td ti_pagreg=\"1\" >";
+                            itr += "<td>";
+//                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"reader pagreg x64\"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" va_pagreg=\"\">";
+                            itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"reader pagreg x64\"" : "class=\"reader pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
                             itr += "    </span>";
                             itr += "</td>";
                         } else if (fila.getRegistroDTO().getTi_estreg().contentEquals("E")) {
 //                            System.out.println("fila = REDERER OK!");
-                            itr += "<td ti_pagreg=\"1\" >";
+//                            itr += "<td ti_pagreg=\"1\" >";
+                            itr += "<td>";
                             itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 writer pagreg \"" : "class=\"writer pagreg\"") + " name=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\"  ti_pagreg=\"1\"  co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\" >";
                             itr += "        <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
                             itr += "            <input id=\"\" type=\"text\" value=\"\" maxlength=\"" + fila.getRegistroDTO().getCa_caract() + "\" size=\"" + fila.getRegistroDTO().getCa_carcol() + "\" style=\"text-align: " + fila.getRegistroDTO().getVa_alireg() + ";\" " + (fila.getRegistroDTO().isIl_onchan() ? "onchange=dinpag2(this," + fila.getRegistroDTO().getCo_pagreg() + ")" : "") + " class=\"w3-input w3-border form-control " + (fila.getRegistroDTO().isIl_onchan() ? "dynpag" : "") + "\">";
@@ -134,7 +137,8 @@ public class PaginaRerporte extends Pagina implements Serializable {
                     case 2: {
 //                        if (!fila.getRegistroDTO().getTi_estreg().contentEquals("O")) {
 //                        System.out.println("fila = REDERER OK!");
-                        itr += "<td ti_pagreg=\"2\" >";
+//                        itr += "<td ti_pagreg=\"2\" >";
+                        itr += "<td>";
                         itr += "    <span id=\"X64UIR" + fila.getRegistroDTO().getCo_pagreg() + "V\" ti_pagreg=\"2\"  " + (fila.getRegistroDTO().isIl_guareg() ? "class=\"x64 pagreg\"" : "class=\"pagreg\"") + " co_regist=\"" + fila.getRegistroDTO().getCo_pagreg() + "\">";
                         itr += "    </span>";
                         itr += "</td>";

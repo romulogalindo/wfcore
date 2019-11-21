@@ -118,17 +118,6 @@ public class LoginServlet extends HttpServlet {
                         requestManager.save_over_request("goto", "go!");
                         goToUrl = "/";
 
-                        //tiempo de session por default
-//                        int SESSION_TIMEOUT = Integer.parseInt(WFIOAPP.APP.getDataSourceService().getValueOfKey("SESSION_TIMEOUT"), 10);
-//                        SESSION_TIMEOUT = SESSION_TIMEOUT * 60;
-//                        request.getSession().setMaxInactiveInterval(SESSION_TIMEOUT);
-//                        request.getSession().setAttribute("expired_session", SESSION_TIMEOUT);
-//                        System.out.println("[LOGIN!]Duraccion de session:" + request.getSession().getMaxInactiveInterval());
-//
-//                        //deberia darme una linea por default>>>>ejeurl-->444
-//                        goToUrl = "/password";
-//                        System.out.println("goToUrl = " + goToUrl);
-//                        System.out.println("doLogin.getUsuario() = " + doLogin.getUsuario());
                     } else {
                         throw new Exception(doLogin.getMessage());
                     }
@@ -149,11 +138,7 @@ public class LoginServlet extends HttpServlet {
             String p_ti_cambio = requestManager.getParam("type");
             String p_no_curpwd = requestManager.getParam("current_password");
             String p_no_passwo = requestManager.getParam("new_password");
-//            System.out.println("p_co_usuari = " + p_co_usuari);
-//            System.out.println("p_no_correo = " + p_no_correo);
-//            System.out.println("p_ti_cambio = " + p_ti_cambio);
-//            System.out.println("p_no_curpwd = " + p_no_curpwd);
-//            System.out.println("p_no_passwo = " + p_no_passwo);
+
 
             SecurityLDAO ldao = new SecurityLDAO("cn=admin,dc=acceso,dc=com,dc=pe:4cc3s02019#@192.168.44.138:389");
             SecurityDAO dao = new SecurityDAO();

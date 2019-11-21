@@ -32,19 +32,19 @@ import javax.servlet.http.HttpServletResponse;
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        System.out.println("[MainFilter]request = " + req.getContextPath());
-        System.out.println("[MainFilter]request = " + req.getRequestURL());
-        System.out.println("[MainFilter]request = " + req.getQueryString());
-        System.out.println("[MainFilter]request = " + req.getParameter("co_conten"));
+//        System.out.println("[MainFilter]request = " + req.getContextPath());
+//        System.out.println("[MainFilter]request = " + req.getRequestURL());
+//        System.out.println("[MainFilter]request = " + req.getQueryString());
+//        System.out.println("[MainFilter]request = " + req.getParameter("co_conten"));
 
         Integer co_conten = Util.toInt(req.getParameter("co_conten"), -1);
-        System.out.println("[MainFilter]co_conten = " + co_conten);
+//        System.out.println("[MainFilter]co_conten = " + co_conten);
 
         Usuario usuario = (Usuario) req.getSession().getAttribute("US");
-        System.out.println("[MainFilter]usuario = " + usuario);
+//        System.out.println("[MainFilter]usuario = " + usuario);
 
         if (usuario != null) {
-            System.out.println("!!!suario.getLs_mensis().get(co_conten) = " + usuario.getLs_mensis().get(co_conten));
+//            System.out.println("!!!suario.getLs_mensis().get(co_conten) = " + usuario.getLs_mensis().get(co_conten));
             //CODIGO ESPECIAL PARA SESSION
             /*
             if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
@@ -65,14 +65,14 @@ import javax.servlet.http.HttpServletResponse;
             current_expired_session = current_expired_session + milseg;
             req.getSession().setMaxInactiveInterval(current_expired_session + milseg);
 
-            System.out.println("[1]Duraccion de session:" + req.getSession().getMaxInactiveInterval());
+//            System.out.println("[1]Duraccion de session:" + req.getSession().getMaxInactiveInterval());
 //            System.out.println("[1]Duraccion de session2:" + (current_expired_session + milseg));
             req.getSession().setAttribute("expired_session", req.getSession().getMaxInactiveInterval());
             chain.doFilter(req, res);
             //existe osea si se puede loguear
 
         } else {
-            System.out.println("validado = No!");
+//            System.out.println("validado = No!");
             res.sendRedirect("/");
         }
 

@@ -179,7 +179,6 @@ public class PaginaLSBean extends MainBean implements Serializable, DefaultMaint
     }
 
     public void setPagina(PaginaDTO pagina) {
-        Log.info("Seteando pagina>>" + pagina);
         this.pagina = pagina;
     }
 
