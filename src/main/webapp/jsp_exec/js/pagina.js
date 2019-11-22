@@ -2714,7 +2714,7 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
     placeholder = placeholder == undefined ? '' : placeholder;
     if (type == 1) {
         if (ti_estreg == 'E') {
-            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"1\" class=\"writer pagreg\" >";
+            html += "   <span id='" + id + "' name='" + id + "' ti_pagreg=\"1\" class=\"writer " + (il_onchag ? " xaction " : "") + " pagreg\" >";
             html += "       <div class=\"md-form mt-0\" style=\"margin-bottom: 0px;\">";
             console.log('placeholder:' + placeholder);
             if (validation.regexp == null) {
@@ -2748,12 +2748,12 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
                 } catch (e) {
                     // console.log('en la creacion----->' + e);
                 }
+
+                validation.regexp = encodeURIComponent(validation.regexp);
                 console.log('@@--@@:' + validation.regexp);
                 validation.regexp = validation.regexp.replace('\\', '\\\\');
                 console.log('@@--@@:' + validation.regexp);
                 html += "           <input type=text class=\"w3-input w3-border form-control\" value=\"\" " + " onkeypress='return inputLimiter(event, \"" + validation.charset + "\")' onkeyup=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" onchange=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\'); " + (il_onchag ? "dinpag(this," + co_regist + ")" : "") + "\" onblur=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\',\'" + validation.charset + "\');\" placeholder=\"" + placeholder + "\" onpaste=\"validar_regexp(this,\'" + validation.regexp + "\'," + co_regist + ",\'" + validation.message + "\', \'" + validation.charset + "\');\" maxlength=\"" + ca_caract + "\">";
-
-
             }
 
             html += "       </div>";

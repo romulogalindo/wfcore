@@ -74,6 +74,7 @@ import javax.servlet.http.HttpServletResponse;
         } else {
 //            System.out.println("validado = No!");
             res.sendRedirect("/");
+
         }
 
 //        if (req.getSession(true).getAttribute("US") == null) {
