@@ -165,6 +165,18 @@ function pagina_onload(_data) {
             const ID_PAGINA = 'PAG' + CO_PAGINA;
             console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
             if (TI_PAGINA == PAGE_TYPE_REPORT | TI_PAGINA == PAGE_TYPE_FREEREPORRT) {
+                ///ADDIOTIONAL
+                if (unrealTable != undefined) {
+                    unrealTable.api().clear();
+                    unrealTable.api().destroy();
+                    unrealTable = null;
+                    console.log('unset co_pagina:::>>' + $('#PAG' + CO_PAGINA));
+                    $('#PAG' + CO_PAGINA).removeAttr('style');
+                    document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+                    console.log('unset co_pagina:::>>' + $('#PAG' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style')));
+                } /*else {
+                    unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+                }*/
 
                 tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
                 tbody64.innerHTML = '';
@@ -1060,6 +1072,16 @@ function loadReporte64(rowid, tbody64, row, aditional) {
 
     nr.innerHTML = n_itr;
     nr.setAttribute('id', 'row' + rowid);
+
+    // if () {
+    //
+    // }
+    // if (unrealTable != undefined) {
+    //     unrealTable.api().destroy();
+    // } else {
+    //     unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    // }
+
     tbody64.appendChild(nr);
 
     for (var x = 0; x < row.regs.length; x++) {
@@ -2550,54 +2572,31 @@ var cfg_table_currentPage = 0;
 var unrealTable;
 
 function CFGDATATABLE(cfgopts) {
-    console.log('configurando....');
+    // console.log('configurando....');
     //remove css class
-    // document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', ''));
-    if (document.getElementById('ti_pagina').value != 'Y') {
-        // document.getElementById('PAG' + CO_PAGINA).setAttribute('class', document.getElementById('PAG' + CO_PAGINA).getAttribute('class').replace('table-responsive', 'wf-w'));
-        // //fase1;
-        // var tx = document.getElementById('PAG' + CO_PAGINA);
-        // var dx = tx.getElementsByTagName("tbody")[0];
-        // // dx = dx.getElementsByTagName("tr")[0];
-        // var tds = tx.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName('TD');
-        // var ths = tx.getElementsByTagName("thead")[0].getElementsByTagName("tr")[1].getElementsByTagName('TH');
-        //
-        // var tnz = 0;
-        // for (var i = 0; i < tds.length; i++) {
-        //     var nz = tds[i].offsetWidth;
-        //     nz += 10;
-        //     tnz += nz;
-        //     ths[i].style.width = nz + 'px';
-        //     tds[i].style.width = nz + 'px';
-        //
-        //     if (tds[i].getAttribute('style').indexOf('flex') > -1) {
-        //         ths[i].setAttribute('style', 'width: ' + nz + 'px');
-        //         tds[i].setAttribute('style', 'width: ' + nz + 'px;display:flex;');
-        //     } else {
-        //         ths[i].setAttribute('style', 'width: ' + nz + 'px');
-        //         tds[i].setAttribute('style', 'width: ' + nz + 'px');
-        //     }
-        //
-        //     // ths[i].setAttribute('style', 'width: ' + nz + 'px');
-        //     // tds[i].setAttribute('style', 'width: ' + nz + 'px');
-        //     // console.log('td(' + (i + 1) + ')=>nz:' + nz);
-        // }
-        // document.getElementById('wf-w').innerHTML = 'table#PAG' + CO_PAGINA + '{width:' + tnz + 'px;} ' +
-        //     '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHead .wf-w{width:' + tnz + 'px !important;}' +
-        //     '#PAG' + CO_PAGINA + '_wrapper .dataTables_scrollHeadInner{width:' + tnz + 'px !important;}' +
-        //     '#PAG' + CO_PAGINA + '_wrapper table#PAG' + CO_PAGINA + ' thead tr th{border: none !important; padding: 0px !important;margin: 0px !important;}';
-        // // console.log('TNZ::' + tnz);
-        // tx.style.width = tnz + 'px';
-        // document.getElementById('PAG' + CO_PAGINA).setAttribute("style", "width: " + tnz + "px");
-        // // console.log('-->' + document.getElementById('PAG' + CO_PAGINA).getAttribute("style"));
-        // $('#PAG' + CO_PAGINA).css("width", tnz + "px");
-        // $('#PAG' + CO_PAGINA).attr("style", "width, tnz + 'px");
-        // $('.wf-report').attr("style", "width, tnz + 'px");
-    }
-
     // console.log('CFG! PAGINA::' + cfgopts.pageLength);
     cfg_table_pageLength = cfgopts.pageLength;
+    // console.log('Existe una tabla previamente:' + (unrealTable != undefined ? true : false) + "!");
+    /*if (unrealTable != undefined) {
+        unrealTable.api().destroy();
+    } else {
+        unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+    }*/
+    if (unrealTable != undefined) {
+        $('#PAG' + CO_PAGINA).removeAttr('style');
+        // document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+        // console.log('(2)unset co_pagina:::>>' + document.getElementById("PAG" + CO_PAGINA).getAttribute('style'));
+    }
+
+    // console.log('aplicando cambios:!' + CO_PAGINA);
+    // alert('-->' + document.getElementById('PAG' + CO_PAGINA));
+    // alert('-->' + document.getElementById('XPAG' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style')));
+    // console.log('aplicando cambios:!' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style'));
+    document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+    // console.log('aplicando cambios2:!');
     unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+
+
     console.log('unrealTable:' + unrealTable);
     $('#PAG' + CO_PAGINA).on('page.dt', function () {
         cfg_table_currentPage = $($($('.paginate_button.page-item.active')[0]).find('a')[0]).attr('data-dt-idx');
@@ -2608,22 +2607,32 @@ function CFGDATATABLE(cfgopts) {
             AUTODYNAMIC(DYNAMIC)
         }, 500);
     });
+
     unrealTable.on('fnDrawCallback', function (oSettings) {
         // console.log('----------------------->cfg_table_currentPage: XX:' + oSettings);
         // AUTODYNAMIC(DYNAMIC);
     });
 
     $('#PAG' + CO_PAGINA + ' THEAD TR').css('paddin-top', '0px !important');
+    // console.log('@@' + document.getElementById('ti_pagina').value);
+    // console.log('@@' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style'));
+    document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+    document.getElementById('PAG' + CO_PAGINA).setAttribute('style','');
     if (document.getElementById('ti_pagina').value != 'Y') {
         document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
         document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].getElementsByTagName("TH")[0].setAttribute('style', 'padding-top: 0px !important; padding-bottom: 0px !important;');
         document.getElementsByClassName('dataTables_scrollBody')[0].getElementsByTagName('THEAD')[0].style.visibility = 'hidden';
         document.getElementById('PAG' + CO_PAGINA + '_wrapper').getElementsByClassName('row')[0].style.display = 'none';
         setTimeout(function () {
+                console.log('AGAIN XD-->>');
+                document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+                //--------------------
                 var eldt = document.getElementById('PAG' + CO_PAGINA).getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].getElementsByTagName("TH")[0];
                 eldt.setAttribute('style', eldt.getAttribute('style') + ' background: none;padding-top: 0px !important; padding-bottom: 0px !important;');
             }, 500
         );
+        console.log('AGAIN XD-->>');
+        document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
 
     }
 }
