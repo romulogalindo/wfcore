@@ -46,15 +46,6 @@ import javax.servlet.http.HttpServletResponse;
         if (usuario != null) {
 //            System.out.println("!!!suario.getLs_mensis().get(co_conten) = " + usuario.getLs_mensis().get(co_conten));
             //CODIGO ESPECIAL PARA SESSION
-            /*
-            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
-                System.out.println("validado = ");
-                chain.doFilter(req, res);
-            } else {
-                System.out.println("Error escribir");
-                throw new ServletException("No tiene permiso de acceso. Comuniquese con la administraciòn");
-            }
-            */
 
 //            System.out.println("Ultimo acceso = " + req.getSession().getLastAccessedTime());
 //            System.out.println("Ultimo acceso(2) = " + new Date(req.getSession().getLastAccessedTime()));
@@ -68,8 +59,18 @@ import javax.servlet.http.HttpServletResponse;
 //            System.out.println("[1]Duraccion de session:" + req.getSession().getMaxInactiveInterval());
 //            System.out.println("[1]Duraccion de session2:" + (current_expired_session + milseg));
             req.getSession().setAttribute("expired_session", req.getSession().getMaxInactiveInterval());
-            chain.doFilter(req, res);
+//            chain.doFilter(req, res);
             //existe osea si se puede loguear
+
+
+            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
+                System.out.println("validado = ");
+                chain.doFilter(req, res);
+            } else {
+                System.out.println("Error escribir");
+                throw new ServletException("No tiene permiso de acceso. Comuniquese con la administraciòn");
+            }
+
 
         } else {
 //            System.out.println("validado = No!");
