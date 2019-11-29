@@ -8,6 +8,7 @@ import com.acceso.wfcore.utils.*;
 import com.acceso.wfweb.daos.Frawor4DAO;
 import com.acceso.wfweb.dtos.ArchivDTO;
 import com.acceso.wfweb.dtos.ValpagDTO;
+import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.utils.JsonResponse;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import net.sf.jasperreports.engine.*;
@@ -455,6 +456,39 @@ public class DataAPI extends GenericAPI {
         return CREATE_FILE(filename, extension, null, result);
     }
 
+    public Usuario USUARI(String key, Object value) {
+        String query = "";
+        switch (key) {
+            case "GET": {
+                query = "select * from wfsistem.tsusuari where co_usuari = " + value + ";";
+                break;
+            }
+        }
+
+        JsonResponse jrpta = this.SQL("wfcore", query);
+        if (jrpta.getStatus().contentEquals("OK")) {
+            HashMap<String, Object> regsesiniDTO = (HashMap<String, Object>) ((ArrayList) jrpta.getResult()).get(0);
+
+            Usuario usuario = new Usuario();
+//            usuario.setId_sesion(Long.parseLong(regsesiniDTO.get("id_sesion").toString()));
+            usuario.setCo_usuari(Long.parseLong(regsesiniDTO.get("co_usuari").toString()));
+            usuario.setNo_usulog("" + regsesiniDTO.get("co_usulog"));
+            usuario.setNo_usuari("" + regsesiniDTO.get("no_usuari"));
+            usuario.setNo_imgusu("" + regsesiniDTO.get("ar_imgusu"));
+
+//            usuario.setCo_sistem(regsesiniDTO.get("co_sistem"));
+//            usuario.setCo_subsis(regsesiniDTO.get("co_subsis");
+            usuario.setNo_correo("" + regsesiniDTO.get("no_correo"));
+            usuario.setNu_docide("" + regsesiniDTO.get("nu_docide"));
+            usuario.setIp_remoto("" + regsesiniDTO.get("ip_remoto"));
+            usuario.setTi_usuari("" + regsesiniDTO.get("ti_usuari"));
+            System.out.println("jrpta = " + jrpta.getResult());
+            return usuario;
+        }
+
+        return null;
+    }
+
     @Deprecated
     public File CREATE_FILE(String filename, String extension, Object cfg, Object result) {
         File file = null;
@@ -476,8 +510,8 @@ public class DataAPI extends GenericAPI {
     }
 
     /*
-    * GENERADOR DE ARCHIVOS
-    * */
+     * GENERADOR DE ARCHIVOS
+     * */
     public File CREATE_FILE(Object obj) {
         ScriptObjectMirror opts = (ScriptObjectMirror) obj;
         String co_archiv = opts.get("co_archiv") == null ? null : ("" + opts.get("co_archiv"));

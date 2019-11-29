@@ -27,6 +27,7 @@ public class Usuario implements Serializable {
     String no_correo;
     String nu_docide;
     String ip_remoto;
+    String ti_usuari;
 
     Root root;
     MainMenu mainMenu;
@@ -227,6 +228,14 @@ public class Usuario implements Serializable {
 
     public void setSesion_tomcat_id(String sesion_tomcat_id) {
         this.sesion_tomcat_id = sesion_tomcat_id;
+    }
+
+    public String getTi_usuari() {
+        return ti_usuari;
+    }
+
+    public void setTi_usuari(String ti_usuari) {
+        this.ti_usuari = ti_usuari;
     }
 
     @Override

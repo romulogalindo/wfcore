@@ -93,6 +93,7 @@ public class DoLogin {
         usuario.setNo_correo(regsesiniDTO.getNo_correo());
         usuario.setNu_docide(regsesiniDTO.getNu_docide());
         usuario.setIp_remoto(regsesiniDTO.getIp_remoto());
+        usuario.setTi_usuari(regsesiniDTO.getTi_usuari());
 //        usuario.setCo_paquet(regsesiniDTO.getCo_paquet());
         usuario.setLdap(regsesiniDTO.getLdap());
         usuario.setIl_schema(true);
@@ -172,6 +173,11 @@ public class DoLogin {
                                                 if (getConten(menuItem.getUrl()) > -1) {
                                                     ls_mensis.put(getConten(menuItem.getUrl()), menuItem.getUrl());
                                                 }
+                                                if (menuItem.getLs_conten() != null && !menuItem.getLs_conten().isEmpty()) {
+                                                    for (Integer co_conte : menuItem.getLs_conten()) {
+                                                        ls_mensis.put(co_conte, "");
+                                                    }
+                                                }
 
                                                 System.out.println(" |-------------------[" + menuItem.getCo_mensis() + "::" + (menuItem.getName()) + "::" + menuItem.getUrl() + "]({" + (renderer ? "VISIBLE" : "OCULTO") + "})");
                                             }
@@ -179,6 +185,11 @@ public class DoLogin {
                                     } else if (menu.getUrl() != null) {
                                         if (getConten(menu.getUrl()) > -1) {
                                             ls_mensis.put(getConten(menu.getUrl()), menu.getUrl());
+                                        }
+                                        if (menu.getLs_conten() != null && !menu.getLs_conten().isEmpty()) {
+                                            for (Integer co_conte : menu.getLs_conten()) {
+                                                ls_mensis.put(co_conte, "");
+                                            }
                                         }
                                     }
                                 }
@@ -248,7 +259,7 @@ public class DoLogin {
         return regsesiniDTO.getDe_mensaj();
     }
 
-    public RegsesiniDTO getRegsesiniDTO(){
-        return  regsesiniDTO;
+    public RegsesiniDTO getRegsesiniDTO() {
+        return regsesiniDTO;
     }
 }

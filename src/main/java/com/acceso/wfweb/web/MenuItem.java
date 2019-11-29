@@ -9,6 +9,7 @@ public class MenuItem implements Serializable {
     String name;
     String url;
     List<MenuItem> sub;
+    List<Integer> ls_conten;
 
     public MenuItem() {
     }
@@ -43,6 +44,14 @@ public class MenuItem implements Serializable {
 
     public void setCo_mensis(int co_mensis) {
         this.co_mensis = co_mensis;
+    }
+
+    public List<Integer> getLs_conten() {
+        return ls_conten;
+    }
+
+    public void setLs_conten(List<Integer> ls_conten) {
+        this.ls_conten = ls_conten;
     }
 
     @Override

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Rómulo Galindo Tanta
  */
-    public class MainFilter implements Filter {
+public class MainFilter implements Filter {
 
     public MainFilter() {
     }
@@ -62,9 +62,13 @@ import javax.servlet.http.HttpServletResponse;
 //            chain.doFilter(req, res);
             //existe osea si se puede loguear
 
-
-            if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
-                System.out.println("validado = ");
+            System.out.println("usuario.getLs_mensis() = " + usuario.getLs_mensis().get(co_conten) + ", vs=" + co_conten);
+            //Poderoso perfil desarrollador
+            if (usuario.getTi_usuari().contentEquals("D")) {
+                System.out.println("Flujo desarrollador");
+                chain.doFilter(req, res);
+            } else if (co_conten == 444 | usuario.getLs_mensis().get(co_conten) != null) {
+                System.out.println("Flujo restringido");
                 chain.doFilter(req, res);
             } else {
                 System.out.println("Error escribir");

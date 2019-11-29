@@ -58,6 +58,7 @@ public class RegsesiniDTO implements Serializable {
 
     String ip_remoto;
     Date fe_updpas;
+    String ti_usuari;
 
     @Transient
     String il_prilog;
@@ -202,6 +203,14 @@ public class RegsesiniDTO implements Serializable {
 
     public void setFe_updpas(Date fe_updpas) {
         this.fe_updpas = fe_updpas;
+    }
+
+    public String getTi_usuari() {
+        return ti_usuari;
+    }
+
+    public void setTi_usuari(String ti_usuari) {
+        this.ti_usuari = ti_usuari;
     }
 
     @Override
