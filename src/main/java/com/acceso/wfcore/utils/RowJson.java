@@ -38,7 +38,7 @@ public class RowJson implements Serializable {
 
     /*SOLO TIPO TABLA(por ahora)*/
     public void cfg(List<CfgJson> cfgobjs) {
-        System.out.println("cfgobjs = " + cfgobjs);
+//        System.out.println("cfgobjs = " + cfgobjs);
         this.cfgobjs = cfgobjs;
     }
 

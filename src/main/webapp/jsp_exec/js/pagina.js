@@ -167,8 +167,14 @@ function pagina_onload(_data) {
             if (TI_PAGINA == PAGE_TYPE_REPORT | TI_PAGINA == PAGE_TYPE_FREEREPORRT) {
                 ///ADDIOTIONAL
                 if (unrealTable != undefined) {
-                    unrealTable.api().clear();
-                    unrealTable.api().destroy();
+                    try {
+                        unrealTable.api().clear();
+                    } catch (e) {
+                    }
+                    try {
+                        unrealTable.api().destroy();
+                    } catch (e) {
+                    }
                     unrealTable = null;
                     console.log('unset co_pagina:::>>' + $('#PAG' + CO_PAGINA));
                     $('#PAG' + CO_PAGINA).removeAttr('style');
