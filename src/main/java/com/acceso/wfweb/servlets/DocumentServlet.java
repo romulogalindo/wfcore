@@ -1013,21 +1013,29 @@ public class DocumentServlet extends HttpServlet {
 
                                 Map<String, String> params = new HashMap<>();
                                 params.put("json", "{\"ext\":\"" + FilenameUtils.getExtension(item.getName()) + "\",\"base\":\"" + new String(Base64.encodeBase64(item.get()), StandardCharsets.US_ASCII) + "\"}");
+                                System.out.println("[DocumentServlet] => " + WFIOAPP.APP.getDataSourceService().getValueOfKey("ENDPOINT_FILESERVER"));
                                 JsonResponse firstResponse = new HttpAPI().POST(WFIOAPP.APP.getDataSourceService().getValueOfKey("ENDPOINT_FILESERVER"),
                                         Util.getDefaultJsonHeader(),
                                         params,
                                         10000);
                                 ArchivDTO arcadj;
 
+//                                System.out.println("[DocumentServlet] firstResponse = " + firstResponse);
+//                                System.out.println("[DocumentServlet] getStatus = " + firstResponse.getStatus());
+//                                System.out.println("[DocumentServlet] getResult = " + firstResponse.getResult());
+//                                System.out.println("[DocumentServlet] getError = " + firstResponse.getError());
+//                                System.out.println("[DocumentServlet] getMessage = " + firstResponse.getMessage());
+//                                System.out.println("[DocumentServlet] EVAL-ERROR = " + firstResponse.getStatus().contentEquals("ERROR"));
+
                                 if (firstResponse.getStatus().contentEquals("ERROR")) {
-                                    //usar metodo tradicional
+                                    //CONTINGENCIA!!!->usar metodo tradicional
+//                                    System.out.println("[DocumentServlet] FLUJO CONTINGENCIA = " + firstResponse.getMessage());
                                     DataAPI dataAPI = new DataAPI();
                                     arcadj = dataAPI.SAVE(item, null, null, null);
 
                                 } else {
                                     //con los datos devuelos
                                     FileServerItemJS fijs = new Gson().fromJson(firstResponse.getResult().toString(), FileServerItemJS.class);
-
                                     DataAPI dataAPI = new DataAPI();
                                     arcadj = dataAPI.SAVE(item, Long.parseLong(fijs.getCo_archiv()), Util.toDate(fijs.getFe_archiv()), item.getName());
 

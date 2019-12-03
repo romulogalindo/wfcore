@@ -30,7 +30,8 @@ public class Util {
 
     private static List<String> exts = Arrays.asList("tar.gz", "tgz", "gz", "zip");
     public static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
-    public static SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+    //    public static SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", Locale.US);//actualizado 20191202
+    public static SimpleDateFormat sdf2 = new SimpleDateFormat("MMM dd, yyyy", new Locale("es", "MX"));
     public static Gson gson_typeA = new Gson();
     public static Gson gson_typeB = new GsonBuilder()
             .registerTypeAdapter(RegJson.class, new RegJsonAdapter())
@@ -223,6 +224,7 @@ public class Util {
         try {
             return sdf2.parse(date);
         } catch (Exception ep) {
+            ep.printStackTrace();
             return null;
         }
     }

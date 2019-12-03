@@ -579,7 +579,7 @@ function loadFormulario64(index, row, aditional, dom2) {
                     var ur_pagreg = reg.link == undefined ? '' : reg.link;
                     var il_axtsea = false;
 
-                    console.log('(' + CO_PAGINA + ')EVALUACION{' + co_regist + '}!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']' + ',[reg.placeholder:' + reg.placeholder + ']');
+                    console.log('(' + CO_PAGINA + ')EVALUACION{' + co_regist + '}!> [de:' + ti_pagreg + '][a:' + reg.type + '][' + (reg.state != undefined) + '][' + (reg.state != undefined && ti_pagreg != reg.state) + '[ur_pagreg:' + ur_pagreg + ']' + ',[reg.placeholder:' + reg.placeholder + '][il_onchag:' + il_onchag + ']');
                     // if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type && reg.type > 0) {
                     if ((reg.type != undefined & reg.type > -1) && ti_pagreg != reg.type) {
                         console.log('(' + CO_PAGINA + ')[' + reg.regist + ']Es un cambio de tipo:[de:' + ti_pagreg + '][a:' + reg.type + ']');
@@ -2617,7 +2617,7 @@ function CFGDATATABLE(cfgopts) {
     // console.log('@@' + document.getElementById('ti_pagina').value);
     // console.log('@@' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style'));
     document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
-    document.getElementById('PAG' + CO_PAGINA).setAttribute('style','');
+    document.getElementById('PAG' + CO_PAGINA).setAttribute('style', '');
     if (document.getElementById('ti_pagina').value != 'Y') {
         document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].style.paddingBottom = '0';
         document.getElementsByClassName('dataTables_scrollHeadInner')[0].getElementsByTagName('TABLE')[0].getElementsByTagName("THEAD")[0].getElementsByTagName("TR")[0].getElementsByTagName("TH")[0].setAttribute('style', 'padding-top: 0px !important; padding-bottom: 0px !important;');
@@ -2802,21 +2802,21 @@ function builderType(type, ti_estreg, co_regist, ur_pagreg, il_onchag, ca_caract
         }
     } else if (type == 6) {
         if (ti_estreg == 'E') {
-            html += "   <span id='" + id + "' name='" + id + "' class='writer " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            html += "   <span id='" + id + "' name='" + id + "' class='writer " + (il_onchag ? "xaction" : "") + " pagreg' ti_pagreg='6' >";
             html += "       <div class='custom-control custom-checkbox'>";
             html += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked/>";
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'L') {
-            html += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            html += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "xaction" : "") + " pagreg' ti_pagreg='6' >";
             html += "       <div class='custom-control custom-checkbox'>";
             html += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
             html += "       </div>";
             html += "   </span>";
         } else if (ti_estreg == 'O') {
-            html += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "dynpag" : "") + " pagreg' ti_pagreg='6' >";
+            html += "   <span id='" + id + "' name='" + id + "' class='reader " + (il_onchag ? "xaction" : "") + " pagreg' ti_pagreg='6' >";
             html += "       <div class='custom-control custom-checkbox'>";
             html += "           <input id='" + id + "D' type='checkbox' class='w3-input " + (il_onchag ? "dynpag" : "") + " custom-control-input' " + (il_onchag ? "onchange='dinpag(this," + co_regist + ")'" : "") + " checked disabled/>";
             html += "           <label class='custom-control-label' for='" + id + "D'></label>";
