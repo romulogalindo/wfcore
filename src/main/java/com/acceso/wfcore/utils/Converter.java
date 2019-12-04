@@ -413,7 +413,7 @@ public class Converter {
             for (CellJson cellJson : styles) {
                 CellReference cr = new CellReference(cellJson.getNo_addres());
                 ColumnConfigJson configJson = cellJson.getColumnConfigJson();
-                System.out.println("configJson.getWidth() = " + configJson.getWidth());
+//                System.out.println("configJson.getWidth() = " + configJson.getWidth());
 //                    if (configJson.getWidth() > -1) {
                 sheet.setColumnWidth(cr.getCol(), configJson.getWidth() * 100);
 //                    }

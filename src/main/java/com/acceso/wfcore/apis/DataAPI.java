@@ -129,7 +129,7 @@ public class DataAPI extends GenericAPI {
             Long midt = Transactional.insert(1, Long.parseLong(getCo_usuari()), sqlQuery);
             valReturn = sql.getResultList();
 
-            Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " T = " + (System.currentTimeMillis() - execution_time) + "ms");
+            Log.info("[U" + getCo_usuari() + "][S" + getId_sesion() + "][F" + getId_frawor() + "][C" + getCo_conten() + "][P" + getCo_pagina() + "][" + getNo_escena() + "] Q = " + sqlQuery + " [T = " + (System.currentTimeMillis() - execution_time) + "ms]");
             transaction.commit();
             session.close();
 
@@ -163,7 +163,7 @@ public class DataAPI extends GenericAPI {
                 jsonResponse.setError(Util.getError(ep));
             }
 
-            Log.error("[@" + conectionName + "] Q = " + sqlQuery + "e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
+            Log.error("[@" + conectionName + "] Q = " + sqlQuery + ",e=" + jsonResponse.getError().getMessage() + ": E1 = " + ep.getMessage() + "");
 
             if (WFIOAPP.APP.THROWS_EXCEPTION) {
                 ep.printStackTrace();
