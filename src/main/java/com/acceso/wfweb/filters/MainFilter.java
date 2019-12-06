@@ -62,7 +62,7 @@ public class MainFilter implements Filter {
 //            chain.doFilter(req, res);
             //existe osea si se puede loguear
 
-            System.out.println("usuario.getLs_mensis() = " + usuario.getLs_mensis().get(co_conten) + ", vs=" + co_conten);
+            System.out.println("[" + usuario.getTi_usuari() + "]usuario.getLs_mensis() = " + usuario.getLs_mensis().get(co_conten) + ", vs=" + co_conten);
             //Poderoso perfil desarrollador
             if (usuario.getTi_usuari().contentEquals("D")) {
                 System.out.println("Flujo desarrollador");

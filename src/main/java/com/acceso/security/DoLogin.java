@@ -209,12 +209,9 @@ public class DoLogin {
         Object obj = root.getSistemas().stream().filter(s -> s.getCo_sistem() == usuario.getCo_sistem()).findAny().orElse(null);
         if (obj != null) {
             obj = ((Sistema) obj).getSubsistemas().stream().filter(s -> s.getCo_subsis() == usuario.getCo_subsis()).findAny().orElse(null);
-//            if (obj != null) {
-//                obj = ((Subsistema) obj).getPaquetes().stream().filter(s -> s.getCo_paquet() == usuario.getCo_paquet()).findAny().orElse(null);
             if (obj != null) {
                 usuario.setMainMenu(((Subsistema) obj).getMmenu());
             }
-//            }
         }
 
         System.out.println("usuario = " + usuario);

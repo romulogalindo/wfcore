@@ -302,8 +302,8 @@ public class Frawor4DAO extends DAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-            ep.printStackTrace();
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + ", E = " + ep.getMessage());
+//            ep.printStackTrace();
         }
 
         return procesoDTO;
@@ -332,8 +332,8 @@ public class Frawor4DAO extends DAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + "E = " + ep.getMessage());
-            ep.printStackTrace();
+            System.out.println("[Frawor4DAO] Q = " + nQuery.getQueryString() + ", E = " + ep.getMessage());
+//            ep.printStackTrace();
         }
 
         return procesoDTO;
