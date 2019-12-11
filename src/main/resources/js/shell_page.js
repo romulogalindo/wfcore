@@ -175,3 +175,16 @@ function to_date(str_date) {
 
     return null;
 }
+
+function build_json(object) {
+    if (object == undefined)
+        return null;
+
+    try {
+        object = decodeURIComponent(object);
+        object = JSON.parse(object);
+        return object;
+    } catch (e) {
+        return null
+    }
+}

@@ -123,8 +123,10 @@ doPropag = function (url, regparams, data, co_button) {
     // net.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     net.onreadystatechange = function () {
         if (net.readyState == 4 && net.status == 200) {
+            console.log('===>' + net.responseText);
 
             var rpta = JSON.parse(net.responseText);
+            console.log('rpta:' + rpta);
             if (rpta.error) {
                 window.parent.showloading(false);
                 window.parent.showMessageModal(rpta.error.message);
@@ -158,9 +160,51 @@ doPropag = function (url, regparams, data, co_button) {
                 }
 
                 for (var z = 0; z < rpta.ls_action.length; z++) {
+                    urlpart = '';
                     var action = rpta.ls_action[z];
                     console.log('ACTION:' + action.no_action);
+                    console.log("ACTIONrpta.params===>" + action.ls_params);
+                    //---------------------------
+                    if (action.ls_params != undefined) {
+                        for (var i = 0; i < action.ls_params.length; i++) {
+                            console.log("[" + action + "]rpta.params[i].no_param=" + action.ls_params[i].no_param);
+                            for (var o = 0; o < regparams.length; o++) {
+                                console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].no_param = " + action.ls_params[i].no_param);
+                                console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].va_param = " + (typeof action.ls_params[i].va_param));
+                                console.log("regparams[o] = " + regparams[o] + " &&&rpta.params[i].va_param = " + ((typeof action.ls_params[i].va_param) == 'object'));
+                                if (regparams[o].indexOf(action.ls_params[i].no_param) > -1) {
+                                    if ((typeof action.ls_params[i].va_param) == 'object') {
+                                        regparams[o] = action.ls_params[i].no_param + "=" + JSON.stringify(action.ls_params[i].va_param);
+                                    } else {
+                                        regparams[o] = action.ls_params[i].no_param + "=" + action.ls_params[i].va_param;
+                                    }
 
+                                }
+                            }
+                        }
+                    }
+                    for (var o = 0; o < regparams.length; o++) {
+                        urlpart += '&' + regparams[o];
+                    }
+
+                    if (action.ls_params != undefined) {
+                        for (var i = 0; i < action.ls_params.length; i++) {
+                            console.log("[" + action + "]rpta.params[i].no_param=" + action.ls_params[i].no_param);
+                            console.log("[" + action + "]rpta.params[i].va_param=" + (typeof action.ls_params[i].va_param));
+                            console.log("[" + action + "]rpta.params[i].va_param=" + ((typeof action.ls_params[i].va_param) == 'object'));
+                            if (urlpart.indexOf(action.ls_params[i].no_param) == -1) {
+                                if ((typeof action.ls_params[i].va_param) == 'object') {
+                                    console.log('hereUEL>..' + JSON.stringify(action.ls_params[i].va_param));
+                                    urlpart += "&" + action.ls_params[i].no_param + "=" + JSON.stringify(action.ls_params[i].va_param);
+                                } else {
+                                    urlpart += "&" + action.ls_params[i].no_param + "=" + action.ls_params[i].va_param;
+                                }
+
+                            }
+                        }
+                    }
+                    console.log('ACTION:' + urlpart);
+                    ///----------------------------
                     if (action.no_action == 'REDIRECT') {
                         //verificar co_condes
                         if (rpta.co_condes != undefined) {
@@ -173,9 +217,15 @@ doPropag = function (url, regparams, data, co_button) {
                         // window.parent.page_to_master(regparams);
                         window.parent.page_to_master(action.ls_params, action.ls_pagina);
                     } else if (action.no_action == 'REFRESH') {
-                        if (rpta.ls_params != undefined) {
-                            for (var i = 0; i < rpta.ls_params.length; i++) {
-                                doPutParamForce('/salamander?id_frawor=' + ID_FRAWOR + '&co_conten=' + CO_CONTEN + '&no_conpar=' + rpta.ls_params[i].no_param + '&va_conpar=' + encodeURIComponent(rpta.ls_params[i].va_param));
+                        // if (rpta.ls_params != undefined) {
+                        if (action.ls_params != undefined) {
+                            // for (var i = 0; i < rpta.ls_params.length; i++) {
+                            for (var i = 0; i < action.ls_params.length; i++) {
+                                if ((typeof action.ls_params[i].va_param) == 'object') {
+                                    doPutParamForce('/salamander?id_frawor=' + ID_FRAWOR + '&co_conten=' + CO_CONTEN + '&no_conpar=' + action.ls_params[i].no_param + '&va_conpar=' + encodeURIComponent(JSON.stringify(action.ls_params[i].va_param)));
+                                }else{
+                                    doPutParamForce('/salamander?id_frawor=' + ID_FRAWOR + '&co_conten=' + CO_CONTEN + '&no_conpar=' + action.ls_params[i].no_param + '&va_conpar=' + encodeURIComponent(action.ls_params[i].va_param));
+                                }
                             }
                         }
 

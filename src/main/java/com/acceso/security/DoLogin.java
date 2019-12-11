@@ -8,12 +8,16 @@ import com.acceso.wfcore.kernel.WFIOAPP;
 import com.acceso.wfcore.utils.Security;
 import com.acceso.wfcore.utils.Util;
 import com.acceso.wfcore.utils.Values;
+import com.acceso.wfweb.units.Perfil;
 import com.acceso.wfweb.units.Usuario;
 import com.acceso.wfweb.units.UsuarioLDAP;
 import com.acceso.wfweb.utils.RequestManager;
 import com.acceso.wfweb.web.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.SerializationUtils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -99,13 +103,18 @@ public class DoLogin {
         usuario.setIl_schema(true);
         usuario.setFe_updpas(regsesiniDTO.getFe_updpas());
 
+        Type listType = new TypeToken<ArrayList<Perfil>>() {
+        }.getType();
+        List<Perfil> perfiles = new Gson().fromJson(regsesiniDTO.getJs_perfil(), listType);
+        usuario.setPerfil(perfiles  );
+
         SecurityDAO securityDAO = new SecurityDAO();
         permisbloDTO = securityDAO.getListBloq((int) regsesiniDTO.getCo_usuari());
         securityDAO.close();
 
-        SecurityDAO securityfDAO = new SecurityDAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
-        securityfDAO.regsesinif(regsesiniDTO.getId_sesion(), regsesiniDTO.getCo_usuari(), regsesiniDTO.getIp_remoto());
-        securityfDAO.close();
+//        SecurityDAO securityfDAO = new SecurityDAO(WFIOAPP.APP.dataSourceService.getManager("wfacr").getNativeSession());
+//        securityfDAO.regsesinif(regsesiniDTO.getId_sesion(), regsesiniDTO.getCo_usuari(), regsesiniDTO.getIp_remoto());
+//        securityfDAO.close();
 
         //elementos que han sido capados por la capa de securidad ->>> desde la cache
         Root root = SerializationUtils.clone((Root) WFIOAPP.APP.getCacheService().getZeroDawnCache().getSpace(Values.CACHE_MAIN_MENUTREE).get("ROOT_TREE"));

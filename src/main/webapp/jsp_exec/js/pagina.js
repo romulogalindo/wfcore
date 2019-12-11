@@ -21,6 +21,7 @@ const DATA_STATUS_ERROR = 'ERROR';
 const PAGE_TYPE_FORM = 'F';
 const PAGE_TYPE_REPORT = 'R';
 const PAGE_TYPE_CHART = 'C';
+const PAGE_TYPE_VIEWER = 'V';
 const PAGE_TYPE_MAPS = 'G';
 const PAGE_TYPE_TABS = 'B';
 const PAGE_TYPE_FREEFORM = 'X';
@@ -263,6 +264,17 @@ function pagina_onload(_data) {
                 GDATAX[GDATAX.length] = MDATA;
             }
             GDATA = GDATAX;
+
+            /*BEFORE VIEW*/
+            eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
+            //devuevo actualizar el height;
+            size_of_pagina();
+
+            window.parent.iframe2('PAG' + CO_PAGINA, height_table);
+        } else if (TI_PAGINA == PAGE_TYPE_VIEWER) {
+            console.log("la data es:"+_data.result.url);
+            $('#viewer').attr('src',_data.result.url);
+            $('#viewer').css('height',_data.result.height);
 
             /*BEFORE VIEW*/
             eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');

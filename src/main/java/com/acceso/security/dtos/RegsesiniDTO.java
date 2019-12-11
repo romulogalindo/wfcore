@@ -59,6 +59,7 @@ public class RegsesiniDTO implements Serializable {
     String ip_remoto;
     Date fe_updpas;
     String ti_usuari;
+    String js_perfil;
 
     @Transient
     String il_prilog;
@@ -211,6 +212,14 @@ public class RegsesiniDTO implements Serializable {
 
     public void setTi_usuari(String ti_usuari) {
         this.ti_usuari = ti_usuari;
+    }
+
+    public String getJs_perfil() {
+        return js_perfil;
+    }
+
+    public void setJs_perfil(String js_perfil) {
+        this.js_perfil = js_perfil;
     }
 
     @Override

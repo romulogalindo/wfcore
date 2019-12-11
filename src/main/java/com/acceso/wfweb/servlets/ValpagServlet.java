@@ -13,6 +13,7 @@ import com.acceso.wfweb.web.Root;
 import com.acceso.wfweb.web.Sistema;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -77,6 +78,17 @@ public class ValpagServlet extends HttpServlet {
                 String id_frawor = request.getParameter("id_frawor");
                 String no_conpar = request.getParameter("no_conpar");
                 String va_conpar = request.getParameter("va_conpar");
+                System.out.println("va_conpar = " + va_conpar);
+
+                try {
+                    if (va_conpar.contains("{") | va_conpar.contains("[")) {
+                        va_conpar = URLEncoder.encode(va_conpar, "UTF-8");
+                    }
+//                        String encodeURL = URLEncoder.encode(va_conpar, "UTF-8");
+                    System.out.println("va_conpar = " + va_conpar);
+                } catch (Exception ep) {
+                    ep.printStackTrace();
+                }
 
                 ((Contenedor) ((HttpServletRequest) asyncCtx.getRequest()).getSession().getAttribute("CNT" + co_conten + ":" + id_frawor)).put_conpar(no_conpar, va_conpar);
 

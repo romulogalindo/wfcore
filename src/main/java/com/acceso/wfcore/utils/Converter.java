@@ -254,6 +254,7 @@ public class Converter {
             System.out.println("Crendo XLS JSON!");
             List<CellJson> regions = new ArrayList<>();
             List<CellJson> styles = new ArrayList<>();
+            Map<String, CellStyle> mstyles = new HashMap<>();
             List<CellJson> widths = new ArrayList<>();
             com.acceso.wfcore.utils.ValpagJson valpagJson = (com.acceso.wfcore.utils.ValpagJson) data;
             for (RowJson rowJson : valpagJson.getRows()) {
@@ -310,106 +311,120 @@ public class Converter {
             for (CellJson cellJson : styles) {
                 CellReference cr = new CellReference(cellJson.getNo_addres());
                 ColumnConfigJson configJson = cellJson.getColumnConfigJson();
-                Font customFont = workbook.createFont();
-                CellStyle customStyle = workbook.createCellStyle();
-                if (configJson.getAlign() != null) {
-                    switch (configJson.getAlign()) {
-                        case "CENTER": {
-                            customStyle.setAlignment(HorizontalAlignment.CENTER);
-                            break;
-                        }
-                        case "LEFT": {
-                            customStyle.setAlignment(HorizontalAlignment.LEFT);
-                            break;
-                        }
-                        case "RIGHT": {
-                            customStyle.setAlignment(HorizontalAlignment.RIGHT);
-                            break;
-                        }
-                        case "JUSTIFY": {
-                            customStyle.setAlignment(HorizontalAlignment.JUSTIFY);
-                            break;
-                        }
-                    }
-                }
+                CellStyle customStyle = mstyles.get(configJson.getUXCode());
 
-                if (configJson.getValign() != null) {
-                    switch (configJson.getValign()) {
-                        case "CENTER": {
-                            customStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-                            break;
-                        }
-                        case "TOP": {
-                            customStyle.setVerticalAlignment(VerticalAlignment.TOP);
-                            break;
-                        }
-                        case "BOTTOM": {
-                            customStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
-                            break;
+                if (customStyle == null) {
+                    Font customFont = workbook.createFont();
+                    customStyle = workbook.createCellStyle();
+                    System.out.println("(*)customStyle = " + customStyle);
+                    if (configJson.getAlign() != null) {
+                        switch (configJson.getAlign()) {
+                            case "CENTER": {
+                                customStyle.setAlignment(HorizontalAlignment.CENTER);
+                                break;
+                            }
+                            case "LEFT": {
+                                customStyle.setAlignment(HorizontalAlignment.LEFT);
+                                break;
+                            }
+                            case "RIGHT": {
+                                customStyle.setAlignment(HorizontalAlignment.RIGHT);
+                                break;
+                            }
+                            case "JUSTIFY": {
+                                customStyle.setAlignment(HorizontalAlignment.JUSTIFY);
+                                break;
+                            }
                         }
                     }
+
+                    if (configJson.getValign() != null) {
+                        switch (configJson.getValign()) {
+                            case "CENTER": {
+                                customStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+                                break;
+                            }
+                            case "TOP": {
+                                customStyle.setVerticalAlignment(VerticalAlignment.TOP);
+                                break;
+                            }
+                            case "BOTTOM": {
+                                customStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (configJson.getColor() != null) {
+                        customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
+                        customFont.setColor(Util.getColor(configJson.getColor()));
+                    }
+
+                    if (configJson.getBgcolor() != null) {
+                        customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
+                    }
+
+                    if (configJson.isVwrap()) {
+                        customStyle.setWrapText(true);
+                    }
+
+                    if (configJson.getBorderTop() != null) {
+                        customStyle = getBorderStyle(customStyle, configJson.getBorderTop());
+                    }
+                    if (configJson.getBorderRight() != null) {
+                        customStyle = getBorderStyle(customStyle, configJson.getBorderRight());
+                    }
+                    if (configJson.getBorderBottom() != null) {
+                        customStyle = getBorderStyle(customStyle, configJson.getBorderBottom());
+                    }
+                    if (configJson.getBorderLeft() != null) {
+                        customStyle = getBorderStyle(customStyle, configJson.getBorderLeft());
+                    }
+
+                    if (configJson.isBold()) {
+                        customFont.setBold(true);
+                    }
+
+                    if (configJson.isItalic()) {
+                        customFont.setItalic(true);
+                    }
+
+                    if (configJson.isUnderline()) {
+                        customFont.setUnderline(HSSFFont.U_SINGLE);
+                    }
+
+                    if (configJson.isUnderline()) {
+                        customFont.setUnderline(HSSFFont.U_SINGLE);
+                    }
+
+                    if (configJson.getSize() != null) {
+                        customFont.setFontHeightInPoints(configJson.getSize().shortValue());
+                    }
+
+                    if (configJson.getFont() != null) {
+                        customFont.setFontName(configJson.getFont());
+                    }
+
+                    customStyle.setFont(customFont);
+                    mstyles.put(configJson.getUXCode(), customStyle);
                 }
 
-                if (configJson.getColor() != null) {
-                    customStyle.setFillForegroundColor(Util.getColor(configJson.getColor()));
-                    customFont.setColor(Util.getColor(configJson.getColor()));
+//                System.out.println("cr.getRow() = " + cr.getRow() + ", cr.getCol() = " + cr.getCol());
+//                System.out.println("sheet.getRow(cr.getRow()) = " + sheet.getRow(cr.getRow()));
+//                System.out.println("sheet.getRow(cr.getRow()).getCell(cr.getCol()) = " + sheet.getRow(cr.getRow()).getCell(cr.getCol()));
+                try {
+                    sheet.getRow(cr.getRow()).getCell(cr.getCol()).setCellStyle(customStyle);
+                } catch (Exception ep) {
+                    System.out.print("[E:" + ep.getMessage() + "]");
+//                    ep.printStackTrace();
                 }
-
-                if (configJson.getBgcolor() != null) {
-                    customStyle.setFillBackgroundColor(Util.getColor(configJson.getBgcolor()));
-                }
-
-                if (configJson.isVwrap()) {
-                    customStyle.setWrapText(true);
-                }
-
-                if (configJson.getBorderTop() != null) {
-                    customStyle = getBorderStyle(customStyle, configJson.getBorderTop());
-                }
-                if (configJson.getBorderRight() != null) {
-                    customStyle = getBorderStyle(customStyle, configJson.getBorderRight());
-                }
-                if (configJson.getBorderBottom() != null) {
-                    customStyle = getBorderStyle(customStyle, configJson.getBorderBottom());
-                }
-                if (configJson.getBorderLeft() != null) {
-                    customStyle = getBorderStyle(customStyle, configJson.getBorderLeft());
-                }
-
-                if (configJson.isBold()) {
-                    customFont.setBold(true);
-                }
-
-                if (configJson.isItalic()) {
-                    customFont.setItalic(true);
-                }
-
-                if (configJson.isUnderline()) {
-                    customFont.setUnderline(HSSFFont.U_SINGLE);
-                }
-
-                if (configJson.isUnderline()) {
-                    customFont.setUnderline(HSSFFont.U_SINGLE);
-                }
-
-                if (configJson.getSize() != null) {
-                    customFont.setFontHeightInPoints(configJson.getSize().shortValue());
-                }
-
-                if (configJson.getFont() != null) {
-                    customFont.setFontName(configJson.getFont());
-                }
-
-                customStyle.setFont(customFont);
-
-                sheet.getRow(cr.getRow()).getCell(cr.getCol()).setCellStyle(customStyle);
-
 
                 if (configJson.getWidth() > -1) {
                     widths.add(cellJson);
 
                 }
             }
+
             for (CellJson cellJson : styles) {
                 CellReference cr = new CellReference(cellJson.getNo_addres());
                 ColumnConfigJson configJson = cellJson.getColumnConfigJson();

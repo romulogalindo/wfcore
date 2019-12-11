@@ -38,6 +38,7 @@ public class Usuario implements Serializable {
     String no_temdef;
     Date fe_updpas;
     String sesion_tomcat_id;
+    Object perfil;
 
     Map<Integer, Object> ls_mensis;
 
@@ -236,6 +237,14 @@ public class Usuario implements Serializable {
 
     public void setTi_usuari(String ti_usuari) {
         this.ti_usuari = ti_usuari;
+    }
+
+    public Object getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Object perfil) {
+        this.perfil = perfil;
     }
 
     @Override

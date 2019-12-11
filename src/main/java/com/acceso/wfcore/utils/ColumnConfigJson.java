@@ -1,5 +1,9 @@
 package com.acceso.wfcore.utils;
 
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+
 public class ColumnConfigJson {
 
     int index;
@@ -175,6 +179,144 @@ public class ColumnConfigJson {
 
     public void setValign(String valign) {
         this.valign = valign;
+    }
+
+    public String getUXCode() {
+        String UXCode = "";
+        //----------------------------------------
+
+        //ALINEAMIENTO
+        if (getAlign() != null) {
+            switch (getAlign()) {
+                case "CENTER": {
+                    UXCode = UXCode + HorizontalAlignment.CENTER;
+                    break;
+                }
+                case "LEFT": {
+                    UXCode = UXCode + HorizontalAlignment.LEFT;
+                    break;
+                }
+                case "RIGHT": {
+                    UXCode = UXCode + HorizontalAlignment.RIGHT;
+                    break;
+                }
+                case "JUSTIFY": {
+                    UXCode = UXCode + HorizontalAlignment.JUSTIFY;
+                    break;
+                }
+            }
+        } else {
+            UXCode = UXCode + HorizontalAlignment.LEFT;
+        }
+
+        //ALINEAMIENTO VERTICAL
+        if (getValign() != null) {
+            switch (getValign()) {
+                case "CENTER": {
+                    UXCode = UXCode + "_" + VerticalAlignment.CENTER;
+                    break;
+                }
+                case "TOP": {
+                    UXCode = UXCode + "_" + VerticalAlignment.TOP;
+                    break;
+                }
+                case "BOTTOM": {
+                    UXCode = UXCode + "_" + VerticalAlignment.BOTTOM;
+                    break;
+                }
+            }
+        } else {
+            UXCode = UXCode + "_" + VerticalAlignment.CENTER;
+        }
+
+        //COLOR DE TEXTO
+        if (getColor() != null) {
+            UXCode = UXCode + "_" + Util.getColor(getColor());
+//            customStyle.setFillForegroundColor(Util.getColor(getColor()));
+//            customFont.setColor(Util.getColor(configJson.getColor()));
+        } else {
+            UXCode = UXCode + "_1";
+        }
+
+        //COLOR DE FONTDO
+        if (getBgcolor() != null) {
+            UXCode = UXCode + "_" + Util.getColor(getColor());
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //WRAP
+        if (isVwrap()) {
+            UXCode = UXCode + "_1";
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //BORDE TOP
+        if (getBorderTop() != null) {
+            UXCode = UXCode + "_" + getBorderTop();
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //BORDE DERECHO
+        if (getBorderRight() != null) {
+            UXCode = UXCode + "_" + getBorderRight();
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //BORDE INFERIOR
+        if (getBorderBottom() != null) {
+            UXCode = UXCode + "_" + getBorderBottom();
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //BORDE IZQUIRDO
+        if (getBorderLeft() != null) {
+            UXCode = UXCode + "_" + getBorderLeft();
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+
+        //NEGRITA
+        if (isBold()) {
+            UXCode = UXCode + "_1";
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //ITAQLICA
+        if (isItalic()) {
+            UXCode = UXCode + "_1";
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //SUBRAYADO
+        if (isUnderline()) {
+            UXCode = UXCode + "_" + HSSFFont.U_SINGLE;
+        } else {
+            UXCode = UXCode + "_0";
+        }
+
+        //TAMANO DE LETRA
+        if (getSize() != null) {
+            UXCode = UXCode + "_" + getSize().shortValue();
+        } else {
+            UXCode = UXCode + "_10";
+        }
+
+        //font name
+        if (getFont() != null) {
+            UXCode = UXCode + "_" + getFont();
+        } else {
+            UXCode = UXCode + "_EMPTY";
+        }
+
+        return UXCode;
     }
 
     @Override

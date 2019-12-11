@@ -126,6 +126,10 @@ public class ApplicationManager {
                     contenedor.addPagina(new PaginaChart(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
                     break;
                 }
+                case "V": {
+                    contenedor.addPagina(new PaginaView(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
+                    break;
+                }
                 case "B": {
                     contenedor.addPagina(new PaginaTab(paginaDTO.getCo_pagina(), paginaDTO.getNo_pagtit(), paginaDTO.getTi_pagina(), paginaDTO.getNu_rowspa(), paginaDTO.getNu_colspa(), paginaDTO.getOr_numrow(), paginaDTO.getOr_numcol(), paginaDTO.getCo_contab(), ultraFilas));
                     break;

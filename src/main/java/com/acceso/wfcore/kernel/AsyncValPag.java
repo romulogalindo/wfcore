@@ -76,6 +76,7 @@ public class AsyncValPag extends AsyncProcessor {
             ValpagJson valpagJson = null;
             Object valpagx = null;
             if (type == 1) {
+                System.out.println("[*]ls_conpar = " + ls_conpar);
                 valpagx = script.doValpag64(id_frawor, co_conten, co_pagina, ls_conpar, usuario.getId_sesion(), usuario, 1);
                 jsonResponse.setResult(valpagx);
                 jsonResponse.setFnpost(script.dopvpj("GET_DO_POST_LOAD_DATA"));
