@@ -182,7 +182,7 @@
             </td>
         </tr>
         <tr>
-            <td style="height: 50%; vertical-align: top;text-align: center;font-size: 1.2em;font-weight: bold;">
+            <td id="loader_text" style="height: 50%; vertical-align: top;text-align: center;font-size: 1.2em;font-weight: bold;">
                 Cargando página...
             </td>
         </tr>

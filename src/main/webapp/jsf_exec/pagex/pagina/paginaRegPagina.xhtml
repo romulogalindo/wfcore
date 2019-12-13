@@ -16,7 +16,7 @@
                 height: 560px;
             }
 
-            #form\:tb\:valpagjs, #form\:tb\:propagjs, #form\:tb\:compagjs {
+            #form\:tb\:valpagjs, #form\:tb\:propagjs, #form\:tb\:dinpagjs {
                 padding: 0px;
             }
 
@@ -663,6 +663,7 @@
                                                indentUnit="4"
                                                widgetVar="cadeJS"
                                                completeMethod="#{paginaBean.complete}"
+                                               oncomplete=""
                                                extraKeys="{ 'Ctrl-Space': function(cm) { PF('cadeJS').complete(); }, 'Ctrl-S': function(cm) { $(PF('btn_dyna_sabe').jqId).click() } ,'Ctrl-Shift-S':function(cm) { $(PF('btn_dyna_sabe').jqId).click() }}"
                                 />
                             </p:outputPanel>
@@ -670,7 +671,7 @@
 
                         <p:tab id="propagjs" title="Script de Proceso">
                             <p:outputPanel style="text-align: left;padding: 0px;height: 100%;">
-                                <pe:codeMirror id="cadeJS2" mode="javascript" theme="material" label="valpag.js"
+                                <pe:codeMirror id="cadeJS2" mode="javascript" theme="material" label="propag.js"
                                                value="#{paginaBean.pagina.js_propag}"
                                                lineNumbers="true"
                                                lineWrapping="true"

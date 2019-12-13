@@ -149,107 +149,21 @@ function doformulariosubmit(keyEvent) {
 
 var chace_pagina_formulario_Base = undefined;
 
+function wait(ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while (end < start + ms) {
+        end = new Date().getTime();
+    }
+}
+
 function pagina_onload(_data) {
     if (!CALLED) {
         CALLED = true;
     }
 
     if (_data.status == DATA_STATUS_OK) {
-        if (_data.result != undefined && _data.result.rows != undefined && _data.result.rows.length > 0) {
-            //prueba especial de carga?!
-            HTML_PAGINA.removeAttribute('style');
-            var rows = _data.result.rows;
-            var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
-            var tbody64;
-
-
-            const ID_PAGINA = 'PAG' + CO_PAGINA;
-            console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
-            if (TI_PAGINA == PAGE_TYPE_REPORT | TI_PAGINA == PAGE_TYPE_FREEREPORRT) {
-                ///ADDIOTIONAL
-                if (unrealTable != undefined) {
-                    try {
-                        unrealTable.api().clear();
-                    } catch (e) {
-                    }
-                    try {
-                        unrealTable.api().destroy();
-                    } catch (e) {
-                    }
-                    unrealTable = null;
-                    console.log('unset co_pagina:::>>' + $('#PAG' + CO_PAGINA));
-                    $('#PAG' + CO_PAGINA).removeAttr('style');
-                    document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
-                    console.log('unset co_pagina:::>>' + $('#PAG' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style')));
-                } /*else {
-                    unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
-                }*/
-
-                tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
-                tbody64.innerHTML = '';
-                itr = itr.replace('<tr>', '').replace('</tr>', '');
-            } else if (TI_PAGINA == PAGE_TYPE_FORM) {
-                chace_pagina_formulario_Base = chace_pagina_formulario_Base == undefined ? document.getElementById("row1").innerHTML : chace_pagina_formulario_Base;
-                dom2 = chace_pagina_formulario_Base;
-                // var allbodies = document.getElementById(ID_PAGINA);
-                // console.log('PAG(allbodies):' + allbodies);
-                var allbodies = document.getElementById(ID_PAGINA).getElementsByTagName('TBODY');
-                // console.log('allbodies.length:' + allbodies.length);
-
-                if (allbodies.length > 1) {
-                    // console.log('allbodies.length: se eliminaran los bodies');
-                    for (var i = allbodies.length; i > 0; i--) {
-                        // console.log('allbodies.length: se valuara::' + allbodies[i - 1].id + ', ----->' + (allbodies[i - 1].id != 'row1'));
-                        if (allbodies[i - 1].id != 'row1') {
-                            try {
-                                document.getElementById(ID_PAGINA).removeChild(allbodies[i - 1]);
-                            } catch (e) {
-
-                            }
-
-                            // console.log('elemento eliminado');
-                        }
-                    }
-                }
-            }
-
-            for (var i = 0; i < rows.length; i++) {
-                if (TI_PAGINA == PAGE_TYPE_FORM) {
-                    // loadFormulario64((i + 1), rows[i], _data.aditional, dom2);
-                    loadFormulario64((i + 1), rows[i], rows[i].cfgobjs, dom2);
-                } else if (TI_PAGINA == PAGE_TYPE_TABS) {
-                    loadTabber64((i + 1), rows[i]);
-                } else {
-                    loadReporte64((i + 1), tbody64, rows[i], rows[i].cfgobjs);
-                }
-
-            }
-
-            /*ON END LOAD*/
-            /*SELECT*/
-            var all_selects = document.getElementsByClassName('mdb-select');
-//    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
-//    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
-            for (var i = 0; i < all_selects.length; i++) {
-                var me_select = all_selects[i];
-                if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
-                    $(me_select).materialSelect();
-                } else if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('mdb-select md-formx initialized') > -1) {
-                    $(me_select).materialSelect();
-                }
-
-            }
-
-            /*BEFORE VIEW*/
-//            alert('antes de view!');
-            eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
-
-            /*UPDATE HEIGHT*/
-            size_of_pagina();
-            if (CALLED) {
-                window.parent.iframe2('PAG' + CO_PAGINA, height_table);
-            }
-        } else if (TI_PAGINA == PAGE_TYPE_CHART) {
+        if (TI_PAGINA == PAGE_TYPE_CHART) {
             //validar el objeto de retorno llamado gdata
             //poner esto en el objeto gdata
             var GDATAX = [];
@@ -271,10 +185,13 @@ function pagina_onload(_data) {
             size_of_pagina();
 
             window.parent.iframe2('PAG' + CO_PAGINA, height_table);
+
+            document.getElementById('loader').style.display = 'none';
+            do_post_afk();
         } else if (TI_PAGINA == PAGE_TYPE_VIEWER) {
-            console.log("la data es:"+_data.result.url);
-            $('#viewer').attr('src',_data.result.url);
-            $('#viewer').css('height',_data.result.height);
+            console.log("la data es:" + _data.result.url);
+            $('#viewer').attr('src', _data.result.url);
+            $('#viewer').css('height', _data.result.height);
 
             /*BEFORE VIEW*/
             eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
@@ -282,13 +199,108 @@ function pagina_onload(_data) {
             size_of_pagina();
 
             window.parent.iframe2('PAG' + CO_PAGINA, height_table);
-        } else {
-            document.getElementById('PAG' + CO_PAGINA).style.display = 'none';
-            window.parent.iframe2('PAG' + CO_PAGINA, -1);
-//            console.log('[pagina@\' + CO_PAGINA + \']rows unde fined!!= ' + _data.result);
-        }
 
-        document.getElementById('loader').style.display = 'none';
+            document.getElementById('loader').style.display = 'none';
+            do_post_afk();
+        } else {
+            if (_data.result != undefined && _data.result.rows != undefined && _data.result.rows.length > 0) {
+                //prueba especial de carga?!
+                HTML_PAGINA.removeAttribute('style');
+                var rows = _data.result.rows;
+                var dom2 = document.getElementById("row1") != undefined ? document.getElementById("row1").innerHTML : '';
+                var tbody64;
+
+
+                const ID_PAGINA = 'PAG' + CO_PAGINA;
+                console.log('CANT ROWS:' + rows.length);
+                console.log('TI_PAGINA:' + TI_PAGINA + ', PAGE_TYPE_REPORT:' + PAGE_TYPE_REPORT + ", ===>" + (TI_PAGINA == PAGE_TYPE_REPORT));
+                if (TI_PAGINA == PAGE_TYPE_REPORT | TI_PAGINA == PAGE_TYPE_FREEREPORRT) {
+                    ///ADDIOTIONAL
+                    if (unrealTable != undefined) {
+                        try {
+                            unrealTable.api().clear();
+                        } catch (e) {
+                        }
+                        try {
+                            unrealTable.api().destroy();
+                        } catch (e) {
+                        }
+                        unrealTable = null;
+                        console.log('unset co_pagina:::>>' + $('#PAG' + CO_PAGINA));
+                        $('#PAG' + CO_PAGINA).removeAttr('style');
+                        document.getElementById('PAG' + CO_PAGINA).removeAttribute('style');
+                        console.log('unset co_pagina:::>>' + $('#PAG' + document.getElementById('PAG' + CO_PAGINA).getAttribute('style')));
+                    } /*else {
+                    unrealTable = $('#PAG' + CO_PAGINA).dataTable(cfgopts);
+                }*/
+
+                    tbody64 = HTML_PAGINA.getElementsByTagName('TBODY')[0];
+                    tbody64.innerHTML = '';
+                    itr = itr.replace('<tr>', '').replace('</tr>', '');
+                } else if (TI_PAGINA == PAGE_TYPE_FORM) {
+                    chace_pagina_formulario_Base = chace_pagina_formulario_Base == undefined ? document.getElementById("row1").innerHTML : chace_pagina_formulario_Base;
+                    dom2 = chace_pagina_formulario_Base;
+                    // var allbodies = document.getElementById(ID_PAGINA);
+                    // console.log('PAG(allbodies):' + allbodies);
+                    var allbodies = document.getElementById(ID_PAGINA).getElementsByTagName('TBODY');
+                    // console.log('allbodies.length:' + allbodies.length);
+
+                    if (allbodies.length > 1) {
+                        // console.log('allbodies.length: se eliminaran los bodies');
+                        for (var i = allbodies.length; i > 0; i--) {
+                            // console.log('allbodies.length: se valuara::' + allbodies[i - 1].id + ', ----->' + (allbodies[i - 1].id != 'row1'));
+                            if (allbodies[i - 1].id != 'row1') {
+                                try {
+                                    document.getElementById(ID_PAGINA).removeChild(allbodies[i - 1]);
+                                } catch (e) {
+
+                                }
+
+                                // console.log('elemento eliminado');
+                            }
+                        }
+                    }
+                }
+
+                var rowIndex = 0;
+                // var rowMax = Math.floor(rows.length / 1000);
+                var rowMax = Math.floor(rows.length / 100);
+                rowMax = rowMax + (rowMax % 100 > 0 ? 1 : 0);
+                setTimeout(function () {
+                    procesa(rows, rowIndex, tbody64, _data.fnpost, rowMax, dom2);
+                }, 1);
+                // for (var i = 0; i < rows.length; i++) {
+                //     if (TI_PAGINA == PAGE_TYPE_FORM) {
+                //         loadFormulario64((i + 1), rows[i], rows[i].cfgobjs, dom2);
+                //     } else if (TI_PAGINA == PAGE_TYPE_TABS) {
+                //         loadTabber64((i + 1), rows[i]);
+                //     } else {
+                //         loadReporte64((i + 1), tbody64, rows[i], rows[i].cfgobjs);
+                //     }
+                //
+                //     if (rowIndex == 1000) {
+                //         console.log('VAMOS A ESPERAR!!!!!!!-------------------->>>>>>>>>>>>' + new Date())
+                //         wait(1000);
+                //         rowIndex = 0;
+                //     }
+                //
+                //     rowIndex++;
+                // }
+
+                // do_post_af();
+
+
+            } else {
+                document.getElementById('PAG' + CO_PAGINA).style.display = 'none';
+                window.parent.iframe2('PAG' + CO_PAGINA, -1);
+//            console.log('[pagina@\' + CO_PAGINA + \']rows unde fined!!= ' + _data.result);
+
+                document.getElementById('loader').style.display = 'none';
+                do_post_afk();
+            }
+
+
+        }
     } else {
         document.getElementById('content_table_loader').style.display = 'none';
         //seteo de valores
@@ -296,9 +308,96 @@ function pagina_onload(_data) {
         document.getElementById('detail_error').innerHTML = _data.error.message;
 
         document.getElementById('card_error').style.display = 'block';
+        do_post_afk();
+    }
+}
+
+function procesa(rows, rowIndex, tbody64, fnpost, rowMax, dom2) {
+    // if (rows.length > 1000) {
+    if (rows.length > 100) {
+        var ini = rowIndex > 0 ? (rowIndex * 100) : 0;
+        var fin = ((rowIndex + 1) * 100) - 1;
+        if (rowMax == (rowIndex + 1)) {
+            fin = rows.length;
+        }
+        console.log('[procesa*][' + rowIndex + '.to./' + rowMax + ']DE[' + ini + '] a[' + fin + ']');
+        for (var i = ini; i < fin; i++) {
+            if (TI_PAGINA == PAGE_TYPE_FORM) {
+                loadFormulario64((i + 1), rows[i], rows[i].cfgobjs, dom2);
+            } else if (TI_PAGINA == PAGE_TYPE_TABS) {
+                loadTabber64((i + 1), rows[i]);
+            } else {
+                console.log('>>>>>>>>' + $('#loader_text'));
+                $('#loader_text').html('Procesando ' + (i + 1) + ' de ' + rows.length + ' registros.');
+                loadReporte64((i + 1), tbody64, rows[i], rows[i].cfgobjs);
+
+            }
+        }
+        rowIndex++;
+        if (rowMax > rowIndex) {
+            console.log('[procesa*]rowIndex[' + rowIndex + ']');
+            setTimeout(function () {
+                procesa(rows, rowIndex, tbody64, fnpost, rowMax, dom2)
+            }, 1500);
+        } else {
+            rows = null;
+            do_post_af(fnpost);
+        }
+
+    } else {
+        for (var i = 0; i < rows.length; i++) {
+            if (TI_PAGINA == PAGE_TYPE_FORM) {
+                loadFormulario64((i + 1), rows[i], rows[i].cfgobjs, dom2);
+            } else if (TI_PAGINA == PAGE_TYPE_TABS) {
+                loadTabber64((i + 1), rows[i]);
+            } else {
+                loadReporte64((i + 1), tbody64, rows[i], rows[i].cfgobjs);
+            }
+
+            // if (rowIndex == 1000) {
+            //     console.log('VAMOS A ESPERAR!!!!!!!-------------------->>>>>>>>>>>>' + new Date())
+            //     wait(1000);
+            //     rowIndex = 0;
+            // }
+
+            rowIndex++;
+        }
+        do_post_af(fnpost);
     }
 
+}
 
+function do_post_af(data) {
+    /*ON END LOAD*/
+    /*SELECT*/
+    var all_selects = document.getElementsByClassName('mdb-select');
+    //    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects);
+    //    console.log('ALL>SELECT>[' + CO_PAGINA + ']-*>>' + all_selects.length);
+    for (var i = 0; i < all_selects.length; i++) {
+        var me_select = all_selects[i];
+        if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('initialized') == -1) {
+            $(me_select).materialSelect();
+        } else if (me_select.tagName == 'SELECT' & me_select.getAttribute('class').indexOf('mdb-select md-formx initialized') > -1) {
+            $(me_select).materialSelect();
+        }
+
+    }
+
+    /*BEFORE VIEW*/
+    // eval('try{function xc() {this.newjspex = ' + _data.fnpost + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
+    eval('try{function xc() {this.newjspex = ' + data + ';} new xc().newjspex();}catch(e){console.log(\'WFAIO:\'+e)}');
+
+    /*UPDATE HEIGHT*/
+    size_of_pagina();
+    if (CALLED) {
+        window.parent.iframe2('PAG' + CO_PAGINA, height_table);
+    }
+
+    document.getElementById('loader').style.display = 'none';
+    do_post_afk();
+}
+
+function do_post_afk() {
     /*TOOLTIP*/
     $('[data-toggle="tooltip"]').tooltip();
 

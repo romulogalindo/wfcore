@@ -44,8 +44,9 @@ public class ValpagServlet extends HttpServlet {
         request.setCharacterEncoding("ISO-8859-1");
         response.setContentType("aplication/json;charset=ISO-8859-1");
 
+        int timeoutAsync = 180 * 1000;//3minutos
         AsyncContext asyncCtx = request.startAsync();
-        asyncCtx.setTimeout(100000);
+        asyncCtx.setTimeout(timeoutAsync);
 
         switch (request.getServletPath()) {
             case "/pangolin": {

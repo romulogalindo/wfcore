@@ -58,8 +58,8 @@ public class WFIOAPP {
         this.javaScriptService = new JavaScriptService("JSEngine");
         this.messageService = new MessageService("MessageService");
 
-        this.executor = new ThreadPoolExecutor(1000, 8000, 50000L,
-                TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(1000));
+        this.executor = new ThreadPoolExecutor(10000, 80000, 50000L,
+                TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10000));
     }
 
     public void run(ServletContextEvent sce) {
